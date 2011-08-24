@@ -171,6 +171,29 @@ public class ObjectVerifiers extends Assert {
    }
 
    /**
+    * Returns an object that verifies that the test object is the same as a specified
+    * instance.
+    * 
+    * <p>This verifier is useful for testing method chaining with mutable objects. In
+    * such cases, it is expected that the method will return the instance under test
+    * itself.
+    * 
+    * @param <T>        The type of the instance and the verifier
+    * @param instance   The objected expected as the test value
+    * @return           A verifier that verifies that the test value
+    *                   is the same object as {@code instance}
+    */
+   public static <T> ObjectVerifier<T> checkInstance(final T instance) {
+      return new ObjectVerifier<T>() {
+         @Override
+         public T verify(T test, T reference) {
+            assertSame(instance, test);
+            return test;
+         }
+      };
+   }
+   
+   /**
     * Returns an object that verifies that the test object matches the reference
     * object by checking that {@link Comparable#compareTo(Object)} is zero. If one
     * of the objects is null and the other is non-null, verification will fail.
