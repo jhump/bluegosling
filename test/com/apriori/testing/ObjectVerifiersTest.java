@@ -391,6 +391,36 @@ public class ObjectVerifiersTest extends TestCase {
    }
 
    /**
+    * Tests {@link ObjectVerifiers#checkInstance}.
+    */
+   public void testCheckInstance() {
+      MockObject o1 = new MockObject();
+      MockObject o2 = new MockObject();
+      
+      // expecting non-null object
+      ObjectVerifier<MockObject> v = ObjectVerifiers.checkInstance(o1);
+
+      // don't really care about reference value -- just expect that the
+      // test value equals the one specified to checkInstance
+      assertReturnsFirst(v, o1, o2);
+      assertReturnsFirst(v, o1, o1);
+      assertFails(v, o2, o2);
+      assertFails(v, o2, o1);
+      assertFails(v, null, o1);
+      assertFails(v, null, o2);
+      
+      // expecting null object
+      v = ObjectVerifiers.checkInstance(null);
+      
+      assertFails(v, o1, o2);
+      assertFails(v, o1, o1);
+      assertFails(v, o2, o2);
+      assertFails(v, o2, o1);
+      assertReturnsNull(v, null, o1);
+      assertReturnsNull(v, null, o2);
+   }
+   
+   /**
     * Tests {@link ObjectVerifiers#forComparable}.
     */
    public void testForComparable() {
