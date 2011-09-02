@@ -26,6 +26,7 @@ public class MethodSignature {
     * Constructs a new signature for the specified method.
     * 
     * @param m the method
+    * @throws NullPointerException If the specified method is {@code null}
     */
    public MethodSignature(Method m) {
       this(m.getName(), m.getParameterTypes());
@@ -35,10 +36,20 @@ public class MethodSignature {
     * Constructs a new signature based on the given name and list of
     * arguments.
     * 
-    * @param name the method name
-    * @param argTypes the parameter types
+    * @param name       The method name
+    * @param argTypes   The parameter types
+    * @throws NullPointerException If the specified method name is {@code null}
+    *                   or any of the specified argument types is {@code null}
     */
    public MethodSignature(String name, Class<?>... argTypes) {
+      if (name == null) {
+         throw new NullPointerException();
+      }
+      for (Class<?> arg : argTypes) {
+         if (arg == null) {
+            throw new NullPointerException();
+         }
+      }
       this.name = name;
       this.argTypes = Arrays.asList(argTypes);
    }

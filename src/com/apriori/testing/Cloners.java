@@ -836,4 +836,146 @@ public class Cloners {
          }
       };
    }
+
+   /**
+    * Creates a cloner for arrays that performs a deep copy by using the specified
+    * cloner to clone elements. If you want a cloner that does a <em>shallow</em>
+    * copy of the array, you can use {@link #forCloneable()} since arrays in Java
+    * implement {@code Cloneable}.
+    * 
+    * @param <T>     The element type of the array
+    * @param cloner  The cloner for copying elements
+    * @return        A cloner for deep-copying arrays
+    */
+   public static <T> Cloner<T[]> forArray(final Cloner<T> cloner) {
+      return new Cloner<T[]>() {
+         @Override
+         public T[] clone(T[] o) {
+            T[] copy = o.clone();
+            for (int i = 0; i < o.length; i++) {
+               // clone all of the elements
+               copy[i] = cloner.clone(o[i]);
+            }
+            return copy;
+         }
+      };
+   }
+
+   /**
+    * Creates a cloner for arrays that performs a deep copy by cloning all
+    * array elements. The "leaf" components (not arrays) will be cloned
+    * using the specifie cloner. The rest of the structure, regardless of
+    * nesting depth, will be deep copied in the resulting clone.
+    * 
+    * This can be useful if you have a cloner for {@code SpreadsheetCell}
+    * and a sheet of cells represented by a two-dimensional array of
+    * these objects: {@code SpreadsheetCell[][]}. In such a case, a cloner
+    * for this structure could be build like so:
+    * <pre>
+    * Cloner&lt;SpreadsheetCell&gt; cellCloner = new MyCellCloner();
+    * Cloner&lt;SpreadsheetCell[][]&gt; sheetCloner =
+    *       <strong>Cloners.forNestedArray(SpreadsheetCell[][].class, cellCloner);</strong>
+    * </pre>
+    * This is effectively shorthand for repeated calls to {@link #forArray(Cloner)}
+    * that look like this:
+    * <pre>
+    * Cloner&lt;SpreadsheetCell&gt; cellCloner = new MyCellCloner();
+    * Cloner&lt;SpreadsheetCell[]&gt; rowCloner = <strong>Cloners.forArray(cellCloner);</strong>
+    * Cloner&lt;SpreadsheetCell[][]&gt; sheetCloner = <strong>Cloners.forArray(rowCloner);</strong>
+    * </pre>
+    * And this method works, regardless of nesting depth. So the following
+    * call is just as valid and will create a cloner for a four-dimensional
+    * array (and will save even more typing since using {@code forArray} with
+    * a four-dimensional array is even more verbose):
+    * <pre>
+    * Cloner&lt;MyObject&gt; elementCloner = new MyObjectCloner();
+    * Cloner&lt;MyObject[][][][]&gt; matrixCloner =
+    *       <strong>Cloners.forNestedArray(MyObject[][][][].class, elementCloner);</strong>
+    * </pre>
+    * 
+    * @param <T>        The component type of the array type to clone (which can itself
+    *                   be an array type since this method is designed to work with
+    *                   nested arrays)
+    * @param arrayClass The class token for the array type to clone
+    * @param cloner     The cloner for cloning leaf components
+    * @return           A cloner for deep-copying arrays
+    */
+   public static <T> Cloner<T[]> forNestedArray(Class<T[]> arrayClass, Cloner<?> cloner) {
+      Class<?> clazz = arrayClass;
+      while (clazz.isArray()) {
+         cloner = forArray(cloner);
+         clazz = clazz.getComponentType();
+      }
+      @SuppressWarnings("unchecked")
+      Cloner<T[]> ret = (Cloner<T[]>) cloner;
+      return ret;
+   }
+
+   /**
+    * Creates a "default" cloner for the specified class. The default cloner is chosen like
+    * so:
+    * <ul>
+    *    <li>If the type represents an array then {@link Cloners#forArray(Cloner)} is used to
+    *    create a cloner that <em>deep copies</em> arrays. Elements in the array will be
+    *    cloned by a "default" cloner for their type.
+    *    <li>If the type implements {@code Cloneable} then {@link Cloners#forCloneable()}
+    *    is used to create the cloner.</li>
+    *    <li>If the type implements {@code Serializable} then
+    *    {@link Cloners#forSerializable()} is used.</li>
+    *    <li>Otherwise, {@link Cloners#withCopyConstructor(Class)} is used to create the
+    *    cloner.
+    * </ul>
+    * If the type is not an array, implements neither interface, and has no suitable copy
+    * constructor then an exception is thrown. Similarly, if the type is an array but
+    * has an element type that implements neither interface and has no suitable copy
+    * constructor then an exception is thrown.
+    * 
+    * @param <T>     The type of object to be cloned
+    * @param clazz   The class token for the type of object to be cloned
+    * @return        A cloner for the specified type
+    */
+   public static <T> Cloner<T> defaultClonerFor(Class<T> clazz) {
+      if (clazz.isArray()) {
+         Class<?> element  = clazz.getComponentType();
+         @SuppressWarnings("unchecked")
+         Cloner<T> ret = (Cloner<T>) Cloners.<Object> forArray((Cloner<Object>) defaultClonerFor(element));
+         return ret;
+         
+      } else if (Cloneable.class.isAssignableFrom(clazz)) {
+         @SuppressWarnings("unchecked")
+         Cloner<T> ret = (Cloner<T>) Cloners.<Cloneable> forCloneable();
+         return ret;
+         
+      } else if (Serializable.class.isAssignableFrom(clazz)) {
+         @SuppressWarnings("unchecked")
+         Cloner<T> ret = (Cloner<T>) Cloners.<Serializable> forSerializable();
+         return ret;
+         
+      } else {
+         return withCopyConstructor(clazz);
+      }
+   }
+   
+   /**
+    * A generic cloner that will try to clone any type of object. Its strategy
+    * for cloning objects follows the same flow as {@code #defaultClonerFor(Class)}
+    * except that it evaluates the logic for <em>every object cloned</em> instead
+    * of trying to do it statically based on a given type.
+    * 
+    * <p>So it is more flexible than {@code #defaultClonerFor(Class)} since you
+    * don't have to know the runtime type of objects being cloned ahead of time.
+    * But its performance is worse and cloning may result in runtime exceptions
+    * during the cloning operation, instead of when creating the cloner. This
+    * occurs if a given object to be cloned is not array and implements neither
+    * {@code Cloneable} nor {@code Serializable} and whose class does not provide
+    * a suitable copy constructor.
+    */
+   public static Cloner<Object> GENERIC_CLONER = new Cloner<Object>() {
+      @Override
+      public Object clone(Object o) {
+         @SuppressWarnings("unchecked")
+         Cloner<Object> delegate = (Cloner<Object>) Cloners.defaultClonerFor(o.getClass());
+         return delegate.clone(o);
+      }
+   };
 }

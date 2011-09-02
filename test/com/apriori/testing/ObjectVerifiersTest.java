@@ -504,6 +504,15 @@ public class ObjectVerifiersTest extends TestCase {
       
       v = ObjectVerifiers.compositeVerifier(pv, fv);
       assertFails(v, o1, o2);
+      
+      // should throw NPE with null input
+      boolean caught = false;
+      try {
+         v = ObjectVerifiers.compositeVerifier(pv, null);
+      } catch (NullPointerException e) {
+         caught = true;
+      }
+      assertTrue(caught);
    }
 
    /**
@@ -531,7 +540,7 @@ public class ObjectVerifiersTest extends TestCase {
       TestInterface proxy = v.verify(i1, i2);
       assertNotNull(proxy);
       assertTrue(proxy instanceof Proxy);
-      assertNotNull(TestingInvocationHandler.handlerFor(proxy));
+      assertNotNull(InterfaceVerifier.verifierFor(proxy));
       
       // smoke test the resulting proxy and its invocation handler
       assertEquals(0, proxy.getIntForString("test"));
@@ -541,6 +550,15 @@ public class ObjectVerifiersTest extends TestCase {
       try {
          proxy.getIntForString("test");
       } catch (AssertionFailedError e) {
+         caught = true;
+      }
+      assertTrue(caught);
+      
+      // should throw NPE with null input
+      caught = false;
+      try {
+         v = ObjectVerifiers.forTesting(null);
+      } catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);

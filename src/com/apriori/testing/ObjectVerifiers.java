@@ -306,7 +306,7 @@ public class ObjectVerifiers extends Assert {
     * Returns a special object verifier that returns a testing proxy. The
     * returned proxy subsequently verifies that the test object implements
     * its methods in the same way as the reference object. Callers can use
-    * {@link TestingInvocationHandler#handlerFor(Object)} to configure how
+    * {@link InterfaceVerifier#verifierFor(Object)} to configure how
     * the test object's implementation should be tested. If one of the
     * objects is null and the other is non-null, verification will fail.
     * 
@@ -335,8 +335,8 @@ public class ObjectVerifiers extends Assert {
          @Override
          public T verify(T test, T reference) {
             if (NULLS.verify(test, reference) == null) return null;
-            TestingInvocationHandler<T> handler = new TestingInvocationHandler<T>(test, reference, iface);
-            return handler.createProxy(classLoader);
+            InterfaceVerifier<T> verifier = new InterfaceVerifier<T>(iface);
+            return verifier.createProxy(test, reference, classLoader);
          }
       };
    }

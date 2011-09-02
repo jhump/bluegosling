@@ -28,12 +28,50 @@ public class MethodCapturer<E> {
    private Method captured;
    private MethodSignature capturedSig;
    
-   private MethodCapturer(Class<E> iface) {
+   /**
+    * Constructs a new object for capturing methods for one interface.
+    * 
+    * @param iface   The class token for the interface whose methods will be
+    *                captured
+    * @throws IllegalArgumentException If the specified class token does not represent
+    *                an interface
+    * @throws NullPointerException if the specified class token is {@code null}
+    */
+   public MethodCapturer(Class<E> iface) {
       this(Collections.<Class<? extends E>> singleton(iface));
    }
    
-   @SuppressWarnings("unchecked")
-   private MethodCapturer(Set<Class<? extends E>> interfaces) {
+   /**
+    * Constructs a new object for capturing methods for one or more interfaces.
+    * 
+    * @param interfaces The class tokens for the interfaces whose methods will be
+    *                   captured
+    * @throws IllegalArgumentException if no interfaces are specified, if any of the
+    *          specified class tokens does not represent an interface, if the
+    *          interfaces are incompatible (they have a method with the same signature
+    *          but different and incompatible return types), or if a proxy object for
+    *          the interfaces cannot be created using the {@code ClassLoader} of any
+    *          of the interfaces
+    * @throws NullPointerException if any of the specified class tokens is {@code null}
+    */
+   public MethodCapturer(Class<? extends E>... interfaces) {
+      this(new HashSet<Class<? extends E>>(Arrays.asList(interfaces)));
+   }
+   
+   /**
+    * Constructs a new object for capturing methods for one or more interfaces.
+    * 
+    * @param interfaces The set of class tokens for the interfaces whose methods will
+    *                   be captured
+    * @throws IllegalArgumentException if no interfaces are specified, if any of the
+    *          specified class tokens does not represent an interface, if the
+    *          interfaces are incompatible (they have a method with the same signature
+    *          but different and incompatible return types), or if a proxy object for
+    *          the interfaces cannot be created using the {@code ClassLoader} of any
+    *          of the interfaces
+    * @throws NullPointerException if any of the specified class tokens is {@code null}
+    */
+   public MethodCapturer(Set<Class<? extends E>> interfaces) {
       // check interfaces
       if (interfaces.size() == 0) {
          throw new IllegalArgumentException("Must provide at least one interface");
@@ -45,12 +83,13 @@ public class MethodCapturer<E> {
          }
          classLoaders.add(clazz.getClassLoader());
       }
-      this.interfaces = interfaces;
+      this.interfaces = new HashSet<Class<? extends E>>(interfaces); // defensive copy
       // use first class loader that works for creating proxy
       IllegalArgumentException e = null;
       for (ClassLoader classLoader : classLoaders) {
          try {
-            proxy = (E) Proxy.newProxyInstance(classLoader, interfaces.toArray(new Class<?>[interfaces.size()]), new InvocationHandler() {
+            @SuppressWarnings("unchecked")
+            E p = (E) Proxy.newProxyInstance(classLoader, interfaces.toArray(new Class<?>[interfaces.size()]), new InvocationHandler() {
                @SuppressWarnings("synthetic-access")
                @Override
                public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
@@ -59,6 +98,7 @@ public class MethodCapturer<E> {
                   return ProxyUtil.getNullReturnValue(method.getReturnType());
                }
             });
+            proxy = p;
             break; // got it!
          } catch (IllegalArgumentException thrown) {
             e = thrown;
@@ -72,66 +112,6 @@ public class MethodCapturer<E> {
    }
    
    /**
-    * Creates an instance for capturing methods for a single interface. This is the
-    * most common type of capturer.
-    * 
-    * @param <T> the interface whose methods will be captured
-    * @param iface the class token for the interface whose methods will be captured
-    * @return the method capturer
-    * @throws IllegalArgumentException if the specified class token does not represent
-    *          an interface
-    * @throws NullPointerException if the specified class token is {@code null}
-    */
-   public static <T> MethodCapturer<T> forOne(Class<T> iface) {
-      return new MethodCapturer<T>(iface);
-   }
-
-   /**
-    * Creates an instance for capturing methods for multiple interfaces. This type of
-    * capturer is less common than ones for a single interface.
-    * 
-    * <p>This method cannot be used for a single interface. If only one interface is
-    * specified in the var-args then an {@code IllegalArgumentException} will be
-    * thrown. For one interface, use {@link #forOne(Class)} instead.
-    * 
-    * @param interfaces the class tokens for the interfaces whose methods will be
-    *          captured
-    * @return the method capturer
-    * @throws IllegalArgumentException if no interfaces are specified or if only one
-    *          interface is specified, if any of the specified class tokens does not
-    *          represent an interface, if the interfaces are incompatible (they have
-    *          a method with the same signature but different and incompatible return
-    *          types), or if a proxy object for the interfaces cannot be created using
-    *          the {@code ClassLoader} of any of the interfaces
-    * @throws NullPointerException if any of the specified class tokens is {@code null}
-    */
-   public static MethodCapturer<Object> forMultiple(Class<?>... interfaces) {
-      if (interfaces.length == 1) {
-         throw new IllegalArgumentException("More than one interface expected. " +
-         		"Use MethodCapturer.forOne(Class) to create an instance for a single interface");
-      }
-      return new MethodCapturer<Object>(new HashSet<Class<? extends Object>>(Arrays.asList(interfaces)));
-   }
-   
-   /**
-    * Creates an instance for capturing methods for one or more interfaces.
-    * 
-    * @param interfaces the class tokens for the interfaces whose methods will be
-    *          captured
-    * @return the method capturer
-    * @throws IllegalArgumentException if no interfaces are specified (empty set), if
-    *          any of the specified class tokens does not represent an interface, if
-    *          the interfaces are incompatible (they have a method with the same
-    *          signature but different and incompatible return types), or if a proxy
-    *          object for the interfaces cannot be created using the {@code ClassLoader}
-    *          of any of the interfaces
-    * @throws NullPointerException if any of the specified class tokens is {@code null}
-    */
-   public static MethodCapturer<Object> forMultiple(Set<Class<? extends Object>> interfaces) {
-      return new MethodCapturer<Object>(interfaces);
-   }
-   
-   /**
     * Returns the set of interfaces whose methods can be captured. If
     * only a single interface's methods are captured then this returns
     * a singleton set with just {@code Class<E>}.
@@ -139,7 +119,7 @@ public class MethodCapturer<E> {
     * @return set of interfaces whose methods can be captured
     */
    public Set<Class<? extends E>> getInterfaces() {
-      return interfaces;
+      return Collections.unmodifiableSet(interfaces);
    }
    
    /**
