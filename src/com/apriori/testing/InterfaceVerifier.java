@@ -440,6 +440,195 @@ public class InterfaceVerifier<T> {
    public interface MethodConfiguration<T> extends MethodConfigurator<T> {
 
       /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> mutator();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> mutator(ObjectVerifier<? super T> v);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> notMutator();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override <R> MethodConfiguration<T> returnVerifier(ObjectVerifier<R> v, Class<R> clazz);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> returnVerifier(ObjectVerifier<?> v);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> strictExceptionVerifier();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> relaxedExceptionVerifier();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> exceptionVerifier(ObjectVerifier<Throwable> v);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> cloneAndVerifyArguments();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> cloneArguments();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> cloneArgumentsWith(Cloner<?>... cloners);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> cloneArgumentsWith(List<Cloner<?>> cloners);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> cloneAllArgumentsWith(Cloner<?> cloner);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> noCloneAndVerifyArguments();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> verifyArguments();
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> verifyArgumentsWith(ObjectVerifier<?>... verifiers);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> verifyArgumentsWith(List<ObjectVerifier<?>> verifiers);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> verifyAllArgumentsWith(ObjectVerifier<?> verifier);
+      
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>Overridden to narrow the return type from {@code MethodConfigurator}
+       * to {@code MethodConfiguration} in order to maintain the more specific
+       * type information with method chaining.
+       */
+      @Override MethodConfiguration<T> noVerifyArguments();
+
+      /**
        * Returns the set of methods configured by this object. All of the
        * methods will have the same signature. The set will only include
        * more than one method when the {@code InterfaceVerifier} is used
@@ -1316,8 +1505,9 @@ public class InterfaceVerifier<T> {
          if (testThrown != null) {
             if (suppressExceptions) {
                return ProxyUtil.getNullReturnValue(conf.returnType);
+            } else {
+               throw testThrown;
             }
-            throw testThrown;
          }
          return testRet;
       }

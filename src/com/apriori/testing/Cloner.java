@@ -16,7 +16,7 @@ public interface Cloner<T> {
     * the incoming argument. That way both the test implementation and
     * reference implementation receive proper incoming values (otherwise,
     * one implementation may receive "different" arguments due to the
-    * values being mutated by the other implementation).
+    * values having been mutated by the other implementation).
     * 
     * <p>It should not be necessary for implementors of this interface to
     * check whether the specified object is null. It should never be null.
@@ -26,6 +26,7 @@ public interface Cloner<T> {
     * @param o    The object being cloned
     * @return     The clone
     * @throws NullPointerException If the specified object is null
+    * @throws CloningException If any step in the cloning operation fails
     */
    T clone(T o);
 }

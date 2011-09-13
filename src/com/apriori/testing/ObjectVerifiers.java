@@ -50,12 +50,22 @@ public class ObjectVerifiers extends Assert {
 
    /**
     * An object that verifies that the test object is equal to the reference object
-    * via {@code Object.equals()}.
+    * via {@code Object.equals()}. If the reference object is an array then this will
+    * verify that their contents are equal using {@code Arrays.deepEquals(Object[], Object[])}.
+    * If the reference object is an array but the test object is not, the verification
+    * will fail.
     */
    public static final ObjectVerifier<Object> EQUALS = new ObjectVerifier<Object>() {
       @Override
       public Object verify(Object test, Object reference) {
-         assertEquals(reference, test);
+         if (reference instanceof Object[]) {
+            // must both be arrays
+            assertTrue(test instanceof Object[]);
+            assertTrue(Arrays.deepEquals((Object[]) reference, (Object[]) test));
+            
+         } else {
+            assertEquals(reference, test);
+         }
          return test;
       }
    };

@@ -11,7 +11,7 @@ import java.util.List;
  * 
  * @author jhumphries
  *
- * @param <E> the type of element contained in the list
+ * @param <E>  The type of element contained in the list
  */
 public interface LinkedList<E> extends List<E> {
 
@@ -22,7 +22,7 @@ public interface LinkedList<E> extends List<E> {
 	 *
 	 * @author jhumphries
 	 *
-	 * @param <E> the type of value stored in the node
+	 * @param <E> The type of value stored in the node
 	 */
 	interface Node<E> {
 		/**
@@ -30,7 +30,7 @@ public interface LinkedList<E> extends List<E> {
 		 * represents the first item in the list and {@size() - 1}
 		 * represents the last item in the list.
 		 * 
-		 * @return the index for this node in the list
+		 * @return   The index for this node in the list
 		 */
 		int currentIndex();
 		
@@ -39,15 +39,15 @@ public interface LinkedList<E> extends List<E> {
 		 * first item in the list, for example, then this would be
 		 * the same as {@code list.get(0)}.
 		 * 
-		 * @return the value of this node
+		 * @return   The value of this node
 		 */
 		E value();
 
 		/**
 		 * Gets the next node in the list.
 		 * 
-		 * @return the next node in the list or {@code null} if this
-		 * 			is the last node in the list
+		 * @return   The next node in the list or {@code null} if this
+		 * 			 is the last node in the list
 		 */
 		Node<E> next();
 
@@ -58,7 +58,7 @@ public interface LinkedList<E> extends List<E> {
 		 * represents the first item in the list, for example, then
 		 * this would be the same as {@code list.listIterator(1)}.
 		 * 
-		 * @return an iterator from this node's position in the list
+		 * @return   An iterator from this node's position in the list
 		 */
 		ListIterator<E> iteratorFrom();
 	}
@@ -69,7 +69,7 @@ public interface LinkedList<E> extends List<E> {
 	 * 
 	 * @author jhumphries
 	 *
-	 * @param <E> the type of element contained in the list
+	 * @param <E> The type of element contained in the list
 	 */
 	interface ListIterator<E> extends java.util.ListIterator<E> {
 		/**
@@ -77,9 +77,9 @@ public interface LinkedList<E> extends List<E> {
 		 * Calling {@code iterator.nodeNode().value()} would be
 		 * similar to calling {@code iterator.next()}.
 		 * 
-		 * @return the node that represents the next item in the
-		 * 			iteration or null if the iteration has no
-		 * 			more items
+		 * @return   The node that represents the next item in the
+		 *           iteration or null if the iteration has no
+		 *           more items
 		 */
 		Node<E> nextNode();
 	}
@@ -109,16 +109,16 @@ public interface LinkedList<E> extends List<E> {
 	 * Gets the list's head node, which corresponds to the first
 	 * element in the list.
 	 * 
-	 * @return the node for the first item in the list or {@code null}
-	 * 			if the list is empty
+	 * @return The node for the first item in the list or {@code null}
+	 *         if the list is empty
 	 */
 	public Node<E> getHead();
 
 	/**
 	 * Returns the first item in the list, like the Lisp "car" function.
 	 * 
-	 * @return the first item in the list or {@code null} if the list
-	 * 			is empty
+	 * @return The first item in the list or {@code null} if the list
+	 *         is empty
 	 */
 	public E car();
 	
@@ -128,7 +128,7 @@ public interface LinkedList<E> extends List<E> {
 	 * {@code null}. If the list has only one element (returned by the
 	 * {@code car()} method) then this will return an empty list.
 	 * 
-	 * @return the rest of the list, after the first item
+	 * @return The rest of the list, after the first item
 	 */
 	public LinkedList<E> cdr();
 }

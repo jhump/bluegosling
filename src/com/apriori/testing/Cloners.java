@@ -1,7 +1,5 @@
 package com.apriori.testing;
 
-import static junit.framework.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +24,10 @@ import java.util.concurrent.Callable;
  * @author jhumphries
  */
 public class Cloners {
+   /**
+    * Prevents instantiation.
+    */
+   private Cloners() {}
 
    /**
     * Checks that the clone is valid. This will assert that the clone
@@ -41,8 +43,10 @@ public class Cloners {
     * @param clone   The object's clone
     */
    public static void checkClone(Object orig, Object clone) {
-      if (clone == orig || clone.getClass() != orig.getClass()) {
-         fail();
+      if (clone == orig) {
+         throw new CloningException("Clone should not be same instance as original object");
+      } else if (clone.getClass() != orig.getClass()) {
+         throw new CloningException("Clone should be of the same class as original object");
       }
    }
    
@@ -70,16 +74,15 @@ public class Cloners {
                T ret = (T) clone;
                return ret;
             } catch (InvocationTargetException e) {
-               fail();
+               throw new CloningException("Failed to invoke clone()", e);
             } catch (IllegalAccessException e) {
-               fail();
+               throw new CloningException("Failed to invoke clone()", e);
             }
-            return null; // make compiler happy...
          }
          
          private Method findCloneMethod(Class<?> clazz) {
             try {
-               Method m = clazz.getMethod("clone");
+               Method m = clazz.getDeclaredMethod("clone");
                m.setAccessible(true);
                return m;
                // Exceptions below shouldn't actually ever
@@ -90,12 +93,16 @@ public class Cloners {
                // is declared as protected instead of public
             }
             catch (SecurityException e) {
-               fail();
+               throw new CloningException("Failed to locate clone() method", e);
             }
             catch (NoSuchMethodException e) {
-               fail();
+               if (clazz.getSuperclass() == null) {
+                  throw new CloningException("Failed to locate clone() method", e);
+               } else {
+                  // try super-class
+                  return findCloneMethod(clazz.getSuperclass());
+               }
             }
-            return null; // make compiler happy...
          }
       };
    }
@@ -136,10 +143,10 @@ public class Cloners {
                return ret;
             }
             catch (IOException e) {
-               fail();
+               throw new CloningException("Failed to clone via serialization", e);
             }
             catch (ClassNotFoundException e) {
-               fail();
+               throw new CloningException("Failed to clone via serialization", e);
             } finally {
                // close streams in case an exception
                // was raised
@@ -150,7 +157,6 @@ public class Cloners {
                   if (ois != null) ois.close();
                } catch (IOException ignored) {}
             }
-            return null; // make compiler happy...
          }
       };
    }
@@ -481,8 +487,8 @@ public class Cloners {
     * @param cons    The constructor to use to create a clone
     * @return        A cloner that will use the constructor to create a clone
     * @throws IllegalArgumentException If the specified constructor requires
-    *                      more than one argument or requires an argument that
-    *                      is a primitive type
+    *                more than one argument or requires an argument that
+    *                is a primitive type
     * @throws NullPointerException If the specified constructor is null
     */
    public static <T> Cloner<T> withCopyConstructor(final Constructor<T> cons) {
@@ -492,8 +498,12 @@ public class Cloners {
       final Class<?> argTypes[] = cons.getParameterTypes();
       if (argTypes.length > 1) {
          throw new IllegalArgumentException("Constructor must take no more than one argument");
-      } else if (argTypes.length == 1 && argTypes[0].isPrimitive()) {
-         throw new IllegalArgumentException("Constructor argument cannot be primitive");
+      } else if (argTypes.length == 1) {
+         if (argTypes[0].isPrimitive()) {
+            throw new IllegalArgumentException("Constructor argument cannot be primitive");
+         } else if (!argTypes[0].isAssignableFrom(cons.getDeclaringClass())) {
+            throw new IllegalArgumentException("Constructor argument is not compatible with declaring class");
+         }
       }
       
       return new Cloner<T>() {
@@ -506,18 +516,17 @@ public class Cloners {
                return clone;
             }
             catch (IllegalArgumentException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy constructor", e);
             }
             catch (InstantiationException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy constructor", e);
             }
             catch (IllegalAccessException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy constructor", e);
             }
             catch (InvocationTargetException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy constructor", e);
             }
-            return null; // make compiler happy...
          }
       };
    }
@@ -604,8 +613,12 @@ public class Cloners {
          throw new IllegalArgumentException("Instance method must take no argument");
       } else if (argTypes.length > 1) {
          throw new IllegalArgumentException("Static method must take no more than one argument");
-      } else if (argTypes.length == 1 && argTypes[0].isPrimitive()) {
-         throw new IllegalArgumentException("Static method argument cannot be primitive");
+      } else if (argTypes.length == 1) {
+         if (argTypes[0].isPrimitive()) {
+            throw new IllegalArgumentException("Static method argument cannot be primitive");
+         } else if (!argTypes[0].isAssignableFrom(method.getDeclaringClass())) {
+            throw new IllegalArgumentException("Static method argument is not compatible with declaring class");
+         }
       }
       
       return new Cloner<T>() {
@@ -621,15 +634,14 @@ public class Cloners {
                return ret;
             }
             catch (IllegalArgumentException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy method", e);
             }
             catch (IllegalAccessException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy method", e);
             }
             catch (InvocationTargetException e) {
-               fail();
+               throw new CloningException("Failed to invoke copy method", e);
             }
-            return null; // make compiler happy...
          }
       };
    }
@@ -652,24 +664,29 @@ public class Cloners {
       if (clazz == null || methodName == null) {
          throw new NullPointerException();
       }
-      Method method;
-      try {
-         method = clazz.getDeclaredMethod(methodName);
+      Class<?> currentClass = clazz;
+      while (currentClass != null) {
+         try {
+            Method method = currentClass.getDeclaredMethod(methodName);
+            int mods = method.getModifiers();
+            if (Modifier.isStatic(mods)) {
+               throw new IllegalArgumentException("No instance method named " + methodName
+                     + " exists for " + clazz.getName());
+            }
+            return withCopyMethod(method);
+         }
+         catch (SecurityException e) {
+            throw new IllegalArgumentException("No copy method named " + methodName
+                  + " exists for " + clazz.getName());
+         }
+         catch (NoSuchMethodException e) {
+            // try super-class method
+            currentClass = currentClass.getSuperclass();
+         }
       }
-      catch (SecurityException e) {
-         throw new IllegalArgumentException("No copy method named " + methodName
-               + " exists for " + clazz.getName());
-      }
-      catch (NoSuchMethodException e) {
-         throw new IllegalArgumentException("No copy method named " + methodName
-               + " exists for " + clazz.getName());
-      }
-      int mods = method.getModifiers();
-      if (Modifier.isStatic(mods)) {
-         throw new IllegalArgumentException("No instance method named " + methodName
-               + " exists for " + clazz.getName());
-      }
-      return withCopyMethod(method);
+      // went through entire hierarchy w/out finding the method
+      throw new IllegalArgumentException("No copy method named " + methodName
+            + " exists for " + clazz.getName());
    }
 
    /**
@@ -740,8 +757,8 @@ public class Cloners {
     * 
     * @param <T>     The type of object being cloned
     * @param clone   The clone
-    * @return  A cloner that returns {@code clone} (regardless of the object passed to
-    *          {@link Cloner#clone(Object)})
+    * @return        A cloner that returns {@code clone} (regardless of the object passed to
+    *                {@link Cloner#clone(Object)})
     * @throws NullPointerException If the specified instance is null
     */
    public static <T> Cloner<T> fromInstance(final T clone) {
@@ -765,7 +782,7 @@ public class Cloners {
     * the objects to be cloned and are not the same instances as the objects being cloned.
     * 
     * @param clones  The clones
-    * @return  A list of cloners
+    * @return        A list of cloners
     * 
     * @see #fromInstances(List)
     */
@@ -785,12 +802,17 @@ public class Cloners {
     * <p>If any null values are specified as clones, the corresponding cloner in the returned
     * list will also be null. This is useful for specifying cloners to
     * {@link InterfaceVerifier.MethodConfigurator#cloneArgumentsWith(List)} under situations
-    * where some of the method arguments will be null (and thus not need cloning).
+    * where some of the method arguments do not need to be cloned (like if they are null,
+    * primitive, or not subject to mutation by the method under test).
     * 
     * @param clones  The clones
-    * @return  A list of cloners
+    * @return        A list of cloners
+    * @throws NullPointerException If the specified list is null
     */
    public static List<Cloner<?>> fromInstances(List<?> clones) {
+      if (clones == null) {
+         throw new NullPointerException();
+      }
       ArrayList<Cloner<?>> ret = new ArrayList<Cloner<?>>(clones.size());
       for (Object clone : clones) {
          if (clone == null) {
@@ -828,7 +850,7 @@ public class Cloners {
                clone = c.call();
             }
             catch (Exception e) {
-               fail();
+               throw new CloningException("Callable failed to return clone", e);
             }
             // check the object's value and type
             checkClone(o, clone);
@@ -846,15 +868,21 @@ public class Cloners {
     * @param <T>     The element type of the array
     * @param cloner  The cloner for copying elements
     * @return        A cloner for deep-copying arrays
+    * @throws NullPointerException If the specified cloner is null
     */
    public static <T> Cloner<T[]> forArray(final Cloner<T> cloner) {
+      if (cloner == null) {
+         throw new NullPointerException();
+      }
       return new Cloner<T[]>() {
          @Override
          public T[] clone(T[] o) {
             T[] copy = o.clone();
             for (int i = 0; i < o.length; i++) {
-               // clone all of the elements
-               copy[i] = cloner.clone(o[i]);
+               // clone all of the non-null elements
+               if (o[i] != null) {
+                  copy[i] = cloner.clone(o[i]);
+               }
             }
             return copy;
          }
@@ -864,7 +892,7 @@ public class Cloners {
    /**
     * Creates a cloner for arrays that performs a deep copy by cloning all
     * array elements. The "leaf" components (not arrays) will be cloned
-    * using the specifie cloner. The rest of the structure, regardless of
+    * using the specified cloner. The rest of the structure, regardless of
     * nesting depth, will be deep copied in the resulting clone.
     * 
     * This can be useful if you have a cloner for {@code SpreadsheetCell}
@@ -899,8 +927,15 @@ public class Cloners {
     * @param arrayClass The class token for the array type to clone
     * @param cloner     The cloner for cloning leaf components
     * @return           A cloner for deep-copying arrays
+    * @throws NullPointerException If either argument is null
     */
    public static <T> Cloner<T[]> forNestedArray(Class<T[]> arrayClass, Cloner<?> cloner) {
+      if (arrayClass == null) {
+         throw new NullPointerException();
+      }
+      if (cloner == null) {
+         throw new NullPointerException();
+      }
       Class<?> clazz = arrayClass;
       while (clazz.isArray()) {
          cloner = forArray(cloner);
@@ -933,8 +968,12 @@ public class Cloners {
     * @param <T>     The type of object to be cloned
     * @param clazz   The class token for the type of object to be cloned
     * @return        A cloner for the specified type
+    * @throws NullPointerException If the specified class token is null
     */
    public static <T> Cloner<T> defaultClonerFor(Class<T> clazz) {
+      if (clazz == null) {
+         throw new NullPointerException();
+      }
       if (clazz.isArray()) {
          Class<?> element  = clazz.getComponentType();
          @SuppressWarnings("unchecked")

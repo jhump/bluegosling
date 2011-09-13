@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.AssertionFailedError;
@@ -181,6 +182,28 @@ public class ObjectVerifiersTest extends TestCase {
       assertFails(v, o1, o2);
 
       doNullTests(v, o1, o2);
+      
+      // test array behavior
+      Object[] a1 = new Object[] { 1, 2, "a string", new String[] { "abc", "def" }, new Number[] { 3, 4, 5 }, null, 6 };
+      Object[] a2 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" }, new Object[] { 3, 4, 5 }, null, 6 };
+      Object[] a3 = new Object[] { 1, 2, 3 };
+      Object[] a4 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" }, new Object[] { 3, 4, 5 }, 6 };
+      Object[] a5 = new Object[] { 1, 2, "a string", new Object[] { "abc", "Def" }, new Object[] { 3, 4, 5 }, null, 6 };
+      
+      assertReturnsFirst(v, a1, a2);
+      assertReturnsFirst(v, a2, a1);
+      assertFails(v, a1, a3);
+      assertFails(v, a2, a3);
+      assertFails(v, a1, a4);
+      assertFails(v, a2, a5);
+      // mixed with non-arrays
+      o1.equals = true;
+      assertFails(v, o1, a1);
+      // if reference object is not an array, then its equals method is called
+      // instead of checking array contents
+      assertReturnsFirst(v, a1, o1);
+      // with nulls
+      doNullTests(v, a1, a2);
    }
    
    /**
@@ -513,6 +536,14 @@ public class ObjectVerifiersTest extends TestCase {
          caught = true;
       }
       assertTrue(caught);
+      
+      caught = false;
+      try {
+         v = ObjectVerifiers.compositeVerifier((List<ObjectVerifier<Object>>) null);
+      } catch (NullPointerException e) {
+         caught = true;
+      }
+      assertTrue(caught);
    }
 
    /**
@@ -554,11 +585,38 @@ public class ObjectVerifiersTest extends TestCase {
       }
       assertTrue(caught);
       
+      doNullTests(v, i1, i2);
+      
       // should throw NPE with null input
       caught = false;
       try {
-         v = ObjectVerifiers.forTesting(null);
+         ObjectVerifiers.forTesting(null);
       } catch (NullPointerException e) {
+         caught = true;
+      }
+      assertTrue(caught);
+
+      caught = false;
+      try {
+         ObjectVerifiers.forTesting(null, TestInterface.class.getClassLoader());
+      } catch (NullPointerException e) {
+         caught = true;
+      }
+      assertTrue(caught);
+
+      caught = false;
+      try {
+         ObjectVerifiers.forTesting(TestInterface.class, null);
+      } catch (NullPointerException e) {
+         caught = true;
+      }
+      assertTrue(caught);
+
+      // with bad class token (not an interface)
+      caught = false;
+      try {
+         ObjectVerifiers.forTesting(Object.class);
+      } catch (IllegalArgumentException e) {
          caught = true;
       }
       assertTrue(caught);

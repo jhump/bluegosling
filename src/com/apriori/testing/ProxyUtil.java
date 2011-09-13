@@ -7,6 +7,10 @@ package com.apriori.testing;
  * @author jhumphries
  */
 public class ProxyUtil {
+   /**
+    * Prevents instantiation.
+    */
+   private ProxyUtil() {}
    
    /**
     * Determines a "null" return value to use for a method. For most methods

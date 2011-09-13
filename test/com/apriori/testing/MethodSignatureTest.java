@@ -122,6 +122,11 @@ public class MethodSignatureTest extends TestCase {
       assertFalse(sig3.equals(sig1));
       assertFalse(sig2.equals(sig3));
       assertFalse(sig3.equals(sig2));
+      
+      // null
+      assertFalse(sig1.equals(null));
+      // wrong class
+      assertFalse(sig1.equals(new Object()));
    }
    
    /**
@@ -138,5 +143,16 @@ public class MethodSignatureTest extends TestCase {
       assertTrue(sig1.hashCode() == sig2.hashCode());
       assertTrue(sig1.hashCode() != sig3.hashCode());
       assertTrue(sig2.hashCode() != sig3.hashCode());
+   }
+   
+   /**
+    * Tests the implementation of {@code toString()}.
+    */
+   public void testToString() {
+      MethodSignature sig = new MethodSignature("binarySearch", Object[].class, Object.class, Comparator.class);
+      String sigStr = sig.toString();
+      // shouldn't be empty and should at least contain reference to method name
+      assertFalse(sigStr.isEmpty());
+      assertTrue(sigStr.contains("binarySearch"));
    }
 }

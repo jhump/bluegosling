@@ -6,7 +6,7 @@ package com.apriori.collections;
  * 
  * @author jhumphries
  *
- * @param <E> the type of element contained in the list
+ * @param <E>  The type of element contained in the list
  */
 public interface DoublyLinkedList<E> extends LinkedList<E> {
 
@@ -25,13 +25,14 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 		 * Narrows the return type from {@code LinkedList.Node}
 		 * to {@code DoublyLinkedList.Node}.
 		 */
+	   @Override
 		Node<E> next();
 		
 		/**
 		 * Gets the previous node in the list.
 		 * 
-		 * @return the previous node in the list or {@code null} if this
-		 * 			is the first node in the list
+		 * @return   The previous node in the list or {@code null} if this
+		 *           is the first node in the list
 		 */
 		Node<E> previous();
 
@@ -39,6 +40,7 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 		 * Narrows the return type from {@code LinkedList.ListIterator}
 		 * to {@code DoublyLinkedList.ListIterator}.
 		 */
+		@Override
 		ListIterator<E> iteratorFrom();
 	}
 
@@ -55,7 +57,7 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 		 * Narrows the return type from {@code LinkedList.Node}
 		 * to {@code DoublyLinkedList.Node}.
 		 */
-	   
+	   @Override
 		Node<E> nextNode();
 		
 		/**
@@ -63,9 +65,9 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 		 * Calling {@code iterator.previousNode().value()} would be
 		 * similar to calling {@code iterator.previous()}.
 		 * 
-		 * @return the node that represents the previous item in the
-		 * 			iteration or null if the iteration has no
-		 * 			prior items
+		 * @return   The node that represents the previous item in the
+		 *           iteration or null if the iteration has no
+		 *           prior items
 		 */
 		Node<E> previousNode();
 	}
@@ -97,8 +99,8 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 	 * in order to narrow the return type from {@code LinkedList.Node}
 	 * to {@code DoublyLinkedList.Node}.
 	 * 
-	 * @return the node for the first item in the list or {@code null}
-	 * 			if the list is empty
+	 * @return The node for the first item in the list or {@code null}
+	 *         if the list is empty
 	 */
 	@Override
 	public Node<E> getHead();
@@ -107,8 +109,8 @@ public interface DoublyLinkedList<E> extends LinkedList<E> {
 	 * Gets the list's tail node, which corresponds to the last
 	 * element in the list.
 	 * 
-	 * @return the node for the last item in the list or {@code null}
-	 * 			if the list is empty
+	 * @return The node for the last item in the list or {@code null}
+	 *         if the list is empty
 	 */
 	public Node<E> getTail();
 	
