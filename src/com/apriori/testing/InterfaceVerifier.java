@@ -227,6 +227,7 @@ public class InterfaceVerifier<T> {
        * 
        * @see #uncheckedExceptions(Set)
        */
+      //@SafeVararg
       MethodConfigurator<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
       
       /**
@@ -518,6 +519,7 @@ public class InterfaceVerifier<T> {
        * to {@code MethodConfiguration} in order to maintain the more specific
        * type information with method chaining.
        */
+      //@SafeVararg
       @Override MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
       
       /**
@@ -770,7 +772,7 @@ public class InterfaceVerifier<T> {
       // fields
       private MethodSignature sig;
       private Set<Method> confMethods;
-      // default access so they can be accessed from MethodInvocationHelper below
+      // default access so they can be accessed from MethodInvocationHandler below
       Class<?> returnType;
       Set<Class<? extends Throwable>> checkedExceptions;
       boolean isMutator;
@@ -816,7 +818,7 @@ public class InterfaceVerifier<T> {
             returnVerifier = null;
          } else if (returnType.isInterface()) {
             isMutator = false;
-            returnVerifier = ObjectVerifiers.forTesting(returnType);
+            returnVerifier = ObjectVerifiers.forTesting(returnType, returnType.getClassLoader());
          } else {
             isMutator = false;
             returnVerifier = ObjectVerifiers.EQUALS;
@@ -942,6 +944,9 @@ public class InterfaceVerifier<T> {
 
       @Override
       public ObjectVerifier<? super T> getMutatorVerifier() {
+         if (!isMutator) {
+            return null;
+         }
          if (mutatorVerifier == null) {
             return defaultMutatorVerifier;
          } else {
@@ -1010,6 +1015,7 @@ public class InterfaceVerifier<T> {
          }
       }
 
+      //@SafeVararg
       @Override
       public MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables) {
          return uncheckedExceptions(new HashSet<Class<? extends Throwable>>(Arrays.asList(throwables)));
@@ -1272,6 +1278,7 @@ public class InterfaceVerifier<T> {
          return this;
       }
 
+      //@SafeVararg
       @Override
       public MethodConfigurator<T> uncheckedExceptions(Class<? extends Throwable>... throwables) {
          for (MethodConfigurationImpl conf : configs) {
@@ -1602,6 +1609,7 @@ public class InterfaceVerifier<T> {
     *                   same signature but different and incompatible return types)
     * @throws NullPointerException If any of the specified interfaces are {@code null}
     */
+   //@SafeVararg
    public InterfaceVerifier(Class<? extends T>... interfaces) {
       this(new HashSet<Class<? extends T>>(Arrays.asList(interfaces)));
    }
@@ -1617,13 +1625,19 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException If the set of interfaces is {@code null} or if any
     *                   of the specified interfaces therein are {@code null}
     */
-   private InterfaceVerifier(Set<Class<? extends T>> interfaces) {
+   public InterfaceVerifier(Set<Class<? extends T>> interfaces) {
       if (interfaces == null) {
          throw new NullPointerException();
+      }
+      if (interfaces.isEmpty()) {
+         throw new IllegalArgumentException();
       }
       for (Class<?> iface : interfaces) {
          if (iface == null) {
             throw new NullPointerException();
+         }
+         if (! iface.isInterface()) {
+            throw new IllegalArgumentException();
          }
       }
       this.interfaces = new HashSet<Class<? extends T>>(interfaces); // defensive copy
@@ -1776,6 +1790,7 @@ public class InterfaceVerifier<T> {
 
    /**
     * Returns true if exceptions will be suppressed during method invocations.
+    * By default this is true.
     * 
     * @return  True if exceptions will be suppressed
     */
@@ -1786,7 +1801,9 @@ public class InterfaceVerifier<T> {
    /**
     * Returns the exception thrown during the most recent method invocation
     * or {@code null} if the most recent invocation did not throw an
-    * exception.
+    * exception. This returns the excpetion thrown by the implementation
+    * under test. So if the reference implementation threw an exception but
+    * the test implementation did not, this would return {@code null}.
     * 
     * <p>This can be used when exceptions are suppressed to easily access
     * thrown exceptions without having to write verbose {@code try-catch}
@@ -1975,7 +1992,7 @@ public class InterfaceVerifier<T> {
     * 
     * @return  The set of all supported method signatures
     */
-   public Set<MethodSignature> allMethodSignaures() {
+   public Set<MethodSignature> allMethodSignatures() {
       return methodConfig.keySet();
    }
 
@@ -2072,6 +2089,8 @@ public class InterfaceVerifier<T> {
     *                      implement all required interfaces or if any of the
     *                      interfaces are not visible by name through the
     *                      specified class loader
+    * @throws NullPointerException If either of the implementations specified
+    *                      is {@code null}
     */
    public T createProxy(T testImpl, T referenceImpl, ClassLoader classLoader) {
       Class<?> testClass = testImpl.getClass();

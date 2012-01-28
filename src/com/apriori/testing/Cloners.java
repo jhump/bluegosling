@@ -505,6 +505,8 @@ public class Cloners {
             throw new IllegalArgumentException("Constructor argument is not compatible with declaring class");
          }
       }
+      // make sure we can access it
+      cons.setAccessible(true);
       
       return new Cloner<T>() {
          @Override
@@ -620,6 +622,8 @@ public class Cloners {
             throw new IllegalArgumentException("Static method argument is not compatible with declaring class");
          }
       }
+      // make sure we can access it
+      method.setAccessible(true);
       
       return new Cloner<T>() {
          @Override

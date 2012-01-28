@@ -138,7 +138,7 @@ public class MethodCapturer<E> {
     * to this proxy do not in any way "queue" the captured methods. The {@link #getMethod()}
     * and {@link #getSignature()} methods always return the last method called.
     * 
-    * <p>Take the following example of an the wrong way to use the capturer.
+    * <p>Take the following example of the wrong way to use the capturer.
     * <pre>
     * MethodCapturer&lt;MyInterface&gt; capturer = MethodCapturer.forOne(MyInterface.class);
     * MyInterface i = capturer.capture();

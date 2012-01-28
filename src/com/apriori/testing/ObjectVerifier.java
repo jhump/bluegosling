@@ -11,7 +11,7 @@ public interface ObjectVerifier<T> {
    /**
     * Verifies that an object sufficiently matches a reference value.
     * 
-    * <p>The return value will generally be the test object but can be a
+    * <p>The return value will generally be the test object but a
     * different value can be returned instead for various effects. If the
     * verification fails, this method should throw an {@code AssertionFailedError}.
     * 

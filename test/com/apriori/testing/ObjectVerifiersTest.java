@@ -3,6 +3,7 @@ package com.apriori.testing;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -585,6 +586,15 @@ public class ObjectVerifiersTest extends TestCase {
       }
       assertTrue(caught);
       
+      // no class loader specified (so make sure to use an interface that the
+      // bootstrap classloader can see)
+      @SuppressWarnings("rawtypes")
+      ObjectVerifier<Iterable> v2 = ObjectVerifiers.forTesting(Iterable.class, null);
+      Iterable<?> proxy2 = v2.verify(new ArrayList<Object>(), new HashSet<Object>());
+      assertNotNull(proxy2);
+      assertTrue(proxy2 instanceof Proxy);
+      assertNotNull(InterfaceVerifier.verifierFor(proxy2));
+      
       doNullTests(v, i1, i2);
       
       // should throw NPE with null input
@@ -599,14 +609,6 @@ public class ObjectVerifiersTest extends TestCase {
       caught = false;
       try {
          ObjectVerifiers.forTesting(null, TestInterface.class.getClassLoader());
-      } catch (NullPointerException e) {
-         caught = true;
-      }
-      assertTrue(caught);
-
-      caught = false;
-      try {
-         ObjectVerifiers.forTesting(TestInterface.class, null);
       } catch (NullPointerException e) {
          caught = true;
       }

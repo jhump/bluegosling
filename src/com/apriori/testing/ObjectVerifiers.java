@@ -327,7 +327,7 @@ public class ObjectVerifiers extends Assert {
     * @throws IllegalArgumentException if the specified class token does not
     *             represent an interface or if the interface is not visible
     *             from the specified class loader
-    * @throws NullPointerException if either argument is {@code null}
+    * @throws NullPointerException if the specified interface is {@code null}
     */
    public static <T> ObjectVerifier<T> forTesting(final Class<T> iface, final ClassLoader classLoader) {
       // verify arguments
@@ -336,9 +336,6 @@ public class ObjectVerifiers extends Assert {
       }
       if (!iface.isInterface()) {
          throw new IllegalArgumentException(iface.getName() + " must be an interface");
-      }
-      if (classLoader == null) {
-         throw new NullPointerException("class loader");
       }
       // create the verifier
       return new ObjectVerifier<T>() {
