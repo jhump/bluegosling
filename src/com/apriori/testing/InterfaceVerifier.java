@@ -15,6 +15,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.apriori.reflect.MethodCapturer;
+import com.apriori.reflect.MethodSignature;
+import com.apriori.reflect.ProxyUtil;
+import com.apriori.util.Cloner;
+import com.apriori.util.Cloners;
+
 /**
  * An object that can verify an implementation of an interface by comparing
  * its behavior to that of a reference implementation. This can be

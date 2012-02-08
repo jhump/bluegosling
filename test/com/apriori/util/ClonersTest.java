@@ -1,4 +1,4 @@
-package com.apriori.testing;
+package com.apriori.util;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,6 +11,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import com.apriori.util.Cloner;
+import com.apriori.util.Cloners;
+import com.apriori.util.CloningException;
 
 import junit.framework.TestCase;
 

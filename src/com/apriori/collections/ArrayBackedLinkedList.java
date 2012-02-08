@@ -13,6 +13,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 import java.util.Set;
@@ -125,13 +126,13 @@ import java.util.Set;
  * 
  * @param <E> The type of element in the array
  */
-public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
+public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       Cloneable, Serializable {
 
    /**
-    * Concrete implementation of {@code DoublyLinkedList.ListIterator}. This
-    * same class is used for both iterators for the list and iterators for
-    * sub-lists returned from {@link ArrayBackedLinkedList#subList(int, int)}.
+    * Concrete implementation of {@code ListIterator}. This same class is used for
+    * both iterators for the list and iterators for sub-lists returned from
+    * {@link ArrayBackedLinkedList#subList(int, int)}.
     * 
     * @author jhumphries
     */
@@ -282,12 +283,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
       }
 
       @Override
-      public Node<E> nextNode() {
-         inc();
-         return new NodeImpl(lastFetched, idx);
-      }
-
-      @Override
       @SuppressWarnings("unchecked")
       public E previous() {
          dec();
@@ -297,13 +292,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
       @Override
       public int previousIndex() {
          return idx;
-      }
-
-      @Override
-      public Node<E> previousNode() {
-         int i = idx;
-         dec();
-         return new NodeImpl(lastFetched, i);
       }
 
       @Override
@@ -357,89 +345,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
        * current location removed via the iterator's {@code add()} method.
        */
       ADDED
-   }
-
-   /**
-    * Concrete implementation of {@code DoublyLinkedList.Node}. A typical linked
-    * list could implement the {@code java.util.List} interface solely on top of
-    * {@code Node}s. But, for performance reasons, this list implementation
-    * works the other way around. This list is instead backed by arrays that
-    * mimic the pointer structures, so this implementation of {@code Node} is
-    * just a view into those structures.
-    * 
-    * @author jhumphries
-    */
-   private class NodeImpl implements Node<E> {
-
-      /**
-       * Raw index into the buffer for this node.
-       */
-      protected int pos;
-
-      /**
-       * List index for this node.
-       */
-      protected int idx;
-
-      /**
-       * Snapshot of {@code modCount} for detecting concurrent modifications.
-       */
-      protected int myModCount;
-
-      /**
-       * Creates a new node for a given raw index into the buffer and its
-       * corresponding list index.
-       * 
-       * @param pos raw index
-       * @param idx list index
-       */
-      NodeImpl(int pos, int idx) {
-         this.pos = pos;
-         this.idx = idx;
-         myModCount = modCount;
-      }
-
-      @Override
-      public int currentIndex() {
-         return idx;
-      }
-
-      @Override
-      public ListIterator<E> iteratorFrom() {
-         checkMod(myModCount);
-         return new IteratorImpl(pos, idx);
-      }
-
-      @Override
-      public Node<E> next() {
-         checkMod(myModCount);
-         int nextPos = next[pos];
-         if (nextPos == -1) {
-            return null;
-         }
-         else {
-            return new NodeImpl(nextPos, idx + 1);
-         }
-      }
-
-      @Override
-      public Node<E> previous() {
-         checkMod(myModCount);
-         int prevPos = prev[pos];
-         if (prevPos == -1) {
-            return null;
-         }
-         else {
-            return new NodeImpl(prevPos, idx - 1);
-         }
-      }
-
-      @Override
-      @SuppressWarnings("unchecked")
-      public E value() {
-         checkMod(myModCount);
-         return (E) data[pos];
-      }
    }
 
    /**
@@ -605,12 +510,12 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
    }
 
    /**
-    * A sub-list that provides the {@code DoublyLinkedList} interface over a
+    * A sub-list that provides the {@code List} interface over a
     * subset of elements in this list.
     * 
     * @author jhumphries
     */
-   private class SubListImpl implements DoublyLinkedList<E> {
+   private class SubListImpl implements List<E> {
 
       int low;
       int high;
@@ -682,22 +587,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          return true;
       }
 
-      @Override
-      public E car() {
-         checkMod(myModCount);
-         if (low >= high)
-            return null;
-         return getFirst();
-      }
-
-      @Override
-      public DoublyLinkedList<E> cdr() {
-         checkMod(myModCount);
-         if (low >= high)
-            return null;
-         return subList(1, high - low);
-      }
-      
       private void check(int index) {
          if (low + index >= high) {
             throw new IndexOutOfBoundsException("" + index + " >= " + size);
@@ -751,24 +640,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          return (E) data[find(idx + low)];
       }
 
-      @Override
-      public Node<E> getHead() {
-         checkMod(myModCount);
-         if (high == low) {
-            throw new NoSuchElementException("List is empty");
-         }
-         return new SubListNodeImpl(this, subHead, low);
-      }
-
-      @Override
-      public Node<E> getTail() {
-         checkMod(myModCount);
-         if (high == low) {
-            throw new NoSuchElementException("List is empty");
-         }
-         return new SubListNodeImpl(this, subTail, high - 1);
-      }
-      
       @Override
       public int hashCode() {
          checkMod(myModCount);
@@ -865,7 +736,7 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
       }
 
       @Override
-      public DoublyLinkedList<E> subList(int from, int to) {
+      public List<E> subList(int from, int to) {
          checkMod(myModCount);
          check(from);
          checkWide(to);
@@ -917,7 +788,7 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
    }
 
    /**
-    * An implementation of {@code DoublyLinkedList.ListIterator} for sub-lists.
+    * An implementation of {@code ListIterator} for sub-lists.
     * This class is used for iterators for sub-lists returned from
     * {@link ArrayBackedLinkedList#subList(int, int)}.
     * 
@@ -952,22 +823,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
        */
       SubListIteratorImpl(SubListImpl sublist, int idx) {
          super(idx);
-         this.sublist = sublist;
-      }
-
-      /**
-       * Creates an iterator for a subset of the list starting at the specified
-       * element.
-       * 
-       * @param sublist the sub-list over whose items we iterate
-       * @param pos the raw index into the buffer for the element <em>before</em>
-       *             the first element returned by {@code next()}
-       * @param idx the list index (into the main list, not into the sub-list)
-       *             for the element <em>before</em> the first element returned
-       *             by {@code next()}
-       */
-      SubListIteratorImpl(SubListImpl sublist, int pos, int idx) {
-         super(pos, idx);
          this.sublist = sublist;
       }
 
@@ -1023,21 +878,8 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
       }
 
       @Override
-      public Node<E> nextNode() {
-         inc();
-         return new SubListNodeImpl(sublist, lastFetched, idx);
-      }
-
-      @Override
       public int previousIndex() {
          return idx - sublist.low;
-      }
-
-      @Override
-      public Node<E> previousNode() {
-         int i = idx;
-         dec();
-         return new SubListNodeImpl(sublist, lastFetched, i);
       }
 
       @Override
@@ -1050,61 +892,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          sublist.subTail = newTail;
          sublist.subHead = newHead;
          sublist.high--;
-      }
-   }
-
-   /**
-    * An implemention of {@code DoublyLinkedList.Node} for sub-lists.
-    * 
-    * @author jhumphries
-    */
-   private class SubListNodeImpl extends NodeImpl {
-
-      /**
-       * A reference to the sub-list for this node.
-       */
-      private SubListImpl sublist;
-
-      /**
-       * Creates a new node for a given raw index into the buffer and its
-       * corresponding list index.
-       * 
-       * @param sublist sublist that contains the node
-       * @param pos raw index
-       * @param idx list index
-       */
-      SubListNodeImpl(SubListImpl sublist, int pos, int idx) {
-         super(pos, idx);
-         this.sublist = sublist;
-      }
-      
-      @Override
-      public int currentIndex() {
-         return super.currentIndex() - sublist.low;
-      }
-
-      @Override
-      public ListIterator<E> iteratorFrom() {
-         checkMod(myModCount);
-         return new SubListIteratorImpl(sublist, pos, idx);
-      }
-
-      @Override
-      public Node<E> next() {
-         checkMod(myModCount);
-         if (idx == sublist.high - 1) {
-            return null;
-         }
-         return new SubListNodeImpl(sublist, next[pos], idx + 1);
-      }
-
-      @Override
-      public Node<E> previous() {
-         checkMod(myModCount);
-         if (idx == sublist.low) {
-            return null;
-         }
-         return new SubListNodeImpl(sublist, prev[pos], idx - 1);
       }
    }
 
@@ -1254,11 +1041,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          }
 
          @Override
-         public Node<E> nextNode() {
-            return iter.previousNode();
-         }
-
-         @Override
          public E previous() {
             return iter.next();
          }
@@ -1266,11 +1048,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          @Override
          public int previousIndex() {
             return iter.nextIndex();
-         }
-
-         @Override
-         public Node<E> previousNode() {
-            return iter.nextNode();
          }
 
          @Override
@@ -1511,18 +1288,6 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
          optimize();
       }
       return new RandomAccessImpl();
-   }
-
-   @Override
-   public E car() {
-      if (size == 0) return null;
-      return getFirst();
-   }
-
-   @Override
-   public DoublyLinkedList<E> cdr() {
-      if (size == 0) return null;
-      return subList(1, size);
    }
 
    /**
@@ -1833,28 +1598,12 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
    }
 
    @Override
-   public Node<E> getHead() {
-      if (size == 0) {
-         throw new NoSuchElementException("List is empty");
-      }
-      return new NodeImpl(head, 0);
-   }
-
-   @Override
    @SuppressWarnings("unchecked")
    public E getLast() {
       if (size == 0) {
          throw new NoSuchElementException("List is empty");
       }
       return (E) data[tail];
-   }
-
-   @Override
-   public Node<E> getTail() {
-      if (size == 0) {
-         throw new NoSuchElementException("List is empty");
-      }
-      return new NodeImpl(tail, size - 1);
    }
 
    private void growTo(int newSize) {
@@ -2276,7 +2025,7 @@ public class ArrayBackedLinkedList<E> implements DoublyLinkedList<E>, Deque<E>,
    }
 
    @Override
-   public DoublyLinkedList<E> subList(int from, int to) {
+   public List<E> subList(int from, int to) {
       check(from);
       checkWide(to);
       if (from > to) {

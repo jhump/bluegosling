@@ -1,9 +1,12 @@
-package com.apriori.testing;
+package com.apriori.reflect;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+
+import com.apriori.reflect.MethodCapturer;
+import com.apriori.reflect.MethodSignature;
 
 import junit.framework.TestCase;
 

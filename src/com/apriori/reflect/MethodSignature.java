@@ -1,4 +1,4 @@
-package com.apriori.testing;
+package com.apriori.reflect;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

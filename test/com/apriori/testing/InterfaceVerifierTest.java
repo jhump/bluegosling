@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.apriori.reflect.MethodCapturer;
+import com.apriori.reflect.MethodSignature;
 import com.apriori.testing.InterfaceVerifier.MethodConfiguration;
 import com.apriori.testing.InterfaceVerifier.MethodConfigurator;
 

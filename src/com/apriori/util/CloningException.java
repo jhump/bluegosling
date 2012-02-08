@@ -1,4 +1,4 @@
-package com.apriori.testing;
+package com.apriori.util;
 
 /**
  * An exception that occurs during a cloning operation. This

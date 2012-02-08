@@ -1,4 +1,6 @@
-package com.apriori.testing;
+package com.apriori.util;
+
+import com.apriori.testing.InterfaceVerifier;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
