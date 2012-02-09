@@ -7,7 +7,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,12 +30,12 @@ import java.util.List;
  * Class&lt;List&lt;?&gt;&gt; clazz = List.class;
  * </code></p>
  * 
- * <p>{@code TypeReference} to the rescue!</p>
+ * <p>{@code TypeRef} to the rescue!</p>
  * 
  * <p><code>
  * // <em>Compiles, is valid, and is type safe. Yay!</em><br/>
  * Class&lt;List&lt;String&gt;&gt; clazz =
- *     new TypeReference&lt;List&lt;String&gt;&gt;() { }.asClass();
+ *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();
  * </code></p>
  * 
  * <p>Note that, due to type erasure, the actual class instance returned is the
@@ -44,9 +43,9 @@ import java.util.List;
  * 
  * <p><code>
  * Class&lt;List&lt;String&gt;&gt; clazz1 =
- *     new TypeReference&lt;List&lt;String&gt;&gt;() { }.asClass();<br/>
+ *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();<br/>
  * Class&lt;List&lt;Integer&gt;&gt; clazz2 =
- *     new TypeReference&lt;List&lt;Integer&gt;&gt;() { }.asClass();<br/>
+ *     new TypeRef&lt;List&lt;Integer&gt;&gt;() { }.asClass();<br/>
  * // <em>Maybe not intuitive, but sadly true:</em><br/>
  * <strong>clazz1 == clazz2</strong>
  * </code></p>
@@ -58,12 +57,12 @@ import java.util.List;
  * instance.</p>
  * 
  * <p>The following snippets show examples of extracting reifiable generic
- * type information from a {@code TypeReference}.
+ * type information from a {@code TypeRef}.
  * 
  * <p><code>
  * // <em>Consider this complex type references:</em><br/>
- * TypeReference&lt;?&gt; mapType =<br/>
- * &nbsp; new TypeReference&lt;<br/>
+ * TypeRef&lt;?&gt; mapType =<br/>
+ * &nbsp; new TypeRef&lt;<br/>
  * &nbsp; &nbsp; Map&lt;<br/>
  * &nbsp; &nbsp; &nbsp; Comparable&lt;? super Number&gt;,<br/>
  * &nbsp; &nbsp; &nbsp; List&lt;Set&lt;String&gt;&gt;<br/>
@@ -71,15 +70,15 @@ import java.util.List;
  * &nbsp; &gt;() { };<br/>
  * <br/>
  * // <em>We'll then extract as much information as possible:</em><br/>
- * TypeReference&lt;?&gt; comparableType =
+ * TypeRef&lt;?&gt; comparableType =
  *   mapType.resolveTypeVariable("K");<br/>
- * &nbsp; TypeReference&lt;?&gt; numberType =
+ * &nbsp; TypeRef&lt;?&gt; numberType =
  *   comparableType.resolveTypeVariable("T");<br/>
- * TypeReference&lt;?&gt; listType =
+ * TypeRef&lt;?&gt; listType =
  *   mapType.resolveTypeVariable("V");<br/>
- * &nbsp; TypeReference&lt;?&gt; setType =
+ * &nbsp; TypeRef&lt;?&gt; setType =
  *   listType.resolveTypeVariable("E");<br/>
- * &nbsp; &nbsp; TypeReference&lt;?&gt; stringType =
+ * &nbsp; &nbsp; TypeRef&lt;?&gt; stringType =
  *   setType.resolveTypeVariable("E");<br/>
  * <br/>
  * // <em>The following implications are then true:</em><br/>
@@ -102,48 +101,48 @@ import java.util.List;
  *
  * @param <T> the type represented by this token
  */
-public abstract class TypeReference<T> {
-   
+public abstract class TypeRef<T> {
+
+   private final Class<?> typeRefLeaf;
    private final Type type;
    private final Class<?> clazz;
-   private final Class<?> subclass;
 
    /**
     * Constructs a new type reference. This is protected so that construction
     * looks like so:
     * <p><code>
-    * TypeReference&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =<br/>
-    * &nbsp; new TypeReference&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt;()
+    * TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =<br/>
+    * &nbsp; new TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt;()
     * <strong>{ }</strong>;
     * </code></p>
     * Note the curly braces used to construct an anonymous sub-class of
-    * {@code TypeReference}.
+    * {@code TypeRef}.
     * 
     * <p>The generic type must be specified. An exception will be raised
     * otherwise:
     * <p><code>
     * // <em>Bad! Generic type references another type parameter</em><br/>
     * // <em>instead of being adequately specified:</em><br/>
-    * TypeReference&lt;?&gt; type =
-    *     new TypeReference&lt;<strong>E</strong>&gt;() { };<br/>
+    * TypeRef&lt;?&gt; type =
+    *     new TypeRef&lt;<strong>E</strong>&gt;() { };<br/>
     * <br/>
     * // <em>Bad! Same problem, but with an array type:</em><br/>
-    * TypeReference&lt;?&gt; type =
-    *     new TypeReference&lt;<strong>E</strong>[]&gt;() { };<br/>
+    * TypeRef&lt;?&gt; type =
+    *     new TypeRef&lt;<strong>E</strong>[]&gt;() { };<br/>
     * <br/>
     * // <em>Good! If the generic type is also a parameterized, it is</em><br/>
     * // <em>okay for <strong>its</strong> parameter to remain</em>
     * // <em>unspecified:</em><br/>
-    * TypeReference&lt;?&gt; type =
-    *     new TypeReference&lt;Map&lt;<strong>E</strong>, String&gt;&gt;()
+    * TypeRef&lt;?&gt; type =
+    *     new TypeRef&lt;Map&lt;<strong>E</strong>, String&gt;&gt;()
     *     { };<br/>
     * <br/>
     * // <em>Good! You can even use wildcards and bounds:</em><br/>
-    * TypeReference&lt;?&gt; type =
-    *     new TypeReference&lt;Map&lt;<strong>?</strong>,
+    * TypeRef&lt;?&gt; type =
+    *     new TypeRef&lt;Map&lt;<strong>?</strong>,
     *     <strong>?</strong>&gt;&gt;() { };<br/>
-    * TypeReference&lt;?&gt; type =
-    *     new TypeReference&lt;List&lt;<strong>? extends Number</strong>&gt;()
+    * TypeRef&lt;?&gt; type =
+    *     new TypeRef&lt;List&lt;<strong>? extends Number</strong>&gt;()
     *     { };<br/>
     * </code></p>
     * 
@@ -151,27 +150,24 @@ public abstract class TypeReference<T> {
     *    adequately specified. Sadly, this must be a runtime exception instead
     *    of a compile error due to type erasure.
     */
-   protected TypeReference() {
-      // Since instantiation creates an anonymous sub-class, we know this will
-      // be invoked from a sub-class constructor. So find the ancestor class
-      // token that represents this class (TypeReference)
-      subclass = getClass();
-      type = lookupTypeVar(TypeReference.class.getTypeParameters()[0]);
+   protected TypeRef() {
+      typeRefLeaf = getClass();
+      type = lookupTypeVar(TypeRef.class.getTypeParameters()[0]);
       if (type == null) {
          // could not find generic type info!
          throw new IllegalArgumentException("type parameter not fully specified");
       }
-      clazz = resolveClass(type);
+      clazz = resolveClassForType(type);
       if (clazz == null) {
          // could not reify generic type variable!
          throw new IllegalArgumentException("type parameter not fully specified");
       }
    }
    
-   private TypeReference(Type type, Class<?> clazz, Class<?> subclass) {
+   private TypeRef(Type type, Class<?> clazz, Class<?> subclass) {
       this.type = type;
       this.clazz = clazz;
-      this.subclass = subclass;
+      this.typeRefLeaf = subclass;
    }
    
    private Type lookupTypeVar(TypeVariable<?> typeVar) {
@@ -186,8 +182,8 @@ public abstract class TypeReference<T> {
       TypeVariable<?> tvArray[] = superclass.getTypeParameters();
       int i = 0;
       for (; tvArray[i] != typeVar; i++);
-      // and determine resolved type for that variable if possible
-      Type ancestorType = findGenericSuperclass(superclass);
+      // and get actual type argument for this variable, if possible
+      Type ancestorType = lookupGenericSuperclass(superclass);
       if (ancestorType instanceof ParameterizedType) {
          ParameterizedType ptAncestor = (ParameterizedType) ancestorType;
          return ptAncestor.getActualTypeArguments()[i];
@@ -198,8 +194,8 @@ public abstract class TypeReference<T> {
       }
    }
    
-   private Type findGenericSuperclass(Class<?> superclass) {
-      Class<?> curr = subclass;
+   private Type lookupGenericSuperclass(Class<?> superclass) {
+      Class<?> curr = typeRefLeaf;
       while (curr.getSuperclass() != superclass) {
          curr = curr.getSuperclass();
          if (curr == null) {
@@ -209,12 +205,12 @@ public abstract class TypeReference<T> {
       return curr.getGenericSuperclass();
    }
    
-   private Class<?> resolveClass(Type aType) {
+   private Class<?> resolveClassForType(Type aType) {
       if (aType instanceof Class) {
          return (Class<?>) aType;
       } else if (aType instanceof GenericArrayType) {
          GenericArrayType gat = (GenericArrayType) aType;
-         Class<?> componentType = resolveClass(gat.getGenericComponentType());
+         Class<?> componentType = resolveClassForType(gat.getGenericComponentType());
          if (componentType == null) {
             return null;
          }
@@ -222,28 +218,19 @@ public abstract class TypeReference<T> {
          return Array.newInstance(componentType, 0).getClass();
       } else if (aType instanceof ParameterizedType) {
          ParameterizedType pt = (ParameterizedType) aType;
-         return resolveClass(pt.getRawType());
+         return resolveClassForType(pt.getRawType());
       } else if (aType instanceof TypeVariable<?>) {
          TypeVariable<?> tv = (TypeVariable<?>) aType;
          Type tvResolved = lookupTypeVar(tv);
          if (tvResolved == null) {
             return null;
          } else {
-            return resolveClass(tvResolved);
+            return resolveClassForType(tvResolved);
          }
       } else {
          // wildcards not allowed...
          return null;
       }
-   }
-   
-   /**
-    * Returns the generic {@code Type} on which this reference is based.
-    * 
-    * @return a {@code Type}
-    */
-   public Type getType() {
-      return this.type;
    }
    
    private static Class<?> getBaseComponentType(Class<?> aClass) {
@@ -254,16 +241,27 @@ public abstract class TypeReference<T> {
       }
    }
    
+   private ParameterizedType getParameterizedType(Type aType) {
+      if (aType instanceof ParameterizedType)  {
+         return (ParameterizedType) aType;
+      } else if (aType instanceof GenericArrayType) {
+         GenericArrayType gat = (GenericArrayType) aType;
+         return getParameterizedType(gat.getGenericComponentType());
+      } else if (aType instanceof TypeVariable) {
+         TypeVariable<?> typeVar = (TypeVariable<?>) aType;
+         return getParameterizedType(lookupTypeVar(typeVar));
+      } else {
+         // wildcards cannot be parameterized types...
+         return null;
+      }
+   }
+   
    private TypeVariable<Class<?>>[] getTypeVariableArray() {
       @SuppressWarnings("rawtypes")
       TypeVariable tv[] = getBaseComponentType(clazz).getTypeParameters();
       @SuppressWarnings("unchecked")
       TypeVariable<Class<?>> tvGeneric[] = tv;
       return tvGeneric;
-   }
-   
-   public List<TypeVariable<Class<?>>> getTypeVariables() {
-      return Collections.unmodifiableList(Arrays.asList(getTypeVariableArray()));
    }
    
    public List<String> getTypeVariableNames() {
@@ -284,7 +282,7 @@ public abstract class TypeReference<T> {
       throw new IllegalArgumentException(variableName + " is not a type variable of " + clazz);
    }
    
-   public TypeReference<?> resolveTypeVariable(String variableName) {
+   public TypeRef<?> resolveTypeVariable(String variableName) {
       TypeVariable<Class<?>> tvArray[] = getTypeVariableArray();
       int i = 0;
       for (TypeVariable<Class<?>> tv : tvArray) {
@@ -302,28 +300,13 @@ public abstract class TypeReference<T> {
          return null;
       }
       Type newType = pType.getActualTypeArguments()[i];
-      Class<?> newClass = resolveClass(newType);
+      Class<?> newClass = resolveClassForType(newType);
       if (newClass == null) {
          return null;
       }
       @SuppressWarnings({ "rawtypes", "synthetic-access", "unchecked" })
-      TypeReference ret = new TypeReference(newType, newClass, subclass) {};
+      TypeRef ret = new TypeRef(newType, newClass, typeRefLeaf) {};
       return ret;
-   }
-   
-   public ParameterizedType getParameterizedType(Type aType) {
-      if (aType instanceof ParameterizedType)  {
-         return (ParameterizedType) aType;
-      } else if (aType instanceof GenericArrayType) {
-         GenericArrayType gat = (GenericArrayType) aType;
-         return getParameterizedType(gat.getGenericComponentType());
-      } else if (aType instanceof TypeVariable) {
-         TypeVariable<?> typeVar = (TypeVariable<?>) aType;
-         return getParameterizedType(lookupTypeVar(typeVar));
-      } else {
-         // wildcards cannot be parameterized types...
-         return null;
-      }
    }
    
    /**
@@ -345,8 +328,8 @@ public abstract class TypeReference<T> {
    
    @Override
    public boolean equals(Object other) {
-      if (other instanceof TypeReference) {
-         TypeReference<?> otherType = (TypeReference<?>) other;
+      if (other instanceof TypeRef) {
+         TypeRef<?> otherType = (TypeRef<?>) other;
          return this.type.equals(otherType.type) &&
                this.clazz == otherType.clazz;
       } else {
