@@ -103,10 +103,15 @@ import java.util.List;
  */
 public abstract class TypeRef<T> {
 
-   private final Class<?> typeRefLeaf;
+   /** The {@code Type} that this {@code TypeRef} represents. */
    private final Type type;
+   
+   /** The resolved {@code Class} for {@code type}. */
    private final Class<?> clazz;
 
+   /** The leaf of the type hierarchy used to lookup generic type information. */
+   private final Class<?> searchBase;
+   
    /**
     * Constructs a new type reference. This is protected so that construction
     * looks like so:
@@ -151,26 +156,41 @@ public abstract class TypeRef<T> {
     *    of a compile error due to type erasure.
     */
    protected TypeRef() {
-      typeRefLeaf = getClass();
-      type = lookupTypeVar(TypeRef.class.getTypeParameters()[0]);
+      searchBase = getClass();
+      type = findTypeForTypeVariable(TypeRef.class.getTypeParameters()[0]);
       if (type == null) {
          // could not find generic type info!
          throw new IllegalArgumentException("type parameter not fully specified");
       }
-      clazz = resolveClassForType(type);
+      clazz = resolveType(type);
       if (clazz == null) {
          // could not reify generic type variable!
          throw new IllegalArgumentException("type parameter not fully specified");
       }
    }
-   
-   private TypeRef(Type type, Class<?> clazz, Class<?> subclass) {
+
+   /**
+    * Constructs a new {@code TypeRef}. Private since it is only used internally.
+    * 
+    * @param type the {@code Type} for this {@code TypeRef}
+    * @param clazz the resolved {@code Class} for {@code type}
+    * @param searchBase the leaf of the type hierarchy that is used to lookup
+    *       generic type information
+    */
+   private TypeRef(Type type, Class<?> clazz, Class<?> searchBase) {
       this.type = type;
       this.clazz = clazz;
-      this.typeRefLeaf = subclass;
+      this.searchBase = searchBase;
    }
-   
-   private Type lookupTypeVar(TypeVariable<?> typeVar) {
+
+   /**
+    * Finds the {@code Type} that is the actual type argument for a given
+    * {@code TypeVariable}.
+    * 
+    * @param typeVar the type variable
+    * @return corresponding type or null if one cannot be found
+    */
+   private Type findTypeForTypeVariable(TypeVariable<?> typeVar) {
       GenericDeclaration gd = typeVar.getGenericDeclaration();
       if (!(gd instanceof Class)) {
          // if type variable belongs to a constructor or class, we won't
@@ -183,7 +203,7 @@ public abstract class TypeRef<T> {
       int i = 0;
       for (; tvArray[i] != typeVar; i++);
       // and get actual type argument for this variable, if possible
-      Type ancestorType = lookupGenericSuperclass(superclass);
+      Type ancestorType = findGenericSuperclass(superclass);
       if (ancestorType instanceof ParameterizedType) {
          ParameterizedType ptAncestor = (ParameterizedType) ancestorType;
          return ptAncestor.getActualTypeArguments()[i];
@@ -194,8 +214,16 @@ public abstract class TypeRef<T> {
       }
    }
    
-   private Type lookupGenericSuperclass(Class<?> superclass) {
-      Class<?> curr = typeRefLeaf;
+   /**
+    * Finds the generic type information for the specified superclass. This
+    * searches the type hierarchy of {@code typeRefLeaf}.
+    * 
+    * @param superclass the superclass whose information will be returned
+    * @return the generic type information for {@code superclass} or null
+    *       if it cannot be found
+    */
+   private Type findGenericSuperclass(Class<?> superclass) {
+      Class<?> curr = searchBase;
       while (curr.getSuperclass() != superclass) {
          curr = curr.getSuperclass();
          if (curr == null) {
@@ -205,12 +233,19 @@ public abstract class TypeRef<T> {
       return curr.getGenericSuperclass();
    }
    
-   private Class<?> resolveClassForType(Type aType) {
+   /**
+    * Tries to resolve the specified generic type information into a
+    * {@code Class} token.
+    * 
+    * @param aType the type to resolve
+    * @return the resolved class or null if {@code aType} cannot be resolved
+    */
+   private Class<?> resolveType(Type aType) {
       if (aType instanceof Class) {
          return (Class<?>) aType;
       } else if (aType instanceof GenericArrayType) {
          GenericArrayType gat = (GenericArrayType) aType;
-         Class<?> componentType = resolveClassForType(gat.getGenericComponentType());
+         Class<?> componentType = resolveType(gat.getGenericComponentType());
          if (componentType == null) {
             return null;
          }
@@ -218,14 +253,14 @@ public abstract class TypeRef<T> {
          return Array.newInstance(componentType, 0).getClass();
       } else if (aType instanceof ParameterizedType) {
          ParameterizedType pt = (ParameterizedType) aType;
-         return resolveClassForType(pt.getRawType());
+         return resolveType(pt.getRawType());
       } else if (aType instanceof TypeVariable<?>) {
          TypeVariable<?> tv = (TypeVariable<?>) aType;
-         Type tvResolved = lookupTypeVar(tv);
+         Type tvResolved = findTypeForTypeVariable(tv);
          if (tvResolved == null) {
             return null;
          } else {
-            return resolveClassForType(tvResolved);
+            return resolveType(tvResolved);
          }
       } else {
          // wildcards not allowed...
@@ -233,6 +268,15 @@ public abstract class TypeRef<T> {
       }
    }
    
+   /**
+    * Recursively determines the component type for the given class. If the
+    * specified class is an array, even a nested/multi-dimensional array, it's
+    * root (non-array) component type is returned. If the specified class is
+    * not an array then it is returned.
+    * 
+    * @param aClass the class whose component type will be returned
+    * @return the component type of the specified class
+    */
    private static Class<?> getBaseComponentType(Class<?> aClass) {
       if (aClass.isArray()) {
          return getBaseComponentType(aClass.getComponentType());
@@ -241,6 +285,16 @@ public abstract class TypeRef<T> {
       }
    }
    
+   /**
+    * Returns the {@code ParameterizedType} for the specified type. If the
+    * specified type is an array (even a multi-dimensonal array), then a
+    * {@code ParameterizedType} for its root (non-array) component type will
+    * be returned.
+    * 
+    * @param aType the type
+    * @return the {@code ParameterizedType} that represents {@code aType} or null
+    *       if none can be found
+    */
    private ParameterizedType getParameterizedType(Type aType) {
       if (aType instanceof ParameterizedType)  {
          return (ParameterizedType) aType;
@@ -249,13 +303,21 @@ public abstract class TypeRef<T> {
          return getParameterizedType(gat.getGenericComponentType());
       } else if (aType instanceof TypeVariable) {
          TypeVariable<?> typeVar = (TypeVariable<?>) aType;
-         return getParameterizedType(lookupTypeVar(typeVar));
+         return getParameterizedType(findTypeForTypeVariable(typeVar));
       } else {
          // wildcards cannot be parameterized types...
          return null;
       }
    }
-   
+
+   /**
+    * Returns the type variables for the current type. If the current type is
+    * an array (even a multi-dimensonal array) then the type variables for its
+    * root (non-array) component type are returned.
+    * 
+    * @return an array of type variables which could be empty if the current
+    *       type has no generic type variables
+    */
    private TypeVariable<Class<?>>[] getTypeVariableArray() {
       @SuppressWarnings("rawtypes")
       TypeVariable tv[] = getBaseComponentType(clazz).getTypeParameters();
@@ -264,6 +326,11 @@ public abstract class TypeRef<T> {
       return tvGeneric;
    }
    
+   /**
+    * Returns the names of this type's generic type variables (as declared in code).
+    * 
+    * @return list of type variable names
+    */
    public List<String> getTypeVariableNames() {
       TypeVariable<Class<?>> typeVars[] = getTypeVariableArray();
       List<String> ret = new ArrayList<String>(typeVars.length);
@@ -272,7 +339,16 @@ public abstract class TypeRef<T> {
       }
       return Collections.unmodifiableList(ret);
    }
-   
+
+   /**
+    * Returns the {@code TypeVariable} for the specified generic type
+    * variable name.
+    * 
+    * @param variableName the variable name
+    * @return the {@code TypeVariable} for {@code variableName}
+    * @throws IllegalArgumentException if this type has no type variable
+    *       with the specified name
+    */
    public TypeVariable<Class<?>> getTypeVariable(String variableName) {
       for (TypeVariable<Class<?>> tv : getTypeVariableArray()) {
          if (tv.getName().equals(variableName)) {
@@ -282,6 +358,14 @@ public abstract class TypeRef<T> {
       throw new IllegalArgumentException(variableName + " is not a type variable of " + clazz);
    }
    
+   /**
+    * Resolves the specified type variable into a {@code TypeRef}.
+    * 
+    * @param variableName the variable name
+    * @return a {@code TypeRef} that represents the type of {@code variableName}
+    * @throws IllegalArgumentException if this type has no type variable
+    *       with the specified name
+    */
    public TypeRef<?> resolveTypeVariable(String variableName) {
       TypeVariable<Class<?>> tvArray[] = getTypeVariableArray();
       int i = 0;
@@ -300,12 +384,12 @@ public abstract class TypeRef<T> {
          return null;
       }
       Type newType = pType.getActualTypeArguments()[i];
-      Class<?> newClass = resolveClassForType(newType);
+      Class<?> newClass = resolveType(newType);
       if (newClass == null) {
          return null;
       }
       @SuppressWarnings({ "rawtypes", "synthetic-access", "unchecked" })
-      TypeRef ret = new TypeRef(newType, newClass, typeRefLeaf) {};
+      TypeRef ret = new TypeRef(newType, newClass, searchBase) {};
       return ret;
    }
    
@@ -325,25 +409,89 @@ public abstract class TypeRef<T> {
       Class<T> ret = rawClazz;
       return ret;
    }
-   
+
+   /**
+    * Compares this object to another. This object is equal to another object if
+    * they are the same instance <strong>or</strong> if both objects are
+    * {@code TypeRef} instances and represent the same types.
+    * 
+    * <p>For two {@code TypeRef} instances to represent the same types, they must
+    * resolve to the same {@code Class} and have the same generic type parameters.
+    * Note that two seemingly equal {@code TypeRef}s with <em>unresolved</em> type
+    * variables (for example, two instances that aren't the same instance but both
+    * represent {@code List<?>}) are considered <strong>not</strong> equal.
+    * 
+    * @param other the object against which this object is compared
+    */
    @Override
    public boolean equals(Object other) {
-      if (other instanceof TypeRef) {
-         TypeRef<?> otherType = (TypeRef<?>) other;
-         return this.type.equals(otherType.type) &&
-               this.clazz == otherType.clazz;
-      } else {
-         return false;
+      if (other == this) {
+         return true;
+      } else if (other instanceof TypeRef) {
+         TypeRef<?> otherRef = (TypeRef<?>) other;
+         if (clazz.equals(otherRef.clazz)) {
+            TypeVariable<Class<?>> vars[] = getTypeVariableArray();
+            TypeVariable<Class<?>> otherVars[] = otherRef.getTypeVariableArray();
+            if (vars.length == otherVars.length) {
+               for (int i = 0, len = vars.length; i < len; i++) {
+                  if (vars[i].getName().equals(otherVars[i].getName())) {
+                     TypeRef<?> varRef = resolveTypeVariable(vars[i].getName());
+                     TypeRef<?> otherVarRef = otherRef.resolveTypeVariable(vars[i].getName());
+                     // if either is null then they are wildcards (?) so we can't know if
+                     // one is equal to the other (? not necessarily equal to ?) so we must
+                     // return false
+                     if (varRef == null || otherVarRef == null || !varRef.equals(otherVarRef)) {
+                        return false;
+                     }
+                  } else {
+                     return false;
+                  }
+               }
+               return true;
+            }
+         }
       }
-   }
-   
-   @Override
-   public String toString() {
-      return this.type.toString();
+      return false;
    }
    
    @Override
    public int hashCode() {
-      return 37 * this.clazz.hashCode() + this.type.hashCode();
+      int hashCode = clazz.hashCode();
+      TypeVariable<Class<?>> vars[] = getTypeVariableArray();
+      for (TypeVariable<Class<?>> var : vars) {
+         TypeRef<?> ref = resolveTypeVariable(var.getName());
+         if (ref != null) {
+            hashCode = hashCode * 37 + ref.hashCode();
+         }
+      }
+      return hashCode;
+   }
+   
+   @Override
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append(clazz.getName());
+      TypeVariable<Class<?>> vars[] = getTypeVariableArray();
+      if (vars.length > 0) {
+         sb.append("<");
+         boolean first = true;
+         for (TypeVariable<Class<?>> var : vars) {
+            if (first) {
+               first = false;
+            } else {
+               sb.append(",");
+            }
+            sb.append(var.getName());
+            sb.append("=");
+            TypeRef<?> ref = resolveTypeVariable(var.getName());
+            if (ref == null) {
+               sb.append("?");
+            } else {
+               sb.append(ref.toString());
+            }
+         }
+         sb.append(">");
+      }
+      return sb.toString();
    }
 }

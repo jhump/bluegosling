@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 
 import junit.framework.TestCase;
 
@@ -368,5 +369,81 @@ public class TypeRefTest extends TestCase {
       e = v.resolveTypeVariable("E");
       assertSame(Boolean[].class, e.asClass());
       assertTrue(e.getTypeVariableNames().isEmpty());
+   }
+   
+   /**
+    * Tests that {@link TypeRef#equals(Object)} properly treats an instance as
+    * equal to itself.
+    */
+   public void testEqualsSameInstance() {
+      TypeRef<?> tr = new TypeRef<Map<List<String>,Map<Integer,SortedSet<Class<?>>>>>() {};
+      assertEquals(tr.hashCode(), tr.hashCode());
+      assertTrue(tr.equals(tr));
+   }
+
+   /**
+    * Tests that {@link TypeRef#equals(Object)} properly recognizes that two
+    * equal objects are equal and that {@link TypeRef#hashCode()} is
+    * consistent with it.
+    */
+   public void testEquals() {
+      TypeRef<?> tr1 = new TypeRef<Map<List<String>,Map<Integer,SortedSet<Number>>>>() {};
+      TypeRef<?> tr2 = new TypeRef<Map<List<String>,Map<Integer,SortedSet<Number>>>>() {};
+      assertEquals(tr1.hashCode(), tr2.hashCode());
+      assertTrue(tr1.equals(tr2));
+      assertTrue(tr2.equals(tr1));
+   }
+
+   /**
+    * Tests that {@link TypeRef#equals(Object)} properly recognizes that two
+    * unequal objects are not equal.
+    */
+   public void testNotEquals() {
+      TypeRef<?> tr1 = new TypeRef<Map<List<String>,Map<Integer,SortedSet<Number>>>>() {};
+      TypeRef<?> tr2 = new TypeRef<Map<List<String>,? extends Object>>() {};
+      assertFalse(tr1.equals(tr2));
+      assertFalse(tr2.equals(tr1));
+   }
+
+   /**
+    * Tests that {@link TypeRef#equals(Object)} properly recognizes that two
+    * seemingly equal but actually unequal (due to semantics of wildcards)
+    * objects are not equal. 
+    */
+   public void testNotEqualsWildcards() {
+      // they look the same, but wildcard prevents us from being able to
+      // say they are equal
+      TypeRef<?> tr1 = new TypeRef<Map<List<String>,?>>() {};
+      TypeRef<?> tr2 = new TypeRef<Map<List<String>,?>>() {};
+      assertFalse(tr1.equals(tr2));
+      assertFalse(tr2.equals(tr1));
+   }
+   
+   /**
+    * Tests {@link TypeRef#toString()} with a non-generic type.
+    */
+   public void testToStringNoTypeVars() {
+      TypeRef<?> tr = new TypeRef<Double>() {};
+      assertEquals("java.lang.Double", tr.toString());
+   }
+   
+   /**
+    * Tests {@link TypeRef#toString()} with a generic type.
+    */
+   public void testToStringWithTypeVars() {
+      TypeRef<?> tr = new TypeRef<List<Number>>() {};
+      assertEquals("java.util.List<E=java.lang.Number>", tr.toString());
+   }
+   
+   /**
+    * Tests {@link TypeRef#toString()} with an elaborate and complex generic type.
+    * 
+    * @param <X> dummy type variable
+    */
+   public <X> void testToStringComplex() {
+      TypeRef<?> tr = new TypeRef<Map<List<X>,Map<Integer,SortedSet<Class<?>>>>>() {};
+      assertEquals(
+            "java.util.Map<K=java.util.List<E=?>,V=java.util.Map<K=java.lang.Integer,V=java.util.SortedSet<E=java.lang.Class<T=?>>>>",
+            tr.toString());
    }
 }
