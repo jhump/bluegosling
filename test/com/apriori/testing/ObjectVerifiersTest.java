@@ -15,15 +15,15 @@ import junit.framework.TestCase;
 /**
  * Tests the functionality in {@link ObjectVerifiers}.
  * 
- * @author jhumphries
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ObjectVerifiersTest extends TestCase {
-   
+
    /**
     * A verifier that always raises an assertion error.
     */
    private class FailingVerifier implements ObjectVerifier<Object> {
-      
+
       public FailingVerifier() {}
 
       @Override
@@ -34,8 +34,8 @@ public class ObjectVerifiersTest extends TestCase {
    }
 
    /**
-    * A verifier that never raises an assertion error and always returns
-    * the object specified at construction time.
+    * A verifier that never raises an assertion error and always returns the object specified at
+    * construction time.
     */
    private class PassingVerifier implements ObjectVerifier<Object> {
       private Object o;
@@ -51,26 +51,26 @@ public class ObjectVerifiersTest extends TestCase {
    }
 
    /**
-    * A mock object that allows the results of {@code equals()}, {@code hashCode()},
-    * and {@code compareTo()} to be controlled by manipulating public fields.
+    * A mock object that allows the results of {@code equals()}, {@code hashCode()}, and
+    * {@code compareTo()} to be controlled by manipulating public fields.
     */
    private class MockObject implements Comparable<MockObject> {
       public boolean equals;
       public int hashCode;
       public int compareTo;
-      
+
       public MockObject() {}
-      
+
       @Override
       public boolean equals(Object o) {
          return equals;
       }
-      
+
       @Override
       public int hashCode() {
          return hashCode;
       }
-      
+
       @Override
       public int compareTo(MockObject o) {
          return compareTo;
@@ -78,29 +78,29 @@ public class ObjectVerifiersTest extends TestCase {
    }
 
    /**
-    * A mock comparator that allows the results of {@code compare()} to be
-    * controlled by manipulating a public field.
+    * A mock comparator that allows the results of {@code compare()} to be controlled by
+    * manipulating a public field.
     */
    private class MockComparator implements Comparator<Object> {
       public int compare;
-      
+
       public MockComparator() {}
-      
+
       @Override
       public int compare(Object o1, Object o2) {
          return compare;
       }
    }
-   
+
    /**
     * A simple test interface for use in testing {@code ObjectVerifiers.forTesting()}.
     */
    private static interface TestInterface {
       int getIntForString(String str);
    }
-   
+
    // helper methods:
-   
+
    private static <T> void assertReturnsFirst(ObjectVerifier<? super T> v, T o1, T o2) {
       assertSame(o1, v.verify(o1, o2));
    }
@@ -112,12 +112,13 @@ public class ObjectVerifiersTest extends TestCase {
    private static <T> void assertFails(ObjectVerifier<? super T> v, T o1, T o2) {
       try {
          v.verify(o1, o2);
-      } catch (AssertionFailedError e) {
+      }
+      catch (AssertionFailedError e) {
          return; // expected
       }
       fail(); // should have throw exception
    }
-   
+
    private static <T> void doNullTests(ObjectVerifier<? super T> v, T o1, T o2) {
       assertFails(v, null, o2);
       assertFails(v, o1, null);
@@ -139,14 +140,14 @@ public class ObjectVerifiersTest extends TestCase {
       // succeed even when objects not equal
       o1.equals = o2.equals = false;
       assertReturnsFirst(v, o1, o2);
-      
+
       // normal null tests don't apply to this verifier since
       // it always succeeds
       assertReturnsFirst(v, o1, null);
       assertReturnsNull(v, null, o2);
       assertReturnsNull(v, null, null);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#NULLS}.
     */
@@ -158,11 +159,11 @@ public class ObjectVerifiersTest extends TestCase {
       // objects are equal
       o1.equals = o2.equals = true;
       assertReturnsFirst(v, o1, o2);
-      
+
       // objects NOT equal - still passes since both are non-null
       o1.equals = o2.equals = false;
       assertReturnsFirst(v, o1, o2);
-      
+
       doNullTests(v, o1, o2);
    }
 
@@ -177,20 +178,24 @@ public class ObjectVerifiersTest extends TestCase {
       // objects are equal
       o1.equals = o2.equals = true;
       assertReturnsFirst(v, o1, o2);
-      
+
       // objects NOT equal
       o1.equals = o2.equals = false;
       assertFails(v, o1, o2);
 
       doNullTests(v, o1, o2);
-      
+
       // test array behavior
-      Object[] a1 = new Object[] { 1, 2, "a string", new String[] { "abc", "def" }, new Number[] { 3, 4, 5 }, null, 6 };
-      Object[] a2 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" }, new Object[] { 3, 4, 5 }, null, 6 };
+      Object[] a1 = new Object[] { 1, 2, "a string", new String[] { "abc", "def" },
+            new Number[] { 3, 4, 5 }, null, 6 };
+      Object[] a2 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" },
+            new Object[] { 3, 4, 5 }, null, 6 };
       Object[] a3 = new Object[] { 1, 2, 3 };
-      Object[] a4 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" }, new Object[] { 3, 4, 5 }, 6 };
-      Object[] a5 = new Object[] { 1, 2, "a string", new Object[] { "abc", "Def" }, new Object[] { 3, 4, 5 }, null, 6 };
-      
+      Object[] a4 = new Object[] { 1, 2, "a string", new Object[] { "abc", "def" },
+            new Object[] { 3, 4, 5 }, 6 };
+      Object[] a5 = new Object[] { 1, 2, "a string", new Object[] { "abc", "Def" },
+            new Object[] { 3, 4, 5 }, null, 6 };
+
       assertReturnsFirst(v, a1, a2);
       assertReturnsFirst(v, a2, a1);
       assertFails(v, a1, a3);
@@ -206,13 +211,13 @@ public class ObjectVerifiersTest extends TestCase {
       // with nulls
       doNullTests(v, a1, a2);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#HASH_CODES}.
     */
    public void testHashCodes() {
       ObjectVerifier<Object> v = ObjectVerifiers.HASH_CODES;
-      
+
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
 
@@ -220,7 +225,7 @@ public class ObjectVerifiersTest extends TestCase {
       o1.equals = o2.equals = false; // this shouldn't matter
       o1.hashCode = o2.hashCode = -99;
       assertReturnsFirst(v, o1, o2);
-      
+
       // objects do NOT match
       o1.hashCode = 44;
       assertFails(v, o1, o2);
@@ -233,30 +238,30 @@ public class ObjectVerifiersTest extends TestCase {
     */
    public void testSame() {
       ObjectVerifier<Object> v = ObjectVerifiers.SAME;
-      
+
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
 
       // objects are equal but not the same
       o1.equals = o2.equals = true;
       assertFails(v, o1, o2);
-      
+
       doNullTests(v, o1, o2);
-      
+
       // passing non-null cases
       assertReturnsFirst(v, o1, o1);
       assertReturnsFirst(v, o2, o2);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#STRICT_EXCEPTIONS}.
     */
    public void testStrictExceptions() {
       ObjectVerifier<Throwable> v = ObjectVerifiers.STRICT_EXCEPTIONS;
-      
+
       Throwable t1 = new IllegalArgumentException();
       Throwable t2 = new IOException();
-      
+
       // objects are not of the same class, not even same hierarchy
       assertFails(v, t1, t2);
 
@@ -267,14 +272,15 @@ public class ObjectVerifiersTest extends TestCase {
       // objects are of the same class
       t2 = new IllegalArgumentException();
       assertReturnsFirst(v, t1, t2);
-      
+
       // technically, these aren't the same class since one is an
       // anonymous sub-class
       t1 = new OutOfMemoryError() {
          // get rid of compiler warning about serializable class...
          private static final long serialVersionUID = 1L;
-         
-         @Override public String getMessage() {
+
+         @Override
+         public String getMessage() {
             return "sweet";
          }
       };
@@ -294,10 +300,10 @@ public class ObjectVerifiersTest extends TestCase {
    public void testRelaxedExceptionsVarArgs() {
       ObjectVerifier<Throwable> v =
             ObjectVerifiers.relaxedExceptions(IOException.class, RuntimeException.class);
-      
+
       Throwable t1 = new IllegalArgumentException();
       Throwable t2 = new IOException();
-      
+
       // objects are not of the same class, not even same hierarchy
       assertFails(v, t1, t2);
 
@@ -327,12 +333,13 @@ public class ObjectVerifiersTest extends TestCase {
       boolean caught = false;
       try {
          v = ObjectVerifiers.relaxedExceptions(IOException.class, null);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#relaxedExceptions(java.util.Set)}.
     */
@@ -343,10 +350,10 @@ public class ObjectVerifiersTest extends TestCase {
       ObjectVerifier<Throwable> v = ObjectVerifiers.relaxedExceptions(set);
 
       // same tests as testRelaxedExceptionsVarArgs:
-      
+
       Throwable t1 = new IllegalArgumentException();
       Throwable t2 = new IOException();
-      
+
       // objects are not of the same class, not even same hierarchy
       assertFails(v, t1, t2);
 
@@ -372,8 +379,8 @@ public class ObjectVerifiersTest extends TestCase {
       set.clear();
       set.add(IOException.class);
       assertReturnsFirst(v, t1, t2);
-      
-      // result only changes when we rebuild the verifier 
+
+      // result only changes when we rebuild the verifier
       // (without RuntimeException as valid ancestor for siblings)
       v = ObjectVerifiers.relaxedExceptions(set);
       assertFails(v, t1, t2);
@@ -384,8 +391,9 @@ public class ObjectVerifiersTest extends TestCase {
       t1 = new OutOfMemoryError() {
          // get rid of compiler warning about serializable class...
          private static final long serialVersionUID = 1L;
-         
-         @Override public String getMessage() {
+
+         @Override
+         public String getMessage() {
             return "sweet";
          }
       };
@@ -397,8 +405,9 @@ public class ObjectVerifiersTest extends TestCase {
       // should throw NPE with null inputs
       boolean caught = false;
       try {
-         v = ObjectVerifiers.relaxedExceptions((Set<Class<? extends Throwable>>)null);
-      } catch (NullPointerException e) {
+         v = ObjectVerifiers.relaxedExceptions((Set<Class<? extends Throwable>>) null);
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -408,7 +417,8 @@ public class ObjectVerifiersTest extends TestCase {
       set.add(null);
       try {
          v = ObjectVerifiers.relaxedExceptions(set);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -420,7 +430,7 @@ public class ObjectVerifiersTest extends TestCase {
    public void testCheckInstance() {
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
-      
+
       // expecting non-null object
       ObjectVerifier<MockObject> v = ObjectVerifiers.checkInstance(o1);
 
@@ -432,10 +442,10 @@ public class ObjectVerifiersTest extends TestCase {
       assertFails(v, o2, o1);
       assertFails(v, null, o1);
       assertFails(v, null, o2);
-      
+
       // expecting null object
       v = ObjectVerifiers.checkInstance(null);
-      
+
       assertFails(v, o1, o2);
       assertFails(v, o1, o1);
       assertFails(v, o2, o2);
@@ -443,7 +453,7 @@ public class ObjectVerifiersTest extends TestCase {
       assertReturnsNull(v, null, o1);
       assertReturnsNull(v, null, o2);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#forComparable}.
     */
@@ -456,7 +466,7 @@ public class ObjectVerifiersTest extends TestCase {
       o1.equals = o2.equals = false;
       o1.compareTo = o2.compareTo = 0;
       assertReturnsFirst(v, o1, o2);
-      
+
       // objects compare to non-zero
       o1.compareTo = o2.compareTo = 1;
       assertFails(v, o1, o2);
@@ -482,7 +492,7 @@ public class ObjectVerifiersTest extends TestCase {
       o1.compareTo = o2.compareTo = 1;
       c.compare = 0;
       assertReturnsFirst(v, o1, o2);
-      
+
       // objects compare to non-zero
       c.compare = 1;
       assertFails(v, o1, o2);
@@ -491,17 +501,18 @@ public class ObjectVerifiersTest extends TestCase {
       assertFails(v, o1, o2);
 
       doNullTests(v, o1, o2);
-      
+
       // should throw NPE with null input
       boolean caught = false;
       try {
          v = ObjectVerifiers.fromComparator(null);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
    }
-   
+
    /**
     * Tests {@link ObjectVerifiers#compositeVerifier(ObjectVerifier...)}.
     */
@@ -512,7 +523,7 @@ public class ObjectVerifiersTest extends TestCase {
       MockObject other = new MockObject();
       FailingVerifier fv = new FailingVerifier();
       PassingVerifier pv = new PassingVerifier(other); // always returns other
-      
+
       // make sure return value is from the last in the list
       ObjectVerifier<Object> v = ObjectVerifiers.compositeVerifier(pv, ObjectVerifiers.NO_OP);
       assertReturnsFirst(v, o1, o2);
@@ -521,27 +532,29 @@ public class ObjectVerifiersTest extends TestCase {
       v = ObjectVerifiers.compositeVerifier(ObjectVerifiers.NO_OP, pv);
       assertSame(other, v.verify(o1, o2));
       assertSame(other, v.verify(null, null));
-      
+
       // make sure exceptions in any verifier fail the whole thing
       v = ObjectVerifiers.compositeVerifier(pv, ObjectVerifiers.NULLS, ObjectVerifiers.NO_OP);
       doNullTests(v, o1, o2);
-      
+
       v = ObjectVerifiers.compositeVerifier(pv, fv);
       assertFails(v, o1, o2);
-      
+
       // should throw NPE with null input
       boolean caught = false;
       try {
          v = ObjectVerifiers.compositeVerifier(pv, null);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
-      
+
       caught = false;
       try {
          v = ObjectVerifiers.compositeVerifier((List<ObjectVerifier<Object>>) null);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -552,40 +565,43 @@ public class ObjectVerifiersTest extends TestCase {
     */
    public void testForTesting() {
       ObjectVerifier<TestInterface> v = ObjectVerifiers.forTesting(TestInterface.class);
-      
+
       // use arrays so we can change the value below w/out reconstructing
       // either of these interface implementations
       final int i1val[] = new int[] { 0 };
       final int i2val[] = new int[] { 0 };
 
       TestInterface i1 = new TestInterface() {
-         @Override public int getIntForString(String str) {
+         @Override
+         public int getIntForString(String str) {
             return i1val[0];
          }
       };
       TestInterface i2 = new TestInterface() {
-         @Override public int getIntForString(String str) {
+         @Override
+         public int getIntForString(String str) {
             return i2val[0];
          }
       };
-      
+
       TestInterface proxy = v.verify(i1, i2);
       assertNotNull(proxy);
       assertTrue(proxy instanceof Proxy);
       assertNotNull(InterfaceVerifier.verifierFor(proxy));
-      
+
       // smoke test the resulting proxy and its invocation handler
       assertEquals(0, proxy.getIntForString("test"));
-      
+
       i2val[0] = 1; // cause them to return different values
       boolean caught = false;
       try {
          proxy.getIntForString("test");
-      } catch (AssertionFailedError e) {
+      }
+      catch (AssertionFailedError e) {
          caught = true;
       }
       assertTrue(caught);
-      
+
       // no class loader specified (so make sure to use an interface that the
       // bootstrap classloader can see)
       @SuppressWarnings("rawtypes")
@@ -594,14 +610,15 @@ public class ObjectVerifiersTest extends TestCase {
       assertNotNull(proxy2);
       assertTrue(proxy2 instanceof Proxy);
       assertNotNull(InterfaceVerifier.verifierFor(proxy2));
-      
+
       doNullTests(v, i1, i2);
-      
+
       // should throw NPE with null input
       caught = false;
       try {
          ObjectVerifiers.forTesting(null);
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -609,7 +626,8 @@ public class ObjectVerifiersTest extends TestCase {
       caught = false;
       try {
          ObjectVerifiers.forTesting(null, TestInterface.class.getClassLoader());
-      } catch (NullPointerException e) {
+      }
+      catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -618,7 +636,8 @@ public class ObjectVerifiersTest extends TestCase {
       caught = false;
       try {
          ObjectVerifiers.forTesting(Object.class);
-      } catch (IllegalArgumentException e) {
+      }
+      catch (IllegalArgumentException e) {
          caught = true;
       }
       assertTrue(caught);

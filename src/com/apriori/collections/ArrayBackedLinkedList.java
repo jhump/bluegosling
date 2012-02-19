@@ -19,14 +19,12 @@ import java.util.RandomAccess;
 import java.util.Set;
 
 /**
- * A list implementation that attempts to achieve some of the benefits of a
- * linked list without sacrificing the overwhelming performance advantages and
- * memory efficiency of arrays.
+ * A list implementation that attempts to achieve some of the benefits of a linked list without
+ * sacrificing the overwhelming performance advantages and memory efficiency of arrays.
  * 
  * <p>
- * A memory backed linked list works by using arrays to store the data as well
- * as supplemental arrays that store references for "next" and "previous"
- * elements:
+ * A memory backed linked list works by using arrays to store the data as well as supplemental
+ * arrays that store references for "next" and "previous" elements:
  * 
  * <pre>
  * Object data[];  // stores the elements in the list
@@ -44,17 +42,15 @@ import java.util.Set;
  * head == tail == -1 // true when the list is empty
  * </pre>
  * 
- * This allows us to optimize storage as arrays (fixed number of objects to
- * allocate and then garbage collect instead of one object per item in the
- * list). For append-only lists, the internal structure ({@code data}) will be
- * identical to the internal array of {@code java.util.ArrayList}.
+ * This allows us to optimize storage as arrays (fixed number of objects to allocate and then
+ * garbage collect instead of one object per item in the list). For append-only lists, the internal
+ * structure ({@code data}) will be identical to the internal array of {@code java.util.ArrayList}.
  * 
  * <p>
- * The implementation of adding an item to the list will generally be constant
- * time but it can degrade to linear time under some cases. If the list is
- * populated and then a large number of items are removed, adding new items back
- * to the list will try to "fill the gaps" in the buffer before growing it.
- * Finding such a gap can involve <em>O(n)</em> traversal through the buffer.
+ * The implementation of adding an item to the list will generally be constant time but it can
+ * degrade to linear time under some cases. If the list is populated and then a large number of
+ * items are removed, adding new items back to the list will try to "fill the gaps" in the buffer
+ * before growing it. Finding such a gap can involve <em>O(n)</em> traversal through the buffer.
  * 
  * <p>
  * <em><strong>Note:</strong> a possible enhancement to this class is to track a queue of
@@ -65,64 +61,54 @@ import java.util.Set;
  * is used as circular buffer, like in {@code java.util.ArrayDeque}.</em>
  * 
  * <p>
- * This class uses a similar strategy for automatically growing the internal
- * buffer as {@code java.util.ArrayList} and {@code java.util.HashMap}. To
- * minimize the amount of heap space required by the list, this class provides a
- * method named {@code trimToSize()} that is similar to, though not quite the
- * same as, the method of the same name provided by {@code java.util.ArrayList}.
- * However, in cases where elements are arbitrarily inserted and removed to and
- * from the list, the internal structure can become fragmented so this method
- * may not actually release very much memory. So two other methods are also
- * provided:
+ * This class uses a similar strategy for automatically growing the internal buffer as
+ * {@code java.util.ArrayList} and {@code java.util.HashMap}. To minimize the amount of heap space
+ * required by the list, this class provides a method named {@code trimToSize()} that is similar to,
+ * though not quite the same as, the method of the same name provided by {@code java.util.ArrayList}
+ * . However, in cases where elements are arbitrarily inserted and removed to and from the list, the
+ * internal structure can become fragmented so this method may not actually release very much
+ * memory. So two other methods are also provided:
  * <ol>
- * <li>{@link #compact()} - This method will first defragment the internal buffer
- * and then trim the buffer to size. This method is just as effective as
- * {@code java.util.ArrayList.trimToSize()} at freeing heap space, but,
- * depending on the extent of fragmentation, may take longer to execute. It runs
- * in <em>O(n)</em> time.</li>
- * <li>{@link #optimize()} - Instead of trying to defragment the list, this
- * method creates a new buffer and populates it with the elements of the list
- * <em>in order</em>. The result is a buffer where the first item in the array
- * is the first item in the list, the second item in the array is the second
- * item in the list, and so on. This not only frees up heap space but also
- * improves the performance of iteration since it should reduce the chances of
- * memory cache misses since the items are stored contiguously vs. back and
- * forth all over the array.</li>
+ * <li>{@link #compact()} - This method will first defragment the internal buffer and then trim the
+ * buffer to size. This method is just as effective as {@code java.util.ArrayList.trimToSize()} at
+ * freeing heap space, but, depending on the extent of fragmentation, may take longer to execute. It
+ * runs in <em>O(n)</em> time.</li>
+ * <li>{@link #optimize()} - Instead of trying to defragment the list, this method creates a new
+ * buffer and populates it with the elements of the list <em>in order</em>. The result is a buffer
+ * where the first item in the array is the first item in the list, the second item in the array is
+ * the second item in the list, and so on. This not only frees up heap space but also improves the
+ * performance of iteration since it should reduce the chances of memory cache misses since the
+ * items are stored contiguously vs. back and forth all over the array.</li>
  * </ol>
  * 
  * <p>
  * Terminology used in doc and comments for this class:
  * <dl>
  * <dt>List index</dt>
- * <dd>An index that describes the ordinal position of an element or node in the
- * list.</dd>
+ * <dd>An index that describes the ordinal position of an element or node in the list.</dd>
  * <dt>Raw index</dt>
- * <dd>An index that describes the actual position in the array buffer of an
- * element or node. This is often different than an element's
- * <em>list index</em>.</dd>
+ * <dd>An index that describes the actual position in the array buffer of an element or node. This
+ * is often different than an element's <em>list index</em>.</dd>
  * <dt>High water point</dt>
- * <dd>The index in the array buffer <em>after</em> the last raw index which
- * contains an item. If the array buffer is full or if, even if it is mostly
- * empty but the last element in the array buffer contains a list item, then
- * this is equal to the size of the array buffer. So if you insert 20 items
- * into an empty list and then remove 10, it is possible (depending on which
- * 10 items are removed) that the high water point will still be 20 (until you
- * {@code compact()} or {@code optimize()} the list).</dd>
+ * <dd>The index in the array buffer <em>after</em> the last raw index which contains an item. If
+ * the array buffer is full or if, even if it is mostly empty but the last element in the array
+ * buffer contains a list item, then this is equal to the size of the array buffer. So if you insert
+ * 20 items into an empty list and then remove 10, it is possible (depending on which 10 items are
+ * removed) that the high water point will still be 20 (until you {@code compact()} or
+ * {@code optimize()} the list).</dd>
  * </dl>
  * 
  * <p>
- * This list is not thread-safe. It can be accessed for read-only operations
- * safely but simultaneous changes to the list from multiple threads (or even
- * changes from one thread with reads from other threads) may have undefined
- * behavior. Most operations, including iteration, could have undefined results
- * if the underlying list is changed concurrently. So these operations implement
- * "fail fast" and make a best effort to raise
- * {@code ConcurrentModificationException}s if it is detected that changes have
- * been made to the list. Note that these failures should not be relied on for
- * correct multiple access to the list but are instead present only for
- * detecting bugs in multi-threaded code.
+ * This list is not thread-safe. It can be accessed for read-only operations safely but simultaneous
+ * changes to the list from multiple threads (or even changes from one thread with reads from other
+ * threads) may have undefined behavior. Most operations, including iteration, could have undefined
+ * results if the underlying list is changed concurrently. So these operations implement "fail fast"
+ * and make a best effort to raise {@code ConcurrentModificationException}s if it is detected that
+ * changes have been made to the list. Note that these failures should not be relied on for correct
+ * multiple access to the list but are instead present only for detecting bugs in multi-threaded
+ * code.
  * 
- * @author jhumphries
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @param <E> The type of element in the array
  */
@@ -130,11 +116,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       Cloneable, Serializable {
 
    /**
-    * Concrete implementation of {@code ListIterator}. This same class is used for
-    * both iterators for the list and iterators for sub-lists returned from
+    * Concrete implementation of {@code ListIterator}. This same class is used for both iterators
+    * for the list and iterators for sub-lists returned from
     * {@link ArrayBackedLinkedList#subList(int, int)}.
     * 
-    * @author jhumphries
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class IteratorImpl implements ListIterator<E> {
 
@@ -149,8 +135,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       protected int idx;
 
       /**
-       * The raw index into the buffer for the item last retrieved by either
-       * {@code next()} or {@code previous()}.
+       * The raw index into the buffer for the item last retrieved by either {@code next()} or
+       * {@code previous()}.
        */
       protected int lastFetched = -1;
 
@@ -172,26 +158,23 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       /**
-       * Creates an iterator for the list starting at the specified list
-       * index.
+       * Creates an iterator for the list starting at the specified list index.
        * 
-       * @param idx the list index <em>before</em> the first element returned
-       *             by {@code next()}
+       * @param idx the list index <em>before</em> the first element returned by {@code next()}
        */
       IteratorImpl(int idx) {
          this(find(idx), idx);
       }
 
       /**
-       * Creates an iterator for the list starting at the specified list
-       * index. For efficiency, the raw index is also specified so that a
-       * traversal through the list isn't necessary (useful for places where the
-       * raw index for a given list index is already known).
+       * Creates an iterator for the list starting at the specified list index. For efficiency, the
+       * raw index is also specified so that a traversal through the list isn't necessary (useful
+       * for places where the raw index for a given list index is already known).
        * 
-       * @param pos the raw index of element <em>before</em> the first element
-       *             returned by {@code next()}
-       * @param idx the list index of the element <em>before</em> first element
-       *             returned by {@code next()}
+       * @param pos the raw index of element <em>before</em> the first element returned by
+       *           {@code next()}
+       * @param idx the list index of the element <em>before</em> first element returned by
+       *           {@code next()}
        */
       IteratorImpl(int pos, int idx) {
          this.pos = pos;
@@ -204,7 +187,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          int addAt;
          if (pos == -1) {
             addAt = head;
-         } else {
+         }
+         else {
             addAt = next[pos];
          }
          if (addAt == -1) {
@@ -220,25 +204,19 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void checkCanModifyElement(String op) {
-         if (lastFetched == -1) {
-            throw new IllegalStateException("No element to " + op + ": "
-                  + "next() or previous() never called");
-         }
-         if (lastFetchModified != IteratorModifiedState.NONE) {
-            throw new IllegalStateException(
+         if (lastFetched == -1) { throw new IllegalStateException("No element to " + op + ": "
+                  + "next() or previous() never called"); }
+         if (lastFetchModified != IteratorModifiedState.NONE) { throw new IllegalStateException(
                   "Cannot "
                         + op
                         + " item after call to "
                         + (lastFetchModified == IteratorModifiedState.REMOVED ? "remove()"
-                              : "add()"));
-         }
+                              : "add()")); }
       }
 
       protected void dec() {
          checkMod(myModCount);
-         if (idx < 0) {
-            throw new NoSuchElementException("At beginning of list");
-         }
+         if (idx < 0) { throw new NoSuchElementException("At beginning of list"); }
          lastFetched = pos;
          lastFetchModified = IteratorModifiedState.NONE;
          idx--;
@@ -257,13 +235,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       protected void inc() {
          checkMod(myModCount);
-         if (idx >= size - 1) {
-            throw new NoSuchElementException("At end of list");
-         }
+         if (idx >= size - 1) { throw new NoSuchElementException("At end of list"); }
          idx++;
          if (pos == -1) {
             pos = head;
-         } else {
+         }
+         else {
             pos = next[pos];
          }
          lastFetched = pos;
@@ -318,49 +295,45 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Enumeration of possible modification states of the iterator. This is used
-    * to detect illegal states for {@code remove()} and {@code set()} methods.
-    * If the state of the current element for the iterator is anything other
-    * than {@code NONE}, calls to {@code remove()} and {@code set()} will result
-    * in {@code IllegalStateException}s.
+    * Enumeration of possible modification states of the iterator. This is used to detect illegal
+    * states for {@code remove()} and {@code set()} methods. If the state of the current element for
+    * the iterator is anything other than {@code NONE}, calls to {@code remove()} and {@code set()}
+    * will result in {@code IllegalStateException}s.
     * 
-    * @author jhumphries
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static enum IteratorModifiedState {
       /**
-       * Indicates that no structural modifications have been made at the
-       * current location from this iterator. The {@code set()} method does not
-       * count as a structural modification.
+       * Indicates that no structural modifications have been made at the current location from this
+       * iterator. The {@code set()} method does not count as a structural modification.
        */
       NONE,
 
       /**
-       * Indicates that the item at the iterator's current location was removed
-       * via the iterator's {@code remove()} method.
+       * Indicates that the item at the iterator's current location was removed via the iterator's
+       * {@code remove()} method.
        */
       REMOVED,
 
       /**
-       * Indicates that at least one item has has been added at the iterator's
-       * current location removed via the iterator's {@code add()} method.
+       * Indicates that at least one item has has been added at the iterator's current location
+       * removed via the iterator's {@code add()} method.
        */
       ADDED
    }
 
    /**
-    * A view of the list where random access operations will run in O(1)
-    * constant time. This is a read-only view. Changes made to the list
-    * can alter its internal storage, making it no longer optimized and
-    * making random access operations revert to O(n) performance. So this
-    * list implementation attempts to detect such changes and fail fast
-    * by throwing {@code ConcurrentModificationException}s.
-    *  
-    * @author jhumphries
+    * A view of the list where random access operations will run in O(1) constant time. This is a
+    * read-only view. Changes made to the list can alter its internal storage, making it no longer
+    * optimized and making random access operations revert to O(n) performance. So this list
+    * implementation attempts to detect such changes and fail fast by throwing
+    * {@code ConcurrentModificationException}s.
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class RandomAccessImpl implements List<E>, RandomAccess {
 
-      public RandomAccessImpl() {
-      }
+      public RandomAccessImpl() {}
 
       @Override
       public boolean add(E e) {
@@ -397,11 +370,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void checkOptimized() {
-         if (!isOptimized) {
-            throw new ConcurrentModificationException();
-         }
+         if (!isOptimized) { throw new ConcurrentModificationException(); }
       }
-      
+
       @Override
       public void clear() {
          ArrayBackedLinkedList.this.clear();
@@ -510,10 +481,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * A sub-list that provides the {@code List} interface over a
-    * subset of elements in this list.
+    * A sub-list that provides the {@code List} interface over a subset of elements in this list.
     * 
-    * @author jhumphries
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SubListImpl implements List<E> {
 
@@ -537,10 +507,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (subTail == tail) {
             ArrayBackedLinkedList.this.add(e);
             subTail = tail;
-         } else {
+         }
+         else {
             if (subTail == -1) {
                subTail = head;
-            } else {
+            }
+            else {
                subTail = next[subTail];
             }
             int newTail = addInternal(subTail, e);
@@ -561,7 +533,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       public void add(int idx, E e) {
          if (idx == high - low) {
             add(e);
-         } else {
+         }
+         else {
             checkMod(myModCount);
             checkWide(idx);
             ArrayBackedLinkedList.this.add(idx - low, e);
@@ -591,18 +564,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (low + index >= high) {
             throw new IndexOutOfBoundsException("" + index + " >= " + size);
          }
-         else if (index < 0) {
-            throw new IndexOutOfBoundsException("" + index + " < 0");
-         }
+         else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
       }
 
       private void checkWide(int index) {
          if (low + index > high) {
             throw new IndexOutOfBoundsException("" + index + " >= " + size);
          }
-         else if (index < 0) {
-            throw new IndexOutOfBoundsException("" + index + " < 0");
-         }
+         else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
       }
 
       @Override
@@ -680,7 +649,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       public ListIterator<E> listIterator(int idx) {
          checkMod(myModCount);
          checkWide(idx);
-         return new SubListIteratorImpl(this, low + idx -1);
+         return new SubListIteratorImpl(this, low + idx - 1);
       }
 
       @Override
@@ -740,9 +709,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkMod(myModCount);
          check(from);
          checkWide(to);
-         if (from > to) {
-            throw new IllegalArgumentException("from > to");
-         }
+         if (from > to) { throw new IllegalArgumentException("from > to"); }
          return new SubListImpl(low + from, low + to);
       }
 
@@ -788,11 +755,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * An implementation of {@code ListIterator} for sub-lists.
-    * This class is used for iterators for sub-lists returned from
-    * {@link ArrayBackedLinkedList#subList(int, int)}.
+    * An implementation of {@code ListIterator} for sub-lists. This class is used for iterators for
+    * sub-lists returned from {@link ArrayBackedLinkedList#subList(int, int)}.
     * 
-    * @author jhumphries
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SubListIteratorImpl extends IteratorImpl {
 
@@ -802,8 +768,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       private SubListImpl sublist;
 
       /**
-       * Creates an iterator for a subset of the list starting at the first
-       * element.
+       * Creates an iterator for a subset of the list starting at the first element.
        * 
        * @param sublist the sub-list over whose items we iterate
        */
@@ -813,13 +778,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       /**
-       * Creates an iterator for a subset of the list starting at the specified
-       * element.
+       * Creates an iterator for a subset of the list starting at the specified element.
        * 
        * @param sublist the sub-list over whose items we iterate
-       * @param idx the list index (into the main list, not into the sub-list)
-       *             for the element <em>before</em> the first element returned
-       *             by {@code next()}
+       * @param idx the list index (into the main list, not into the sub-list) for the element
+       *           <em>before</em> the first element returned by {@code next()}
        */
       SubListIteratorImpl(SubListImpl sublist, int idx) {
          super(idx);
@@ -832,15 +795,17 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (idx == sublist.high) {
             if (sublist.subTail == -1) {
                sublist.subTail = head;
-            } else {
+            }
+            else {
                sublist.subTail = next[sublist.subTail];
             }
          }
          if (idx == sublist.low) {
             if (sublist.subHead == -1) {
                sublist.subHead = head;
-            } else {
-               sublist.subHead = prev[sublist.subHead]; 
+            }
+            else {
+               sublist.subHead = prev[sublist.subHead];
             }
          }
          sublist.high++;
@@ -848,9 +813,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       protected void dec() {
-         if (idx < sublist.low) {
-            throw new NoSuchElementException("At beginning of list");
-         }
+         if (idx < sublist.low) { throw new NoSuchElementException("At beginning of list"); }
          super.dec();
       }
 
@@ -866,9 +829,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       protected void inc() {
-         if (idx == sublist.high) {
-            throw new NoSuchElementException("At end of list");
-         }
+         if (idx == sublist.high) { throw new NoSuchElementException("At end of list"); }
          super.inc();
       }
 
@@ -896,27 +857,26 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * A simple iterator that walks the internal storage buffer and returns
-    * items in the order they are organized, not necessarily ordered by
-    * their list index. This is to be used for cases where order of visiting
-    * nodes does not matter and is used internally to implement
+    * A simple iterator that walks the internal storage buffer and returns items in the order they
+    * are organized, not necessarily ordered by their list index. This is to be used for cases where
+    * order of visiting nodes does not matter and is used internally to implement
     * {@link #removeAll(Collection)}, {@link #retainAll(Collection)}, and
     * {@link #containsAll(Collection)}.
     * 
-    * @author jhumphries
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class UnorderedIteratorImpl implements Iterator<E> {
-      
+
       private IteratorModifiedState modState = IteratorModifiedState.NONE;
       private int lastFetched = -1;
       private int idx = -1;
       private int myModCount;
-      
+
       UnorderedIteratorImpl() {
          myModCount = modCount;
          advance();
       }
-      
+
       private void advance() {
          while (++idx < highWater && next[idx] == -1 && prev[idx] == -1);
       }
@@ -930,9 +890,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public E next() {
          checkMod(myModCount);
-         if (idx >= highWater) {
-            throw new NoSuchElementException("At end of list");
-         }
+         if (idx >= highWater) { throw new NoSuchElementException("At end of list"); }
          lastFetched = idx;
          @SuppressWarnings("unchecked")
          E ret = (E) data[idx];
@@ -943,12 +901,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public void remove() {
-         if (lastFetched == -1) {
-            throw new IllegalStateException("No element to remove: next() never called");
-         }
-         if (modState == IteratorModifiedState.REMOVED) {
-            throw new IllegalStateException("Cannot remove item after call to remove()");
-         }
+         if (lastFetched == -1) { throw new IllegalStateException(
+               "No element to remove: next() never called"); }
+         if (modState == IteratorModifiedState.REMOVED) { throw new IllegalStateException(
+               "Cannot remove item after call to remove()"); }
          checkMod(myModCount);
          modState = IteratorModifiedState.REMOVED;
          removeInternal(lastFetched);
@@ -971,27 +927,23 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (item == null && o == null) {
             return iter.previousIndex();
          }
-         else if (item != null && item.equals(o)) {
-            return iter.previousIndex();
-         }
+         else if (item != null && item.equals(o)) { return iter.previousIndex(); }
       }
       return -1;
    }
 
    /**
-    * Removes a specified object using an iterator. This helper method
-    * implements {@link #remove(Object)}, {@link #removeAll(Object)},
-    * {@link #removeFirstOccurrence(Object)}, and even
-    * {@link #removeLastOccurrence(Object)} (the lattermost of which uses a
-    * {@link #reverseIterator(ListIterator)} to find the last occurrence
-    * instead of the first).
+    * Removes a specified object using an iterator. This helper method implements
+    * {@link #remove(Object)}, {@link #removeAll(Object)}, {@link #removeFirstOccurrence(Object)},
+    * and even {@link #removeLastOccurrence(Object)} (the lattermost of which uses a
+    * {@link #reverseIterator(ListIterator)} to find the last occurrence instead of the first).
     * 
     * @param item the item to remove
     * @param iter the iterator from which to remove the item
-    * @param justFirst true if just removing the first matching item or false if
-    *           removing all matching items
-    * @return true if the item was found and removed or false if the item was
-    *         not found in the iterator
+    * @param justFirst true if just removing the first matching item or false if removing all
+    *           matching items
+    * @return true if the item was found and removed or false if the item was not found in the
+    *         iterator
     */
    static boolean removeObject(Object item, Iterator<?> iter, boolean justFirst) {
       boolean modified = false;
@@ -1010,7 +962,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
       return modified;
    }
-   
+
    static <E> ListIterator<E> reverseIterator(final ListIterator<E> iter) {
       // wrap the list iterator with a simple version that
       // just iterates backwards
@@ -1063,9 +1015,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * The list's current revision level. Every modification to the list causes
-    * this count to be incremented. It is used to implement the "fail-fast"
-    * behavior for detecting concurrent modifications to the list.
+    * The list's current revision level. Every modification to the list causes this count to be
+    * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
+    * modifications to the list.
     */
    protected int modCount;
 
@@ -1075,14 +1027,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    Object[] data;
 
    /**
-    * The array of indexes which point from a given index in the buffer to its
-    * next element in the list.
+    * The array of indexes which point from a given index in the buffer to its next element in the
+    * list.
     */
    int[] next;
 
    /**
-    * The array of indexes which point from a given index in the buffer to its
-    * previous element in the list.
+    * The array of indexes which point from a given index in the buffer to its previous element in
+    * the list.
     */
    int[] prev;
 
@@ -1107,17 +1059,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    int highWater;
 
    /**
-    * The index in the buffer of the last element removed from the list. It may
-    * also be set to the last gap found when an insertion operation tries to
-    * "fill in the gaps" caused from fragmentation before choosing to grow the
-    * buffer.
+    * The index in the buffer of the last element removed from the list. It may also be set to the
+    * last gap found when an insertion operation tries to "fill in the gaps" caused from
+    * fragmentation before choosing to grow the buffer.
     */
    private int lastRemove;
 
    /**
-    * A flag indicating whether the current buffer is optimized or not. If it
-    * is optimized then all items are stored in order, just like in the buffer
-    * of an {@code java.util.ArrayList}.
+    * A flag indicating whether the current buffer is optimized or not. If it is optimized then all
+    * items are stored in order, just like in the buffer of an {@code java.util.ArrayList}.
     */
    boolean isOptimized = true;
 
@@ -1129,9 +1079,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Constructs a new list with the specified contents. The order of items
-    * in the list will be the same as the order they are returned from the
-    * specified collection's {@code Iterator}.
+    * Constructs a new list with the specified contents. The order of items in the list will be the
+    * same as the order they are returned from the specified collection's {@code Iterator}.
     * 
     * @param coll collection of items that will be included in the new list
     */
@@ -1158,10 +1107,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @param initialCapacity the size of the internal buffers
     */
    public ArrayBackedLinkedList(int initialCapacity) {
-      if (initialCapacity < 0) {
-         throw new IllegalArgumentException("Illegal Capacity: "
-               + initialCapacity);
-      }
+      if (initialCapacity < 0) { throw new IllegalArgumentException("Illegal Capacity: "
+               + initialCapacity); }
       data = new Object[initialCapacity];
       next = new int[initialCapacity];
       prev = new int[initialCapacity];
@@ -1178,7 +1125,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       prev[pos] = tail;
       if (tail != -1) {
          next[tail] = pos;
-      } else {
+      }
+      else {
          head = pos;
       }
       tail = pos;
@@ -1190,7 +1138,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    public void add(int index, E e) {
       if (index == size) {
          add(e);
-      } else {
+      }
+      else {
          check(index);
          addInternal(find(index), e);
       }
@@ -1223,8 +1172,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /**
     * Adds an item the specified position in the buffer.
     * 
-    * @param index a raw index into the buffer where the new item should be
-    *             added
+    * @param index a raw index into the buffer where the new item should be added
     * @param e the item to add to the list
     * @return the raw index of the newly added item
     */
@@ -1252,38 +1200,31 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Returns the current list as an instance of {@code RandomAccess}. The
-    * returned list will not be a copy of this list or a new list but a view
-    * into the list.
+    * Returns the current list as an instance of {@code RandomAccess}. The returned list will not be
+    * a copy of this list or a new list but a view into the list.
     * 
     * <p>
-    * Note that structural modifications, like inserting and removing items,
-    * should only be done through this interface. Such changes made via the main
-    * {@code ArrayBackedLinkedList} instance methods can invalidate the
-    * <em>O(1)</em> random access nature of the underlying buffer. This list
-    * implements a "fail fast" strategy and will raise a
-    * {@code ConcurrentModificationException} exception if such a case is
-    * detected.
+    * Note that structural modifications, like inserting and removing items, should only be done
+    * through this interface. Such changes made via the main {@code ArrayBackedLinkedList} instance
+    * methods can invalidate the <em>O(1)</em> random access nature of the underlying buffer. This
+    * list implements a "fail fast" strategy and will raise a
+    * {@code ConcurrentModificationException} exception if such a case is detected.
     * 
     * <p>
-    * Also note that the main use for the returned list should be for operations
-    * that do <em>not</em> change the structure since such operations could
-    * invalidate the internal storage characteristics that provide O(1) random
-    * access. These operations, adding an item anywhere in the list other than
-    * the end and removing an item in the list (not from the end), are thus not
-    * supported by the returned list and will result in
-    * {@code UnsupportedOperationException}s being thrown.
+    * Also note that the main use for the returned list should be for operations that do
+    * <em>not</em> change the structure since such operations could invalidate the internal storage
+    * characteristics that provide O(1) random access. These operations, adding an item anywhere in
+    * the list other than the end and removing an item in the list (not from the end), are thus not
+    * supported by the returned list and will result in {@code UnsupportedOperationException}s being
+    * thrown.
     * 
-    * @param optimize true if the internal storage of this list should be
-    *           optimized if necessary (could be a costly operation)
-    * @return a version of this list that implements {@code RandomAccess} or
-    *         {@code null} if {@code optimize} is false and the list is not
-    *         already optimized
+    * @param optimize true if the internal storage of this list should be optimized if necessary
+    *           (could be a costly operation)
+    * @return a version of this list that implements {@code RandomAccess} or {@code null} if
+    *         {@code optimize} is false and the list is not already optimized
     */
    public List<E> asRandomAccess(boolean optimize) {
-      if (!optimize && !isOptimized) {
-         return null;
-      }
+      if (!optimize && !isOptimized) { return null; }
       if (!isOptimized) {
          optimize();
       }
@@ -1291,10 +1232,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Checks that the specified list index is valid. The list index is
-    * invalid if it is less than zero or greater than or equal to the list
-    * size. If it is invalid then an {@code IndexOutOfBoundsException} is
-    * thrown.
+    * Checks that the specified list index is valid. The list index is invalid if it is less than
+    * zero or greater than or equal to the list size. If it is invalid then an
+    * {@code IndexOutOfBoundsException} is thrown.
     * 
     * @param index list index to check
     * @throws IndexOutOfBoundsException if the list index is invalid
@@ -1303,30 +1243,24 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       if (index >= size) {
          throw new IndexOutOfBoundsException("" + index + " >= " + size);
       }
-      else if (index < 0) {
-         throw new IndexOutOfBoundsException("" + index + " < 0");
-      }
+      else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
    }
 
    /**
-    * Checks the modification level of the list. If the current level does
-    * not match the specified level then a {@code ConcurrentModificationException}
-    * is thrown.
+    * Checks the modification level of the list. If the current level does not match the specified
+    * level then a {@code ConcurrentModificationException} is thrown.
     * 
     * @param aModCount modification level
-    * @throws ConcurrentModificationException if the list's modification level
-    *          is different than the specified level
+    * @throws ConcurrentModificationException if the list's modification level is different than the
+    *            specified level
     */
    void checkMod(int aModCount) {
-      if (aModCount != modCount) {
-         throw new ConcurrentModificationException();
-      }
+      if (aModCount != modCount) { throw new ConcurrentModificationException(); }
    }
 
    /**
-    * Checks that the specified list index is valid. The method differs
-    * from {@code check} in that it allows a list index that is equal to
-    * the size of the list.
+    * Checks that the specified list index is valid. The method differs from {@code check} in that
+    * it allows a list index that is equal to the size of the list.
     * 
     * @param index list index to check
     * @throws IndexOutOfBoundsException if the list index is invalid
@@ -1335,9 +1269,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       if (index > size) {
          throw new IndexOutOfBoundsException("" + index + " > " + size);
       }
-      else if (index < 0) {
-         throw new IndexOutOfBoundsException("" + index + " < 0");
-      }
+      else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
    }
 
    @Override
@@ -1353,13 +1285,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       Arrays.fill(prev, -1);
       isOptimized = true;
    }
-   
+
    @Override
    public Object clone() {
       if (this.getClass() == ArrayBackedLinkedList.class) {
          // don't bother cloning internal state - just create a new optimized list
          return new ArrayBackedLinkedList<E>(this);
-      } else {
+      }
+      else {
          try {
             ArrayBackedLinkedList<?> copy = (ArrayBackedLinkedList<?>) super.clone();
             // deep copy the arrays
@@ -1368,7 +1301,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
             copy.prev = prev.clone();
             // now sub-class can do whatever else with this...
             return copy;
-         } catch (CloneNotSupportedException e) {
+         }
+         catch (CloneNotSupportedException e) {
             // should never happen since we implement Cloneable -- but just in
             // case, wrap in a runtime exception that sort of makes sense...
             throw new ClassCastException("java.lang.Cloneable");
@@ -1377,9 +1311,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Compacts the internal buffers for the list. This is like {@code trimToSize()}
-    * except that it first rearranges items to fill in any gaps in the buffers
-    * caused by fragmentation.
+    * Compacts the internal buffers for the list. This is like {@code trimToSize()} except that it
+    * first rearranges items to fill in any gaps in the buffers caused by fragmentation.
     */
    public void compact() {
       if (highWater != size) {
@@ -1441,8 +1374,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Grows the internal buffers of the list, if necessary, to accommodate
-    * the specified number of items.
+    * Grows the internal buffers of the list, if necessary, to accommodate the specified number of
+    * items.
     * 
     * @param capacity number of items that need to fit in the list
     */
@@ -1458,8 +1391,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Implements <em>equals</em> per the contract defined by
-    * {@code java.util.List.equals(Object)}.
+    * Implements <em>equals</em> per the contract defined by {@code java.util.List.equals(Object)}.
     * 
     * @param list the list
     * @param o an object to compare to the list
@@ -1478,17 +1410,16 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
       return true;
    }
-   
+
    /**
-    * Filters all objects in the list against a specified collection. Either
-    * removes all items that are found in specified collection or removes all
-    * items that are not found in the collection. Uses {@link Iterator#remove()}
-    * to remove items from the target list.
+    * Filters all objects in the list against a specified collection. Either removes all items that
+    * are found in specified collection or removes all items that are not found in the collection.
+    * Uses {@link Iterator#remove()} to remove items from the target list.
     * 
     * @param items collection of items acting as a filter
     * @param iter iterator, representing target list, from which items will be removed
-    * @param contains true if removing items found in the collection or false if
-    *           leaving items found in the collection
+    * @param contains true if removing items found in the collection or false if leaving items found
+    *           in the collection
     * @return true if the list was modified and something was removed
     */
    static boolean filter(Collection<?> items, Iterator<?> iter, boolean contains) {
@@ -1515,26 +1446,25 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Determines if all items in a specified collection exist in the
-    * specified iteration.
+    * Determines if all items in a specified collection exist in the specified iteration.
     * 
     * @param coll the collection of items we're looking for
     * @param iter the iteration in which we're searching
-    * @return true if the items returned by the specified iterator contain
-    *       at every item in the specified collection
+    * @return true if the items returned by the specified iterator contain at every item in the
+    *         specified collection
     */
    static boolean containsAll(Collection<?> coll, Iterator<?> iter) {
       HashSet<Object> items = new HashSet<Object>(coll);
       while (iter.hasNext()) {
          Object o = iter.next();
-         if (items.remove(o) && items.size() == 0) {
-            return true; // found all objects in specified collection
+         if (items.remove(o) && items.size() == 0) { return true; // found all objects in specified
+// collection
          }
       }
       // items left in set are ones not found
       return items.size() == 0;
    }
-   
+
    /**
     * Determines the raw index into the buffer for the specified list index.
     * 
@@ -1542,12 +1472,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @return raw index or -1 if the specified list index is not valid
     */
    int find(int index) {
-      if (index < 0) {
-         return -1;
-      }
-      if (isOptimized) {
-         return index;
-      }
+      if (index < 0) { return -1; }
+      if (isOptimized) { return index; }
       int cur = head;
       while (cur != -1 && index > 0) {
          cur = next[cur];
@@ -1591,18 +1517,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    @Override
    @SuppressWarnings("unchecked")
    public E getFirst() {
-      if (size == 0) {
-         throw new NoSuchElementException("List is empty");
-      }
+      if (size == 0) { throw new NoSuchElementException("List is empty"); }
       return (E) data[head];
    }
 
    @Override
    @SuppressWarnings("unchecked")
    public E getLast() {
-      if (size == 0) {
-         throw new NoSuchElementException("List is empty");
-      }
+      if (size == 0) { throw new NoSuchElementException("List is empty"); }
       return (E) data[tail];
    }
 
@@ -1722,15 +1644,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Rearranges storage in internal buffers to optimize traversal and minimize storage
-    * size (to reduce memory pressure). This basically orders the items internally into
-    * iteration order and updates corresponding {@code next} and {@code prev} pointers
-    * correspondingly. It also defragments the internal buffer and trims it so there are
-    * no empty slots in the buffer.
+    * Rearranges storage in internal buffers to optimize traversal and minimize storage size (to
+    * reduce memory pressure). This basically orders the items internally into iteration order and
+    * updates corresponding {@code next} and {@code prev} pointers correspondingly. It also
+    * defragments the internal buffer and trims it so there are no empty slots in the buffer.
     * 
-    * <p>This is generally an O(n) operation and should only need to be done if there
-    * are many random access removals and/or insertion (which could cause the buffer to
-    * become unordered per iteration order and cause fragmentation).
+    * <p>
+    * This is generally an O(n) operation and should only need to be done if there are many random
+    * access removals and/or insertion (which could cause the buffer to become unordered per
+    * iteration order and cause fragmentation).
     */
    public void optimize() {
       if (isOptimized) {
@@ -1838,8 +1760,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * 
     * @param in the stream from which the list is read
     * @throws IOException if an exception is raised when writing to {@code out}
-    * @throws ClassNotFoundException if de-serializing an element fails to
-    *            locate the element's class
+    * @throws ClassNotFoundException if de-serializing an element fails to locate the element's
+    *            class
     */
    private void readObject(ObjectInputStream in) throws IOException,
          ClassNotFoundException {
@@ -1894,9 +1816,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
    /**
     * Removes all occurrences of the specified object. Unlike {@link #remove(Object)},
-    * {@link #removeFirstOccurrence(Object)}, and {@link #removeLastOccurrence(Object)},
-    * which remove only the first or last occurrence of an object in the list, this
-    * method removes any and all such instances from the list.
+    * {@link #removeFirstOccurrence(Object)}, and {@link #removeLastOccurrence(Object)}, which
+    * remove only the first or last occurrence of an object in the list, this method removes any and
+    * all such instances from the list.
     * 
     * @param item the item to remove
     * @return true if the item was found and removed or false if the item was not found
@@ -1966,11 +1888,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    public boolean retainAll(Collection<?> coll) {
       return filter(coll, unorderedIterator(), false);
    }
-   
+
    private ListIterator<E> reverseIterator(int idx) {
       return reverseIterator(listIterator(idx));
    }
-      
+
    @Override
    public E set(int idx, E e) {
       check(idx);
@@ -1990,7 +1912,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * Sorts the list. This is slightly more efficient than {@code Collections.sort(List)} and has
     * the side benefit of optimizing internal storage of the items for subsequent iteration.
     * 
-    * <p>The values must be mutually comparable or else a {@code RuntimeException} (such as
+    * <p>
+    * The values must be mutually comparable or else a {@code RuntimeException} (such as
     * {@code ClassCastException}) may be thrown.
     */
    public void sort() {
@@ -2008,7 +1931,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * Sorts the list. This is slightly more efficient than {@code Collections.sort(List)} and has
     * the side benefit of optimizing internal storage of the items for subsequent iteration.
     * 
-    * <p>This uses the specified comparator to compare and order items.
+    * <p>
+    * This uses the specified comparator to compare and order items.
     * 
     * @param c the comparator used to define the sort order
     */
@@ -2028,9 +1952,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    public List<E> subList(int from, int to) {
       check(from);
       checkWide(to);
-      if (from > to) {
-         throw new IllegalArgumentException("from > to");
-      }
+      if (from > to) { throw new IllegalArgumentException("from > to"); }
       return new SubListImpl(from, to);
    }
 
@@ -2071,11 +1993,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Shrinks the internal buffer as much as possible without performing any other more
-    * aggressive reorganization. This may not actually free much (or even any) space, even
-    * when the internal buffer is sized much large than the actual number of items. This
-    * could be the case due to fragmentation of the buffer. Use {@link #compact()} or
-    * {@link #optimize()} for more aggressive management of internal buffers.
+    * Shrinks the internal buffer as much as possible without performing any other more aggressive
+    * reorganization. This may not actually free much (or even any) space, even when the internal
+    * buffer is sized much large than the actual number of items. This could be the case due to
+    * fragmentation of the buffer. Use {@link #compact()} or {@link #optimize()} for more aggressive
+    * management of internal buffers.
     */
    public void trimToSize() {
       if (data.length != highWater) {
@@ -2087,13 +2009,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Creates an iterator that provides maximum performance iteration. The iteration, however,
-    * may not actually return elements in the order of their list index. This is useful for
-    * providing a slight performance increase to operations that will neeed to operate on every
-    * item in the list, regardless of order.
+    * Creates an iterator that provides maximum performance iteration. The iteration, however, may
+    * not actually return elements in the order of their list index. This is useful for providing a
+    * slight performance increase to operations that will neeed to operate on every item in the
+    * list, regardless of order.
     * 
     * @return an iterator whose order of items may not match the list order of items but whose
-    *          traversal may perform more efficiently
+    *         traversal may perform more efficiently
     */
    public Iterator<E> unorderedIterator() {
       return new UnorderedIteratorImpl();

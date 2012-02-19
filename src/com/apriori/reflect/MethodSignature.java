@@ -6,19 +6,18 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a method signature, composed of a method name and sequence of
- * parameter types.
+ * Represents a method signature, composed of a method name and sequence of parameter types.
  * 
- * <p>{@code MethodSignature} objects are used in place of {@code java.lang.reflect.Method}
- * objects when configuring the invocation handler. A single invocation handler could
- * implement multiple {@code Method}s with identical signatures if it is constructed for
- * multiple interfaces and an interface with the same signature is defined in more than
- * one of them.
+ * <p>
+ * {@code MethodSignature} objects are used in place of {@code java.lang.reflect.Method} objects
+ * when configuring the invocation handler. A single invocation handler could implement multiple
+ * {@code Method}s with identical signatures if it is constructed for multiple interfaces and an
+ * interface with the same signature is defined in more than one of them.
  * 
- * @author jhumphries
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class MethodSignature {
-   
+
    private String name;
    private List<Class<?>> argTypes;
 
@@ -31,24 +30,19 @@ public class MethodSignature {
    public MethodSignature(Method m) {
       this(m.getName(), m.getParameterTypes());
    }
-   
+
    /**
-    * Constructs a new signature based on the given name and list of
-    * arguments.
+    * Constructs a new signature based on the given name and list of arguments.
     * 
-    * @param name       The method name
-    * @param argTypes   The parameter types
-    * @throws NullPointerException If the specified method name is {@code null}
-    *                   or any of the specified argument types is {@code null}
+    * @param name The method name
+    * @param argTypes The parameter types
+    * @throws NullPointerException If the specified method name is {@code null} or any of the
+    *            specified argument types is {@code null}
     */
    public MethodSignature(String name, Class<?>... argTypes) {
-      if (name == null) {
-         throw new NullPointerException();
-      }
+      if (name == null) { throw new NullPointerException(); }
       for (Class<?> arg : argTypes) {
-         if (arg == null) {
-            throw new NullPointerException();
-         }
+         if (arg == null) { throw new NullPointerException(); }
       }
       this.name = name;
       this.argTypes = Arrays.asList(argTypes);
@@ -62,7 +56,7 @@ public class MethodSignature {
    public String getName() {
       return name;
    }
-   
+
    /**
     * Returns the parameter types for the method that this signature represents.
     * 
@@ -71,16 +65,16 @@ public class MethodSignature {
    public List<Class<?>> getParameterTypes() {
       return Collections.unmodifiableList(argTypes);
    }
-   
+
    @Override
    public boolean equals(Object o) {
       if (o instanceof MethodSignature) {
          MethodSignature ms = (MethodSignature) o;
-         return this.name.equals(ms.name) && this.argTypes.equals(ms.argTypes);
+         return name.equals(ms.name) && argTypes.equals(ms.argTypes);
       }
       return false;
    }
-   
+
    @Override
    public int hashCode() {
       int ret = 17;
@@ -88,7 +82,7 @@ public class MethodSignature {
       ret = 31 * ret + argTypes.hashCode();
       return ret;
    }
-   
+
    @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
@@ -98,7 +92,8 @@ public class MethodSignature {
       for (Class<?> argType : argTypes) {
          if (first) {
             first = false;
-         } else {
+         }
+         else {
             sb.append(", ");
          }
          sb.append(argType.getName());

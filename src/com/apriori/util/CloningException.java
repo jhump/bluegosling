@@ -1,13 +1,11 @@
 package com.apriori.util;
 
 /**
- * An exception that occurs during a cloning operation. This
- * is a {@code RuntimeException} so that the use of
- * {@link Cloner#clone(Object)} doesn't require extra
- * boiler-plate for {@code throws} declarations or
- * {@code try-catch} blocks.
+ * An exception that occurs during a cloning operation. This is a {@code RuntimeException} so that
+ * the use of {@link Cloner#clone(Object)} doesn't require extra boiler-plate for {@code throws}
+ * declarations or {@code try-catch} blocks.
  * 
- * @author jhumphries
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class CloningException extends RuntimeException {
 
@@ -32,8 +30,7 @@ public class CloningException extends RuntimeException {
    }
 
    /**
-    * Constructs a new exception with a message that is chained
-    * to another.
+    * Constructs a new exception with a message that is chained to another.
     * 
     * @param message the exception message
     * @param cause the cause of the cloning exception

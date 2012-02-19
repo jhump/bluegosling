@@ -1,15 +1,15 @@
 package com.apriori.collections;
 
+import org.apache.commons.collections.list.AbstractTestList;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.collections.list.AbstractTestList;
-
 /**
- * Tests the {@code ArrayBackedLinkedList} class using the list tests provided
- * in the Apache Commons Collections library.
+ * Tests the {@code ArrayBackedLinkedList} class using the list tests provided in the Apache Commons
+ * Collections library.
  * 
- * @author jhumphries
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ArrayBackedLinkedListTest extends AbstractTestList {
 
@@ -26,7 +26,7 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
    public List<?> makeEmptyList() {
       return new ArrayBackedLinkedList<Object>();
    }
-   
+
    @Override
    public List<?> makeFullList() {
       return new ArrayBackedLinkedList<Object>(Arrays.asList(getFullElements()));
@@ -41,9 +41,9 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
    public boolean isEqualsCheckable() {
       return true;
    }
-   
+
    @Override
    protected boolean skipSerializedCanonicalTests() {
       return true;
-  }
+   }
 }
