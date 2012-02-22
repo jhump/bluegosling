@@ -946,7 +946,9 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> mutator(ObjectVerifier<? super T> v) {
-         if (v == null) { throw new NullPointerException(); }
+         if (v == null) {
+            throw new NullPointerException();
+         }
          mutatorVerifier = v;
          isMutator = true;
          return this;
@@ -961,7 +963,9 @@ public class InterfaceVerifier<T> {
 
       @Override
       public ObjectVerifier<? super T> getMutatorVerifier() {
-         if (!isMutator) { return null; }
+         if (!isMutator) {
+            return null;
+         }
          if (mutatorVerifier == null) {
             return defaultMutatorVerifier;
          }
@@ -977,17 +981,23 @@ public class InterfaceVerifier<T> {
 
       @Override
       public <R> MethodConfiguration<T> returnVerifier(ObjectVerifier<R> v, Class<R> clazz) {
-         if (clazz == null) { throw new NullPointerException(); }
-         if (!clazz.isAssignableFrom(returnType)) { throw new IllegalArgumentException(
-               "Verifier type " + clazz.getName()
-                     + " is not compatible with return type " + returnType.getName()); }
+         if (clazz == null) {
+            throw new NullPointerException();
+         }
+         if (!clazz.isAssignableFrom(returnType)) {
+            throw new IllegalArgumentException(
+                  "Verifier type " + clazz.getName()
+                        + " is not compatible with return type " + returnType.getName());
+         }
          return returnVerifier(v);
       }
 
       @Override
       public MethodConfiguration<T> returnVerifier(ObjectVerifier<?> v) {
-         if ((returnType == void.class || returnType == Void.class) && v != null) { throw new IllegalArgumentException(
-               "Non-null return verifier not allowed for void return type"); }
+         if ((returnType == void.class || returnType == Void.class) && v != null) {
+            throw new IllegalArgumentException(
+                  "Non-null return verifier not allowed for void return type");
+         }
          returnVerifier = v;
          return this;
       }
@@ -1037,9 +1047,13 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables) {
-         if (throwables == null) { throw new NullPointerException(); }
+         if (throwables == null) {
+            throw new NullPointerException();
+         }
          for (Class<? extends Throwable> t : throwables) {
-            if (t == null) { throw new NullPointerException(); }
+            if (t == null) {
+               throw new NullPointerException();
+            }
          }
          // defensive copy
          uncheckedExceptions = new HashSet<Class<? extends Throwable>>(throwables);
@@ -1070,17 +1084,23 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> cloneArgumentsWith(List<Cloner<?>> cloners) {
-         if (cloners == null) { throw new NullPointerException(); }
+         if (cloners == null) {
+            throw new NullPointerException();
+         }
          List<Class<?>> args = sig.getParameterTypes();
-         if (cloners.size() != args.size()) { throw new IllegalArgumentException(
-               "Wrong number of cloners specified"); }
+         if (cloners.size() != args.size()) {
+            throw new IllegalArgumentException(
+                  "Wrong number of cloners specified");
+         }
          Iterator<Cloner<?>> clnIter = cloners.iterator();
          Iterator<Class<?>> argIter = args.iterator();
          while (clnIter.hasNext()) {
             Cloner<?> cloner = clnIter.next();
             Class<?> argType = argIter.next();
-            if (argType.isPrimitive() && cloner != null) { throw new IllegalArgumentException(
-                  "Non-null cloner specified for primitive argument"); }
+            if (argType.isPrimitive() && cloner != null) {
+               throw new IllegalArgumentException(
+                     "Non-null cloner specified for primitive argument");
+            }
          }
          // defensive copy
          argumentCloners = new ArrayList<Cloner<?>>(cloners);
@@ -1089,7 +1109,9 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> cloneAllArgumentsWith(Cloner<?> cloner) {
-         if (cloner == null) { throw new NullPointerException(); }
+         if (cloner == null) {
+            throw new NullPointerException();
+         }
          List<Class<?>> args = sig.getParameterTypes();
          List<Cloner<?>> cloners = new ArrayList<Cloner<?>>(args.size());
          int used = 0;
@@ -1102,7 +1124,9 @@ public class InterfaceVerifier<T> {
                used++;
             }
          }
-         if (used == 0) { throw new IllegalArgumentException("Method has no arguments to clone"); }
+         if (used == 0) {
+            throw new IllegalArgumentException("Method has no arguments to clone");
+         }
          argumentCloners = cloners;
          return this;
       }
@@ -1125,7 +1149,8 @@ public class InterfaceVerifier<T> {
       @Override
       public boolean isCloningArguments() {
          for (Cloner<?> c : argumentCloners) {
-            if (c != null) return true;
+            if (c != null)
+               return true;
          }
          return false;
       }
@@ -1142,16 +1167,22 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> verifyArgumentsWith(List<ObjectVerifier<?>> verifiers) {
-         if (verifiers == null) { throw new NullPointerException(); }
-         if (verifiers.size() != argumentCloners.size()) { throw new IllegalArgumentException(
-               "Wrong number of verifiers specified"); }
+         if (verifiers == null) {
+            throw new NullPointerException();
+         }
+         if (verifiers.size() != argumentCloners.size()) {
+            throw new IllegalArgumentException(
+                  "Wrong number of verifiers specified");
+         }
          Iterator<ObjectVerifier<?>> vfyIter = verifiers.iterator();
          Iterator<Cloner<?>> clnIter = argumentCloners.iterator();
          while (vfyIter.hasNext()) {
             ObjectVerifier<?> verifier = vfyIter.next();
             Cloner<?> cloner = clnIter.next();
-            if (cloner == null && verifier != null) { throw new IllegalArgumentException(
-                  "Non-null verifier specified for non-cloned argument"); }
+            if (cloner == null && verifier != null) {
+               throw new IllegalArgumentException(
+                     "Non-null verifier specified for non-cloned argument");
+            }
          }
          // defensive copy
          argumentVerifiers = new ArrayList<ObjectVerifier<?>>(verifiers);
@@ -1160,9 +1191,13 @@ public class InterfaceVerifier<T> {
 
       @Override
       public MethodConfiguration<T> verifyAllArgumentsWith(ObjectVerifier<?> verifier) {
-         if (verifier == null) { throw new NullPointerException(); }
-         if (!isCloningArguments()) { throw new IllegalArgumentException(
-               "No cloned arguments to verify"); }
+         if (verifier == null) {
+            throw new NullPointerException();
+         }
+         if (!isCloningArguments()) {
+            throw new IllegalArgumentException(
+                  "No cloned arguments to verify");
+         }
          List<ObjectVerifier<?>> verifiers = new ArrayList<ObjectVerifier<?>>(
                argumentCloners.size());
          for (Cloner<?> c : argumentCloners) {
@@ -1188,7 +1223,8 @@ public class InterfaceVerifier<T> {
       @Override
       public boolean isVerifyingArguments() {
          for (ObjectVerifier<?> v : argumentVerifiers) {
-            if (v != null) return true;
+            if (v != null)
+               return true;
          }
          return false;
       }
@@ -1619,11 +1655,19 @@ public class InterfaceVerifier<T> {
     *            specified interfaces therein are {@code null}
     */
    public InterfaceVerifier(Set<Class<? extends T>> interfaces) {
-      if (interfaces == null) { throw new NullPointerException(); }
-      if (interfaces.isEmpty()) { throw new IllegalArgumentException(); }
+      if (interfaces == null) {
+         throw new NullPointerException();
+      }
+      if (interfaces.isEmpty()) {
+         throw new IllegalArgumentException();
+      }
       for (Class<?> iface : interfaces) {
-         if (iface == null) { throw new NullPointerException(); }
-         if (!iface.isInterface()) { throw new IllegalArgumentException(); }
+         if (iface == null) {
+            throw new NullPointerException();
+         }
+         if (!iface.isInterface()) {
+            throw new IllegalArgumentException();
+         }
       }
       this.interfaces = new HashSet<Class<? extends T>>(interfaces); // defensive copy
 
@@ -1670,7 +1714,9 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException if the specified verifier is {@code null}
     */
    public void setDefaultMutatorVerifier(ObjectVerifier<? super T> v) {
-      if (v == null) { throw new NullPointerException("verifier"); }
+      if (v == null) {
+         throw new NullPointerException("verifier");
+      }
       defaultMutatorVerifier = v;
    }
 
@@ -1692,7 +1738,9 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException if the specified verifier is {@code null}
     */
    public void setDefaultExceptionVerifier(ObjectVerifier<Throwable> v) {
-      if (v == null) { throw new NullPointerException("verifier"); }
+      if (v == null) {
+         throw new NullPointerException("verifier");
+      }
       defaultExceptionVerifier = v;
    }
 
@@ -1925,7 +1973,9 @@ public class InterfaceVerifier<T> {
     */
    public MethodSignature getMethod(String methodName, Class<?>... args) {
       HashMap<List<Class<?>>, MethodSignature> matches = methodSigMap.get(methodName);
-      if (matches != null) { return matches.get(Arrays.asList(args)); }
+      if (matches != null) {
+         return matches.get(Arrays.asList(args));
+      }
       return null;
    }
 
@@ -1979,8 +2029,10 @@ public class InterfaceVerifier<T> {
          if (m == null) {
             throw new NullPointerException("method signature");
          }
-         else if (!methodConfig.containsKey(m)) { throw new IllegalArgumentException(m.toString()
-               + " not supported by this handler"); }
+         else if (!methodConfig.containsKey(m)) {
+            throw new IllegalArgumentException(m.toString()
+                  + " not supported by this handler");
+         }
       }
    }
 
@@ -2012,7 +2064,9 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException If any of the specified methods are {@code null}
     */
    public MethodConfigurator<T> configureMethods(MethodSignature... sigs) {
-      if (sigs.length == 0) { throw new IllegalArgumentException("No method signatures specified"); }
+      if (sigs.length == 0) {
+         throw new IllegalArgumentException("No method signatures specified");
+      }
       verifyMethods(sigs);
       HashSet<MethodConfigurationImpl> configs = new HashSet<MethodConfigurationImpl>(sigs.length);
       for (MethodSignature sig : sigs) {
@@ -2059,12 +2113,16 @@ public class InterfaceVerifier<T> {
       Class<?> referenceClass = referenceImpl.getClass();
       for (Class<?> iface : interfaces) {
          // check that the interfaces are all correct for specified objects
-         if (!iface.isAssignableFrom(testClass)) { throw new IllegalArgumentException("Interface "
-               + iface.getName()
-                  + " incompatible with test class " + testClass.getName()); }
-         if (!iface.isAssignableFrom(referenceClass)) { throw new IllegalArgumentException(
-               "Interface " + iface.getName()
-                     + " incompatible with reference class " + referenceClass.getName()); }
+         if (!iface.isAssignableFrom(testClass)) {
+            throw new IllegalArgumentException("Interface "
+                  + iface.getName()
+                  + " incompatible with test class " + testClass.getName());
+         }
+         if (!iface.isAssignableFrom(referenceClass)) {
+            throw new IllegalArgumentException(
+                  "Interface " + iface.getName()
+                        + " incompatible with reference class " + referenceClass.getName());
+         }
       }
       @SuppressWarnings("unchecked")
       T ret = (T) Proxy.newProxyInstance(classLoader, interfaces.toArray(new Class<?>[0]),

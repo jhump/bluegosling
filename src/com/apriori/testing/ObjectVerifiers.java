@@ -76,7 +76,8 @@ public class ObjectVerifiers extends Assert {
    public static final ObjectVerifier<Object> HASH_CODES = new ObjectVerifier<Object>() {
       @Override
       public Object verify(Object test, Object reference) {
-         if (NULLS.verify(test, reference) == null) return null;
+         if (NULLS.verify(test, reference) == null)
+            return null;
          assertEquals(reference.hashCode(), test.hashCode());
          return test;
       }
@@ -101,7 +102,8 @@ public class ObjectVerifiers extends Assert {
    public static final ObjectVerifier<Throwable> STRICT_EXCEPTIONS = new ObjectVerifier<Throwable>() {
       @Override
       public Throwable verify(Throwable test, Throwable reference) {
-         if (NULLS.verify(test, reference) == null) return null;
+         if (NULLS.verify(test, reference) == null)
+            return null;
          assertSame(reference.getClass(), test.getClass());
          return test;
       }
@@ -130,24 +132,33 @@ public class ObjectVerifiers extends Assert {
    public static ObjectVerifier<Throwable> relaxedExceptions(
          Set<Class<? extends Throwable>> exceptions) {
       // check inputs
-      if (exceptions == null) { throw new NullPointerException("exception classes"); }
+      if (exceptions == null) {
+         throw new NullPointerException("exception classes");
+      }
       for (Class<?> c : exceptions) {
-         if (c == null) { throw new NullPointerException("exception class"); }
+         if (c == null) {
+            throw new NullPointerException("exception class");
+         }
       }
       final Set<Class<? extends Throwable>> myCopy = new HashSet<Class<? extends Throwable>>(
             exceptions);
       return new ObjectVerifier<Throwable>() {
          @Override
          public Throwable verify(Throwable test, Throwable reference) {
-            if (NULLS.verify(test, reference) == null) return null;
+            if (NULLS.verify(test, reference) == null)
+               return null;
             Class<?> testClass = test.getClass();
             Class<?> refClass = reference.getClass();
             // see if they are directly compatible
-            if (refClass.isAssignableFrom(testClass)) { return test; }
+            if (refClass.isAssignableFrom(testClass)) {
+               return test;
+            }
             // otherwise, they could be siblings in hierarchy -- see if
             // they have a common ancestor
             for (Class<?> c : myCopy) {
-               if (c.isAssignableFrom(refClass) && c.isAssignableFrom(testClass)) { return test; }
+               if (c.isAssignableFrom(refClass) && c.isAssignableFrom(testClass)) {
+                  return test;
+               }
             }
             // no match? no good
             fail();
@@ -205,7 +216,8 @@ public class ObjectVerifiers extends Assert {
       return new ObjectVerifier<T>() {
          @Override
          public T verify(T test, T reference) {
-            if (NULLS.verify(test, reference) == null) return null;
+            if (NULLS.verify(test, reference) == null)
+               return null;
             assertEquals(0, test.compareTo(reference));
             return test;
          }
@@ -224,11 +236,14 @@ public class ObjectVerifiers extends Assert {
     * @throws NullPointerException if the specified comparator is {@code null}
     */
    public static <T> ObjectVerifier<T> fromComparator(final Comparator<T> c) {
-      if (c == null) { throw new NullPointerException("comparator"); }
+      if (c == null) {
+         throw new NullPointerException("comparator");
+      }
       return new ObjectVerifier<T>() {
          @Override
          public T verify(T test, T reference) {
-            if (NULLS.verify(test, reference) == null) return null;
+            if (NULLS.verify(test, reference) == null)
+               return null;
             assertEquals(0, c.compare(test, reference));
             return test;
          }
@@ -246,9 +261,13 @@ public class ObjectVerifiers extends Assert {
     */
    public static <T> ObjectVerifier<T> compositeVerifier(final List<ObjectVerifier<T>> verifiers) {
       // check inputs
-      if (verifiers == null) { throw new NullPointerException("verifiers"); }
+      if (verifiers == null) {
+         throw new NullPointerException("verifiers");
+      }
       for (ObjectVerifier<T> v : verifiers) {
-         if (v == null) { throw new NullPointerException("verifier"); }
+         if (v == null) {
+            throw new NullPointerException("verifier");
+         }
       }
       return new ObjectVerifier<T>() {
          @Override
@@ -288,7 +307,9 @@ public class ObjectVerifiers extends Assert {
     * @see #forTesting(Class, ClassLoader)
     */
    public static <T> ObjectVerifier<T> forTesting(Class<T> iface) {
-      if (iface == null) { throw new NullPointerException("interface"); }
+      if (iface == null) {
+         throw new NullPointerException("interface");
+      }
       return forTesting(iface, iface.getClassLoader());
    }
 
@@ -310,14 +331,19 @@ public class ObjectVerifiers extends Assert {
    public static <T> ObjectVerifier<T> forTesting(final Class<T> iface,
          final ClassLoader classLoader) {
       // verify arguments
-      if (iface == null) { throw new NullPointerException("interface"); }
-      if (!iface.isInterface()) { throw new IllegalArgumentException(iface.getName()
-            + " must be an interface"); }
+      if (iface == null) {
+         throw new NullPointerException("interface");
+      }
+      if (!iface.isInterface()) {
+         throw new IllegalArgumentException(iface.getName()
+               + " must be an interface");
+      }
       // create the verifier
       return new ObjectVerifier<T>() {
          @Override
          public T verify(T test, T reference) {
-            if (NULLS.verify(test, reference) == null) return null;
+            if (NULLS.verify(test, reference) == null)
+               return null;
             InterfaceVerifier<T> verifier = new InterfaceVerifier<T>(iface);
             return verifier.createProxy(test, reference, classLoader);
          }

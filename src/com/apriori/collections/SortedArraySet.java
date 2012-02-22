@@ -121,7 +121,9 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       @Override
       public Comparator<? super E> comparator() {
          final Comparator<? super E> comp = base.comparator();
-         if (comp == null) { return null; }
+         if (comp == null) {
+            return null;
+         }
          return new Comparator<E>() {
             @Override
             public int compare(E o1, E o2) {
@@ -294,7 +296,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    Object data[];
    int size;
    private Comparator<? super E> comp;
-   protected int modCount;
+   int modCount;
 
    public SortedArraySet() {
       this(DEFAULT_INITIAL_CAPACITY, null);
@@ -335,12 +337,16 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       }
    }
 
-   private void checkMod(int someModCount) {
-      if (someModCount != modCount) { throw new ConcurrentModificationException(); }
+   void checkMod(int someModCount) {
+      if (someModCount != modCount) {
+         throw new ConcurrentModificationException();
+      }
    }
 
    private void maybeGrowArray() {
-      if (data.length > size) { return; }
+      if (data.length > size) {
+         return;
+      }
       // TODO: grow it
       modCount++;
    }
@@ -353,11 +359,15 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          return mid;
       }
       else if (c < 0) {
-         if (hi == mid) { return -(hi + 2); }
+         if (hi == mid) {
+            return -(hi + 2);
+         }
          return findIndexWithoutComparator(o, mid + 1, hi);
       }
       else {
-         if (lo == mid) { return -(lo + 1); }
+         if (lo == mid) {
+            return -(lo + 1);
+         }
          return findIndexWithoutComparator(o, lo, mid - 1);
       }
    }
@@ -370,11 +380,15 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          return mid;
       }
       else if (c < 0) {
-         if (hi == mid) { return -(hi + 2); }
+         if (hi == mid) {
+            return -(hi + 2);
+         }
          return findIndexWithComparator(o, mid + 1, hi);
       }
       else {
-         if (lo == mid) { return -(lo + 1); }
+         if (lo == mid) {
+            return -(lo + 1);
+         }
          return findIndexWithComparator(o, lo, mid - 1);
       }
    }
@@ -396,7 +410,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       size++;
    }
 
-   private void removeItem(int index) {
+   void removeItem(int index) {
       // TODO
       modCount++;
       size--;
@@ -406,14 +420,18 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       // TODO
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean add(E element) {
       int idx = findIndex(element);
-      if (idx >= 0) { return false; }
+      if (idx >= 0) {
+         return false;
+      }
       insertItem(element, -(idx + 1));
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean addAll(Collection<? extends E> elements) {
       boolean ret = false;
@@ -425,6 +443,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public void clear() {
       for (int i = 0, len = data.length; i < len; i++) {
@@ -434,37 +453,47 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       modCount++;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean contains(Object element) {
       return findIndex(element) >= 0;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean containsAll(Collection<?> elements) {
       for (Object o : elements) {
-         if (!contains(o)) { return false; }
+         if (!contains(o)) {
+            return false;
+         }
       }
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean isEmpty() {
       return size == 0;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Iterator<E> iterator() {
       return new IteratorImpl();
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean remove(Object element) {
       int idx = findIndex(element);
-      if (idx < 0) { return false; }
+      if (idx < 0) {
+         return false;
+      }
       removeItem(idx);
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean removeAll(Collection<?> elements) {
       boolean ret = false;
@@ -476,6 +505,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean retainAll(Collection<?> elements) {
       // TODO Auto-generated method stub
@@ -483,118 +513,145 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return false;
    }
 
+   /** {@inheritDoc} */
    @Override
    public int size() {
       return size;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Object[] toArray() {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public <T> T[] toArray(T[] a) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Comparator<? super E> comparator() {
       return comp;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E first() {
-      if (size == 0) { throw new NoSuchElementException("set is empty"); }
+      if (size == 0) {
+         throw new NoSuchElementException("set is empty");
+      }
       @SuppressWarnings("unchecked")
       E ret = (E) data[0];
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> headSet(E toElement) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E last() {
-      if (size == 0) { throw new NoSuchElementException("set is empty"); }
+      if (size == 0) {
+         throw new NoSuchElementException("set is empty");
+      }
       @SuppressWarnings("unchecked")
       E ret = (E) data[size - 1];
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> subSet(E fromElement, E toElement) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E ceiling(E e) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Iterator<E> descendingIterator() {
       return new DescendingIteratorImpl();
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> descendingSet() {
       return new DescendingSetImpl<E>(this);
    }
 
+   /** {@inheritDoc} */
    @Override
    public E floor(E e) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E higher(E e) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E lower(E e) {
       // TODO Auto-generated method stub
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E pollFirst() {
-      if (size == 0) { return null; }
+      if (size == 0) {
+         return null;
+      }
       @SuppressWarnings("unchecked")
       E ret = (E) data[0];
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E pollLast() {
-      if (size == 0) { return null; }
+      if (size == 0) {
+         return null;
+      }
       @SuppressWarnings("unchecked")
       E ret = (E) data[size - 1];
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
          boolean toInclusive) {
@@ -602,6 +659,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return null;
    }
 
+   /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
       // TODO Auto-generated method stub

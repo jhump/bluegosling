@@ -204,19 +204,25 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void checkCanModifyElement(String op) {
-         if (lastFetched == -1) { throw new IllegalStateException("No element to " + op + ": "
-                  + "next() or previous() never called"); }
-         if (lastFetchModified != IteratorModifiedState.NONE) { throw new IllegalStateException(
+         if (lastFetched == -1) {
+            throw new IllegalStateException("No element to " + op + ": "
+                  + "next() or previous() never called");
+         }
+         if (lastFetchModified != IteratorModifiedState.NONE) {
+            throw new IllegalStateException(
                   "Cannot "
                         + op
                         + " item after call to "
                         + (lastFetchModified == IteratorModifiedState.REMOVED ? "remove()"
-                              : "add()")); }
+                              : "add()"));
+         }
       }
 
       protected void dec() {
          checkMod(myModCount);
-         if (idx < 0) { throw new NoSuchElementException("At beginning of list"); }
+         if (idx < 0) {
+            throw new NoSuchElementException("At beginning of list");
+         }
          lastFetched = pos;
          lastFetchModified = IteratorModifiedState.NONE;
          idx--;
@@ -235,7 +241,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       protected void inc() {
          checkMod(myModCount);
-         if (idx >= size - 1) { throw new NoSuchElementException("At end of list"); }
+         if (idx >= size - 1) {
+            throw new NoSuchElementException("At end of list");
+         }
          idx++;
          if (pos == -1) {
             pos = head;
@@ -370,7 +378,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void checkOptimized() {
-         if (!isOptimized) { throw new ConcurrentModificationException(); }
+         if (!isOptimized) {
+            throw new ConcurrentModificationException();
+         }
       }
 
       @Override
@@ -552,7 +562,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       public boolean addAll(int idx, Collection<? extends E> coll) {
          checkWide(idx);
          checkMod(myModCount);
-         if (coll.size() == 0) return false;
+         if (coll.size() == 0)
+            return false;
          for (E e : coll) {
             add(idx++, e);
          }
@@ -564,14 +575,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (low + index >= high) {
             throw new IndexOutOfBoundsException("" + index + " >= " + size);
          }
-         else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
+         else if (index < 0) {
+            throw new IndexOutOfBoundsException("" + index + " < 0");
+         }
       }
 
       private void checkWide(int index) {
          if (low + index > high) {
             throw new IndexOutOfBoundsException("" + index + " >= " + size);
          }
-         else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
+         else if (index < 0) {
+            throw new IndexOutOfBoundsException("" + index + " < 0");
+         }
       }
 
       @Override
@@ -709,7 +724,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkMod(myModCount);
          check(from);
          checkWide(to);
-         if (from > to) { throw new IllegalArgumentException("from > to"); }
+         if (from > to) {
+            throw new IllegalArgumentException("from > to");
+         }
          return new SubListImpl(low + from, low + to);
       }
 
@@ -813,7 +830,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       protected void dec() {
-         if (idx < sublist.low) { throw new NoSuchElementException("At beginning of list"); }
+         if (idx < sublist.low) {
+            throw new NoSuchElementException("At beginning of list");
+         }
          super.dec();
       }
 
@@ -829,7 +848,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       protected void inc() {
-         if (idx == sublist.high) { throw new NoSuchElementException("At end of list"); }
+         if (idx == sublist.high) {
+            throw new NoSuchElementException("At end of list");
+         }
          super.inc();
       }
 
@@ -846,9 +867,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public void remove() {
          int newHead = sublist.subHead;
-         if (lastFetched == newHead && lastFetched != -1) newHead = next[newHead];
+         if (lastFetched == newHead && lastFetched != -1)
+            newHead = next[newHead];
          int newTail = sublist.subTail;
-         if (lastFetched == newTail && lastFetched != -1) newTail = prev[newTail];
+         if (lastFetched == newTail && lastFetched != -1)
+            newTail = prev[newTail];
          super.remove();
          sublist.subTail = newTail;
          sublist.subHead = newHead;
@@ -890,7 +913,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public E next() {
          checkMod(myModCount);
-         if (idx >= highWater) { throw new NoSuchElementException("At end of list"); }
+         if (idx >= highWater) {
+            throw new NoSuchElementException("At end of list");
+         }
          lastFetched = idx;
          @SuppressWarnings("unchecked")
          E ret = (E) data[idx];
@@ -901,10 +926,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public void remove() {
-         if (lastFetched == -1) { throw new IllegalStateException(
-               "No element to remove: next() never called"); }
-         if (modState == IteratorModifiedState.REMOVED) { throw new IllegalStateException(
-               "Cannot remove item after call to remove()"); }
+         if (lastFetched == -1) {
+            throw new IllegalStateException(
+                  "No element to remove: next() never called");
+         }
+         if (modState == IteratorModifiedState.REMOVED) {
+            throw new IllegalStateException(
+                  "Cannot remove item after call to remove()");
+         }
          checkMod(myModCount);
          modState = IteratorModifiedState.REMOVED;
          removeInternal(lastFetched);
@@ -927,7 +956,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          if (item == null && o == null) {
             return iter.previousIndex();
          }
-         else if (item != null && item.equals(o)) { return iter.previousIndex(); }
+         else if (item != null && item.equals(o)) {
+            return iter.previousIndex();
+         }
       }
       return -1;
    }
@@ -951,13 +982,17 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          Object o = iter.next();
          if (item == null && o == null) {
             iter.remove();
-            if (justFirst) return true;
-            if (!modified) modified = true;
+            if (justFirst)
+               return true;
+            if (!modified)
+               modified = true;
          }
          else if (item != null && item.equals(o)) {
             iter.remove();
-            if (justFirst) return true;
-            if (!modified) modified = true;
+            if (justFirst)
+               return true;
+            if (!modified)
+               modified = true;
          }
       }
       return modified;
@@ -1107,8 +1142,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @param initialCapacity the size of the internal buffers
     */
    public ArrayBackedLinkedList(int initialCapacity) {
-      if (initialCapacity < 0) { throw new IllegalArgumentException("Illegal Capacity: "
-               + initialCapacity); }
+      if (initialCapacity < 0) {
+         throw new IllegalArgumentException("Illegal Capacity: "
+               + initialCapacity);
+      }
       data = new Object[initialCapacity];
       next = new int[initialCapacity];
       prev = new int[initialCapacity];
@@ -1117,6 +1154,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       head = tail = -1;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean add(E e) {
       modCount++;
@@ -1134,6 +1172,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public void add(int index, E e) {
       if (index == size) {
@@ -1145,6 +1184,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean addAll(Collection<? extends E> coll) {
       maybeGrowBy(coll.size());
@@ -1154,6 +1194,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean addAll(int index, Collection<? extends E> coll) {
       maybeGrowBy(coll.size());
@@ -1164,6 +1205,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public void addFirst(E e) {
       add(0, e);
@@ -1194,6 +1236,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return pos;
    }
 
+   /** {@inheritDoc} */
    @Override
    public void addLast(E e) {
       add(e);
@@ -1224,7 +1267,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     *         {@code optimize} is false and the list is not already optimized
     */
    public List<E> asRandomAccess(boolean optimize) {
-      if (!optimize && !isOptimized) { return null; }
+      if (!optimize && !isOptimized) {
+         return null;
+      }
       if (!isOptimized) {
          optimize();
       }
@@ -1243,7 +1288,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       if (index >= size) {
          throw new IndexOutOfBoundsException("" + index + " >= " + size);
       }
-      else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
+      else if (index < 0) {
+         throw new IndexOutOfBoundsException("" + index + " < 0");
+      }
    }
 
    /**
@@ -1255,7 +1302,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     *            specified level
     */
    void checkMod(int aModCount) {
-      if (aModCount != modCount) { throw new ConcurrentModificationException(); }
+      if (aModCount != modCount) {
+         throw new ConcurrentModificationException();
+      }
    }
 
    /**
@@ -1269,9 +1318,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       if (index > size) {
          throw new IndexOutOfBoundsException("" + index + " > " + size);
       }
-      else if (index < 0) { throw new IndexOutOfBoundsException("" + index + " < 0"); }
+      else if (index < 0) {
+         throw new IndexOutOfBoundsException("" + index + " < 0");
+      }
    }
 
+   /** {@inheritDoc} */
    @Override
    public void clear() {
       modCount++;
@@ -1286,6 +1338,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       isOptimized = true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Object clone() {
       if (this.getClass() == ArrayBackedLinkedList.class) {
@@ -1346,21 +1399,25 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       trimToSize();
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean contains(Object item) {
       return findObject(item, listIterator()) != -1;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean containsAll(Collection<?> coll) {
       return containsAll(coll, unorderedIterator());
    }
 
+   /** {@inheritDoc} */
    @Override
    public Iterator<E> descendingIterator() {
       return reverseIterator(size);
    }
 
+   /** {@inheritDoc} */
    @Override
    public E element() {
       if (size > 0) {
@@ -1385,6 +1442,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean equals(Object o) {
       return equalsImpl(this, o);
@@ -1398,15 +1456,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @return true if {@code o} equals {@code list}
     */
    static boolean equalsImpl(List<?> list, Object o) {
-      if (o == null || !(o instanceof List<?>)) return false;
+      if (o == null || !(o instanceof List<?>))
+         return false;
       List<?> l = (List<?>) o;
-      if (l.size() != list.size()) return false;
+      if (l.size() != list.size())
+         return false;
       Iterator<?> iter1 = l.iterator();
       Iterator<?> iter2 = list.iterator();
       while (iter1.hasNext()) {
          Object e1 = iter1.next();
          Object e2 = iter2.next();
-         if (e1 == null ? e2 != null : !e1.equals(e2)) return false;
+         if (e1 == null ? e2 != null : !e1.equals(e2))
+            return false;
       }
       return true;
    }
@@ -1439,7 +1500,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          Object o = iter.next();
          if (items.contains(o) == contains) {
             iter.remove();
-            if (!modified) modified = true;
+            if (!modified)
+               modified = true;
          }
       }
       return modified;
@@ -1457,7 +1519,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       HashSet<Object> items = new HashSet<Object>(coll);
       while (iter.hasNext()) {
          Object o = iter.next();
-         if (items.remove(o) && items.size() == 0) { return true; // found all objects in specified
+         if (items.remove(o) && items.size() == 0) {
+            return true; // found all objects in specified
 // collection
          }
       }
@@ -1472,8 +1535,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @return raw index or -1 if the specified list index is not valid
     */
    int find(int index) {
-      if (index < 0) { return -1; }
-      if (isOptimized) { return index; }
+      if (index < 0) {
+         return -1;
+      }
+      if (isOptimized) {
+         return index;
+      }
       int cur = head;
       while (cur != -1 && index > 0) {
          cur = next[cur];
@@ -1507,6 +1574,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return pos;
    }
 
+   /** {@inheritDoc} */
    @Override
    @SuppressWarnings("unchecked")
    public E get(int index) {
@@ -1514,17 +1582,23 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return (E) data[find(index)];
    }
 
+   /** {@inheritDoc} */
    @Override
    @SuppressWarnings("unchecked")
    public E getFirst() {
-      if (size == 0) { throw new NoSuchElementException("List is empty"); }
+      if (size == 0) {
+         throw new NoSuchElementException("List is empty");
+      }
       return (E) data[head];
    }
 
+   /** {@inheritDoc} */
    @Override
    @SuppressWarnings("unchecked")
    public E getLast() {
-      if (size == 0) { throw new NoSuchElementException("List is empty"); }
+      if (size == 0) {
+         throw new NoSuchElementException("List is empty");
+      }
       return (E) data[tail];
    }
 
@@ -1543,6 +1617,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       Arrays.fill(prev, oldPrev.length, prev.length, -1);
    }
 
+   /** {@inheritDoc} */
    @Override
    public int hashCode() {
       return hashCodeImpl(this);
@@ -1563,31 +1638,37 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public int indexOf(Object item) {
       return findObject(item, listIterator());
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean isEmpty() {
       return size == 0;
    }
 
+   /** {@inheritDoc} */
    @Override
    public Iterator<E> iterator() {
       return new IteratorImpl();
    }
 
+   /** {@inheritDoc} */
    @Override
    public int lastIndexOf(Object item) {
       return findObject(item, reverseIterator(size));
    }
 
+   /** {@inheritDoc} */
    @Override
    public ListIterator<E> listIterator() {
       return new IteratorImpl();
    }
 
+   /** {@inheritDoc} */
    @Override
    public ListIterator<E> listIterator(int idx) {
       checkWide(idx);
@@ -1627,17 +1708,20 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       growTo(len);
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean offer(E e) {
       return add(e);
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean offerFirst(E e) {
       add(0, e);
       return true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean offerLast(E e) {
       return add(e);
@@ -1684,6 +1768,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       isOptimized = true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E peek() {
       if (size > 0) {
@@ -1696,11 +1781,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public E peekFirst() {
       return peek();
    }
 
+   /** {@inheritDoc} */
    @Override
    public E peekLast() {
       if (size > 0) {
@@ -1713,6 +1800,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public E poll() {
       if (size > 0) {
@@ -1726,11 +1814,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public E pollFirst() {
       return poll();
    }
 
+   /** {@inheritDoc} */
    @Override
    public E pollLast() {
       if (size > 0) {
@@ -1744,6 +1834,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public E pop() {
       return removeFirst();
@@ -1780,6 +1871,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       isOptimized = true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E remove() {
       if (size > 0) {
@@ -1793,6 +1885,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
    }
 
+   /** {@inheritDoc} */
    @Override
    public E remove(int idx) {
       check(idx);
@@ -1803,12 +1896,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean remove(Object item) {
-      if (size == 0) return false;
+      if (size == 0)
+         return false;
       return removeObject(item, iterator(), true);
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean removeAll(Collection<?> coll) {
       return filter(coll, unorderedIterator(), true);
@@ -1824,15 +1920,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @return true if the item was found and removed or false if the item was not found
     */
    public boolean removeAll(Object item) {
-      if (size == 0) return false;
+      if (size == 0)
+         return false;
       return removeObject(item, iterator(), false);
    }
 
+   /** {@inheritDoc} */
    @Override
    public E removeFirst() {
       return remove();
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean removeFirstOccurrence(Object item) {
       return remove(item);
@@ -1873,17 +1972,21 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       size--;
    }
 
+   /** {@inheritDoc} */
    @Override
    public E removeLast() {
       return remove(size - 1);
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean removeLastOccurrence(Object item) {
-      if (size == 0) return false;
+      if (size == 0)
+         return false;
       return removeObject(item, reverseIterator(size), true);
    }
 
+   /** {@inheritDoc} */
    @Override
    public boolean retainAll(Collection<?> coll) {
       return filter(coll, unorderedIterator(), false);
@@ -1893,6 +1996,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return reverseIterator(listIterator(idx));
    }
 
+   /** {@inheritDoc} */
    @Override
    public E set(int idx, E e) {
       check(idx);
@@ -1903,6 +2007,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    public int size() {
       return size;
@@ -1948,14 +2053,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       isOptimized = true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public List<E> subList(int from, int to) {
       check(from);
       checkWide(to);
-      if (from > to) { throw new IllegalArgumentException("from > to"); }
+      if (from > to) {
+         throw new IllegalArgumentException("from > to");
+      }
       return new SubListImpl(from, to);
    }
 
+   /** {@inheritDoc} */
    @Override
    public Object[] toArray() {
       Object ret[] = new Object[size];
@@ -1971,6 +2080,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       return ret;
    }
 
+   /** {@inheritDoc} */
    @Override
    @SuppressWarnings("unchecked")
    public <T> T[] toArray(T[] array) {

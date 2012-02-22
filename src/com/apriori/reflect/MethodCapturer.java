@@ -68,12 +68,16 @@ public class MethodCapturer<E> {
     */
    public MethodCapturer(Set<Class<? extends E>> interfaces) {
       // check interfaces
-      if (interfaces.size() == 0) { throw new IllegalArgumentException(
-            "Must provide at least one interface"); }
+      if (interfaces.size() == 0) {
+         throw new IllegalArgumentException(
+               "Must provide at least one interface");
+      }
       HashSet<ClassLoader> classLoaders = new HashSet<ClassLoader>();
       for (Class<?> clazz : interfaces) {
-         if (!clazz.isInterface()) { throw new IllegalArgumentException(clazz.getName()
-               + " is not an interface"); }
+         if (!clazz.isInterface()) {
+            throw new IllegalArgumentException(clazz.getName()
+                  + " is not an interface");
+         }
          classLoaders.add(clazz.getClassLoader());
       }
       this.interfaces = new HashSet<Class<? extends E>>(interfaces); // defensive copy
@@ -101,7 +105,9 @@ public class MethodCapturer<E> {
          }
       }
       // couldn't create proxy!
-      if (proxy == null) { throw e; }
+      if (proxy == null) {
+         throw e;
+      }
       // done initializing!
    }
 

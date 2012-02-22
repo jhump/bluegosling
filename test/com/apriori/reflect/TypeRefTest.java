@@ -2,12 +2,16 @@ package com.apriori.reflect;
 
 import java.io.Serializable;
 import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -432,6 +436,9 @@ public class TypeRefTest extends TestCase {
             tr.toString());
    }
 
+   /**
+    * Tests {@link TypeRef#getTypeVariable(String)}.
+    */
    public void testGetTypeVariable() {
       TypeRef<?> tr = new TypeRef<Map<? extends Number, List<?>>>() {};
       TypeVariable<Class<?>> typeVarKey = tr.getTypeVariable("K");
@@ -449,6 +456,9 @@ public class TypeRefTest extends TestCase {
       assertSame(List.class.getTypeParameters()[0], typeVarElement);
    }
 
+   /**
+    * Tests {@link TypeRef#getTypeVariable(String)} with invalid variable names specified.
+    */
    public void testGetTypeVariableWithInvalidVariable() {
       TypeRef<?> tr = new TypeRef<Map<? extends Number, List<?>>>() {};
       try {
@@ -468,6 +478,9 @@ public class TypeRefTest extends TestCase {
       catch (NullPointerException expected) {}
    }
 
+   /**
+    * Tests {@link TypeRef#canResolveTypeVariable(String)}.
+    */
    public void testCanResolveTypeVariable() {
       TypeRef<?> tr = new TypeRef<Map<? extends Number, List<?>>>() {};
       assertFalse(tr.canResolveTypeVariable("K"));
@@ -487,6 +500,9 @@ public class TypeRefTest extends TestCase {
       catch (IllegalStateException expected) {}
    }
 
+   /**
+    * Tests {@link TypeRef#canResolveTypeVariable(String)} with invalid variable names specified.
+    */
    public void testCanResolveTypeVariableWithInvalidVariable() {
       TypeRef<?> tr = new TypeRef<Map<? extends Number, List<?>>>() {};
       try {
@@ -506,12 +522,20 @@ public class TypeRefTest extends TestCase {
       catch (NullPointerException expected) {}
    }
 
+   /**
+    * Tests that {@link TypeRef#isResolved()} correctly identifies when the current object is not
+    * resolved.
+    */
    public void testIsResolvedFalse() {
       TypeRef<?> tr = new TypeRef<Map<? extends Number, List<?>>>() {};
       assertFalse(tr.isResolved());
       assertFalse(tr.resolveTypeVariable("V").isResolved());
    }
 
+   /**
+    * Tests that {@link TypeRef#isResolved()} correctly identifies when the current object is
+    * resolved.
+    */
    public void testIsResolvedTrue() {
       TypeRef<?> tr = new TypeRef<Map<Comparable<Integer>, List<String>>>() {};
       assertTrue(tr.isResolved());
@@ -523,6 +547,12 @@ public class TypeRefTest extends TestCase {
       assertTrue(varRef.resolveTypeVariable("E").isResolved());
    }
 
+   /**
+    * Tests that {@link TypeRef#isResolved()} correctly identifies an object "mixed" resolution.
+    * A "mixed" resolution is one where an object is <em>not</em> resolved but one of its type
+    * variables is. This asserts that the type variable returns true but that the composite/parent
+    * type returns false.
+    */
    public void testIsResolvedMixed() {
       TypeRef<?> tr = new TypeRef<Map<? extends Comparable<Integer>, List<String>>>() {};
       assertFalse(tr.isResolved());
@@ -531,6 +561,10 @@ public class TypeRefTest extends TestCase {
       assertTrue(varRef.resolveTypeVariable("E").isResolved());
    }
 
+   /**
+    * Tests that {@link TypeRef#isResolved()} correctly identifies a primitive or non-generic type
+    * as resolved.
+    */
    public void testIsResolvedSimpleTypes() {
       TypeRef<?> tr = new TypeRef<Object>() {};
       assertTrue(tr.isResolved());
@@ -538,28 +572,47 @@ public class TypeRefTest extends TestCase {
       assertTrue(tr.isResolved());
    }
 
-   public void testSuperTypeRefFor1() {
+   /**
+    * Tests {@link TypeRef#superTypeRef()}, {@link TypeRef#superTypeRefFor(Class)}, and
+    * {@link TypeRef#interfaceTypeRefs()}.
+    */
+   public void testSuperTypeAndInterfaceTypeRefs() {
+      @SuppressWarnings("serial")
       abstract class ComparableList extends Number
             implements List<CharSequence>, Comparable<Collection<Number>> {}
 
       TypeRef<?> tr = new TypeRef<ComparableList>() {};
       assertTrue(tr.getTypeVariableNames().isEmpty());
       // superclass
+      assertSame(Number.class, tr.superTypeRef().asClass());
+      //   again, but this time using superTypeRefFor
       assertSame(Number.class, tr.superTypeRefFor(Number.class).asClass());
       // interface
-      TypeRef<?> superRef = tr.superTypeRefFor(List.class);
+      List<TypeRef<?>> ifaceTypes = new ArrayList<TypeRef<?>>(tr.interfaceTypeRefs());
+      assertEquals(2, ifaceTypes.size());
+      TypeRef<?> superRef = ifaceTypes.get(0);
+      assertSame(List.class, superRef.asClass());
+      assertSame(CharSequence.class, superRef.resolveTypeVariable("E").asClass());
+      //   again, but this time using superTypeRefFor
+      superRef = tr.superTypeRefFor(List.class);
       assertSame(List.class, superRef.asClass());
       assertSame(CharSequence.class, superRef.resolveTypeVariable("E").asClass());
       // another interface
-      superRef = tr.superTypeRefFor(Comparable.class);
+      superRef = ifaceTypes.get(1);
       assertSame(Comparable.class, superRef.asClass());
       TypeRef<?> varRef = superRef.resolveTypeVariable("T");
+      assertSame(Collection.class, varRef.asClass());
+      assertSame(Number.class, varRef.resolveTypeVariable("E").asClass());
+      //   again, but this time using superTypeRefFor
+      superRef = tr.superTypeRefFor(Comparable.class);
+      assertSame(Comparable.class, superRef.asClass());
+      varRef = superRef.resolveTypeVariable("T");
       assertSame(Collection.class, varRef.asClass());
       assertSame(Number.class, varRef.resolveTypeVariable("E").asClass());
    }
 
    // convoluted definitions to really stress test
-   // TypeRef.resolveTypeVariable(String) and TypeRef.setupTypeRefFor(Class)
+   // TypeRef.resolveTypeVariable(String) and TypeRef.superTypeRefFor(Class)
    interface Tuple5<M1, M2, M3, M4, M5> {}
 
    interface Pair<A, B> extends Tuple5<A, B, Void, Void, Void> {}
@@ -567,9 +620,16 @@ public class TypeRefTest extends TestCase {
    interface CrazySet<W extends GenericDeclaration, X, Y, Z> extends
          Serializable, TypeVariable<W>, Map<Pair<X, Y>, SortedSet<Z>> {}
 
+   @SuppressWarnings("serial")
    static abstract class MyCrazySet<S, T> implements CrazySet<Class<S>, S, String, T> {}
 
-   public void testSuperTypeRefFor2() {
+   /**
+    * Tests {@link TypeRef#superTypeRef()} and {@link TypeRef#superTypeRefFor(Class)} with a very
+    * complex example to hopefully catch any possible edge cases in the lookup/resolution of
+    * super types.
+    */
+   public void testSuperTypeRefForComplex() {
+      @SuppressWarnings("serial")
       abstract class MyCrazierSet<F> extends MyCrazySet<Number, Callable<F>> {}
 
       // first w/ wild-card
@@ -654,6 +714,9 @@ public class TypeRefTest extends TestCase {
       assertSame(Number.class, varRef.resolveTypeVariable("T").asClass());
    }
 
+   /**
+    * Tests {@link TypeRef#superTypeRefFor(Class)} when an invalid type is queried.
+    */
    public void testSuperTypeRefForInvalidType() {
       TypeRef<?> tr = new TypeRef<ArrayList<String>>() {};
 
@@ -676,6 +739,10 @@ public class TypeRefTest extends TestCase {
       catch (NullPointerException expected) {}
    }
 
+   /**
+    * Tests that {@link TypeRef#superTypeRef()} returns {@code null} for interfaces, {@code Object},
+    * primitives, and {@code void}.
+    */
    public void testSuperTypeRefNull() {
       // root of hierarchy
       TypeRef<?> tr = new TypeRef<Object>() {};
@@ -691,13 +758,268 @@ public class TypeRefTest extends TestCase {
       assertNull(tr.superTypeRef());
    }
 
-   // test isSuperTypeOf
+   /**
+    * Tests {@link TypeRef#isSubTypeOf(TypeRef)} under normal conditions.
+    */
+   public void testIsSubTypeOf() {
+      TypeRef<ArrayList<Map<String, String>>> ref =
+            new TypeRef<ArrayList<Map<String, String>>>() {};
+            
+      assertTrue(ref.isSubTypeOf(ref));
 
-   // test isSubTypeOf
+      TypeRef<Serializable> subRef1 = new TypeRef<Serializable>() {};
+      TypeRef<List<Map<String, String>>> subRef2 = new TypeRef<List<Map<String, String>>>() {};
+      TypeRef<ArrayList<Map<String, String>>> subRef3 =
+            new TypeRef<ArrayList<Map<String, String>>>() {};
+      
+      assertTrue(ref.isSubTypeOf(subRef1));
+      assertTrue(ref.isSubTypeOf(subRef2));
+      assertTrue(ref.isSubTypeOf(subRef3));
+      
+      TypeRef<List<Map<?, String>>> notSubRef1 = new TypeRef<List<Map<?, String>>>() {};
+      TypeRef<List<Map<String, Object>>> notSubRef2 = new TypeRef<List<Map<String, Object>>>() {};
+      TypeRef<List<?>> notSubRef3 = new TypeRef<List<?>>() {};
+      TypeRef<Double> notSubRef4 = new TypeRef<Double>() {};
 
-   // test isSubTypeOf
+      assertFalse(ref.isSubTypeOf(notSubRef1));
+      assertFalse(ref.isSubTypeOf(notSubRef2));
+      assertFalse(ref.isSubTypeOf(notSubRef3));
+      assertFalse(ref.isSubTypeOf(notSubRef4));
+      
+      // sneak one more useful one in here:
+      abstract class StringList implements List<String> {}
+      assertTrue(new TypeRef<StringList>() {}.isSubTypeOf(new TypeRef<List<String>>() {}));
+   }
 
-   // test static forClass
+   /**
+    * Tests {@link TypeRef#isSubTypeOf(TypeRef)} with array types.
+    */
+   public void testIsSubTypeOfArray() {
+      TypeRef<Object> ref1 = new TypeRef<Object>() {};
+      TypeRef<Object[]> ref2 = new TypeRef<Object[]>() {};
+      TypeRef<Collection<String>[]> ref3 = new TypeRef<Collection<String>[]>() {};
+      
+      assertTrue(ref2.isSubTypeOf(ref1));
+      assertTrue(ref3.isSubTypeOf(ref1));
+      assertTrue(ref3.isSubTypeOf(ref2));
 
-   // test static forType
+      assertFalse(ref1.isSubTypeOf(ref2));
+      assertFalse(ref1.isSubTypeOf(ref3));
+      assertFalse(ref2.isSubTypeOf(ref3));
+   }
+      
+   /**
+    * Tests {@link TypeRef#isSubTypeOf(TypeRef)} for a type that is not fully resolved (which means
+    * no other type can be considered a sub-type).
+    */
+   public void testIsSubTypeOfWildcard() {
+      TypeRef<ArrayList<? extends Comparable<? extends Number>>> ref =
+            new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
+
+      // a type is always a sub-type of itself, and if they're the same instance, then wildcard
+      // are allowed
+      assertTrue(ref.isSubTypeOf(ref));
+
+      TypeRef<List<? extends Comparable<? extends Number>>> notSubRef1 =
+            new TypeRef<List<? extends Comparable<? extends Number>>>() {};
+      TypeRef<ArrayList<? extends Comparable<? extends Number>>> notSubRef2 =
+            new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
+
+      assertFalse(ref.isSubTypeOf(notSubRef1));
+      assertFalse(ref.isSubTypeOf(notSubRef2));
+   }
+   
+   /**
+    * Tests that {@link TypeRef#isSubTypeOf(TypeRef)} throws an exception on {@code null} input.
+    */
+   public void testIsSubTypeOfNull() {
+      TypeRef<ArrayList<? extends Comparable<? extends Number>>> ref =
+            new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
+            
+      try {
+         assertFalse(ref.isSubTypeOf(null));
+         fail();
+      } catch (NullPointerException expected) {
+      }
+   }
+
+   /**
+    * Tests {@link TypeRef#isSuperTypeOf(TypeRef)} under normal conditions.
+    */
+   public void testIsSuperTypeOf() {
+      TypeRef<Collection<Map<String, String>>> ref =
+            new TypeRef<Collection<Map<String, String>>>() {};
+            
+      TypeRef<List<Map<String, String>>> superRef1 = new TypeRef<List<Map<String, String>>>() {};
+      TypeRef<LinkedHashSet<Map<String, String>>> superRef2 =
+            new TypeRef<LinkedHashSet<Map<String, String>>>() {};
+      TypeRef<Collection<Map<String, String>>> superRef3 =
+            new TypeRef<Collection<Map<String, String>>>() {};
+      
+      assertTrue(ref.isSuperTypeOf(superRef1));
+      assertTrue(ref.isSuperTypeOf(superRef2));
+      assertTrue(ref.isSuperTypeOf(superRef3));
+      
+      TypeRef<Collection<Map<?, String>>> notSuperRef1 =
+            new TypeRef<Collection<Map<?, String>>>() {};
+      TypeRef<Collection<Map<String, Object>>> notSuperRef2 =
+            new TypeRef<Collection<Map<String, Object>>>() {};
+      TypeRef<Collection<?>> notSuperRef3 = new TypeRef<Collection<?>>() {};
+      TypeRef<Map<String, Number>> notSuperRef4 = new TypeRef<Map<String, Number>>() {};
+
+      assertFalse(ref.isSuperTypeOf(notSuperRef1));
+      assertFalse(ref.isSuperTypeOf(notSuperRef2));
+      assertFalse(ref.isSuperTypeOf(notSuperRef3));
+      assertFalse(ref.isSuperTypeOf(notSuperRef4));
+   }
+
+   /**
+    * Tests {@link TypeRef#isSuperTypeOf(TypeRef)} with array types.
+    */
+   public void testIsSuperTypeOfArray() {
+      TypeRef<Object> ref1 = new TypeRef<Object>() {};
+      TypeRef<Object[]> ref2 = new TypeRef<Object[]>() {};
+      TypeRef<Collection<String>[]> ref3 = new TypeRef<Collection<String>[]>() {};
+      
+      assertTrue(ref1.isSuperTypeOf(ref2));
+      assertTrue(ref1.isSuperTypeOf(ref3));
+      assertTrue(ref2.isSuperTypeOf(ref3));
+
+      assertFalse(ref2.isSuperTypeOf(ref1));
+      assertFalse(ref3.isSuperTypeOf(ref1));
+      assertFalse(ref3.isSuperTypeOf(ref2));
+   }
+      
+   /**
+    * Tests {@link TypeRef#isSuperTypeOf(TypeRef)} for a type that is not fully resolved (which
+    * means no other type can be considered a super type).
+    */
+   public void testIsSuperTypeOfWildcard() {
+      TypeRef<List<? extends Comparable<? extends Number>>> ref =
+            new TypeRef<List<? extends Comparable<? extends Number>>>() {};
+
+      // a type is always a super type of itself, and if they're the same instance, then wildcard
+      // are allowed
+      assertTrue(ref.isSuperTypeOf(ref));
+            
+      TypeRef<ArrayList<? extends Comparable<? extends Number>>> notSuperRef1 =
+            new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
+      TypeRef<List<? extends Comparable<? extends Number>>> notSuperRef2 =
+            new TypeRef<List<? extends Comparable<? extends Number>>>() {};
+
+      assertFalse(ref.isSuperTypeOf(notSuperRef1));
+      assertFalse(ref.isSuperTypeOf(notSuperRef2));
+   }
+   
+   /**
+    * Tests that {@link TypeRef#isSuperTypeOf(TypeRef)} throws an exception on {@code null} input.
+    */
+   public void testIsSuperTypeOfNull() {
+      TypeRef<ArrayList<? extends Comparable<? extends Number>>> ref =
+            new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
+            
+      try {
+         assertFalse(ref.isSuperTypeOf(null));
+         fail();
+      } catch (NullPointerException expected) {
+      }
+   }
+
+   /**
+    * Tests {@link TypeRef#forClass(Class)}.
+    */
+   public void testForClass() {
+      TypeRef<?> ref = TypeRef.forClass(int.class);
+      assertSame(int.class, ref.asClass());
+      assertTrue(ref.isResolved());
+
+      ref = TypeRef.forClass(String[].class);
+      assertSame(String[].class, ref.asClass());
+      assertTrue(ref.isResolved());
+
+      ref = TypeRef.forClass(LinkedHashSet.class);
+      assertSame(LinkedHashSet.class, ref.asClass());
+      assertEquals(Arrays.asList("E"), ref.getTypeVariableNames());
+      // raw class means we have no info on generic type parameters
+      assertFalse(ref.isResolved());
+      assertFalse(ref.canResolveTypeVariable("E"));
+   }
+
+   /**
+    * Tests {@link TypeRef#forClass(Class)} with {@code null} input.
+    */
+   public void testForClassNull() {
+      try {
+         TypeRef.forClass(null);
+         fail();
+      } catch (NullPointerException expected) {
+      }
+   }
+   
+   /**
+    * Tests {@link TypeRef#forType(Type)}.
+    */
+   public void testForType() {
+      abstract class NumberList<T extends Number> implements List<T> {
+         @SuppressWarnings("unused")
+         Map<Class<? extends Number>, T> field;
+      }
+      abstract class BigDecimalList extends NumberList<BigDecimal> {
+      }
+      
+      TypeRef<?> ref = TypeRef.forType(NumberList.class.getGenericInterfaces()[0]);
+      assertSame(List.class, ref.asClass());
+      assertFalse(ref.isResolved());
+      assertFalse(ref.canResolveTypeVariable("E"));
+      
+      ref = TypeRef.forType(NumberList.class.getDeclaredFields()[0].getGenericType());
+      assertSame(Map.class, ref.asClass());
+      assertFalse(ref.isResolved());
+      assertFalse(ref.canResolveTypeVariable("V"));
+      ref = ref.resolveTypeVariable("K");
+      assertSame(Class.class, ref.asClass());
+      assertFalse(ref.canResolveTypeVariable("T"));
+
+      ref = TypeRef.forType(BigDecimalList.class.getGenericSuperclass());
+      assertSame(NumberList.class, ref.asClass());
+      assertTrue(ref.isResolved());
+      assertSame(BigDecimal.class, ref.resolveTypeVariable("T").asClass());
+   }
+
+   /**
+    * Tests {@link TypeRef#forType(Type)} with input that cannot actually be resolved into a
+    * {@code TypeRef}.
+    */
+   public void testForTypeInvalid() {
+      // type parameter
+      try {
+         TypeRef.forType(Comparable.class.getTypeParameters()[0]);
+      } catch (IllegalArgumentException expected) {
+      }
+      // wildcard
+      try {
+         TypeRef.forType(new WildcardType() {
+            @Override
+            public Type[] getUpperBounds() {
+               return new Type[] { Object.class, ArrayList.class.getGenericSuperclass() };
+            }
+            @Override
+            public Type[] getLowerBounds() {
+               return new Type[0];
+            }
+         });
+      } catch (IllegalArgumentException expected) {
+      }
+   }
+
+   /**
+    * Tests {@link TypeRef#forType(Type)} with {@code null} input.
+    */
+   public void testForTypeNull() {
+      try {
+         TypeRef.forType(null);
+         fail();
+      } catch (NullPointerException expected) {
+      }
+   }
 }

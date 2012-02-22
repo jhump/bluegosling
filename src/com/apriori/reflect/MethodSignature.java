@@ -40,9 +40,13 @@ public class MethodSignature {
     *            specified argument types is {@code null}
     */
    public MethodSignature(String name, Class<?>... argTypes) {
-      if (name == null) { throw new NullPointerException(); }
+      if (name == null) {
+         throw new NullPointerException();
+      }
       for (Class<?> arg : argTypes) {
-         if (arg == null) { throw new NullPointerException(); }
+         if (arg == null) {
+            throw new NullPointerException();
+         }
       }
       this.name = name;
       this.argTypes = Arrays.asList(argTypes);
