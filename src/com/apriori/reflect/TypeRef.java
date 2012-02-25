@@ -824,7 +824,7 @@ public abstract class TypeRef<T> {
     * other token are is fully resolved then this will return false, even if the Java compiler might
     * treat it as a super type due to compatible bounds.
     * 
-    * @param ref a {@code Type Ref}
+    * @param ref a {@code TypeRef}
     * @return true if {@code ref} represents a super type of this
     */
    public boolean isSuperTypeOf(TypeRef<?> ref) {
