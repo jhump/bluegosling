@@ -1492,7 +1492,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       // Set, we'll live with the runtime it provides -- which is hopefully no
       // worse than O(log n), like for TreeSet, which changes this batch
       // operation from O(n) to O(n log n).
-      if (!(items instanceof Set<?>) && items.size() > 40) {
+      if (!(items instanceof Set<?>) && items.size() > 100) {
          items = new HashSet<Object>(items);
       }
       boolean modified = false;

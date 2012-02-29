@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -7,10 +8,13 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
+import java.util.SortedSet;
 
 public class SortedArraySet<E> implements NavigableSet<E> {
 
    private static final int DEFAULT_INITIAL_CAPACITY = 10;
+   
+   private static final int THRESHOLD_FOR_BULK_OP = 100;
 
    private class IteratorImpl implements Iterator<E> {
 
@@ -237,12 +241,12 @@ public class SortedArraySet<E> implements NavigableSet<E> {
 
       @Override
       public NavigableSet<E> headSet(E toElement) {
-         return (NavigableSet<E>) base.tailSet(toElement);
+         return new DescendingSetImpl<E>((NavigableSet<E>) base.tailSet(toElement));
       }
 
       @Override
       public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-         return base.tailSet(toElement, inclusive);
+         return new DescendingSetImpl<E>(base.tailSet(toElement, inclusive));
       }
 
       @Override
@@ -284,15 +288,234 @@ public class SortedArraySet<E> implements NavigableSet<E> {
 
       @Override
       public NavigableSet<E> tailSet(E fromElement) {
-         return (NavigableSet<E>) base.headSet(fromElement);
+         return new DescendingSetImpl<E>((NavigableSet<E>) base.headSet(fromElement));
       }
 
       @Override
       public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-         return base.headSet(fromElement, inclusive);
+         return new DescendingSetImpl<E>(base.headSet(fromElement, inclusive));
       }
    }
 
+   private class SubSetImpl implements NavigableSet<E> {
+      
+      public SubSetImpl(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
+         // TODO
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public Comparator<? super E> comparator() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E first() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E last() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean add(E arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean addAll(Collection<? extends E> arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public void clear() {
+         // TODO implement me
+         
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean contains(Object arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean containsAll(Collection<?> arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean isEmpty() {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean remove(Object arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean removeAll(Collection<?> arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public boolean retainAll(Collection<?> arg0) {
+         // TODO implement me
+         return false;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public int size() {
+         // TODO implement me
+         return 0;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public Object[] toArray() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public <T> T[] toArray(T[] arg0) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E ceiling(E e) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public Iterator<E> descendingIterator() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> descendingSet() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E floor(E e) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public SortedSet<E> headSet(E toElement) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E higher(E e) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public Iterator<E> iterator() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E lower(E e) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E pollFirst() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E pollLast() {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public SortedSet<E> subSet(E fromElement, E toElement) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
+            boolean toInclusive) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public SortedSet<E> tailSet(E fromElement) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+         // TODO implement me
+         return null;
+      }
+      
+   }
+   
    Object data[];
    int size;
    private Comparator<? super E> comp;
@@ -311,6 +534,9 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    }
 
    public SortedArraySet(int initialCapacity, Comparator<? super E> comp) {
+      if (initialCapacity < 0) {
+         throw new IllegalArgumentException("initialCapacity should not be negative");
+      }
       data = new Object[initialCapacity];
       size = 0;
       this.comp = comp;
@@ -327,6 +553,11 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       for (E item : source) {
          data[i++] = item;
       }
+      sort();
+      removeDups();
+   }
+   
+   private void sort() {
       if (comp == null) {
          Arrays.sort(data);
       }
@@ -336,6 +567,32 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          Arrays.sort(toSort, comp);
       }
    }
+   
+   @SuppressWarnings("unchecked")
+   private void removeDups() {
+      int numUnique = 0;
+      for (int i = 1; i < size; i++) {
+         int c;
+         if (comp == null) {
+            c = ((Comparable<Object>) data[i]).compareTo(data[numUnique]);
+         } else {
+            c = comp.compare((E) data[i], (E) data[numUnique]);
+         }
+         if (c != 0) {
+            // not a dup!
+            numUnique++;
+            // move if necessary to keep unique items consolidated at the beginning of array
+            if (numUnique != i) {
+               data[numUnique] = data[i];
+            }
+         }
+      }
+      for (int i = numUnique + 1; i < size; i++) {
+         // clear out the rest of the array, effectively null'ing out any dup references
+         data[i] = null;
+      }
+      size = numUnique;
+   }
 
    void checkMod(int someModCount) {
       if (someModCount != modCount) {
@@ -344,80 +601,76 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    }
 
    private void maybeGrowArray() {
-      if (data.length > size) {
+      int prevLen = data.length;
+      if (prevLen > size) {
          return;
       }
-      // TODO: grow it
+      int len = prevLen << 1;
+      // avoid overflow
+      if (len <= prevLen) {
+         len = Integer.MAX_VALUE - 8;
+      }
+      Object oldData[] = data;
+      data = new Object[len];
+      System.arraycopy(oldData, 0, data, 0, oldData.length);
       modCount++;
    }
 
    @SuppressWarnings("unchecked")
-   private int findIndexWithoutComparator(Object o, int lo, int hi) {
-      int mid = (hi + lo) >> 1;
-      int c = ((Comparable<Object>) data[lo]).compareTo(o);
-      if (c == 0) {
-         return mid;
-      }
-      else if (c < 0) {
-         if (hi == mid) {
-            return -(hi + 2);
-         }
-         return findIndexWithoutComparator(o, mid + 1, hi);
-      }
-      else {
-         if (lo == mid) {
-            return -(lo + 1);
-         }
-         return findIndexWithoutComparator(o, lo, mid - 1);
-      }
-   }
-
-   @SuppressWarnings("unchecked")
-   private int findIndexWithComparator(Object o, int lo, int hi) {
-      int mid = (hi + lo) >> 1;
-      int c = comp.compare((E) data[mid], (E) o);
-      if (c == 0) {
-         return mid;
-      }
-      else if (c < 0) {
-         if (hi == mid) {
-            return -(hi + 2);
-         }
-         return findIndexWithComparator(o, mid + 1, hi);
-      }
-      else {
-         if (lo == mid) {
-            return -(lo + 1);
-         }
-         return findIndexWithComparator(o, lo, mid - 1);
-      }
-   }
-
-   private int findIndex(Object element) {
+   private int findIndex(Object o) {
       // binary search
-      if (comp == null) {
-         return findIndexWithoutComparator(element, 0, size - 1);
-      }
-      else {
-         return findIndexWithComparator(element, 0, size - 1);
+      int lo = 0;
+      int hi = size - 1;
+      while (true) {
+         int mid = (hi + lo) >> 1;
+         int c;
+         if (comp == null) {
+            c = ((Comparable<Object>) data[mid]).compareTo(o);
+         } else {
+            c = comp.compare((E) data[mid], (E) o);
+         }
+         if (c == 0) {
+            return mid;
+         }
+         else if (c < 0) {
+            if (hi == mid) {
+               return -(hi + 2);
+            }
+            lo = mid + 1;
+         }
+         else {
+            if (lo == mid) {
+               return -(lo + 1);
+            }
+            hi = mid - 1;
+         }
       }
    }
 
    private void insertItem(E element, int index) {
       maybeGrowArray();
-      // TODO
+      if (index < size) {
+         System.arraycopy(data, index, data, index + 1, size - index);
+      }
+      data[index] = element;
       modCount++;
       size++;
    }
 
    void removeItem(int index) {
-      // TODO
+      if (index < size - 1) {
+         System.arraycopy(data, index + 1, data, index, size - 1 - index);
+      }
+      data[size - 1] = null; // clear last reference
       modCount++;
       size--;
    }
 
    public void trimToSize() {
-      // TODO
+      if (data.length != size) {
+         data = Arrays.copyOf(data, size);
+         modCount++;
+      }
    }
 
    /** {@inheritDoc} */
@@ -434,13 +687,34 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public boolean addAll(Collection<? extends E> elements) {
+      int otherSize = elements.size();
       boolean ret = false;
-      for (E e : elements) {
-         if (add(e)) {
-            ret = true;
+      
+      // Since adding an item is O(n) due to need to shift items around in internal array, the
+      // simple approach degenerates into quadratic performance: O(m *n), where m is size of
+      // specified collection and n is size of this set. So we instead defer the O(n) operation to
+      // the end and do it only once. This is done by just appending elements into an array
+      // (constant time for adding a single item) and then sort and remove duplicates in one final
+      // pass at the end. That makes the whole algorithm O(m * log n).
+      
+      if (size < THRESHOLD_FOR_BULK_OP && otherSize < THRESHOLD_FOR_BULK_OP) {
+         // simple approach is fine for small collections since linear ops use very fast
+         // System.arraycopy which offsets algorithmic inefficiencies
+         for (E e : elements) {
+            if (add(e)) {
+               ret = true;
+            }
          }
+         return ret;
       }
-      return ret;
+      
+      Object newData[] = new Object[size + otherSize];
+      newData = elements.toArray(newData);
+      System.arraycopy(data, 0, newData, otherSize, size);
+      int oldSize = size;
+      sort();
+      removeDups();
+      return size > oldSize;
    }
 
    /** {@inheritDoc} */
@@ -496,11 +770,50 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public boolean removeAll(Collection<?> elements) {
+      if (size == 0) {
+         return false;
+      }
+      
+      // Since removing an item is O(n) due to need to shift items around in internal array, the
+      // simple approach degenerates into quadratic performance: O(m *n), where m is size of
+      // specified collection and n is size of this set. So we instead defer the O(n) operation to
+      // the end and do it only once. This is done by overwriting removed elements with a duplicate
+      // value and then doing a single O(n) de-dup pass at the end. That makes the whole algorithm
+      // O(m * log n).
+      
       boolean ret = false;
-      for (Object o : elements) {
-         if (remove(o)) {
-            ret = true;
+      if (elements.size() < THRESHOLD_FOR_BULK_OP && size < THRESHOLD_FOR_BULK_OP) {
+         // simple approach is fine for small collections since linear ops use very fast
+         // System.arraycopy which offsets algorithmic inefficiencies
+         for (Object o : elements) {
+            if (remove(o)) {
+               ret = true;
+            }
          }
+         return ret;
+      }
+      
+      for (Object o : elements) {
+         int idx = findIndex(o);
+         if (idx >= 0) {
+            if (size == 1) {
+               size = 0;
+               data[0] = null;
+               // nothing else that can be removed so skip out
+               return true;
+            }
+            ret = true;
+            if (idx == 0) {
+               data[0] = data[1];
+            }
+            else {
+               data[idx] = data[idx-1];
+            }
+         }
+      }
+      if (ret) {
+         removeDups();
+         modCount++;
       }
       return ret;
    }
@@ -508,7 +821,33 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public boolean retainAll(Collection<?> elements) {
-      // TODO Auto-generated method stub
+      boolean ret = false;
+
+      // Similar performance notes as removeAll(). We use a bulk strategy for larger collections
+      // to get O(m log n) performance instead of O(m * n).
+      
+      if (elements.size() < THRESHOLD_FOR_BULK_OP && size < THRESHOLD_FOR_BULK_OP) {
+         // simple approach is acceptable for small collections
+         for (Iterator<E> iter = iterator(); iter.hasNext(); ) {
+            if (!elements.contains(iter.next())) {
+               iter.remove();
+               ret = true;
+            }
+         }
+         return ret;
+      }
+      
+      Object newData[] = new Object[elements.size()];
+      int newSize = 0;
+      for (Object o : elements) {
+         int i = findIndex(o);
+         if (i >= 0) {
+            newData[newSize++] = data[i];
+         }
+      }
+      data = newData;
+      size = newSize;
+      removeDups();
       modCount++;
       return false;
    }
@@ -522,15 +861,23 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public Object[] toArray() {
-      // TODO Auto-generated method stub
-      return null;
+      Object ret[] = new Object[size];
+      System.arraycopy(data, 0, ret, 0, size);
+      return ret;
    }
 
    /** {@inheritDoc} */
    @Override
+   @SuppressWarnings("unchecked")
    public <T> T[] toArray(T[] a) {
-      // TODO Auto-generated method stub
-      return null;
+      if (a.length < size) {
+         a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
+      }
+      System.arraycopy(data, 0, a, 0, size);
+      if (a.length > size) {
+         a[size] = null;
+      }
+      return a;
    }
 
    /** {@inheritDoc} */
@@ -553,8 +900,7 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> headSet(E toElement) {
-      // TODO Auto-generated method stub
-      return null;
+      return headSet(toElement, false);
    }
 
    /** {@inheritDoc} */
@@ -567,26 +913,32 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       E ret = (E) data[size - 1];
       return ret;
    }
-
+   
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> subSet(E fromElement, E toElement) {
-      // TODO Auto-generated method stub
-      return null;
+      return subSet(fromElement, true, toElement, false);
    }
 
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement) {
-      // TODO Auto-generated method stub
-      return null;
+      return tailSet(fromElement, true);
    }
 
    /** {@inheritDoc} */
    @Override
    public E ceiling(E e) {
-      // TODO Auto-generated method stub
-      return null;
+      int idx = findIndex(e);
+      if (idx < 0) {
+         idx = -idx - 1;
+         if (idx >= size) {
+            return null;
+         }
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[idx];
+      return ret;
    }
 
    /** {@inheritDoc} */
@@ -604,29 +956,61 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    /** {@inheritDoc} */
    @Override
    public E floor(E e) {
-      // TODO Auto-generated method stub
-      return null;
+      int idx = findIndex(e);
+      if (idx < 0) {
+         idx = -idx - 2;
+         if (idx < 0) {
+            return null;
+         }
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[idx];
+      return ret;
    }
 
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      if (toElement == null) {
+         throw new NullPointerException();
+      }
+      return new SubSetImpl(null, false, toElement, inclusive);
    }
 
    /** {@inheritDoc} */
    @Override
    public E higher(E e) {
-      // TODO Auto-generated method stub
-      return null;
+      int idx = findIndex(e);
+      if (idx >= 0) {
+         return null;
+      }
+      else {
+         idx = -idx - 1;
+         if (idx >= size) {
+            return null;
+         }
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[idx];
+      return ret;
    }
 
    /** {@inheritDoc} */
    @Override
    public E lower(E e) {
-      // TODO Auto-generated method stub
-      return null;
+      int idx = findIndex(e);
+      if (idx >= 0) {
+         return null;
+      }
+      else {
+         idx = -idx - 2;
+         if (idx < 0) {
+            return null;
+         }
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[idx];
+      return ret;
    }
 
    /** {@inheritDoc} */
@@ -655,14 +1039,18 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    @Override
    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
          boolean toInclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      if (fromElement == null || toElement == null) {
+         throw new NullPointerException();
+      }
+      return new SubSetImpl(fromElement, fromInclusive, toElement, toInclusive);
    }
 
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      if (fromElement == null) {
+         throw new NullPointerException();
+      }
+      return new SubSetImpl(fromElement, inclusive, null, false);
    }
 }
