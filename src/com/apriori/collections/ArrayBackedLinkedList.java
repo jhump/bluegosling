@@ -180,6 +180,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          this.pos = pos;
          this.idx = idx;
       }
+      
+      protected void resetModCount() {
+         myModCount = modCount;
+      }
 
       @Override
       public void add(E e) {
@@ -199,7 +203,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
             pos = addInternal(addAt, e);
          }
          idx++;
-         myModCount = modCount;
+         resetModCount();
          lastFetchModified = IteratorModifiedState.ADDED;
       }
 
@@ -290,7 +294,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
             idx--;
          }
          removeInternal(lastFetched);
-         myModCount = modCount;
+         resetModCount();
          lastFetchModified = IteratorModifiedState.REMOVED;
       }
 
@@ -399,9 +403,20 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       @Override
+      public boolean equals(Object o) {
+         return equalsImpl(ArrayBackedLinkedList.this, o);
+      }
+
+      @Override
       public E get(int idx) {
          checkOptimized();
          return ArrayBackedLinkedList.this.get(idx);
+      }
+
+      @Override
+      public int hashCode() {
+         checkOptimized();
+         return hashCodeImpl(ArrayBackedLinkedList.this);
       }
 
       @Override
@@ -488,6 +503,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkOptimized();
          return ArrayBackedLinkedList.this.toArray(array);
       }
+      
+      @Override
+      public String toString() {
+         checkOptimized();
+         return toStringImpl(ArrayBackedLinkedList.this);
+      }
    }
 
    /**
@@ -501,7 +522,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       int high;
       int subHead;
       int subTail;
-      private int myModCount;
+      int myModCount;
 
       SubListImpl(int low, int high) {
          this.low = low;
@@ -536,7 +557,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          }
          high++;
          myModCount = modCount;
-         return false;
+         return true;
       }
 
       @Override
@@ -545,9 +566,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
             add(e);
          }
          else {
-            checkMod(myModCount);
             checkWide(idx);
-            ArrayBackedLinkedList.this.add(idx - low, e);
+            checkMod(myModCount);
+            ArrayBackedLinkedList.this.add(low + idx, e);
             high++;
             myModCount = modCount;
          }
@@ -572,8 +593,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void check(int index) {
-         if (low + index >= high) {
-            throw new IndexOutOfBoundsException("" + index + " >= " + size);
+         if (index >= high - low) {
+            throw new IndexOutOfBoundsException("" + index + " >= " + (high - low));
          }
          else if (index < 0) {
             throw new IndexOutOfBoundsException("" + index + " < 0");
@@ -581,8 +602,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       private void checkWide(int index) {
-         if (low + index > high) {
-            throw new IndexOutOfBoundsException("" + index + " >= " + size);
+         if (index > high - low) {
+            throw new IndexOutOfBoundsException("" + index + " > " + (high - low));
          }
          else if (index < 0) {
             throw new IndexOutOfBoundsException("" + index + " < 0");
@@ -594,6 +615,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkMod(myModCount);
          Iterator<E> iter = iterator();
          while (iter.hasNext()) {
+            iter.next();
             iter.remove();
          }
          myModCount = modCount;
@@ -689,17 +711,17 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public boolean removeAll(Collection<?> coll) {
          checkMod(myModCount);
-         filter(coll, iterator(), true);
+         boolean ret = filter(coll, iterator(), true);
          myModCount = modCount;
-         return false;
+         return ret;
       }
 
       @Override
       public boolean retainAll(Collection<?> coll) {
          checkMod(myModCount);
-         filter(coll, iterator(), false);
+         boolean ret = filter(coll, iterator(), false);
          myModCount = modCount;
-         return false;
+         return ret;
       }
 
       @Override
@@ -753,7 +775,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkMod(myModCount);
          int sz = high - low;
          if (array.length < sz) {
-            array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
+            array = (T[]) Array.newInstance(array.getClass().getComponentType(), sz);
          }
          if (isOptimized) {
             System.arraycopy(data, low, array, 0, sz);
@@ -768,6 +790,11 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
             array[sz] = null;
          }
          return array;
+      }
+      
+      @Override
+      public String toString() {
+         return toStringImpl(this);
       }
    }
 
@@ -792,6 +819,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       SubListIteratorImpl(SubListImpl sublist) {
          super(sublist.low - 1);
          this.sublist = sublist;
+         // at same rev as source sub-list
+         myModCount = sublist.myModCount;
       }
 
       /**
@@ -804,8 +833,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       SubListIteratorImpl(SubListImpl sublist, int idx) {
          super(idx);
          this.sublist = sublist;
+         // at same rev as source sub-list
+         myModCount = sublist.myModCount;
       }
 
+      @Override
+      protected void resetModCount() {
+         myModCount = modCount;
+         // update sublist, too, so sublist doesn't throw concurrent modifications from add/remove
+         // operations from its iterator
+         sublist.myModCount = modCount;
+      }
+      
       @Override
       public void add(E e) {
          super.add(e);
@@ -838,17 +877,17 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public boolean hasNext() {
-         return idx != sublist.high;
+         return idx != sublist.high - 1;
       }
 
       @Override
       public boolean hasPrevious() {
-         return idx != sublist.low;
+         return idx >= sublist.low;
       }
 
       @Override
       protected void inc() {
-         if (idx == sublist.high) {
+         if (idx == sublist.high - 1) {
             throw new NoSuchElementException("At end of list");
          }
          super.inc();
@@ -1520,8 +1559,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       while (iter.hasNext()) {
          Object o = iter.next();
          if (items.remove(o) && items.size() == 0) {
-            return true; // found all objects in specified
-// collection
+            return true; // found all objects in specified collection
          }
       }
       // items left in set are ones not found
@@ -2142,5 +2180,28 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       for (E e : this) {
          out.writeObject(e);
       }
+   }
+   
+   /** {@inheritDoc} */
+   @Override
+   public String toString() {
+      return toStringImpl(this);
+   }
+   
+   static String toStringImpl(List<?> list) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("[");
+      boolean first = true;
+      for (Object item : list) {
+         if (first) {
+            first = false;
+         } else {
+            sb.append(",");
+         }
+         sb.append(" ");
+         sb.append(String.valueOf(item));
+      }
+      sb.append(" ]");
+      return sb.toString();
    }
 }

@@ -8,6 +8,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.SortedSet;
 
 public class SortedArraySet<E> implements NavigableSet<E> {
@@ -42,7 +43,9 @@ public class SortedArraySet<E> implements NavigableSet<E> {
 
       @Override
       public E next() {
-         // check/throw
+         if (idx >= limit) {
+            throw new NoSuchElementException();
+         }
          checkMod(myModCount);
          removed = false;
          @SuppressWarnings("unchecked")
@@ -53,10 +56,12 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       @Override
       public void remove() {
          if (removed) {
-            // TODO throw
+            // already removed
+            throw new IllegalStateException("remove() already called");
          }
          else if (idx == start) {
-            // TODO throw
+            // no element yet to remove
+            throw new IllegalStateException("next() never called");
          }
          checkMod(myModCount);
          removeItem(--idx);
@@ -91,7 +96,9 @@ public class SortedArraySet<E> implements NavigableSet<E> {
 
       @Override
       public E next() {
-         // check/throw
+         if (idx < limit) {
+            throw new NoSuchElementException();
+         }
          checkMod(myModCount);
          removed = false;
          @SuppressWarnings("unchecked")
@@ -102,10 +109,12 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       @Override
       public void remove() {
          if (removed) {
-            // TODO throw
+            // already removed
+            throw new IllegalStateException("remove() already called");
          }
          else if (idx == start - 1) {
-            // TODO throw
+            // no element yet to remove
+            throw new IllegalStateException("next() never called");
          }
          checkMod(myModCount);
          removeItem(idx + 1);
@@ -294,6 +303,21 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       @Override
       public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
          return new DescendingSetImpl<E>(base.headSet(fromElement, inclusive));
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         return base.equals(o);
+      }
+      
+      @Override
+      public int hashCode() {
+         return base.hashCode();
+      }
+      
+      @Override
+      public String toString() {
+         return toStringImpl(this);
       }
    }
 
@@ -514,6 +538,20 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          return null;
       }
       
+      @Override
+      public boolean equals(Object o) {
+         return equalsImpl(this, o);
+      }
+      
+      @Override
+      public int hashCode() {
+         return hashCodeImpl(this);
+      }
+      
+      @Override
+      public String toString() {
+         return toStringImpl(this);
+      }
    }
    
    Object data[];
@@ -619,6 +657,9 @@ public class SortedArraySet<E> implements NavigableSet<E> {
    @SuppressWarnings("unchecked")
    private int findIndex(Object o) {
       // binary search
+      if (size == 0) {
+         return -1;
+      }
       int lo = 0;
       int hi = size - 1;
       while (true) {
@@ -1052,5 +1093,68 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          throw new NullPointerException();
       }
       return new SubSetImpl(fromElement, inclusive, null, false);
+   }
+   
+   /** {@inheritDoc} */
+   @Override
+   public boolean equals(Object o) {
+      return equalsImpl(this, o);
+   }
+   
+   static boolean equalsImpl(Set<?> set, Object o) {
+      if (o instanceof Set) {
+         Set<?> other = (Set<?>) o;
+         if (other.size() == set.size()) {
+            for (Object item : set) {
+               if (!other.contains(item)) {
+                  return false;
+               }
+            }
+            return true;
+         } else {
+            return false;
+         }
+      } else {
+         return false;
+      }
+   }
+   
+   /** {@inheritDoc} */
+   @Override
+   public int hashCode() {
+      return hashCodeImpl(this);
+   }
+   
+   static int hashCodeImpl(Set<?> set) {
+      int hashCode = 0;
+      for (Object item : set) {
+         if (item != null) {
+            hashCode += item.hashCode();
+         }
+      }
+      return hashCode;
+   }
+   
+   /** {@inheritDoc} */
+   @Override
+   public String toString() {
+      return toStringImpl(this);
+   }
+   
+   static String toStringImpl(Set<?> set) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("[");
+      boolean first = true;
+      for (Object item : set) {
+         if (first) {
+            first = false;
+         } else {
+            sb.append(",");
+         }
+         sb.append(" ");
+         sb.append(String.valueOf(item));
+      }
+      sb.append(" ]");
+      return sb.toString();
    }
 }
