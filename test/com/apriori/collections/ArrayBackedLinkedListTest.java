@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 public class ArrayBackedLinkedListTest extends AbstractTestList {
 
    /**
-    * Creates a new test suite that includes all test case (including Apache {@code BulkTest}s,
+    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
     * which recursively include cases for sub-lists, iterators, etc.).
     *
     * @return a test suite that includes all test cases for {@code ArrayBackedLinkedList}

@@ -127,18 +127,18 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       /**
        * The iterator's current raw index into the buffer.
        */
-      protected int pos;
+      int pos;
 
       /**
        * The iterator's current list index.
        */
-      protected int idx;
+      int idx;
 
       /**
        * The raw index into the buffer for the item last retrieved by either {@code next()} or
        * {@code previous()}.
        */
-      protected int lastFetched = -1;
+      int lastFetched = -1;
 
       /**
        * The current modification state of the iterator.
@@ -148,7 +148,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       /**
        * Snapshot of {@code modCount} for detecting concurrent modifications.
        */
-      protected int myModCount = modCount;
+      int myModCount = modCount;
 
       /**
        * Creates an iterator for the list starting at the first element.
@@ -181,7 +181,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          this.idx = idx;
       }
       
-      protected void resetModCount() {
+      void resetModCount() {
          myModCount = modCount;
       }
 
@@ -222,7 +222,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          }
       }
 
-      protected void dec() {
+      void dec() {
          checkMod(myModCount);
          if (idx < 0) {
             throw new NoSuchElementException("At beginning of list");
@@ -243,7 +243,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          return idx >= 0;
       }
 
-      protected void inc() {
+      void inc() {
          checkMod(myModCount);
          if (idx >= size - 1) {
             throw new NoSuchElementException("At end of list");
@@ -838,7 +838,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       @Override
-      protected void resetModCount() {
+      void resetModCount() {
          myModCount = modCount;
          // update sublist, too, so sublist doesn't throw concurrent modifications from add/remove
          // operations from its iterator
@@ -868,7 +868,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       @Override
-      protected void dec() {
+      void dec() {
          if (idx < sublist.low) {
             throw new NoSuchElementException("At beginning of list");
          }
@@ -886,7 +886,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       }
 
       @Override
-      protected void inc() {
+      void inc() {
          if (idx == sublist.high - 1) {
             throw new NoSuchElementException("At end of list");
          }
@@ -981,6 +981,121 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    private static final long serialVersionUID = -4604439572205925230L;
+   
+   private static final int DEFAULT_INITIAL_CAPACITY = 10;
+   
+   private static final int THRESHOLD_FOR_BULK_OP = 100;
+
+   /**
+    * Implements <em>equals</em> per the contract defined by {@code java.util.List.equals(Object)}.
+    * 
+    * @param list the list
+    * @param o an object to compare to the list
+    * @return true if {@code o} equals {@code list}
+    */
+   static boolean equalsImpl(List<?> list, Object o) {
+      if (o == null || !(o instanceof List<?>))
+         return false;
+      List<?> l = (List<?>) o;
+      if (l.size() != list.size())
+         return false;
+      Iterator<?> iter1 = l.iterator();
+      Iterator<?> iter2 = list.iterator();
+      while (iter1.hasNext()) {
+         Object e1 = iter1.next();
+         Object e2 = iter2.next();
+         if (e1 == null ? e2 != null : !e1.equals(e2))
+            return false;
+      }
+      return true;
+   }
+
+   /**
+    * Computes the hash code for a list per the contract defined by
+    * {@code java.util.List.hashCode()}.
+    * 
+    * @param list the list
+    * @return the hash code for {@code list}
+    */
+   static int hashCodeImpl(List<?> list) {
+      int ret = 1;
+      for (Object e : list) {
+         ret = 31 * ret + (e == null ? 0 : e.hashCode());
+      }
+      return ret;
+   }
+
+   static String toStringImpl(List<?> list) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("[");
+      boolean first = true;
+      for (Object item : list) {
+         if (first) {
+            first = false;
+         } else {
+            sb.append(",");
+         }
+         sb.append(" ");
+         sb.append(String.valueOf(item));
+      }
+      sb.append(" ]");
+      return sb.toString();
+   }
+   
+   /**
+    * Filters all objects in the list against a specified collection. Either removes all items that
+    * are found in specified collection or removes all items that are not found in the collection.
+    * Uses {@link Iterator#remove()} to remove items from the target list.
+    * 
+    * @param items collection of items acting as a filter
+    * @param iter iterator, representing target list, from which items will be removed
+    * @param contains true if removing items found in the collection or false if leaving items found
+    *           in the collection
+    * @return true if the list was modified and something was removed
+    */
+   static boolean filter(Collection<?> items, Iterator<?> iter, boolean contains) {
+      // if list is not already a set and is reasonably big, add the items
+      // to a new HashSet. This should mitigate the otherwise O(n^2) runtime
+      // speed and provide O(n) instead. The overhead (creating new and
+      // populating new set as well as garbage collecting it later) isn't
+      // worth it for small collections. If the collection already implements
+      // Set, we'll live with the runtime it provides -- which is hopefully no
+      // worse than O(log n), like for TreeSet, which changes this batch
+      // operation from O(n) to O(n log n).
+      if (!(items instanceof Set<?>) && items.size() > THRESHOLD_FOR_BULK_OP) {
+         items = new HashSet<Object>(items);
+      }
+      boolean modified = false;
+      while (iter.hasNext()) {
+         Object o = iter.next();
+         if (items.contains(o) == contains) {
+            iter.remove();
+            if (!modified)
+               modified = true;
+         }
+      }
+      return modified;
+   }
+
+   /**
+    * Determines if all items in a specified collection exist in the specified iteration.
+    * 
+    * @param coll the collection of items we're looking for
+    * @param iter the iteration in which we're searching
+    * @return true if the items returned by the specified iterator contain at every item in the
+    *         specified collection
+    */
+   static boolean containsAll(Collection<?> coll, Iterator<?> iter) {
+      HashSet<Object> items = new HashSet<Object>(coll);
+      while (iter.hasNext()) {
+         Object o = iter.next();
+         if (items.remove(o) && items.size() == 0) {
+            return true; // found all objects in specified collection
+         }
+      }
+      // items left in set are ones not found
+      return items.size() == 0;
+   }
 
    /**
     * Finds an item by iterating through the specified iterator.
@@ -1149,7 +1264,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * Constructs a new empty list.
     */
    public ArrayBackedLinkedList() {
-      this(10);
+      this(DEFAULT_INITIAL_CAPACITY);
    }
 
    /**
@@ -1182,8 +1297,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     */
    public ArrayBackedLinkedList(int initialCapacity) {
       if (initialCapacity < 0) {
-         throw new IllegalArgumentException("Illegal Capacity: "
-               + initialCapacity);
+         throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
       }
       data = new Object[initialCapacity];
       next = new int[initialCapacity];
@@ -1488,85 +1602,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * Implements <em>equals</em> per the contract defined by {@code java.util.List.equals(Object)}.
-    * 
-    * @param list the list
-    * @param o an object to compare to the list
-    * @return true if {@code o} equals {@code list}
-    */
-   static boolean equalsImpl(List<?> list, Object o) {
-      if (o == null || !(o instanceof List<?>))
-         return false;
-      List<?> l = (List<?>) o;
-      if (l.size() != list.size())
-         return false;
-      Iterator<?> iter1 = l.iterator();
-      Iterator<?> iter2 = list.iterator();
-      while (iter1.hasNext()) {
-         Object e1 = iter1.next();
-         Object e2 = iter2.next();
-         if (e1 == null ? e2 != null : !e1.equals(e2))
-            return false;
-      }
-      return true;
-   }
-
-   /**
-    * Filters all objects in the list against a specified collection. Either removes all items that
-    * are found in specified collection or removes all items that are not found in the collection.
-    * Uses {@link Iterator#remove()} to remove items from the target list.
-    * 
-    * @param items collection of items acting as a filter
-    * @param iter iterator, representing target list, from which items will be removed
-    * @param contains true if removing items found in the collection or false if leaving items found
-    *           in the collection
-    * @return true if the list was modified and something was removed
-    */
-   static boolean filter(Collection<?> items, Iterator<?> iter, boolean contains) {
-      // if list is not already a set and is reasonably big, add the items
-      // to a new HashSet. This should mitigate the otherwise O(n^2) runtime
-      // speed and provide O(n) instead. The overhead (creating new and
-      // populating new set as well as garbage collecting it later) isn't
-      // worth it for small collections. If the collection already implements
-      // Set, we'll live with the runtime it provides -- which is hopefully no
-      // worse than O(log n), like for TreeSet, which changes this batch
-      // operation from O(n) to O(n log n).
-      if (!(items instanceof Set<?>) && items.size() > 100) {
-         items = new HashSet<Object>(items);
-      }
-      boolean modified = false;
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (items.contains(o) == contains) {
-            iter.remove();
-            if (!modified)
-               modified = true;
-         }
-      }
-      return modified;
-   }
-
-   /**
-    * Determines if all items in a specified collection exist in the specified iteration.
-    * 
-    * @param coll the collection of items we're looking for
-    * @param iter the iteration in which we're searching
-    * @return true if the items returned by the specified iterator contain at every item in the
-    *         specified collection
-    */
-   static boolean containsAll(Collection<?> coll, Iterator<?> iter) {
-      HashSet<Object> items = new HashSet<Object>(coll);
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (items.remove(o) && items.size() == 0) {
-            return true; // found all objects in specified collection
-         }
-      }
-      // items left in set are ones not found
-      return items.size() == 0;
-   }
-
-   /**
     * Determines the raw index into the buffer for the specified list index.
     * 
     * @param index list index
@@ -1659,21 +1694,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    @Override
    public int hashCode() {
       return hashCodeImpl(this);
-   }
-
-   /**
-    * Computes the hash code for a list per the contract defined by
-    * {@code java.util.List.hashCode()}.
-    * 
-    * @param list the list
-    * @return the hash code for {@code list}
-    */
-   static int hashCodeImpl(List<?> list) {
-      int ret = 1;
-      for (Object e : list) {
-         ret = 31 * ret + (e == null ? 0 : e.hashCode());
-      }
-      return ret;
    }
 
    /** {@inheritDoc} */
@@ -1885,10 +1905,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
    /**
     * Customizes de-serialization to read list of elements same way as written by
-    * {@code writeObject()}.
+    * {@link #writeObject(ObjectOutputStream)}.
     * 
     * @param in the stream from which the list is read
-    * @throws IOException if an exception is raised when writing to {@code out}
+    * @throws IOException if an exception is raised when reading from {@code in}
     * @throws ClassNotFoundException if de-serializing an element fails to locate the element's
     *            class
     */
@@ -2186,22 +2206,5 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    @Override
    public String toString() {
       return toStringImpl(this);
-   }
-   
-   static String toStringImpl(List<?> list) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("[");
-      boolean first = true;
-      for (Object item : list) {
-         if (first) {
-            first = false;
-         } else {
-            sb.append(",");
-         }
-         sb.append(" ");
-         sb.append(String.valueOf(item));
-      }
-      sb.append(" ]");
-      return sb.toString();
    }
 }

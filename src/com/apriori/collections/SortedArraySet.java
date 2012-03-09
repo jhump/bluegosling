@@ -1,38 +1,64 @@
 package com.apriori.collections;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedSet;
 
-public class SortedArraySet<E> implements NavigableSet<E> {
+/**
+ * An implementation of {@link NavigableSet} that is optimized for memory efficiency at the cost of
+ * slower mutations. This is ideal for representing very large sets that do not change. Smaller sets
+ * that change infrequently is another good use case.
+ * 
+ * <p>This set uses an array internally to store the items in the set. Lookups are
+ * <em>O(log<sub>2</sub>n)</em>. Due to the way the elements are stored in the array, mutations
+ * (insertions and removals can involve <em>O(n)</em> operations to shuffle elements around.
+ * 
+ * <p>This set does not support {@code null} values.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ * @param <E> the type of element in the set
+ */
+public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializable {
 
-   private static final int DEFAULT_INITIAL_CAPACITY = 10;
-   
-   private static final int THRESHOLD_FOR_BULK_OP = 100;
-
+   /**
+    * An iterator over elements of the set.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private class IteratorImpl implements Iterator<E> {
 
-      private int myModCount = modCount;
+      int myModCount = modCount;
       private int start;
       private int limit;
       private int idx;
       private boolean removed = false;
 
       IteratorImpl() {
-         this(0, size);
+         this(0, size, modCount);
       }
 
-      IteratorImpl(int start, int limit) {
+      IteratorImpl(int start, int limit, int modCount) {
          this.start = start;
          this.limit = limit;
+         myModCount = modCount;
          idx = start;
+      }
+      
+      void resetModCount() {
+         myModCount = modCount;
       }
 
       @Override
@@ -65,29 +91,41 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          }
          checkMod(myModCount);
          removeItem(--idx);
-         myModCount = modCount;
+         limit--;
+         resetModCount();
          removed = true;
       }
    }
 
+   /**
+    * An iterator that visits elements in the set in the opposite order as a normal iterator: from
+    * largest to smallest.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private class DescendingIteratorImpl implements Iterator<E> {
 
-      private int myModCount = modCount;
+      int myModCount;
       private int start;
       private int limit;
       private int idx = size - 1;
       private boolean removed = false;
 
       DescendingIteratorImpl() {
-         this(size, 0);
+         this(size, 0, modCount);
       }
 
-      DescendingIteratorImpl(int start, int limit) {
+      DescendingIteratorImpl(int start, int limit, int modCount) {
          this.start = start;
          this.limit = limit;
+         myModCount = modCount;
          idx = start;
       }
 
+      void resetModCount() {
+         myModCount = modCount;
+      }
+      
       @Override
       public boolean hasNext() {
          checkMod(myModCount);
@@ -118,11 +156,25 @@ public class SortedArraySet<E> implements NavigableSet<E> {
          }
          checkMod(myModCount);
          removeItem(idx + 1);
-         myModCount = modCount;
+         resetModCount();
          removed = true;
       }
    }
 
+   /**
+    * A {@link NavigableSet} that is a view of another sort, but in opposite (descending) order.
+    * Most operations are reversed. For example {@link #first()} returns the
+    * {@link SortedSet#last() last} item in the underlying set, {@link #iterator()} visits elements
+    * in descending order (and {@link #descendingIterator()} visits them in ascending order!), etc.
+    * 
+    * <p>Note that this implementation <em>requires</em> that the sets returned from
+    * {@link NavigableSet#headSet(Object)}, {@link NavigableSet#tailSet(Object)}, and
+    * {@link NavigableSet#subSet(Object, Object)} implement {@link NavigableSet} (even though the
+    * interface only requires they implement {@link SortedSet}).
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * @param <E> the type of element in the set
+    */
    private static class DescendingSetImpl<E> implements NavigableSet<E> {
 
       private NavigableSet<E> base;
@@ -321,221 +373,515 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       }
    }
 
+   /**
+    * A subset of a {@link SortedArraySet}. This is used to implement head-, tail-, and sub-sets.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private class SubSetImpl implements NavigableSet<E> {
+      private final E fromElement;
+      private final boolean fromInclusive;
+      private int fromIndex;
+      
+      private final E toElement;
+      private final boolean toInclusive;
+      int toIndex;
+      
+      int myModCount;
       
       public SubSetImpl(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
-         // TODO
+         this(fromElement, fromInclusive, -1, toElement, toInclusive, -1, modCount);
       }
 
+      private SubSetImpl(E fromElement, boolean fromInclusive, int fromIndex,
+            E toElement, boolean toInclusive, int toIndex, int modCount) {
+         
+         if (fromElement != null && toElement != null) {
+            int check = compare(fromElement, toElement);
+            if (check > 0 || (check == 0 && !fromInclusive && !toInclusive)) {
+               throw new IllegalArgumentException("Invalid subset bounds");
+            }
+         } else if (fromElement == null && toElement == null) {
+            throw new NullPointerException();
+         }
+         
+         this.fromElement = fromElement;
+         this.fromInclusive = fromInclusive;
+         if (fromIndex == -1) {
+            determineFromIndex();
+         } else {
+            this.fromIndex = fromIndex;
+         }
+         this.toElement = toElement;
+         this.toInclusive = toInclusive;
+         if (toIndex == -1) {
+            determineToIndex();
+         } else {
+            this.toIndex = toIndex;
+         }
+         this.myModCount = modCount;
+      }
+      
+      private void determineFromIndex() {
+         if (fromElement == null) {
+            fromIndex = 0;
+         } else {
+            fromIndex = findIndex(fromElement);
+            if (fromIndex < 0) {
+               fromIndex = -fromIndex - 1;
+            } else if (!fromInclusive) {
+               fromIndex++;
+            }
+         }
+      }
+      
+      private void determineToIndex() {
+         if (toElement == null) {
+            toIndex = size - 1;
+         } else {
+            toIndex = findIndex(toElement);
+            if (toIndex < 0) {
+               toIndex = -toIndex - 2;
+            } else if (!toInclusive) {
+               toIndex--;
+            }
+         }
+      }
+      
+      private void checkRangeLow(Object o, boolean inclusive) {
+         if (!isInRangeLow(o, inclusive)) {
+            throw new IllegalArgumentException("Object outside of subset range");
+         }
+      }
+      
+      private boolean isInRangeLow(Object o, boolean inclusive) {
+         if (fromElement != null) {
+            int c = compare(o, fromElement);
+            if (c < 0 || (c == 0 && inclusive && !fromInclusive)) {
+               return false;
+            }
+         }
+         return true;
+      }
+      
+      private void checkRangeHigh(Object o, boolean inclusive) {
+         if (!isInRangeHigh(o, inclusive)) {
+            throw new IllegalArgumentException("Object outside of subset range");
+         }
+      }
+      
+      private boolean isInRangeHigh(Object o, boolean inclusive) {
+         if (toElement != null) {
+            int c = compare(o, toElement);
+            if (c > 0 || (c == 0 && inclusive && !toInclusive)) {
+               return false;
+            }
+         }
+         return true;
+      }
+      
+      private void checkRange(Object o) {
+         checkRangeLow(o, true);
+         checkRangeHigh(o, true);
+      }
+      
+      private boolean isInRange(Object o) {
+         return isInRangeLow(o, true) && isInRangeHigh(o, true);
+      }
+      
       /** {@inheritDoc} */
       @Override
       public Comparator<? super E> comparator() {
-         // TODO implement me
-         return null;
+         return comp;
       }
 
       /** {@inheritDoc} */
       @Override
       public E first() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         if (fromIndex > toIndex) {
+            throw new NoSuchElementException();
+         }
+         @SuppressWarnings("unchecked")
+         E ret = (E) data[fromIndex];
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
       public E last() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         if (fromIndex > toIndex) {
+            throw new NoSuchElementException();
+         }
+         @SuppressWarnings("unchecked")
+         E ret = (E) data[toIndex];
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean add(E arg0) {
-         // TODO implement me
-         return false;
+      public boolean add(E e) {
+         checkMod(myModCount);
+         checkRange(e);
+         boolean ret = SortedArraySet.this.add(e);
+         if (ret) {
+            toIndex++;
+            myModCount = modCount;
+         }
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean addAll(Collection<? extends E> arg0) {
-         // TODO implement me
-         return false;
+      public boolean addAll(Collection<? extends E> coll) {
+         checkMod(myModCount);
+         for (Object o : coll) {
+            checkRange(o);
+         }
+         boolean ret = SortedArraySet.this.addAll(coll);
+         if (ret) {
+            // not sure how many items were added, so re-calculate
+            determineToIndex();
+            myModCount = modCount;
+         }
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
       public void clear() {
-         // TODO implement me
-         
+         checkMod(myModCount);
+         if (fromIndex <= toIndex) {
+            int removed = toIndex - fromIndex + 1;
+            int tailKeep = size - toIndex - 1;
+            // compact the before and after blocks
+            if (tailKeep > 0) {
+               System.arraycopy(data, toIndex + 1, data, fromIndex, tailKeep);
+            }
+            // and set extraneous references to null
+            for (int i = fromIndex + tailKeep, len = removed - tailKeep; i < len; i++) {
+               data[i] = null;
+            }
+            size -= removed;
+            toIndex -= removed;
+            myModCount = ++modCount;
+         }
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean contains(Object arg0) {
-         // TODO implement me
-         return false;
+      public boolean contains(Object o) {
+         checkMod(myModCount);
+         return isInRange(o) ? SortedArraySet.this.contains(o) : false;
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean containsAll(Collection<?> arg0) {
-         // TODO implement me
-         return false;
+      public boolean containsAll(Collection<?> coll) {
+         checkMod(myModCount);
+         for (Object o : coll) {
+            if (!contains(o)) {
+               return false;
+            }
+         }
+         return true;
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean isEmpty() {
-         // TODO implement me
-         return false;
+         checkMod(myModCount);
+         return toIndex < fromIndex;
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean remove(Object arg0) {
-         // TODO implement me
-         return false;
+      public boolean remove(Object o) {
+         checkMod(myModCount);
+         if (isInRange(o)) {
+            boolean ret = SortedArraySet.this.remove(o);
+            if (ret) {
+               toIndex--;
+               myModCount = modCount;
+            }
+            return ret;
+         } else {
+            return false;
+         }
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean removeAll(Collection<?> arg0) {
-         // TODO implement me
-         return false;
+      public boolean removeAll(Collection<?> coll) {
+         checkMod(myModCount);
+         HashSet<Object> toRemove = new HashSet<Object>(coll);
+         for (Iterator<Object> iter = toRemove.iterator(); iter.hasNext(); ) {
+            if (!isInRange(iter.next())) {
+               iter.remove();
+            }
+         }
+         if (!toRemove.isEmpty()) {
+            boolean ret = SortedArraySet.this.removeAll(coll);
+            if (ret) {
+               // not sure how many items were removed so re-calc
+               determineToIndex();
+               myModCount = modCount;
+            }
+            return ret;
+         } else {
+            return false;
+         }
       }
 
       /** {@inheritDoc} */
       @Override
-      public boolean retainAll(Collection<?> arg0) {
-         // TODO implement me
-         return false;
+      public boolean retainAll(Collection<?> coll) {
+         checkMod(myModCount);
+         ArrayList<Object> toRemove = new ArrayList<Object>();
+         for (Object o : this) {
+            if (!coll.contains(o)) {
+               toRemove.add(o);
+            }
+         }
+         if (toRemove.isEmpty()) {
+            return false;
+         } else {
+            return removeAll(toRemove);
+         }
       }
 
       /** {@inheritDoc} */
       @Override
       public int size() {
-         // TODO implement me
-         return 0;
+         checkMod(myModCount);
+         return toIndex - fromIndex + 1;
       }
 
       /** {@inheritDoc} */
       @Override
       public Object[] toArray() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         int len = size();
+         Object a[] = new Object[len];
+         if (len > 0) {
+            System.arraycopy(data, fromIndex, a, 0, len);
+         }
+         return a;
       }
 
       /** {@inheritDoc} */
       @Override
-      public <T> T[] toArray(T[] arg0) {
-         // TODO implement me
-         return null;
+      @SuppressWarnings("unchecked")
+      public <T> T[] toArray(T[] a) {
+         checkMod(myModCount);
+         int len = size();
+         if (a.length < len) {
+            a = (T[]) Array.newInstance(a.getClass().getComponentType(), len);
+         }
+         System.arraycopy(data, fromIndex, a, 0, len);
+         if (a.length > len) {
+            a[len] = null;
+         }
+         return a;
       }
 
       /** {@inheritDoc} */
       @Override
       public E ceiling(E e) {
-         // TODO implement me
+         checkMod(myModCount);
+         if (toIndex >= fromIndex) {
+            if (isInRangeHigh(e, true)) {
+               if (isInRangeLow(e, true)) {
+                  E ret = SortedArraySet.this.ceiling(e);
+                  if (isInRange(ret)) {
+                     return ret;
+                  }
+               } else {
+                  @SuppressWarnings("unchecked")
+                  E ret = (E) data[fromIndex];
+                  return ret;
+               }
+            }
+         }
          return null;
       }
 
       /** {@inheritDoc} */
       @Override
       public Iterator<E> descendingIterator() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         return new DescendingIteratorImpl(toIndex + 1, fromIndex, myModCount) {
+            @Override
+            void resetModCount() {
+               // update enclosing subset, too
+               this.myModCount = modCount;
+               SubSetImpl.this.myModCount = modCount;
+            }
+            @Override
+            public void remove() {
+               super.remove();
+               toIndex--;
+            }
+         };
       }
 
       /** {@inheritDoc} */
       @Override
       public NavigableSet<E> descendingSet() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         return new DescendingSetImpl<E>(this);
       }
 
       /** {@inheritDoc} */
       @Override
       public E floor(E e) {
-         // TODO implement me
+         checkMod(myModCount);
+         if (toIndex >= fromIndex) {
+            if (isInRangeLow(e, true)) {
+               if (isInRangeHigh(e, true)) {
+                  E ret = SortedArraySet.this.floor(e);
+                  if (isInRange(ret)) {
+                     return ret;
+                  }
+               } else {
+                  @SuppressWarnings("unchecked")
+                  E ret = (E) data[toIndex];
+                  return ret;
+               }
+            }
+         }
          return null;
       }
 
       /** {@inheritDoc} */
       @Override
-      public SortedSet<E> headSet(E toElement) {
-         // TODO implement me
-         return null;
+      public SortedSet<E> headSet(E to) {
+         return headSet(to, false);
       }
 
       /** {@inheritDoc} */
       @Override
-      public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-         // TODO implement me
-         return null;
+      public NavigableSet<E> headSet(E to, boolean inclusive) {
+         checkMod(myModCount);
+         checkRangeHigh(to, inclusive);
+         return new SubSetImpl(this.fromElement, this.fromInclusive, this.fromIndex,
+               to, inclusive, -1, myModCount);
       }
 
       /** {@inheritDoc} */
       @Override
       public E higher(E e) {
-         // TODO implement me
+         checkMod(myModCount);
+         if (toIndex >= fromIndex) {
+            if (isInRangeHigh(e, true)) {
+               if (isInRangeLow(e, true)) {
+                  E ret = SortedArraySet.this.higher(e);
+                  if (isInRange(ret)) {
+                     return ret;
+                  }
+               } else {
+                  @SuppressWarnings("unchecked")
+                  E ret = (E) data[fromIndex];
+                  return ret;
+               }
+            }
+         }
          return null;
       }
 
       /** {@inheritDoc} */
       @Override
       public Iterator<E> iterator() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         return new IteratorImpl(fromIndex, toIndex + 1, myModCount) {
+            @Override
+            void resetModCount() {
+               // update enclosing subset, too
+               this.myModCount = modCount;
+               SubSetImpl.this.myModCount = modCount;
+            }
+            @Override
+            public void remove() {
+               super.remove();
+               toIndex--;
+            }
+         };
       }
 
       /** {@inheritDoc} */
       @Override
       public E lower(E e) {
-         // TODO implement me
+         checkMod(myModCount);
+         if (toIndex >= fromIndex) {
+            if (isInRangeLow(e, true)) {
+               if (isInRangeHigh(e, true)) {
+                  E ret = SortedArraySet.this.lower(e);
+                  if (isInRange(ret)) {
+                     return ret;
+                  }
+               } else {
+                  @SuppressWarnings("unchecked")
+                  E ret = (E) data[toIndex];
+                  return ret;
+               }
+            }
+         }
          return null;
       }
 
       /** {@inheritDoc} */
       @Override
       public E pollFirst() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         if (fromIndex > toIndex) {
+            return null;
+         }
+         @SuppressWarnings("unchecked")
+         E ret = (E) data[fromIndex];
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
       public E pollLast() {
-         // TODO implement me
-         return null;
+         checkMod(myModCount);
+         if (fromIndex > toIndex) {
+            return null;
+         }
+         @SuppressWarnings("unchecked")
+         E ret = (E) data[toIndex];
+         return ret;
       }
 
       /** {@inheritDoc} */
       @Override
-      public SortedSet<E> subSet(E fromElement, E toElement) {
-         // TODO implement me
-         return null;
+      public SortedSet<E> subSet(E from, E to) {
+         return subSet(from, true, to, false);
       }
 
       /** {@inheritDoc} */
       @Override
-      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
-            boolean toInclusive) {
-         // TODO implement me
-         return null;
+      public NavigableSet<E> subSet(E from, boolean fromInc, E to, boolean toInc) {
+         checkMod(myModCount);
+         checkRangeLow(from, fromInc);
+         checkRangeHigh(to, toInc);
+         return new SubSetImpl(from, fromInc, -1, to, toInc, -1, myModCount);
       }
 
       /** {@inheritDoc} */
       @Override
-      public SortedSet<E> tailSet(E fromElement) {
-         // TODO implement me
-         return null;
+      public SortedSet<E> tailSet(E from) {
+         return tailSet(from, true);
       }
 
       /** {@inheritDoc} */
       @Override
-      public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-         // TODO implement me
-         return null;
+      public NavigableSet<E> tailSet(E from, boolean inclusive) {
+         checkMod(myModCount);
+         checkRangeLow(from, inclusive);
+         return new SubSetImpl(from, inclusive, -1,
+               this.toElement, this.toInclusive, this.toIndex, myModCount);
       }
       
       @Override
@@ -554,36 +900,140 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       }
    }
    
-   Object data[];
-   int size;
-   private Comparator<? super E> comp;
-   int modCount;
+   private static final long serialVersionUID = 576094990615323839L;
 
+   private static final int DEFAULT_INITIAL_CAPACITY = 10;
+   
+   private static final int THRESHOLD_FOR_BULK_OP = 100;
+
+   static boolean equalsImpl(Set<?> set, Object o) {
+      if (o instanceof Set) {
+         Set<?> other = (Set<?>) o;
+         if (other.size() == set.size()) {
+            for (Object item : set) {
+               if (!other.contains(item)) {
+                  return false;
+               }
+            }
+            return true;
+         } else {
+            return false;
+         }
+      } else {
+         return false;
+      }
+   }
+   
+   static int hashCodeImpl(Set<?> set) {
+      int hashCode = 0;
+      for (Object item : set) {
+         if (item != null) {
+            hashCode += item.hashCode();
+         }
+      }
+      return hashCode;
+   }
+   
+   static String toStringImpl(Set<?> set) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("[");
+      boolean first = true;
+      for (Object item : set) {
+         if (first) {
+            first = false;
+         } else {
+            sb.append(",");
+         }
+         sb.append(" ");
+         sb.append(String.valueOf(item));
+      }
+      sb.append(" ]");
+      return sb.toString();
+   }
+
+   /**
+    * The internal array that stores the elements in the set.
+    */
+   Object data[];
+   
+   /**
+    * The size of the set. The internal array is automatically grown as needed and may be larger
+    * than the actual size of the set.
+    */
+   int size;
+  
+   /**
+    * The comparator used to sort elements in the set or {@code null} to indicate that items are
+    * sorted by their natural order.
+    */
+   Comparator<? super E> comp;
+   
+   /**
+    * The set's current revision level. Every modification to the set causes this count to be
+    * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
+    * modifications to the set.
+    */
+   protected int modCount;
+
+   /**
+    * Constructs a new empty set. All elements must be mutually comparable. They will be sorted per
+    * their natural ordering.
+    */
    public SortedArraySet() {
       this(DEFAULT_INITIAL_CAPACITY, null);
    }
 
+   /**
+    * Constructs a new empty set using the specified comparator to sort items within the set.
+    * 
+    * @param comp the comparator used to sort items in the set
+    */
    public SortedArraySet(Comparator<? super E> comp) {
       this(DEFAULT_INITIAL_CAPACITY, comp);
    }
 
+   /**
+    * Constructs a new empty set with an internal array sized as specified. All elements must be
+    * mutually comparable. They will be sorted per their natural ordering.
+    *
+    * @param initialCapacity the size of the internal array
+    */
    public SortedArraySet(int initialCapacity) {
       this(initialCapacity, null);
    }
 
+   /**
+    * Constructs a new empty set. The internal array will be sized as specified, and items will be
+    * sorted using the specified comparator.
+    *
+    * @param initialCapacity the size of the internal array
+    * @param comp the comparator used to sort items in the set
+    */
    public SortedArraySet(int initialCapacity, Comparator<? super E> comp) {
       if (initialCapacity < 0) {
-         throw new IllegalArgumentException("initialCapacity should not be negative");
+         throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
       }
       data = new Object[initialCapacity];
       size = 0;
       this.comp = comp;
    }
 
+   /**
+    * Constructs a new set populated with the items in the given collection. All elements must be
+    * mutually comparable. They will be sorted per their natural ordering.
+    *
+    * @param source the collection whose contents will be the initial contents of the set
+    */
    public SortedArraySet(Collection<? extends E> source) {
       this(source, null);
    }
 
+   /**
+    * Constructs a new set populated with the items in the given collection.
+    *
+    * @param source the collection whose contents will be the initial contents of the set
+    * @param comp the comparator used to sort items in the set
+    */
    public SortedArraySet(Collection<? extends E> source, Comparator<? super E> comp) {
       this(source.size(), comp);
       size = source.size();
@@ -594,7 +1044,11 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       sort();
       removeDups();
    }
-   
+
+   /**
+    * Sorts the internal array. Items are usually sorted as they are added, but this method can be
+    * used to re-sort the array after bulk insertion operations.
+    */
    private void sort() {
       if (comp == null) {
          Arrays.sort(data);
@@ -606,17 +1060,35 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       }
    }
    
+   /**
+    * Compares two elements for purposes of sorting in this set. If the set's comparator is
+    * {@code null} then the items must implement {@code Comparable}.
+    * 
+    * @param o1 an element
+    * @param o2 another element
+    * @return negative one, zero, or positive one as the first element is less than, equal to, or
+    *       greater than the second element, respectively
+    */
    @SuppressWarnings("unchecked")
+   int compare(Object o1, Object o2) {
+      if (comp == null) {
+         return ((Comparable<Object>) o1).compareTo(o2);
+      } else {
+         return comp.compare((E) o1, (E) o2);
+      }
+   }
+
+   /**
+    * Removes duplicate entries from the internal array. Generally, duplicates are not inserted into
+    * the set. But this can be used to remove duplicates to make bulk insertion of items more
+    * efficient.
+    * 
+    * <p>The internal array must already be {@link #sort() sorted} before this method is invoked.
+    */
    private void removeDups() {
       int numUnique = 0;
       for (int i = 1; i < size; i++) {
-         int c;
-         if (comp == null) {
-            c = ((Comparable<Object>) data[i]).compareTo(data[numUnique]);
-         } else {
-            c = comp.compare((E) data[i], (E) data[numUnique]);
-         }
-         if (c != 0) {
+         if (compare(data[i], data[numUnique]) != 0) {
             // not a dup!
             numUnique++;
             // move if necessary to keep unique items consolidated at the beginning of array
@@ -654,22 +1126,28 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       modCount++;
    }
 
-   @SuppressWarnings("unchecked")
-   private int findIndex(Object o) {
-      // binary search
-      if (size == 0) {
+   /**
+    * Binary searches a range in the set to find the specified item. If the item is not found, an
+    * encoded negative value is returned that indicates where the item <em>would</em> be. So if the
+    * return value is negative then the following expression indicates the index into the array
+    * where the item would go:
+    * <pre>
+    * -findIndex(o, lo, hi) - 1
+    * </pre>
+    *
+    * @param o the item to find
+    * @param lo the minimum index in the internal array that will be searched
+    * @param hi the maximum index in the internal array that will be searched
+    * @return the index in the list where the specified item was found or, if not found, a negative
+    *       value that can be decoded to determine the index where the item would go
+    */
+   int findIndex(Object o, int lo, int hi) {
+      if (hi < lo) {
          return -1;
       }
-      int lo = 0;
-      int hi = size - 1;
       while (true) {
          int mid = (hi + lo) >> 1;
-         int c;
-         if (comp == null) {
-            c = ((Comparable<Object>) data[mid]).compareTo(o);
-         } else {
-            c = comp.compare((E) data[mid], (E) o);
-         }
+         int c = compare(data[mid], o);
          if (c == 0) {
             return mid;
          }
@@ -688,7 +1166,11 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       }
    }
 
-   private void insertItem(E element, int index) {
+   int findIndex(Object o) {
+      return findIndex(o, 0, size - 1);
+   }
+
+   void insertItem(E element, int index) {
       maybeGrowArray();
       if (index < size) {
          System.arraycopy(data, index, data, index + 1, size - index);
@@ -707,6 +1189,10 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       size--;
    }
 
+   /**
+    * Shrinks the internal array so that it is exactly the necessary size. Attempts to add an item
+    * to the set after this is called will cause it to grow the internal array to fit the new item.
+    */
    public void trimToSize() {
       if (data.length != size) {
          data = Arrays.copyOf(data, size);
@@ -1101,38 +1587,10 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return equalsImpl(this, o);
    }
    
-   static boolean equalsImpl(Set<?> set, Object o) {
-      if (o instanceof Set) {
-         Set<?> other = (Set<?>) o;
-         if (other.size() == set.size()) {
-            for (Object item : set) {
-               if (!other.contains(item)) {
-                  return false;
-               }
-            }
-            return true;
-         } else {
-            return false;
-         }
-      } else {
-         return false;
-      }
-   }
-   
    /** {@inheritDoc} */
    @Override
    public int hashCode() {
       return hashCodeImpl(this);
-   }
-   
-   static int hashCodeImpl(Set<?> set) {
-      int hashCode = 0;
-      for (Object item : set) {
-         if (item != null) {
-            hashCode += item.hashCode();
-         }
-      }
-      return hashCode;
    }
    
    /** {@inheritDoc} */
@@ -1141,20 +1599,34 @@ public class SortedArraySet<E> implements NavigableSet<E> {
       return toStringImpl(this);
    }
    
-   static String toStringImpl(Set<?> set) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("[");
-      boolean first = true;
-      for (Object item : set) {
-         if (first) {
-            first = false;
-         } else {
-            sb.append(",");
-         }
-         sb.append(" ");
-         sb.append(String.valueOf(item));
+   /**
+    * Customizes de-serialization to read set of elements same way as written by
+    * {@link #writeObject(ObjectOutputStream)}.
+    * 
+    * @param in the stream from which the set is read
+    * @throws IOException if an exception is raised when reading from {@code in}
+    * @throws ClassNotFoundException if de-serializing an element fails to locate the element's
+    *            class
+    */
+   private void readObject(ObjectInputStream in) throws IOException,
+         ClassNotFoundException {
+      size = in.readInt();
+      data = new Object[size];
+      for (int i = 0; i < size; i++) {
+         data[i] = in.readObject();
       }
-      sb.append(" ]");
-      return sb.toString();
+   }
+   
+   /**
+    * Customizes serialization by just writing the set contents in order.
+    * 
+    * @param out the stream to which to serialize this set
+    * @throws IOException if an exception is raised when writing to {@code out}
+    */
+   private void writeObject(ObjectOutputStream out) throws IOException {
+      out.writeInt(size);
+      for (E e : this) {
+         out.writeObject(e);
+      }
    }
 }
