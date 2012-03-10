@@ -27,6 +27,15 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
    }
    
    /**
+    * Constructs a new test case.
+    * 
+    * @param testName the name of the test (provided at runtime by the JUnit test runner)
+    */
+   public ArrayBackedLinkedListTest(String testName) {
+      super(testName);
+   }
+
+   /**
     * Adds additional test cases to test the value returned from
     * {@link ArrayBackedLinkedList#asRandomAccess(boolean)}.
     *
@@ -35,15 +44,10 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
    public BulkTest bulkTestAsRandomAccess() {
       return new BulkTestAsRandomAccess(this);
    }
-
-   /**
-    * Constructs a new test case.
-    * 
-    * @param testName the name of the test (provided at runtime by the JUnit test runner)
-    */
-   public ArrayBackedLinkedListTest(String testName) {
-      super(testName);
-   }
+   
+   // TODO: add additional tests for methods specific to ArrayBackedLinkedList (like trimToSize(),
+   // compact(), optimize()) and additional bulk tests for the unordered and reversed iterators.
+   // Also extend AbstractTestCollection to create queue/deque tests and include those here, too.
 
    @Override
    public List<?> makeEmptyList() {
@@ -147,6 +151,9 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
          return false;
       }
       
+      // TODO: add tests to verify behavior of add() and remove() given their unusual constraints
+      // (here, on iterator, on sub-list, and on sub-list's iterator)
+
       @Override
       public void testUnsupportedAdd() {
          // skip this test - doesn't pass due to atypical constraints on add()

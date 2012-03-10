@@ -108,7 +108,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       int myModCount;
       private int start;
       private int limit;
-      private int idx = size - 1;
+      private int idx;
       private boolean removed = false;
 
       DescendingIteratorImpl() {
@@ -129,18 +129,18 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       @Override
       public boolean hasNext() {
          checkMod(myModCount);
-         return idx >= limit;
+         return idx > limit;
       }
 
       @Override
       public E next() {
-         if (idx < limit) {
+         if (idx <= limit) {
             throw new NoSuchElementException();
          }
          checkMod(myModCount);
          removed = false;
          @SuppressWarnings("unchecked")
-         E ret = (E) data[idx--];
+         E ret = (E) data[--idx];
          return ret;
       }
 
@@ -150,12 +150,12 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             // already removed
             throw new IllegalStateException("remove() already called");
          }
-         else if (idx == start - 1) {
+         else if (idx == start) {
             // no element yet to remove
             throw new IllegalStateException("next() never called");
          }
          checkMod(myModCount);
-         removeItem(idx + 1);
+         removeItem(idx);
          resetModCount();
          removed = true;
       }
@@ -302,7 +302,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
 
       @Override
       public NavigableSet<E> headSet(E toElement) {
-         return new DescendingSetImpl<E>((NavigableSet<E>) base.tailSet(toElement));
+         return headSet(toElement, false);
       }
 
       @Override
@@ -337,7 +337,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
 
       @Override
       public NavigableSet<E> subSet(E fromElement, E toElement) {
-         return new DescendingSetImpl<E>((NavigableSet<E>) base.subSet(toElement, fromElement));
+         return subSet(fromElement, true, toElement, false);
       }
 
       @Override
@@ -349,7 +349,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
 
       @Override
       public NavigableSet<E> tailSet(E fromElement) {
-         return new DescendingSetImpl<E>((NavigableSet<E>) base.headSet(fromElement));
+         return tailSet(fromElement, true);
       }
 
       @Override

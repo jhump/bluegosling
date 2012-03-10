@@ -1,8 +1,6 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
-import org.apache.commons.collections.set.AbstractTestSortedSet;
-
 import java.util.Set;
 
 import junit.framework.TestSuite;
@@ -13,7 +11,7 @@ import junit.framework.TestSuite;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SortedArraySetTest extends AbstractTestSortedSet {
+public class SortedArraySetTest extends AbstractTestNavigableSet {
    
    /**
     * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
@@ -24,7 +22,7 @@ public class SortedArraySetTest extends AbstractTestSortedSet {
    public static TestSuite suite() {
       return makeSuite(SortedArraySetTest.class);
    }
-
+   
    /**
     * Constructs a new test case.
     * 
@@ -33,6 +31,8 @@ public class SortedArraySetTest extends AbstractTestSortedSet {
    public SortedArraySetTest(String name) {
       super(name);
    }
+
+   // TODO: add additional tests for methods specific to SortedArraySet, like trimToSize(), etc.
 
    @Override
    public Set<?> makeEmptySet() {
