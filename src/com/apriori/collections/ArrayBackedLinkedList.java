@@ -1493,14 +1493,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
    /** {@inheritDoc} */
    @Override
-   public Object clone() {
+   public ArrayBackedLinkedList<E> clone() {
       if (this.getClass() == ArrayBackedLinkedList.class) {
          // don't bother cloning internal state - just create a new optimized list
          return new ArrayBackedLinkedList<E>(this);
       }
       else {
          try {
-            ArrayBackedLinkedList<?> copy = (ArrayBackedLinkedList<?>) super.clone();
+            @SuppressWarnings("unchecked")
+            ArrayBackedLinkedList<E> copy = (ArrayBackedLinkedList<E>) super.clone();
             // deep copy the arrays
             copy.data = data.clone();
             copy.next = next.clone();

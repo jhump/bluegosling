@@ -1599,6 +1599,29 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       return toStringImpl(this);
    }
    
+   @Override
+   public SortedArraySet<E> clone() {
+      if (this.getClass() == SortedArraySet.class) {
+         // don't bother cloning internal state - just create a new optimized list
+         return new SortedArraySet<E>(this);
+      }
+      else {
+         try {
+            @SuppressWarnings("unchecked")
+            SortedArraySet<E> copy = (SortedArraySet<E>) super.clone();
+            // deep copy the array
+            copy.data = data.clone();
+            // now sub-class can do whatever else with this...
+            return copy;
+         }
+         catch (CloneNotSupportedException e) {
+            // should never happen since we implement Cloneable -- but just in
+            // case, wrap in a runtime exception that sort of makes sense...
+            throw new ClassCastException("java.lang.Cloneable");
+         }
+      }
+   }
+   
    /**
     * Customizes de-serialization to read set of elements same way as written by
     * {@link #writeObject(ObjectOutputStream)}.
