@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.SortedSet;
 
 /**
@@ -158,218 +157,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          removeItem(idx);
          resetModCount();
          removed = true;
-      }
-   }
-
-   /**
-    * A {@link NavigableSet} that is a view of another sort, but in opposite (descending) order.
-    * Most operations are reversed. For example {@link #first()} returns the
-    * {@link SortedSet#last() last} item in the underlying set, {@link #iterator()} visits elements
-    * in descending order (and {@link #descendingIterator()} visits them in ascending order!), etc.
-    * 
-    * <p>Note that this implementation <em>requires</em> that the sets returned from
-    * {@link NavigableSet#headSet(Object)}, {@link NavigableSet#tailSet(Object)}, and
-    * {@link NavigableSet#subSet(Object, Object)} implement {@link NavigableSet} (even though the
-    * interface only requires they implement {@link SortedSet}).
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    * @param <E> the type of element in the set
-    */
-   private static class DescendingSetImpl<E> implements NavigableSet<E> {
-
-      private NavigableSet<E> base;
-
-      public DescendingSetImpl(NavigableSet<E> base) {
-         this.base = base;
-      }
-
-      @Override
-      public Comparator<? super E> comparator() {
-         final Comparator<? super E> comp = base.comparator();
-         if (comp == null) {
-            return null;
-         }
-         return new Comparator<E>() {
-            @Override
-            public int compare(E o1, E o2) {
-               // reverse it
-               return comp.compare(o2, o1);
-            }
-         };
-      }
-
-      @Override
-      public E first() {
-         return base.last();
-      }
-
-      @Override
-      public E last() {
-         return base.first();
-      }
-
-      @Override
-      public boolean add(E e) {
-         return base.add(e);
-      }
-
-      @Override
-      public boolean addAll(Collection<? extends E> c) {
-         return base.addAll(c);
-      }
-
-      @Override
-      public void clear() {
-         base.clear();
-      }
-
-      @Override
-      public boolean contains(Object o) {
-         return base.contains(o);
-      }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-         return base.containsAll(c);
-      }
-
-      @Override
-      public boolean isEmpty() {
-         return base.isEmpty();
-      }
-
-      @Override
-      public boolean remove(Object o) {
-         return base.remove(o);
-      }
-
-      @Override
-      public boolean removeAll(Collection<?> c) {
-         return base.removeAll(c);
-      }
-
-      @Override
-      public boolean retainAll(Collection<?> c) {
-         return base.retainAll(c);
-      }
-
-      @Override
-      public int size() {
-         return base.size();
-      }
-
-      private void reverseArray(Object[] a) {
-         for (int i = 0, j = a.length - 1; i < j; i++, j--) {
-            Object tmp = a[j];
-            a[j] = a[i];
-            a[i] = tmp;
-         }
-      }
-
-      @Override
-      public Object[] toArray() {
-         Object ret[] = base.toArray();
-         reverseArray(ret);
-         return ret;
-      }
-
-      @Override
-      public <T> T[] toArray(T[] a) {
-         T ret[] = base.toArray(a);
-         reverseArray(ret);
-         return ret;
-      }
-
-      @Override
-      public E ceiling(E e) {
-         return base.floor(e);
-      }
-
-      @Override
-      public Iterator<E> descendingIterator() {
-         return base.iterator();
-      }
-
-      @Override
-      public NavigableSet<E> descendingSet() {
-         return base;
-      }
-
-      @Override
-      public E floor(E e) {
-         return base.ceiling(e);
-      }
-
-      @Override
-      public NavigableSet<E> headSet(E toElement) {
-         return headSet(toElement, false);
-      }
-
-      @Override
-      public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-         return new DescendingSetImpl<E>(base.tailSet(toElement, inclusive));
-      }
-
-      @Override
-      public E higher(E e) {
-         return base.lower(e);
-      }
-
-      @Override
-      public Iterator<E> iterator() {
-         return base.descendingIterator();
-      }
-
-      @Override
-      public E lower(E e) {
-         return base.higher(e);
-      }
-
-      @Override
-      public E pollFirst() {
-         return base.pollLast();
-      }
-
-      @Override
-      public E pollLast() {
-         return base.pollFirst();
-      }
-
-      @Override
-      public NavigableSet<E> subSet(E fromElement, E toElement) {
-         return subSet(fromElement, true, toElement, false);
-      }
-
-      @Override
-      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
-            boolean toInclusive) {
-         return new DescendingSetImpl<E>(base.subSet(toElement, toInclusive, fromElement,
-               fromInclusive));
-      }
-
-      @Override
-      public NavigableSet<E> tailSet(E fromElement) {
-         return tailSet(fromElement, true);
-      }
-
-      @Override
-      public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-         return new DescendingSetImpl<E>(base.headSet(fromElement, inclusive));
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         return base.equals(o);
-      }
-      
-      @Override
-      public int hashCode() {
-         return base.hashCode();
-      }
-      
-      @Override
-      public String toString() {
-         return toStringImpl(this);
       }
    }
 
@@ -730,7 +517,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       @Override
       public NavigableSet<E> descendingSet() {
          checkMod(myModCount);
-         return new DescendingSetImpl<E>(this);
+         return new DescendingSet<E>(this);
       }
 
       /** {@inheritDoc} */
@@ -886,17 +673,17 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       
       @Override
       public boolean equals(Object o) {
-         return equalsImpl(this, o);
+         return Utils.equals(this, o);
       }
       
       @Override
       public int hashCode() {
-         return hashCodeImpl(this);
+         return Utils.hashCode(this);
       }
       
       @Override
       public String toString() {
-         return toStringImpl(this);
+         return Utils.toString(this);
       }
    }
    
@@ -906,74 +693,29 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    
    private static final int THRESHOLD_FOR_BULK_OP = 100;
 
-   static boolean equalsImpl(Set<?> set, Object o) {
-      if (o instanceof Set) {
-         Set<?> other = (Set<?>) o;
-         if (other.size() == set.size()) {
-            for (Object item : set) {
-               if (!other.contains(item)) {
-                  return false;
-               }
-            }
-            return true;
-         } else {
-            return false;
-         }
-      } else {
-         return false;
-      }
-   }
-   
-   static int hashCodeImpl(Set<?> set) {
-      int hashCode = 0;
-      for (Object item : set) {
-         if (item != null) {
-            hashCode += item.hashCode();
-         }
-      }
-      return hashCode;
-   }
-   
-   static String toStringImpl(Set<?> set) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("[");
-      boolean first = true;
-      for (Object item : set) {
-         if (first) {
-            first = false;
-         } else {
-            sb.append(",");
-         }
-         sb.append(" ");
-         sb.append(String.valueOf(item));
-      }
-      sb.append(" ]");
-      return sb.toString();
-   }
-
    /**
     * The internal array that stores the elements in the set.
     */
-   Object data[];
+   transient Object data[];
    
    /**
     * The size of the set. The internal array is automatically grown as needed and may be larger
     * than the actual size of the set.
     */
-   int size;
+   transient int size;
   
    /**
     * The comparator used to sort elements in the set or {@code null} to indicate that items are
     * sorted by their natural order.
     */
-   Comparator<? super E> comp;
+   transient Comparator<? super E> comp;
    
    /**
     * The set's current revision level. Every modification to the set causes this count to be
     * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
     * modifications to the set.
     */
-   protected int modCount;
+   protected transient int modCount;
 
    /**
     * Constructs a new empty set. All elements must be mutually comparable. They will be sorted per
@@ -1477,7 +1219,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> descendingSet() {
-      return new DescendingSetImpl<E>(this);
+      return new DescendingSet<E>(this);
    }
 
    /** {@inheritDoc} */
@@ -1584,19 +1326,19 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public boolean equals(Object o) {
-      return equalsImpl(this, o);
+      return Utils.equals(this, o);
    }
    
    /** {@inheritDoc} */
    @Override
    public int hashCode() {
-      return hashCodeImpl(this);
+      return Utils.hashCode(this);
    }
    
    /** {@inheritDoc} */
    @Override
    public String toString() {
-      return toStringImpl(this);
+      return Utils.toString(this);
    }
    
    @Override
@@ -1631,8 +1373,11 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     * @throws ClassNotFoundException if de-serializing an element fails to locate the element's
     *            class
     */
+   @SuppressWarnings("unchecked")
    private void readObject(ObjectInputStream in) throws IOException,
          ClassNotFoundException {
+      in.defaultReadObject();
+      comp = (Comparator<? super E>) in.readObject();
       size = in.readInt();
       data = new Object[size];
       for (int i = 0; i < size; i++) {
@@ -1647,6 +1392,8 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     * @throws IOException if an exception is raised when writing to {@code out}
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
+      out.defaultWriteObject();
+      out.writeObject(comp);
       out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);

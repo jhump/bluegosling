@@ -335,11 +335,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    /**
-    * A view of the list where random access operations will run in O(1) constant time. This is a
-    * read-only view. Changes made to the list can alter its internal storage, making it no longer
-    * optimized and making random access operations revert to O(n) performance. So this list
-    * implementation attempts to detect such changes and fail fast by throwing
-    * {@code ConcurrentModificationException}s.
+    * A view of the list where random access operations will run in <em>O(1)</em> constant time.
+    * This is mostly a read-only view since changes made to the list can alter its internal storage,
+    * making it no longer optimized and making random access operations revert to O(n) performance.
+    * Mutative operations that are allowed are adding items to the very end of the list and removing
+    * the very last item in the list. Other mutative operations will throw
+    * {@code UnsupportedOperationException}s. This list implementation attempts to detect
+    * concurrent modifications (since they may alter the internal structure) and fail fast by
+    * throwing {@code ConcurrentModificationException}s.
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -404,7 +407,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public boolean equals(Object o) {
-         return equalsImpl(ArrayBackedLinkedList.this, o);
+         return Utils.equals(ArrayBackedLinkedList.this, o);
       }
 
       @Override
@@ -416,7 +419,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int hashCode() {
          checkOptimized();
-         return hashCodeImpl(ArrayBackedLinkedList.this);
+         return Utils.hashCode(ArrayBackedLinkedList.this);
       }
 
       @Override
@@ -507,7 +510,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public String toString() {
          checkOptimized();
-         return toStringImpl(ArrayBackedLinkedList.this);
+         return Utils.toString(ArrayBackedLinkedList.this);
       }
    }
 
@@ -635,7 +638,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public boolean equals(Object o) {
-         return equalsImpl(this, o);
+         return Utils.equals(this, o);
       }
 
       @SuppressWarnings("unchecked")
@@ -649,7 +652,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int hashCode() {
          checkMod(myModCount);
-         return hashCodeImpl(this);
+         return Utils.hashCode(this);
       }
 
       @Override
@@ -794,7 +797,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       
       @Override
       public String toString() {
-         return toStringImpl(this);
+         return Utils.toString(this);
       }
    }
 
@@ -987,62 +990,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    private static final int THRESHOLD_FOR_BULK_OP = 100;
 
    /**
-    * Implements <em>equals</em> per the contract defined by {@code java.util.List.equals(Object)}.
-    * 
-    * @param list the list
-    * @param o an object to compare to the list
-    * @return true if {@code o} equals {@code list}
-    */
-   static boolean equalsImpl(List<?> list, Object o) {
-      if (o == null || !(o instanceof List<?>))
-         return false;
-      List<?> l = (List<?>) o;
-      if (l.size() != list.size())
-         return false;
-      Iterator<?> iter1 = l.iterator();
-      Iterator<?> iter2 = list.iterator();
-      while (iter1.hasNext()) {
-         Object e1 = iter1.next();
-         Object e2 = iter2.next();
-         if (e1 == null ? e2 != null : !e1.equals(e2))
-            return false;
-      }
-      return true;
-   }
-
-   /**
-    * Computes the hash code for a list per the contract defined by
-    * {@code java.util.List.hashCode()}.
-    * 
-    * @param list the list
-    * @return the hash code for {@code list}
-    */
-   static int hashCodeImpl(List<?> list) {
-      int ret = 1;
-      for (Object e : list) {
-         ret = 31 * ret + (e == null ? 0 : e.hashCode());
-      }
-      return ret;
-   }
-
-   static String toStringImpl(List<?> list) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("[");
-      boolean first = true;
-      for (Object item : list) {
-         if (first) {
-            first = false;
-         } else {
-            sb.append(",");
-         }
-         sb.append(" ");
-         sb.append(String.valueOf(item));
-      }
-      sb.append(" ]");
-      return sb.toString();
-   }
-   
-   /**
     * Filters all objects in the list against a specified collection. Either removes all items that
     * are found in specified collection or removes all items that are not found in the collection.
     * Uses {@link Iterator#remove()} to remove items from the target list.
@@ -1208,57 +1155,57 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
     * modifications to the list.
     */
-   protected int modCount;
+   protected transient int modCount;
 
    /**
     * The buffer in which list elements are stored.
     */
-   Object[] data;
+   transient Object[] data;
 
    /**
     * The array of indexes which point from a given index in the buffer to its next element in the
     * list.
     */
-   int[] next;
+   transient int[] next;
 
    /**
     * The array of indexes which point from a given index in the buffer to its previous element in
     * the list.
     */
-   int[] prev;
+   transient int[] prev;
 
    /**
     * The number of items currently in the list.
     */
-   int size;
+   transient int size;
 
    /**
     * The index in the buffer of the first element in the list.
     */
-   int head;
+   transient int head;
 
    /**
     * The index in the buffer of the last element in the list.
     */
-   int tail;
+   transient int tail;
 
    /**
     * The high water point in the buffer.
     */
-   int highWater;
+   transient int highWater;
 
    /**
     * The index in the buffer of the last element removed from the list. It may also be set to the
     * last gap found when an insertion operation tries to "fill in the gaps" caused from
     * fragmentation before choosing to grow the buffer.
     */
-   private int lastRemove;
+   private transient int lastRemove;
 
    /**
     * A flag indicating whether the current buffer is optimized or not. If it is optimized then all
     * items are stored in order, just like in the buffer of an {@code java.util.ArrayList}.
     */
-   boolean isOptimized = true;
+   transient boolean isOptimized = true;
 
    /**
     * Constructs a new empty list.
@@ -1409,10 +1356,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * <p>
     * Also note that the main use for the returned list should be for operations that do
     * <em>not</em> change the structure since such operations could invalidate the internal storage
-    * characteristics that provide O(1) random access. These operations, adding an item anywhere in
-    * the list other than the end and removing an item in the list (not from the end), are thus not
-    * supported by the returned list and will result in {@code UnsupportedOperationException}s being
-    * thrown.
+    * characteristics that provide <em>O(1)</em> random access. These operations, adding an item
+    * anywhere in the list other than the end and removing an item in the list (not from the end),
+    * are thus not supported by the returned list and will result in
+    * {@code UnsupportedOperationException}s being thrown.
     * 
     * @param optimize true if the internal storage of this list should be optimized if necessary
     *           (could be a costly operation)
@@ -1599,7 +1546,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public boolean equals(Object o) {
-      return equalsImpl(this, o);
+      return Utils.equals(this, o);
    }
 
    /**
@@ -1694,7 +1641,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public int hashCode() {
-      return hashCodeImpl(this);
+      return Utils.hashCode(this);
    }
 
    /** {@inheritDoc} */
@@ -1793,8 +1740,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * defragments the internal buffer and trims it so there are no empty slots in the buffer.
     * 
     * <p>
-    * This is generally an O(n) operation and should only need to be done if there are many random
-    * access removals and/or insertion (which could cause the buffer to become unordered per
+    * This is generally an <em>O(n)</em> operation and should only need to be done if there are many
+    * random access removals and/or insertion (which could cause the buffer to become unordered per
     * iteration order and cause fragmentation).
     */
    public void optimize() {
@@ -1915,6 +1862,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     */
    private void readObject(ObjectInputStream in) throws IOException,
          ClassNotFoundException {
+      in.defaultReadObject();
       size = in.readInt();
       data = new Object[size];
       next = new int[size];
@@ -2197,6 +2145,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
     * @throws IOException if an exception is raised when writing to {@code out}
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
+      out.defaultWriteObject();
       out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);
@@ -2206,6 +2155,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public String toString() {
-      return toStringImpl(this);
+      return Utils.toString(this);
    }
 }

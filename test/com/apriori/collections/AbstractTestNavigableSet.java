@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * Abstract test that builds on the Apache Commons Collection's {@link AbstractTestSortedSet} to
@@ -18,7 +19,7 @@ import java.util.Set;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
-
+   
    /**
     * Constructs a new test.
     *
@@ -27,37 +28,281 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
    public AbstractTestNavigableSet(String name) {
       super(name);
    }
-
+   
    /**
-    * Adds test cases in bulk for testing {@link NavigableSet#descendingSet()}.
-    *
-    * @return tests
+    * Determines if the values returned by {@link NavigableSet#headSet(Object)} return a
+    * {@link NavigableSet}. The interface is defined only to return {@link SortedSet} but many
+    * implementations are in fact {@link NavigableSet}s.
+    * 
+    * <p>Defaults to true if {@link #isSubSetReturningNavigableSet()} returns true so that the one
+    * method can be overridden to change assumption for all of head-sets, tail-sets, and sub-sets.
+    * 
+    * @return true to cast head-sets to {@link NavigableSet}
     */
-   public BulkTest bulkTestDescendingSet() {
-      return new BulkTestDescendingSet(this);
+   public boolean isHeadSetReturningNavigableSet() {
+      return isSubSetReturningNavigableSet();
    }
 
    /**
-    * Adds test cases in bulk for testing {@link NavigableSet#iterator()}.
-    *
-    * @return tests
+    * Determines if the values returned by {@link NavigableSet#tailSet(Object)} return a
+    * {@link NavigableSet}. The interface is defined only to return {@link SortedSet} but many
+    * implementations are in fact {@link NavigableSet}s.
+    * 
+    * <p>Defaults to true if {@link #isSubSetReturningNavigableSet()} returns true so that the one
+    * method can be overridden to change assumption for all of head-sets, tail-sets, and sub-sets.
+    * 
+    * @return true to cast tail-sets to {@link NavigableSet}
     */
-   public BulkTest bulkTestIterator() {
-      return new BulkTestIterator(this);
+   public boolean isTailSetReturningNavigableSet() {
+      return isSubSetReturningNavigableSet();
+   }
+
+   /**
+    * Determines if the values returned by {@link NavigableSet#subSet(Object, Object)} return a
+    * {@link NavigableSet}. The interface is defined only to return {@link SortedSet} but many
+    * implementations are in fact {@link NavigableSet}s.
+    * 
+    * <p>Defaults to true. Sub-classes must override to change this setting.
+    * 
+    * @return true to cast sub-sets to {@link NavigableSet}
+    */
+   public boolean isSubSetReturningNavigableSet() {
+      return true;
+   }
+   
+   BulkTest makeSubSetBulkTest(int bound, boolean head) {
+      return new BulkTestSubSet(bound, head);
+   }
+
+   BulkTest makeSubSetBulkTest(int lobound, int hibound) {
+      return new BulkTestSubSet(lobound, hibound);
+   }
+   
+   @Override
+   public BulkTest bulkTestSortedSetSubSet() {
+      int length = getFullElements().length;
+      int lobound = length / 3;
+      int hibound = lobound * 2;
+      return makeSubSetBulkTest(lobound, hibound);
+   }
+
+   @Override
+   public BulkTest bulkTestSortedSetHeadSet() {
+      int length = getFullElements().length;
+      int lobound = length / 3;
+      int hibound = lobound * 2;
+      return makeSubSetBulkTest(hibound, true);
+   }
+
+   @Override
+   public BulkTest bulkTestSortedSetTailSet() {
+      int length = getFullElements().length;
+      int lobound = length / 3;
+      return makeSubSetBulkTest(lobound, false);
+   }
+
+   /**
+    * Adds test cases for the methods of {@link NavigableSet}.
+    * 
+    * @return a bulk test
+    */
+   public BulkTest bulkTestNavigableSet() {
+      return new BulkTestNavigableSet(this, false, false);
    }
    
    /**
-    * Adds test cases in bulk for testing {@link NavigableSet#descendingIterator()}.
+    * An enumeration of sub-set types. In addition to <em>sub-set</em>, this also includes
+    * head-set and tail-set types.
     *
-    * @return tests
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public BulkTest bulkTestDescendingIterator() {
-      return new BulkTestDescendingIterator(this);
+   public static enum SubSetType {
+      
+      /** A type that represents a {@linkplain NavigableSet#headSet(Object) head-set}. */
+      HEAD() {
+         @Override
+         public boolean isNavigableSet(AbstractTestNavigableSet test) {
+            return test.isHeadSetReturningNavigableSet();
+         }
+      },
+      
+      /** A type that represents a {@linkplain NavigableSet#tailSet(Object) tail-set}. */
+      TAIL() {
+         @Override
+         public boolean isNavigableSet(AbstractTestNavigableSet test) {
+            return test.isTailSetReturningNavigableSet();
+         }
+      },
+      
+      /** A type that represents a {@linkplain NavigableSet#subSet(Object, Object) sub-set}. */
+      SUB() {
+         @Override
+         public boolean isNavigableSet(AbstractTestNavigableSet test) {
+            return test.isSubSetReturningNavigableSet();
+         }
+      };
+      
+      /**
+       * Returns true if this sub-set type will implement {@link NavigableSet} instead of just
+       * implementing {@link SortedSet}.
+       *
+       * @param test the test for the underlying {@link NavigableSet}
+       * @return true if this sub-set type implements {@link NavigableSet}
+       */
+      public abstract boolean isNavigableSet(AbstractTestNavigableSet test);
    }
-   
-   // TODO: add additional tests for the other methods of NavigableSet (ceiling, floor, higher,
-   // and lower) and for add'l ways to create sub-sets (head-, tail-, and sub-sets with
-   // inclusive/exclusive bounds).
+
+   /**
+    * A bulk set of test cases for the methods of {@link NavigableSet}. This adds the tests using
+    * composition instead of inheritance so we can also decorate head-, tail-, and sub-set tests
+    * with these same additional tests.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public static class BulkTestNavigableSet extends BulkTest {
+
+      private AbstractTestSortedSet test;
+      private boolean forSubSet;
+      private boolean forDescendingSet;
+      
+      /**
+       * Constructs a new test.
+       *
+       * @param test the tests for the {@link SortedSet} super-interface
+       * @param forSubSet true if this is adding tests for a head-set, tail-set, or sub-set
+       * @param forDescendingSet true if this is adding tests for a descending set
+       */
+      public BulkTestNavigableSet(AbstractTestSortedSet test, boolean forSubSet,
+            boolean forDescendingSet) {
+         super("");
+         this.test = test;
+         this.forSubSet = forSubSet;
+         this.forDescendingSet = forDescendingSet;
+      }
+      
+      /**
+       * Adds test cases in bulk for testing {@link NavigableSet#descendingSet()}.
+       *
+       * @return tests
+       */
+      public BulkTest bulkTestDescendingSet() {
+         if (forDescendingSet) {
+            return null; // prevent infinite recursion
+         }
+         return new BulkTestDescendingSet(test, forSubSet);
+      }
+
+      /**
+       * Adds test cases in bulk for testing {@link NavigableSet#iterator()}.
+       *
+       * @return tests
+       */
+      public BulkTest bulkTestIterator() {
+         return new BulkTestIterator(test);
+      }
+      
+      /**
+       * Adds test cases in bulk for testing {@link NavigableSet#descendingIterator()}.
+       *
+       * @return tests
+       */
+      public BulkTest bulkTestDescendingIterator() {
+         return new BulkTestDescendingIterator(test);
+      }
+      
+      /**
+       * Tests {@link NavigableSet#ceiling(Object)}.
+       */
+      @SuppressWarnings("unchecked")
+      public void testCeiling() {
+         
+         test.resetEmpty();
+         Object items[] = test.getFullElements();
+         NavigableSet<Object> set = ((NavigableSet<Object>) test.getSet());
+         assertNull("ceiling() on empty set should always be null",
+               set.ceiling(items[0]));
+         assertNull("ceiling() on empty set should always be null",
+               set.ceiling(items[items.length-1]));
+         test.verify();
+         
+         test.resetFull();
+         set = ((NavigableSet<Object>) test.getSet());
+         // an item in the set
+         Object item = items[items.length / 2];
+         assertEquals("ceiling() for item in set should return that item",
+               item, set.ceiling(item));
+         // an item not in the set
+         items = test.getOtherElements();
+         item = items[0];
+         Object nextItem = forDescendingSet ? ((Integer) item) - 1 : ((Integer) item) + 1;
+         assertEquals("ceiling() for item not in set should return the next item",
+               nextItem, set.ceiling(item));
+         // an item outside range of set -- low
+         items = test.getFullElements();
+         item = items[0];
+         Object prevItem = forDescendingSet ? ((Integer) item) + 1 : ((Integer) item) - 1;
+         assertEquals("ceiling() for item lower than set range should return first item",
+               item, set.ceiling(prevItem));
+         // an item outside range of set -- high
+         items = test.getFullElements();
+         item = items[items.length - 1];
+         nextItem = forDescendingSet ? ((Integer) item) - 1 : ((Integer) item) + 1;
+         assertNull("ceiling() for item higher than set range should return null",
+               set.ceiling(nextItem));
+         
+         test.verify();
+      }
+      
+      // TODO: add additional tests for the other methods of NavigableSet (ceiling, floor, higher,
+      // and lower) and for add'l ways to create sub-sets (head-, tail-, and sub-sets with
+      // inclusive/exclusive bounds).
+   }
+
+   /**
+    * Test cases for the head-, tail-, or sub-set of a {@link NavigableSet}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public class BulkTestSubSet extends AbstractTestSortedSet.TestSortedSetSubSet {
+      
+      SubSetType type;
+      
+      /**
+       * Constructs a new test.
+       * 
+       * @param bound the bound of this sub-set
+       * @param head true if this is a head-set, false if a tail-set
+       */
+      public BulkTestSubSet(int bound, boolean head) {
+         AbstractTestNavigableSet.this.super(bound, head);
+         type = head ? SubSetType.HEAD : SubSetType.TAIL;
+      }
+      
+      /**
+       * Constructs a new test.
+       *
+       * @param lobound the lower bound of this sub-set
+       * @param hibound the upper bound of this sub-set
+       */
+      public BulkTestSubSet(int lobound, int hibound) {
+         AbstractTestNavigableSet.this.super(lobound, hibound);
+         type = SubSetType.SUB;
+      }
+      
+      BulkTest makeNavigableSetBulkTest() {
+         return new BulkTestNavigableSet(this, true, false);
+      }
+      
+      /**
+       * Adds test cases for the methods of {@link NavigableSet}.
+       *
+       * @return a bulk test
+       */
+      public BulkTest bulkTestNavigableSet() {
+         return type.isNavigableSet(AbstractTestNavigableSet.this) ?
+               makeNavigableSetBulkTest() : null;
+      }
+   }
 
    /**
     * Tests for a the descending view of a {@link NavigableSet}.
@@ -66,21 +311,24 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     */
    public static class BulkTestDescendingSet extends AbstractTestNavigableSet {
       
-      AbstractTestNavigableSet outer;
+      AbstractTestSortedSet outer;
+      boolean forSubSet;
       
       /**
        * Constructs a new test.
        * 
        * @param outer the test for the underlying {@link NavigableSet}
+       * @param forSubSet true if this test is for a head-set, tail-set, or sub-set
        */
-      public BulkTestDescendingSet(AbstractTestNavigableSet outer) {
+      public BulkTestDescendingSet(AbstractTestSortedSet outer, boolean forSubSet) {
          super("");
          this.outer = outer;
+         this.forSubSet = forSubSet;
       }
       
       @Override
-      public BulkTest bulkTestDescendingSet() {
-         return null; // prevent infinite recursion
+      public BulkTest bulkTestNavigableSet() {
+         return new BulkTestNavigableSet(this, forSubSet, true);
       }
       
       /**
@@ -100,27 +348,20 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       }
       
       @Override
-      public BulkTest bulkTestSortedSetSubSet() {
-         int length = getFullElements().length;
-         int lobound = length / 3;
-         int hibound = lobound * 2;
-         return new BulkTestSubSet(lobound, hibound);
+      BulkTest makeSubSetBulkTest(int bound, boolean head) {
+         if (forSubSet) {
+            return null; // prevent infinite recursion
+         }
+         return new BulkTestDescendingSubSet(bound, head);
       }
-      
+
       @Override
-      public BulkTest bulkTestSortedSetHeadSet() {
-         int length = getFullElements().length;
-         int lobound = length / 3;
-         int hibound = lobound * 2;
-         return new BulkTestSubSet(hibound, true);
+      BulkTest makeSubSetBulkTest(int lobound, int hibound) {
+         if (forSubSet) {
+            return null; // prevent infinite recursion
+         }
+         return new BulkTestDescendingSubSet(lobound, hibound);
       }
-      
-      @Override
-      public BulkTest bulkTestSortedSetTailSet() {
-         int length = getFullElements().length;
-         int lobound = length / 3;
-         return new BulkTestSubSet(lobound, false);
-     }
       
       @Override
       public NavigableSet<?> makeEmptySet() {
@@ -192,7 +433,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
-      public class BulkTestSubSet extends AbstractTestSortedSet.TestSortedSetSubSet {
+      public class BulkTestDescendingSubSet extends BulkTestSubSet {
 
          /**
           * Constructs a new test.
@@ -200,8 +441,8 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
           * @param bound the bound of this sub-set
           * @param head true if this is a head-set, false if a tail-set
           */
-         public BulkTestSubSet(int bound, boolean head) {
-            BulkTestDescendingSet.this.super(bound, head);
+         public BulkTestDescendingSubSet(int bound, boolean head) {
+            super(bound, head);
          }
 
          /**
@@ -210,8 +451,13 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
           * @param lobound the lower bound of this sub-set
           * @param hibound the upper bound of this sub-set
           */
-         public BulkTestSubSet(int lobound, int hibound) {
-            BulkTestDescendingSet.this.super(lobound, hibound);
+         public BulkTestDescendingSubSet(int lobound, int hibound) {
+            super(lobound, hibound);
+         }
+         
+         @Override
+         BulkTest makeNavigableSetBulkTest() {
+            return new BulkTestNavigableSet(this, true, true);
          }
          
          @Override
@@ -248,7 +494,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    public static class BulkTestIterator extends AbstractTestIterator {
-      AbstractTestNavigableSet outer;
+      AbstractTestSortedSet outer;
       Iterator<?> testIter;
       Iterator<?> confirmedIter;
 
@@ -257,7 +503,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        *
        * @param outer the test for the underlying {@link NavigableSet}
        */
-      public BulkTestIterator(AbstractTestNavigableSet outer) {
+      public BulkTestIterator(AbstractTestSortedSet outer) {
          super("");
          this.outer = outer;
       }
@@ -363,7 +609,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        *
        * @param outer the test for the underlying {@link NavigableSet}
        */
-      public BulkTestDescendingIterator(AbstractTestNavigableSet outer) {
+      public BulkTestDescendingIterator(AbstractTestSortedSet outer) {
          super(outer);
       }
       
