@@ -652,7 +652,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
    public boolean equals(Object o) {
       acquireReadLocks();
       try {
-         return Utils.equals(this, o);
+         return CollectionUtils.equals(this, o);
       } finally {
          releaseReadLocks();
       }
@@ -662,7 +662,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
    public int hashCode() {
       acquireReadLocks();
       try {
-         return Utils.hashCode(this);
+         return CollectionUtils.hashCode(this);
       } finally {
          releaseReadLocks();
       }
@@ -672,7 +672,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
    public String toString() {
       acquireReadLocks();
       try {
-         return Utils.toString(this);
+         return CollectionUtils.toString(this);
       } finally {
          releaseReadLocks();
       }

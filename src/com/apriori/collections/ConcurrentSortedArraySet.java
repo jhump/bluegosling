@@ -271,9 +271,8 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
 
    /** {@inheritDoc} */
    @Override
-   public boolean retainAll(Collection<?> arg0) {
-      // TODO implement me
-      return false;
+   public boolean retainAll(Collection<?> coll) {
+      return CollectionUtils.filter(coll, iterator(), false);
    }
 
    /** {@inheritDoc} */
@@ -323,8 +322,7 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> descendingSet() {
-      // TODO implement me
-      return null;
+      return new DescendingSet<E>(this);
    }
 
    /** {@inheritDoc} */
@@ -412,8 +410,8 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    public boolean equals(Object o) {
       // Due to the concurrent nature of this set, Utils.equals() isn't
       // strong enough (even for weak consistency guarantees of this set).
-      // So we us this alternate implementation which is slightly less
-      // efficient but more correct.
+      // So we us this alternate implementation, which is slightly less
+      // efficient (since it does ~2x as many set queries) but more correct.
       if (o instanceof Set) {
          Set<?> other = (Set<?>) o;
          return other.containsAll(this) && containsAll(other);
@@ -424,11 +422,11 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    
    @Override
    public int hashCode() {
-      return Utils.hashCode(this);
+      return CollectionUtils.hashCode(this);
    }
 
    @Override
    public String toString() {
-      return Utils.toString(this);
+      return CollectionUtils.toString(this);
    }
 }

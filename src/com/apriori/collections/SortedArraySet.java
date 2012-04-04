@@ -184,7 +184,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             E toElement, boolean toInclusive, int toIndex, int modCount) {
          
          if (fromElement != null && toElement != null) {
-            int check = compare(fromElement, toElement);
+            int check = comp.compare(fromElement, toElement);
             if (check > 0 || (check == 0 && !fromInclusive && !toInclusive)) {
                throw new IllegalArgumentException("Invalid subset bounds");
             }
@@ -243,7 +243,8 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       
       private boolean isInRangeLow(Object o, boolean inclusive) {
          if (fromElement != null) {
-            int c = compare(o, fromElement);
+            @SuppressWarnings("unchecked")
+            int c = comp.compare((E) o, fromElement);
             if (c < 0 || (c == 0 && inclusive && !fromInclusive)) {
                return false;
             }
@@ -259,7 +260,8 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       
       private boolean isInRangeHigh(Object o, boolean inclusive) {
          if (toElement != null) {
-            int c = compare(o, toElement);
+            @SuppressWarnings("unchecked")
+            int c = comp.compare((E) o, toElement);
             if (c > 0 || (c == 0 && inclusive && !toInclusive)) {
                return false;
             }
@@ -279,7 +281,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public Comparator<? super E> comparator() {
-         return comp;
+         return comp == CollectionUtils.NATURAL_ORDERING ? null : comp;
       }
 
       /** {@inheritDoc} */
@@ -673,17 +675,17 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       
       @Override
       public boolean equals(Object o) {
-         return Utils.equals(this, o);
+         return CollectionUtils.equals(this, o);
       }
       
       @Override
       public int hashCode() {
-         return Utils.hashCode(this);
+         return CollectionUtils.hashCode(this);
       }
       
       @Override
       public String toString() {
-         return Utils.toString(this);
+         return CollectionUtils.toString(this);
       }
    }
    
@@ -757,7 +759,11 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       }
       data = new Object[initialCapacity];
       size = 0;
-      this.comp = comp;
+      if (comp == null) {
+         this.comp = CollectionUtils.NATURAL_ORDERING;
+      } else {
+         this.comp = comp;
+      }
    }
 
    /**
@@ -801,24 +807,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          Arrays.sort(toSort, comp);
       }
    }
-   
-   /**
-    * Compares two elements for purposes of sorting in this set. If the set's comparator is
-    * {@code null} then the items must implement {@code Comparable}.
-    * 
-    * @param o1 an element
-    * @param o2 another element
-    * @return negative one, zero, or positive one as the first element is less than, equal to, or
-    *       greater than the second element, respectively
-    */
-   @SuppressWarnings("unchecked")
-   int compare(Object o1, Object o2) {
-      if (comp == null) {
-         return ((Comparable<Object>) o1).compareTo(o2);
-      } else {
-         return comp.compare((E) o1, (E) o2);
-      }
-   }
 
    /**
     * Removes duplicate entries from the internal array. Generally, duplicates are not inserted into
@@ -827,10 +815,11 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     * 
     * <p>The internal array must already be {@link #sort() sorted} before this method is invoked.
     */
+   @SuppressWarnings("unchecked")
    private void removeDups() {
       int numUnique = 0;
       for (int i = 1; i < size; i++) {
-         if (compare(data[i], data[numUnique]) != 0) {
+         if (comp.compare((E) data[i], (E) data[numUnique]) != 0) {
             // not a dup!
             numUnique++;
             // move if necessary to keep unique items consolidated at the beginning of array
@@ -852,81 +841,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       }
    }
 
-   private void maybeGrowArray() {
-      int prevLen = data.length;
-      if (prevLen > size) {
-         return;
-      }
-      int len = prevLen << 1;
-      // avoid overflow
-      if (len <= prevLen) {
-         len = Integer.MAX_VALUE - 8;
-      }
-      Object oldData[] = data;
-      data = new Object[len];
-      System.arraycopy(oldData, 0, data, 0, oldData.length);
-      modCount++;
-   }
-
-   /**
-    * Binary searches a range in the set to find the specified item. If the item is not found, an
-    * encoded negative value is returned that indicates where the item <em>would</em> be. So if the
-    * return value is negative then the following expression indicates the index into the array
-    * where the item would go:
-    * <pre>
-    * -findIndex(o, lo, hi) - 1
-    * </pre>
-    *
-    * @param o the item to find
-    * @param lo the minimum index in the internal array that will be searched
-    * @param hi the maximum index in the internal array that will be searched
-    * @return the index in the list where the specified item was found or, if not found, a negative
-    *       value that can be decoded to determine the index where the item would go
-    */
-   int findIndex(Object o, int lo, int hi) {
-      if (hi < lo) {
-         return -1;
-      }
-      while (true) {
-         int mid = (hi + lo) >> 1;
-         int c = compare(data[mid], o);
-         if (c == 0) {
-            return mid;
-         }
-         else if (c < 0) {
-            if (hi == mid) {
-               return -(hi + 2);
-            }
-            lo = mid + 1;
-         }
-         else {
-            if (lo == mid) {
-               return -(lo + 1);
-            }
-            hi = mid - 1;
-         }
-      }
-   }
-
+   @SuppressWarnings("unchecked")
    int findIndex(Object o) {
-      return findIndex(o, 0, size - 1);
-   }
-
-   void insertItem(E element, int index) {
-      maybeGrowArray();
-      if (index < size) {
-         System.arraycopy(data, index, data, index + 1, size - index);
-      }
-      data[index] = element;
-      modCount++;
-      size++;
+      return ArrayUtils.findIndex(o, data, 0, size - 1, (Comparator<Object>) comp);
    }
 
    void removeItem(int index) {
-      if (index < size - 1) {
-         System.arraycopy(data, index + 1, data, index, size - 1 - index);
-      }
-      data[size - 1] = null; // clear last reference
+      ArrayUtils.removeIndex(index, data, size);
       modCount++;
       size--;
    }
@@ -949,7 +870,9 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       if (idx >= 0) {
          return false;
       }
-      insertItem(element, -(idx + 1));
+      data = ArrayUtils.insertItem(element, idx, data, size);
+      modCount++;
+      size++;
       return true;
    }
 
@@ -1326,19 +1249,19 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public boolean equals(Object o) {
-      return Utils.equals(this, o);
+      return CollectionUtils.equals(this, o);
    }
    
    /** {@inheritDoc} */
    @Override
    public int hashCode() {
-      return Utils.hashCode(this);
+      return CollectionUtils.hashCode(this);
    }
    
    /** {@inheritDoc} */
    @Override
    public String toString() {
-      return Utils.toString(this);
+      return CollectionUtils.toString(this);
    }
    
    @Override
@@ -1378,6 +1301,9 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          ClassNotFoundException {
       in.defaultReadObject();
       comp = (Comparator<? super E>) in.readObject();
+      if (comp == null) {
+         comp = CollectionUtils.NATURAL_ORDERING;
+      }
       size = in.readInt();
       data = new Object[size];
       for (int i = 0; i < size; i++) {
@@ -1393,7 +1319,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
       out.defaultWriteObject();
-      out.writeObject(comp);
+      out.writeObject(comp == CollectionUtils.NATURAL_ORDERING ? null : comp);
       out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);

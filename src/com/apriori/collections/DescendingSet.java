@@ -227,6 +227,6 @@ public class DescendingSet<E> implements NavigableSet<E> {
    
    @Override
    public String toString() {
-      return Utils.toString(this);
+      return CollectionUtils.toString(this);
    }
 }

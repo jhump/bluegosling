@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
-import java.util.Set;
 
 /**
  * A list implementation that attempts to achieve some of the benefits of a linked list without
@@ -407,7 +406,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public boolean equals(Object o) {
-         return Utils.equals(ArrayBackedLinkedList.this, o);
+         return CollectionUtils.equals(ArrayBackedLinkedList.this, o);
       }
 
       @Override
@@ -419,7 +418,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int hashCode() {
          checkOptimized();
-         return Utils.hashCode(ArrayBackedLinkedList.this);
+         return CollectionUtils.hashCode(ArrayBackedLinkedList.this);
       }
 
       @Override
@@ -510,7 +509,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public String toString() {
          checkOptimized();
-         return Utils.toString(ArrayBackedLinkedList.this);
+         return CollectionUtils.toString(ArrayBackedLinkedList.this);
       }
    }
 
@@ -638,7 +637,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
 
       @Override
       public boolean equals(Object o) {
-         return Utils.equals(this, o);
+         return CollectionUtils.equals(this, o);
       }
 
       @SuppressWarnings("unchecked")
@@ -652,7 +651,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int hashCode() {
          checkMod(myModCount);
-         return Utils.hashCode(this);
+         return CollectionUtils.hashCode(this);
       }
 
       @Override
@@ -714,7 +713,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public boolean removeAll(Collection<?> coll) {
          checkMod(myModCount);
-         boolean ret = filter(coll, iterator(), true);
+         boolean ret = CollectionUtils.filter(coll, iterator(), true);
          myModCount = modCount;
          return ret;
       }
@@ -722,7 +721,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public boolean retainAll(Collection<?> coll) {
          checkMod(myModCount);
-         boolean ret = filter(coll, iterator(), false);
+         boolean ret = CollectionUtils.filter(coll, iterator(), false);
          myModCount = modCount;
          return ret;
       }
@@ -797,7 +796,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       
       @Override
       public String toString() {
-         return Utils.toString(this);
+         return CollectionUtils.toString(this);
       }
    }
 
@@ -987,43 +986,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    
    private static final int DEFAULT_INITIAL_CAPACITY = 10;
    
-   private static final int THRESHOLD_FOR_BULK_OP = 100;
-
-   /**
-    * Filters all objects in the list against a specified collection. Either removes all items that
-    * are found in specified collection or removes all items that are not found in the collection.
-    * Uses {@link Iterator#remove()} to remove items from the target list.
-    * 
-    * @param items collection of items acting as a filter
-    * @param iter iterator, representing target list, from which items will be removed
-    * @param contains true if removing items found in the collection or false if leaving items found
-    *           in the collection
-    * @return true if the list was modified and something was removed
-    */
-   static boolean filter(Collection<?> items, Iterator<?> iter, boolean contains) {
-      // if list is not already a set and is reasonably big, add the items
-      // to a new HashSet. This should mitigate the otherwise O(n^2) runtime
-      // speed and provide O(n) instead. The overhead (creating new and
-      // populating new set as well as garbage collecting it later) isn't
-      // worth it for small collections. If the collection already implements
-      // Set, we'll live with the runtime it provides -- which is hopefully no
-      // worse than O(log n), like for TreeSet, which changes this batch
-      // operation from O(n) to O(n log n).
-      if (!(items instanceof Set<?>) && items.size() > THRESHOLD_FOR_BULK_OP) {
-         items = new HashSet<Object>(items);
-      }
-      boolean modified = false;
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (items.contains(o) == contains) {
-            iter.remove();
-            if (!modified)
-               modified = true;
-         }
-      }
-      return modified;
-   }
-
    /**
     * Determines if all items in a specified collection exist in the specified iteration.
     * 
@@ -1546,7 +1508,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public boolean equals(Object o) {
-      return Utils.equals(this, o);
+      return CollectionUtils.equals(this, o);
    }
 
    /**
@@ -1641,7 +1603,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public int hashCode() {
-      return Utils.hashCode(this);
+      return CollectionUtils.hashCode(this);
    }
 
    /** {@inheritDoc} */
@@ -1914,7 +1876,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public boolean removeAll(Collection<?> coll) {
-      return filter(coll, unorderedIterator(), true);
+      return CollectionUtils.filter(coll, unorderedIterator(), true);
    }
 
    /**
@@ -1988,15 +1950,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public boolean removeLastOccurrence(Object item) {
-      if (size == 0)
-         return false;
+      if (size == 0) return false;
       return removeObject(item, reverseIterator(size), true);
    }
 
    /** {@inheritDoc} */
    @Override
    public boolean retainAll(Collection<?> coll) {
-      return filter(coll, unorderedIterator(), false);
+      return CollectionUtils.filter(coll, unorderedIterator(), false);
    }
 
    private ListIterator<E> reverseIterator(int idx) {
@@ -2155,6 +2116,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public String toString() {
-      return Utils.toString(this);
+      return CollectionUtils.toString(this);
    }
 }

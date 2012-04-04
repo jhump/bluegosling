@@ -2,6 +2,8 @@
 package com.apriori.collections;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -17,20 +19,33 @@ import java.util.Set;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class Utils {
+public class CollectionUtils {
+   
+   private static final int FILTER_THRESHOLD_FOR_NEW_SET = 100;
+   
+   /**
+    * A comparator that uses the objects' {@linkplain Comparable natural ordering}.
+    */
+   public static final Comparator<Object> NATURAL_ORDERING = new Comparator<Object>() {
+      @SuppressWarnings("unchecked")
+      @Override
+      public int compare(Object o1, Object o2) {
+         return ((Comparable<Object>) o1).compareTo(o2);
+      }
+   };
 
    /** Prevents instantiation. */
-   private Utils() {
+   private CollectionUtils() {
    }
    
    /**
     * Constructs a string representation of the specified collection.
     * 
-    * <p>Empty collections are represented as "[ ]". A collection with a single
+    * <p>Empty collections are represented as {@code "[ ]"}. A collection with a single
     * element would be represented as {@code "[ item ]"}, where <em>"item"</em> is the
-    * value of {@code String.valueOf(theOneItem)}. Collections with multiple
-    * items follow the same pattern, with multiple items separated by a comma
-    * and a single space, like so: {@code "[ item1, item2, item3 ]"}.
+    * value of {@link String#valueOf(Object) String.valueOf(theOneItem)}. Collections
+    * with multiple items follow the same pattern, with multiple items separated by a
+    * comma and a single space, like so: {@code "[ item1, item2, item3 ]"}.
     *
     * @param coll the collection
     * @return a string representation of {@code coll}
@@ -131,4 +146,38 @@ public class Utils {
       return hashCode;
    }
 
+   /**
+    * Filters all objects in the list against a specified collection. Either removes all items that
+    * are found in specified collection or removes all items that are not found in the collection.
+    * Uses {@link Iterator#remove()} to remove items from the target list.
+    * 
+    * @param items collection of items acting as a filter
+    * @param iter iterator over the target collection, from which items will be removed
+    * @param remove true if <em>removing</em> all items found in the collection or false if
+    *           <em>retaining</em> them
+    * @return true if the list was modified and something was removed
+    */
+   public static boolean filter(Collection<?> items, Iterator<?> iter, boolean remove) {
+      // if list is not already a set and is reasonably big, add the items
+      // to a new HashSet. This should mitigate the otherwise O(n^2) runtime
+      // speed and provide O(n) instead. The overhead (creating new and
+      // populating new set as well as garbage collecting it later) isn't
+      // worth it for small collections. If the collection already implements
+      // Set, we'll live with the runtime it provides -- which is hopefully no
+      // worse than O(log n), like for TreeSet, which changes this batch
+      // operation from O(n) to O(n log n).
+      if (!(items instanceof Set<?>) && items.size() > FILTER_THRESHOLD_FOR_NEW_SET) {
+         items = new HashSet<Object>(items);
+      }
+      boolean modified = false;
+      while (iter.hasNext()) {
+         Object o = iter.next();
+         if (items.contains(o) == remove) {
+            iter.remove();
+            if (!modified)
+               modified = true;
+         }
+      }
+      return modified;
+   }
 }
