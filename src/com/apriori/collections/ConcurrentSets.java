@@ -38,17 +38,80 @@ import java.util.SortedSet;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ConcurrentSets {
-   
+
+   /**
+    * The default level of concurrency when creating concurrent sets. This
+    * will be the number of shards used in a set and should be the expected
+    * peak number of modifying threads.
+    */
    public static final int DEFAULT_CONCURRENCY = 10;
    
+   /**
+    * Creates concurrent set objects using the builder pattern.
+    * 
+    * <p>Example usage:
+    * <pre>
+    * <em>// return a concurrent set that is based on a
+    * // {@link java.util.HashSet} and uses default parameters of 10
+    * // concurrent writer threads and unfair locks.</em>
+    * return ConcurrentSets.wrapSet(new HashSet()).create();
+    * 
+    * <em>// return a concurrent sorted set that is based on a
+    * // {@link java.util.TreeSet}, expects 5 concurrent writer threads,
+    * // and uses fair locks.</em>
+    * return ConcurrentSets.wrapSortedSet(new TreeSet())
+    *                      .concurrency(5)
+    *                      .fair(true)
+    *                      .create();
+    * </pre>
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * 
+    * @param <E> the type of element in the returned set
+    * @param <T> the type of set (e.g. {@code Set}, {@code SortedSet},
+    *       or {@code NavigableSet})
+    */
    public interface ConcurrentSetBuilder<E, T extends Set<E>> {
+      /**
+       * Sets the concurrency level for the set that will be created.
+       * If this method is never called, the created set will use
+       * {@link ConcurrentSets#DEFAULT_CONCURRENCY}.
+       *
+       * @param concurrency the level of concurrency
+       * @return {@code this}
+       */
       ConcurrentSetBuilder<E, T> concurrency(int concurrency);
+      
+      /**
+       * Sets whether or not access to the set uses fair read-write locks.
+       * If this method is never called, the created set will <em>not</em>
+       * use fair locks.
+       *
+       * @param fair whether or not to use fair locks
+       * @return {@code this}
+       */
       ConcurrentSetBuilder<E, T> fair(boolean fair);
+      
+      /**
+       * Creates a set.
+       *
+       * @return the concurrent set
+       */
       T create();
    }
    
+   /**
+    * Abstract implementor of the builder interface. Concrete subclasses must
+    * implement the {@link #create()} method.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * 
+    * @param <E> the type of element in the returned set
+    * @param <T> the type of set
+    */
    private static abstract class ConcurrentSetBuilderImpl<E, T extends Set<E>>
          implements ConcurrentSetBuilder<E, T> {
+      
       int concurrency;
       boolean fair;
       
@@ -68,10 +131,22 @@ public class ConcurrentSets {
          this.fair = fair;
          return this;
       }
-      
    }
    
-   
+   /**
+    * Wraps the specified {@link Set} as a concurrent set implementation.
+    * 
+    * <p>The specified set provides the implementation of the underlying set.
+    * The actual instance specified will be {@linkplain Object#clone() cloned}
+    * to create the new set's shards. So the resulting concurrent set will
+    * actually be independent of the specified set; mutations to one will not
+    * be reflected in the other.
+    *
+    * @param <E> the type of element in the set
+    * @param <S> the type of the wrapped set
+    * @param set the set to use as a basis for a concurrent set
+    * @return a concurrent set
+    */
    public static <E, S extends Set<E> & Cloneable> ConcurrentSetBuilder<E, Set<E>>
          wrapSet(final S set) {
       
@@ -83,6 +158,20 @@ public class ConcurrentSets {
       };
    }
 
+   /**
+    * Wraps the specified {@link SortedSet} as a concurrent set implementation.
+    * 
+    * <p>The specified set provides the implementation of the underlying set.
+    * The actual instance specified will be {@linkplain Object#clone() cloned}
+    * to create the new set's shards. So the resulting concurrent set will
+    * actually be independent of the specified set; mutations to one will not
+    * be reflected in the other.
+    *
+    * @param <E> the type of element in the set
+    * @param <S> the type of the wrapped set
+    * @param set the set to use as a basis for a concurrent set
+    * @return a concurrent sorted set
+    */
    public static <E, S extends SortedSet<E> & Cloneable> ConcurrentSetBuilder<E, SortedSet<E>>
          wrapSortedSet(final S set) {
 
@@ -94,6 +183,21 @@ public class ConcurrentSets {
       };
    }
 
+   /**
+    * Wraps the specified {@link NavigableSet} as a concurrent set
+    * implementation.
+    * 
+    * <p>The specified set provides the implementation of the underlying set.
+    * The actual instance specified will be {@linkplain Object#clone() cloned}
+    * to create the new set's shards. So the resulting concurrent set will
+    * actually be independent of the specified set; mutations to one will not
+    * be reflected in the other.
+    *
+    * @param <E> the type of element in the set
+    * @param <S> the type of the wrapped set
+    * @param set the set to use as a basis for a concurrent set
+    * @return a concurrent navigable set
+    */
    public static <E, S extends NavigableSet<E> & Cloneable> ConcurrentSetBuilder<E, NavigableSet<E>>
          wrapNavigableSet(final S set) {
       

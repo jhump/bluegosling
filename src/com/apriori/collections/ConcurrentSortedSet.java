@@ -78,6 +78,10 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          return haveNext;
       }
 
+      boolean isLessThan(E e1, E e2) {
+         return comp.compare(e1, e2) < 0;
+      }
+      
       /** {@inheritDoc} */
       @Override
       public synchronized E next() {
@@ -90,7 +94,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
                E other = nextElements[i];
                if (other != null) {
                   nextCount++;
-                  if (lastElement == null || comp.compare(other, lastElement) < 0) {
+                  if (lastElement == null || isLessThan(other, lastElement)) {
                      lastElement = other;
                      idx = i; // save index
                   }
@@ -463,10 +467,15 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       try {
          E ret = null;
          for (Set<E> shard : shards) {
-            E other = ((SortedSet<E>) shard).first();
-            if (ret == null || comp.compare(other, ret) < 0) {
-               ret = other;
+            if (!shard.isEmpty()) {
+               E other = ((SortedSet<E>) shard).first();
+               if (ret == null || comp.compare(other, ret) < 0) {
+                  ret = other;
+               }
             }
+         }
+         if (ret == null) {
+            throw new NoSuchElementException();
          }
          return ret;
       } finally {
@@ -492,10 +501,15 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       try {
          E ret = null;
          for (Set<E> shard : shards) {
-            E other = ((SortedSet<E>) shard).last();
-            if (ret == null || comp.compare(other, ret) > 0) {
-               ret = other;
+            if (!shard.isEmpty()) {
+               E other = ((SortedSet<E>) shard).last();
+               if (ret == null || comp.compare(other, ret) > 0) {
+                  ret = other;
+               }
             }
+         }
+         if (ret == null) {
+            throw new NoSuchElementException();
          }
          return ret;
       } finally {

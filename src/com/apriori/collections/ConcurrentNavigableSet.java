@@ -13,6 +13,11 @@ import java.util.Set;
 class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
       implements NavigableSet<E> {
 
+   /**
+    * Iterates over the concurrent set in descending order.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    class DescendingIteratorImpl extends SortedIteratorImpl {
       DescendingIteratorImpl(Set<E> stableShards[]) {
          super(stableShards);
@@ -21,6 +26,13 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
       @Override
       Iterator<E> getIterator(Set<E> shard) {
          return ((NavigableSet<E>) shard).descendingIterator();
+      }
+      
+      @Override
+      boolean isLessThan(E e1, E e2) {
+         // return the opposite of usual comparison here since
+         // we're iterating backwards
+         return comp.compare(e1, e2) > 0;
       }
    }
    
@@ -42,8 +54,19 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    /** {@inheritDoc} */
    @Override
    public E ceiling(E e) {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).ceiling(e);
+            if (ret == null || comp.compare(other, ret) < 0) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
@@ -61,8 +84,19 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    /** {@inheritDoc} */
    @Override
    public E floor(E e) {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).floor(e);
+            if (ret == null || comp.compare(other, ret) > 0) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
@@ -75,29 +109,73 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    /** {@inheritDoc} */
    @Override
    public E higher(E e) {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).higher(e);
+            if (ret == null || comp.compare(other, ret) < 0) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
    @Override
    public E lower(E e) {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).lower(e);
+            if (ret == null || comp.compare(other, ret) > 0) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
    @Override
    public E pollFirst() {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).pollFirst();
+            if (other != null && (ret == null || comp.compare(other, ret) < 0)) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
    @Override
    public E pollLast() {
-      // TODO implement me
-      return null;
+      acquireReadLocks();
+      try {
+         E ret = null;
+         for (Set<E> shard : shards) {
+            E other = ((NavigableSet<E>) shard).pollLast();
+            if (other != null && (ret == null || comp.compare(other, ret) > 0)) {
+               ret = other;
+            }
+         }
+         return ret;
+      } finally {
+         releaseReadLocks();
+      }
    }
 
    /** {@inheritDoc} */
