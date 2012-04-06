@@ -372,10 +372,16 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          try {
             E ret = null;
             for (Set<E> shard : shards) {
-               E other = subSet((SortedSet<E>) shard).first();
-               if (ret == null || comp.compare(other, ret) < 0) {
-                  ret = other;
+               SortedSet<E> subShard = subSet((SortedSet<E>) shard);
+               if (!subShard.isEmpty()) {
+                  E other = subShard.first();
+                  if (ret == null || comp.compare(other, ret) < 0) {
+                     ret = other;
+                  }
                }
+            }
+            if (ret == null) {
+               throw new NoSuchElementException();
             }
             return ret;
          } finally {
@@ -397,10 +403,16 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          try {
             E ret = null;
             for (Set<E> shard : shards) {
-               E other = subSet((SortedSet<E>) shard).last();
-               if (ret == null || comp.compare(other, ret) > 0) {
-                  ret = other;
+               SortedSet<E> subShard = subSet((SortedSet<E>) shard);
+               if (!subShard.isEmpty()) {
+                  E other = subShard.last();
+                  if (ret == null || comp.compare(other, ret) > 0) {
+                     ret = other;
+                  }
                }
+            }
+            if (ret == null) {
+               throw new NoSuchElementException();
             }
             return ret;
          } finally {

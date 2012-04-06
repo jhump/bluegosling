@@ -54,12 +54,12 @@ public class ConcurrentSets {
     * <em>// return a concurrent set that is based on a
     * // {@link java.util.HashSet} and uses default parameters of 10
     * // concurrent writer threads and unfair locks.</em>
-    * return ConcurrentSets.wrapSet(new HashSet()).create();
+    * return ConcurrentSets.withSet(new HashSet()).create();
     * 
     * <em>// return a concurrent sorted set that is based on a
     * // {@link java.util.TreeSet}, expects 5 concurrent writer threads,
     * // and uses fair locks.</em>
-    * return ConcurrentSets.wrapSortedSet(new TreeSet())
+    * return ConcurrentSets.withSet(new TreeSet())
     *                      .concurrency(5)
     *                      .fair(true)
     *                      .create();
@@ -71,7 +71,7 @@ public class ConcurrentSets {
     * @param <T> the type of set (e.g. {@code Set}, {@code SortedSet},
     *       or {@code NavigableSet})
     */
-   public interface ConcurrentSetBuilder<E, T extends Set<E>> {
+   public interface Builder<E, T extends Set<E>> {
       /**
        * Sets the concurrency level for the set that will be created.
        * If this method is never called, the created set will use
@@ -80,7 +80,7 @@ public class ConcurrentSets {
        * @param concurrency the level of concurrency
        * @return {@code this}
        */
-      ConcurrentSetBuilder<E, T> concurrency(int concurrency);
+      Builder<E, T> concurrency(int concurrency);
       
       /**
        * Sets whether or not access to the set uses fair read-write locks.
@@ -89,8 +89,10 @@ public class ConcurrentSets {
        *
        * @param fair whether or not to use fair locks
        * @return {@code this}
+       * 
+       * @see java.util.concurrent.locks.ReentrantReadWriteLock#isFair()
        */
-      ConcurrentSetBuilder<E, T> fair(boolean fair);
+      Builder<E, T> fair(boolean fair);
       
       /**
        * Creates a set.
@@ -109,48 +111,49 @@ public class ConcurrentSets {
     * @param <E> the type of element in the returned set
     * @param <T> the type of set
     */
-   private static abstract class ConcurrentSetBuilderImpl<E, T extends Set<E>>
-         implements ConcurrentSetBuilder<E, T> {
+   private static abstract class BuilderImpl<E, T extends Set<E>>
+         implements Builder<E, T> {
       
       int concurrency;
       boolean fair;
       
-      ConcurrentSetBuilderImpl() {
+      BuilderImpl() {
          concurrency = DEFAULT_CONCURRENCY;
          fair = false;
       }
       
       @Override
-      public ConcurrentSetBuilder<E, T> concurrency(int concurrency) {
+      public Builder<E, T> concurrency(int concurrency) {
          this.concurrency = concurrency;
          return this;
       }
       
       @Override
-      public ConcurrentSetBuilder<E, T> fair(boolean fair) {
+      public Builder<E, T> fair(boolean fair) {
          this.fair = fair;
          return this;
       }
    }
    
    /**
-    * Wraps the specified {@link Set} as a concurrent set implementation.
+    * Returns a builder for creating a concurrent set implementation that is
+    * backed by the specified {@link Set}.
     * 
-    * <p>The specified set provides the implementation of the underlying set.
-    * The actual instance specified will be {@linkplain Object#clone() cloned}
-    * to create the new set's shards. So the resulting concurrent set will
-    * actually be independent of the specified set; mutations to one will not
-    * be reflected in the other.
+    * <p>The specified set provides the implementation of the underlying set
+    * and its initial contents. The actual instance specified will be
+    * {@linkplain Object#clone() cloned} to create the new set's shards. So the
+    * resulting concurrent set will actually be independent of the specified
+    * set; mutations to one will not be reflected in the other.
     *
     * @param <E> the type of element in the set
     * @param <S> the type of the wrapped set
     * @param set the set to use as a basis for a concurrent set
     * @return a concurrent set
     */
-   public static <E, S extends Set<E> & Cloneable> ConcurrentSetBuilder<E, Set<E>>
-         wrapSet(final S set) {
+   public static <E, S extends Set<E> & Cloneable> Builder<E, Set<E>>
+         withSet(final S set) {
       
-      return new ConcurrentSetBuilderImpl<E, Set<E>>() {
+      return new BuilderImpl<E, Set<E>>() {
          @Override
          public Set<E> create() {
             return new ConcurrentSet<E>(set, concurrency, fair);
@@ -159,23 +162,24 @@ public class ConcurrentSets {
    }
 
    /**
-    * Wraps the specified {@link SortedSet} as a concurrent set implementation.
+    * Returns a builder for creating a concurrent set implementation that is
+    * backed by the specified {@link SortedSet}.
     * 
-    * <p>The specified set provides the implementation of the underlying set.
-    * The actual instance specified will be {@linkplain Object#clone() cloned}
-    * to create the new set's shards. So the resulting concurrent set will
-    * actually be independent of the specified set; mutations to one will not
-    * be reflected in the other.
+    * <p>The specified set provides the implementation of the underlying set
+    * and its initial contents. The actual instance specified will be
+    * {@linkplain Object#clone() cloned} to create the new set's shards. So the
+    * resulting concurrent set will actually be independent of the specified
+    * set; mutations to one will not be reflected in the other.
     *
     * @param <E> the type of element in the set
     * @param <S> the type of the wrapped set
     * @param set the set to use as a basis for a concurrent set
     * @return a concurrent sorted set
     */
-   public static <E, S extends SortedSet<E> & Cloneable> ConcurrentSetBuilder<E, SortedSet<E>>
-         wrapSortedSet(final S set) {
+   public static <E, S extends SortedSet<E> & Cloneable> Builder<E, SortedSet<E>>
+         withSortedSet(final S set) {
 
-      return new ConcurrentSetBuilderImpl<E, SortedSet<E>>() {
+      return new BuilderImpl<E, SortedSet<E>>() {
          @Override
          public SortedSet<E> create() {
             return new ConcurrentSortedSet<E>(set, concurrency, fair);
@@ -184,24 +188,24 @@ public class ConcurrentSets {
    }
 
    /**
-    * Wraps the specified {@link NavigableSet} as a concurrent set
-    * implementation.
+    * Returns a builder for creating a concurrent set implementation that is
+    * backed by the specified {@link NavigableSet}.
     * 
-    * <p>The specified set provides the implementation of the underlying set.
-    * The actual instance specified will be {@linkplain Object#clone() cloned}
-    * to create the new set's shards. So the resulting concurrent set will
-    * actually be independent of the specified set; mutations to one will not
-    * be reflected in the other.
+    * <p>The specified set provides the implementation of the underlying set
+    * and its initial contents. The actual instance specified will be
+    * {@linkplain Object#clone() cloned} to create the new set's shards. So the
+    * resulting concurrent set will actually be independent of the specified
+    * set; mutations to one will not be reflected in the other.
     *
     * @param <E> the type of element in the set
     * @param <S> the type of the wrapped set
     * @param set the set to use as a basis for a concurrent set
     * @return a concurrent navigable set
     */
-   public static <E, S extends NavigableSet<E> & Cloneable> ConcurrentSetBuilder<E, NavigableSet<E>>
-         wrapNavigableSet(final S set) {
+   public static <E, S extends NavigableSet<E> & Cloneable> Builder<E, NavigableSet<E>>
+         withNavigableSet(final S set) {
       
-      return new ConcurrentSetBuilderImpl<E, NavigableSet<E>>() {
+      return new BuilderImpl<E, NavigableSet<E>>() {
          @Override
          public NavigableSet<E> create() {
             return new ConcurrentNavigableSet<E>(set, concurrency, fair);

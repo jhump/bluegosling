@@ -203,8 +203,6 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
     * @param set the underlying set implementation
     * @param concurrency the number of expected concurrent writers
     * @param fair whether or not fair read-write locks are used
-    * 
-    * @see ReentrantReadWriteLock
     */
    @SuppressWarnings("unchecked")
    <S extends Set<E> & Cloneable> ConcurrentSet(S set, int concurrency,

@@ -1,9 +1,11 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * TODO document me
@@ -33,6 +35,181 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          // return the opposite of usual comparison here since
          // we're iterating backwards
          return comp.compare(e1, e2) > 0;
+      }
+   }
+   
+   class SubSetImpl extends ConcurrentSortedSet<E>.SubSetImpl implements NavigableSet<E> {
+      private boolean fromInclusive;
+      private boolean toInclusive;
+      
+      SubSetImpl(E from, boolean fromInclusive, E to, boolean toInclusive) {
+         super(from, to);
+         this.fromInclusive = fromInclusive;
+         this.toInclusive = toInclusive;
+      }
+      
+      @SuppressWarnings("unchecked")
+      @Override
+      boolean isInRange(Object o) {
+         return CollectionUtils.isInRange(o, from, fromInclusive, to, toInclusive,
+               (Comparator<Object>) comp);
+      }
+
+      @Override
+      NavigableSet<E> subSet(SortedSet<E> shard) {
+         if (from == null) {
+            return ((NavigableSet<E>) shard).headSet(to, toInclusive);
+         } else if (to == null) {
+            return ((NavigableSet<E>) shard).tailSet(from, fromInclusive);
+         } else {
+            return ((NavigableSet<E>) shard).subSet(from, fromInclusive, to, toInclusive);
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E ceiling(E e) {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).ceiling(e);
+               if (ret == null || comp.compare(other, ret) < 0) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public Iterator<E> descendingIterator() {
+         Set<E> stableShards[] = getStableShards();
+         for (int i = 0, len = stableShards.length; i < len; i++) {
+            stableShards[i] = subSet((SortedSet<E>) stableShards[i]);
+         }
+         return new DescendingIteratorImpl(stableShards);
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> descendingSet() {
+         return new DescendingSet<E>(this);
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E floor(E e) {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).floor(e);
+               if (ret == null || comp.compare(other, ret) > 0) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E higher(E e) {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).higher(e);
+               if (ret == null || comp.compare(other, ret) < 0) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E lower(E e) {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).lower(e);
+               if (ret == null || comp.compare(other, ret) > 0) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E pollFirst() {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).pollFirst();
+               if (other != null && (ret == null || comp.compare(other, ret) < 0)) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public E pollLast() {
+         acquireReadLocks();
+         try {
+            E ret = null;
+            for (Set<E> shard : shards) {
+               E other = subSet((NavigableSet<E>) shard).pollLast();
+               if (other != null && (ret == null || comp.compare(other, ret) > 0)) {
+                  ret = other;
+               }
+            }
+            return ret;
+         } finally {
+            releaseReadLocks();
+         }
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
+            boolean toInclusive) {
+         // TODO implement me
+         return null;
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+         // TODO implement me
+         return null;
       }
    }
    
@@ -102,8 +279,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-      // TODO implement me
-      return null;
+      return new SubSetImpl(null, false, toElement, inclusive);
    }
 
    /** {@inheritDoc} */
@@ -182,14 +358,12 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    @Override
    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
          boolean toInclusive) {
-      // TODO implement me
-      return null;
+      return new SubSetImpl(fromElement, fromInclusive, toElement, toInclusive);
    }
 
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-      // TODO implement me
-      return null;
+      return new SubSetImpl(fromElement, inclusive, null, false);
    }
 }
