@@ -59,6 +59,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * the new elements if executing concurrently with a call to {@code addAll(Collection)}, for
  * example.
  * 
+ * <p>This implementation is very similar to a {@link ConcurrentNavigableSet} constructed with a
+ * {@link SortedArraySet} <em>except</em> that this implementation does not provide guarantees
+ * of strong consistency or atomicity, so it might allow greater throughput.
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @param <E> The type of element contained in the set

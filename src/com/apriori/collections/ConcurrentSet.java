@@ -67,11 +67,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 
  * @param <E> the type element contained in the set
  */
-public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable, Set<E> {
+class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
 
    private static final long serialVersionUID = -2010351788181385374L;
-
-   private static final int DEFAULT_CONCURRENCY = 10;
    
    private static final Method CLONE_METHOD;
    
@@ -85,6 +83,18 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       }
    }
    
+   /**
+    * Iterates over a snapshot of the set.
+    * 
+    * <p>The shards are a snapshot and can be assumed to be immutable.
+    * 
+    * <p>Methods are synchronized so as not to corrupt the structure if
+    * used from multiple threads. However, access from multiple threads is
+    * discouraged since it could cause {@link #next()} to spuriously throw
+    * exceptions, even if the code is first checking {@link #hasNext()}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private class IteratorImpl implements Iterator<E> {
       private final Set<E> stableShards[];
       private Iterator<E> curIterator;
@@ -101,7 +111,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
 
       /** {@inheritDoc} */
       @Override
-      public boolean hasNext() {
+      public synchronized boolean hasNext() {
          while (!done) {
             if (curIterator.hasNext()) {
                return true;
@@ -121,7 +131,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
 
       /** {@inheritDoc} */
       @Override
-      public E next() {
+      public synchronized E next() {
          if (hasNext()) {
             fetched = true;
             removed = false;
@@ -134,19 +144,19 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
 
       /** {@inheritDoc} */
       @Override
-      public void remove() {
+      public synchronized void remove() {
          if (removed) {
             throw new IllegalStateException("element already removed");
          } else if (!fetched) {
             throw new IllegalStateException("no element to remove");
          } else {
-            ConcurrentCopyOnIterationSet.this.remove(lastElement);
+            ConcurrentSet.this.remove(lastElement);
          }
       }
    }
    
    @SuppressWarnings("unchecked")
-   private static <E, S extends Set<E>> S makeClone(S set) {
+   static <E, S extends Set<E>> S makeClone(S set) {
       try {
          return (S) CLONE_METHOD.invoke(set);
       }
@@ -166,7 +176,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
    
    // ideally, these would be final -- but they aren't because we have
    // to set them during deserialization in addition to in constructor
-   private transient Set<E> shards[];
+   transient Set<E> shards[];
    private transient int shardModCounts[];
    private transient int shardLatestIteratorModCounts[];
    // all of the above fields must be accessed under these locks
@@ -174,39 +184,11 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
 
    /**
     * Constructs a new set, based on the provided set implementation. The
-    * new set will have a default concurrency level of 10 and will not use
-    * fair read-write locks.
-    * 
-    * @param <S> the type of the underlying set implementation
-    * @param set the underlying set implementation
-    * 
-    * @see #ConcurrentCopyOnIterationSet(Set, int, boolean)
-    */
-   public <S extends Set<E> & Cloneable> ConcurrentCopyOnIterationSet(S set) {
-      this(set, DEFAULT_CONCURRENCY);
-   }
-   
-   /**
-    * Constructs a new set, based on the provided set implementation. The
-    * new set will not use fair read-write locks.
-    *
-    * @param <S> the type of the underlying set implementation
-    * @param set the underlying set implementation
-    * @param concurrency the number of expected concurrent writers
-    * 
-    * @see #ConcurrentCopyOnIterationSet(Set, int, boolean)
-    */
-   public <S extends Set<E> & Cloneable> ConcurrentCopyOnIterationSet(S set, int concurrency) {
-      this(set, concurrency, false);
-   }
-   
-   /**
-    * Constructs a new set, based on the provided set implementation. The
     * specified set must implement {@link Cloneable} since that is how shards
     * are copied during copy-on-iteration operations. The new set will be
     * completely independent of the specified set, so changes made to the
     * specified set after this constructor returns will <em>not</em> be
-    * reflected in the contents of the new {@code ConcurrentCopyOnIterationSet}.
+    * reflected in the contents of the new {@code ConcurrentSet}.
     * 
     * <p>The expected level of concurrent writes is also the number of shards
     * that will be used internally in the new set.
@@ -225,7 +207,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
     * @see ReentrantReadWriteLock
     */
    @SuppressWarnings("unchecked")
-   public <S extends Set<E> & Cloneable> ConcurrentCopyOnIterationSet(S set, int concurrency,
+   <S extends Set<E> & Cloneable> ConcurrentSet(S set, int concurrency,
          boolean fair) {
       
       if (concurrency < 1) {
@@ -260,19 +242,19 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       shardLocks[shard].writeLock().unlock();
    }
 
-   private void acquireWriteLocks() {
+   void acquireWriteLocks() {
       for (int i = 0, len = shards.length; i < len; i++) {
          acquireWriteLock(i);
       }
    }
    
-   private void releaseWriteLocks() {
+   void releaseWriteLocks() {
       for (int i = 0, len = shards.length; i < len; i++) {
          releaseWriteLock(i);
       }
    }
    
-   private void acquireWriteLocks(boolean effectedShards[]) {
+   void acquireWriteLocks(boolean effectedShards[]) {
       for (int i = 0, len = shards.length; i < len; i++) {
          if (effectedShards[i]) {
             acquireWriteLock(i);
@@ -280,7 +262,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       }
    }
    
-   private void releaseWriteLocks(boolean effectedShards[]) {
+   void releaseWriteLocks(boolean effectedShards[]) {
       for (int i = 0, len = shards.length; i < len; i++) {
          if (effectedShards[i]) {
             releaseWriteLock(i);
@@ -296,13 +278,13 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       shardLocks[shard].readLock().unlock();
    }
    
-   private void acquireReadLocks() {
+   void acquireReadLocks() {
       for (int i = 0, len = shards.length; i < len; i++) {
          acquireReadLock(i);
       }
    }
    
-   private void releaseReadLocks() {
+   void releaseReadLocks() {
       for (int i = 0, len = shards.length; i < len; i++) {
          releaseReadLock(i);
       }
@@ -328,7 +310,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       return o.hashCode() % shards.length;
    }
    
-   private <T> Collection<T>[] collectionToShards(Collection<T> coll) {
+   <T> Collection<T>[] collectionToShards(Collection<T> coll) {
       int len = shards.length;
       int initialShardSize = (coll.size() + len - 1) / len;
       @SuppressWarnings("unchecked")
@@ -344,7 +326,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       return ret;
    }
    
-   private boolean[] getEffectedShards(Collection<?> colls[]) {
+   boolean[] getEffectedShards(Collection<?> colls[]) {
       int len = colls.length;
       boolean ret[] = new boolean[len];
       for (int i = 0; i < len; i++) {
@@ -448,10 +430,8 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
          releaseReadLocks();
       }
    }
-
-   /** {@inheritDoc} */
-   @Override
-   public Iterator<E> iterator() {
+   
+   Set<E>[] getStableShards() {
       acquireReadLocks();
       try {
          int len = shards.length;
@@ -460,14 +440,22 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
          // get stable snapshot of references (individual shards may be cloned
          // on mutations after this point)
          System.arraycopy(shards, 0, stableShards, 0, len);
-         Iterator<E> ret = new IteratorImpl(stableShards);
-         
          // extra book-keeping for our lazy copy-on-iteration semantics
          System.arraycopy(shardModCounts, 0, shardLatestIteratorModCounts, 0, len);
-         return ret;
+         return stableShards;
       } finally {
          releaseReadLocks();
       }
+   }
+   
+   Iterator<E> makeIterator(Set<E> stableShards[]) {
+      return new IteratorImpl(stableShards);
+   }
+
+   /** {@inheritDoc} */
+   @Override
+   public Iterator<E> iterator() {
+      return makeIterator(getStableShards());
    }
 
    /** {@inheritDoc} */
@@ -553,12 +541,12 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       }
    }
    
-   private void copyToArray(Object a[]) {
+   static void copyToArray(Set<?> shards[], Object a[]) {
       // caller is expect to have already acquired read locks for all shards
       int i = 0;
-      for (Set<E> shard : shards) {
-         for (E e : shard) {
-            a[i++] = e;
+      for (Set<?> shard : shards) {
+         for (Object o : shard) {
+            a[i++] = o;
          }
       }
    }
@@ -569,7 +557,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       acquireReadLocks();
       try {
          Object ret[] = new Object[sizeNoLocks()];
-         copyToArray(ret);
+         copyToArray(shards, ret);
          return ret;
       } finally {
          releaseReadLocks();
@@ -586,7 +574,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
          if (a.length < sz) {
             a = (T[]) Array.newInstance(a.getClass().getComponentType(), sz);
          }
-         copyToArray(a);
+         copyToArray(shards, a);
          if (a.length > sz) {
             a[sz] = null;
          }
@@ -609,10 +597,8 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
          out.writeBoolean(shardLocks[0].isFair()); // lock fairness
          out.writeInt(sizeNoLocks()); // number of elements
          // and now each element
-         for (Set<E> shard : shards) {
-            for (E e : shard) {
-               out.writeObject(e);
-            }
+         for (Iterator<E> iter = makeIterator(shards); iter.hasNext(); ) {
+            out.writeObject(iter.next());
          }
       } finally {
          releaseReadLocks();
@@ -628,6 +614,7 @@ public class ConcurrentCopyOnIterationSet<E> implements Serializable, Cloneable,
       int size = in.readInt();
       // build instance fields
       template = makeClone(template); // defensive copy
+      template.clear();
       shards = new Set[concurrency];
       shards[0] = template;
       for (int i = 1; i < concurrency; i++) {

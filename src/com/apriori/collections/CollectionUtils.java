@@ -180,4 +180,74 @@ public class CollectionUtils {
       }
       return modified;
    }
+   
+   /**
+    * Checks if the given object is in the range according to the range's lower
+    * bound.
+    *
+    * @param o the object
+    * @param from the lower bound of the range
+    * @param inclusive true if {@code from} is included in the range; false
+    *       otherwise
+    * @param comp the comparator used to compare {@code o} to {@code from}
+    *       (cannot be null)
+    * @return true if the specified object is greater than the bound and the
+    *       bound is exclusive; true if the object is greater than or equal
+    *       to the bound and the bound is inclusive; false otherwise
+    */
+   public static boolean isInRangeLow(Object o, Object from, boolean inclusive,
+         Comparator<Object> comp) {
+      if (from != null) {
+         int c = comp.compare(o, from);
+         if (c < 0 || (c == 0 && !inclusive)) {
+            return false;
+         }
+      }
+      return true;
+   }
+   
+   /**
+    * Checks if the given object is in the range according to the range's upper
+    * bound.
+    *
+    * @param o the object
+    * @param to the upper bound of the range
+    * @param inclusive true if {@code to} is included in the range; false
+    *       otherwise
+    * @param comp the comparator used to compare {@code o} to {@code to}
+    *       (cannot be null)
+    * @return true if the specified object is less than the bound and the
+    *       bound is exclusive; true if the object is less than or equal
+    *       to the bound and the bound is inclusive; false otherwise
+    */
+   public static boolean isInRangeHigh(Object o, Object to, boolean inclusive,
+         Comparator<Object> comp) {
+      if (to != null) {
+         int c = comp.compare(o, to);
+         if (c > 0 || (c == 0 && !inclusive)) {
+            return false;
+         }
+      }
+      return true;
+   }
+   
+   /**
+    * Checks if the given object is within the given bounds.
+    *
+    * @param o the object
+    * @param from the lower bound of the range
+    * @param fromInclusive true if {@code from} is included in the range; false
+    *       otherwise
+    * @param to the upper bound of the range
+    * @param toInclusive true if {@code to} is included in the range; false
+    *       otherwise
+    * @param comp the comparator used to compare {@code o} to {@code to}
+    *       (cannot be null)
+    * @return true if the specified object is within the specified bounds; false
+    *       otherwise
+    */
+   public static boolean isInRange(Object o, Object from, boolean fromInclusive, Object to,
+         boolean toInclusive, Comparator<Object> comp) {
+      return isInRangeLow(o, from, fromInclusive, comp) && isInRangeHigh(o, to, toInclusive, comp);
+   }
 }
