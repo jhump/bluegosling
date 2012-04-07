@@ -8,12 +8,23 @@ import java.util.Set;
 import java.util.SortedSet;
 
 /**
- * TODO document me
+ * An implementation of {@link NavigableSet} that supports concurrent access.
+ * This implementation uses the same approach and provides the same consistency
+ * and atomicity guarantees as ancestor class {@link ConcurrentSet}.
+ * 
+ * <p>This set does not support {@code null} values, even if the underlying set
+ * implementations do.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @param <E> the type of element contained in the set
+ * 
+ * @see ConcurrentSet
  */
 class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
       implements NavigableSet<E> {
+
+   private static final long serialVersionUID = -701598894628602252L;
 
    /**
     * Iterates over the concurrent set in descending order.
@@ -38,6 +49,11 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
       }
    }
    
+   /**
+    * A sub-set of the concurrent set.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    class SubSetImpl extends ConcurrentSortedSet<E>.SubSetImpl implements NavigableSet<E> {
       private boolean fromInclusive;
       private boolean toInclusive;
@@ -46,6 +62,20 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          super(from, to);
          this.fromInclusive = fromInclusive;
          this.toInclusive = toInclusive;
+      }
+      
+      @SuppressWarnings("unchecked")
+      @Override
+      boolean isInRangeLow(Object o, boolean inclusive) {
+         return CollectionUtils.isInRangeLow(o, inclusive, from, fromInclusive,
+               (Comparator<Object>) comp);
+      }
+      
+      @SuppressWarnings("unchecked")
+      @Override
+      boolean isInRangeHigh(Object o, boolean inclusive) {
+         return CollectionUtils.isInRangeHigh(o, inclusive, to, toInclusive,
+               (Comparator<Object>) comp);
       }
       
       @SuppressWarnings("unchecked")
@@ -120,9 +150,16 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
 
       /** {@inheritDoc} */
       @Override
+      public NavigableSet<E> headSet(E toElement) {
+         return headSet(toElement, false);
+      }
+
+      /** {@inheritDoc} */
+      @Override
       public NavigableSet<E> headSet(E toElement, boolean inclusive) {
-         // TODO implement me
-         return null;
+         checkRangeLow(toElement, false);
+         checkRangeHigh(toElement, inclusive);
+         return new SubSetImpl(from, fromInclusive, toElement, inclusive);
       }
 
       /** {@inheritDoc} */
@@ -199,17 +236,30 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
 
       /** {@inheritDoc} */
       @Override
-      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
-            boolean toInclusive) {
-         // TODO implement me
-         return null;
+      public NavigableSet<E> subSet(E fromElement, E toElement) {
+         return subSet(fromElement, true, toElement, false);
       }
 
       /** {@inheritDoc} */
       @Override
+      public NavigableSet<E> subSet(E fromElement, boolean fromInc, E toElement, boolean toInc) {
+         checkRangeLow(fromElement, fromInc);
+         checkRangeHigh(toElement, toInc);
+         return new SubSetImpl(fromElement, fromInc, toElement, toInc);
+      }
+
+      /** {@inheritDoc} */
+      @Override
+      public NavigableSet<E> tailSet(E fromElement) {
+         return tailSet(fromElement, true);
+      }
+      
+      /** {@inheritDoc} */
+      @Override
       public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
-         // TODO implement me
-         return null;
+         checkRangeLow(fromElement, inclusive);
+         checkRangeHigh(fromElement, false);
+         return new SubSetImpl(fromElement, inclusive, to, toInclusive);
       }
    }
    
@@ -274,6 +324,12 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
       } finally {
          releaseReadLocks();
       }
+   }
+
+   /** {@inheritDoc} */
+   @Override
+   public NavigableSet<E> headSet(E toElement) {
+      return headSet(toElement, false);
    }
 
    /** {@inheritDoc} */
@@ -356,11 +412,23 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
 
    /** {@inheritDoc} */
    @Override
+   public NavigableSet<E> subSet(E fromElement, E toElement) {
+      return subSet(fromElement, true, toElement, false);
+   }
+   
+   /** {@inheritDoc} */
+   @Override
    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
          boolean toInclusive) {
       return new SubSetImpl(fromElement, fromInclusive, toElement, toInclusive);
    }
 
+   /** {@inheritDoc} */
+   @Override
+   public NavigableSet<E> tailSet(E fromElement) {
+      return tailSet(fromElement, true);
+   }
+   
    /** {@inheritDoc} */
    @Override
    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {

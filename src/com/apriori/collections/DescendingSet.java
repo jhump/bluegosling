@@ -13,11 +13,6 @@ import java.util.SortedSet;
  * elements in descending order (and {@link #descendingIterator()} visits them in ascending order!),
  * etc.
  * 
- * <p>Note that this implementation <em>requires</em> that the underlying set return instances of
- * {@link NavigableSet} from {@link NavigableSet#headSet(Object)},
- * {@link NavigableSet#tailSet(Object)}, and {@link NavigableSet#subSet(Object, Object)} (even
- * though the interface only requires instances of {@link SortedSet}).
- * 
  * <p>This implementation is designed to be used to implement {@link NavigableSet#descendingSet()}.
  * The underlying set must implement all other interface methods <em>without</em> using this
  * implementation. For example, you can't use a {@code DescendingSet} to help you implement a
@@ -40,7 +35,7 @@ public class DescendingSet<E> implements NavigableSet<E> {
    public DescendingSet(NavigableSet<E> base) {
       this.base = base;
    }
-
+   
    @Override
    public Comparator<? super E> comparator() {
       final Comparator<? super E> comp = base.comparator();

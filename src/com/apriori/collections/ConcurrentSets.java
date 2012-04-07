@@ -38,6 +38,10 @@ import java.util.SortedSet;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ConcurrentSets {
+   
+   /** Prevents instantiation. */
+   private ConcurrentSets() {
+   }
 
    /**
     * The default level of concurrency when creating concurrent sets. This
@@ -90,7 +94,7 @@ public class ConcurrentSets {
        * @param fair whether or not to use fair locks
        * @return {@code this}
        * 
-       * @see java.util.concurrent.locks.ReentrantReadWriteLock#isFair()
+       * @see java.util.concurrent.locks.ReentrantReadWriteLock
        */
       Builder<E, T> fair(boolean fair);
       

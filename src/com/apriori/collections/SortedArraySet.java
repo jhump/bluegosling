@@ -184,8 +184,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             E toElement, boolean toInclusive, int toIndex, int modCount) {
          
          if (fromElement != null && toElement != null) {
-            int check = comp.compare(fromElement, toElement);
-            if (check > 0 || (check == 0 && !fromInclusive && !toInclusive)) {
+            if (comp.compare(fromElement, toElement) > 0) {
                throw new IllegalArgumentException("Invalid subset bounds");
             }
          } else if (fromElement == null && toElement == null) {
@@ -241,15 +240,10 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          }
       }
       
+      @SuppressWarnings("unchecked")
       private boolean isInRangeLow(Object o, boolean inclusive) {
-         if (fromElement != null) {
-            @SuppressWarnings("unchecked")
-            int c = comp.compare((E) o, fromElement);
-            if (c < 0 || (c == 0 && inclusive && !fromInclusive)) {
-               return false;
-            }
-         }
-         return true;
+         return CollectionUtils.isInRangeLow(o, inclusive, fromElement, fromInclusive,
+               (Comparator<Object>) comp);
       }
       
       private void checkRangeHigh(Object o, boolean inclusive) {
@@ -258,24 +252,22 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          }
       }
       
+      @SuppressWarnings("unchecked")
       private boolean isInRangeHigh(Object o, boolean inclusive) {
-         if (toElement != null) {
-            @SuppressWarnings("unchecked")
-            int c = comp.compare((E) o, toElement);
-            if (c > 0 || (c == 0 && inclusive && !toInclusive)) {
-               return false;
-            }
-         }
-         return true;
+         return CollectionUtils.isInRangeHigh(o, inclusive, toElement, toInclusive,
+               (Comparator<Object>) comp);
       }
       
       private void checkRange(Object o) {
-         checkRangeLow(o, true);
-         checkRangeHigh(o, true);
+         if (!isInRange(o)) {
+            throw new IllegalArgumentException("Object outside of subset range");
+         }
       }
       
+      @SuppressWarnings("unchecked")
       private boolean isInRange(Object o) {
-         return isInRangeLow(o, true) && isInRangeHigh(o, true);
+         return CollectionUtils.isInRange(o, fromElement, fromInclusive, toElement, toInclusive,
+               (Comparator<Object>) comp);
       }
       
       /** {@inheritDoc} */
@@ -553,6 +545,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       @Override
       public NavigableSet<E> headSet(E to, boolean inclusive) {
          checkMod(myModCount);
+         checkRangeLow(to, false);
          checkRangeHigh(to, inclusive);
          return new SubSetImpl(this.fromElement, this.fromInclusive, this.fromIndex,
                to, inclusive, -1, myModCount);
@@ -669,6 +662,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       public NavigableSet<E> tailSet(E from, boolean inclusive) {
          checkMod(myModCount);
          checkRangeLow(from, inclusive);
+         checkRangeHigh(from, false);
          return new SubSetImpl(from, inclusive, -1,
                this.toElement, this.toInclusive, this.toIndex, myModCount);
       }

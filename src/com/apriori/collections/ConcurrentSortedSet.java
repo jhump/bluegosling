@@ -147,6 +147,19 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       SubSetImpl(E from, E to) {
          this.from = from;
          this.to = to;
+         if (comp.compare(from, to) > 0) {
+            throw new IllegalArgumentException("Invalid subset bounds");
+         }
+      }
+      
+      @SuppressWarnings("unchecked")
+      boolean isInRangeLow(Object o, boolean inclusive) {
+         return CollectionUtils.isInRangeLow(o, inclusive, from, true, (Comparator<Object>) comp);
+      }
+      
+      @SuppressWarnings("unchecked")
+      boolean isInRangeHigh(Object o, boolean inclusive) {
+         return CollectionUtils.isInRangeHigh(o, inclusive, to, false, (Comparator<Object>) comp);
       }
       
       @SuppressWarnings("unchecked")
@@ -154,7 +167,19 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          return CollectionUtils.isInRange(o, from, true, to, false, (Comparator<Object>) comp);
       }
       
-      private void checkRange(Object o) {
+      void checkRangeHigh(Object o, boolean inclusive) {
+         if (!isInRangeHigh(o, inclusive)) {
+            throw new IllegalArgumentException("Object outside of subset range");
+         }
+      }
+      
+      void checkRangeLow(Object o, boolean inclusive) {
+         if (!isInRangeLow(o, inclusive)) {
+            throw new IllegalArgumentException("Object outside of subset range");
+         }
+      }
+      
+      void checkRange(Object o) {
          if (!isInRange(o)) {
             throw new IllegalArgumentException("Object outside of subset range");
          }
@@ -392,7 +417,8 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       /** {@inheritDoc} */
       @Override
       public SortedSet<E> headSet(E toElement) {
-         checkRange(toElement);
+         checkRangeLow(toElement, false);
+         checkRangeHigh(toElement, false);
          return new SubSetImpl(from, toElement);
       }
 
@@ -423,15 +449,16 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       /** {@inheritDoc} */
       @Override
       public SortedSet<E> subSet(E fromElement, E toElement) {
-         checkRange(fromElement);
-         checkRange(toElement);
+         checkRangeLow(fromElement, true);
+         checkRangeHigh(toElement, false);
          return new SubSetImpl(fromElement, toElement);
       }
 
       /** {@inheritDoc} */
       @Override
       public SortedSet<E> tailSet(E fromElement) {
-         checkRange(fromElement);
+         checkRangeLow(fromElement, true);
+         checkRangeHigh(fromElement, false);
          return new SubSetImpl(fromElement, to);
       }
    }

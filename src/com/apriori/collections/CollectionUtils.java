@@ -182,12 +182,19 @@ public class CollectionUtils {
    }
    
    /**
-    * Checks if the given object is in the range according to the range's lower
-    * bound.
+    * Checks if the given object (or range lower bound) lies above another
+    * lower bound.
+    * 
+    * <p>Generally, this is used to test if an object is above the specified
+    * lower bound (in which case, the parameter {@code oIncluded} will be true).
+    * But we can also tell if the lower bound of one range (specified by the
+    * parameters {@code o} and {@code oIncluded}) lies above the lower bound
+    * of another range (specified by {@code from} and {@code fromInclusive}).
     *
     * @param o the object
+    * @param oIncluded true if {@code o} needs to be included in the range
     * @param from the lower bound of the range
-    * @param inclusive true if {@code from} is included in the range; false
+    * @param fromInclusive true if {@code from} is included in the range; false
     *       otherwise
     * @param comp the comparator used to compare {@code o} to {@code from}
     *       (cannot be null)
@@ -195,11 +202,11 @@ public class CollectionUtils {
     *       bound is exclusive; true if the object is greater than or equal
     *       to the bound and the bound is inclusive; false otherwise
     */
-   public static boolean isInRangeLow(Object o, Object from, boolean inclusive,
-         Comparator<Object> comp) {
+   public static boolean isInRangeLow(Object o, boolean oIncluded, Object from,
+         boolean fromInclusive, Comparator<Object> comp) {
       if (from != null) {
          int c = comp.compare(o, from);
-         if (c < 0 || (c == 0 && !inclusive)) {
+         if (c < 0 || (c == 0 && oIncluded && !fromInclusive)) {
             return false;
          }
       }
@@ -207,24 +214,31 @@ public class CollectionUtils {
    }
    
    /**
-    * Checks if the given object is in the range according to the range's upper
-    * bound.
+    * Checks if the given object (or range upper bound) falls under another
+    * upper bound.
+    * 
+    * <p>Generally, this is used to test if an object is under the specified
+    * upper bound (in which case, the parameter {@code oIncluded} will be true).
+    * But we can also tell if the upper bound of one range (specified by the
+    * parameters {@code o} and {@code oIncluded}) falls under the upper bound
+    * of another range (specified by {@code to} and {@code toInclusive}).
     *
     * @param o the object
+    * @param oIncluded true if {@code o} needs to be included in the range
     * @param to the upper bound of the range
-    * @param inclusive true if {@code to} is included in the range; false
+    * @param toInclusive true if {@code to} is included in the range, false
     *       otherwise
     * @param comp the comparator used to compare {@code o} to {@code to}
     *       (cannot be null)
     * @return true if the specified object is less than the bound and the
-    *       bound is exclusive; true if the object is less than or equal
-    *       to the bound and the bound is inclusive; false otherwise
+    *       bound is exclusive, true if the object is less than or equal
+    *       to the bound and the bound is inclusive, and false otherwise
     */
-   public static boolean isInRangeHigh(Object o, Object to, boolean inclusive,
+   public static boolean isInRangeHigh(Object o, boolean oIncluded, Object to, boolean toInclusive,
          Comparator<Object> comp) {
       if (to != null) {
          int c = comp.compare(o, to);
-         if (c > 0 || (c == 0 && !inclusive)) {
+         if (c > 0 || (c == 0 && oIncluded && !toInclusive)) {
             return false;
          }
       }
@@ -248,6 +262,7 @@ public class CollectionUtils {
     */
    public static boolean isInRange(Object o, Object from, boolean fromInclusive, Object to,
          boolean toInclusive, Comparator<Object> comp) {
-      return isInRangeLow(o, from, fromInclusive, comp) && isInRangeHigh(o, to, toInclusive, comp);
+      return isInRangeLow(o, true, from, fromInclusive, comp)
+            && isInRangeHigh(o, true, to, toInclusive, comp);
    }
 }
