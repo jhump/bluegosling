@@ -792,7 +792,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     * used to re-sort the array after bulk insertion operations.
     */
    private void sort() {
-      if (comp == null) {
+      if (comp == CollectionUtils.NATURAL_ORDERING) {
          Arrays.sort(data);
       }
       else {
@@ -864,6 +864,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       if (idx >= 0) {
          return false;
       }
+      idx = -idx - 1;
       data = ArrayUtils.insertItem(element, idx, data, size);
       modCount++;
       size++;

@@ -92,13 +92,12 @@ public class ArrayUtils {
          // copy items prior to index
          if (index > 0) {
             System.arraycopy(data, 0, newData, 0, index);
-            
          }
          // new item at index
          newData[index] = element;
          // and items after the index
-         if (index < size - 1) {
-            System.arraycopy(data, index, newData, index + 1, prevLen - index - 1);
+         if (index < size) {
+            System.arraycopy(data, index, newData, index + 1, prevLen - index);
          }
          return newData;
       }
