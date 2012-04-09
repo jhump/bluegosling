@@ -104,7 +104,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).ceiling(e);
-               if (ret == null || comp.compare(other, ret) < 0) {
+               if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                   ret = other;
                }
             }
@@ -138,7 +138,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).floor(e);
-               if (ret == null || comp.compare(other, ret) > 0) {
+               if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                   ret = other;
                }
             }
@@ -170,7 +170,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).higher(e);
-               if (ret == null || comp.compare(other, ret) < 0) {
+               if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                   ret = other;
                }
             }
@@ -188,7 +188,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).lower(e);
-               if (ret == null || comp.compare(other, ret) > 0) {
+               if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                   ret = other;
                }
             }
@@ -206,7 +206,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).pollFirst();
-               if (other != null && (ret == null || comp.compare(other, ret) < 0)) {
+               if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                   ret = other;
                }
             }
@@ -224,7 +224,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
             E ret = null;
             for (Set<E> shard : shards) {
                E other = subSet((NavigableSet<E>) shard).pollLast();
-               if (other != null && (ret == null || comp.compare(other, ret) > 0)) {
+               if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                   ret = other;
                }
             }
@@ -286,7 +286,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).ceiling(e);
-            if (ret == null || comp.compare(other, ret) < 0) {
+            if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                ret = other;
             }
          }
@@ -299,7 +299,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
    /** {@inheritDoc} */
    @Override
    public Iterator<E> descendingIterator() {
-      return new DescendingIteratorImpl(shards);
+      return new DescendingIteratorImpl(getStableShards());
    }
 
    /** {@inheritDoc} */
@@ -316,7 +316,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).floor(e);
-            if (ret == null || comp.compare(other, ret) > 0) {
+            if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                ret = other;
             }
          }
@@ -346,7 +346,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).higher(e);
-            if (ret == null || comp.compare(other, ret) < 0) {
+            if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                ret = other;
             }
          }
@@ -364,7 +364,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).lower(e);
-            if (ret == null || comp.compare(other, ret) > 0) {
+            if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                ret = other;
             }
          }
@@ -382,7 +382,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).pollFirst();
-            if (other != null && (ret == null || comp.compare(other, ret) < 0)) {
+            if (ret == null || (other != null && comp.compare(other, ret) < 0)) {
                ret = other;
             }
          }
@@ -400,7 +400,7 @@ class ConcurrentNavigableSet<E> extends ConcurrentSortedSet<E>
          E ret = null;
          for (Set<E> shard : shards) {
             E other = ((NavigableSet<E>) shard).pollLast();
-            if (other != null && (ret == null || comp.compare(other, ret) > 0)) {
+            if (ret == null || (other != null && comp.compare(other, ret) > 0)) {
                ret = other;
             }
          }

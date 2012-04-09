@@ -54,6 +54,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       SortedIteratorImpl(Set<E> stableShards[]) {
          int len = stableShards.length;
          iterators = new Iterator[len];
+         nextElements = (E[]) new Object[len];
          for (int i = 0; i < len; i++) {
             Iterator<E> iter = getIterator(stableShards[i]);
             if (iter.hasNext()) {
@@ -127,6 +128,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          } else if (lastElement == null) {
             throw new IllegalStateException("no element to remove");
          } else {
+            removed = true;
             ConcurrentSortedSet.this.remove(lastElement);
          }
       }
@@ -147,7 +149,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       SubSetImpl(E from, E to) {
          this.from = from;
          this.to = to;
-         if (comp.compare(from, to) > 0) {
+         if (from != null && to != null &&comp.compare(from, to) > 0) {
             throw new IllegalArgumentException("Invalid subset bounds");
          }
       }
@@ -304,7 +306,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
             for (int i = 0, len = effectedShards.length; i < len; i++) {
                Set<E> shard = subSet((SortedSet<E>) shards[i]);
                if (effectedShards[i]) {
-                  if (shard.removeAll(colls[i])) {
+                  if (shard.retainAll(colls[i])) {
                      ret = true;
                   }
                } else {
@@ -460,6 +462,21 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          checkRangeLow(fromElement, true);
          checkRangeHigh(fromElement, false);
          return new SubSetImpl(fromElement, to);
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         return CollectionUtils.equals(this, o);
+      }
+
+      @Override
+      public int hashCode() {
+         return CollectionUtils.hashCode(this);
+      }
+      
+      @Override
+      public String toString() {
+         return CollectionUtils.toString(this);
       }
    }
    

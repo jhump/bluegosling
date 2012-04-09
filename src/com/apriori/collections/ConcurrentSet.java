@@ -75,7 +75,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
    
    static {
       try {
-         CLONE_METHOD = Set.class.getMethod("clone");
+         CLONE_METHOD = Object.class.getDeclaredMethod("clone");
          CLONE_METHOD.setAccessible(true);
       }
       catch (NoSuchMethodException e) {
@@ -150,6 +150,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
          } else if (!fetched) {
             throw new IllegalStateException("no element to remove");
          } else {
+            removed = true;
             ConcurrentSet.this.remove(lastElement);
          }
       }
@@ -305,7 +306,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
    }
 
    private int shardNumFor(Object o) {
-      return o.hashCode() % shards.length;
+      return ((o == null ? 0 : o.hashCode()) & 0x7fffffff) % shards.length;
    }
    
    <T> Collection<T>[] collectionToShards(Collection<T> coll) {
@@ -499,7 +500,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       try {
          for (int i = 0, len = effectedShards.length; i < len; i++) {
             if (effectedShards[i]) {
-               if (shards[i].removeAll(colls[i])) {
+               if (shards[i].retainAll(colls[i])) {
                   ret = true;
                }
             } else {
@@ -595,7 +596,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
          out.writeBoolean(shardLocks[0].isFair()); // lock fairness
          out.writeInt(sizeNoLocks()); // number of elements
          // and now each element
-         for (Iterator<E> iter = makeIterator(shards); iter.hasNext(); ) {
+         for (Iterator<E> iter = makeIterator(shards.clone()); iter.hasNext(); ) {
             out.writeObject(iter.next());
          }
       } finally {
