@@ -369,6 +369,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       }
       
       private Object[] reverse(Object array[]) {
+         array = array.clone();
          // reverse the array in place
          for (int i = 0, j = array.length - 1; j > i; i++, j--) {
             Object tmp = array[i];
@@ -477,7 +478,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
             // So we instead want:
             //   super.getOtherElements()[i] == super.getFullElements()[i] - 1
             // Easily achieved by just subtracting two from every element...
-            Object ret[] = super.getOtherElements();
+            Object ret[] = super.getOtherElements().clone();
             for (int i = 0, len = ret.length; i < len; i++) {
                ret[i] = ((Integer) ret[i]) - 2;
             }

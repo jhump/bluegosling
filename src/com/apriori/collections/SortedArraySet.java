@@ -341,9 +341,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
                System.arraycopy(data, toIndex + 1, data, fromIndex, tailKeep);
             }
             // and set extraneous references to null
-            for (int i = fromIndex + tailKeep, len = removed - tailKeep; i < len; i++) {
-               data[i] = null;
-            }
+            Arrays.fill(data, fromIndex + tailKeep, size, null);
             size -= removed;
             toIndex -= removed;
             myModCount = ++modCount;
@@ -475,7 +473,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             if (isInRangeHigh(e, true)) {
                if (isInRangeLow(e, true)) {
                   E ret = SortedArraySet.this.ceiling(e);
-                  if (isInRange(ret)) {
+                  if (ret == null || isInRange(ret)) {
                      return ret;
                   }
                } else {
@@ -522,7 +520,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             if (isInRangeLow(e, true)) {
                if (isInRangeHigh(e, true)) {
                   E ret = SortedArraySet.this.floor(e);
-                  if (isInRange(ret)) {
+                  if (ret == null || isInRange(ret)) {
                      return ret;
                   }
                } else {
@@ -559,7 +557,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             if (isInRangeHigh(e, true)) {
                if (isInRangeLow(e, true)) {
                   E ret = SortedArraySet.this.higher(e);
-                  if (isInRange(ret)) {
+                  if (ret == null || isInRange(ret)) {
                      return ret;
                   }
                } else {
@@ -599,7 +597,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             if (isInRangeLow(e, true)) {
                if (isInRangeHigh(e, true)) {
                   E ret = SortedArraySet.this.lower(e);
-                  if (isInRange(ret)) {
+                  if (ret == null || isInRange(ret)) {
                      return ret;
                   }
                } else {
