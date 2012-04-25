@@ -11,6 +11,8 @@ import java.util.Comparator;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ArrayUtils {
+   
+   private static final int MIN_GROWN_SIZE = 8;
 
    /** Prevents instantiation. */
    private ArrayUtils() {
@@ -84,6 +86,10 @@ public class ArrayUtils {
          return data;
       } else {
          int len = prevLen << 1;
+         // arbitrary lower bound on size of new arrays
+         if (len < MIN_GROWN_SIZE) {
+            len = MIN_GROWN_SIZE;
+         }
          // avoid overflow
          if (len <= prevLen) {
             len = Integer.MAX_VALUE - 8;

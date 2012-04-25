@@ -1,6 +1,7 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.set.AbstractTestSortedSet;
 
 import java.util.Set;
@@ -60,5 +61,15 @@ public class ConcurrentSortedSetTest extends AbstractTestSortedSet {
    @Override
    protected boolean skipSerializedCanonicalTests() {
       return true;
+   }
+   
+   /**
+    * Returns a bulk test with cases that verify concurrent access
+    * behavior.
+    *
+    * @return a bulk test
+    */
+   public BulkTest bulkTestConcurrentAccess() {
+      return new ConcurrentSetTest.BulkTestConcurrentAccess(this);
    }
 }

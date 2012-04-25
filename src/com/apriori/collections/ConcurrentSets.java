@@ -35,6 +35,22 @@ import java.util.SortedSet;
  * guaranteed to be atomic (unlike many other implementations of concurrent
  * collections).
  *
+ * <p>Example usage:
+ * <pre>
+ * <em>// return a concurrent set that is based on a
+ * // {@link java.util.HashSet} and uses default parameters of 10
+ * // concurrent writer threads and unfair locks.</em>
+ * return ConcurrentSets.withSet(new HashSet()).create();
+ * 
+ * <em>// return a concurrent sorted set that is based on a
+ * // {@link java.util.TreeSet}, expects 5 concurrent writer threads,
+ * // and uses fair locks.</em>
+ * return ConcurrentSets.withSet(new TreeSet())
+ *                      .concurrency(5)
+ *                      .fair(true)
+ *                      .create();
+ * </pre>
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ConcurrentSets {
@@ -53,27 +69,13 @@ public class ConcurrentSets {
    /**
     * Creates concurrent set objects using the builder pattern.
     * 
-    * <p>Example usage:
-    * <pre>
-    * <em>// return a concurrent set that is based on a
-    * // {@link java.util.HashSet} and uses default parameters of 10
-    * // concurrent writer threads and unfair locks.</em>
-    * return ConcurrentSets.withSet(new HashSet()).create();
-    * 
-    * <em>// return a concurrent sorted set that is based on a
-    * // {@link java.util.TreeSet}, expects 5 concurrent writer threads,
-    * // and uses fair locks.</em>
-    * return ConcurrentSets.withSet(new TreeSet())
-    *                      .concurrency(5)
-    *                      .fair(true)
-    *                      .create();
-    * </pre>
-    * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     * 
     * @param <E> the type of element in the returned set
     * @param <T> the type of set (e.g. {@code Set}, {@code SortedSet},
     *       or {@code NavigableSet})
+    *       
+    * @see ConcurrentSets
     */
    public interface Builder<E, T extends Set<E>> {
       /**
@@ -127,14 +129,14 @@ public class ConcurrentSets {
       }
       
       @Override
-      public Builder<E, T> concurrency(int concurrency) {
-         this.concurrency = concurrency;
+      public Builder<E, T> concurrency(int c) {
+         this.concurrency = c;
          return this;
       }
       
       @Override
-      public Builder<E, T> fair(boolean fair) {
-         this.fair = fair;
+      public Builder<E, T> fair(boolean f) {
+         this.fair = f;
          return this;
       }
    }
