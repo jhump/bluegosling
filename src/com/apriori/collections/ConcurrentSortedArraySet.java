@@ -125,9 +125,9 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
        * a grow operation may be needed when fewer items are in the set if the items added
        * are not evenly distributed amongst the internal shards.
        * 
-       * <p>If left unset, the capacity will be the smaller of 10 elements per shard (100 elements
-       * if using the default concurrency of 10) or the number of items in the set's initial
-       * contents (if specified).
+       * <p>If left unset, the capacity will be the number of items in the set's initial contents.
+       * If this capacity is unset and the initial contents are also unset, then this defaults to
+       * 10 elements per shard (100 elements if using the default concurrency of 10).
        * 
        * @param capacity the amount of capacity allocated in the new set.
        * @return this (for chaining method calls)
@@ -167,7 +167,7 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
        * @param set the set whose elements and comparator will be used to build the new set
        * @return this (for chaining method calls)
        */
-      public Builder<E> basedOn(SortedSet<E> set) {
+      public Builder<E> copyOf(SortedSet<E> set) {
          this.contents = set;
          this.comp = set.comparator();
          return this;
