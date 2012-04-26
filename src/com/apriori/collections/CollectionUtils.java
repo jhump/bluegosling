@@ -115,16 +115,7 @@ public class CollectionUtils {
    public static boolean equals(Set<?> set, Object o) {
       if (o instanceof Set) {
          Set<?> other = (Set<?>) o;
-         if (other.size() == set.size()) {
-            for (Object item : set) {
-               if (!other.contains(item)) {
-                  return false;
-               }
-            }
-            return true;
-         } else {
-            return false;
-         }
+         return other.size() == set.size() && set.containsAll(other);
       } else {
          return false;
       }

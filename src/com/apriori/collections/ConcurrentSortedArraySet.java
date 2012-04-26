@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableSet;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -69,9 +69,126 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, NavigableSet<E> {
 
+   private static final long serialVersionUID = -5784539573506639261L;
+
    private static final int DEFAULT_CONCURRENCY = 10;
    
    private static final int DEFAULT_INITIAL_CAPACITY_PER_SHARD = 10;
+   
+   /**
+    * A builder class for constructing instances of {@code ConcurrentSortedArraySet}.
+    * This pattern is used to make construction easier to read since there are so
+    * many options that might otherwise take the form of constructor parameters and
+    * many overloaded constructors.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * 
+    * @param <E> the type of element in the constructed set
+    */
+   public static class Builder<E> {
+      
+      private int concurrency = DEFAULT_CONCURRENCY;
+      private boolean fair = false;
+      private int initialCapacity = -1;
+      private Comparator<? super E> comp = null;
+      private Collection<? extends E> contents = null;
+      
+      /**
+       * Sets the concurrency level for the set. This will be the number of shards
+       * used in the new set. If unset, this defaults to 10.
+       *
+       * @param c the expected level of concurrency
+       * @return this (for chaining method calls)
+       */
+      public Builder<E> concurrency(int c) {
+         this.concurrency = c;
+         return this;
+      }
+      
+      /**
+       * Sets whether read-write locks used will be fair or not. If unset, this defaults
+       * to using unfair locks.
+       * 
+       * @param f true if locks are fair
+       * @return this (for chaining method calls)
+       * 
+       * @see ReentrantReadWriteLock#isFair()
+       */
+      public Builder<E> fair(boolean f) {
+         this.fair = f;
+         return this;
+      }
+      
+      /**
+       * Sets the initial capacity of the set. The new set will be able to contain up to
+       * this many items before having to grow internal array buffers. It is possible that
+       * a grow operation may be needed when fewer items are in the set if the items added
+       * are not evenly distributed amongst the internal shards.
+       * 
+       * <p>If left unset, the capacity will be the smaller of 10 elements per shard (100 elements
+       * if using the default concurrency of 10) or the number of items in the set's initial
+       * contents (if specified).
+       * 
+       * @param capacity the amount of capacity allocated in the new set.
+       * @return this (for chaining method calls)
+       */
+      public Builder<E> initialCapacity(int capacity) {
+         this.initialCapacity = capacity;
+         return this;
+      }
+      
+      /**
+       * Sets the comparator used to sort items in the set. If set to {@code null} or
+       * left unset, the set will use the {@linkplain Comparable natural ordering} of items.
+       * 
+       * @param c the comparator used to sort items in the set
+       * @return this (for chaining method calls)
+       */
+      public Builder<E> comparator(Comparator<? super E> c) {
+         this.comp = c;
+         return this;
+      }
+      
+      /**
+       * Sets the initial contents of the set.
+       *
+       * @param coll the initial contents of the new set
+       * @return this (for chaining method calls)
+       */
+      public Builder<E> initialContents(Collection<? extends E> coll) {
+         this.contents = coll;
+         return this;
+      }
+      
+      /**
+       * Sets both the initial contents of the set and the comparator used to sort
+       * elements to those of the specified {@link SortedSet}.
+       *
+       * @param set the set whose elements and comparator will be used to build the new set
+       * @return this (for chaining method calls)
+       */
+      public Builder<E> basedOn(SortedSet<E> set) {
+         this.contents = set;
+         this.comp = set.comparator();
+         return this;
+      }
+      
+      /**
+       * Constructs a new set with the specified configuration.
+       *
+       * @return the new set
+       */
+      public ConcurrentSortedArraySet<E> build() {
+         if (contents == null) {
+            int capacity = initialCapacity < 0 ? concurrency * DEFAULT_INITIAL_CAPACITY_PER_SHARD
+                  : initialCapacity;
+            return new ConcurrentSortedArraySet<E>(concurrency, fair, capacity, comp);
+         } else {
+            int capacity = initialCapacity < 0 ? contents.size() : initialCapacity;
+            return new ConcurrentSortedArraySet<E>(contents, concurrency, fair, capacity, comp);
+         }
+      }
+   }
    
    /**
     * Two-dimensional array of elements. Each item represents a single shard. Each shard is itself
@@ -102,85 +219,109 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
     */
    transient Comparator<? super E> comp;
 
+   /**
+    * Constructs a new empty set. All options (like concurrency level, fairness of locks, and
+    * sort order of elements) use defaults. This constructor is provided for convenience and using
+    * a {@link Builder} is generally recommended instead.
+    *
+    * @see Builder
+    */
    public ConcurrentSortedArraySet() {
-      this(DEFAULT_CONCURRENCY);
+      this(DEFAULT_CONCURRENCY, false, DEFAULT_INITIAL_CAPACITY_PER_SHARD * DEFAULT_CONCURRENCY,
+            null);
    }
    
+   /**
+    * Constructs a new set that will use the specified comparator to sort elements. Other options
+    * will use default values. This constructor is provided for convenience per the conventions
+    * of other implementations of {@link SortedSet}. The use of a {@link Builder} is generally
+    * recommended instead.
+    *
+    * @param comp the comparator used to sort elements or {@code null} to sort elements per their
+    *       {@linkplain Comparable natural ordering}
+    *       
+    * @see Builder
+    */
    public ConcurrentSortedArraySet(Comparator<? super E> comp) {
-      this(DEFAULT_CONCURRENCY, comp);
+      this(DEFAULT_CONCURRENCY, false, DEFAULT_INITIAL_CAPACITY_PER_SHARD * DEFAULT_CONCURRENCY,
+            comp);
    }
    
-   public ConcurrentSortedArraySet(int concurrency) {
-      this(concurrency, false);
+   /**
+    * Constructs a new set with the specified contents. Other options will use default values. This
+    * constructor is provided for convenience per the convention recommended for all collection
+    * implementations. The use of a {@link Builder} is generally recommended instead.
+    *
+    * @param coll the initial contents of the new set
+    *       
+    * @see Builder
+    */
+   public ConcurrentSortedArraySet(Collection<? extends E> coll) {
+      this(coll, DEFAULT_CONCURRENCY, false, coll.size(), null);
    }
    
-   public ConcurrentSortedArraySet(int concurrency, boolean fair) {
-      this(concurrency, fair, concurrency * DEFAULT_INITIAL_CAPACITY_PER_SHARD);
+   /**
+    * Constructs a new set that will have the same contents and comparator as the specified set.
+    * Other options will use default values. This constructor is provided for convenience per the 
+    * conventions of other implementations of {@link SortedSet}. The use of a {@link Builder} is
+    * generally recommended instead.
+    *
+    * @param set the set whose contents will comprise the new set and whose comparator will be
+    *       used to sort the elements of the new set
+    *       
+    * @see Builder
+    */
+   public ConcurrentSortedArraySet(SortedSet<E> set) {
+      this(set, DEFAULT_CONCURRENCY, false, set.size(), set.comparator());
    }
-   
-   public ConcurrentSortedArraySet(int concurrency, Comparator<? super E> comp) {
-      this(concurrency, concurrency * DEFAULT_INITIAL_CAPACITY_PER_SHARD, comp);
-   }
-   
-   public ConcurrentSortedArraySet(int concurrency, boolean fair, Comparator<? super E> comp) {
-      this(concurrency, fair, concurrency * DEFAULT_INITIAL_CAPACITY_PER_SHARD, comp);
-   }
-   
-   public ConcurrentSortedArraySet(int concurrency, int initialCapacity) {
-      this(concurrency, false, initialCapacity);
-   }
-   
-   public ConcurrentSortedArraySet(int concurrency, boolean fair, int initialCapacity) {
-      this(concurrency, fair, initialCapacity, null);
-   }
-   
-   public ConcurrentSortedArraySet(int concurrency, int initialCapacity,
+
+   /**
+    * Constructs a new empty set with the specified configuration options.
+    *
+    * @param concurrency the expected level of concurrency
+    * @param fair true if locks are fair
+    * @param initialCapacity the amount of capacity allocated in the new set.
+    * @param comp the comparator used to sort items in the set
+    */
+   ConcurrentSortedArraySet(int concurrency, boolean fair, int initialCapacity,
          Comparator<? super E> comp) {
-      this(concurrency, false, initialCapacity, comp);
-   }
-   
-   public ConcurrentSortedArraySet(int concurrency, boolean fair, int initialCapacity,
-         Comparator<? super E> comp) {
+      if (concurrency < 1) {
+         throw new IllegalArgumentException("concurrency: " + concurrency + " < 1");
+      }
+      if (initialCapacity < 0) {
+         throw new IllegalArgumentException("capacity: " + initialCapacity + " < 0");
+      }
       // new empty set
-      this.comp = comp;
+      if (comp == null) {
+         this.comp = CollectionUtils.NATURAL_ORDERING;
+      } else {
+         this.comp = comp;
+      }
       shards = new Object[concurrency][];
       shardSizes = new int[concurrency];
       shardLocks = new ReentrantReadWriteLock[concurrency];
       int capPerShard = (initialCapacity + concurrency - 1) / concurrency;
-      for (int i = 0, len = shards.length; i < len; i++) {
+      for (int i = 0; i < concurrency; i++) {
          shards[i] = new Object[capPerShard];
          shardSizes[i] = 0;
          shardLocks[i] = new ReentrantReadWriteLock(fair);
       }
    }
-   
-   public ConcurrentSortedArraySet(Collection<? extends E> coll) {
-      this(coll, DEFAULT_CONCURRENCY);
-   }
-   
-   public ConcurrentSortedArraySet(Collection<? extends E> coll,
-         Comparator<? super E> comp) {
-      this(coll, DEFAULT_CONCURRENCY, comp);
-   }
-   
-   public ConcurrentSortedArraySet(Collection<? extends E> coll, int concurrency) {
-      this(coll, concurrency, false);
-   }
 
-   public ConcurrentSortedArraySet(Collection<? extends E> coll, int concurrency,
-         boolean fair) {
-      this(coll, concurrency, fair, null);
-   }
-
-   public ConcurrentSortedArraySet(Collection<? extends E> coll, int concurrency,
-         Comparator<? super E> comp) {
-      this(coll, concurrency, false, comp);
-   }
-   
-   public ConcurrentSortedArraySet(Collection<? extends E> coll, int concurrency, boolean fair,
-         Comparator<? super E> comp) {
+   /**
+    * Constructs a new set with the specified configuration options and populated with the
+    * specified initial contents.
+    *
+    * @param coll the initial contents of the new set
+    * @param concurrency the expected level of concurrency
+    * @param fair true if locks are fair
+    * @param initialCapacity the amount of capacity allocated in the new set.
+    * @param comp the comparator used to sort items in the set
+    */
+   ConcurrentSortedArraySet(Collection<? extends E> coll, int concurrency, boolean fair,
+         int initialCapacity, Comparator<? super E> comp) {
       // new populated set
-      this(concurrency, fair, coll.size(), comp);
+      this(concurrency, fair, initialCapacity, comp);
       addAll(coll);
    }
 
@@ -227,7 +368,6 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    @Override
    public void clear() {
       // TODO implement me
-      
    }
 
    /** {@inheritDoc} */
@@ -412,16 +552,7 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
 
    @Override
    public boolean equals(Object o) {
-      // Due to the concurrent nature of this set, Utils.equals() isn't
-      // strong enough (even for weak consistency guarantees of this set).
-      // So we us this alternate implementation, which is slightly less
-      // efficient (since it does ~2x as many set queries) but more correct.
-      if (o instanceof Set) {
-         Set<?> other = (Set<?>) o;
-         return other.containsAll(this) && containsAll(other);
-      } else {
-         return false;
-      }
+      return CollectionUtils.equals(this, o);
    }
    
    @Override
