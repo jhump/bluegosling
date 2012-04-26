@@ -1,6 +1,9 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -548,6 +551,25 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    public NavigableSet<E> tailSet(E from, boolean inclusive) {
       // TODO implement me
       return null;
+   }
+   
+   /**
+    * Trims the internal array buffers to be exactly the required size to accommodate the
+    * set's contents. This is generally done after all items are added to the set in order to
+    * reduce memory pressure and allow excess buffer space to be reclaimed.
+    */
+   public void trimToSize() {
+      // TODO implement me
+   }
+   
+   private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
+      in.defaultReadObject();
+      // TODO implement me
+   }
+   
+   private void writeObject(ObjectOutputStream out) throws IOException {
+      out.defaultWriteObject();
+      // TODO implement me
    }
 
    @Override
