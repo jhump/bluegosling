@@ -13,8 +13,8 @@ public class ProxyUtil {
 
    /**
     * Determines a "null" return value to use for a method. For most methods this will simply be
-    * {@code null}. But of mehods that return primitives, we need to choose a suitable primitive
-    * value to avoid a {@code NullPointerException}.
+    * {@code null}. But for methods that return primitives, we need to choose a suitable primitive
+    * value to avoid a {@code NullPointerException} (such as zero or false).
     * 
     * @param clazz the return type of the method
     * @return the "null" value that method should return

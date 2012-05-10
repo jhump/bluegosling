@@ -58,13 +58,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * <p>Like many other concurrent collection implementations, operations in this set are
  * weakly consistent. Bulk operations, like {@link #addAll(Collection)} and
  * {@link #removeAll(Collection)} for example, are not guaranteed to execute atomically. So
- * it is possible for an iteration or even a call to {#link #toString()} to reflect only some of
+ * it is possible for an iteration or even a call to {@link #toString()} to reflect only some of
  * the new elements if executing concurrently with a call to {@code addAll(Collection)}, for
  * example.
  * 
- * <p>This implementation is very similar to a {@link ConcurrentNavigableSet} constructed with a
- * {@link SortedArraySet} <em>except</em> that this implementation does not provide guarantees
- * of strong consistency or atomicity, so it might allow greater throughput.
+ * <p>This implementation is very similar to that returned from the following expression:
+ * <pre>ConcurrentSets.withNavigableSet(new SortedArraySet()).create();</pre>
+ * The big exception is that this implementation does not provide guarantees of strong consistency
+ * or atomicity, so as to allow greater throughput.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 

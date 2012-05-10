@@ -688,7 +688,7 @@ public class InterfaceVerifier<T> {
       Set<Class<? extends Throwable>> getCheckedExceptions();
 
       /**
-       * Determine the set of <em>all</em> exceptios thrown from the method signature configured by
+       * Determine the set of <em>all</em> exceptions thrown from the method signature configured by
        * this object. This will be the union of both checked and unchecked exceptions.
        * 
        * @return The set of all exceptions thrown by the method signature

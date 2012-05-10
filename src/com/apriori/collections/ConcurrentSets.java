@@ -65,80 +65,59 @@ public class ConcurrentSets {
     * peak number of modifying threads.
     */
    public static final int DEFAULT_CONCURRENCY = 10;
-   
+      
    /**
     * Creates concurrent set objects using the builder pattern.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    * 
-    * @param <E> the type of element in the returned set
-    * @param <T> the type of set (e.g. {@code Set}, {@code SortedSet},
-    *       or {@code NavigableSet})
-    *       
-    * @see ConcurrentSets
-    */
-   public interface Builder<E, T extends Set<E>> {
-      /**
-       * Sets the concurrency level for the set that will be created.
-       * If this method is never called, the created set will use
-       * {@link ConcurrentSets#DEFAULT_CONCURRENCY}.
-       *
-       * @param concurrency the level of concurrency
-       * @return {@code this}
-       */
-      Builder<E, T> concurrency(int concurrency);
-      
-      /**
-       * Sets whether or not access to the set uses fair read-write locks.
-       * If this method is never called, the created set will <em>not</em>
-       * use fair locks.
-       *
-       * @param fair whether or not to use fair locks
-       * @return {@code this}
-       * 
-       * @see java.util.concurrent.locks.ReentrantReadWriteLock
-       */
-      Builder<E, T> fair(boolean fair);
-      
-      /**
-       * Creates a set.
-       *
-       * @return the concurrent set
-       */
-      T create();
-   }
-   
-   /**
-    * Abstract implementor of the builder interface. Concrete subclasses must
-    * implement the {@link #create()} method.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     * 
     * @param <E> the type of element in the returned set
     * @param <T> the type of set
     */
-   private static abstract class BuilderImpl<E, T extends Set<E>>
-         implements Builder<E, T> {
+   public static abstract class Builder<E, T extends Set<E>> {
       
       int concurrency;
       boolean fair;
       
-      BuilderImpl() {
+      Builder() {
          concurrency = DEFAULT_CONCURRENCY;
          fair = false;
       }
       
-      @Override
+      /**
+       * Sets the concurrency level for the set that will be created.
+       * If this method is never called, the created set will use
+       * {@link ConcurrentSets#DEFAULT_CONCURRENCY}.
+       *
+       * @param c the level of concurrency
+       * @return {@code this}
+       */
       public Builder<E, T> concurrency(int c) {
          this.concurrency = c;
          return this;
       }
       
-      @Override
+      /**
+       * Sets whether or not access to the set uses fair read-write locks.
+       * If this method is never called, the created set will <em>not</em>
+       * use fair locks.
+       *
+       * @param f whether or not to use fair locks
+       * @return {@code this}
+       * 
+       * @see java.util.concurrent.locks.ReentrantReadWriteLock
+       */
       public Builder<E, T> fair(boolean f) {
          this.fair = f;
          return this;
       }
+      
+      /**
+       * Creates a set.
+       *
+       * @return the concurrent set
+       */
+      public abstract T create();
    }
    
    /**
@@ -159,7 +138,7 @@ public class ConcurrentSets {
    public static <E, S extends Set<E> & Cloneable> Builder<E, Set<E>>
          withSet(final S set) {
       
-      return new BuilderImpl<E, Set<E>>() {
+      return new Builder<E, Set<E>>() {
          @Override
          public Set<E> create() {
             return new ConcurrentSet<E>(set, concurrency, fair);
@@ -185,7 +164,7 @@ public class ConcurrentSets {
    public static <E, S extends SortedSet<E> & Cloneable> Builder<E, SortedSet<E>>
          withSortedSet(final S set) {
 
-      return new BuilderImpl<E, SortedSet<E>>() {
+      return new Builder<E, SortedSet<E>>() {
          @Override
          public SortedSet<E> create() {
             return new ConcurrentSortedSet<E>(set, concurrency, fair);
@@ -211,7 +190,7 @@ public class ConcurrentSets {
    public static <E, S extends NavigableSet<E> & Cloneable> Builder<E, NavigableSet<E>>
          withNavigableSet(final S set) {
       
-      return new BuilderImpl<E, NavigableSet<E>>() {
+      return new Builder<E, NavigableSet<E>>() {
          @Override
          public NavigableSet<E> create() {
             return new ConcurrentNavigableSet<E>(set, concurrency, fair);
