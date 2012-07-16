@@ -109,7 +109,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests constructing an {@link InterfaceVerifier} with invalid arguments.
     */
-   @SuppressWarnings({ "unused", "unchecked" })
+   @SuppressWarnings("unchecked")
    public void testConstructorThrowsException() {
       // no interfaces specified - var arg
       boolean caught = false;

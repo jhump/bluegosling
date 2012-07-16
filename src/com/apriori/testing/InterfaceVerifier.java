@@ -2,7 +2,7 @@ package com.apriori.testing;
 
 import com.apriori.reflect.MethodCapturer;
 import com.apriori.reflect.MethodSignature;
-import com.apriori.reflect.ProxyUtil;
+import com.apriori.reflect.ProxyUtils;
 import com.apriori.util.Cloner;
 import com.apriori.util.Cloners;
 
@@ -1545,7 +1545,7 @@ public class InterfaceVerifier<T> {
          // finish
          if (testThrown != null) {
             if (suppressExceptions) {
-               return ProxyUtil.getNullReturnValue(conf.returnType);
+               return ProxyUtils.getNullReturnValue(conf.returnType);
             }
             else {
                throw testThrown;

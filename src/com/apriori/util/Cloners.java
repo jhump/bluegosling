@@ -24,7 +24,7 @@ import java.util.concurrent.Callable;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class Cloners {
+public final class Cloners {
    /**
     * Prevents instantiation.
     */
@@ -193,8 +193,8 @@ public class Cloners {
     * Utility class for looking up static methods.
     */
    private static class MethodGetter implements MemberGetter<Method> {
-      private Class<?> clazz;
-      private String methodName;
+      private final Class<?> clazz;
+      private final String methodName;
 
       public MethodGetter(Class<?> clazz, String methodName) {
          this.clazz = clazz;
@@ -228,7 +228,7 @@ public class Cloners {
     * @param <T> The generic type of the constructors that this class looks up
     */
    private static class ConstructorGetter<T> implements MemberGetter<Constructor<T>> {
-      private Class<T> clazz;
+      private final Class<T> clazz;
 
       public ConstructorGetter(Class<T> clazz) {
          this.clazz = clazz;

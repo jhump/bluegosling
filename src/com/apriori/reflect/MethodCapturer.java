@@ -94,7 +94,7 @@ public class MethodCapturer<E> {
                            throws Throwable {
                         captured = method;
                         capturedSig = new MethodSignature(method);
-                        return ProxyUtil.getNullReturnValue(method.getReturnType());
+                        return ProxyUtils.getNullReturnValue(method.getReturnType());
                      }
                   });
             proxy = p;
@@ -106,6 +106,9 @@ public class MethodCapturer<E> {
       }
       // couldn't create proxy!
       if (proxy == null) {
+         if (e == null) {
+            throw new AssertionError("Non-empty set of classes yielded empty set of class loaders!");
+         }
          throw e;
       }
       // done initializing!

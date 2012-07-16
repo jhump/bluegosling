@@ -53,7 +53,7 @@ import java.util.SortedSet;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ConcurrentSets {
+public final class ConcurrentSets {
    
    /** Prevents instantiation. */
    private ConcurrentSets() {

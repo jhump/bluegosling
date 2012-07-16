@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
 import junit.framework.TestCase;
 
 /**
- * Tests the functionality in {@link ProxyUtil}.
+ * Tests the functionality in {@link ProxyUtils}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -62,7 +62,7 @@ public class ProxyUtilTest extends TestCase {
    }
 
    /**
-    * Tests {@link ProxyUtil#getNullReturnValue(Class)}.
+    * Tests {@link ProxyUtils#getNullReturnValue(Class)}.
     */
    public void testGetNullReturnValue() {
       // use an actual proxy so we not only check that returned values are what we
@@ -74,7 +74,7 @@ public class ProxyUtilTest extends TestCase {
                @Override
                public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
                   // method under test!
-                  return ProxyUtil.getNullReturnValue(method.getReturnType());
+                  return ProxyUtils.getNullReturnValue(method.getReturnType());
                }
             });
 

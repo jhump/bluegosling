@@ -14,7 +14,7 @@ import junit.framework.Assert;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ObjectVerifiers extends Assert {
+public final class ObjectVerifiers extends Assert {
    /**
     * Prevents instantiation.
     */
