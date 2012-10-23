@@ -43,5 +43,4 @@
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-@Bindings({})
 package com.apriori.di;

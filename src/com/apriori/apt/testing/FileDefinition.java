@@ -195,7 +195,7 @@ class FileDefinition {
     * Appends all files in the specified {@link FileSets} to the specified list.
     * 
     * @param fileSets the sets of files to add
-    * @param the list to which files are added
+    * @param files the list to which files are added
     */
    private static void addFilesToProcess(FileSets fileSets, List<FileDefinition> files) {
       for (FileSet inputFiles : fileSets.value()) {

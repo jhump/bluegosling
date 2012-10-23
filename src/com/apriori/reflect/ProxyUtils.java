@@ -1,10 +1,6 @@
 package com.apriori.reflect;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Utility methods for working with proxies and implementing invocation handlers.
@@ -59,7 +55,7 @@ public final class ProxyUtils {
       else {
          // this should never happen...
          throw new IllegalArgumentException(
-               "Suppressing exceptions could not determine return value for "
+               "Could not determine null value for "
                      + clazz.getName());
       }
    }
@@ -119,72 +115,11 @@ public final class ProxyUtils {
     *       
     * @see #castToInterface(Object, Class)
     */
-   @SuppressWarnings("unchecked")
    public static <T> T castToInterface(final Object o, Class<T> clazz, boolean recursiveCast) {
-      if (o == null || clazz.isInstance(o)) {
-         return (T) o;
+      Caster.Builder<T> builder = Caster.builder(clazz);
+      if (recursiveCast) {
+         builder.castingReturnTypes();
       }
-      if (!clazz.isInterface()) {
-         throw new IllegalArgumentException("Specified class, " + clazz.getName() + ", is not an interface");
-      }
-      final Map<Method, InvocationHandler> methodMap = new HashMap<Method, InvocationHandler>();
-      Class<?> targetClass = o.getClass();
-      for (Method m : clazz.getMethods()) {
-         boolean hasCompatibleMethod = true;
-         try {
-            // TODO: consider looking for "compatible" methods, even if signature doesn't match exactly
-            // (i.e. a method where parameter types are assignable from those on the interface method)
-            final Method targetMethod = targetClass.getMethod(m.getName(), m.getParameterTypes());
-            final Class<?> expectedReturnType = m.getReturnType();
-            if (expectedReturnType.isAssignableFrom(targetMethod.getReturnType())) {
-               methodMap.put(m, new InvocationHandler() {
-                  @Override
-                  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                     return targetMethod.invoke(o, args);
-                  }
-               });
-            } else if (recursiveCast && expectedReturnType.isInterface()) {
-               // delay compatibility check to runtime via another cast
-               methodMap.put(m, new InvocationHandler() {
-                  @Override
-                  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                     return castToInterface(targetMethod.invoke(o, args), expectedReturnType, true);
-                  }
-               });
-            } else {
-               hasCompatibleMethod = false;
-            }
-         } catch (NoSuchMethodException e) {
-            hasCompatibleMethod = false;
-         }
-         if (!hasCompatibleMethod) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Specified object, of type ");
-            sb.append(targetClass.getName());
-            sb.append(", has no method that is compatible with:\n");
-            sb.append(m.getReturnType().getName());
-            sb.append(" ");
-            sb.append(m.getName());
-            sb.append("(");
-            boolean first = true;
-            for (Class<?> argClass : m.getParameterTypes()) {
-               if (first) {
-                  first = false;
-               } else {
-                  sb.append(",");
-               }
-               sb.append(argClass.getName());
-            }
-            sb.append(")");
-            throw new ClassCastException(sb.toString());
-         }
-      }
-      return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz },
-            new InvocationHandler() {
-               @Override
-               public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                  return methodMap.get(method).invoke(proxy, method, args);
-               }
-            });
+      return builder.build().cast(o);
    }
 }
