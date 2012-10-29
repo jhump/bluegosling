@@ -22,11 +22,13 @@ public class Constructor extends AbstractExecutableMember {
    }
    
    /**
-    * Creates a new constructor based on the specified element.
+    * Returns a constructor based on the specified element.
     * 
     * @param element the element
-    * @return a new constructor
-    * @throws NullPointerException
+    * @return a constructor
+    * @throws NullPointerException if the specified element is null
+    * @throws IllegalArgumentException if the specified element does not represent a
+    *       constructor
     */
    public static Constructor forElement(ExecutableElement element) {
       if (element == null) {
@@ -43,6 +45,8 @@ public class Constructor extends AbstractExecutableMember {
     * generic type information.
     * 
     * @return the list of type variables
+    * 
+    * @see #getTypeVariables()
     */
    @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
    public List<TypeVariable<Constructor>> getConstructorTypeVariables() {
@@ -56,12 +60,9 @@ public class Constructor extends AbstractExecutableMember {
     * {@link #getParameters()}, except that the return value has more
     * generic type information.
     * 
-    * <p>(Sadly, though Java allows co-variant return types in overridden
-    * methods, it does not allow co-variance where the return types'
-    * erasures are the same and are co-variant only based on generic
-    * parameters.)
-    * 
     * @return the list of parameters
+    * 
+    * @see #getParameters()
     */
    @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
    public List<Parameter<Constructor>> getConstructorParameters() {

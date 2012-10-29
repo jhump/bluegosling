@@ -4,6 +4,7 @@ import com.apriori.util.Function;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -59,7 +60,6 @@ import java.util.Map;
  *
  * @param <T> the interface type to which objects are cast
  */
-// TODO: javadoc!!!
 public class Caster<T> {
    private final Class<T> iface;
    private final boolean dynamicMethods;
@@ -223,8 +223,7 @@ public class Caster<T> {
                   @Override
                   public Object invoke(Object proxy, Method method, Object[] args)
                         throws Throwable {
-                     return invokeDynamic(Caster.this, o, candidates, method, args, castArguments,
-                           castReturnTypes, expandVarArgs, ignoreAmbiguities);
+                     return invokeDynamic(Caster.this, o, candidates, method, args);
                   }
                });
             }
@@ -232,21 +231,29 @@ public class Caster<T> {
             try {
                final Method targetMethod = targetClass.getMethod(m.getName(), m.getParameterTypes());
                ConversionStrategy strategy = getConversionStrategy(targetMethod.getReturnType(),
-                     m.getReturnType(), castReturnTypes);
+                     m.getReturnType(), castReturnTypes, false);
                if (strategy != null) {
                   final Converter converter = strategy.getConverter();
                   if (converter == null) {
                      methodMap.put(m, new InvocationHandler() {
                         @Override
                         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                           return targetMethod.invoke(o, args);
+                           try {
+                              return targetMethod.invoke(o, args);
+                           } catch (InvocationTargetException e) {
+                              throw e.getCause();
+                           }
                         }
                      });
                   } else {
                      methodMap.put(m, new InvocationHandler() {
                         @Override
                         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                           return converter.convert(targetMethod.invoke(o, args), Caster.this);
+                           try {
+                              return converter.convert(targetMethod.invoke(o, args), Caster.this);
+                           } catch (InvocationTargetException e) {
+                              throw e.getCause();
+                           }
                         }
                      });
                   }
@@ -265,14 +272,8 @@ public class Caster<T> {
                   bestCandidates = getBestCandidates(candidates, m, m.getParameterTypes(),
                         castArguments, castReturnTypes, false);
                   try {
-                     requireOneCandidate(m, bestCandidates, ignoreAmbiguities);
-                  } catch (NoSuchMethodException nsme) {
-                     hasCompatibleMethod = false;
-                  } catch (AmbiguousMethodException ame) {
-                     hasCompatibleMethod = false;
-                  }
-                  if (hasCompatibleMethod) {
-                     final DispatchCandidate finalCandidate = bestCandidates.iterator().next();
+                     final DispatchCandidate finalCandidate = requireOneCandidate(m, bestCandidates,
+                           ignoreAmbiguities);
                      methodMap.put(m, new InvocationHandler() {
                         @Override
                         public Object invoke(Object proxy, Method method, Object[] args)
@@ -280,6 +281,10 @@ public class Caster<T> {
                            return finalCandidate.invoke(Caster.this, o, args);
                         }
                      });
+                  } catch (NoSuchMethodException nsme) {
+                     hasCompatibleMethod = false;
+                  } catch (AmbiguousMethodException ame) {
+                     hasCompatibleMethod = false;
                   }
                }
             }
@@ -348,6 +353,7 @@ public class Caster<T> {
     *
     * @param <T> the interface type to which objects will be cast
     */
+   // TODO: javadoc members
    public static class Builder<T> {
       private final Class<T> iface;
       private boolean dynamicMethods;
@@ -464,6 +470,7 @@ public class Caster<T> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   // TODO: javadoc members
    private static class DispatchCandidates implements Iterable<Iterable<Method>> {
       private final List<List<Method>> methods;
       
@@ -511,6 +518,20 @@ public class Caster<T> {
       }
    }
    
+   /**
+    * Selects a broad range of candidates for dispatching the specified method. This set of
+    * candidates is the starting point for dynamic dispatches. The resulting set can be further
+    * filtered during proxy creation to generate suitable method dispatches that are not dynamic.
+    * 
+    * <p>This set of candidates is based solely on method name and number of arguments.
+    * 
+    * @param method the method that is being dispatched
+    * @param dispatchClass the object to which the method is being delegated (the resulting
+    *       candidates come from this class's set of public methods)
+    * @param expandVarArgs if true then additional candidates will be returned that might be
+    *       compatible for dynamic dispatch in the event that var-arg arrays are expanded
+    * @return the set of potentially suitable candidates
+    */
    static DispatchCandidates getDynamicDispatchCandidates(Method method, Class<?> dispatchClass,
          boolean expandVarArgs) {
       DispatchCandidates methods = new DispatchCandidates();
@@ -545,6 +566,7 @@ public class Caster<T> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   // TODO: javadoc members
    private static class DispatchCandidate {
       private final Method method;
       private final int numArgs;
@@ -583,22 +605,26 @@ public class Caster<T> {
       }
       
       public Object invoke(Caster<?> caster, Object obj, Object args[]) throws Throwable {
-         if (argConverters != null) {
-            for (int i = 0, len = args.length; i < len; i++) {
-               Converter converter = argConverters[i];
-               if (converter != null) {
-                  args[i] = converter.convert(args[i], caster);
+         try {
+            if (argConverters != null) {
+               for (int i = 0, len = args.length; i < len; i++) {
+                  Converter converter = argConverters[i];
+                  if (converter != null) {
+                     args[i] = converter.convert(args[i], caster);
+                  }
                }
             }
+            if (varArgsConverter != null) {
+               args = varArgsConverter.apply(args);
+            }
+            Object ret = method.invoke(obj, args);
+            if (returnConverter != null) {
+               ret = returnConverter.convert(ret, caster);
+            }
+            return ret;
+         } catch (InvocationTargetException e) {
+            throw e.getCause();
          }
-         if (varArgsConverter != null) {
-            args = varArgsConverter.apply(args);
-         }
-         Object ret = method.invoke(obj, args);
-         if (returnConverter != null) {
-            ret = returnConverter.convert(ret, caster);
-         }
-         return ret;
       }
    }
    
@@ -608,6 +634,7 @@ public class Caster<T> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   // TODO: javadoc members
    private static class Conversion {
       public final Class<?> from;
       public final Class<?> to;
@@ -632,6 +659,7 @@ public class Caster<T> {
       }
    }
    
+   // TODO: javadoc these static fields
    static final Map<Class<?>, Class<?>> autoBoxTypes = new HashMap<Class<?>, Class<?>>();
    static final Map<Class<?>, Class<?>> autoUnboxTypes = new HashMap<Class<?>, Class<?>>();
    static final Map<Conversion, Function<Object, ?>> conversions =
@@ -641,6 +669,7 @@ public class Caster<T> {
     * Populate the three maps above.
     */
    static {
+      autoBoxTypes.put(void.class, Void.class);
       autoBoxTypes.put(boolean.class, Boolean.class);
       autoBoxTypes.put(byte.class, Byte.class);
       autoBoxTypes.put(char.class, Character.class);
@@ -650,6 +679,7 @@ public class Caster<T> {
       autoBoxTypes.put(float.class, Float.class);
       autoBoxTypes.put(double.class, Double.class);
       
+      autoUnboxTypes.put(Void.class, void.class);
       autoUnboxTypes.put(Boolean.class, boolean.class);
       autoUnboxTypes.put(Byte.class, byte.class);
       autoUnboxTypes.put(Character.class, char.class);
@@ -762,6 +792,13 @@ public class Caster<T> {
       conversions.put(new Conversion(from, to), f);
    }
    
+   /**
+    * A conversion strategy, which indicates how dispatch will convert one type to another if need
+    * be.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   // TODO: javadoc members
    private static class ConversionStrategy {
       private boolean requiresCast;
       private boolean requiresAutoBoxOrUnbox;
@@ -795,8 +832,23 @@ public class Caster<T> {
       }
    }
    
+   /**
+    * Creates a conversion strategy for converting one type of value to another. If the first type
+    * is assignable to the second then the conversion strategy is a no-op (since no conversion is
+    * necessary). Supported conversions include "casting" one type to an interface type and numeric
+    * type "widening" (i.e.g converting an int to a long).
+    * 
+    * @param from a source type
+    * @param to a target type
+    * @param castArguments if true then "casting" source types to target interface types is
+    *       permitted
+    * @param forVarArgsArray if true then the resulting converter assumes it receives an object
+    *       array and performs a conversion on all elements of the array (for converting the
+    *       contents of a var-args array)
+    * @return the conversion strategy
+    */
    private static ConversionStrategy getConversionStrategy(Class<?> from, final Class<?> to,
-         boolean castArguments) {
+         boolean castArguments, boolean forVarArgsArray) {
       ConversionStrategy strategy = new ConversionStrategy();
       if (to.isAssignableFrom(from)) {
          return strategy;
@@ -811,16 +863,12 @@ public class Caster<T> {
                return converter.apply(in);
             }
          });
-         return strategy;
-      }
-      if (to.equals(autoBoxTypes.get(from)) || to.equals(autoUnboxTypes.get(from))) {
+      } else if (to.equals(autoBoxTypes.get(from)) || to.equals(autoUnboxTypes.get(from))) {
          // conversion not needed since reflection always resorts to boxed
          // types, but we need to know if auto-boxing/unboxing was required to
          // rank dispatch candidates
          strategy.setRequestAutoBoxOrUnbox();
-         return strategy;
-      }
-      if (castArguments && to.isInterface()) {
+      } else if (castArguments && to.isInterface()) {
          strategy.setRequiresCast();
          strategy.setConverter(new Converter() {
             @Override
@@ -828,10 +876,25 @@ public class Caster<T> {
                return caster.to(to).cast(in);
             }
          });
-         return strategy;
+      } else {
+         // incompatible!!
+         return null;
       }
-      // incompatible!!
-      return null;
+      final Converter converter = strategy.getConverter();
+      if (forVarArgsArray && converter != null) {
+         // need to apply conversion to every element of var args array
+         strategy.setConverter(new Converter() {
+            @Override public Object convert(Object in, Caster<?> caster) {
+               // convert args in place
+               Object args[] = (Object[]) in;
+               for (int i = 0, len = args.length; i < len; i++) {
+                  args[i] = converter.convert(args[i], caster);
+               }
+               return args;
+            }
+         });
+      }
+      return strategy;
    }
    
    /**
@@ -848,7 +911,7 @@ public class Caster<T> {
     *       interface using a {@link Caster}, if necessary for compatibility with the target method
     * @param varArgsExpanded if true then the argument types specified represent runtime types with
     *       the contents of a var-args array expanded into multiple arguments
-    * @return the candidate or {@code null} if the specified candidate method is not eligible
+    * @return the candidate or {@code null} if the specified candidate method is not suitable
     */
    static DispatchCandidate getCandidate(Method candidateMethod, Method m, Class<?> argTypes[],
          boolean castArguments, boolean castReturnType, boolean varArgsExpanded) {
@@ -867,7 +930,7 @@ public class Caster<T> {
          int i;
          for (i = 0; i < len; i++) {
             ConversionStrategy strategy = getConversionStrategy(argTypes[i], candidateTypes[i],
-                  castArguments);
+                  castArguments, false);
             if (strategy != null) {
                if (strategy.doesRequireAutoBoxOrUnbox()) {
                   autobox = true;
@@ -895,81 +958,33 @@ public class Caster<T> {
             // compare to component type of var args array
             Class<?> candidateType = candidateTypes[i].getComponentType();
             for (; i < argTypes.length; i++) {
-               if (!candidateType.isAssignableFrom(argTypes[i])
-                     && !conversions.containsKey(new Conversion(argTypes[i], candidateType))) {
-                  if (candidateType.equals(autoBoxTypes.get(argTypes[i]))
-                        || candidateType.equals(autoUnboxTypes.get(argTypes[i]))) {
-                     anyArgNeedsConversion = true;
-                     Class<?> from = argTypes[i];
-                     if (from.isPrimitive()) {
-                        from = autoBoxTypes.get(from);
-                     }
-                     final Function<Object, ?> converter = conversions.get(from);
-                     argConverters[i] = new Converter() {
-                        @Override
-                        public Object convert(Object in, Caster<?> caster) {
-                           return converter.apply(in);
-                        }
-                     };
-                     autobox = true;
-                  } else if (i == argTypes.length - 1 && m.isVarArgs() && !varArgsExpanded) {
-                     // the incoming method call is var args, so check its element type and compare
-                     // to see if contents can be converted/appended to candidate var arg array
+               ConversionStrategy strategy = getConversionStrategy(argTypes[i], candidateType,
+                     castArguments, false);
+               if ((strategy == null || strategy.doesRequireCast()) && i == argTypes.length - 1
+                     && m.isVarArgs() && !varArgsExpanded) {
+                  // prefer repackaging var-args (if possible) over casting
+                  Class<?> argType = argTypes[i].getComponentType();
+                  ConversionStrategy varArgStrategy = getConversionStrategy(argType, candidateType,
+                        castArguments, true);
+                  if (varArgStrategy != null) {
                      appendIncomingVarArgs = true;
-                     Class<?> argType = argTypes[i].getComponentType();
-                     if (candidateType.equals(autoBoxTypes.get(argType))
-                           || candidateType.equals(autoUnboxTypes.get(argType))) {
-                        anyArgNeedsConversion = true;
-                        Class<?> from = argType;
-                        if (from.isPrimitive()) {
-                           from = autoBoxTypes.get(from);
-                        }
-                        final Function<Object, ?> converter = conversions.get(from);
-                        argConverters[i] = new Converter() {
-                           @Override
-                           public Object convert(Object in, Caster<?> caster) {
-                              // have to convert whole array
-                              Object vals[] = (Object[]) in;
-                              for (int j = 0, arrayLength = vals.length; j < arrayLength; j++) {
-                                 vals[j] = converter.apply(vals[j]);
-                              }
-                              return in;
-                           }
-                        };
-                        autobox = true;
-                     } else if (castArguments && candidateType.isInterface()) {
-                        anyArgNeedsConversion = true;
-                        final Class<?> argInterface = candidateTypes[i];
-                        argConverters[i] = new Converter() {
-                           @Override
-                           public Object convert(Object in, Caster<?> caster) {
-                              // have to convert whole array
-                              Object vals[] = (Object[]) in;
-                              for (int j = 0, arrayLength = vals.length; j < arrayLength; j++) {
-                                 vals[j] = caster.to(argInterface).cast(vals[j]);
-                              }
-                              return in;
-                           }
-                        };
-                        numCastArgs++;
-                     } else {
-                        // incompatible!
-                        return null;
-                     }
-                  } else if (castArguments && candidateType.isInterface()) {
-                     anyArgNeedsConversion = true;
-                     final Class<?> argInterface = candidateTypes[i];
-                     argConverters[i] = new Converter() {
-                        @Override
-                        public Object convert(Object in, Caster<?> caster) {
-                           return caster.to(argInterface).cast(in);
-                        }
-                     };
-                     numCastArgs++;
-                  } else {
-                     // incompatible!
-                     return null;
+                     strategy = varArgStrategy;
                   }
+               }
+               if (strategy == null) {
+                  // incompatible!
+                  return null;
+               }
+               if (strategy.doesRequireAutoBoxOrUnbox()) {
+                  autobox = true;
+               }
+               if (strategy.doesRequireCast()) {
+                  numCastArgs++;
+               }
+               Converter argConverter = strategy.getConverter(); 
+               if (argConverter != null) {
+                  anyArgNeedsConversion = true;
+                  argConverters[i] = argConverter; 
                }
             }
             final int candidateArgsLen = candidateTypes.length;
@@ -981,6 +996,9 @@ public class Caster<T> {
                @SuppressWarnings("null")
                @Override
                public Object[] apply(Object[] input) {
+                  if (input == null) {
+                     input = new Object[0];
+                  }
                   Object ret[] = new Object[candidateArgsLen];
                   if (candidateArgsLen > 1) {
                      System.arraycopy(input, 0, ret, 0, candidateArgsLen - 1);
@@ -1008,7 +1026,7 @@ public class Caster<T> {
          }
          // args are good, so now check return type
          ConversionStrategy strategy = getConversionStrategy(candidateMethod.getReturnType(),
-               m.getReturnType(), castReturnType);
+               m.getReturnType(), castReturnType, false);
          if (strategy == null) {
             // incompatible return type!
             return null;
@@ -1026,6 +1044,24 @@ public class Caster<T> {
       }
    }
    
+   /**
+    * Filters the set of dispatch candidates to only the one(s) that best suit the specified
+    * argument types. If there are multiple "maximally specific" candidates methods that are suited
+    * then the returned collection will include all such candidates.
+    * 
+    * @param candidates a set of candidates for dispatching the specified method
+    * @param m the interface method that will be dispatched
+    * @param argTypes the argument types for the interface method, which could be actual runtime
+    *       types (during dynamic dispatch) instead of the method's declared argument types
+    * @param castArguments if true then argument type mismatches are tolerated if an argument
+    *       can be "cast" (using a {@code Caster}) to the target type
+    * @param castReturnType if true then return type mismatches are tolerated if the candidate
+    *       return type can be "cast" to the method's return type
+    * @param varArgsExpanded if true then a var-arg array has already been expanded and appended
+    *       to the specified array of argument types
+    * @return the best candidate(s) from the specified set or an empty list if there are no
+    *       suitable candidates
+    */
    static Collection<DispatchCandidate> getBestCandidates(DispatchCandidates candidates, Method m,
          Class<?> argTypes[], boolean castArguments, boolean castReturnType,
          boolean varArgsExpanded) {
@@ -1074,16 +1110,31 @@ public class Caster<T> {
       return bestMatches;
    }
    
+   /**
+    * Performs a dynamic dispatch for a given object and interface method. This will use the runtime
+    * types of the method arguments to find the most appropriate dispatch method instead of the
+    * statically declared argument types.
+    * 
+    * @param caster the caster that created the proxy that is performing dynamic dispatch
+    * @param o the object on which dispatch will occur
+    * @param candidates a set of candidates from which to choose for dynamic dispatch
+    * @param m the interface method that is being invoked
+    * @param args the arguments supplied to the interface method
+    * @return the result of performing dynamic dispatch, which is the value returned from the
+    *       dispatch candidate that best fits the runtime types of the supplied arguments
+    * @throws NoSuchMethodException if there are no suitable dispatch candidates
+    * @throws AmbiguousMethodException if there are multiple equally specific dispatch candidates
+    *       and {@code caster.ignoreAmbiguities} is false
+    */
    static Object invokeDynamic(Caster<?> caster, Object o, DispatchCandidates candidates, Method m,
-         Object args[], boolean castArguments, boolean castReturnType, boolean expandVarArgs,
-         boolean ignoreAmbiguities) throws Throwable {
+         Object args[]) throws Throwable {
       Class<?> argTypes[] = new Class<?>[args.length];
       for (int i = 0; i < args.length; i++) {
          argTypes[i] = args[i].getClass();
       }
       Collection<DispatchCandidate> bestCandidates = getBestCandidates(candidates, m, argTypes,
-            castArguments, castReturnType, false);
-      if (bestCandidates.isEmpty() && m.isVarArgs() && expandVarArgs
+            caster.castArguments, caster.castReturnTypes, false);
+      if (bestCandidates.isEmpty() && m.isVarArgs() && caster.expandVarArgs
             && args[args.length-1] != null) {
          // expand var args array and re-try finding a dispatch method
          int nonVarArgLen = args.length - 1;
@@ -1099,14 +1150,27 @@ public class Caster<T> {
          // swap
          args = newArgs;
          argTypes = newArgTypes;
-         bestCandidates = getBestCandidates(candidates, m, argTypes, castArguments, castReturnType,
-               true);
+         bestCandidates = getBestCandidates(candidates, m, argTypes, caster.castArguments,
+               caster.castReturnTypes, true);
       }
-      requireOneCandidate(m, bestCandidates, ignoreAmbiguities);
-      return bestCandidates.iterator().next().invoke(caster, o, args);
+      return requireOneCandidate(m, bestCandidates, caster.ignoreAmbiguities)
+            .invoke(caster, o, args);
    }
    
-   static void requireOneCandidate(Method m, Collection<DispatchCandidate> candidates,
+   /**
+    * Requires that the specified collection has one suitable candidate and returns that one
+    * candidate. If the collection has more than one and is ignoring ambiguities then one of the
+    * candidates is chosen arbitrarily and returned.
+    * 
+    * @param m the interface method
+    * @param candidates the set of dispatch candidates
+    * @param ignoreAmbiguities if false only one candidate is allowed and an exception will be
+    *       thrown if the specified collection has more than one
+    * @throws NoSuchMethodException if the specified collection is empty
+    * @throws AmbiguousMethodException if the specified collection has more than one candidate and
+    *       {@code ignoreAmbiguities} is false
+    */
+   static DispatchCandidate requireOneCandidate(Method m, Collection<DispatchCandidate> candidates,
          boolean ignoreAmbiguities)
          throws NoSuchMethodException, AmbiguousMethodException {
       if (candidates.isEmpty()) {
@@ -1119,5 +1183,26 @@ public class Caster<T> {
          }
          throw new AmbiguousMethodException(m, methods);
       }
+      return candidates.iterator().next();
    }
 }
+
+// TODO: refactor!
+// 1) move a lot of the inner classes here to package-private top-level classes
+// 2) use ConversionStrategy in DispatchCandidate to remove more boiler-plate
+// 3) move some of these static methods into instance methods on some of those classes
+// 4) address other TODOs, particularly around exception handling
+// 5) if a method has no dynamic dispatch candidates, fail or use unsupported operation (instead
+//    of letting it fail with NoSuchMethod at invocation time)
+// 6) consider changing dynamic dispatch to always use unsupported operation exception with a cause
+//    that is either "no such method" or "ambiguous methods"...
+// 7) closely inspect current names and rename if appropriate
+
+// TODO: add cool stuff!
+// 1) consider add'l out of box conversions:
+//    * primitive int to Object, for example, via auto-boxing
+//    * converting of array elements (like "casting" or auto-boxing/unboxing) not just for var-args
+//      (especially useful for annotation return types)
+//    * arrays -> lists and vice versa?
+// 2) add hooks to make conversions extensible by app code
+// 3) allow any interface method to return void and just discard any non-void return from dispatch

@@ -3,7 +3,16 @@ package com.apriori.apt.reflect;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.TypeMirror;
 
-//TODO: javadoc!!
+/**
+ * An array type with generic type information. This generally indicates that the array's component
+ * type is a parameterized type or type variable. This is analogous to {@link java.lang.reflect.GenericArrayType
+ * java.lang.reflect.GenericArrayType}, except that it represents types
+ * in Java source (during annotation processing) vs. representing runtime types.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @see java.lang.reflect.GenericArrayType
+ */
 public class GenericArrayType implements Type {
    
    private final ArrayType arrayType;
@@ -15,6 +24,16 @@ public class GenericArrayType implements Type {
       this.arrayType = arrayType;
    }
    
+   /**
+    * Creates a generic array type from the specified type mirror.
+    * 
+    * @param arrayType the type mirror
+    * @return a generic array type
+    * @throws NullPointerException if the specified type mirror is null
+    */
+   // TODO: throw IllegalArgumentException if the specified type should be represented by a
+   // Class instead of a GenericArrayType (i.e. its component type has no references to type
+   // parameter or parameterized types)
    public static GenericArrayType forTypeMirror(ArrayType arrayType) {
       return new GenericArrayType(arrayType);
    }
@@ -34,6 +53,13 @@ public class GenericArrayType implements Type {
       return arrayType;
    }
    
+   /**
+    * Gets the component type of the array.
+    * 
+    * @return the component type
+    * 
+    * @see java.lang.reflect.GenericArrayType#getGenericComponentType()
+    */
    public Type getGenericComponentType() {
       return Types.forTypeMirror(arrayType.getComponentType());
    }

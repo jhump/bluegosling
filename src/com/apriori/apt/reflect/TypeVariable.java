@@ -3,10 +3,23 @@ package com.apriori.apt.reflect;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeParameterElement;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 
-//TODO: javadoc!
+/**
+ * A type variable. Type variables are declared on generic classes and interfaces and then used in
+ * type specifications in the class. For example, the class {@link ArrayList} has a type parameter
+ * ({@code E}) and a method that is declared as {@code boolean add(E)}. In the method signature, the
+ * generic type of the one parameter is a reference to the type variable. This is analogous to
+ * {@link java.lang.reflect.TypeVariable java.lang.reflect.TypeVariable}, except that it represents
+ * types in Java source (during annotation processing) vs. representing runtime types.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @see java.lang.reflect.TypeVariable
+ */
 public class TypeVariable<D extends GenericDeclaration> implements Type {
    private final TypeParameterElement element;
    
@@ -17,8 +30,30 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
       this.element = element;
    }
    
+   /**
+    * Creates a type variable from the specified element.
+    * 
+    * @param element the type parameter element
+    * @return a type variable
+    * @throws NullPointerException if the specified element is null
+    */
    public static TypeVariable<?> forElement(TypeParameterElement element) {
       return new TypeVariable<GenericDeclaration>(element);
+   }
+   
+   /**
+    * Creates a type variable from the specified type mirror.
+    * 
+    * @param typeMirror the type mirror
+    * @return a wildcard type
+    * @throws NullPointerException if the specified type mirror is null
+    */
+   public static TypeVariable<?> forTypeMirror(javax.lang.model.type.TypeVariable typeMirror) {
+      TypeVariable<?> ret = ReflectionVisitors.TYPE_VARIABLE_VISITOR.visit(typeMirror.asElement());
+      if (ret == null) {
+         throw new MirroredTypeException(typeMirror);
+      }
+      return ret;
    }
    
    @Override
@@ -31,11 +66,29 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
       return visitor.visitTypeVariable(this,  p);
    }
    
+   /**
+    * Returns the underlying {@link Element} represented by this type.
+    * 
+    * @return the underlying element
+    */
+   public TypeParameterElement asElement() {
+      return element;
+   }
+   
    @Override
    public TypeMirror asTypeMirror() {
       return element.asType();
    }
 
+   /**
+    * Returns the upper bounds (aka "extends" bounds) for this type variable. For example in the
+    * declaration {@code Interface<T extends SomeClass & Cloneable & Serializable>}, the type
+    * variable {@code T} has three bounds: {@code SomeClass}, {@code Cloneable}, and
+    * {@code Serializable}. If a type variable has no bounds defined then the implicit upper bound
+    * is {@code java.lang.Object}.
+    * 
+    * @return the upper bounds for this type variable
+    */
    public List<? extends Type> getBounds() {
       List<? extends TypeMirror> elementBounds = element.getBounds();
       int size = elementBounds.size();
@@ -49,6 +102,12 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
       return bounds;
    }
    
+   /**
+    * Returns the declaration for this type variable. This will be either a {@code Class},
+    * {@link Method}, or {@link Constructor}, depending on where the type variable was declared.
+    * 
+    * @return the generic declaration that declared this type variable
+    */
    public D getGenericDeclaration() {
       @SuppressWarnings("unchecked")
       D decl = (D) ReflectionVisitors.GENERIC_DECLARATION_VISITOR.visit(element.getGenericElement());
@@ -58,6 +117,12 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
       return decl;
    }
    
+   /**
+    * Returns the name of the type variable. For example, in an interface declared as
+    * {@code Interface<T>}, the one type variable's name is {@code T}.
+    * 
+    * @return the name of the type variable
+    */
    public String getName() {
       return element.getSimpleName().toString();
    }

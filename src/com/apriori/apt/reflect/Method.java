@@ -5,18 +5,37 @@ import java.util.List;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 
-//TODO: javadoc!!
+/**
+ * A method. This is analogous to {@link java.lang.reflect.Method
+ * java.lang.reflect.Method}, except that it represents methods
+ * in Java source (during annotation processing) vs. representing methods
+ * of runtime types.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @see java.lang.reflect.Method
+ */
 public class Method extends AbstractExecutableMember {
 
    private Method(ExecutableElement element) {
       super(element);
    }
    
+   /**
+    * Returns a method based on the specified element.
+    * 
+    * @param element the element
+    * @return a method
+    * @throws NullPointerException if the specified element is null
+    * @throws IllegalArgumentException if the specified element does not represent a
+    *       method
+    */
    public static Method forElement(ExecutableElement element) {
       if (element == null) {
          throw new NullPointerException();
       } else if (element.getKind() != ElementKind.METHOD) {
-         throw new IllegalArgumentException("Invalid element kind. Expected METHOD; got " + element.getKind().name());
+         throw new IllegalArgumentException("Invalid element kind. Expected METHOD; got "
+               + element.getKind().name());
       }
       return new Method(element);
    }
@@ -27,6 +46,8 @@ public class Method extends AbstractExecutableMember {
     * generic type information.
     * 
     * @return the list of type variables
+    * 
+    * @see #getTypeVariables()
     */
    @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
    public List<TypeVariable<Method>> getMethodTypeVariables() {
@@ -40,12 +61,9 @@ public class Method extends AbstractExecutableMember {
     * {@link #getParameters()}, except that the return value has more
     * generic type information.
     * 
-    * <p>(Sadly, though Java allows co-variant return types in overridden
-    * methods, it does not allow co-variance where the return types'
-    * erasures are the same and are co-variant only based on generic
-    * parameters.)
-    * 
     * @return the list of parameters
+    * 
+    * @see #getParameters()
     */
    @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
    public List<Parameter<Method>> getMethodParameters() {
@@ -54,10 +72,26 @@ public class Method extends AbstractExecutableMember {
       return (List<Parameter<Method>>) ((List) getParameters());
    }
    
+   /**
+    * Returns the method's return type. The returned type is a raw type with any generic type
+    * information erased. For full type information, use {@link #getGenericReturnType()}.
+    * 
+    * @return the method's return type
+    * 
+    * @see java.lang.reflect.Method#getReturnType()
+    */
    public Class getReturnType() {
       return Class.forTypeMirror(asElement().getReturnType());
    }
 
+   /**
+    * Returns the method's return type. The returned type includes all generic type information
+    * that was specified in the source declaration of the type.
+    * 
+    * @return the method's return type
+    * 
+    * @see java.lang.reflect.Method#getGenericReturnType()
+    */
    public Type getGenericReturnType() {
       return Types.forTypeMirror(asElement().getReturnType());
    }

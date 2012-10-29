@@ -1,5 +1,6 @@
 package com.apriori.di;
 
+import java.io.Writer;
 import java.util.Set;
 
 import javax.inject.Provider;
@@ -18,12 +19,19 @@ public interface Binding {
    interface Target<T> {
       boolean isProvider();
       boolean isSelectionProvider();
+      boolean isAdapter();
       Key<? extends T> key();
       Key<? extends Provider<? extends T>> providerKey();
       Key<? extends SelectionProvider<? extends T>> selectionProviderKey();
+      BindAdapter<T, ?> adapter();
       ScopeSpec scope();
-      
-      @SuppressWarnings("rawtypes")
-      Class<? extends ConflictResolver> conflictResolver();
+      @SuppressWarnings("rawtypes") Class<? extends ConflictResolver> conflictResolver();
    }
+
+   interface BindAdapter<F, T> {
+      T continueBinding(Key<F> key);
+      void generateProviderCode(Key<F> key, Writer writer);
+      @SuppressWarnings("rawtypes") Class<? extends ConflictResolver> conflictResolver();
+   }
+   
 }

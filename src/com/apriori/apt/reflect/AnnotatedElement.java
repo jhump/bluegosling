@@ -1,5 +1,6 @@
 package com.apriori.apt.reflect;
 
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import javax.lang.model.element.Element;
@@ -15,9 +16,13 @@ import javax.lang.model.element.Element;
  *
  * <p>This interface is analogous to {@link java.lang.reflect.AnnotatedElement java.lang.reflect.AnnotatedElement},
  * except that it represents a source-level type (during annotation processing) instead
- * of an actual runtime type.
+ * of an actual runtime type.  Unlike {@code java.lang.reflect.AnnotatedElement}, this
+ * interface can be used to inspect annotations whose retention policy is
+ * {@link RetentionPolicy#CLASS} or {@link RetentionPolicy#SOURCE}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see java.lang.reflect.AnnotatedElement
  */
 public interface AnnotatedElement {
    /**

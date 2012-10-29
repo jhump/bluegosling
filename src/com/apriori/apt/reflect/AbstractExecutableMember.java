@@ -133,6 +133,14 @@ abstract class AbstractExecutableMember extends AbstractMember implements Generi
       return toString(true);
    }
    
+   /**
+    * Allows sub-classes to hook in an optional return type into the output of {@link #toString()}
+    * and {@link #toGenericString()}.
+    * 
+    * @param sb the target for appending the return type's string representation
+    * @param includeGenerics whether or not the string representation should include generic type
+    *       information about the return type (if false, just use erased type)
+    */
    abstract void appendReturnType(StringBuilder sb, boolean includeGenerics);
    
    private String toString(boolean includeGenerics) {
@@ -145,15 +153,15 @@ abstract class AbstractExecutableMember extends AbstractMember implements Generi
       appendReturnType(sb, includeGenerics);
       sb.append(getName());
       sb.append("(");
-      List<? extends Type> parameters = includeGenerics ? getGenericParameterTypes() : getParameterTypes();
+      List<Parameter<?>> parameters = getParameters();
       boolean first = true;
-      for (Type type : parameters) {
+      for (Parameter<?> parameter : parameters) {
          if (first) {
             first = false;
          } else {
             sb.append(",");
          }
-         sb.append(type.toTypeString());
+         sb.append(includeGenerics ? parameter.toGenericString() : parameter.toString());
       }
       sb.append(")");
       List<? extends Type> exceptions = includeGenerics ? getGenericExceptionTypes() : getExceptionTypes();

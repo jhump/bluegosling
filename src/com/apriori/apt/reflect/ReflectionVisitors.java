@@ -24,12 +24,20 @@ import javax.lang.model.util.SimpleAnnotationValueVisitor6;
 import javax.lang.model.util.SimpleElementVisitor6;
 import javax.lang.model.util.TypeKindVisitor6;
 
-//TODO: javadoc!
+/**
+ * Visitor implementations useful for extracting reflection information from elements, annotation
+ * mirrors, and type mirrors.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public final class ReflectionVisitors {
-   
    private ReflectionVisitors() {
    }
    
+   /**
+    * A visitor that returns a {@link Class} or null if the visited element does not represent a
+    * class, interface, annotation type, or enum.
+    */
    public static final ElementVisitor<Class, Void> CLASS_VISITOR =
          new SimpleElementVisitor6<Class, Void>() {
             @Override public Class visitType(TypeElement element, Void v) {
@@ -37,6 +45,10 @@ public final class ReflectionVisitors {
             }
          };
 
+   /**
+    * A visitor that returns a {@link Package} or null if the visited element does not represent a
+    * package.
+    */
    public static final ElementVisitor<Package, Void> PACKAGE_VISITOR =
          new SimpleElementVisitor6<Package, Void>() {
             @Override public Package visitPackage(PackageElement element, Void v) {
@@ -44,6 +56,10 @@ public final class ReflectionVisitors {
             }
          };
 
+   /**
+    * A visitor that returns a {@link Field} or null if the visited element does not represent a
+    * field or enum constant.
+    */
    public static final ElementVisitor<Field, Void> FIELD_VISITOR =
          new ElementKindVisitor6<Field, Void>() {
             @Override public Field visitVariableAsField(VariableElement element, Void v) {
@@ -54,6 +70,10 @@ public final class ReflectionVisitors {
             }
          };
    
+   /**
+    * A visitor that returns a {@link Method} or null if the visited element does not represent a
+    * method.
+    */
    public static final ElementVisitor<Method, Void> METHOD_VISITOR =
          new ElementKindVisitor6<Method, Void>() {
             @Override public Method visitExecutableAsMethod(ExecutableElement element, Void v) {
@@ -61,6 +81,10 @@ public final class ReflectionVisitors {
             }
          };
    
+   /**
+    * A visitor that returns a {@link Constructor} or null if the visited element does not represent
+    * a constructor.
+    */
    public static final ElementVisitor<Constructor, Void> CONSTRUCTOR_VISITOR =
          new ElementKindVisitor6<Constructor, Void>() {
             @Override public Constructor visitExecutableAsConstructor(ExecutableElement element, Void v) {
@@ -68,6 +92,11 @@ public final class ReflectionVisitors {
             }
          };
          
+   /**
+    * A visitor that returns a {@link GenericDeclaration} or null if the visited element does not
+    * represent one. Generic declarations include classes, interfaces, annotation types, enums,
+    * methods, and constructors (an element in Java source where a type variable can be declared).
+    */
    public static final ElementVisitor<GenericDeclaration, Void> GENERIC_DECLARATION_VISITOR =
          new ElementKindVisitor6<GenericDeclaration, Void>() {
             @Override public GenericDeclaration visitType(TypeElement element, Void v) {
@@ -81,6 +110,10 @@ public final class ReflectionVisitors {
             }
          };
    
+   /**
+    * A visitor that returns an {@link ExecutableMember} or null if the visited element does not
+    * represent a method or constructor.
+    */
    public static final ElementVisitor<ExecutableMember, Void> EXECUTABLE_MEMBER_VISITOR =
          new ElementKindVisitor6<ExecutableMember, Void>() {
             @Override public ExecutableMember visitExecutableAsMethod(ExecutableElement element, Void v) {
@@ -91,6 +124,10 @@ public final class ReflectionVisitors {
             }
          };
    
+   /**
+    * A visitor that returns a {@link Parameter} or null if the visited element does not represent a
+    * parameter.
+    */
    public static final ElementVisitor<Parameter<?>, Void> PARAMETER_VISITOR =
          new ElementKindVisitor6<Parameter<?>, Void>() {
             @Override public Parameter<?> visitVariableAsParameter(VariableElement element, Void v) {
@@ -98,6 +135,10 @@ public final class ReflectionVisitors {
             }
          };
    
+   /**
+    * A visitor that returns a {@link TypeVariable} or null if the visited element does not
+    * represent a type variable.
+    */
    public static final ElementVisitor<TypeVariable<?>, Void> TYPE_VARIABLE_VISITOR =
          new SimpleElementVisitor6<TypeVariable<?>, Void>() {
             @Override public TypeVariable<?> visitTypeParameter(TypeParameterElement element, Void d) {
@@ -105,6 +146,23 @@ public final class ReflectionVisitors {
             }
          };
 
+   /**
+    * A visitor that returns an annotation method's value. This is similar to what is returned
+    * from {@link AnnotationValue#getValue()} with a couple of key differences:
+    * <ul>
+    * <li>If the annotation method returns a {@link java.lang.Class java.lang.Class} then this
+    * visitor returns a {@link Class} instead of a {@link TypeMirror}.</li>
+    * <li>If the annotation method returns an annotation then this visitor returns an
+    * {@link Annotation} instead of an {@link AnnotationMirror}.</li>
+    * <li>If the annotation method returns an enum then this visitor returns a {@link Field} instead
+    * of a {@link VariableElement}.</li>
+    * <li>If the annotation method returns an array, this visitor returns a {@link List}. But its
+    * contents have the same types returned by this visitor (instead of those returned by
+    * {@link AnnotationValue#getValue()}).</li>
+    * </ul>
+    * 
+    * @see Annotation#getAnnotationAttributes()
+    */
    public static final AnnotationValueVisitor<Object, Void> ANNOTATION_VALUE_VISITOR =
          new SimpleAnnotationValueVisitor6<Object, Void>() {
             @Override public Object visitAnnotation(AnnotationMirror mirror, Void v) {
@@ -128,12 +186,27 @@ public final class ReflectionVisitors {
             }
          };
 
+   /**
+    * A visitor that returns a {@link Type} for the specified mirror. This will return {@code null}
+    * for the null type (i.e. super-type of {@code java.lang.Object} and of primitive types). It
+    * will throw a {@link MirroredTypeException} if there is an error inspecting and converting
+    * the mirrors. Otherwise, it should return an appropriate implementation of {@link Type} based
+    * on the kind and details of the actual mirror visited.
+    * 
+    * @see Types#forTypeMirror(TypeMirror)
+    */
    public static final TypeVisitor<Type, Void> TYPE_MIRROR_VISITOR =
          new TypeKindVisitor6<Type, Void>() {
             @Override public Type visitArray(ArrayType mirror, Void v) {
+               Type componentType = this.visit(mirror.getComponentType(), v);
+               if (componentType.getTypeKind() == Type.Kind.CLASS) {
+                  return Class.forArray(Types.asClass(componentType));
+               }
                return GenericArrayType.forTypeMirror(mirror);
             }
             @Override public Type visitDeclared(DeclaredType mirror, Void v) {
+               // TODO: also allow types w/ no args but that are non-static member types enclosed
+               // in types that have args to be represented as parameterized types
                if (mirror.getTypeArguments().isEmpty()) {
                   Class ret = ReflectionVisitors.CLASS_VISITOR.visit(mirror.asElement());
                   if (ret == null) {
@@ -145,11 +218,7 @@ public final class ReflectionVisitors {
                }
             }
             @Override public Type visitTypeVariable(javax.lang.model.type.TypeVariable mirror, Void v) {
-               TypeVariable<?> ret = ReflectionVisitors.TYPE_VARIABLE_VISITOR.visit(mirror.asElement());
-               if (ret == null) {
-                  throw new MirroredTypeException(mirror);
-               }
-               return ret;
+               return TypeVariable.forTypeMirror(mirror);
             }
             @Override public Type visitWildcard(javax.lang.model.type.WildcardType mirror, Void v) {
                return WildcardType.forTypeMirror(mirror);

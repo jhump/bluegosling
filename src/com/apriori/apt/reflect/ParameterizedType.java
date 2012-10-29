@@ -11,11 +11,30 @@ import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
-//TODO: javadoc!
+/**
+ * An instance of type with information about actual type parameters. Even though a {@link Class}
+ * has {@linkplain Class#getTypeVariables() type variables}, it represents a raw or erased type
+ * and its type variables represent type variable declarations. A parameterized type represents
+ * an actual instance -- or usage -- of a type with actual type parameter values. This class is
+ * analogous to {@link java.lang.reflect.ParameterizedType java.lang.reflect.ParameterizedType},
+ * except that it represents types in Java source (during annotation processing) vs. representing
+ * runtime types.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see java.lang.reflect.ParameterizedType
+ */
 public class ParameterizedType implements Type {
    
    private final DeclaredType declaredType;
    
+   /**
+    * Creates a parameterized type from the specified type mirror.
+    * 
+    * @param arrayType the type mirror
+    * @return a parameterized type
+    * @throws NullPointerException if the specified type mirror is null
+    */
    private ParameterizedType(DeclaredType declaredType) {
       if (declaredType == null) {
          throw new NullPointerException();
@@ -23,6 +42,16 @@ public class ParameterizedType implements Type {
       this.declaredType = declaredType;
    }
    
+   /**
+    * Creates a parameterized type from the specified type mirror.
+    * 
+    * @param declaredType the type mirror
+    * @return a parameterized type
+    * @throws NullPointerException if the specified type mirror is null
+    */
+   // TODO: throw IllegalArgumentException if the specified type should be represented by a
+   // Class instead of a ParameterizedType (i.e. it has no type parameters and is not enclosed in
+   // a type that has type parameters)
    public static ParameterizedType forTypeMirror(DeclaredType declaredType) {
       return new ParameterizedType(declaredType);
    }
@@ -42,6 +71,15 @@ public class ParameterizedType implements Type {
       return declaredType;
    }
 
+   /**
+    * Returns a list of the actual values supplied for the type variables. If this type represents
+    * a non-parameterized type but is nested within a parameterized type then the returned list
+    * could be empty.
+    * 
+    * @return the list of type parameter values
+    * 
+    * @see java.lang.reflect.ParameterizedType#getActualTypeArguments()
+    */
    public List<? extends Type> getActualTypeArguments() {
       List<? extends TypeMirror> args = declaredType.getTypeArguments();
       List<Type> ret = new ArrayList<Type>(args.size());
@@ -51,11 +89,32 @@ public class ParameterizedType implements Type {
       return ret;
    }
    
+   /**
+    * Returns the enclosing type. If this is a top-level type then this method returns {@code null}.
+    * The enclosing type could also be a {@link ParameterizedType}, or it could be a {@link Class}.
+    * 
+    * <p>For example, if this type is {@code ParentType<T>.EnclosedType<S>} then this function would
+    * return a {@link ParameterizedType} that represents {@code ParentType<T>}. If this is a static
+    * member type or a member of a type that is not parameterized, then it might look more like the
+    * type {@code ParentType.EnclosedStaticType<S>}, in which case this method will return a
+    * {@link Class} that represents {@code ParentType}.
+    * 
+    * @return the enclosing type
+    * 
+    * @see java.lang.reflect.ParameterizedType#getOwnerType()
+    */
    public Type getOwnerType() {
       TypeMirror owner = declaredType.getEnclosingType();
       return owner.getKind() == TypeKind.NONE ? null : Types.forTypeMirror(owner);
    }
    
+   /**
+    * Returns the raw, or erased, type.
+    * 
+    * @return the raw type
+    * 
+    * @see java.lang.reflect.ParameterizedType#getRawType()
+    */
    public Class getRawType() {
       Element erasedType = TypeUtils.get().asElement(TypeUtils.get().erasure(declaredType));
       Class ret = ReflectionVisitors.CLASS_VISITOR.visit(erasedType);

@@ -103,11 +103,12 @@ public abstract class AbstractBinding implements Binding {
       BindBuilder<T> annotatedWith(Annotation annotation);
       BindBuilder<T> forSelector(Object selector);
       BindBuilder<T> withResolver(@SuppressWarnings("rawtypes") Class<? extends ConflictResolver> resolver);
+      <A> A withAdapter(BindAdapter<T, A> adapter);
       BindBuilder<T> catchAll();
       ScopeBuilder<T> to(Key<? extends T> key);
       ScopeBuilder<T> to(Class<? extends T> clazz);
       ScopeBuilder<T> to(TypeRef<? extends T> typeRef);
-      ScopeBuilder<T> to(Type type);
+      ScopeBuilder<T> to(Type type); // need to do runtime check on underlying type for this!
       ScopeBuilder<T> toProvider(Key<? extends Provider<? extends T>> key);
       ScopeBuilder<T> toProvider(Class<? extends Provider<? extends T>> clazz);
       ScopeBuilder<T> toProvider(TypeRef<? extends Provider<? extends T>> typeRef);
@@ -182,7 +183,14 @@ public abstract class AbstractBinding implements Binding {
 
       @Override
       public BindBuilder<T> withResolver(@SuppressWarnings("rawtypes") Class<? extends ConflictResolver> resolver) {
+         // TODO
          return null;
+      }
+
+      @Override
+      public <A> A withAdapter(BindAdapter<T, A> adapter) {
+         // TODO register the adapter, pass correct key
+         return adapter.continueBinding(null);
       }
 
       @Override
@@ -246,6 +254,5 @@ public abstract class AbstractBinding implements Binding {
          // TODO Auto-generated method stub
          return null;
       }
-      
    }
 }

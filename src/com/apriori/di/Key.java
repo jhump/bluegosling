@@ -5,6 +5,7 @@ import com.apriori.reflect.TypeRef;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A key for binding injected types to their implementations. The key can be
@@ -18,6 +19,12 @@ import java.util.Map;
 // TODO: implement me!
 // TODO: javadoc!
 public class Key<T> {
+
+   private boolean isProvider;
+   private boolean isSelectionProvider;
+   private TypeRef<T> typeRef;
+   private Set<Class<? extends Annotation>> annotationsWithoutAttributes;
+   private Set<Annotation> annotationsWithAttribtues;
    
    public static <T> Key<T> of(Class<T> clazz) {
       return null;

@@ -2,7 +2,6 @@ package com.apriori.apt.reflect;
 
 import com.apriori.apt.ElementUtils;
 
-import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +14,7 @@ import javax.lang.model.element.ExecutableElement;
  * An annotation in Java source code. It is sort of analogous to the actual
  * {@link java.lang.annotation.Annotation java.lang.annotation.Annotation}
  * interface, except that it represents source-level annotations during
- * annotation processing vs. annotations on actual runtime types. Unlike
- * {@code java.lang.annotation.Annotation}, this representation can be used
- * to inspect annotations whose retention policy is {@link RetentionPolicy#CLASS}
- * or {@link RetentionPolicy#SOURCE}.
+ * annotation processing vs. annotations on actual runtime types.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
