@@ -9,6 +9,7 @@ public class Names {
    private Names() {}
    
    public static Named named(final String name) {
+      // TODO use Annotations util class (which will also generate appropriate equals() and hashCode())
       return new Named() {
          @Override
          public Class<? extends Annotation> annotationType() {

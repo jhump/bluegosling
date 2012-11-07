@@ -80,6 +80,7 @@ public abstract class AbstractBinding implements Binding {
    }
    
    public interface ScopeBuilder<T> {
+      void unscoped();
       void singleton();
       void inScope(Class<? extends Annotation> annotationClass);
       void inScope(Class<? extends Annotation> annotationClass,
@@ -102,7 +103,7 @@ public abstract class AbstractBinding implements Binding {
             Map<String, Object> annotationValues);
       BindBuilder<T> annotatedWith(Annotation annotation);
       BindBuilder<T> forSelector(Object selector);
-      BindBuilder<T> withResolver(@SuppressWarnings("rawtypes") Class<? extends ConflictResolver> resolver);
+      BindBuilder<T> withResolver(Class<? extends ConflictResolver<? super T>> resolver);
       <A> A withAdapter(BindAdapter<T, A> adapter);
       BindBuilder<T> catchAll();
       ScopeBuilder<T> to(Key<? extends T> key);
@@ -117,142 +118,168 @@ public abstract class AbstractBinding implements Binding {
       ScopeBuilder<T> toSelectionProvider(TypeRef<? extends SelectionProvider<? extends T>> typeRef);
    }
    
-   private static class BindBuilderImpl<T> implements BindBuilder<T> {
+   private class BindBuilderImpl<T> implements BindBuilder<T> {
+
+      private Key<T> key;
+      private boolean catchAll;
+      private Class<? extends ConflictResolver<? super T>> resolver;
+      private BindAdapter<T, ?> adapter;
+      private Key<? extends T> target;
+      private Key<? extends Provider<? extends T>> targetProvider;
+      private Key<? extends SelectionProvider<? extends T>> targetSelectionProvider;
+      private ScopeSpec scope;
+      
+      BindBuilderImpl(Key<T> key) {
+         this.key = key;
+      }
+      
+      void finish() {
+         // TODO
+      }
+      
+      @Override
+      public void unscoped() {
+         finish();
+      }
 
       @Override
       public void singleton() {
-         // TODO Auto-generated method stub
-         
+         scope = ScopeSpec.fromAnnotation(AnnotationSpec.fromAnnotationType(Singleton.class));
+         finish();
       }
 
       @Override
       public void inScope(Class<? extends Annotation> annotationClass) {
-         // TODO Auto-generated method stub
-         
+         scope = ScopeSpec.fromAnnotation(AnnotationSpec.fromAnnotationType(annotationClass));
+         finish();
       }
 
       @Override
       public void inScope(Class<? extends Annotation> annotationClass,
             Map<String, Object> annotationValues) {
-         // TODO Auto-generated method stub
-         
+         scope = ScopeSpec.fromAnnotation(AnnotationSpec.fromAnnotationValues(annotationClass,
+               annotationValues));
+         finish();
       }
 
       @Override
       public void inScope(Annotation annotation) {
-         // TODO Auto-generated method stub
+         scope = ScopeSpec.fromAnnotation(AnnotationSpec.fromAnnotation(annotation));
+         finish();
          
       }
 
       @Override
       public void inScope(Scoper scope) {
-         // TODO Auto-generated method stub
-         
+         this.scope = ScopeSpec.fromScoper(scope);
+         finish();
       }
 
       @Override
       public BindBuilder<T> annotatedWith(Class<? extends Annotation> annotationClass) {
-         // TODO Auto-generated method stub
-         return null;
+         key = key.annotatedWith(annotationClass);
+         return this;
       }
 
       @Override
       public BindBuilder<T> annotatedWith(Class<? extends Annotation> annotationClass,
             Map<String, Object> annotationValues) {
-         // TODO Auto-generated method stub
-         return null;
+         key = key.annotatedWith(annotationClass, annotationValues);
+         return this;
       }
 
       @Override
       public BindBuilder<T> annotatedWith(Annotation annotation) {
-         // TODO Auto-generated method stub
-         return null;
+         key = key.annotatedWith(annotation);
+         return this;
       }
 
       @Override
       public BindBuilder<T> forSelector(Object selector) {
-         // TODO Auto-generated method stub
-         return null;
+         key = key.forSelector(selector);
+         return this;
       }
 
       @Override
       public BindBuilder<T> catchAll() {
-         // TODO Auto-generated method stub
-         return null;
+         catchAll = true;
+         return this;
       }
 
       @Override
-      public BindBuilder<T> withResolver(@SuppressWarnings("rawtypes") Class<? extends ConflictResolver> resolver) {
-         // TODO
-         return null;
+      public BindBuilder<T> withResolver(Class<? extends ConflictResolver<? super T>> resolver) {
+         this.resolver = resolver;
+         return this;
       }
 
       @Override
       public <A> A withAdapter(BindAdapter<T, A> adapter) {
-         // TODO register the adapter, pass correct key
-         return adapter.continueBinding(null);
+         this.adapter = adapter;
+         return adapter.continueBinding(key);
       }
 
       @Override
       public ScopeBuilder<T> to(Key<? extends T> key) {
-         // TODO Auto-generated method stub
-         return null;
+         target = key;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(Class<? extends T> clazz) {
-         // TODO Auto-generated method stub
-         return null;
+         target = Key.of(clazz);
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(TypeRef<? extends T> typeRef) {
-         // TODO Auto-generated method stub
-         return null;
+         target = Key.of(typeRef);
+         return this;
       }
 
+      @SuppressWarnings("unchecked")
       @Override
       public ScopeBuilder<T> to(Type type) {
-         // TODO Auto-generated method stub
-         return null;
+         // TODO validate that type is actually a match or is compatible
+         target = (Key<T>) Key.of(type);
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Key<? extends Provider<? extends T>> key) {
-         // TODO Auto-generated method stub
-         return null;
+         targetProvider = key;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Class<? extends Provider<? extends T>> clazz) {
-         // TODO Auto-generated method stub
-         return null;
+         targetProvider = Key.of(clazz);
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(TypeRef<? extends Provider<? extends T>> typeRef) {
-         // TODO Auto-generated method stub
-         return null;
+         targetProvider = Key.of(typeRef);
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Key<? extends SelectionProvider<? extends T>> key) {
-         // TODO Auto-generated method stub
-         return null;
+         targetSelectionProvider = key;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(
             Class<? extends SelectionProvider<? extends T>> clazz) {
-         // TODO Auto-generated method stub
-         return null;
+         targetSelectionProvider = Key.of(clazz);
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(
             TypeRef<? extends SelectionProvider<? extends T>> typeRef) {
-         // TODO Auto-generated method stub
-         return null;
+         targetSelectionProvider = Key.of(typeRef);
+         return this;
       }
    }
 }

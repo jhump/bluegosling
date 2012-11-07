@@ -1,7 +1,7 @@
 package com.apriori.di;
 
 /**
- * A marker interface for interfaces and abstract classes that used to provide
+ * A marker interface for interfaces and abstract classes that are used to provide
  * injected values. Each public non-void concrete method in sub-classes will be treated like
  * {@code @Provides} methods in a Guice module. Abstract methods can be used to define
  * "hooks" that will be implemented by subclasses. If an {@linkplain InjectedEntryPoint

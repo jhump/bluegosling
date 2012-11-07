@@ -2,6 +2,7 @@ package com.apriori.apt.reflect;
 
 import java.util.List;
 
+import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 
@@ -94,6 +95,21 @@ public class Method extends AbstractExecutableMember {
     */
    public Type getGenericReturnType() {
       return Types.forTypeMirror(asElement().getReturnType());
+   }
+   
+   /**
+    * Returns the default value for an annotation method. If this method is not an
+    * annotation method then {@code null} is returned.
+    * 
+    * <p>The type of the value is the same as found in the map returned by
+    * {@link Annotation#getAnnotationAttributes()}.
+    * 
+    * @return the default value for this annotation method or {@code null} if this is
+    *       not an annotation method
+    */
+   public Object getDefaultValue() {
+      AnnotationValue val = asElement().getDefaultValue();
+      return val == null ? null : ReflectionVisitors.ANNOTATION_VALUE_VISITOR.visit(val);
    }
    
    @Override 

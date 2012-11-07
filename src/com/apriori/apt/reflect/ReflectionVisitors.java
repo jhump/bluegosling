@@ -30,7 +30,7 @@ import javax.lang.model.util.TypeKindVisitor6;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public final class ReflectionVisitors {
+final class ReflectionVisitors {
    private ReflectionVisitors() {
    }
    

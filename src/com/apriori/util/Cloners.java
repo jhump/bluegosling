@@ -538,7 +538,8 @@ public final class Cloners {
     * @param cons The constructor to use to create a clone
     * @return A cloner that will use the constructor to create a clone
     * @throws IllegalArgumentException If the specified constructor requires more than one argument
-    *            or requires an argument that is a primitive type
+    *            or requires an argument that is a primitive type or does not accept an instance
+    *            of the declaring class (the type that is to be cloned)
     * @throws NullPointerException If the specified constructor is null
     */
    public static <T> Cloner<T> withCopyConstructor(final Constructor<T> cons) {

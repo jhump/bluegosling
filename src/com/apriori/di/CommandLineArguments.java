@@ -9,7 +9,7 @@ import javax.inject.Qualifier;
 
 /**
  * A marker for command-line arguments. This should be used to annotate a
- * {@code List<String>} into which command-line arguments are injected.
+ * {@code List<String>} or {@code String[]} into which command-line arguments are injected.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

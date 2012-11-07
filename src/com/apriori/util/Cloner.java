@@ -8,6 +8,8 @@ import com.apriori.testing.InterfaceVerifier;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @param <T> The type of object that can be cloned
+ * 
+ * @see Cloners
  */
 public interface Cloner<T> {
    /**

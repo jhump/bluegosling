@@ -52,35 +52,36 @@ public class Annotation {
       return Class.forTypeMirror(mirror.getAnnotationType());
    }
    
-   private Map<? extends Method, ?> convertAttributes(
+   private Map<String, ?> convertAttributes(
          Map<? extends ExecutableElement, ? extends AnnotationValue> values) {
-      Map<Method, Object> ret = new HashMap<Method, Object>(values.size());
+      Map<String, Object> ret = new HashMap<String, Object>(values.size());
       for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry
             : values.entrySet()) {
-         Method method = Method.forElement(entry.getKey());
          Object value = ReflectionVisitors.ANNOTATION_VALUE_VISITOR.visit(entry.getValue());
-         ret.put(method, value == null ? entry.getValue().getValue() : value);
+         ret.put(entry.getKey().getSimpleName().toString(),
+               value == null ? entry.getValue().getValue() : value);
       }
       return ret;
    }
 
    /**
-    * Returns the annotation's attributes and values, include undeclared
-    * attributes with the corresponding default value. The keys represent
+    * Returns the annotation's attributes and values, including undeclared
+    * attributes with their corresponding default value. The keys represent
     * the annotation's methods; the values represent the actual values.
     * The values will be instances of one of the following:
     * <ul>
-    * <li>Strings and primitives.</li>
+    * <li>Strings and boxed primitives.</li>
+    * <li>{@link Class} objects for methods whose return is a {@code java.lang.Class}.</li>
     * <li>{@code List<?>} for methods whose return type is an array. The values
-    * in the list will be one the types in this list.</li>
-    * <li>Other {@link Annotation}s for methods that return other annotation.</li>
+    * in this list will be one the other types described here.</li>
+    * <li>Other {@link Annotation}s for methods that return other annotation types.</li>
     * </ul>
     * 
     * @return the annotation's attributes and values
     * 
     * @see #getDeclaredAnnotationAttributes()
     */
-   public Map<? extends Method, ?> getAnnotationAttributes() {
+   public Map<String, ?> getAnnotationAttributes() {
       return convertAttributes(ElementUtils.get().getElementValuesWithDefaults(mirror));
    }
    
@@ -94,7 +95,7 @@ public class Annotation {
     * 
     * @see #getAnnotationAttributes()
     */
-   public Map<? extends Method, ?> getDeclaredAnnotationAttributes() {
+   public Map<String, ?> getDeclaredAnnotationAttributes() {
       return convertAttributes(mirror.getElementValues());
    }
    
@@ -172,13 +173,13 @@ public class Annotation {
       sb.append(annotationType().getSimpleName());
       sb.append("(");
       boolean first = true;
-      for (Map.Entry<? extends Method, ?> entry : getAnnotationAttributes().entrySet()) {
+      for (Map.Entry<String, ?> entry : getAnnotationAttributes().entrySet()) {
          if (first) {
             first = false;
          } else {
             sb.append(",");
          }
-         sb.append(entry.getKey().getName());
+         sb.append(entry.getKey());
          sb.append("=");
          attributeValueToString(sb, entry.getValue());
       }

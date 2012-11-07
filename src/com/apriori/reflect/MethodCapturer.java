@@ -144,7 +144,8 @@ public class MethodCapturer<E> {
     * Take the following example of the wrong way to use the capturer.
     * 
     * <pre>
-    * MethodCapturer&lt;MyInterface&gt; capturer = MethodCapturer.forOne(MyInterface.class);
+    * MethodCapturer&lt;MyInterface&gt; capturer =
+    *       new MethodCapturer&lt;MyInterface&gt;(MyInterface.class);
     * MyInterface i = capturer.capture();
     * 
     * // call some methods
@@ -172,7 +173,19 @@ public class MethodCapturer<E> {
     * Method m3 = capturer.getMethod();
     * </pre>
     * 
+    * For methods that return values (vs. just those that return {@code void}), you can use the
+    * following syntax to make this even more readable:
+    * 
+    * <pre>
+    * Method m1 = capturer.getMethod(i.someMethod());
+    * Method m2 = capturer.getMethod(i.someOtherMethod(null, null));
+    * Method m3 = capturer.getMethod(i.yetAnotherMethod(null));
+    * </pre>
+    * 
     * @return a proxy that captures method calls
+    * 
+    * @see #getMethod()
+    * @see #getMethod(Object)
     */
    public E capture() {
       return proxy;
@@ -224,7 +237,7 @@ public class MethodCapturer<E> {
     * 
     * @return the signature of the last method called on the proxy
     */
-   MethodSignature getSignature() {
+   public MethodSignature getSignature() {
       return capturedSig;
    }
 

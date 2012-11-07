@@ -15,7 +15,7 @@ public class SingletonScoper extends AbstractConcurrentScoper {
    private final ConcurrentHashMap<Key<?>, Object> scopedInstances = new ConcurrentHashMap<Key<?>, Object>();
    
    @Override
-   public ConcurrentMap<Key<?>, Object> scopedInstances() {
+   protected ConcurrentMap<Key<?>, Object> scopedInstances() {
       return scopedInstances;
    }
 }

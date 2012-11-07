@@ -7,9 +7,13 @@ import com.apriori.apt.reflect.Field;
 import com.apriori.apt.reflect.Method;
 import com.apriori.apt.reflect.Package;
 
-import java.util.EnumSet;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.lang.model.element.Element;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
 
 //TODO: javadoc!
 public class RoundEnvironment {
@@ -27,24 +31,47 @@ public class RoundEnvironment {
    public boolean isProcessingOver() {
       return env.processingOver();
    }
+
+   private Set<? extends AnnotatedElement> getRootElements(boolean includeClasses, boolean includePackages) {
+      Set<? extends Element> rootElements = env.getRootElements();
+      Set<AnnotatedElement> ret = new HashSet<AnnotatedElement>(rootElements.size());
+      for (Element e : rootElements) {
+         Class clazz = e instanceof TypeElement ? Class.forElement((TypeElement) e) : null;
+         if (clazz != null) {
+            if (includeClasses) {
+               ret.add(clazz);
+            }
+            if (includePackages) {
+               Package pkg = clazz.getPackage();
+               if (pkg != null) {
+                  ret.add(pkg);
+               }
+            }
+         } else if (includePackages) {
+            Package pkg = e instanceof PackageElement ? Package.forElement((PackageElement) e) : null;
+            if (pkg != null) {
+               ret.add(pkg);
+            }
+         }
+      }
+      return Collections.unmodifiableSet(ret);
+   }
    
    public Set<? extends AnnotatedElement> allElements() {
-      // TODO
-      env.getRootElements();
-      return null;
+      return getRootElements(true, true);
    }
 
+   @SuppressWarnings("unchecked")
    public Set<Package> allPackages() {
-      // TODO
-      return null;
+      return (Set<Package>) getRootElements(false, true);
    }
    
+   @SuppressWarnings("unchecked")
    public Set<Class> allClasses() {
-      // TODO
-      return null;
+      return (Set<Class>) getRootElements(true, false);
    }
    
-   public Set<Class> allClasses(EnumSet<Class.Kind> classTypes) {
+   public Set<Class> allClasses(Set<Class.Kind> classTypes) {
       Set<Class> classes = new HashSet<Class>();
       for (Class clazz : allClasses()) {
          if (classTypes.contains(clazz.getClassKind())) {
@@ -78,7 +105,7 @@ public class RoundEnvironment {
 
    public Set<Class> annotatedClasses(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation,
-         EnumSet<Class.Kind> classTypes) {
+         Set<Class.Kind> classTypes) {
       Set<Class> classes = new HashSet<Class>();
       for (Class clazz : annotatedClasses(annotation)) {
          if (classTypes.contains(clazz.getClassKind())) {
@@ -88,7 +115,7 @@ public class RoundEnvironment {
       return classes;
    }
 
-   public Set<Class> annotatedClasses(Class annotation, EnumSet<Class.Kind> classTypes) {
+   public Set<Class> annotatedClasses(Class annotation, Set<Class.Kind> classTypes) {
       Set<Class> classes = new HashSet<Class>();
       for (Class clazz : annotatedClasses(annotation)) {
          if (classTypes.contains(clazz.getClassKind())) {
@@ -104,7 +131,7 @@ public class RoundEnvironment {
       return null;
    }
 
-   public Set<Package> annotatedPacakges(Class annotation) {
+   public Set<Package> annotatedPackages(Class annotation) {
       // TODO
       return null;
    }

@@ -61,7 +61,7 @@ public final class ProxyUtils {
    }
    
    /**
-    * Casts an object to interface that it may not necessarily implement. If it does not
+    * Casts an object to an interface that it may not necessarily implement. If it does not
     * implement the specified interface, it must have compatible methods -- meaning it must
     * have methods with the same signatures (names and argument lists) as all of the
     * interface's methods. In addition to having the same signature, the object's method

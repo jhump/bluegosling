@@ -1,5 +1,7 @@
 package com.apriori.apt.testing;
 
+import com.apriori.reflect.Members;
+
 import org.junit.runners.model.FrameworkMethod;
 
 import java.lang.annotation.Annotation;
@@ -11,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Logger;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -33,6 +36,8 @@ import javax.tools.FileObject;
  * @see AnnotationProcessorTestRunner
  */
 class TestMethodProcessor extends AbstractProcessor {
+   private static final Logger logger = Logger.getLogger(TestMethodProcessor.class.getName());
+   
    private final FrameworkMethod method;
    private final Object test;
    private final TestJavaFileManager fileManager;
@@ -90,7 +95,10 @@ class TestMethodProcessor extends AbstractProcessor {
             // initialize any processors itself)
             return null;
          } else {
-            Field field = test.getClass().getField(initField.value());
+            Field field = Members.findField(test.getClass(), initField.value());
+            if (field == null) {
+               throw new NoSuchFieldException(test.getClass().getName() + "#" + initField.value());
+            }
             field.setAccessible(true);
             return (Processor) field.get(test);
          }
@@ -133,16 +141,21 @@ class TestMethodProcessor extends AbstractProcessor {
    
    @Override
    public Set<String> getSupportedAnnotationTypes() {
+      Set<String> ret;
       if (processor != null) {
-         return processor.getSupportedAnnotationTypes();
+         ret = processor.getSupportedAnnotationTypes();
       } else {
          SupportedAnnotationTypes annotations = findAnnotation(SupportedAnnotationTypes.class, test.getClass());
          if (annotations == null) {
-            return Collections.singleton("*");
+            ret = Collections.singleton("*");
          } else {
-            return new HashSet<String>(Arrays.asList(annotations.value()));
+            ret = new HashSet<String>(Arrays.asList(annotations.value()));
          }
       }
+      if (ret.isEmpty()) {
+         logger.warning("No supported annotations for test. Processor will not get invoked.");
+      }
+      return ret;
    }
 
    @Override
@@ -182,7 +195,8 @@ class TestMethodProcessor extends AbstractProcessor {
          TestEnvironment testEnv = new TestEnvironment(fileManager, diagnosticCollector, processingEnv,
                roundEnv, invocationCount, annotations, processor, test); 
          // and call method
-         Object params[] = TestMethodParameterInjector.getInjectedParameters(method.getMethod(), testEnv);
+         Object params[] =
+               TestMethodParameterInjectors.FOR_TEST_METHODS.getInjectedParameters(method.getMethod(), testEnv);
          Object result;
          result = method.invokeExplosively(test, params);
          

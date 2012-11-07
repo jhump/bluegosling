@@ -395,36 +395,94 @@ public class Caster<T> {
          return ret;
       }
 
+      /**
+       * Enables dynamic methods. A {@link Caster} built with this builder will perform dynamic
+       * dispatch. During dynamic dispatch, the actual method to be invoked is not chosen until
+       * runtime, and it is based on the runtime types of the arguments vs. the static types
+       * declared on the target interface methods.
+       * 
+       * @return {@code this}, for method chaining
+       */
       public Builder<T> withDynamicMethods() {
          this.dynamicMethods = true;
          return this;
       }
 
+      /**
+       * Enables casting of return values. If the target interface method returns an interface and
+       * the underlying object's method does not return an object that implements it, the return
+       * value will be "cast" (using a {@link Caster}) to that interface. The {@link Caster} that
+       * is used to perform the cast will have the same options as the one built by this builder.
+       * 
+       * @return {@code this}, for method chaining
+       */
       public Builder<T> castingReturnTypes() {
          this.castReturnTypes = true;
          return this;
       }
 
+      /**
+       * Enables casting of arguments. If the object does not have a method that is otherwise
+       * compatible then, with this enabled, an alternative may be selected. The alternative must
+       * accept an interface (or multiple interface arguments) that the corresponding argument type
+       * of the target interface method does not implement. In this case, the argument(s) will be
+       * "cast" (using a {@link Caster}) to the interface(s). The {@link Caster} that is used to
+       * perform the cast will have the same options as the one built by this builder.
+       * 
+       * @return {@code this}, for method chaining
+       */
       public Builder<T> castingArguments() {
          this.castArguments = true;
          return this;
       }
       
+      /**
+       * Enables expanding of var-args. This is only performed during dynamic dispatch so it will
+       * have no impact unless {@link #withDynamicMethods()} is also called on this builder. If no
+       * method can be identified during dynamic dispatch that is compatible with the runtime
+       * arguments of the invocation, and the method being invoked is a variable-arity method, then
+       * the var-args array will be expanded and methods will be re-examined for compatibility based
+       * on this expanded list of argument types (as opposed to the abbreviated argument types that
+       * included an array as the last argument).
+       * 
+       * @return {@code this}, for method chaining
+       * 
+       * @see #withDynamicMethods()
+       */
       public Builder<T> expandingVarArgs() {
          this.expandVarArgs = true;
          return this;
       }
 
+      /**
+       * Enables unsupported operations. Without this, if an object to be cast has no methods that
+       * can be used to dispatch a target interface method, the cast will fail with a
+       * {@link ClassCastException}. With this setting, the cast will succeed but invoking any of
+       * these methods will result in an {@link UnsupportedOperationException}.
+       * 
+       * @return {@code this}, for method chaining
+       */
       public Builder<T> allowingUnsupportedOperations() {
          this.allowUnsupportedOperations = true;
          return this;
       }
       
+      /**
+       * Configures the cast to <em>not</em> throw {@link AmbiguousMethodException}s. If any
+       * ambiguities are encountered, one of the methods will be chosen arbitrarily for dispatch.
+       * 
+       * @return {@code this}, for method chaining
+       */
       public Builder<T> ignoringAmbiguities() {
          this.ignoreAmbiguities = true;
          return this;
       }
 
+      /**
+       * Builds a {@link Caster}.
+       * 
+       * @return a {@link Caster} with the specified settings
+       */
       public Caster<T> build() {
          return new Caster<T>(iface, dynamicMethods, castReturnTypes, castArguments,
                expandVarArgs, allowUnsupportedOperations, ignoreAmbiguities);
@@ -1190,16 +1248,16 @@ public class Caster<T> {
 // TODO: refactor!
 // 1) move a lot of the inner classes here to package-private top-level classes
 // 2) use ConversionStrategy in DispatchCandidate to remove more boiler-plate
-// 3) move some of these static methods into instance methods on some of those classes
+// 3) move a lot of these static methods into instance methods on some of those classes
 // 4) address other TODOs, particularly around exception handling
 // 5) if a method has no dynamic dispatch candidates, fail or use unsupported operation (instead
 //    of letting it fail with NoSuchMethod at invocation time)
 // 6) consider changing dynamic dispatch to always use unsupported operation exception with a cause
 //    that is either "no such method" or "ambiguous methods"...
-// 7) closely inspect current names and rename if appropriate
+// 7) closely inspect current method and class names and rename if appropriate
 
 // TODO: add cool stuff!
-// 1) consider add'l out of box conversions:
+// 1) consider add'l out-of-box conversions:
 //    * primitive int to Object, for example, via auto-boxing
 //    * converting of array elements (like "casting" or auto-boxing/unboxing) not just for var-args
 //      (especially useful for annotation return types)

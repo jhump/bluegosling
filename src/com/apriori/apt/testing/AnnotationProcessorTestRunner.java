@@ -1,7 +1,11 @@
 package com.apriori.apt.testing;
 
+import com.apriori.collections.TransformingList;
+import com.apriori.util.Function;
 import com.apriori.util.Streams;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
@@ -10,10 +14,13 @@ import org.junit.runners.model.Statement;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -209,9 +216,15 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
                CategorizingDiagnosticCollector diagnosticCollector = new CategorizingDiagnosticCollector();
                TestJavaFileManager fileManager = new TestJavaFileManager(
                      compiler.getStandardFileManager(diagnosticCollector.getListener(), null, null));
-               Iterable<String> options = options(method.getMethod(), test.getClass());
-               Iterable<String> classNames = classNamesToProcess(method.getMethod(), test.getClass());
-               Iterable<JavaFileObject> files = filesToProcess(method.getMethod(), test.getClass(), fileManager);
+               List<String> options = options(method.getMethod(), test.getClass());
+               Collection<String> classNames = classNamesToProcess(method.getMethod(), test.getClass());
+               Collection<JavaFileObject> files = filesToProcess(method.getMethod(), test.getClass(), fileManager);
+               if (files.isEmpty() && classNames.isEmpty()) {
+                  // If no files or classes are specified, then we need to add a file in order to avoid
+                  // compilation failure (otherwise javac complains that there it has nothing to do)
+                  // so we'll just process the test class itself
+                  classNames = Collections.singletonList(test.getClass().getCanonicalName());
+               }
                JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
                      diagnosticCollector.getListener(), options, classNames, files);
                // The compiler eats everything thrown by an annotation processor. So we'll use this reference to
@@ -240,27 +253,74 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       }
    }
    
+   private List<Method> getAnnotatedMethods(Class<? extends Annotation> annotationType) {
+      return new TransformingList<FrameworkMethod, Method>(
+            getTestClass().getAnnotatedMethods(annotationType),
+            new Function<FrameworkMethod, Method>() {
+               @Override public Method apply(FrameworkMethod input) {
+                  return input.getMethod();
+               }
+            });
+   }
+   
+   // This method is supposedly deprecated, but there is no replacement for intercepting the
+   // validation of @Before and @After methods
    @Override
-   protected void validateTestMethods(List<Throwable> errors) {
-      // Do not call super since it performs overly strict validation on test methods.
-      for (Method m : getTestClass().getJavaClass().getMethods()) {
-         if (m.isAnnotationPresent(Test.class)) {
-            if (m.isAnnotationPresent(NoProcess.class)) {
-               if (m.getParameterTypes().length > 0) {
-                  errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                        + " must accept no parameters"));
-               }
-               if (!ALLOWED_NO_PROCESS_RETURN_TYPES.contains(m.getReturnType())) {
-                  errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                        + " must return one of " + ALLOWED_NO_PROCESS_RETURN_TYPES));
-               }
-            } else {
-               TestMethodParameterInjector.verifyParameterTypes(m, errors);
-               if (!ALLOWED_PROCESS_RETURN_TYPES.contains(m.getReturnType())) {
-                  errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                        + " must return one of " + ALLOWED_PROCESS_RETURN_TYPES));
-               }
+   protected void validateInstanceMethods(List<Throwable> errors) {
+      // Do not call super since it performs overly strict validation on methods.
+      
+      // @Before methods:
+      validateMethods(getAnnotatedMethods(Before.class), ALLOWED_NO_PROCESS_RETURN_TYPES,
+            TestMethodParameterInjectors.FOR_BEFORE_METHODS, errors);
+      
+      // @Test methods:
+      List<Method> processorTestMethods = new ArrayList<Method>();
+      List<Method> normalTestMethods = new ArrayList<Method>();
+      for (Method m : getAnnotatedMethods(Test.class)) {
+         if (m.isAnnotationPresent(NoProcess.class)) {
+            normalTestMethods.add(m);
+         } else {
+            processorTestMethods.add(m);
+         }
+      }
+      validateMethods(processorTestMethods, ALLOWED_PROCESS_RETURN_TYPES,
+            TestMethodParameterInjectors.FOR_TEST_METHODS, errors);
+      validateMethods(normalTestMethods, ALLOWED_NO_PROCESS_RETURN_TYPES, null, errors);
+      
+      // @After methods:
+      validateMethods(getAnnotatedMethods(After.class), ALLOWED_NO_PROCESS_RETURN_TYPES, null,
+            errors);
+
+      if (computeTestMethods().isEmpty()) {
+         errors.add(new Exception("No runnable methods"));
+      }
+   }
+   
+   private void validateMethods(List<Method> methods, Set<Class<?>> allowedReturnTypes,
+         TestMethodParameterInjector<?> parameterInjector, List<Throwable> errors) {
+      for (Method m : methods) {
+         // must be public and non-static
+         if (!Modifier.isPublic(m.getModifiers())) {
+            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
+                  + " must be public"));
+         }
+         if (Modifier.isStatic(m.getModifiers())) {
+            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
+                  + " must not be static"));
+         }
+         // check parameters
+         if (parameterInjector == null) {
+            if (m.getParameterTypes().length > 0) {
+               errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
+                     + " must accept no parameters"));
             }
+         } else {
+            parameterInjector.validateParameterTypes(m, errors);
+         }
+         // and then check return type
+         if (!allowedReturnTypes.contains(m.getReturnType())) {
+            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
+                  + " must return one of " + allowedReturnTypes));
          }
       }
    }
@@ -275,7 +335,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
     * 
     * @see JavaCompiler#getTask(java.io.Writer, JavaFileManager, DiagnosticListener, Iterable, Iterable, Iterable)
     */
-   private Iterable<String> options(Method method, Class<?> clazz) {
+   private List<String> options(Method method, Class<?> clazz) {
       ArrayList<String> options = new ArrayList<String>();
       OptionsForProcessing forMethod = method.getAnnotation(OptionsForProcessing.class);
       if (forMethod == null || forMethod.incremental()) {
@@ -300,7 +360,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
     * 
     * @see JavaCompiler#getTask(java.io.Writer, JavaFileManager, DiagnosticListener, Iterable, Iterable, Iterable)
     */
-   private Iterable<String> classNamesToProcess(Method method, Class<?> clazz) {
+   private Collection<String> classNamesToProcess(Method method, Class<?> clazz) {
       HashSet<String> classNames = new HashSet<String>();
       ClassesToProcess forMethod = method.getAnnotation(ClassesToProcess.class);
       boolean includeClass = true;
@@ -338,7 +398,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
     * 
     * @see JavaCompiler#getTask(java.io.Writer, JavaFileManager, DiagnosticListener, Iterable, Iterable, Iterable)
     */
-   private Iterable<JavaFileObject> filesToProcess(Method method, Class<?> clazz,
+   private Collection<JavaFileObject> filesToProcess(Method method, Class<?> clazz,
          TestJavaFileManager fileManager) throws IOException {
       List<FileDefinition> fileDefs = FileDefinition.getFilesToProcess(method, clazz);
       List<JavaFileObject> fileObjects = new ArrayList<JavaFileObject>();
