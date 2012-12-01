@@ -1,6 +1,6 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.apt.ElementUtils;
+import static com.apriori.apt.ProcessingEnvironments.elements;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +82,7 @@ public class Annotation {
     * @see #getDeclaredAnnotationAttributes()
     */
    public Map<String, ?> getAnnotationAttributes() {
-      return convertAttributes(ElementUtils.get().getElementValuesWithDefaults(mirror));
+      return convertAttributes(elements().getElementValuesWithDefaults(mirror));
    }
    
    /**
@@ -116,7 +116,8 @@ public class Annotation {
 
    private void attributeValueToString(StringBuilder sb, Object attributeValue) {
       if (attributeValue instanceof Class) {
-         
+         Class clazz = (Class) attributeValue;
+         sb.append(clazz.getName());
       } else if (attributeValue instanceof String) {
          String s = (String) attributeValue;
          // wrap literal value with quotes
@@ -157,7 +158,7 @@ public class Annotation {
          sb.append("}");
       } else if (attributeValue instanceof Field) {
          Field field = (Field) attributeValue;
-         sb.append(field.getDeclaringClass().getSimpleName());
+         sb.append(field.getDeclaringClass().getName());
          sb.append(".");
          sb.append(field.getName());
       } else if (attributeValue instanceof Annotation) {
@@ -170,7 +171,7 @@ public class Annotation {
    
    private void toString(StringBuilder sb) {
       sb.append("@");
-      sb.append(annotationType().getSimpleName());
+      sb.append(annotationType().getName());
       sb.append("(");
       boolean first = true;
       for (Map.Entry<String, ?> entry : getAnnotationAttributes().entrySet()) {

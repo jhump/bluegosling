@@ -147,10 +147,17 @@ abstract class AbstractExecutableMember extends AbstractMember implements Generi
       StringBuilder sb = new StringBuilder();
       Modifier.appendModifiers(sb, getModifiers());
       if (includeGenerics) {
+         int l = sb.length();
          TypeVariable.appendTypeParameters(sb, getTypeVariables());
+         if (sb.length() != l) {
+            sb.append(" ");
+         }
+      }
+      int l = sb.length();
+      appendReturnType(sb, includeGenerics);
+      if (sb.length() != l) {
          sb.append(" ");
       }
-      appendReturnType(sb, includeGenerics);
       sb.append(getName());
       sb.append("(");
       List<Parameter<?>> parameters = getParameters();

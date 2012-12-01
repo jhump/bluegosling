@@ -116,6 +116,5 @@ public class Method extends AbstractExecutableMember {
    void appendReturnType(StringBuilder sb, boolean includeGenerics) {
       Type returnType = includeGenerics ? getGenericReturnType() : getReturnType();
       sb.append(returnType.toTypeString());
-      sb.append(" ");
    }
 }

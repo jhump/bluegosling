@@ -16,8 +16,7 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
    @Override
    public final void init(ProcessingEnvironment env) {
       super.init(env);
-      ElementUtils.set(env.getElementUtils());
-      TypeUtils.set(env.getTypeUtils());
+      ProcessingEnvironments.setup(env);
    }
    
    // Synchronized, just in case, since we modify instance state for the duration

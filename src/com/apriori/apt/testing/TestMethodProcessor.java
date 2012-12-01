@@ -153,7 +153,7 @@ class TestMethodProcessor extends AbstractProcessor {
          }
       }
       if (ret.isEmpty()) {
-         logger.warning("No supported annotations for test. Processor will not get invoked.");
+         logger.warning("No supported annotations for test. Test method " + method.getName() + " will not get invoked.");
       }
       return ret;
    }

@@ -25,11 +25,6 @@ import javax.tools.JavaFileObject;
 public class CategorizingDiagnosticCollector {
 
    /**
-    * A writer, for printing messages to an output location other than the internal structures.
-    */
-   private final Writer writer;
-   
-   /**
     * The list of all diagnostics received so far.
     */
    private final List<Diagnostic<JavaFileObject>> allDiagnostics;
@@ -43,27 +38,31 @@ public class CategorizingDiagnosticCollector {
     * Constructs a new collector. Diagnostics will be printed to {@code stderr}.
     */
    public CategorizingDiagnosticCollector() {
-      this(null);
-   }
-   
-   /**
-    * Constructs a new collector. Diagnostics will be printed to the specified writer.
-    * 
-    * @param writer the writer, for printing diagnostics
-    */
-   public CategorizingDiagnosticCollector(Writer writer) {
-      this.writer = writer == null ? new OutputStreamWriter(System.err) : writer;
       allDiagnostics = new ArrayList<Diagnostic<JavaFileObject>>();
       categorizedDiagnostics = new HashMap<Diagnostic.Kind, List<Diagnostic<JavaFileObject>>>();
    }
 
    /**
     * Returns a {@link DiagnosticListener} that prints diagnostic messages and records
-    * them to the collector's internal structures.
+    * them to the collector's internal structures. Diagnostics will be printed to
+    * standard error.
     * 
     * @return the listener
     */
    DiagnosticListener<JavaFileObject> getListener() {
+      return getListener(null);
+   }
+   
+   /**
+    * Returns a {@link DiagnosticListener} that prints diagnostic messages and records
+    * them to the collector's internal structures. Diagnostics will be printed to the
+    * specified writer. 
+    * 
+    * @return the listener
+    * @param writer the writer, for printing diagnostics
+    */
+   DiagnosticListener<JavaFileObject> getListener(Writer writer) {
+      final Writer output = writer == null ? new OutputStreamWriter(System.err) : writer;
       return new DiagnosticListener<JavaFileObject>() {
          @SuppressWarnings("synthetic-access")
          @Override
@@ -80,7 +79,8 @@ public class CategorizingDiagnosticCollector {
                category.add(fileDiagnostic);
             }
             try {
-               writer.write(diagnostic.getMessage(null) + "\n");
+               output.write(diagnostic.getMessage(null) + "\n");
+               output.flush();
             } catch (IOException e) {
                // Don't really want to throw here since we've captured
                // the diagnostic. Wish there was something better to do...

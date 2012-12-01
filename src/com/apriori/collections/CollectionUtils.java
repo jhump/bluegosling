@@ -33,6 +33,11 @@ public class CollectionUtils {
          return ((Comparable<Object>) o1).compareTo(o2);
       }
    };
+   
+   @SuppressWarnings({ "unchecked", "rawtypes" })
+   public static final <T extends Comparable<T>> Comparator<T> naturalOrdering() {
+      return (Comparator) NATURAL_ORDERING;
+   }
 
    /** Prevents instantiation. */
    private CollectionUtils() {

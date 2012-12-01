@@ -13,11 +13,11 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       Builder() {
       }
       
-      public Builder<R, P> forEachClass(ClassVisitor<R, P> visitor) {
-         if (visitor == null) {
+      public Builder<R, P> forEachClass(ClassVisitor<R, P> aVisitor) {
+         if (aVisitor == null) {
             throw new NullPointerException();
          }
-         this.visitor = visitor;
+         this.visitor = aVisitor;
          return this;
       }
       

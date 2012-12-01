@@ -14,9 +14,9 @@ public final class Members {
    public static Method findMethod(Class<?> clazz, final String name, final Class<?>... argTypes) {
       return ClassHierarchyCrawler.crawlWith(clazz, null, new ClassVisitor<Method, Void>() {
          @Override
-         public Method visit(Class<?> clazz, Void v) {
+         public Method visit(Class<?> aClass, Void v) {
             try {
-               return clazz.getDeclaredMethod(name, argTypes);
+               return aClass.getDeclaredMethod(name, argTypes);
             } catch (NoSuchMethodException e) {
                // TODO: would it be more efficient to do linear search through all methods rather
                // than try/catch?
@@ -36,10 +36,10 @@ public final class Members {
             .postOrderVisit() // overwrite super-class or interface methods w/ sub-class methods
             .forEachClass(new ClassVisitor<Void, Map<MethodSignature, Method>>() {
                @Override
-               public Void visit(Class<?> clazz, Map<MethodSignature, Method> methods) {
-                  for (Method m : clazz.getDeclaredMethods()) {
+               public Void visit(Class<?> aClass, Map<MethodSignature, Method> methodMap) {
+                  for (Method m : aClass.getDeclaredMethods()) {
                      if (m.getName().equals(name)) {
-                        methods.put(new MethodSignature(m), m);
+                        methodMap.put(new MethodSignature(m), m);
                      }
                   }
                   return null;
@@ -51,9 +51,9 @@ public final class Members {
    public static Field findField(Class<?> clazz, final String name) {
       return ClassHierarchyCrawler.crawlWith(clazz, null, new ClassVisitor<Field, Void>() {
          @Override
-         public Field visit(Class<?> clazz, Void v) {
+         public Field visit(Class<?> aClass, Void v) {
             try {
-               return clazz.getDeclaredField(name);
+               return aClass.getDeclaredField(name);
             } catch (NoSuchFieldException e) {
                // TODO: would it be more efficient to do linear search through all fields rather
                // than try/catch?

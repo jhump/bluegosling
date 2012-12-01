@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +46,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
+import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
 /**
@@ -178,10 +180,9 @@ import javax.tools.ToolProvider;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: add validation to check config and verify invariants prior to running a test case, including verifying
-// that a test case has at least one file or class to process (maybe even check for validity/presence of all
-// referenced resources?), and verifying annotation compatibility (for example, @ProcessorUnderTest and @NoProcess
-// not allowed on same method)
+// TODO: add validation to check config and verify invariants prior to running a test case, like checking
+// that all referenced resources are present and verifying annotation compatibility (for example,
+// @ProcessorUnderTest and @NoProcess not allowed on same method)
 public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
 
    @SuppressWarnings("unchecked")
@@ -195,9 +196,41 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       super(klass);
    }
    
+   // This method is supposedly deprecated in favor of using rules, but it's simply easier to do
+   // what we want to do in a before method.
    @Override
-   public Statement methodInvoker(final FrameworkMethod method, final Object test) {
-      if (method.getMethod().isAnnotationPresent(NoProcess.class)) {
+   protected Statement withBefores(FrameworkMethod method, final Object target,
+         final Statement statement) {
+      final List<FrameworkMethod> befores = getTestClass().getAnnotatedMethods(Before.class);
+      if (befores.isEmpty()) {
+         return statement;
+      }
+      return new Statement() {
+         @Override
+         public void evaluate() throws Throwable {
+            // invoke before methods
+            for (FrameworkMethod m : befores) {
+               methodInvoker(m, target).evaluate();
+            }
+            // and then invoke the method itself
+            statement.evaluate();
+         }
+      };
+   }
+   
+   @Override
+   protected Statement methodInvoker(final FrameworkMethod method, final Object test) {
+     if (method.getMethod().isAnnotationPresent(Before.class)) {
+        // allow injection of file manager into before methods
+        return new Statement() {
+           @Override
+           public void evaluate() throws Throwable {
+              Object parms[] = TestMethodParameterInjectors.FOR_BEFORE_METHODS
+                    .getInjectedParameters(method.getMethod(), currentContext.get().getFileManager());
+              method.invokeExplosively(test, parms);
+           }
+        };
+     } else if (method.getMethod().isAnnotationPresent(NoProcess.class)) {
          // run as a plain-jane test
          return new Statement() {
             @Override
@@ -212,41 +245,45 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
             @SuppressWarnings("synthetic-access")
             @Override
             public void evaluate() throws Throwable {
-               JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-               CategorizingDiagnosticCollector diagnosticCollector = new CategorizingDiagnosticCollector();
-               TestJavaFileManager fileManager = new TestJavaFileManager(
-                     compiler.getStandardFileManager(diagnosticCollector.getListener(), null, null));
-               List<String> options = options(method.getMethod(), test.getClass());
-               Collection<String> classNames = classNamesToProcess(method.getMethod(), test.getClass());
-               Collection<JavaFileObject> files = filesToProcess(method.getMethod(), test.getClass(), fileManager);
-               if (files.isEmpty() && classNames.isEmpty()) {
-                  // If no files or classes are specified, then we need to add a file in order to avoid
-                  // compilation failure (otherwise javac complains that there it has nothing to do)
-                  // so we'll just process the test class itself
-                  classNames = Collections.singletonList(test.getClass().getCanonicalName());
-               }
-               JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
-                     diagnosticCollector.getListener(), options, classNames, files);
-               // The compiler eats everything thrown by an annotation processor. So we'll use this reference to
-               // communicate the source exception up here so we can re-throw it (that way, junit indicates the
-               // original assertion or test exception instead of just a generic CompilationFailedException)
-               AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
-               TestMethodProcessor processor = new TestMethodProcessor(method, test, fileManager, diagnosticCollector, errorRef);
-               task.setProcessors(Arrays.asList(processor));
+               CompilationContext context = currentContext.get();
                try {
-                  boolean success = task.call();
-                  Throwable t = errorRef.get();
-                  if (t != null) {
-                     throw t;
-                  } else if (!success) {
-                     throw new CompilationFailedException("Compilation task failed",
-                           diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
-                  } else if (processor.getInvocationCount() == 0) {
-                     throw new CompilationFailedException("Compilation never invoked processor",
-                           diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
+                  JavaCompiler compiler = context.getCompiler();
+                  CategorizingDiagnosticCollector diagnosticCollector = context.getDiagnosticCollector();
+                  TestJavaFileManager fileManager = context.getFileManager();
+                  List<String> options = options(method.getMethod(), test.getClass());
+                  Collection<String> classNames = classNamesToProcess(method.getMethod(), test.getClass());
+                  Iterable<JavaFileObject> files = filesToProcess(method.getMethod(), test.getClass(), fileManager);
+                  if (!files.iterator().hasNext() && classNames.isEmpty()) {
+                     // If no files or classes are specified, then we need to add a file in order to avoid
+                     // compilation failure (otherwise javac complains that there it has nothing to do)
+                     // so we'll just process the test class itself
+                     classNames = Collections.singletonList(test.getClass().getCanonicalName());
                   }
-               } catch (TestMethodInvocationException e) {
-                  throw e.getCause();
+                  JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
+                        diagnosticCollector.getListener(), options, classNames, files);
+                  // The compiler eats everything thrown by an annotation processor. So we'll use this reference to
+                  // communicate the source exception up here so we can re-throw it (that way, junit indicates the
+                  // original assertion or test exception instead of just a generic CompilationFailedException)
+                  AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
+                  TestMethodProcessor processor = new TestMethodProcessor(method, test, fileManager, diagnosticCollector, errorRef);
+                  task.setProcessors(Arrays.asList(processor));
+                  try {
+                     boolean success = task.call();
+                     Throwable t = errorRef.get();
+                     if (t != null) {
+                        throw t;
+                     } else if (!success) {
+                        throw new CompilationFailedException("Compilation task failed",
+                              diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
+                     } else if (processor.getInvocationCount() == 0) {
+                        throw new CompilationFailedException("Compilation never invoked processor",
+                              diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
+                     }
+                  } catch (TestMethodInvocationException e) {
+                     throw e.getCause();
+                  }
+               } finally {
+                  currentContext.remove();
                }
             }
          };
@@ -266,11 +303,14 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
    // This method is supposedly deprecated, but there is no replacement for intercepting the
    // validation of @Before and @After methods
    @Override
+   @SuppressWarnings("unchecked") // creating var-arg arrays of generic type Class<? extends Annotation>...
    protected void validateInstanceMethods(List<Throwable> errors) {
       // Do not call super since it performs overly strict validation on methods.
       
       // @Before methods:
-      validateMethods(getAnnotatedMethods(Before.class), ALLOWED_NO_PROCESS_RETURN_TYPES,
+      List<Method> beforeMethods = getAnnotatedMethods(Before.class);
+      validateAnnotationsNotPresent(beforeMethods, errors, Test.class, After.class);
+      validateMethods(beforeMethods, ALLOWED_NO_PROCESS_RETURN_TYPES,
             TestMethodParameterInjectors.FOR_BEFORE_METHODS, errors);
       
       // @Test methods:
@@ -285,14 +325,32 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       }
       validateMethods(processorTestMethods, ALLOWED_PROCESS_RETURN_TYPES,
             TestMethodParameterInjectors.FOR_TEST_METHODS, errors);
+      validateAnnotationsNotPresent(processorTestMethods, errors, Before.class, After.class);
       validateMethods(normalTestMethods, ALLOWED_NO_PROCESS_RETURN_TYPES, null, errors);
+      validateAnnotationsNotPresent(normalTestMethods, errors, Before.class, After.class);
       
       // @After methods:
-      validateMethods(getAnnotatedMethods(After.class), ALLOWED_NO_PROCESS_RETURN_TYPES, null,
-            errors);
+      List<Method> afterMethods = getAnnotatedMethods(After.class);
+      validateMethods(afterMethods, ALLOWED_NO_PROCESS_RETURN_TYPES, null, errors);
+      validateAnnotationsNotPresent(afterMethods, errors, Before.class, Test.class);
 
       if (computeTestMethods().isEmpty()) {
          errors.add(new Exception("No runnable methods"));
+      }
+   }
+   
+   private String methodToMessage(Method m) {
+      return "Method " + m.getName() + " in class " + m.getDeclaringClass().getName();
+   }
+   
+   private void validateAnnotationsNotPresent(List<Method> methods, List<Throwable> errors,
+         Class<? extends Annotation>... notPresentAnnotationTypes) {
+      for (Method m : methods) {
+         for (Class<? extends Annotation> type : notPresentAnnotationTypes) {
+            if (m.isAnnotationPresent(type)) {
+               errors.add(new Exception(methodToMessage(m) + " must not have annotation " + type));
+            }
+         }
       }
    }
    
@@ -301,26 +359,23 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       for (Method m : methods) {
          // must be public and non-static
          if (!Modifier.isPublic(m.getModifiers())) {
-            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                  + " must be public"));
+            errors.add(new Exception(methodToMessage(m) + " must be public"));
          }
          if (Modifier.isStatic(m.getModifiers())) {
-            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                  + " must not be static"));
+            errors.add(new Exception(methodToMessage(m) + " must not be static"));
          }
          // check parameters
          if (parameterInjector == null) {
             if (m.getParameterTypes().length > 0) {
-               errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                     + " must accept no parameters"));
+               errors.add(new Exception(methodToMessage(m) + " must accept no parameters"));
             }
          } else {
             parameterInjector.validateParameterTypes(m, errors);
          }
          // and then check return type
          if (!allowedReturnTypes.contains(m.getReturnType())) {
-            errors.add(new Exception("Method " + m.getName() + " in class " + m.getDeclaringClass().getName()
-                  + " must return one of " + allowedReturnTypes));
+            errors.add(new Exception(methodToMessage(m) + " must return one of "
+                  + allowedReturnTypes));
          }
       }
    }
@@ -398,23 +453,20 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
     * 
     * @see JavaCompiler#getTask(java.io.Writer, JavaFileManager, DiagnosticListener, Iterable, Iterable, Iterable)
     */
-   private Collection<JavaFileObject> filesToProcess(Method method, Class<?> clazz,
+   private Iterable<JavaFileObject> filesToProcess(Method method, Class<?> clazz,
          TestJavaFileManager fileManager) throws IOException {
       List<FileDefinition> fileDefs = FileDefinition.getFilesToProcess(method, clazz);
-      List<JavaFileObject> fileObjects = new ArrayList<JavaFileObject>();
       Set<String> usedPaths = new HashSet<String>();
       for (FileDefinition fileDef : fileDefs) {
          String path = fileDef.getTargetPath();
          if (!usedPaths.contains(path)) {
             // create the file
-            JavaFileObject fileObject = createJavaFileObject(fileDef, fileManager, clazz);
-            // include source files in the returned list of compilation units
-            if (fileObject.getKind() == Kind.SOURCE) {
-               fileObjects.add(fileObject);
-            }
+            createJavaFileObject(fileDef, fileManager, clazz);
          }
       }
-      return Collections.unmodifiableList(fileObjects);
+      // now we return all source files -- which will include those added above as well as any
+      // that were created programmatically in a @Before method
+      return fileManager.list(StandardLocation.SOURCE_PATH, "", EnumSet.of(Kind.SOURCE), true);
    }
    
    /**
@@ -442,7 +494,38 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       }
    }
    
+   private static class CompilationContext {
+      private final JavaCompiler compiler;
+      private final CategorizingDiagnosticCollector diagnosticCollector;
+      private final TestJavaFileManager fileManager;
+      
+      public CompilationContext() {
+         compiler = ToolProvider.getSystemJavaCompiler();
+         diagnosticCollector = new CategorizingDiagnosticCollector();
+         fileManager = new TestJavaFileManager(
+               compiler.getStandardFileManager(diagnosticCollector.getListener(), null, null));
+      }
+      
+      public JavaCompiler getCompiler() {
+         return compiler;
+      }
+      
+      public CategorizingDiagnosticCollector getDiagnosticCollector() {
+         return diagnosticCollector;
+      }
+      
+      public TestJavaFileManager getFileManager() {
+         return fileManager;
+      }
+   }
    
+   final ThreadLocal<CompilationContext> currentContext =
+         new ThreadLocal<CompilationContext>() {
+            @Override
+            protected CompilationContext initialValue() {
+               return new CompilationContext();
+            }
+         };
    
    // TODO: Remove this junk. But keep the useful bits as some of this cruft could be
    // useful as the basis for AnnotationProcessorTestRunnerTest!

@@ -1,6 +1,6 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.apt.ElementUtils;
+import static com.apriori.apt.ProcessingEnvironments.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +46,13 @@ abstract class AbstractAnnotatedElement implements AnnotatedElement {
       }
       return null;
    }
+   
+   @Override
+   public <T extends java.lang.annotation.Annotation> T getAnnotationBridge(
+         java.lang.Class<T> annotationClass) {
+      Annotation a = getAnnotation(annotationClass);
+      return a == null ? null : AnnotationBridge.createBridge(a, annotationClass);
+   }
 
    @Override
    public boolean isAnnotationPresent(Class annotationClass) {
@@ -60,7 +67,7 @@ abstract class AbstractAnnotatedElement implements AnnotatedElement {
 
    @Override
    public List<Annotation> getAnnotations() {
-      return toAnnotations(ElementUtils.get().getAllAnnotationMirrors(element));
+      return toAnnotations(elements().getAllAnnotationMirrors(element));
    }
 
    @Override

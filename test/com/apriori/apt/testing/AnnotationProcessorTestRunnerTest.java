@@ -23,6 +23,8 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
 import junit.framework.AssertionFailedError;
@@ -132,6 +134,7 @@ public class AnnotationProcessorTestRunnerTest {
    }
    
    @SupportedAnnotationTypes("*")
+   @SupportedSourceVersion(SourceVersion.RELEASE_6)
    static class TestProcessor extends AbstractProcessor {
       int initCount;
       

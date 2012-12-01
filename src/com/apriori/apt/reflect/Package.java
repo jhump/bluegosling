@@ -1,6 +1,6 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.apt.ElementUtils;
+import static com.apriori.apt.ProcessingEnvironments.elements;
 
 import javax.lang.model.element.PackageElement;
 
@@ -42,7 +42,7 @@ public class Package extends AbstractAnnotatedElement {
     *       the compilation units being processed
     */
    public static Package forName(String packageName) {
-      return forElement(ElementUtils.get().getPackageElement(packageName));
+      return forElement(elements().getPackageElement(packageName));
    }
    
    @Override

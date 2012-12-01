@@ -96,8 +96,13 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
 
    public static class ReadOnly<I, O> extends TransformingList<I, O> {
 
-      public ReadOnly(List<I> list, Function<I, O> function) {
-         super(list, function);
+      public ReadOnly(List<? extends I> list, Function<I, O> function) {
+         super(cast(list), function);
+      }
+      
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      private static <T> List<T> cast(List<? extends T> input) {
+         return (List) input;
       }
       
       @Override

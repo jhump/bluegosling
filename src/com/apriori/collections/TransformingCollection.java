@@ -131,8 +131,13 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
 
    public static class ReadOnly<I, O> extends TransformingCollection<I, O> {
 
-      public ReadOnly(Collection<I> collection, Function<I, O> function) {
-         super(collection, function);
+      public ReadOnly(Collection<? extends I> collection, Function<I, O> function) {
+         super(cast(collection), function);
+      }
+      
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      private static <T> Collection<T> cast(Collection<? extends T> input) {
+         return (Collection) input;
       }
       
       @Override

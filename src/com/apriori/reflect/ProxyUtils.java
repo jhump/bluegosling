@@ -1,5 +1,6 @@
 package com.apriori.reflect;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
@@ -121,5 +122,33 @@ public final class ProxyUtils {
          builder.castingReturnTypes();
       }
       return builder.build().cast(o);
+   }
+
+   /**
+    * Returns true if the first specified method is more specific than the second. This does not
+    * quite use all of the specificity rules described above. It only looks at argument types,
+    * checking if the types of one method are sub-types of corresponding types of the other. If
+    * the two methods have a different number of arguments then {@code false} will always be
+    * returned.
+    * 
+    * @param method the first method
+    * @param other the second method
+    * @return true if the first method is "more specific" than the second (based solely on argument
+    *       types)
+    */
+   static boolean isMoreSpecific(Method method, Method other) {
+      Class<?> argTypes1[] = method.getParameterTypes();
+      Class<?> argTypes2[] = other.getParameterTypes();
+      if (argTypes1.length != argTypes2.length) {
+         return false;
+      } else {
+         for (int i = 0, len = argTypes1.length; i < len; i++) {
+            if (argTypes1[i].isAssignableFrom(argTypes2[i])
+                  && !argTypes1[i].equals(argTypes2[i])) {
+               return false;
+            }
+         }
+         return true;
+      }
    }
 }

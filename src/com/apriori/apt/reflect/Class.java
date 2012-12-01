@@ -1,7 +1,7 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.apt.ElementUtils;
-import com.apriori.apt.TypeUtils;
+import static com.apriori.apt.ProcessingEnvironments.elements;
+import static com.apriori.apt.ProcessingEnvironments.types;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -115,11 +115,11 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
     *       name
     */
    public static Class forName(String name) throws ClassNotFoundException {
-      Class ret = Class.forElement(ElementUtils.get().getTypeElement(name));
-      if (ret == null) {
+      TypeElement element = elements().getTypeElement(name);
+      if (element == null) {
          throw new ClassNotFoundException(name);
       }
-      return ret;
+      return Class.forElement(element);
    }
    
    /**
@@ -1146,6 +1146,13 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
    }
 
    @Override
+   public <T extends java.lang.annotation.Annotation> T getAnnotationBridge(
+         java.lang.Class<T> annotationClass) {
+      // default
+      return null;
+   }
+
+   @Override
    public List<Annotation> getAnnotations() {
       // default
       return Collections.emptyList();
@@ -1185,6 +1192,7 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
     * Returns a {@link java.lang.Class java.lang.Class} token for this class. The specified class
     * loader is used in the attempt to load the class.
     * 
+    * @param classLoader a class loader
     * @return a {@code java.lang.Class}
     * @throws ClassNotFoundException if no such class could be loaded by the specified class loader
     */
@@ -1222,7 +1230,11 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       sb.append(getClassKind().getClassStringPrefix());
       sb.append(getName());
       if (includeGenerics) {
+         int l = sb.length();
          TypeVariable.appendTypeParameters(sb, getTypeVariables());
+         if (sb.length() != l) {
+            sb.append(" ");
+         }
       }
       return sb.toString();
    }
@@ -1237,15 +1249,15 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       private static Map<java.lang.Class<?>, TypeMirror> typeMirrorMap;
       static {
          typeMirrorMap = new HashMap<java.lang.Class<?>, TypeMirror>(9);
-         typeMirrorMap.put(void.class, TypeUtils.get().getNoType(TypeKind.VOID));
-         typeMirrorMap.put(boolean.class, TypeUtils.get().getPrimitiveType(TypeKind.BOOLEAN));
-         typeMirrorMap.put(byte.class, TypeUtils.get().getPrimitiveType(TypeKind.BYTE));
-         typeMirrorMap.put(char.class, TypeUtils.get().getPrimitiveType(TypeKind.CHAR));
-         typeMirrorMap.put(double.class, TypeUtils.get().getPrimitiveType(TypeKind.DOUBLE));
-         typeMirrorMap.put(float.class, TypeUtils.get().getPrimitiveType(TypeKind.FLOAT));
-         typeMirrorMap.put(int.class, TypeUtils.get().getPrimitiveType(TypeKind.INT));
-         typeMirrorMap.put(long.class, TypeUtils.get().getPrimitiveType(TypeKind.LONG));
-         typeMirrorMap.put(short.class, TypeUtils.get().getPrimitiveType(TypeKind.SHORT));
+         typeMirrorMap.put(void.class, types().getNoType(TypeKind.VOID));
+         typeMirrorMap.put(boolean.class, types().getPrimitiveType(TypeKind.BOOLEAN));
+         typeMirrorMap.put(byte.class, types().getPrimitiveType(TypeKind.BYTE));
+         typeMirrorMap.put(char.class, types().getPrimitiveType(TypeKind.CHAR));
+         typeMirrorMap.put(double.class, types().getPrimitiveType(TypeKind.DOUBLE));
+         typeMirrorMap.put(float.class, types().getPrimitiveType(TypeKind.FLOAT));
+         typeMirrorMap.put(int.class, types().getPrimitiveType(TypeKind.INT));
+         typeMirrorMap.put(long.class, types().getPrimitiveType(TypeKind.LONG));
+         typeMirrorMap.put(short.class, types().getPrimitiveType(TypeKind.SHORT));
       }
       
       private final java.lang.Class<?> clazz;
@@ -1409,7 +1421,7 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       public TypeMirror asTypeMirror() {
          TypeMirror ret = componentClass.asTypeMirror();
          for (int i = 0; i < dimensions; i++) {
-            ret = TypeUtils.get().getArrayType(ret);
+            ret = types().getArrayType(ret);
          }
          return ret;
       }
@@ -1602,6 +1614,12 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       }
 
       @Override
+      public <T extends java.lang.annotation.Annotation> T getAnnotationBridge(
+            java.lang.Class<T> annotationClass) {
+         return annotatedElement.getAnnotationBridge(annotationClass);
+      }
+
+      @Override
       public boolean isAnnotationPresent(Class annotationClass) {
          return annotatedElement.isAnnotationPresent(annotationClass);
       }
@@ -1751,7 +1769,7 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       
       @Override
       public Set<Class> getClasses() {
-         List<TypeElement> types = ElementFilter.typesIn(ElementUtils.get().getAllMembers(asElement()));
+         List<TypeElement> types = ElementFilter.typesIn(elements().getAllMembers(asElement()));
          Set<Class> ret = new HashSet<Class>();
          for (TypeElement type : types) {
             Class clazz = forElement(type);
@@ -1856,7 +1874,7 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
 
       @Override
       public Package getPackage() {
-         PackageElement pkgElement = ElementUtils.get().getPackageOf(asElement());
+         PackageElement pkgElement = elements().getPackageOf(asElement());
          if (pkgElement == null) {
             return null;
          }
@@ -1865,16 +1883,16 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
 
       @Override
       public boolean isAssignableFrom(Class clazz) {
-         return TypeUtils.get().isAssignable(TypeUtils.get().erasure(clazz.asTypeMirror()),
-               TypeUtils.get().erasure(asTypeMirror()));
+         return types().isAssignable(types().erasure(clazz.asTypeMirror()),
+               types().erasure(asTypeMirror()));
       }
 
       @Override
       public boolean equals(Object o) {
          if (o instanceof DeclaredClass) {
             DeclaredClass clazz = (DeclaredClass) o;
-            return TypeUtils.get().isSameType(TypeUtils.get().erasure(clazz.asTypeMirror()),
-                  TypeUtils.get().erasure(asTypeMirror()));
+            return types().isSameType(types().erasure(clazz.asTypeMirror()),
+                  types().erasure(asTypeMirror()));
          }
          return false;
       }

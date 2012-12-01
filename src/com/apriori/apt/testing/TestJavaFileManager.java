@@ -157,7 +157,7 @@ public class TestJavaFileManager implements JavaFileManager {
     * @param location the location of the file
     * @param packageName the package that contains the file
     * @param relativeFileName the path to the file, relative to the package folder
-    * @return an absoluate and canonical path for the specified file
+    * @return an absolute and canonical path for the specified file
     */
    private static String canonicalName(Location location, String packageName, String relativeFileName) {
       String path = location.getName() + "/" + packageName.replace('.', '/') + "/" + relativeFileName;

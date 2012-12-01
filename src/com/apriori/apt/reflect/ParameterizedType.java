@@ -1,6 +1,6 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.apt.TypeUtils;
+import static com.apriori.apt.ProcessingEnvironments.types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +116,7 @@ public class ParameterizedType implements Type {
     * @see java.lang.reflect.ParameterizedType#getRawType()
     */
    public Class getRawType() {
-      Element erasedType = TypeUtils.get().asElement(TypeUtils.get().erasure(declaredType));
+      Element erasedType = types().asElement(types().erasure(declaredType));
       Class ret = ReflectionVisitors.CLASS_VISITOR.visit(erasedType);
       if (ret == null) {
          throw new MirroredTypeException(declaredType);

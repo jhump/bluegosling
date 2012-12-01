@@ -80,7 +80,46 @@ public class Field extends AbstractMember {
    public boolean isEnumConstant() {
       return asElement().getKind() == ElementKind.ENUM_CONSTANT;
    }
+   
+   /**
+    * Returns the actual enum instance represented by this enum constant field.
+    * 
+    * @return the enum instance
+    * @throws ClassNotFoundException if the declaring class cannot be loaded (which means it does
+    *       not exist in compiled form on the classpath or in a fashion that is available/visible to
+    *       the current thread's context class loader)
+    * @throws IllegalStateException if this field is not an enum constant field
+    */
+   public Enum<?> asEnum() throws ClassNotFoundException {
+      if (!isEnumConstant()) {
+         throw new IllegalStateException("not an enum");
+      }
+      @SuppressWarnings({"unchecked", "rawtypes"})
+      Enum<?> ret = Enum.valueOf(
+            (java.lang.Class<? extends Enum>) getDeclaringClass().asJavaLangClass(), getName());
+      return ret;
+   }
 
+   /**
+    * Returns the actual enum instance represented by this enum constant field. The specified class
+    * loader is used in the attempt to load the declaring class.
+    * 
+    * @param classLoader a class loader
+    * @return the enum instance
+    * @throws ClassNotFoundException if no such class could be loaded by the specified class loader
+    * @throws IllegalStateException if this field is not an enum constant field
+    */
+   public Enum<?> asEnum(ClassLoader classLoader) throws ClassNotFoundException {
+      if (!isEnumConstant()) {
+         throw new IllegalStateException("not an enum");
+      }
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      Enum<?> ret = Enum.valueOf(
+            (java.lang.Class<? extends Enum>) getDeclaringClass().asJavaLangClass(classLoader),
+            getName());
+      return ret;
+   }
+   
    @Override
    public boolean equals(Object o) {
       if (o instanceof Field) {
@@ -109,6 +148,7 @@ public class Field extends AbstractMember {
     * 
     * @return a string representation of the field that includes generic type information
     */
+   @Override
    public String toGenericString() {
       return toString(true);
    }

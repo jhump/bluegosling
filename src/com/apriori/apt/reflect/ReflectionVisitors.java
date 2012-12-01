@@ -33,7 +33,36 @@ import javax.lang.model.util.TypeKindVisitor6;
 final class ReflectionVisitors {
    private ReflectionVisitors() {
    }
-   
+
+   /**
+    * A visitor that returns a {@link Class} or null if the visited element does not represent a
+    * class, interface, annotation type, or enum.
+    */
+   public static final ElementVisitor<AnnotatedElement, Void> ANNOTATED_ELEMENT_VISITOR =
+         new ElementKindVisitor6<AnnotatedElement, Void>() {
+            @Override public AnnotatedElement visitType(TypeElement element, Void v) {
+               return Class.forElement(element);
+            }
+            @Override public AnnotatedElement visitPackage(PackageElement element, Void v) {
+               return Package.forElement(element);
+            }
+            @Override public AnnotatedElement visitVariableAsField(VariableElement element, Void v) {
+               return Field.forElement(element);
+            }
+            @Override public AnnotatedElement visitVariableAsEnumConstant(VariableElement element, Void v) {
+               return Field.forElement(element);
+            }
+            @Override public AnnotatedElement visitVariableAsParameter(VariableElement element, Void v) {
+               return Parameter.forElement(element);
+            }
+            @Override public AnnotatedElement visitExecutableAsMethod(ExecutableElement element, Void v) {
+               return Method.forElement(element);
+            }
+            @Override public AnnotatedElement visitExecutableAsConstructor(ExecutableElement element, Void v) {
+               return Constructor.forElement(element);
+            }
+         };
+
    /**
     * A visitor that returns a {@link Class} or null if the visited element does not represent a
     * class, interface, annotation type, or enum.

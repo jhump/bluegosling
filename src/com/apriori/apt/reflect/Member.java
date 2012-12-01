@@ -41,4 +41,13 @@ public interface Member {
     * @return the member's name
     */
    String getName();
+
+   /**
+    * Returns a string representation of the member that includes generic type information. All
+    * type references will include generic type information, using string representations built
+    * via {@link Type#toTypeString()}.
+    * 
+    * @return a string representation of the member
+    */
+   String toGenericString();
 }

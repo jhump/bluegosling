@@ -93,9 +93,10 @@ public class TestEnvironment {
    }
 
    /**
-    * Gets the set of annotation types for the current round. If the test defined a processor
-    * (using {@link ProcessorUnderTest @ProcessorUnderTest} or {@link InitializeProcessorField @InitializeProcessorField}
-    * annotations), then this will be filtered to just the annotations supported by that processor.
+    * Gets the set of annotation types for the current round, as {@link TypeElement}s. If the test
+    * defined a processor (using {@link ProcessorUnderTest @ProcessorUnderTest} or
+    * {@link InitializeProcessorField @InitializeProcessorField} annotations), then this will be
+    * filtered to just the annotations supported by that processor.
     * 
     * <p>If no processor is defined, this will be all annotations in the current set of classes and input
     * files to process. If a processor is later created programmatically inside of a test method, this set

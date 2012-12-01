@@ -76,7 +76,7 @@ public class TestJavaFileObject extends SimpleJavaFileObject {
    static Kind determineKind(String filePath) {
       for (Kind candidate : Kind.values()) {
          if (candidate != Kind.OTHER) {
-            if (filePath.endsWith("." + candidate.extension)) {
+            if (filePath.endsWith(candidate.extension)) {
                return candidate;
             }
          }

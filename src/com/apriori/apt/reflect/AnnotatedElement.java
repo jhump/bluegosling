@@ -1,5 +1,7 @@
 package com.apriori.apt.reflect;
 
+import com.apriori.util.Function;
+
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
@@ -44,6 +46,20 @@ public interface AnnotatedElement {
    Annotation getAnnotation(java.lang.Class<? extends java.lang.annotation.Annotation> annotationClass);
    
    /**
+    * Gets an annotation bridge for the specified annotation type.
+    * 
+    * @param <T> the type of the annotation
+    * @param annotationClass the annotation type
+    * @return the corresponding {@linkplain AnnotationBridge annotation bridge} or {@code null} if
+    *       there is no such annotation
+    *       
+    * @see #getAnnotation(Class)
+    * @see AnnotationBridge#createBridge(Annotation, Class)
+    */
+   <T extends java.lang.annotation.Annotation> T getAnnotationBridge(
+         java.lang.Class<T> annotationClass);
+   
+   /**
     * Determines whether an annotation of the specified type exists on the object. This
     * includes inherited annotations.
     * 
@@ -82,4 +98,18 @@ public interface AnnotatedElement {
     * @return the underlying element
     */
    Element asElement();
+   
+   /**
+    * A function that transforms a {@link Element} to an {@link AnnotatedElement}.
+    * 
+    * <p>The function will return instances of {@link Class}, {@link Field}, {@link Method},
+    * {@link Constructor}, {@link Parameter}, or {@link Package}. If the specified input element
+    * does not represent one of these types of elements then {@code null} is returned.
+    */
+   Function<Element, AnnotatedElement> FROM_ELEMENT = new Function<Element, AnnotatedElement>() {
+      @Override
+      public AnnotatedElement apply(Element input) {
+         return ReflectionVisitors.ANNOTATED_ELEMENT_VISITOR.visit(input);
+      }
+   };
 }

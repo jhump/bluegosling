@@ -20,7 +20,7 @@ public class RoundEnvironment {
    
    private final javax.annotation.processing.RoundEnvironment env;
    
-   RoundEnvironment(javax.annotation.processing.RoundEnvironment env) {
+   public RoundEnvironment(javax.annotation.processing.RoundEnvironment env) {
       this.env = env;
    }
 
@@ -40,12 +40,6 @@ public class RoundEnvironment {
          if (clazz != null) {
             if (includeClasses) {
                ret.add(clazz);
-            }
-            if (includePackages) {
-               Package pkg = clazz.getPackage();
-               if (pkg != null) {
-                  ret.add(pkg);
-               }
             }
          } else if (includePackages) {
             Package pkg = e instanceof PackageElement ? Package.forElement((PackageElement) e) : null;
@@ -80,27 +74,54 @@ public class RoundEnvironment {
       }
       return classes;
    }
+   
+   private <T extends AnnotatedElement> Set<T> convertElements(Set<? extends Element> elements,
+         java.lang.Class<T> clazz) {
+      Set<T> ret = new HashSet<T>();
+      for (Element element : elements) {
+         AnnotatedElement a = AnnotatedElement.FROM_ELEMENT.apply(element);
+         if (a != null) {
+            if (clazz.isInstance(a)) {
+               @SuppressWarnings("unchecked")
+               T t = (T) a;
+               ret.add(t);
+            }
+         }
+         // TODO: log or throw if element returned is null?
+      }
+      return Collections.unmodifiableSet(ret);
+   }
+   
+   private <T extends AnnotatedElement> Set<T> getElements(
+         java.lang.Class<? extends java.lang.annotation.Annotation> annotation,
+         java.lang.Class<T> clazz) {
+      return convertElements(env.getElementsAnnotatedWith(annotation), clazz);
+   }
+
+   private <T extends AnnotatedElement> Set<T> getElements(Class annotation,
+         java.lang.Class<T> clazz) {
+      if (!annotation.isAnnotation()) {
+         throw new IllegalArgumentException("specified type is not an annotation type");
+      }
+      return convertElements(env.getElementsAnnotatedWith(annotation.asElement()), clazz);
+   }
 
    public Set<AnnotatedElement> annotatedElements(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, AnnotatedElement.class);
    }
 
    public Set<AnnotatedElement> annotatedElements(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, AnnotatedElement.class);
    }
 
    public Set<Class> annotatedClasses(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Class.class);
    }
 
    public Set<Class> annotatedClasses(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Class.class);
    }
 
    public Set<Class> annotatedClasses(
@@ -127,45 +148,37 @@ public class RoundEnvironment {
 
    public Set<Package> annotatedPackages(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Package.class);
    }
 
    public Set<Package> annotatedPackages(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Package.class);
    }
 
    public Set<Field> annotatedFields(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Field.class);
    }
 
    public Set<Field> annotatedFields(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Field.class);
    }
 
    public Set<Method> annotatedMethods(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Method.class);
    }
 
    public Set<Method> annotatedMethods(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Method.class);
    }
 
    public Set<Constructor> annotatedConstructors(
          java.lang.Class<? extends java.lang.annotation.Annotation> annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Constructor.class);
    }
 
    public Set<Constructor> annotatedConstructors(Class annotation) {
-      // TODO
-      return null;
+      return getElements(annotation, Constructor.class);
    }
 }

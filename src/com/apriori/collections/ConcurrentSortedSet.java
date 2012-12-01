@@ -44,8 +44,8 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    class SortedIteratorImpl implements Iterator<E> {
-      private Iterator<E> iterators[];
-      private E nextElements[];
+      private final Iterator<E> iterators[];
+      private final E nextElements[];
       private boolean haveNext;
       private E lastElement;
       private boolean removed;

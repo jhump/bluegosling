@@ -131,32 +131,36 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
    public boolean equals(Object o) {
       if (o instanceof TypeVariable) {
          TypeVariable<?> other = (TypeVariable<?>) o;
+         // Have to use getGenericDeclaration().toGenericString() because a cycle (infinite
+         // recursion) could occur if we just use getGenericDeclaration() since their equals() could
+         // be defined in terms of their type variables. For example, Method's equals() is defined
+         // in terms of its parameter types, which may well refer to a type variable. 
          return getName().equals(other.getName())
                && getBounds().equals(other.getBounds())
-               && getGenericDeclaration().equals(other.getGenericDeclaration());
+               && getGenericDeclaration().toGenericString()
+                     .equals(other.getGenericDeclaration().toGenericString());
       }
       return false;
    }
-
+   
    @Override
    public int hashCode() {
+      // Have to use getGenericDeclaration().toGenericString() because a cycle (infinite recursion)
+      // could occur if we just use getGenericDeclaration() since their hashCode() could be defined
+      // in terms of their type variables.
       return 31 * (31 * getName().hashCode() + getBounds().hashCode())
-            + getGenericDeclaration().hashCode();
+            + getGenericDeclaration().toGenericString().hashCode();
    }
 
    @Override
    public String toString() {
-      return toTypeString();
-   }
-
-   @Override
-   public String toTypeString() {
       StringBuilder sb = new StringBuilder();
       sb.append(getName());
       if (!element.getBounds().isEmpty()) {
          boolean first = true;
          for (Type type : getBounds()) {
             if (first) {
+               sb.append(" extends ");
                first = false;
             } else {
                sb.append("&");
@@ -165,6 +169,11 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
          }
       }
       return sb.toString();
+   }
+
+   @Override
+   public String toTypeString() {
+      return getName();
    }
    
    static void appendTypeParameters(StringBuilder sb, List<TypeVariable<?>> typeVariables) {
@@ -177,7 +186,7 @@ public class TypeVariable<D extends GenericDeclaration> implements Type {
             } else {
                sb.append(",");
             }
-            sb.append(typeVariable.toTypeString());
+            sb.append(typeVariable.toString());
          }
          sb.append(">");
       }

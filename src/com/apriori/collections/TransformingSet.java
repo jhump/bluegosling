@@ -24,7 +24,7 @@ public class TransformingSet<I, O> extends TransformingCollection<I, O> implemen
    
    public static class ReadOnly<I, O> extends TransformingCollection.ReadOnly<I, O> implements Set<O> {
 
-      public ReadOnly(Set<I> collection, Function<I, O> function) {
+      public ReadOnly(Set<? extends I> collection, Function<I, O> function) {
          super(collection, function);
       }
       

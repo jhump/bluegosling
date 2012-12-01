@@ -29,6 +29,10 @@ public interface Function<I, O> {
          return new FromMap<I, O>(map, true);
       }
 
+      public Function<I, O> relaxed() {
+         return new FromMap<I, O>(map, false);
+      }
+
       @Override
       public O apply(I input) {
          O val = map.get(input);
