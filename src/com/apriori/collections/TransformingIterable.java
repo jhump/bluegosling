@@ -5,6 +5,7 @@ import com.apriori.util.Function;
 import java.util.Iterator;
 
 //TODO: javadoc
+//TODO: tests
 public class TransformingIterable<I, O> implements Iterable<O> {
 
    private final Iterable<I> iterable;

@@ -3,9 +3,13 @@ package com.apriori.di;
 import com.apriori.reflect.TypeRef;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -23,23 +27,26 @@ import javax.inject.Singleton;
  */
 // TODO: implement me!
 // TODO: finish javadoc!
+// TODO: extra validation about accidentally binding more than once
+// TODO: capture stack traces in binding calls for better validation messages
 @UsingScope(scope = Singleton.class, impl = SingletonScoper.class)
 public abstract class AbstractBinding implements Binding {
    private boolean bindingsBuilt;
-   private final Map<Key<?>, Target<?>> bindings = new HashMap<Key<?>, Target<?>>();
+   private final Map<Key<?>, Key<?>> unresolvedBindings = new HashMap<Key<?>, Key<?>>();
+   private final Map<Key<?>, Target<?>> resolvedBindings = new HashMap<Key<?>, Target<?>>();
    private final Set<BindBuilderImpl<?>> unfinishedBuilders = new LinkedHashSet<BindBuilderImpl<?>>();
 
    @Override
    public final Set<Key<?>> boundKeys() {
       maybeDefineBindings();
-      return Collections.unmodifiableSet(bindings.keySet());
+      return Collections.unmodifiableSet(resolvedBindings.keySet());
    }
    
    @Override
    public final <T> Target<T> targetForKey(Key<T> key) {
       maybeDefineBindings();
       @SuppressWarnings("unchecked")
-      Target<T> ret = (Target<T>) bindings.get(key);
+      Target<T> ret = (Target<T>) resolvedBindings.get(key);
       return ret;
    }
    
@@ -47,7 +54,7 @@ public abstract class AbstractBinding implements Binding {
       if (!bindingsBuilt) {
          defineBindings();
          if (!unfinishedBuilders.isEmpty()) {
-            // TODO: bind these keys, unscoped (to themselves if no target)
+            unfinishedBuilders.iterator().next().finish();
          }
          resolveBindingChains();
          bindingsBuilt = true;
@@ -55,7 +62,28 @@ public abstract class AbstractBinding implements Binding {
    }
    
    private void resolveBindingChains() {
-      //TODO
+      while (!unresolvedBindings.isEmpty()) {
+         resolve(unresolvedBindings.keySet().iterator().next(), new HashSet<Key<?>>());
+      }
+   }
+   
+   private Target<?> resolve(Key<?> keyToResolve, Set<Key<?>> keySequence) {
+      Key<?> targetKey = unresolvedBindings.remove(keyToResolve);
+      Target<?> target;
+      if (unresolvedBindings.containsKey(targetKey)) {
+         if (!keySequence.add(keyToResolve)) {
+            throw new IllegalStateException("circular bindings detected");
+         }
+         target = resolve(targetKey, keySequence);
+         keySequence.remove(keyToResolve);
+      } else {
+         target = resolvedBindings.get(targetKey);
+         if (target == null) {
+            // make target from targetKey
+         }
+      }
+      resolvedBindings.put(keyToResolve, target);
+      return target;
    }
    
    /**
@@ -64,19 +92,22 @@ public abstract class AbstractBinding implements Binding {
    protected abstract void defineBindings();
    
    protected <T> BindBuilder<T> bind(Key<T> key) {
-      return null;
+      if (bindingsBuilt) {
+         throw new IllegalStateException("Bindings already built");
+      }
+      return new BindBuilderImpl<T>(key);
    }
    
    protected <T> BindBuilder<T> bind(Class<T> clazz) {
-      return null;
+      return bind(Key.of(clazz));
    }
    
    protected <T> BindBuilder<T> bind(TypeRef<T> typeRef) {
-      return null;
+      return bind(Key.of(typeRef));
    }
    
    protected BindBuilder<?> bind(Type type) {
-      return null;
+      return bind(Key.of(type));
    }
    
    public interface ScopeBuilder<T> {
@@ -110,12 +141,29 @@ public abstract class AbstractBinding implements Binding {
       ScopeBuilder<T> to(Class<? extends T> clazz);
       ScopeBuilder<T> to(TypeRef<? extends T> typeRef);
       ScopeBuilder<T> to(Type type); // need to do runtime check on underlying type for this!
+      ScopeBuilder<T> to(Constructor<T> cons);
+      ScopeBuilder<T> to(Field field); // need to check type of field
+      ScopeBuilder<T> to(Method factoryMethod); // need to check return type of method
+      ScopeBuilder<T> to(Key<?> otherKey, Field field); // need to check type of field
+      ScopeBuilder<T> to(Key<?> otherKey, Method factoryMethod); // need to check return type of method
       ScopeBuilder<T> toProvider(Key<? extends Provider<? extends T>> key);
       ScopeBuilder<T> toProvider(Class<? extends Provider<? extends T>> clazz);
       ScopeBuilder<T> toProvider(TypeRef<? extends Provider<? extends T>> typeRef);
+      ScopeBuilder<T> toProvider(Type type); // need to do runtime check on underlying type for this!
+      ScopeBuilder<T> toProvider(Constructor<Provider<? extends T>> cons);
+      ScopeBuilder<T> toProvider(Field field); // need to check type of field
+      ScopeBuilder<T> toProvider(Method factoryMethod); // need to check return type of method
+      ScopeBuilder<T> toProvider(Key<?> otherKey, Field field); // need to check type of field
+      ScopeBuilder<T> toProvider(Key<?> otherKey, Method factoryMethod); // need to check return type of method
       ScopeBuilder<T> toSelectionProvider(Key<? extends SelectionProvider<? extends T>> key);
       ScopeBuilder<T> toSelectionProvider(Class<? extends SelectionProvider<? extends T>> clazz);
       ScopeBuilder<T> toSelectionProvider(TypeRef<? extends SelectionProvider<? extends T>> typeRef);
+      ScopeBuilder<T> toSelectionProvider(Type type); // need to do runtime check on underlying type for this!
+      ScopeBuilder<T> toSelectionProvider(Constructor<SelectionProvider<? extends T>> cons);
+      ScopeBuilder<T> toSelectionProvider(Field field); // need to check type of field
+      ScopeBuilder<T> toSelectionProvider(Method factoryMethod); // need to check return type of method
+      ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Field field); // need to check type of field
+      ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Method factoryMethod); // need to check return type of method
    }
    
    private class BindBuilderImpl<T> implements BindBuilder<T> {
@@ -134,7 +182,7 @@ public abstract class AbstractBinding implements Binding {
       }
       
       void finish() {
-         // TODO
+         // TODO - create target
       }
       
       @Override
@@ -280,6 +328,108 @@ public abstract class AbstractBinding implements Binding {
             TypeRef<? extends SelectionProvider<? extends T>> typeRef) {
          targetSelectionProvider = Key.of(typeRef);
          return this;
+      }
+
+      @Override
+      public ScopeBuilder<T> to(Constructor<T> cons) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> to(Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> to(Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Type type) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Constructor<Provider<? extends T>> cons) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Type type) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Constructor<SelectionProvider<? extends T>> cons) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> to(Key<?> otherKey, Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> to(Key<?> otherKey, Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Key<?> otherKey, Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toProvider(Key<?> otherKey, Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Field field) {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Method factoryMethod) {
+         // TODO Auto-generated method stub
+         return null;
       }
    }
 }

@@ -4,7 +4,6 @@ package com.apriori.collections;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -275,7 +274,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       /** {@inheritDoc} */
       @Override
       public boolean removeAll(Collection<?> coll) {
-         // same logic here as in ConcurrentCopyOnIterationSet.removeAll
+         // same logic here as in ConcurrentSet.removeAll
          Collection<?> colls[] = collectionToShards(coll);
          boolean effectedShards[] = getEffectedShards(colls);
          boolean ret = false;
@@ -362,16 +361,14 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
       }
 
       /** {@inheritDoc} */
-      @SuppressWarnings("unchecked")
       @Override
       public <T> T[] toArray(T[] a) {
          acquireReadLocks();
          try {
             int sz = sizeNoLocks();
-            if (a.length < sz) {
-               a = (T[]) Array.newInstance(a.getClass().getComponentType(), sz);
-            }
+            a = ArrayUtils.ensureCapacity(a, sz);
             int len = shards.length;
+            @SuppressWarnings("unchecked")
             SortedSet<E> shardSubSets[] = new SortedSet[len];
             for (int i = 0; i < len; i++) {
                shardSubSets[i] = subSet((SortedSet<E>) shards[i]);

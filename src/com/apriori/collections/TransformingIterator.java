@@ -4,7 +4,8 @@ import com.apriori.util.Function;
 
 import java.util.Iterator;
 
-// TODO: javadoc
+//TODO: javadoc
+//TODO: tests
 public class TransformingIterator<I, O> implements Iterator<O> {
 
    private final Iterator<I> iterator;

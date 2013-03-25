@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -111,8 +110,7 @@ import java.util.RandomAccess;
  * 
  * @param <E> The type of element in the array
  */
-public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
-      Cloneable, Serializable {
+public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
 
    /**
     * Concrete implementation of {@code ListIterator}. This same class is used for both iterators
@@ -303,34 +301,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          checkCanModifyElement("set");
          data[lastFetched] = e;
       }
-   }
-
-   /**
-    * Enumeration of possible modification states of the iterator. This is used to detect illegal
-    * states for {@code remove()} and {@code set()} methods. If the state of the current element for
-    * the iterator is anything other than {@code NONE}, calls to {@code remove()} and {@code set()}
-    * will result in {@code IllegalStateException}s.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static enum IteratorModifiedState {
-      /**
-       * Indicates that no structural modifications have been made at the current location from this
-       * iterator. The {@code set()} method does not count as a structural modification.
-       */
-      NONE,
-
-      /**
-       * Indicates that the item at the iterator's current location was removed via the iterator's
-       * {@code remove()} method.
-       */
-      REMOVED,
-
-      /**
-       * Indicates that at least one item has has been added at the iterator's current location
-       * removed via the iterator's {@code add()} method.
-       */
-      ADDED
    }
 
    /**
@@ -626,13 +596,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public boolean contains(Object item) {
          checkMod(myModCount);
-         return findObject(item, listIterator()) != -1;
+         return CollectionUtils.findObject(item, listIterator()) != -1;
       }
 
       @Override
       public boolean containsAll(Collection<?> coll) {
          checkMod(myModCount);
-         return ArrayBackedLinkedList.containsAll(coll, iterator());
+         return CollectionUtils.containsAll(this, coll);
       }
 
       @Override
@@ -657,7 +627,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int indexOf(Object o) {
          checkMod(myModCount);
-         return findObject(o, listIterator());
+         return CollectionUtils.findObject(o, listIterator());
       }
 
       @Override
@@ -675,7 +645,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public int lastIndexOf(Object o) {
          checkMod(myModCount);
-         return findObject(o, reverseIterator(listIterator(high - low)));
+         return CollectionUtils.findObject(o, CollectionUtils.reverseIterator(listIterator(high - low)));
       }
 
       @Override
@@ -705,25 +675,31 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       @Override
       public boolean remove(Object o) {
          checkMod(myModCount);
-         boolean ret = removeObject(o, iterator(), true);
-         myModCount = modCount;
-         return ret;
+         if (CollectionUtils.removeObject(o, iterator(), true)) {
+            myModCount = modCount;
+            return true;
+         }
+         return false;
       }
 
       @Override
       public boolean removeAll(Collection<?> coll) {
          checkMod(myModCount);
-         boolean ret = CollectionUtils.filter(coll, iterator(), true);
-         myModCount = modCount;
-         return ret;
+         if (CollectionUtils.filter(coll, iterator(), true)) {
+            myModCount = modCount;
+            return true;
+         }
+         return false;
       }
 
       @Override
       public boolean retainAll(Collection<?> coll) {
          checkMod(myModCount);
-         boolean ret = CollectionUtils.filter(coll, iterator(), false);
-         myModCount = modCount;
-         return ret;
+         if (CollectionUtils.filter(coll, iterator(), false)) {
+            myModCount = modCount;
+            return true;
+         }
+         return false;
       }
 
       @Override
@@ -811,7 +787,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
       /**
        * A reference to the sub-list over whose elements we iterate.
        */
-      private SubListImpl sublist;
+      private final SubListImpl sublist;
 
       /**
        * Creates an iterator for a subset of the list starting at the first element.
@@ -986,132 +962,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    
    private static final int DEFAULT_INITIAL_CAPACITY = 10;
    
-   /**
-    * Determines if all items in a specified collection exist in the specified iteration.
-    * 
-    * @param coll the collection of items we're looking for
-    * @param iter the iteration in which we're searching
-    * @return true if the items returned by the specified iterator contain at every item in the
-    *         specified collection
-    */
-   static boolean containsAll(Collection<?> coll, Iterator<?> iter) {
-      HashSet<Object> items = new HashSet<Object>(coll);
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (items.remove(o) && items.size() == 0) {
-            return true; // found all objects in specified collection
-         }
-      }
-      // items left in set are ones not found
-      return items.size() == 0;
-   }
-
-   /**
-    * Finds an item by iterating through the specified iterator.
-    * 
-    * @param item the object to find
-    * @param iter the iterator to examine
-    * @return list index of the item or -1 if the item was not found
-    */
-   static int findObject(Object item, ListIterator<?> iter) {
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (item == null && o == null) {
-            return iter.previousIndex();
-         }
-         else if (item != null && item.equals(o)) {
-            return iter.previousIndex();
-         }
-      }
-      return -1;
-   }
-
-   /**
-    * Removes a specified object using an iterator. This helper method implements
-    * {@link #remove(Object)}, {@link #removeAll(Object)}, {@link #removeFirstOccurrence(Object)},
-    * and even {@link #removeLastOccurrence(Object)} (the lattermost of which uses a
-    * {@link #reverseIterator(ListIterator)} to find the last occurrence instead of the first).
-    * 
-    * @param item the item to remove
-    * @param iter the iterator from which to remove the item
-    * @param justFirst true if just removing the first matching item or false if removing all
-    *           matching items
-    * @return true if the item was found and removed or false if the item was not found in the
-    *         iterator
-    */
-   static boolean removeObject(Object item, Iterator<?> iter, boolean justFirst) {
-      boolean modified = false;
-      while (iter.hasNext()) {
-         Object o = iter.next();
-         if (item == null && o == null) {
-            iter.remove();
-            if (justFirst)
-               return true;
-            if (!modified)
-               modified = true;
-         }
-         else if (item != null && item.equals(o)) {
-            iter.remove();
-            if (justFirst)
-               return true;
-            if (!modified)
-               modified = true;
-         }
-      }
-      return modified;
-   }
-
-   static <E> ListIterator<E> reverseIterator(final ListIterator<E> iter) {
-      // wrap the list iterator with a simple version that
-      // just iterates backwards
-      return new ListIterator<E>() {
-         @Override
-         public void add(E e) {
-            throw new UnsupportedOperationException("reverseIterator().add(Object)");
-         }
-
-         @Override
-         public boolean hasNext() {
-            return iter.hasPrevious();
-         }
-
-         @Override
-         public boolean hasPrevious() {
-            return iter.hasNext();
-         }
-
-         @Override
-         public E next() {
-            return iter.previous();
-         }
-
-         @Override
-         public int nextIndex() {
-            return iter.previousIndex();
-         }
-
-         @Override
-         public E previous() {
-            return iter.next();
-         }
-
-         @Override
-         public int previousIndex() {
-            return iter.nextIndex();
-         }
-
-         @Override
-         public void remove() {
-            iter.remove();
-         }
-
-         @Override
-         public void set(E e) {
-            iter.set(e);
-         }
-      };
-   }
-
    /**
     * The list's current revision level. Every modification to the list causes this count to be
     * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
@@ -1407,22 +1257,20 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          // don't bother cloning internal state - just create a new optimized list
          return new ArrayBackedLinkedList<E>(this);
       }
-      else {
-         try {
-            @SuppressWarnings("unchecked")
-            ArrayBackedLinkedList<E> copy = (ArrayBackedLinkedList<E>) super.clone();
-            // deep copy the arrays
-            copy.data = data.clone();
-            copy.next = next.clone();
-            copy.prev = prev.clone();
-            // now sub-class can do whatever else with this...
-            return copy;
-         }
-         catch (CloneNotSupportedException e) {
-            // should never happen since we implement Cloneable -- but just in
-            // case, wrap in a runtime exception that sort of makes sense...
-            throw new ClassCastException("java.lang.Cloneable");
-         }
+      try {
+         @SuppressWarnings("unchecked")
+         ArrayBackedLinkedList<E> copy = (ArrayBackedLinkedList<E>) super.clone();
+         // deep copy the arrays
+         copy.data = data.clone();
+         copy.next = next.clone();
+         copy.prev = prev.clone();
+         // now sub-class can do whatever else with this...
+         return copy;
+      }
+      catch (CloneNotSupportedException e) {
+         // should never happen since we implement Cloneable -- but just in
+         // case, wrap in a runtime exception that sort of makes sense...
+         throw new ClassCastException(Cloneable.class.getName());
       }
    }
 
@@ -1465,13 +1313,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public boolean contains(Object item) {
-      return findObject(item, listIterator()) != -1;
+      return CollectionUtils.findObject(item, listIterator()) != -1;
    }
 
    /** {@inheritDoc} */
    @Override
    public boolean containsAll(Collection<?> coll) {
-      return containsAll(coll, unorderedIterator());
+      return CollectionUtils.containsAll(this, coll);
    }
 
    /** {@inheritDoc} */
@@ -1609,7 +1457,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public int indexOf(Object item) {
-      return findObject(item, listIterator());
+      return CollectionUtils.findObject(item, listIterator());
    }
 
    /** {@inheritDoc} */
@@ -1627,7 +1475,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    /** {@inheritDoc} */
    @Override
    public int lastIndexOf(Object item) {
-      return findObject(item, reverseIterator(size));
+      return CollectionUtils.findObject(item, reverseIterator(size));
    }
 
    /** {@inheritDoc} */
@@ -1870,7 +1718,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    public boolean remove(Object item) {
       if (size == 0)
          return false;
-      return removeObject(item, iterator(), true);
+      return CollectionUtils.removeObject(item, iterator(), true);
    }
 
    /** {@inheritDoc} */
@@ -1891,7 +1739,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    public boolean removeAll(Object item) {
       if (size == 0)
          return false;
-      return removeObject(item, iterator(), false);
+      return CollectionUtils.removeObject(item, iterator(), false);
    }
 
    /** {@inheritDoc} */
@@ -1951,7 +1799,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    @Override
    public boolean removeLastOccurrence(Object item) {
       if (size == 0) return false;
-      return removeObject(item, reverseIterator(size), true);
+      return CollectionUtils.removeObject(item, reverseIterator(size), true);
    }
 
    /** {@inheritDoc} */
@@ -1961,7 +1809,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
    }
 
    private ListIterator<E> reverseIterator(int idx) {
-      return reverseIterator(listIterator(idx));
+      return CollectionUtils.reverseIterator(listIterator(idx));
    }
 
    /** {@inheritDoc} */
@@ -2040,29 +1888,20 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>,
          System.arraycopy(data, 0, ret, 0, size);
       }
       else {
-         int i = 0;
-         for (E e : this) {
-            ret[i++] = e;
-         }
+         CollectionUtils.copyToArray(this, ret);
       }
       return ret;
    }
 
    /** {@inheritDoc} */
    @Override
-   @SuppressWarnings("unchecked")
    public <T> T[] toArray(T[] array) {
-      if (array.length < size) {
-         array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
-      }
+      array = ArrayUtils.ensureCapacity(array, size);
       if (isOptimized) {
          System.arraycopy(data, 0, array, 0, size);
       }
       else {
-         int i = 0;
-         for (E e : this) {
-            array[i++] = (T) e;
-         }
+         CollectionUtils.copyToArray(this, array);
       }
       if (array.length > size) {
          array[size] = null;

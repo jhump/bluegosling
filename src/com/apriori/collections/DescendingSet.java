@@ -23,9 +23,9 @@ import java.util.SortedSet;
  * 
  * @param <E> the type of element in the set
  */
-public class DescendingSet<E> implements NavigableSet<E> {
+class DescendingSet<E> implements NavigableSet<E> {
 
-   private NavigableSet<E> base;
+   private final NavigableSet<E> base;
 
    /**
     * Constructs a new descending view of the specified set.
@@ -111,25 +111,17 @@ public class DescendingSet<E> implements NavigableSet<E> {
       return base.size();
    }
 
-   private void reverseArray(Object[] a) {
-      for (int i = 0, j = a.length - 1; i < j; i++, j--) {
-         Object tmp = a[j];
-         a[j] = a[i];
-         a[i] = tmp;
-      }
-   }
-
    @Override
    public Object[] toArray() {
       Object ret[] = base.toArray();
-      reverseArray(ret);
+      ArrayUtils.reverse(ret);
       return ret;
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
       T ret[] = base.toArray(a);
-      reverseArray(ret);
+      ArrayUtils.reverse(ret);
       return ret;
    }
 

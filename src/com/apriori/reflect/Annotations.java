@@ -53,7 +53,7 @@ public final class Annotations {
                throw new IllegalArgumentException("No value provided for " + m.getName()
                      + " and method has no default value either");
             }
-            resolvedAttributes.put(m.getName(), m.getDefaultValue());
+            resolvedAttributes.put(m.getName(), value);
          } else {
             Object value = attributes.get(m.getName());
             if (value == null) {
@@ -189,26 +189,33 @@ public final class Annotations {
    }
    
    public static <T extends Annotation> String toString(T annotation) {
+      return toString(annotation, Predicate.ALL);
+   }
+   
+   public static <T extends Annotation> String toString(T annotation,
+         Predicate<? super Method> filterAttributes) {
       StringBuilder sb = new StringBuilder();
       sb.append("@");
       Class<?> annotationType = annotation.annotationType();
       sb.append(annotationType.getName());
       boolean first = true;
       for (Method annotationField : annotation.annotationType().getDeclaredMethods()) {
-         Object val = getAnnotationFieldValue(annotationField, annotation);
-         if (val != null) {
-            if (first) {
-               sb.append("(");
-               first = false;
-            } else {
-               sb.append(", ");
-            }
-            sb.append(annotationField.getName());
-            sb.append(" = ");
-            if (val instanceof Object[]) {
-               sb.append(Arrays.deepToString((Object[]) val));
-            } else {
-               sb.append(val);
+         if (filterAttributes.apply(annotationField)) {
+            Object val = getAnnotationFieldValue(annotationField, annotation);
+            if (val != null) {
+               if (first) {
+                  sb.append("(");
+                  first = false;
+               } else {
+                  sb.append(", ");
+               }
+               sb.append(annotationField.getName());
+               sb.append(" = ");
+               if (val instanceof Object[]) {
+                  sb.append(Arrays.deepToString((Object[]) val));
+               } else {
+                  sb.append(val);
+               }
             }
          }
       }

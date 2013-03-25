@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 //TODO: javadoc
+//TODO: tests
 public class FilteringCollection<E> extends FilteringIterable<E> implements Collection<E> {
 
    public FilteringCollection(Collection<E> collection, Predicate<E> predicate) {
@@ -143,4 +144,8 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
       }
    }
 
+   @Override
+   public String toString() {
+      return CollectionUtils.toString(this);
+   }
 }

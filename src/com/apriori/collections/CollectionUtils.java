@@ -3,9 +3,9 @@ package com.apriori.collections;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 /**
@@ -19,9 +19,8 @@ import java.util.Set;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class CollectionUtils {
-   
-   private static final int FILTER_THRESHOLD_FOR_NEW_SET = 100;
+// TODO: standard impls for containsAll, removeAll, retainAll
+class CollectionUtils {
    
    /**
     * A comparator that uses the objects' {@linkplain Comparable natural ordering}.
@@ -154,29 +153,91 @@ public class CollectionUtils {
     * @return true if the list was modified and something was removed
     */
    public static boolean filter(Collection<?> items, Iterator<?> iter, boolean remove) {
-      // if list is not already a set and is reasonably big, add the items
-      // to a new HashSet. This should mitigate the otherwise O(n^2) runtime
-      // speed and provide O(n) instead. The overhead (creating new and
-      // populating new set as well as garbage collecting it later) isn't
-      // worth it for small collections. If the collection already implements
-      // Set, we'll live with the runtime it provides -- which is hopefully no
-      // worse than O(log n), like for TreeSet, which changes this batch
-      // operation from O(n) to O(n log n).
-      if (!(items instanceof Set<?>) && items.size() > FILTER_THRESHOLD_FOR_NEW_SET) {
-         items = new HashSet<Object>(items);
-      }
       boolean modified = false;
       while (iter.hasNext()) {
-         Object o = iter.next();
-         if (items.contains(o) == remove) {
+         if (items.contains(iter.next()) == remove) {
             iter.remove();
-            if (!modified)
+            modified = true;
+         }
+      }
+      return modified;
+   }
+
+   /**
+    * Removes from a collection all items retrieved from a specified iterator. This can be used to
+    * implement {@link Collection#removeAll(Collection)} for a collection that has a fast (e.g.
+    * logarithmic or constant time) {@linkplain Collection#remove(Object) remove} operation. For
+    * collections with slower (e.g. linear) remove operations, {@link #filter(Collection, Iterator, boolean)}
+    * will be the better choice.
+    * 
+    * <p>Examples:<pre>
+    * // Using CollectionUtils.removeAll()
+    * {@literal @}Override public boolean removeAll(Collection&lt;?&gt; c) {
+    *   return CollectionUtils.removeAll(this, c.iterator());
+    * } 
+    * 
+    * // Alternate implementation instead using CollectionUtils.filter()
+    * {@literal @}Override public boolean removeAll(Collection&lt;?&gt; c) {
+    *   return CollectionUtils.filter(c, iterator(), true);
+    * } 
+    * </pre>
+    * 
+    * @param collection the collection from which items are to be removed
+    * @param itemsToRemove the items to remove
+    * @return true if the collection was modified (e.g. one or more items actually removed)
+    */
+   public static boolean removeAll(Collection<?> collection, Iterator<?> itemsToRemove) {
+      boolean modified = false;
+      while (itemsToRemove.hasNext()) {
+         Object o = itemsToRemove.next();
+         // if collection allows duplicates, we need to repeat remove operation until it returns
+         // false to make sure we get all of them
+         while (true) {
+            if (collection.remove(o)) {
                modified = true;
+            } else {
+               // all removed, move on to next
+               break;
+            }
+         }
+      }
+      return modified;
+   }
+
+   /**
+    * Removes from a set all items retrieved from a specified iterator.
+    * 
+    * <p>The only difference between this method and {@link #removeAll(Collection, Iterator)} is
+    * that this version assumes the collection cannot have duplicates (after all, it is a set). So
+    * it invokes {@link Set#remove(Object)} only once per item to remove. Since other collections
+    * may have duplicates, the other version must invoke the method until it returns false
+    * (indicating that no more occurrences are in the collection).
+    * 
+    * @param collection the collection from which items are to be removed
+    * @param itemsToRemove the items to remove
+    * @return true if the collection was modified (e.g. one or more items actually removed)
+    * 
+    * @see #removeAll(Collection, Iterator)
+    */
+   public static boolean removeAll(Set<?> collection, Iterator<?> itemsToRemove) {
+      boolean modified = false;
+      while (itemsToRemove.hasNext()) {
+         if (collection.remove(itemsToRemove.next())) {
+            modified = true;
          }
       }
       return modified;
    }
    
+   public static boolean containsAll(Collection<?> collectionToCheck, Collection<?> items) {
+      for (Object o : items) {
+         if (!collectionToCheck.contains(o)) {
+            return false;
+         }
+      }
+      return true;
+   }
+
    /**
     * Checks if the given object (or range lower bound) lies above another
     * lower bound.
@@ -260,5 +321,184 @@ public class CollectionUtils {
          boolean toInclusive, Comparator<Object> comp) {
       return isInRangeLow(o, true, from, fromInclusive, comp)
             && isInRangeHigh(o, true, to, toInclusive, comp);
+   }
+
+   /**
+    * Fills the specified array using the contents of the specified collection.
+    * 
+    * @param coll a collection of elements
+    * @param array an array to populate
+    */
+   public static void copyToArray(Iterable<?> coll, Object[] array) {
+      int idx = 0;
+      for (Object o : coll) {
+         array[idx++] = o;
+      }
+   }
+   
+   /**
+    * Implements {@link Collection#toArray()}. This is based on the collection's
+    * {@linkplain Collection#iterator() iterator}.
+    * 
+    * @param coll the collection to convert to an array
+    * @return an array with the same elements as the specified collection
+    */
+   public static Object[] toArray(Collection<?> coll) {
+      Object ret[] = new Object[coll.size()];
+      copyToArray(coll, ret);
+      return ret;
+   }
+
+   /**
+    * Implements {@link Collection#toArray(Object[])}. This is based on the collection's
+    * {@linkplain Collection#iterator() iterator}.
+    * 
+    * @param coll the collection to convert to an array
+    * @param array the array to fill (or whose component type is to be used to allocate a new array)
+    * @param <T> the type of the specified array.
+    * @return an array with the same elements as the specified collection
+    */
+   public static <T> T[] toArray(Collection<?> coll, T[] array) {
+      int size = coll.size();
+      array = ArrayUtils.ensureCapacity(array, size);
+      copyToArray(coll, array);
+      if (array.length > size) {
+         array[size] = null;
+      }
+      return array;
+   }
+
+   /**
+    * Returns an iterator that traverses elements in the opposite order of the specified iterator.
+    * In other words, {@link ListIterator#next()} return the <em>previous</em> element and vice
+    * versa.
+    * 
+    * <p>The returned iterator will support all operations that the underlying iterator supports,
+    * including {@code add} and {@link remove}. Adding multiple elements in a row from the reversed
+    * iterator effectively adds them in reverse order.
+    * 
+    * @param iter an iterator
+    * @return a reversed iterator
+    */
+   public static <E> ListIterator<E> reverseIterator(final ListIterator<E> iter) {
+      // wrap the list iterator with a simple version that
+      // just iterates backwards
+      return new ListIterator<E>() {
+         private boolean added;
+         
+         @Override
+         public void add(E e) {
+            iter.add(e);
+            // Add places item before the result returned by subsequent call to next() which means
+            // newly added element is returned by call to previous(). To reverse (and make sure
+            // multiple additions effectively inserts items in the right place in reverse order),
+            // we have to adjust the cursor:
+            iter.previous();
+            // Underlying iterator would now allow a remove() or set() operation and act on the item
+            // we just added, but proper behavior is to disallow the operation. We have to manage
+            // that ourselves.
+            added = true;
+         }
+   
+         @Override
+         public boolean hasNext() {
+            return iter.hasPrevious();
+         }
+   
+         @Override
+         public boolean hasPrevious() {
+            return iter.hasNext();
+         }
+   
+         @Override
+         public E next() {
+            added = false; // reset
+            return iter.previous();
+         }
+   
+         @Override
+         public int nextIndex() {
+            return iter.previousIndex();
+         }
+   
+         @Override
+         public E previous() {
+            added = false; // reset
+            return iter.next();
+         }
+   
+         @Override
+         public int previousIndex() {
+            return iter.nextIndex();
+         }
+   
+         @Override
+         public void remove() {
+            if (added) {
+               throw new IllegalStateException("Cannot remove item after call to add()");
+            }
+            iter.remove();
+         }
+   
+         @Override
+         public void set(E e) {
+            if (added) {
+               throw new IllegalStateException("Cannot set item after call to add()");
+            }
+            iter.set(e);
+         }
+      };
+   }
+
+   /**
+    * Finds an item by iterating through the specified iterator.
+    * 
+    * @param item the object to find
+    * @param iter the iterator to examine
+    * @return list index of the item or -1 if the item was not found
+    */
+   public static int findObject(Object item, ListIterator<?> iter) {
+      while (iter.hasNext()) {
+         Object o = iter.next();
+         if (item == null ? o == null : item.equals(o)) {
+            return iter.previousIndex();
+         }
+      }
+      return -1;
+   }
+
+   /**
+    * Removes a specified object using an iterator. This helper method implements
+    * {@link #remove(Object)}, {@link #removeAll(Object)}, {@link #removeFirstOccurrence(Object)},
+    * and even {@link #removeLastOccurrence(Object)} (the lattermost of which uses a
+    * {@link reverseIterator} to find the last occurrence instead of the first).
+    * 
+    * @param item the item to remove
+    * @param iter the iterator from which to remove the item
+    * @param justFirst true if just removing the first matching item or false if removing all
+    *           matching items
+    * @return true if the item was found and removed or false if the item was not found in the
+    *         iterator
+    */
+   public static boolean removeObject(Object item, Iterator<?> iter, boolean justFirst) {
+      boolean modified = false;
+      while (iter.hasNext()) {
+         Object o = iter.next();
+         if (item == null && o == null) {
+            iter.remove();
+            if (justFirst)
+               return true;
+            if (!modified)
+               modified = true;
+         }
+         else if (item != null && item.equals(o)) {
+            iter.remove();
+            if (justFirst)
+               return true;
+            if (!modified)
+               modified = true;
+         }
+      }
+      return modified;
    }
 }

@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 //TODO: javadoc
+//TODO: tests
 public class FilteringListIterator<E> implements ListIterator<E> {
 
    private static final Object NULL_SENTINEL = new Object();

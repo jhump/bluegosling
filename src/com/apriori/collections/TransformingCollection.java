@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 //TODO: javadoc
+//TODO: tests
 public class TransformingCollection<I, O> extends TransformingIterable<I, O> implements Collection<O> {
 
    public TransformingCollection(Collection<I> collection, Function<I, O> function) {

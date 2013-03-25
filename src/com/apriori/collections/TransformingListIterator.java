@@ -5,6 +5,7 @@ import com.apriori.util.Function;
 import java.util.ListIterator;
 
 //TODO: javadoc
+//TODO: tests
 public class TransformingListIterator<I, O> extends TransformingIterator<I, O> implements ListIterator<O> {
 
    public TransformingListIterator(ListIterator<I> iterator, Function<I, O> function) {

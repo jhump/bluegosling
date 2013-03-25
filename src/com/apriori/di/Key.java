@@ -4,8 +4,9 @@ import com.apriori.reflect.TypeRef;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * A key for binding injected types to their implementations. The key can be
@@ -16,88 +17,159 @@ import java.util.Set;
  *
  * @param <T> the type represented by the key
  */
-// TODO: implement me!
+// TODO: equals and hashcode
 // TODO: javadoc!
 public class Key<T> {
 
-   private boolean isProvider;
-   private boolean isSelectionProvider;
-   private TypeRef<T> typeRef;
-   private Set<Class<? extends Annotation>> annotationsWithoutAttributes;
-   private Set<Annotation> annotationsWithAttribtues;
+   private final TypeRef<T> typeRef;
+   private final Object selector;
+   private Map<Class<? extends Annotation>, AnnotationSpec<?>> annotations;
+   
+   private Key(TypeRef<T> typeRef) {
+      this(typeRef, null);
+   }
+   
+   private Key(TypeRef<T> typeRef, Object selector) {
+      this(typeRef, selector, Collections.<Class<? extends Annotation>,
+            AnnotationSpec<?>> emptyMap());
+   }
+   
+   private Key(TypeRef<T> typeRef, Object selector,
+         Map<Class<? extends Annotation>, AnnotationSpec<?>> annotations) {
+      if (typeRef == null) {
+         throw new NullPointerException();
+      }
+      this.typeRef = typeRef;
+      this.selector = selector;
+      this.annotations = annotations;
+   }
    
    public static <T> Key<T> of(Class<T> clazz) {
-      return null;
+      return of(TypeRef.forClass(clazz));
    }
+   
    public static <T> Key<T> of(TypeRef<T> typeRef) {
-      return null;
+      return new Key<T>(typeRef);
    }
+   
    public static Key<?> of(Type type) {
-      return null;
+      return of(TypeRef.forType(type));
    }
+   
    public Key<T> annotatedWith(Class<? extends Annotation> annotationClass) {
-      return null;
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      newAnnotations.put(annotationClass, AnnotationSpec.fromAnnotationType(annotationClass));
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> annotatedWith(Class<? extends Annotation> annotationClass,
          Map<String, Object> annotationAttributes) {
-      return null;
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      newAnnotations.put(annotationClass,
+            AnnotationSpec.fromAnnotationValues(annotationClass, annotationAttributes));
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> annotatedWith(Annotation annotation) {
-      return null;
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      newAnnotations.put(annotation.annotationType(), AnnotationSpec.fromAnnotation(annotation));
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> withoutAnnotations() {
-      return null;
+      return new Key<T>(typeRef, selector);
    }
+   
    public Key<T> withoutAnnotation(Class<? extends Annotation> annotationClass) {
-      return null;
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      newAnnotations.remove(annotationClass);
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> withoutAnnotation(Annotation annotation) {
-      return null;
+      return withoutAnnotation(annotation.annotationType());
    }
+   
    public Key<T> withoutAnyAnnotationAttributes() {
-      return null;
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      for (Map.Entry<Class<? extends Annotation>, AnnotationSpec<?>> entry
+            : newAnnotations.entrySet()) {
+         entry.setValue(entry.getValue().withoutAttributes());
+      }
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> withoutAnnotationAttributes(Class<? extends Annotation> annotationClass) {
-      return null;
+      AnnotationSpec<?> spec = annotations.get(annotationClass);
+      if (spec == null) {
+         return this;
+      }
+      Map<Class<? extends Annotation>, AnnotationSpec<?>> newAnnotations =
+            new HashMap<Class<? extends Annotation>, AnnotationSpec<?>>(annotations);
+      newAnnotations.put(annotationClass, spec.withoutAttributes());
+      return new Key<T>(typeRef, selector, newAnnotations);
    }
+   
    public Key<T> withoutAnnotationAttributes(Annotation annotation) {
-      return null;
+      return withoutAnnotationAttributes(annotation.annotationType());
    }
-   public Key<T> forSelector(Object selector) {
-      return null;
+   
+   public Key<T> forSelector(Object newSelector) {
+      return new Key<T>(typeRef, newSelector, annotations);
    }
    
    public Type getType() {
-      return null;
+      return typeRef.asType();
    }
+   
    public Class<T> getRawType() {
-      return null;
+      return typeRef.asClass();
    }
+   
    public Object getSelector() {
-      return null;
+      return selector;
    }
-   public Annotation getAnnotation() {
-      return null;
+   
+   public AnnotationSpec<?> getAnnotation(Class<? extends Annotation> annotationClass) {
+      return annotations.get(annotationClass);
    }
+   
    public boolean hasAnnotations() {
-      return false;
+      return !annotations.isEmpty();
    }
+   
    public boolean hasAnnotation(Class<? extends Annotation> annotationClass) {
-      return false;
+      return annotations.containsKey(annotationClass);
    }
+   
    public boolean hasAnnotation(Annotation annotation) {
-      return false;
+      return hasAnnotation(annotation.annotationType());
    }
+   
    public boolean hasAnyAnnotationAttributes() {
+      for (AnnotationSpec<?> spec : annotations.values()) {
+         if (spec.hasAttributes()) {
+            return true;
+         }
+      }
       return false;
    }
+   
    public boolean hasAnnotationAttributes(Class<? extends Annotation> annotationClass) {
-      return false;
+      AnnotationSpec<?> spec = annotations.get(annotationClass);
+      return spec != null && spec.hasAttributes();
    }
+   
    public boolean hasAnnotationAttributes(Annotation annotation) {
-      return false;
+      return hasAnnotationAttributes(annotation.annotationType());
    }
+   
    public boolean hasSelector() {
-      return false;
+      return selector != null;
    }
 }

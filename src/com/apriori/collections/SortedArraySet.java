@@ -30,6 +30,7 @@ import java.util.SortedSet;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * @param <E> the type of element in the set
  */
+// TODO: implement RandomAccessNavigableSet<E>
 public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializable {
 
    /**
@@ -359,12 +360,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       @Override
       public boolean containsAll(Collection<?> coll) {
          checkMod(myModCount);
-         for (Object o : coll) {
-            if (!contains(o)) {
-               return false;
-            }
-         }
-         return true;
+         return CollectionUtils.containsAll(this, coll);
       }
 
       /** {@inheritDoc} */
@@ -767,6 +763,16 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    public SortedArraySet(Collection<? extends E> source) {
       this(source, null);
    }
+   
+   /**
+    * Constructs a new set that is a copy of the specified sorted set. The new set will have the
+    * same contents and use the same {@link Comparator} as the specified set.
+    * 
+    * @param source the sorted set to copy
+    */
+   public SortedArraySet(SortedSet<E> source) {
+      this(source, source.comparator());
+   }
 
    /**
     * Constructs a new set populated with the items in the given collection.
@@ -781,8 +787,10 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       for (E item : source) {
          data[i++] = item;
       }
-      sort();
-      removeDups();
+      if (!(source instanceof SortedSet)) {
+         sort();
+         removeDups();
+      }
    }
 
    /**
@@ -921,12 +929,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public boolean containsAll(Collection<?> elements) {
-      for (Object o : elements) {
-         if (!contains(o)) {
-            return false;
-         }
-      }
-      return true;
+      return CollectionUtils.containsAll(this, elements);
    }
 
    /** {@inheritDoc} */
@@ -966,18 +969,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       // value and then doing a single O(n) de-dup pass at the end. That makes the whole algorithm
       // O(m * log n).
       
-      boolean ret = false;
       if (elements.size() < THRESHOLD_FOR_BULK_OP && size < THRESHOLD_FOR_BULK_OP) {
          // simple approach is fine for small collections since linear ops use very fast
          // System.arraycopy which offsets algorithmic inefficiencies
-         for (Object o : elements) {
-            if (remove(o)) {
-               ret = true;
-            }
-         }
-         return ret;
+         return CollectionUtils.removeAll(this, elements.iterator());
       }
       
+      boolean ret = false;
       for (Object o : elements) {
          int idx = findIndex(o);
          if (idx >= 0) {
@@ -1013,12 +1011,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       
       if (elements.size() < THRESHOLD_FOR_BULK_OP && size < THRESHOLD_FOR_BULK_OP) {
          // simple approach is acceptable for small collections
-         for (Iterator<E> iter = iterator(); iter.hasNext(); ) {
-            if (!elements.contains(iter.next())) {
-               iter.remove();
-               ret = true;
-            }
-         }
+         CollectionUtils.filter(elements, iterator(), false);
          return ret;
       }
       
@@ -1053,11 +1046,8 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
 
    /** {@inheritDoc} */
    @Override
-   @SuppressWarnings("unchecked")
    public <T> T[] toArray(T[] a) {
-      if (a.length < size) {
-         a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
-      }
+      a = ArrayUtils.ensureCapacity(a, size);
       System.arraycopy(data, 0, a, 0, size);
       if (a.length > size) {
          a[size] = null;
@@ -1263,20 +1253,18 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          // don't bother cloning internal state - just create a new optimized list
          return new SortedArraySet<E>(this);
       }
-      else {
-         try {
-            @SuppressWarnings("unchecked")
-            SortedArraySet<E> copy = (SortedArraySet<E>) super.clone();
-            // deep copy the array
-            copy.data = data.clone();
-            // now sub-class can do whatever else with this...
-            return copy;
-         }
-         catch (CloneNotSupportedException e) {
-            // should never happen since we implement Cloneable -- but just in
-            // case, wrap in a runtime exception that sort of makes sense...
-            throw new ClassCastException("java.lang.Cloneable");
-         }
+      try {
+         @SuppressWarnings("unchecked")
+         SortedArraySet<E> copy = (SortedArraySet<E>) super.clone();
+         // deep copy the array
+         copy.data = data.clone();
+         // now sub-class can do whatever else with this...
+         return copy;
+      }
+      catch (CloneNotSupportedException e) {
+         // should never happen since we implement Cloneable -- but just in
+         // case, wrap in a runtime exception that sort of makes sense...
+         throw new ClassCastException(Cloneable.class.getName());
       }
    }
    

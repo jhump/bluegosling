@@ -29,7 +29,7 @@ public class Stopwatch {
    public void stop() {
       guard.writeLock().lock();
       try {
-         if (!running) {
+         if (running) {
             soFar += System.nanoTime() - currentBase;
             running = false;
          }

@@ -24,7 +24,7 @@ public final class ProcessingEnvironments {
          throw new NullPointerException();
       }
       ProcessingEnvironment previousEnv = threadLocal.get();
-      if (previousEnv != null) {
+      if (previousEnv != null && previousEnv != env) {
          throw new IllegalStateException("ProcessingEnvironment has already been setup on this thread");
       }
       threadLocal.set(env);

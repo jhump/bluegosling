@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Bridges an annotation mirror into an actual annotation interface. The trick is that classes may
- * not be available as actual {code java.lang.Class} tokens at runtime since they may refer to
+ * not be available as actual {@code java.lang.Class} tokens at runtime since they may refer to
  * classes that are not yet compiled. So the bridge provides a way to access these class references
  * as instances of {@link Class} instead.
  * 
@@ -33,7 +33,6 @@ import java.util.Map;
  * 
  * This means that we can access the annotation in an annotation processor like so:
  * <pre>
- * Class.forName("SomeClass").getAnnotation(AnnoXyz.class);
  * // The bridge is an instance of the AnnoXyz annotation.
  * AnnoXyz annotation = createBridge(
  *       Class.forName("SomeClass").getAnnotation(AnnoXyz.class),

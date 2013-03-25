@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 //TODO: javadoc
+//TODO: tests
 public class TransformingList<I, O> extends TransformingCollection<I, O> implements List<O> {
 
    public TransformingList(List<I> list, Function<I, O> function) {

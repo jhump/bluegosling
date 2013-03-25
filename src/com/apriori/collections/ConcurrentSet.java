@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -564,15 +563,12 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
    }
 
    /** {@inheritDoc} */
-   @SuppressWarnings("unchecked")
    @Override
    public <T> T[] toArray(T[] a) {
       acquireReadLocks();
       try {
          int sz = sizeNoLocks();
-         if (a.length < sz) {
-            a = (T[]) Array.newInstance(a.getClass().getComponentType(), sz);
-         }
+         a = ArrayUtils.ensureCapacity(a, sz);
          copyToArray(shards, a);
          if (a.length > sz) {
             a[sz] = null;
@@ -661,6 +657,27 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
          return CollectionUtils.toString(this);
       } finally {
          releaseReadLocks();
+      }
+   }
+   
+   @Override
+   public ConcurrentSet<E> clone() {
+      try {
+         @SuppressWarnings("unchecked")
+         ConcurrentSet<E> copy = (ConcurrentSet<E>) super.clone();
+         // deep copy
+         copy.shardModCounts = new int[shardModCounts.length];
+         copy.shardLatestIteratorModCounts = new int[shardLatestIteratorModCounts.length];
+         copy.shards = shards.clone();
+         copy.shardLocks = shardLocks.clone();
+         for (int i = 0, len = shards.length; i < len; i++) {
+            copy.shards[i] = makeClone(shards[i]);
+            copy.shardLocks[i] = new ReentrantReadWriteLock(shardLocks[i].isFair());
+         }
+         return copy;
+      } catch (CloneNotSupportedException e) {
+         // should never happen since this class implements Cloneable and so must the shards
+         throw new ClassCastException(Cloneable.class.getName());
       }
    }
 }

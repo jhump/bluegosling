@@ -1,35 +1,46 @@
 package com.apriori.di;
 
 import com.apriori.reflect.Annotations;
+import com.apriori.util.Predicate;
 
 import java.lang.annotation.Annotation;
-import java.util.Collections;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 //TODO: javadoc!
 public class AnnotationSpec<T extends Annotation> {
-   private final Class<T> annotationType;
-   private final Map<String, Object> attributes;
    
-   private AnnotationSpec(Class<T> annotationType, Map<String, Object> attributes) {
+   private static final Predicate<Method> EXCLUDE_NONBINDING_ATTRIBUTES =
+         new Predicate<Method>() {
+            @Override public Boolean apply(Method input) {
+               return !input.isAnnotationPresent(NonBinding.class);
+            }
+         };
+         
+   private final Class<T> annotationType;
+   private final T annotation;
+   
+   private AnnotationSpec(Class<T> annotationType, T annotation) {
+      if (annotationType == null) {
+         throw new NullPointerException();
+      }
       this.annotationType = annotationType;
-      this.attributes = attributes;
+      this.annotation = annotation;
    }
    
    public static <T extends Annotation> AnnotationSpec<T> fromAnnotationType(Class<T> annotationType) {
-      return new AnnotationSpec(annotationType, null);
+      return new AnnotationSpec<T>(annotationType, null);
    }
 
    public static <T extends Annotation> AnnotationSpec<T> fromAnnotationValues(Class<T> annotationType,
          Map<String, Object> attributes) {
-      // TODO: validate attributes
-      return new AnnotationSpec(annotationType, attributes);
+      return fromAnnotation(Annotations.create(annotationType, attributes));
    }
    
    public static <T extends Annotation> AnnotationSpec<T> fromAnnotation(T annotation) {
-      // TODO: get attributes!
-      Map<String, Object> attributes = null;
-      return new AnnotationSpec(annotation.annotationType(), attributes);
+      @SuppressWarnings("unchecked")
+      Class<T> clazz = (Class<T>) annotation.annotationType();
+      return new AnnotationSpec<T>(clazz, annotation);
    }
 
    public Class<T> annotationType() {
@@ -37,32 +48,49 @@ public class AnnotationSpec<T extends Annotation> {
    }
    
    public boolean hasAttributes() {
-      return attributes != null;
+      return annotation != null;
    }
    
    public Map<String, Object> attributes() {
-      return attributes == null ? null : Collections.unmodifiableMap(attributes);
+      return annotation == null ? null
+            : Annotations.asMap(annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
    }
    
    public T asAnnotation() {
-      return Annotations.create(annotationType, attributes);
+      return annotation;
    }
    public AnnotationSpec<T> withoutAttributes() {
       return new AnnotationSpec<T>(annotationType, null);
    }
    
-   @Override public boolean equals(Object other) {
-     // TODO
+   @Override public boolean equals(Object o) {
+      if (o instanceof AnnotationSpec) {
+         AnnotationSpec<?> other = (AnnotationSpec<?>) o;
+         if ((annotation == null || other.annotation == null) && annotation != other.annotation) {
+            return false;
+         }
+         if (annotation == null) {
+            return Annotations.equal(annotation, other.annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
+         } else {
+            return annotationType.equals(other.annotationType);
+         }
+      }
       return false;
    }
    
    @Override public int hashCode() {
-      // TODO
-      return 0;
+      if (annotation != null) {
+         return Annotations.hashCode(annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
+      } else {
+         return annotationType.hashCode();
+      }
    }
    
    @Override public String toString() {
-      // TODO
-      return "";
+      if (annotation != null) {
+         return Annotations.toString(annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
+      } else {
+         return "@" + annotationType.getName();
+      }
    }
 }

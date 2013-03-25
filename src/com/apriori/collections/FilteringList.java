@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 //TODO: javadoc
+//TODO: tests
 public class FilteringList<E> extends FilteringCollection<E> implements List<E> {
 
    public FilteringList(List<E> list, Predicate<E> predicate) {
@@ -112,9 +113,18 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
 
    @Override
    public List<E> subList(int fromIndex, int toIndex) {
-      // TODO: fix this! fromIndex and toIndex need to be converted from filterd indices to
+      // TODO: fix this! fromIndex and toIndex need to be converted from filtered indices to
       // underlying indices before calling subList()
       return new FilteringList<E>(internal().subList(fromIndex, toIndex), predicate());
    }
+   
+   @Override
+   public boolean equals(Object o) {
+      return CollectionUtils.equals(this,  o);
+   }
 
+   @Override
+   public int hashCode() {
+      return CollectionUtils.hashCode(this);
+   }
 }

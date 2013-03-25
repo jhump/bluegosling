@@ -1,6 +1,7 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import java.lang.reflect.Array;
 import java.util.Comparator;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Comparator;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ArrayUtils {
+class ArrayUtils {
    
    private static final int MIN_GROWN_SIZE = 8;
 
@@ -67,7 +68,7 @@ public class ArrayUtils {
     * Insert an item into an array, shifting elements around if necessary. If
     * the array is not large enough to fit another element, a larger array will
     * be allocated and its contents will be populated. The array with the new
-    * element will be returned, be that the original object or a new, large one.
+    * element will be returned, be that the original object or a new, larger one.
     *
     * @param element the element to insert into the array
     * @param index the index at which the specified item will be inserted
@@ -123,4 +124,36 @@ public class ArrayUtils {
       }
       data[size - 1] = null; // clear last reference
    }
+
+   /**
+    * Reverses the specified array in place.
+    * 
+    * @param a the array to be reversed.
+    */
+   public static void reverse(Object[] a) {
+      for (int i = 0, j = a.length - 1; i < j; i++, j--) {
+         Object tmp = a[j];
+         a[j] = a[i];
+         a[i] = tmp;
+      }
+   }
+
+   /**
+    * Ensure that the specified array has sufficient capacity and creates a new, larger array if
+    * it is not.
+    * 
+    * @param array the array
+    * @param capacity the required capacity
+    * @return an array with the same component type as the one specified that is large enough to
+    *       hold the specified capacity (may be same instance as specified array if it is already
+    *       large enough)
+    */
+   @SuppressWarnings("unchecked")
+   public static <T> T[] ensureCapacity(T[] array, int capacity) {
+      if (array.length < capacity) {
+         return (T[]) Array.newInstance(array.getClass().getComponentType(), capacity);
+      }
+      return array;
+   }
+
 }

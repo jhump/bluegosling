@@ -6,6 +6,7 @@ import java.util.Set;
 
 // TODO: javadoc -- and explain that this assumes 1-to-1 mappings from the specified
 // function or else invariants of interface Set will be seriously violated
+//TODO: tests
 public class TransformingSet<I, O> extends TransformingCollection<I, O> implements Set<O> {
 
    public TransformingSet(Set<I> set, Function<I, O> function) {

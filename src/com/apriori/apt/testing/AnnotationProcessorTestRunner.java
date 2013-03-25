@@ -431,7 +431,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
          ClassesToProcess forClass = clazz.getAnnotation(ClassesToProcess.class);
          if (forClass != null) {
             for (Class<?> classToProcess : forClass.value()) {
-               classNames.add(classToProcess.getName());
+               classNames.add(classToProcess.getCanonicalName());
             }
          }
       }

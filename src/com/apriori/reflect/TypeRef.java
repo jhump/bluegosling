@@ -134,8 +134,8 @@ public abstract class TypeRef<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class TypeVar {
-      private TypeVariable<Class<?>> typeVariable;
-      private TypeRef<?> typeRef;
+      private final TypeVariable<Class<?>> typeVariable;
+      private final TypeRef<?> typeRef;
 
       public TypeVar(TypeVariable<Class<?>> typeVariable, TypeRef<?> typeRef) {
          this.typeVariable = typeVariable;
@@ -211,7 +211,7 @@ public abstract class TypeRef<T> {
     * @param clazz the class token for the type
     * @return a {@code TypeRef} token for the given type.
     */
-   public static <T> TypeRef<? super T> forClass(Class<T> clazz) {
+   public static <T> TypeRef<T> forClass(Class<T> clazz) {
       if (clazz == null) {
          throw new NullPointerException();
       }

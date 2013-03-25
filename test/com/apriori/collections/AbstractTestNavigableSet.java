@@ -161,9 +161,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     */
    public static class BulkTestNavigableSet extends BulkTest {
 
-      private AbstractTestSortedSet test;
-      private boolean forSubSet;
-      private boolean forDescendingSet;
+      private final AbstractTestSortedSet test;
+      private final boolean forSubSet;
+      private final boolean forDescendingSet;
       
       /**
        * Constructs a new test.
@@ -370,12 +370,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       
       private Object[] reverse(Object array[]) {
          array = array.clone();
-         // reverse the array in place
-         for (int i = 0, j = array.length - 1; j > i; i++, j--) {
-            Object tmp = array[i];
-            array[i] = array[j];
-            array[j] = tmp;
-         }
+         ArrayUtils.reverse(array);
          return array;
       }
       

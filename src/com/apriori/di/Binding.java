@@ -2,6 +2,7 @@ package com.apriori.di;
 
 import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;
 
@@ -25,23 +26,19 @@ public interface Binding {
       ConflictResolver<? super T> conflictResolver();
    }
    
-   interface TargetImplementation<T> extends Target<T> {
-      Key<? extends T> key();
-      Constructor<T> constructor();
+   interface TargetImplementation<T, D extends T> extends Target<T> {
+      Key<D> key();
+      TargetInstanceSource<D> instanceSource();
    }
 
    interface TargetProvider<T, P extends Provider<? extends T>> extends Target<T> {
       Key<P> key();
-      Constructor<P> constructor();
+      TargetInstanceSource<P> instanceSource();
    }
    
    interface TargetSelectionProvider<T, P extends SelectionProvider<? extends T>> extends Target<T> {
       Key<P> key();
-      Constructor<P> constructor();
-   }
-   
-   interface TargetFactoryMethod<T> extends Target<T> {
-      Method method();
+      TargetInstanceSource<P> instanceSource();
    }
    
    interface TargetAdapter<T> extends Target<T> {
@@ -52,18 +49,48 @@ public interface Binding {
       IMPLEMENTATION,
       PROVIDER,
       SELECTION_PROVIDER,
-      FACTORY_METHOD,
       ADAPTER
    }
    
    interface TargetVisitor<T, R, P> {
-      R visitImplementation(TargetImplementation<T> target, P p);
+      R visitImplementation(TargetImplementation<T, ?> target, P p);
       R visitProvider(TargetProvider<T, ?> target, P p);
       R visitSelectionProvider(TargetSelectionProvider<T, ?> target, P p);
-      R visitFactoryMethod(TargetFactoryMethod<T> target, P p);
       R visitAdapter(TargetAdapter<T> target, P p);
    }
 
+   interface TargetInstanceSource<T> {
+      TargetInstanceSourceKind getKind();
+      <R, P> R accept(TargetInstanceSourceVisitor<T, R, P> visitor, P p);
+      Set<Key<?>> dependencies();
+   }
+   
+   interface TargetInstanceSourceConstructor<T> extends TargetInstanceSource<T> {
+      Constructor<T> constructor();
+   }
+   
+   interface TargetInstanceSourceField<T> extends TargetInstanceSource<T> {
+      Key<?> ownerKey();
+      Field field();
+   }
+   
+   interface TargetInstanceSourceMethod<T> extends TargetInstanceSource<T> {
+      Key<?> ownerKey();
+      Method method();
+   }
+   
+   enum TargetInstanceSourceKind {
+      CONSTRUCTOR,
+      FIELD,
+      METHOD
+   }
+   
+   interface TargetInstanceSourceVisitor<T, R, P> {
+      R visitConstructor(TargetInstanceSourceConstructor<T> target, P p);
+      R visitField(TargetInstanceSourceField<T> target, P p);
+      R visitMethod(TargetInstanceSourceMethod<T> target, P p);
+   }
+   
    interface BindAdapter<F, T> {
       T continueBinding(Key<F> key);
       void generateProviderCode(Key<F> key, Writer writer);

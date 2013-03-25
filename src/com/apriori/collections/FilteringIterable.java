@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 //TODO: javadoc
+//TODO: tests
 public class FilteringIterable<E> implements Iterable<E> {
 
    private final Iterable<E> iterable;
