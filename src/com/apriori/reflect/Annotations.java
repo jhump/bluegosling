@@ -91,7 +91,7 @@ public final class Annotations {
                   Object val = resolvedAttributes.get(method.getName());
                   if (val == null || args.length > 0) {
                      if (args.length == 1 && method.getName().equals("equals")) {
-                        return Annotations.equal((Annotation) proxy, args[0]);
+                        return equal((Annotation) proxy, args[0]);
                      } else if (args.length == 0 && method.getName().equals("hashCode")) {
                         return Annotations.hashCode((Annotation) proxy);
                      } else if (args.length == 0 && method.getName().equals("toString")) {

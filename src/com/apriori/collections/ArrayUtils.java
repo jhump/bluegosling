@@ -2,7 +2,6 @@
 package com.apriori.collections;
 
 import java.lang.reflect.Array;
-import java.util.Comparator;
 
 /**
  * Utility methods for working with arrays that back collection implementations.
@@ -11,57 +10,12 @@ import java.util.Comparator;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-class ArrayUtils {
+final class ArrayUtils {
    
    private static final int MIN_GROWN_SIZE = 8;
 
    /** Prevents instantiation. */
    private ArrayUtils() {
-   }
-   
-   /**
-    * Binary searches a range in of a sorted array to find the specified item. If the item is not
-    * found, an encoded negative value is returned that indicates where the item <em>would</em> be.
-    * So if the return value is negative then the following expression indicates the index into the
-    * array where the item would go:
-    * <pre>
-    * -findIndex(o, data, lo, hi, comp) - 1
-    * </pre>
-    * 
-    * <p>The specified comparator cannot be {@code null}. If natural ordering was used to sort
-    * the array, then pass {@link CollectionUtils#NATURAL_ORDERING}.
-    *
-    * @param o the item to find
-    * @param data the sorted array to search
-    * @param lo the minimum index that will be searched
-    * @param hi the maximum index that will be searched
-    * @param comp the comparator used to sort the items in the array
-    * @return the index in the list where the specified item was found or, if not found, a negative
-    *       value that can be decoded to determine the index where the item would go
-    */
-   public static int findIndex(Object o, Object data[], int lo, int hi, Comparator<Object> comp) {
-      if (hi < lo) {
-         return -1;
-      }
-      while (true) {
-         int mid = (hi + lo) >> 1;
-         int c = comp.compare(data[mid], o);
-         if (c == 0) {
-            return mid;
-         }
-         else if (c < 0) {
-            if (hi == mid) {
-               return -(hi + 2);
-            }
-            lo = mid + 1;
-         }
-         else {
-            if (lo == mid) {
-               return -(lo + 1);
-            }
-            hi = mid - 1;
-         }
-      }
    }
 
    /**

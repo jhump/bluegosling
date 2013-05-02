@@ -722,6 +722,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       @Override
       public List<E> subList(int from, int to) {
          checkMod(myModCount);
+         // TODO: checkWide(from)
          check(from);
          checkWide(to);
          if (from > to) {

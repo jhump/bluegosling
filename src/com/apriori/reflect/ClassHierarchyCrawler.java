@@ -9,7 +9,6 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       private boolean earlyOut = true;
       private boolean includeInterfaces = true;
       
-      // package-private
       Builder() {
       }
       

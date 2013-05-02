@@ -843,7 +843,10 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
 
    @SuppressWarnings("unchecked")
    int findIndex(Object o) {
-      return ArrayUtils.findIndex(o, data, 0, size - 1, (Comparator<Object>) comp);
+      if (size == 0) {
+         return -1;
+      }
+      return Arrays.binarySearch(data, 0, size, o, (Comparator<Object>) comp);
    }
 
    void removeItem(int index) {
@@ -1004,15 +1007,16 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public boolean retainAll(Collection<?> elements) {
-      boolean ret = false;
-
+      if (size == 0) {
+         return false;
+      }
+      
       // Similar performance notes as removeAll(). We use a bulk strategy for larger collections
       // to get O(m log n) performance instead of O(m * n).
       
       if (elements.size() < THRESHOLD_FOR_BULK_OP && size < THRESHOLD_FOR_BULK_OP) {
          // simple approach is acceptable for small collections
-         CollectionUtils.filter(elements, iterator(), false);
-         return ret;
+         return CollectionUtils.filter(elements, iterator(), false);
       }
       
       Object newData[] = new Object[elements.size()];

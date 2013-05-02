@@ -991,6 +991,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
 
    @Override
    public List<E> subList(int fromIndex, int toIndex) {
+      // TODO: checkWide(fromIndex)
       check(fromIndex);
       checkWide(toIndex);
       if (fromIndex > toIndex) {

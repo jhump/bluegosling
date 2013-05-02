@@ -53,7 +53,7 @@ public interface AnnotatedElement {
     * @return the corresponding {@linkplain AnnotationBridge annotation bridge} or {@code null} if
     *       there is no such annotation
     *       
-    * @see #getAnnotation(Class)
+    * @see #getAnnotation(java.lang.Class)
     * @see AnnotationBridge#createBridge(Annotation, Class)
     */
    <T extends java.lang.annotation.Annotation> T getAnnotationBridge(

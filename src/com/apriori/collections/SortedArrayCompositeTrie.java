@@ -2,6 +2,6 @@ package com.apriori.collections;
 
 //TODO: javadoc
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
-public abstract class SortedArrayCompositeTrie<K, C, V> implements CompositeTrie<K, C, V> {
+public abstract class SortedArrayCompositeTrie<K, C, V> implements NavigableCompositeTrie<K, C, V> {
 
 }

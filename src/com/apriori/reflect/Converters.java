@@ -5,7 +5,7 @@ import com.apriori.util.Function;
 import java.lang.reflect.Array;
 
 // TODO: javadoc
-final class Converters {
+public final class Converters {
    private Converters() {}
    
    public static <I, O> Converter<I, O> fromFunction(final Function<I, O> function) {

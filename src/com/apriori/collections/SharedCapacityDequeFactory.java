@@ -162,7 +162,7 @@ public class SharedCapacityDequeFactory {
    /**
     * Creates a new {@link BlockingDeque}. The returned deque uses the factory's shared capacity to
     * limit its number of elements. The actual implementation underlying the returned deque is
-    * {@link LinkedBlockingDeque}. If you need an alternate implementation, use one of the varous
+    * {@link LinkedBlockingDeque}. If you need an alternate implementation, use one of the various
     * {@link #shareCapacityWith} methods.
     * 
     * @return a new {@link BlockingDeque}.

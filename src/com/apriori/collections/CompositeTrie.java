@@ -40,7 +40,7 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @return the object used to break up keys into sequences or {@code null} if that behavior is
     *       intrinsic to the trie implementation
     */
-   Componentizer<K, C> componentizer();
+   Componentizer<? super K, ? extends C> componentizer();
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. The specified key

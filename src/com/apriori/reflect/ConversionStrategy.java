@@ -11,6 +11,8 @@ import java.util.Map;
  * be.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see Caster
  */
 // TODO: javadoc members
 class ConversionStrategy<I, O> {

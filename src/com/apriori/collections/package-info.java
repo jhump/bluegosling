@@ -2,7 +2,7 @@
  * New implementations and utilities to complement the Java Collections Framework.
  * 
  * <p>These new collections do <em>not</em> extend the abstract base classes provided
- * in {@code java.util} primarily as an experiment in implementing the collection
+ * in {@code java.util}, primarily as an experiment in implementing the collection
  * interfaces from scratch.
  * 
  * <p>In addition to new implementations for standard collection interfaces, this package also
@@ -15,6 +15,9 @@
  * <li>{@link RandomAccessMap}: A {@link java.util.Map Map} that supports random access of elements
  * via key- and entry-sets that are {@link RandomAccessSet}s and a view of values as a
  * {@link java.util.List List}.</li>
+ * <li>{@link BitSequence}: An immutable sequence of bits. This is similar to
+ * {@link java.util.BitSet} except that it is immutable and provides additional methods for simpler
+ * querying.
  * <li>{@link SequenceTrie}: A {@link java.util.Map Map} that organizes keys that represent
  * sequences and provides views of sub-maps that all share a common prefix. This data structure is
  * typically known as a prefix tree or <a href="#trie">trie</a>.</li>
@@ -47,4 +50,9 @@
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: kill most of *Utils and just extend java.util.Abstract*. It was a fun experiment, but it's
+// probably time to move this code into the mainstream
+// TODO: fix nested sublist/subset/submap (most impls here will mistakenly throw
+// ConcurrentModificationException from a sub-* view if the collection is modified based from a
+// sub-view of that sub-view)
 package com.apriori.collections;

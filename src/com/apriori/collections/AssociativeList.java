@@ -5,10 +5,9 @@ import java.util.ListIterator;
 import java.util.Map;
 
 // TODO: javadoc
-// TODO: add an implementation - AssociativeArrayList
 public interface AssociativeList<E, K> extends List<E> {
    /**
-    * Adds an element with an associative key. If the specified key was previous associated with
+    * Adds an element with an associative key. If the specified key was previously associated with
     * a different element, the index of that element is returned.
     * 
     * @param element the new element to add to the end of the list

@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: diagram (ASCII art?) showing how the threads are allocated to sorting and merging tasks
 public class SlowParallelSort {
 
    /**
@@ -37,7 +38,7 @@ public class SlowParallelSort {
     * elements in the list, fewer threads will be used.
     * 
     * <p>This returns a new list instead of modifying the list out of paranoia: since the merging is
-    * occuring concurrently, an exception in any worker thread means the list could be corrupted or
+    * occurring concurrently, an exception in any worker thread means the list could be corrupted or
     * destroyed.
     * 
     * @param <T> the type of element in the list
@@ -60,7 +61,7 @@ public class SlowParallelSort {
     * elements in the list, fewer threads will be used.
     * 
     * <p>This returns a new list instead of modifying the list out of paranoia: since the merging is
-    * occuring concurrently, an exception in any worker thread means the list could be corrupted or
+    * occurring concurrently, an exception in any worker thread means the list could be corrupted or
     * destroyed.
     * 
     * @param <T> the type of element in the list
@@ -136,7 +137,7 @@ public class SlowParallelSort {
       for (int i = 0; i < numThreads; i++) {
          producers.add(new ProducerFromChunk<T>(chunks[i], sortLatches[i]));
       }
-      // there will be exactly numThreads - 1 mergers; final thread will be a passthrough to
+      // there will be exactly numThreads - 1 mergers; final thread will be a pass-through to
       // handle insertion into final list
       for (int i = 0; !producers.isEmpty(); i++) {
          Producer<T> source1 = producers.remove();

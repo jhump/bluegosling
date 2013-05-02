@@ -20,6 +20,8 @@ import java.util.List;
  * specific method first and the least specific method last.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see Caster
  */
 class DispatchCandidates {
    private final Collection<List<Method>> methods;

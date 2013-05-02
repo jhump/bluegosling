@@ -19,8 +19,11 @@ import java.util.Set;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: standard impls for containsAll, removeAll, retainAll
-class CollectionUtils {
+// TODO: update Transforming*/Filtering* to use methods in this class
+final class CollectionUtils {
+   /** Prevents instantiation. */
+   private CollectionUtils() {
+   }
    
    /**
     * A comparator that uses the objects' {@linkplain Comparable natural ordering}.
@@ -38,10 +41,6 @@ class CollectionUtils {
       return (Comparator) NATURAL_ORDERING;
    }
 
-   /** Prevents instantiation. */
-   private CollectionUtils() {
-   }
-   
    /**
     * Constructs a string representation of the specified collection.
     * 
@@ -152,6 +151,7 @@ class CollectionUtils {
     *           <em>retaining</em> them
     * @return true if the list was modified and something was removed
     */
+   // TODO: add javadoc about using this to implement Collection.removeAll/retainAll
    public static boolean filter(Collection<?> items, Iterator<?> iter, boolean remove) {
       boolean modified = false;
       while (iter.hasNext()) {
@@ -229,6 +229,7 @@ class CollectionUtils {
       return modified;
    }
    
+   // TODO: javadoc
    public static boolean containsAll(Collection<?> collectionToCheck, Collection<?> items) {
       for (Object o : items) {
          if (!collectionToCheck.contains(o)) {
@@ -236,6 +237,19 @@ class CollectionUtils {
          }
       }
       return true;
+   }
+
+   // TODO: javadoc
+   // TODO: update collections to use this where appropriate
+   // TODO: consider replacing usages of findObject() with this 
+   public static boolean contains(Iterator<?> iteratorToCheck, Object item) {
+      while (iteratorToCheck.hasNext()) {
+         Object o = iteratorToCheck.next();
+         if (o == null ? item == null : o.equals(item)) {
+            return true;
+         }
+      }
+      return false;
    }
 
    /**

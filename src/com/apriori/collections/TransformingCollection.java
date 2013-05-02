@@ -2,7 +2,6 @@ package com.apriori.collections;
 
 import com.apriori.util.Function;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -31,35 +30,17 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
 
    @Override
    public boolean contains(Object o) {
-      for (O element : this) {
-         if (o == null ? element == null : o.equals(element)) {
-            return true;
-         }
-      }
-      return false;
+      return CollectionUtils.contains(iterator(),  o);
    }
 
    @Override
    public Object[] toArray() {
-      Object ret[] = new Object[size()];
-      int i = 0;
-      for (O o : this) {
-         ret[i++] = o;
-      }
-      return ret;
+      return CollectionUtils.toArray(this);
    }
 
-   @SuppressWarnings("unchecked")
    @Override
    public <T> T[] toArray(T[] a) {
-      if (a.length < size()) {
-         a = (T[]) Array.newInstance(a.getClass().getComponentType(), size());
-      }
-      int i = 0;
-      for (O o : this) {
-         a[i++] = (T) o;
-      }
-      return a;
+      return CollectionUtils.toArray(this, a);
    }
 
    @Override
@@ -69,24 +50,12 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
 
    @Override
    public boolean remove(Object o) {
-      for (Iterator<O> iter = this.iterator(); iter.hasNext(); ) {
-         O element = iter.next();
-         if (o == null ? element == null : o.equals(element)) {
-            iter.remove();
-            return true;
-         }
-      }
-      return false;
+      return CollectionUtils.removeObject(o,  iterator(), true);
    }
 
    @Override
    public boolean containsAll(Collection<?> c) {
-      for (Object o : c) {
-         if (!contains(o)) {
-            return false;
-         }
-      }
-      return true;
+      return CollectionUtils.containsAll(this,  c);
    }
 
    @Override
@@ -96,28 +65,12 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
 
    @Override
    public boolean removeAll(Collection<?> c) {
-      boolean changed = false;
-      for (Iterator<O> iter = this.iterator(); iter.hasNext(); ) {
-         O o = iter.next();
-         if (c.contains(o)) {
-            iter.remove();
-            changed = true;
-         }
-      }
-      return changed;
+      return CollectionUtils.filter(c, iterator(), true);
    }
 
    @Override
    public boolean retainAll(Collection<?> c) {
-      boolean changed = false;
-      for (Iterator<O> iter = this.iterator(); iter.hasNext(); ) {
-         O o = iter.next();
-         if (!c.contains(o)) {
-            iter.remove();
-            changed = true;
-         }
-      }
-      return changed;
+      return CollectionUtils.filter(c, iterator(), false);
    }
    
    @Override
@@ -175,9 +128,17 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
          super(collection, function1);
          this.function = function2;
       }
+
+      @SuppressWarnings("unchecked")
+      protected I unapply(Object input) {
+         return function.apply((O) input);
+      }
       
-      protected I unapply(O input) {
-         return function.apply(input);
+      @SuppressWarnings("unchecked")
+      protected Collection<I> unapplyAll(Collection<?> c) {
+         @SuppressWarnings("rawtypes")
+         Collection rawCollection = c;
+         return new TransformingCollection<O, I>(rawCollection, function);
       }
       
       @Override
@@ -185,18 +146,34 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
          return internal().add(unapply(e));
       }
       
-      // TODO: override remove(), contains(), removeAll(), retainAll(), containsAll() to use unapply
+      @Override
+      public boolean remove(Object o) {
+         return internal().remove(unapply(o));
+      }
+      
+      @Override
+      public boolean contains(Object o) {
+         return internal().contains(unapply(o));
+      }
 
-      // Cast should be safe assuming underlying collection's implementation of addAll() doesn't
-      // try to add elements to the specified collection. Which seems like a safe assumption since
-      // such behavior would strongly violate the contract of Collection.addAll()!! If something
-      // like that does happen, a ClassCastException could be thrown.
-      @SuppressWarnings("unchecked")
+      @Override
+      public boolean containsAll(Collection<?> c) {
+         return internal().containsAll(unapplyAll(c));
+      }
+      
+      @Override
+      public boolean removeAll(Collection<?> c) {
+         return internal().removeAll(unapplyAll(c));
+      }
+
+      @Override
+      public boolean retainAll(Collection<?> c) {
+         return internal().retainAll(unapplyAll(c));
+      }
+
       @Override
       public boolean addAll(Collection<? extends O> c) {
-         @SuppressWarnings("rawtypes")
-         Collection rawCollection = c;
-         return internal().addAll(new TransformingCollection<O, I>(rawCollection, function));
+         return internal().addAll(unapplyAll(c));
       }
    }
 }

@@ -25,30 +25,33 @@ import java.util.SortedSet;
  */
 class DescendingSet<E> implements NavigableSet<E> {
 
-   private final NavigableSet<E> base;
+   final NavigableSet<E> base;
 
    /**
     * Constructs a new descending view of the specified set.
     *
     * @param base the underlying set
     */
-   public DescendingSet(NavigableSet<E> base) {
+   DescendingSet(NavigableSet<E> base) {
       this.base = base;
    }
    
-   @Override
-   public Comparator<? super E> comparator() {
-      final Comparator<? super E> comp = base.comparator();
+   static <T> Comparator<T> reverseComparator(final Comparator<? super T> comp) {
       if (comp == null) {
          return null;
       }
-      return new Comparator<E>() {
+      return new Comparator<T>() {
          @Override
-         public int compare(E o1, E o2) {
+         public int compare(T o1, T o2) {
             // reverse it
             return comp.compare(o2, o1);
          }
       };
+   }
+   
+   @Override
+   public Comparator<? super E> comparator() {
+      return reverseComparator(base.comparator());
    }
 
    @Override

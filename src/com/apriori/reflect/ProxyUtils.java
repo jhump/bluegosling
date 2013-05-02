@@ -1,5 +1,6 @@
 package com.apriori.reflect;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -60,6 +61,20 @@ public final class ProxyUtils {
                      + clazz.getName());
       }
    }
+
+   /**
+    * Creates a new proxy instance. This is the same as using
+    * {@link Proxy#newProxyInstance(ClassLoader, Class[], InvocationHandler)} except that it
+    * has generic type parameters to eliminate the need for casting the returned proxy.
+    * 
+    * @param iface the interface that the new proxy will implement
+    * @param handler the invocation handler for the proxy
+    * @return the new proxy
+    */
+   @SuppressWarnings("unchecked") // we know returned value implements T, so this is safe
+   public static <T> T newProxyInstance(Class<T> iface, InvocationHandler handler) {
+      return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class<?>[] { iface }, handler);
+   }
    
    /**
     * Casts an object to an interface that it may not necessarily implement. If it does not
@@ -106,7 +121,7 @@ public final class ProxyUtils {
     * @param o the target object which is to be cast
     * @param clazz the interface to which the object should be cast
     * @param recursiveCast if true, return type compatibility is relaxed and returned values
-    *       are cast at runtime if necessary to conform to interface method
+    *       are re-cast at runtime if necessary to conform to interface method
     * @return an instance of the specified interface whose methods are backed by the target
     *       object
     * @throws NullPointerException if any of the specified parameters are {@code null}

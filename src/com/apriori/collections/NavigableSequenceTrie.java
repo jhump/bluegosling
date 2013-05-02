@@ -1,9 +1,12 @@
 package com.apriori.collections;
 
+import java.util.Comparator;
 import java.util.NavigableMap;
 
 //TODO: javadoc
 public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, NavigableMap<Iterable<K>, V> {
+
+   Comparator<? extends K> componentComparator();
    
    @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix);
 

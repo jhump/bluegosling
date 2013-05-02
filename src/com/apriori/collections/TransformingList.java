@@ -94,6 +94,13 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
    public int hashCode() {
       return CollectionUtils.hashCode(this);
    }
+   
+   public static class RandomAccess<I, O> extends TransformingList<I, O> {
+      public <L extends List<I> & java.util.RandomAccess> RandomAccess(L list,
+            Function<I, O> function) {
+         super(list, function);
+      }
+   }
 
    public static class ReadOnly<I, O> extends TransformingList<I, O> {
 
@@ -130,6 +137,13 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
       public List<O> subList(int fromIndex, int toIndex) {
          return new TransformingList.ReadOnly<I, O>(internal().subList(fromIndex, toIndex), function());
       }
+      
+      public static class RandomAccess<I, O> extends TransformingList.ReadOnly<I, O> {
+         public <L extends List<? extends I> & java.util.RandomAccess> RandomAccess(L list,
+               Function<I, O> function) {
+            super(list, function);
+         }
+      }
    }
    
    public static class Bidi<I, O> extends TransformingList<I, O> {
@@ -141,8 +155,16 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          this.function = function2;
       }
       
-      protected I unapply(O input) {
-         return function.apply(input);
+      @SuppressWarnings("unchecked")
+      protected I unapply(Object input) {
+         return function.apply((O) input);
+      }
+      
+      @SuppressWarnings("unchecked")
+      protected Collection<I> unapplyAll(Collection<?> c) {
+         @SuppressWarnings("rawtypes")
+         Collection rawCollection = c;
+         return new TransformingCollection<O, I>(rawCollection, function);
       }
       
       @Override
@@ -150,13 +172,9 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          return internal().add(unapply(e));
       }
 
-      // See TransformingCollection.Bidi.addAll() for explanation
-      @SuppressWarnings("unchecked")
       @Override
       public boolean addAll(Collection<? extends O> c) {
-         @SuppressWarnings("rawtypes")
-         Collection rawCollection = c;
-         return internal().addAll(new TransformingCollection<O, I>(rawCollection, function));
+         return internal().addAll(unapplyAll(c));
       }
       
       @Override
@@ -178,9 +196,31 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          return internal().addAll(index, new TransformingCollection<O, I>(rawCollection, function));
       }
 
-      // TODO: override remove(), contains(), removeAll(), retainAll(), containsAll() to use unapply
-      // (copy implementation from TransformingCollection.Bidi)
+      @Override
+      public boolean remove(Object o) {
+         return internal().remove(unapply(o));
+      }
       
+      @Override
+      public boolean contains(Object o) {
+         return internal().contains(unapply(o));
+      }
+
+      @Override
+      public boolean containsAll(Collection<?> c) {
+         return internal().containsAll(unapplyAll(c));
+      }
+      
+      @Override
+      public boolean removeAll(Collection<?> c) {
+         return internal().removeAll(unapplyAll(c));
+      }
+
+      @Override
+      public boolean retainAll(Collection<?> c) {
+         return internal().retainAll(unapplyAll(c));
+      }
+
       @Override
       public ListIterator<O> listIterator() {
          return new TransformingListIterator.Bidi<I, O>(internal().listIterator(), function(), function);
@@ -194,6 +234,13 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
       @Override
       public List<O> subList(int fromIndex, int toIndex) {
          return new TransformingList.Bidi<I, O>(internal().subList(fromIndex, toIndex), function(), function);
+      }
+      
+      public static class RandomAccess<I, O> extends TransformingList.Bidi<I, O> {
+         public <L extends List<I> & java.util.RandomAccess> RandomAccess(L list,
+               Function<I, O> function1, Function<O, I> function2) {
+            super(list, function1, function2);
+         }
       }
    }
 }

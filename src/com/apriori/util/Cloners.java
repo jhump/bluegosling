@@ -88,18 +88,14 @@ public final class Cloners {
                Method m = clazz.getDeclaredMethod("clone");
                m.setAccessible(true);
                return m;
-               // Exceptions below shouldn't actually ever
-               // happen since this method is defined on
-               // java.lang.Object.
-               // Unfortunately, we have to use reflection
-               // to access it since the version on Object
-               // is declared as protected instead of public
             }
             catch (SecurityException e) {
                throw new CloningException("Failed to locate clone() method", e);
             }
             catch (NoSuchMethodException e) {
                if (clazz.getSuperclass() == null) {
+                  // This should never happen since this method is defined on java.lang.Object if
+                  // not overridden anywhere else in the object's class hierarchy.
                   throw new CloningException("Failed to locate clone() method", e);
                }
                else {

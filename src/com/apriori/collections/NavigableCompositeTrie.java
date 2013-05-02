@@ -1,11 +1,14 @@
 package com.apriori.collections;
 
+import java.util.Comparator;
 import java.util.NavigableMap;
 
 //TODO: javadoc
 public interface NavigableCompositeTrie<K, C, V>
       extends CompositeTrie<K, C, V>, NavigableMap<K, V> {
 
+   Comparator<? extends C> componentComparator();
+   
    @Override NavigableCompositeTrie<K, C, V> prefixMap(K prefix);
    
    @Override NavigableCompositeTrie<K, C, V> prefixMap(K prefix, int numComponents);

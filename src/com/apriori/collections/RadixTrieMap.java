@@ -9,7 +9,13 @@ import java.util.NavigableMap;
  * and each level of the trie represents a nybble (4 bits) of the value with the most-significant
  * bits in the top nodes and least-significant in the leaves.
  * 
- * <p>Since the number of bits in each key is fixed (always 64 bits)
+ * <p>Since the number of bits in each key is fixed (always 64 bits), insertion and removal
+ * operations run in constant time. Inserting keys into this map implicitly sorts the keys,
+ * and this results in constant time sort -- effectively a radix sort. Like any sorted map with
+ * integer keys, this structure can be used to model sparse arrays or lists. To make this use even
+ * simpler, this class provides a {@linkplain #denseValues() list view of the values}. This view
+ * has constraints on mutations due to the fact that it is backed by a map, and it treats list
+ * indices with no value (i.e. no value mapped to that key) as {@code null}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
@@ -57,10 +63,10 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
    }
 
    /**
-    * Returns a view of this map as dense list. Value in the list will only be non-null at indexes
-    * that correspond to keys in this map. The size of the list is equal to the largest mapped key
-    * plus one. Since the list is just a view, it is memory-efficient for very sparse lists that
-    * have items at very large indices.
+    * Returns a view of this map as a dense list. Values in the list will only be non-null at
+    * indices that correspond to keys in this map. The size of the list is equal to the largest
+    * mapped key plus one. Since the list is just a view, it is memory-efficient for very sparse
+    * lists that have items at very large indices.
     * 
     * <p>The returned map does not support any add or remove operations. But does allow setting
     * elements (which results in insertions into the underlying map). The iterator also allows
@@ -75,9 +81,9 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
    }
 
    /**
-    * Returns a view of this map as dense list. Value in the list will only be non-null at indexes
-    * that correspond to keys in this map. Since the list is just a view, it is memory-efficient for
-    * very sparse lists that have items at very large indices.
+    * Returns a view of this map as a dense list. Values in the list will only be non-null at
+    * indices that correspond to keys in this map. Since the list is just a view, it is
+    * memory-efficient for very sparse lists that have items at very large indices.
     * 
     * <p>Any keys in this map that are less than zero or are greater than or equal to the specified
     * size will be absent from the returned list.

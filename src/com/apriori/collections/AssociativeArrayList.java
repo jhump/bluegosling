@@ -21,6 +21,16 @@ import java.util.TreeMap;
 
 // TODO: tests!
 // TODO: javadoc
+/**
+ * An {@link ArrayList} that is also an {@link AssociativeList}. This collection maintains
+ * bidirectional mappings to/from list indices and associative keys using a {@link HashMap} (key to
+ * index) and a {@link TreeMap} (index to key).
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <E> the type of element in the list
+ * @param <K> the type used for associative keys
+ */
 public class AssociativeArrayList<E, K> extends ArrayList<E> implements AssociativeList<E, K> {
 
    private static final long serialVersionUID = 324645810355942807L;
@@ -50,7 +60,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
    }
 
    static <K, V> Map<K, V> createMap(int expectedSize) {
-      return new HashMap<K, V>(expectedSize * 125 / 100);
+      return new HashMap<K, V>(expectedSize * 100 / 75);
    }
    
    private void rangeCheckWide(int index) {
@@ -314,6 +324,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       }
    }
 
+   /** Creates a {@link Map.Entry} for use in implementing map-related methods. */
    static <K, V> Map.Entry<K, V> mapEntry(final K key, final V value) {
       return new Map.Entry<K, V>() {
          @Override public K getKey() {
@@ -443,8 +454,8 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
    
    /**
     * A list iterator that moves from one associative mapping to the next, skipping unmapped
-    * list indices. This differs from {@link KeyedEntryIterator} in that it only returns key
-    * values, not key+value pairs.
+    * list indices. This differs from {@link KeyedEntryIterator} in that it only returns keys, not
+    * key+value pairs.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -593,7 +604,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
    }
    
    /**
-    * Implements the map view of the associative list.
+    * Implements the map view for sub-lists of the associative list.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -693,9 +704,10 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       }
       
       private Set<Map.Entry<Integer, K>> indicesAndKeys() {
-         // We don't want to return subKeyByIndex or an actual subset since that is fixed. Instead,
-         // want to delegate each method call to that field so we pick up changes when that map gets
-         // reset. So this is basically a dumb "forwarding" set.
+         // We don't want to return subKeyByIndex or an actual subset since that field can be
+         // changed as the sublist is mutated. Instead, we want to delegate each method call to that
+         // field so we pick up changes when that map gets reset. So this is basically a dumb
+         // "forwarding" set.
          return new Set<Map.Entry<Integer, K>>() {
             @Override
             public int size() {
@@ -709,12 +721,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
 
             @Override
             public boolean contains(Object o) {
-               for (Object element : this) {
-                  if (element == null ? o == null : element.equals(o)) {
-                     return true;
-                  }
-               }
-               return false;
+               return subList.subKeyByIndex.entrySet().contains(o);
             }
 
             @Override

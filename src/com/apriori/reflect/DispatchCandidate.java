@@ -12,6 +12,8 @@ import java.lang.reflect.Method;
  * arguments passed to the target interface method.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see Caster
  */
 // TODO: javadoc members
 class DispatchCandidate {

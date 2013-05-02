@@ -19,11 +19,8 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
       ProcessingEnvironments.setup(env);
    }
    
-   // Synchronized, just in case, since we modify instance state for the duration
-   // of this method (roundEnvironment). If another thread for any reason tries to
-   // call this method while another is still executing it would corrupt that state
    @Override
-   public synchronized final boolean process(Set<? extends TypeElement> annotations,
+   public final boolean process(Set<? extends TypeElement> annotations,
          javax.annotation.processing.RoundEnvironment env) {
       roundEnv = new RoundEnvironment(env);
       try {
