@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -29,10 +29,12 @@ import java.util.concurrent.TimeoutException;
  */
 //TODO more javadoc above!!! (more details on extensions, code snippets, etc.)
 //TODO javadoc below!!!
-//TODO fix what happens when ScheduledTask is cancelled (should be that just the single
-//    execution is cancelled and subsequent will still get scheduled)
-//TODO real solution to pausing a task so that an invocation is never "dropped" -- maybe
-//    something to do with using latches?
+//TODO scheduling recurring tasks should return a different ScheduledFuture that is API-compatible
+//    with what is returned by normal ScheduledExecutorService (isn't complete until the task is
+//    done-done [fails, stops, cancelled, etc] and cancel() kills whole task and not just current
+//    scheduled instance)
+//TODO consider finer grain concurrency primitives -- e.g. something other than synchronized methods
+//TODO tests!
 public class BetterExecutorService implements ScheduledExecutorService {
 
    /**
@@ -41,14 +43,14 @@ public class BetterExecutorService implements ScheduledExecutorService {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class ScheduledTaskImpl<V, T> implements ScheduledTask<V, T> {
-      private final ScheduledTaskDefinition<V, T> taskDef;
+      private final ScheduledTaskDefinitionImpl<V, T> taskDef;
       private ScheduledFuture<?> future;
       long actualStartMillis;
       private long actualEndMillis;
       private volatile V result;
       private volatile Throwable failure;
       
-      ScheduledTaskImpl(ScheduledTaskDefinition<V, T> taskDef) {
+      ScheduledTaskImpl(ScheduledTaskDefinitionImpl<V, T> taskDef) {
          this.taskDef = taskDef;
       }
       
@@ -68,7 +70,20 @@ public class BetterExecutorService implements ScheduledExecutorService {
 
       @Override
       public boolean cancel(boolean interrupt) {
-         return future.cancel(interrupt);
+         // to prevent deadlock, must always acquire lock for definition before the acquiring the
+         // lock for task instance
+         synchronized (taskDef) {
+            synchronized (this) {
+               if (future.cancel(interrupt)) {
+                  setFailure(new CancellationException());
+                  if (!hasStarted() && !taskDef.isPaused() && !taskDef.isFinished()) {
+                     taskDef.scheduleNext(this);
+                  }
+                  return true;
+               }
+               return false;
+            }
+         }
       }
 
       /**
@@ -120,6 +135,11 @@ public class BetterExecutorService implements ScheduledExecutorService {
       }
 
       @Override
+      public synchronized boolean hasStarted() {
+         return actualStartMillis != 0;
+      }
+
+      @Override
       public synchronized long actualTaskStartMillis() {
          if (actualStartMillis == 0) {
             throw new IllegalStateException("Task not yet started");
@@ -156,12 +176,20 @@ public class BetterExecutorService implements ScheduledExecutorService {
          actualEndMillis = System.currentTimeMillis();
       }
       
-      synchronized void setResult(V result) {
-         this.result = result;
+      synchronized boolean setResult(V result) {
+         if (this.failure == null && this.result == null) {
+            this.result = result;
+            return true;
+         }
+         return false;
       }
       
-      synchronized void setFailure(Throwable t) {
-         this.failure = t;
+      synchronized boolean setFailure(Throwable t) {
+         if (this.failure == null && this.result == null) {
+            this.failure = t;
+            return true;
+         }
+         return false;
       }
    }
    
@@ -285,7 +313,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
       }
 
       @Override
-      public synchronized Collection<ScheduledTask<V, T>> history() {
+      public synchronized List<ScheduledTask<V, T>> history() {
          List<ScheduledTask<V, T>> ret = new ArrayList<ScheduledTask<V, T>>(history.keySet());
          Collections.reverse(ret);
          return Collections.unmodifiableList(ret);
@@ -303,12 +331,12 @@ public class BetterExecutorService implements ScheduledExecutorService {
 
       @Override
       public synchronized boolean isFinished() {
-         return finished;
+         return finished || cancelled;
       }
       
       @Override
       public synchronized boolean cancel(boolean interrupt) {
-         if (!cancelled && !finished) {
+         if (!isFinished()) {
             cancelled = true;
             paused = false;
             if (current != null) {
@@ -316,7 +344,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
             }
             return true;
          } else {
-            return cancelled;
+            return false;
          }
       }
       
@@ -329,34 +357,12 @@ public class BetterExecutorService implements ScheduledExecutorService {
       public synchronized boolean pause() {
          if (!paused && !finished && !cancelled) {
             paused = true;
-            if (current.cancel(false)) {
-               /*
-                * There doesn't seem to be a thread-safe way to truly know
-                * with 100% certainty whether this task will execute or is
-                * already executing.
-                * 
-                * We can look at the start time and most likely, if unset,
-                * it hasn't started. But there is a race condition between the
-                * time a thread in the ExecutorService's pool picks the task
-                * off the queue and the time the task is actually marked with a
-                * start time. And the other API provided by ScheduledFuture and
-                * ScheduledExecutorService don't provide any adequate way to
-                * distinguish this case. :(
-                * 
-                * So we risk the race and "drop" an invocation if it occurs,
-                * meaning the execution counts will be off since an invocation
-                * could have run that we tried to cancel and thought never started.
-                */
-               synchronized (current) {
-                  if (current.actualStartMillis == 0) {
-                     // Best guess: it never started. So forget about it.
-                     current = null;
-                  }
-               }
+            if (current.cancel(false) && !current.hasStarted()) {
+               current = null;
             }
             return true;
          } else {
-            return paused;
+            return false;
          }
       }
       
@@ -374,7 +380,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
             paused = false;
             return true;
          } else {
-            return !finished && !cancelled;
+            return false;
          }
       }
 
@@ -417,7 +423,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
        * @param prevTask the previous (just completed) invocation of the task
        */
       synchronized void scheduleNext(ScheduledTaskImpl<V, T> prevTask) {
-         if (!isRepeating() || !scheduleNextTaskPolicy().shouldScheduleNext(prevTask)) {
+         if (!isRepeating() || !shouldScheduleNext(prevTask)) {
             finished = true;
             paused = false;
             nextTask(null);
@@ -427,16 +433,42 @@ public class BetterExecutorService implements ScheduledExecutorService {
             ScheduledTaskImpl<V, T> task = new ScheduledTaskImpl<V, T>(this);
             long periodDelayMillis = taskDef.periodDelayMillis();
             long nextScheduledTimeMillis;
+            // if previous task was cancelled before it started, schedule its successor as if it
+            // started on time and took no time to complete
             if (isFixedRate()) {
+               long previousStartMillis = prevTask.hasStarted()
+                     ? prevTask.actualTaskStartMillis()
+                     : System.currentTimeMillis() + prevTask.getDelay(TimeUnit.MILLISECONDS);
                nextScheduledTimeMillis = nextTimeForFixedRate(lastScheduledTimeMillis,
-                     prevTask.actualTaskStartMillis(), periodDelayMillis);
+                     previousStartMillis, periodDelayMillis);
             } else {
-               nextScheduledTimeMillis = prevTask.actualTaskEndMillis() + periodDelayMillis;
+               long previousEndMillis = prevTask.hasStarted()
+                     ? prevTask.actualTaskEndMillis()
+                     : System.currentTimeMillis() + prevTask.getDelay(TimeUnit.MILLISECONDS);
+               nextScheduledTimeMillis = previousEndMillis + periodDelayMillis;
             }
             task.setScheduledFuture(delegate.schedule(makeRunnable(task),
                   nextScheduledTimeMillis - System.currentTimeMillis(), TimeUnit.MILLISECONDS));
             lastScheduledTimeMillis = nextScheduledTimeMillis;
             nextTask(task);
+         }
+      }
+      
+      /**
+       * Determines if another task should be scheduled. If the policy throws while determining
+       * if another task should be scheduled the no subsequent task is scheduled and a stack-trace
+       * for whatever is thrown will be printed to stderr.
+       * 
+       * @param prevTask the previous task instance, which can inform the decision for whether to
+       *       schedule another or not
+       * @return {@code true} if another task should be scheduled or {@code false} otherwise
+       */
+      private boolean shouldScheduleNext(ScheduledTaskImpl<V, T> prevTask) {
+         try {
+            return scheduleNextTaskPolicy().shouldScheduleNext(prevTask);
+         } catch (Throwable t) {
+            t.printStackTrace();
+            return false;
          }
       }
       
@@ -477,15 +509,19 @@ public class BetterExecutorService implements ScheduledExecutorService {
        * @return a runnable 
        */
       private Runnable makeRunnable(final ScheduledTaskImpl<V, T> task) {
-         Object taskToRun = taskDef.task();
-         @SuppressWarnings("unchecked")
-         final Callable<V> taskAsCallable = taskToRun instanceof Runnable
-               ? Executors.<V> callable((Runnable) taskToRun, null)
-               : (Callable<V>) taskToRun;
+         final Callable<V> taskAsCallable = taskDef.taskAsCallable();
          return new Runnable() {
             @Override
             public void run() {
-               task.markStart();
+               synchronized (ScheduledTaskDefinitionImpl.this) {
+                  // if task definition was paused before we marked the start of the thread then
+                  // it thinks this scheduled instance never started (and won't run) so fulfill
+                  // that thought
+                  if (isPaused() || task.isCancelled()) {
+                     return;
+                  }
+                  task.markStart();
+               }
                try {
                   V result = taskAsCallable.call();
                   task.markEnd();
@@ -502,6 +538,8 @@ public class BetterExecutorService implements ScheduledExecutorService {
                         handler.uncaughtException(Thread.currentThread(), t);
                      } catch (Throwable ignored) {
                      }
+                  } else {
+                     t.printStackTrace();
                   }
                }
                scheduleNext(task);
@@ -671,6 +709,11 @@ public class BetterExecutorService implements ScheduledExecutorService {
          public ScheduledTaskDefinition<Void, Runnable> taskDefinition() {
             return task.taskDefinition();
          }
+         
+         @Override
+         public boolean hasStarted() {
+            return task.hasStarted();
+         }
 
          @Override
          public long actualTaskStartMillis() {
@@ -740,6 +783,11 @@ public class BetterExecutorService implements ScheduledExecutorService {
          }
 
          @Override
+         public boolean hasStarted() {
+            return task.hasStarted();
+         }
+
+         @Override
          public long actualTaskStartMillis() {
             return task.actualTaskStartMillis();
          }
@@ -797,11 +845,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
       };
    }
 
-   public <V> ScheduledTaskDefinition<V, Callable<V>> scheduleCallable(TaskDefinition<V, Callable<V>> taskDef) {
-      return scheduleInternal(taskDef);
-   }
-   
-   public ScheduledTaskDefinition<Void, Runnable> scheduleRunnable(TaskDefinition<Void, Runnable> taskDef) {
+   public <V, T> ScheduledTaskDefinition<V, T> schedule(TaskDefinition<V, T> taskDef) {
       return scheduleInternal(taskDef);
    }
 

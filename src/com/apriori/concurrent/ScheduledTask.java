@@ -26,6 +26,8 @@ public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
     */
    ScheduledTaskDefinition<V, T> taskDefinition();
    
+   boolean hasStarted();
+   
    /**
     * Returns the actual start time of this invocation, in milliseconds.
     * This is measured as milliseconds elapsed since midnight, January 1, 1970 UTC.

@@ -33,7 +33,7 @@ public class WeightBalancedTreeMap<K, V>
       int subTreeSize;
       Node<K, V> left, right;
       
-      Node(Map.Entry<? extends K, ? extends V> other) {
+      Node(Entry<? extends K, ? extends V> other) {
          this(other.getKey(), other.getValue());
       }
 
@@ -87,23 +87,23 @@ public class WeightBalancedTreeMap<K, V>
       }
    }
 
-   Map.Entry<K, V> mapEntry(Node<K, V> node) {
+   Entry<K, V> mapEntry(Node<K, V> node) {
       return node == null ? null : new EntryImpl(node);
    }
 
    @Override
    public List<V> values() {
-      return new TransformingList.RandomAccess<Map.Entry<K, V>, V>(
-            new RandomAccessSetList<Map.Entry<K, V>>(entrySet()),
-            new Function<Map.Entry<K, V>, V>() {
-               @Override public V apply(Map.Entry<K, V> input) {
+      return new TransformingList.RandomAccess<Entry<K, V>, V>(
+            new RandomAccessSetList<Entry<K, V>>(entrySet()),
+            new Function<Entry<K, V>, V>() {
+               @Override public V apply(Entry<K, V> input) {
                   return input.getValue();
                }
             });
    }
 
    @Override
-   public RandomAccessSet<Map.Entry<K, V>> entrySet() {
+   public RandomAccessSet<Entry<K, V>> entrySet() {
       return new EntrySet<K, V>(this);
    }
 
@@ -114,7 +114,7 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K firstKey() {
-      Map.Entry<K, V> entry = firstEntry();
+      Entry<K, V> entry = firstEntry();
       if (entry == null) {
          throw new NoSuchElementException("map is empty");
       }
@@ -123,7 +123,7 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K lastKey() {
-      Map.Entry<K, V> entry = lastEntry();
+      Entry<K, V> entry = lastEntry();
       if (entry == null) {
          throw new NoSuchElementException("map is empty");
       }
@@ -354,18 +354,18 @@ public class WeightBalancedTreeMap<K, V>
                   : comparator().equals(((SortedMap<?,?>)m).comparator())) {
          // we can efficiently construct a balanced tree without rotations
          @SuppressWarnings("unchecked")
-         Map.Entry<? extends K, ? extends V> entries[] = new Map.Entry[m.size()];
+         Entry<? extends K, ? extends V> entries[] = new Entry[m.size()];
          entries = m.entrySet().toArray(entries);
          size = entries.length;
          root = balancedTreeFromArray(entries, 0, size);
       } else{
-         for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+         for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
             put(entry.getKey(), entry.getValue());
          }
       }
    }
    
-   private Node<K, V> balancedTreeFromArray(Map.Entry<? extends K, ? extends V> entries[],
+   private Node<K, V> balancedTreeFromArray(Entry<? extends K, ? extends V> entries[],
          int start, int len) {
       int mid = start + (len >> 1);
       Node<K, V> entry = new Node<K, V>(entries[mid]);
@@ -389,7 +389,7 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    @Override
-   public Map.Entry<K, V> lowerEntry(K key) {
+   public Entry<K, V> lowerEntry(K key) {
       Node<K, V> max = null;
       Node<K, V> current = root;
       while (current != null) {
@@ -408,12 +408,12 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K lowerKey(K key) {
-      Map.Entry<K, V> entry = lowerEntry(key);
+      Entry<K, V> entry = lowerEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> floorEntry(K key) {
+   public Entry<K, V> floorEntry(K key) {
       Node<K, V> max = null;
       Node<K, V> current = root;
       while (current != null) {
@@ -434,12 +434,12 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K floorKey(K key) {
-      Map.Entry<K, V> entry = floorEntry(key);
+      Entry<K, V> entry = floorEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> ceilingEntry(K key) {
+   public Entry<K, V> ceilingEntry(K key) {
       Node<K, V> min = null;
       Node<K, V> current = root;
       while (current != null) {
@@ -460,12 +460,12 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K ceilingKey(K key) {
-      Map.Entry<K, V> entry = ceilingEntry(key);
+      Entry<K, V> entry = ceilingEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> higherEntry(K key) {
+   public Entry<K, V> higherEntry(K key) {
       Node<K, V> min = null;
       Node<K, V> current = root;
       while (current != null) {
@@ -484,12 +484,12 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public K higherKey(K key) {
-      Map.Entry<K, V> entry = higherEntry(key);
+      Entry<K, V> entry = higherEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> firstEntry() {
+   public Entry<K, V> firstEntry() {
       if (root == null) {
          return null;
       }
@@ -501,7 +501,7 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    @Override
-   public Map.Entry<K, V> lastEntry() {
+   public Entry<K, V> lastEntry() {
       if (root == null) {
          return null;
       }
@@ -513,8 +513,8 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    @Override
-   public Map.Entry<K, V> pollFirstEntry() {
-      Map.Entry<K, V> first = firstEntry();
+   public Entry<K, V> pollFirstEntry() {
+      Entry<K, V> first = firstEntry();
       if (first == null) {
          return null;
       }
@@ -523,8 +523,8 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    @Override
-   public Map.Entry<K, V> pollLastEntry() {
-      Map.Entry<K, V> last = lastEntry();
+   public Entry<K, V> pollLastEntry() {
+      Entry<K, V> last = lastEntry();
       if (last == null) {
          return null;
       }
@@ -555,20 +555,17 @@ public class WeightBalancedTreeMap<K, V>
    @Override
    public RandomAccessNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
          boolean toInclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new SubMap(fromKey, fromInclusive, toKey, toInclusive);
    }
 
    @Override
    public RandomAccessNavigableMap<K, V> headMap(K toKey, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new SubMap(NO_BOUND, false, toKey, inclusive);
    }
 
    @Override
    public RandomAccessNavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new SubMap(fromKey, inclusive, NO_BOUND, false);
    }
 
    @Override
@@ -592,16 +589,16 @@ public class WeightBalancedTreeMap<K, V>
    }
    
    @Override
-   public ListIterator<Map.Entry<K, V>> listIterator() {
+   public ListIterator<Entry<K, V>> listIterator() {
       return listIterator(0);
    }
    
    @Override
-   public ListIterator<Map.Entry<K, V>> listIterator(int index) {
+   public ListIterator<Entry<K, V>> listIterator(int index) {
       checkWideRange(index);
-      return new TransformingListIterator<Node<K, V>, Map.Entry<K, V>>(new ListIteratorImpl(index),
-            new Function<Node<K, V>, Map.Entry<K, V>>() {
-               @Override public Map.Entry<K, V> apply(Node<K, V> input) {
+      return new TransformingListIterator<Node<K, V>, Entry<K, V>>(new ListIteratorImpl(index),
+            new Function<Node<K, V>, Entry<K, V>>() {
+               @Override public Entry<K, V> apply(Node<K, V> input) {
                   return mapEntry(input);
                }
             });
@@ -683,14 +680,14 @@ public class WeightBalancedTreeMap<K, V>
    }
    
    @Override
-   public Map.Entry<K, V> getEntry(int index) {
+   public Entry<K, V> getEntry(int index) {
       checkRange(index);
       Node<K, V> node = getByIndex(index);
       return node == null ? null : mapEntry(node);
    }
    
    @Override
-   public Map.Entry<K, V> removeEntry(int index) {
+   public Entry<K, V> removeEntry(int index) {
       checkRange(index);
       Node<K, V> node = removeByIndex(root, index);
       return node == null ? null : mapEntry(node);
@@ -717,11 +714,11 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    /**
-    * Wraps a {@link Node} in the {@link Map.Entry} interface.
+    * Wraps a {@link Node} in the {@link Entry} interface.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class EntryImpl implements Map.Entry<K, V> {
+   private class EntryImpl implements Entry<K, V> {
       private final K key;
       private V value;
       private Node<K, V> node;
@@ -1013,18 +1010,23 @@ public class WeightBalancedTreeMap<K, V>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SubMapByIndices implements RandomAccessNavigableMap<K, V> {
+      private final WeightBalancedTreeMap<K, V>.SubMapByIndices parent;
       private final int startIndex;
       private int endIndex;
       private int myModCount;
-      // TODO: fix! startNode should be node *before* start of submap and comparisons should treat
-      // it as an exclusive bound (currently its set to first element and assumed to be inclusive)
       private Node<K, V> startNode;
       private Node<K, V> endNode;
       
       SubMapByIndices(int startIndex, int endIndex) {
+         this(startIndex, endIndex, null);
+      }
+      
+      SubMapByIndices(int startIndex, int endIndex,
+            WeightBalancedTreeMap<K, V>.SubMapByIndices parent) {
          this.startIndex = startIndex;
          this.endIndex = endIndex;
          this.myModCount = modCount;
+         this.parent = parent;
       }
       
       void checkModCount() {
@@ -1037,9 +1039,12 @@ public class WeightBalancedTreeMap<K, V>
          endIndex--;
          // TODO: could be a little more efficient by only clearing this when really required,
          // based on what key was removed (e.g. only clear endNode when last item in submap is
-         // removed and only clear startNode when first itme is removed)
+         // removed and only clear startNode when first item is removed)
          endNode = startNode = null;
          myModCount = modCount;
+         if (parent != null) {
+            parent.contractAfterRemove();
+         }
       }
       
       private void expandAfterAdd(int expandBy) {
@@ -1052,11 +1057,14 @@ public class WeightBalancedTreeMap<K, V>
          // end of the submap)
          endNode = null;
          myModCount = modCount;
+         if (parent != null) {
+            parent.expandAfterAdd(expandBy);
+         }
       }
       
       private Node<K, V> startNode() {
-         if (startNode == null && endIndex != startIndex) {
-            startNode = WeightBalancedTreeMap.this.getByIndex(startIndex);
+         if (startNode == null && startIndex != 0) {
+            startNode = WeightBalancedTreeMap.this.getByIndex(startIndex - 1);
          }
          return startNode;
       }
@@ -1069,9 +1077,12 @@ public class WeightBalancedTreeMap<K, V>
       }
       
       boolean isKeyInRange(K key) {
-         K startKey = startNode().key;
+         if (endIndex == startIndex) {
+            return false;
+         }
+         Node<K, V> start = startNode();
          Node<K, V> end = endNode();
-         return comparator.compare(key, startKey) >= 0
+         return (start == null || comparator.compare(key, start.key) > 0)
                && (end == null || comparator.compare(key, end.key) < 0);
       }
       
@@ -1112,77 +1123,118 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public Map.Entry<K, V> lowerEntry(K key) {
+      public Entry<K, V> lowerEntry(K key) {
          checkModCount();
-         Map.Entry<K, V> candidate = WeightBalancedTreeMap.this.lowerEntry(key);
-         if (candidate == null) {
+         if (isEmpty()) {
             return null;
          }
-         return isKeyInRange(candidate.getKey()) ? candidate : null;
+         Node<K, V> end = endNode();
+         if (end != null && comparator.compare(key, end.key) >= 0) {
+            return lastEntry();
+         }
+         Node<K, V> start = startNode();
+         if (start != null && comparator.compare(key, start.key) <= 0) {
+            return null;
+         }
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.lowerEntry(key);
+         return start == null || comparator.compare(candidate.getKey(), start.key) > 0
+               ? candidate : null;
       }
 
       @Override
       public K lowerKey(K key) {
-         Map.Entry<K, V> entry = lowerEntry(key);
+         Entry<K, V> entry = lowerEntry(key);
          return entry == null ? null : entry.getKey();
       }
 
       @Override
-      public Map.Entry<K, V> floorEntry(K key) {
+      public Entry<K, V> floorEntry(K key) {
          checkModCount();
-         Map.Entry<K, V> candidate = WeightBalancedTreeMap.this.floorEntry(key);
-         if (candidate == null) {
+         if (isEmpty()) {
             return null;
          }
-         return isKeyInRange(candidate.getKey()) ? candidate : null;
+         Node<K, V> end = endNode();
+         if (end != null && comparator.compare(key, end.key) >= 0) {
+            return lastEntry();
+         }
+         Node<K, V> start = startNode();
+         if (start != null && comparator.compare(key, start.key) <= 0) {
+            return null;
+         }
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.floorEntry(key);
+         return start == null || comparator.compare(candidate.getKey(), start.key) > 0
+               ? candidate : null;
       }
 
       @Override
       public K floorKey(K key) {
-         Map.Entry<K, V> entry = floorEntry(key);
+         Entry<K, V> entry = floorEntry(key);
          return entry == null ? null : entry.getKey();
       }
 
       @Override
-      public Map.Entry<K, V> ceilingEntry(K key) {
+      public Entry<K, V> ceilingEntry(K key) {
          checkModCount();
-         Map.Entry<K, V> candidate = WeightBalancedTreeMap.this.ceilingEntry(key);
-         if (candidate == null) {
+         if (isEmpty()) {
             return null;
          }
-         return isKeyInRange(candidate.getKey()) ? candidate : null;
+         Node<K, V> start = startNode();
+         if (start != null && comparator.compare(key, start.key) <= 0) {
+            return firstEntry();
+         }
+         Node<K, V> end = endNode();
+         if (end != null && comparator.compare(key, end.key) >= 0) {
+            return null;
+         }
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.ceilingEntry(key);
+         return end == null || comparator.compare(candidate.getKey(), end.key) < 0
+               ? candidate : null;
       }
 
       @Override
       public K ceilingKey(K key) {
-         Map.Entry<K, V> entry = ceilingEntry(key);
+         Entry<K, V> entry = ceilingEntry(key);
          return entry == null ? null : entry.getKey();
       }
 
       @Override
-      public Map.Entry<K, V> higherEntry(K key) {
+      public Entry<K, V> higherEntry(K key) {
          checkModCount();
-         Map.Entry<K, V> candidate = WeightBalancedTreeMap.this.higherEntry(key);
-         if (candidate == null) {
+         if (isEmpty()) {
             return null;
          }
-         return isKeyInRange(candidate.getKey()) ? candidate : null;
+         Node<K, V> start = startNode();
+         if (start != null && comparator.compare(key, start.key) <= 0) {
+            return firstEntry();
+         }
+         Node<K, V> end = endNode();
+         if (end != null && comparator.compare(key, end.key) >= 0) {
+            return null;
+         }
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.higherEntry(key);
+         return end == null || comparator.compare(candidate.getKey(), end.key) < 0
+               ? candidate : null;
       }
 
       @Override
       public K higherKey(K key) {
-         Map.Entry<K, V> entry = higherEntry(key);
+         Entry<K, V> entry = higherEntry(key);
          return entry == null ? null : entry.getKey();
       }
 
       @Override
-      public Map.Entry<K, V> firstEntry() {
+      public Entry<K, V> firstEntry() {
          checkModCount();
-         return isEmpty() ? null : mapEntry(startNode());
+         if (isEmpty()) {
+            return null;
+         }
+         Node<K, V> start = startNode();
+         return start == null ? WeightBalancedTreeMap.this.firstEntry()
+               : WeightBalancedTreeMap.this.higherEntry(start.key);
       }
 
       @Override
-      public Map.Entry<K, V> lastEntry() {
+      public Entry<K, V> lastEntry() {
          checkModCount();
          if (isEmpty()) {
             return null;
@@ -1193,9 +1245,9 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public Map.Entry<K, V> pollFirstEntry() {
+      public Entry<K, V> pollFirstEntry() {
          checkModCount();
-         Map.Entry<K, V> first = firstEntry();
+         Entry<K, V> first = firstEntry();
          if (first == null) {
             return null;
          }
@@ -1205,9 +1257,9 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public Map.Entry<K, V> pollLastEntry() {
+      public Entry<K, V> pollLastEntry() {
          checkModCount();
-         Map.Entry<K, V> last = lastEntry();
+         Entry<K, V> last = lastEntry();
          if (last == null) {
             return null;
          }
@@ -1224,13 +1276,13 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public K firstKey() {
-         Map.Entry<K, V> entry = firstEntry();
+         Entry<K, V> entry = firstEntry();
          return entry == null ? null : entry.getKey();
       }
 
       @Override
       public K lastKey() {
-         Map.Entry<K, V> entry = lastEntry();
+         Entry<K, V> entry = lastEntry();
          return entry == null ? null : entry.getKey();
       }
 
@@ -1298,7 +1350,7 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public void clear() {
-         for (Iterator<Map.Entry<K, V>> iter = listIterator(); iter.hasNext();) {
+         for (Iterator<Entry<K, V>> iter = listIterator(); iter.hasNext();) {
             iter.next();
             iter.remove();
          }
@@ -1311,48 +1363,48 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public List<V> values() {
-         return new TransformingList.RandomAccess<Map.Entry<K, V>, V>(
-               new RandomAccessSetList<Map.Entry<K, V>>(entrySet()),
-               new Function<Map.Entry<K, V>, V>() {
-                  @Override public V apply(Map.Entry<K, V> input) {
+         return new TransformingList.RandomAccess<Entry<K, V>, V>(
+               new RandomAccessSetList<Entry<K, V>>(entrySet()),
+               new Function<Entry<K, V>, V>() {
+                  @Override public V apply(Entry<K, V> input) {
                      return input.getValue();
                   }
                });
       }
 
       @Override
-      public RandomAccessSet<Map.Entry<K, V>> entrySet() {
+      public RandomAccessSet<Entry<K, V>> entrySet() {
          checkModCount();
          return new EntrySet<K, V>(this);
       }
 
       @Override
-      public ListIterator<Map.Entry<K, V>> listIterator() {
+      public ListIterator<Entry<K, V>> listIterator() {
          return listIterator(0);
       }
 
       @Override
-      public ListIterator<Map.Entry<K, V>> listIterator(int index) {
+      public ListIterator<Entry<K, V>> listIterator(int index) {
          checkModCount();
          checkWideRange(index);
-         return new TransformingListIterator<Node<K, V>, Map.Entry<K, V>>(
+         return new TransformingListIterator<Node<K, V>, Entry<K, V>>(
                new SubMapByIndicesIterator<K, V>(new ListIteratorImpl(adjustIndex(index)), this),
-               new Function<Node<K, V>, Map.Entry<K, V>>() {
-                  @Override public Map.Entry<K, V> apply(Node<K, V> input) {
+               new Function<Node<K, V>, Entry<K, V>>() {
+                  @Override public Entry<K, V> apply(Node<K, V> input) {
                      return mapEntry(input);
                   }
                });
       }
 
       @Override
-      public Map.Entry<K, V> getEntry(int index) {
+      public Entry<K, V> getEntry(int index) {
          checkModCount();
          checkRange(index);
          return WeightBalancedTreeMap.this.getEntry(adjustIndex(index));
       }
 
       @Override
-      public Map.Entry<K, V> removeEntry(int index) {
+      public Entry<K, V> removeEntry(int index) {
          checkModCount();
          checkRange(index);
          return WeightBalancedTreeMap.this.removeEntry(adjustIndex(index));
@@ -1370,7 +1422,7 @@ public class WeightBalancedTreeMap<K, V>
          checkModCount();
          checkRange(fromIndex);
          checkWideRange(toIndex);
-         return new SubMapByIndices(adjustIndex(fromIndex), adjustIndex(toIndex));
+         return new SubMapByIndices(adjustIndex(fromIndex), adjustIndex(toIndex), this);
       }
 
       @Override
@@ -1391,20 +1443,31 @@ public class WeightBalancedTreeMap<K, V>
       @Override
       public RandomAccessNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
             boolean toInclusive) {
-         // TODO Auto-generated method stub
-         return null;
+         if (comparator.compare(fromKey, toKey) > 0) {
+            throw new IllegalArgumentException("fromKey (" + fromKey + ") > toKey (" + toKey + ")");
+         }
+         K presentLowerBound = fromInclusive ? ceilingKey(fromKey) : higherKey(fromKey);
+         K presentUpperBound = toInclusive ? floorKey(toKey) : lowerKey(toKey);
+         int fromIndex = presentLowerBound == null ? size() : indexOfKey(presentLowerBound);
+         int toIndex = presentUpperBound == null ? 0 : indexOfKey(presentUpperBound) + 1;
+         return new SubMapOfSubMapByIndices(adjustIndex(fromIndex), adjustIndex(toIndex),
+               fromKey, fromInclusive, toKey, toInclusive, this);
       }
 
       @Override
       public RandomAccessNavigableMap<K, V> headMap(K toKey, boolean inclusive) {
-         // TODO Auto-generated method stub
-         return null;
+         K presentUpperBound = inclusive ? floorKey(toKey) : lowerKey(toKey);
+         int toIndex = presentUpperBound == null ? 0 : indexOfKey(presentUpperBound) + 1;
+         return new SubMapOfSubMapByIndices(startIndex, adjustIndex(toIndex), NO_BOUND, false,
+               toKey, inclusive, this);
       }
 
       @Override
       public RandomAccessNavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
-         // TODO Auto-generated method stub
-         return null;
+         K presentLowerBound = inclusive ? ceilingKey(fromKey) : higherKey(fromKey);
+         int fromIndex = presentLowerBound == null ? size() : indexOfKey(presentLowerBound);
+         return new SubMapOfSubMapByIndices(adjustIndex(fromIndex), endIndex, fromKey, inclusive,
+               NO_BOUND, false, this);
       }
 
       @Override
@@ -1422,9 +1485,81 @@ public class WeightBalancedTreeMap<K, V>
          return tailMap(fromKey, true);
       }
    }
+   
+   /**
+    * A placeholder that represents an unlimited bound of a sub-map view.
+    */
+   static final Object NO_BOUND = new Object();
+   
+   /**
+    * A sub-map view for a {@link SubMapByIndices}. This view has constraints on both the key ranges
+    * as well as index ranges.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private class SubMapOfSubMapByIndices extends SubMapByIndices {
+      private final Object lowerBound;
+      private final boolean lowerInclusive;
+      private final Object upperBound;
+      private final boolean upperInclusive;
+      
+      SubMapOfSubMapByIndices(int startIndex, int endIndex, Object startKey, boolean startInclusive,
+            Object endKey, boolean endInclusive, WeightBalancedTreeMap<K, V>.SubMapByIndices parent) {
+         super(startIndex, endIndex, parent);
+         this.lowerBound = startKey;
+         this.lowerInclusive = startInclusive;
+         this.upperBound = endKey;
+         this.upperInclusive = endInclusive;
+      }
+      
+      private boolean isKeyWithinBounds(K key) {
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound == NO_BOUND) {
+            return CollectionUtils.isInRangeHigh(key, true, upperBound, upperInclusive, comp);
+         } else if (upperBound == NO_BOUND) {
+            return CollectionUtils.isInRangeLow(key, true, lowerBound, lowerInclusive, comp);
+         } else {
+            return CollectionUtils.isInRange(key, lowerBound, lowerInclusive,
+                  upperBound, upperInclusive, comp);
+         }
+      }
+      
+      @Override boolean isKeyInRange(K key) {
+         return isKeyWithinBounds(key) && super.isKeyInRange(key);
+      }
+      
+      @Override
+      public RandomAccessNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
+            boolean toInclusive) {
+         if (!isKeyWithinBounds(fromKey)) {
+            throw new IllegalArgumentException("key " + fromKey + " out of range for sub-map");
+         }
+         if (!isKeyWithinBounds(toKey)) {
+            throw new IllegalArgumentException("key " + toKey + " out of range for sub-map");
+         }
+         return super.subMap(fromKey, fromInclusive, toKey, toInclusive);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> headMap(K toKey, boolean inclusive) {
+         if (!isKeyWithinBounds(toKey)) {
+            throw new IllegalArgumentException("key " + toKey + " out of range for sub-map");
+         }
+         return super.headMap(toKey, inclusive);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
+         if (!isKeyWithinBounds(fromKey)) {
+            throw new IllegalArgumentException("key " + fromKey + " out of range for sub-map");
+         }
+         return super.tailMap(fromKey, inclusive);
+      }
+   }
 
    /**
-    * Implements an iterator over a {@linkplain RandomAccessSet#subSetByIndices(int, int) sub-list} of
+    * Implements an iterator over a {@linkplain #subMapByIndices(int, int) sub-map (by indices)} of
     * elements for the various set views of this map.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -1496,11 +1631,566 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    /**
-    * The view of nodes as a set of {@link Map.Entry} objects.
+    * A sub-map view, with key value bounds, not indices.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class EntrySet<K, V> implements RandomAccessSet<Map.Entry<K, V>> {
+   private class SubMap implements RandomAccessNavigableMap<K, V> {
+      private final Object lowerBound;
+      private final boolean lowerInclusive;
+      private final Object upperBound;
+      private final boolean upperInclusive;
+      private int indexOffset = -1;
+      private int mySize = -1;
+      private int myModCount = modCount;
+      
+      SubMap(Object lowerBound, boolean lowerInclusive, Object upperBound, boolean upperInclusive) {
+         this.lowerBound = lowerBound;
+         this.lowerInclusive = lowerInclusive;
+         this.upperBound = upperBound;
+         this.upperInclusive = upperInclusive;
+      }
+      
+      @Override
+      public Entry<K, V> lowerEntry(K key) {
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.lowerEntry(key);
+         if (candidate == null) {
+            return null;
+         }
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound != NO_BOUND &&
+               !CollectionUtils.isInRangeLow(candidate.getKey(), true, lowerBound, lowerInclusive,
+                     comp)) {
+            return null;
+         }
+         if (upperBound != NO_BOUND &&
+               !CollectionUtils.isInRangeHigh(candidate.getKey(), true, upperBound, upperInclusive,
+                     comp)) {
+            return lastEntry();
+         }
+         return candidate;
+      }
+
+      @Override
+      public K lowerKey(K key) {
+         Entry<K, V> entry = lowerEntry(key);
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public Entry<K, V> floorEntry(K key) {
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.floorEntry(key);
+         if (candidate == null) {
+            return null;
+         }
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound != NO_BOUND &&
+               !CollectionUtils.isInRangeLow(candidate.getKey(), true, lowerBound, lowerInclusive,
+                     comp)) {
+            return null;
+         }
+         if (upperBound != NO_BOUND &&
+               !CollectionUtils.isInRangeHigh(candidate.getKey(), true, upperBound, upperInclusive,
+                     comp)) {
+            return lastEntry();
+         }
+         return candidate;
+      }
+
+      @Override
+      public K floorKey(K key) {
+         Entry<K, V> entry = floorEntry(key);
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public Entry<K, V> ceilingEntry(K key) {
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.ceilingEntry(key);
+         if (candidate == null) {
+            return null;
+         }
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound != NO_BOUND &&
+               !CollectionUtils.isInRangeLow(candidate.getKey(), true, lowerBound, lowerInclusive,
+                     comp)) {
+            return firstEntry();
+         }
+         if (upperBound != NO_BOUND &&
+               !CollectionUtils.isInRangeHigh(candidate.getKey(), true, upperBound, upperInclusive,
+                     comp)) {
+            return null;
+         }
+         return candidate;
+      }
+
+      @Override
+      public K ceilingKey(K key) {
+         Entry<K, V> entry = ceilingEntry(key);
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public Entry<K, V> higherEntry(K key) {
+         Entry<K, V> candidate = WeightBalancedTreeMap.this.higherEntry(key);
+         if (candidate == null) {
+            return null;
+         }
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound != NO_BOUND &&
+               !CollectionUtils.isInRangeLow(candidate.getKey(), true, lowerBound, lowerInclusive,
+                     comp)) {
+            return firstEntry();
+         }
+         if (upperBound != NO_BOUND &&
+               !CollectionUtils.isInRangeHigh(candidate.getKey(), true, upperBound, upperInclusive,
+                     comp)) {
+            return null;
+         }
+         return candidate;
+      }
+
+      @Override
+      public K higherKey(K key) {
+         Entry<K, V> entry = higherEntry(key);
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public Entry<K, V> firstEntry() {
+         if (lowerBound == NO_BOUND) {
+            return WeightBalancedTreeMap.this.firstEntry();
+         }
+         @SuppressWarnings("unchecked") // if not NO_BOUND then it must be a K
+         K lowerBoundKey = (K) lowerBound;
+         Entry<K, V> candidate = lowerInclusive
+               ? WeightBalancedTreeMap.this.ceilingEntry(lowerBoundKey)
+               : WeightBalancedTreeMap.this.higherEntry(lowerBoundKey);
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (upperBound != NO_BOUND &&
+               !CollectionUtils.isInRangeHigh(candidate.getKey(), true, upperBound, upperInclusive,
+                     comp)) {
+            return null;
+         }
+         return candidate;
+      }
+
+      @Override
+      public Entry<K, V> lastEntry() {
+         if (upperBound == NO_BOUND) {
+            return WeightBalancedTreeMap.this.lastEntry();
+         }
+         @SuppressWarnings("unchecked") // if not NO_BOUND then it must be a K
+         K upperBoundKey = (K) upperBound;
+         Entry<K, V> candidate = upperInclusive
+               ? WeightBalancedTreeMap.this.floorEntry(upperBoundKey)
+               : WeightBalancedTreeMap.this.lowerEntry(upperBoundKey);
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound != NO_BOUND &&
+               !CollectionUtils.isInRangeLow(candidate.getKey(), true, lowerBound, lowerInclusive,
+                     comp)) {
+            return null;
+         }
+         return candidate;
+      }
+
+      @Override
+      public Entry<K, V> pollFirstEntry() {
+         Entry<K, V> entry = firstEntry();
+         if (entry == null) {
+            return null;
+         }
+         remove(entry.getKey());
+         return entry;
+      }
+
+      @Override
+      public Entry<K, V> pollLastEntry() {
+         Entry<K, V> entry = lastEntry();
+         if (entry == null) {
+            return null;
+         }
+         remove(entry.getKey());
+         return entry;
+      }
+
+      @Override
+      public Comparator<? super K> comparator() {
+         return WeightBalancedTreeMap.this.comparator();
+      }
+
+      @Override
+      public K firstKey() {
+         Entry<K, V> entry = firstEntry();
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public K lastKey() {
+         Entry<K, V> entry = lastEntry();
+         return entry == null ? null : entry.getKey();
+      }
+
+      @Override
+      public int size() {
+         if (mySize == -1 || myModCount != modCount) {
+            Entry<K, V> first = firstEntry();
+            Entry<K, V> last = lastEntry();
+            if (first == null || last == null) {
+               mySize = 0;
+            } else {
+               mySize = WeightBalancedTreeMap.this.indexOfKey(last.getKey()) -
+                     WeightBalancedTreeMap.this.indexOfKey(first.getKey()) + 1; 
+            }
+            if (myModCount != modCount) {
+               myModCount = modCount;
+               indexOffset = -1;
+            }
+         }
+         return mySize;
+      }
+
+      @Override
+      public boolean isEmpty() {
+         return size() == 0;
+      }
+      
+      boolean isInRange(Object key) {
+         @SuppressWarnings("unchecked") // we'll only feed it values of the right type, promise
+         Comparator<Object> comp = (Comparator<Object>) comparator;
+         if (lowerBound == NO_BOUND) {
+            return CollectionUtils.isInRangeHigh(key, true, upperBound, upperInclusive, comp);
+         } else if (upperBound == NO_BOUND) {
+            return CollectionUtils.isInRangeLow(key, true, lowerBound, lowerInclusive, comp);
+         } else {
+            return CollectionUtils.isInRange(key, lowerBound, lowerInclusive,
+                  upperBound, upperInclusive, comp);
+         }
+      }
+
+      @Override
+      public boolean containsKey(Object key) {
+         return isInRange(key) ? WeightBalancedTreeMap.this.containsKey(key) : false;
+      }
+
+      @Override
+      public boolean containsValue(Object value) {
+         return values().contains(value);
+      }
+
+      @Override
+      public V get(Object key) {
+         return isInRange(key) ? WeightBalancedTreeMap.this.get(key) : null;
+      }
+
+      @Override
+      public V put(K key, V value) {
+         if (!isInRange(key)) {
+            throw new IllegalArgumentException("Key " + key + " outside of submap range");
+         }
+         return WeightBalancedTreeMap.this.put(key,  value);
+      }
+
+      @Override
+      public V remove(Object key) {
+         return isInRange(key) ? WeightBalancedTreeMap.this.remove(key) : null;
+      }
+
+      @Override
+      public void putAll(Map<? extends K, ? extends V> m) {
+         for (K k : m.keySet()) {
+            if (!isInRange(k)) {
+               throw new IllegalArgumentException("Key " + k + " outside of submap range");
+            }
+         }
+         WeightBalancedTreeMap.this.putAll(m);
+      }
+
+      @Override
+      public void clear() {
+         ListIterator<Entry<K, V>> iter = listIterator();
+         while (iter.hasNext()) {
+            iter.next();
+            iter.remove();
+         }
+      }
+
+      @Override
+      public RandomAccessSet<K> keySet() {
+         return navigableKeySet();
+      }
+
+      @Override
+      public List<V> values() {
+         return new TransformingList.RandomAccess<Entry<K, V>, V>(
+               new RandomAccessSetList<Entry<K, V>>(entrySet()),
+               new Function<Entry<K, V>, V>() {
+                  @Override public V apply(Entry<K, V> input) {
+                     return input.getValue();
+                  }
+               });
+      }
+
+      @Override
+      public RandomAccessSet<Entry<K, V>> entrySet() {
+         return new EntrySet<K, V>(this);
+      }
+      
+      private int getIndexOffset() {
+         if (indexOffset == -1 || myModCount != modCount) {
+            Entry<K, V> first = firstEntry();
+            indexOffset = first == null ? 0 : WeightBalancedTreeMap.this.indexOfKey(first.getKey());
+            if (myModCount != modCount) {
+               myModCount = modCount;
+               mySize = -1;
+            }
+         }
+         return indexOffset;
+      }
+      
+      private void checkRange(int index) {
+         if (index < 0) {
+            throw new IndexOutOfBoundsException("" + index + " < 0");
+         }
+         int sz = size();
+         if (index >= sz) {
+            throw new IndexOutOfBoundsException("" + index + " >= " + sz);
+         }
+      }
+      
+      private void checkWideRange(int index) {
+         if (index < 0) {
+            throw new IndexOutOfBoundsException("" + index + " < 0");
+         }
+         int sz = size();
+         if (index > sz) {
+            throw new IndexOutOfBoundsException("" + index + " > " + sz);
+         }
+      }
+
+      @Override
+      public ListIterator<Entry<K, V>> listIterator() {
+         return listIterator(0);
+      }
+
+      @Override
+      public ListIterator<Entry<K, V>> listIterator(int index) {
+         int offset = getIndexOffset();
+         checkWideRange(index);
+         return new TransformingListIterator<Node<K, V>, Entry<K, V>>(
+               new SubMapIterator<K, V>(new ListIteratorImpl(index + offset), offset, this),
+               new Function<Node<K, V>, Entry<K, V>>() {
+                  @Override public Entry<K, V> apply(Node<K, V> input) {
+                     return mapEntry(input);
+                  }
+               });
+}
+
+      @Override
+      public Entry<K, V> getEntry(int index) {
+         checkRange(index);
+         return WeightBalancedTreeMap.this.getEntry(index + getIndexOffset());
+      }
+
+      @Override
+      public Entry<K, V> removeEntry(int index) {
+         checkRange(index);
+         return WeightBalancedTreeMap.this.removeEntry(index + getIndexOffset());
+      }
+
+      @Override
+      public int indexOfKey(Object key) {
+         return isInRange(key) ? WeightBalancedTreeMap.this.indexOfKey(key) + getIndexOffset() : -1;
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> subMapByIndices(int startIndex, int endIndex) {
+         checkRange(startIndex);
+         checkWideRange(endIndex);
+         int offset = getIndexOffset();
+         return new SubMapByIndices(startIndex + offset, endIndex + offset);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> descendingMap() {
+         return new DescendingRandomAccessMap<K, V>(this);
+      }
+
+      @Override
+      public RandomAccessNavigableSet<K> navigableKeySet() {
+         return new KeySet<K, V>(this);
+      }
+
+      @Override
+      public RandomAccessNavigableSet<K> descendingKeySet() {
+         return navigableKeySet().descendingSet();
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
+            boolean toInclusive) {
+         if (!isInRange(toKey)) {
+            throw new IllegalArgumentException("to key " + toKey + " is outside sub-map range");
+         }
+         if (!isInRange(fromKey)) {
+            throw new IllegalArgumentException("from key " + fromKey + " is outside sub-map range");
+         }
+         return new SubMap(fromKey, fromInclusive, toKey, toInclusive);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> headMap(K toKey, boolean inclusive) {
+         if (!isInRange(toKey)) {
+            throw new IllegalArgumentException("to key " + toKey + " is outside sub-map range");
+         }
+         return new SubMap(NO_BOUND, false, toKey, inclusive);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
+         if (!isInRange(fromKey)) {
+            throw new IllegalArgumentException("from key " + fromKey + " is outside sub-map range");
+         }
+         return new SubMap(fromKey, inclusive, NO_BOUND, false);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> subMap(K fromKey, K toKey) {
+         return subMap(fromKey, true, toKey, false);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> headMap(K toKey) {
+         return headMap(toKey, false);
+      }
+
+      @Override
+      public RandomAccessNavigableMap<K, V> tailMap(K fromKey) {
+         return tailMap(fromKey, true);
+      }
+      
+   }
+   
+   /**
+    * Implements an iterator over a {@linkplain #subMap(Object, boolean, Object, boolean) sub-map}
+    * of elements for the various set views of this map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <K> the type of key in the map
+    * @param <V> the type of element in the map
+    */
+   private static class SubMapIterator<K, V> implements ListIterator<Node<K, V>> {
+      private final ListIterator<Node<K, V>> iterator;
+      private final int indexOffset;
+      private final WeightBalancedTreeMap<K, V>.SubMap submap;
+      private boolean needNext = true;
+      private Node<K, V> next;
+      private boolean needPrevious = true;
+      private Node<K, V> previous;
+      
+      SubMapIterator(ListIterator<Node<K, V>> iterator, int indexOffset,
+            WeightBalancedTreeMap<K, V>.SubMap submap) {
+         this.iterator = iterator;
+         this.indexOffset = indexOffset;
+         this.submap = submap;
+      }
+      
+      private void peekNext() {
+         if (needNext && iterator.hasNext()) {
+            next = iterator.next();
+            iterator.previous(); // go back so cursor stays in the proper position
+            needNext = false;
+         }
+      }
+      
+      private void peekPrevious() {
+         if (needPrevious && iterator.hasPrevious()) {
+            previous = iterator.previous();
+            iterator.next(); // go back so cursor stays in the proper position
+            needPrevious = false;
+         }
+      }
+
+      @Override
+      public boolean hasNext() {
+         peekNext();
+         return next != null && submap.isInRange(next.key);
+      }
+
+      @Override
+      public Node<K, V> next() {
+         peekNext();
+         if (next == null) {
+            throw new NoSuchElementException();
+         }
+         iterator.next(); // advance iterator
+         // update local members
+         previous = next;
+         needPrevious = false;
+         next = null;
+         needNext = true;
+         return previous;
+      }
+
+      @Override
+      public boolean hasPrevious() {
+         peekPrevious();
+         return previous != null && submap.isInRange(previous.key);
+      }
+
+      @Override
+      public Node<K, V> previous() {
+         peekPrevious();
+         if (previous == null) {
+            throw new NoSuchElementException();
+         }
+         iterator.previous(); // move back iterator
+         // update local members
+         next = previous;
+         needNext = false;
+         previous = null;
+         needPrevious = true;
+         return next;
+      }
+
+      @Override
+      public int nextIndex() {
+         return iterator.nextIndex() + indexOffset;
+      }
+
+      @Override
+      public int previousIndex() {
+         return iterator.previousIndex() + indexOffset;
+      }
+
+      @Override
+      public void remove() {
+         iterator.remove();
+      }
+
+      @Override
+      public void set(Node<K, V> e) {
+         throw new UnsupportedOperationException("set");
+      }
+
+      @Override
+      public void add(Node<K, V> e) {
+         throw new UnsupportedOperationException("add");
+      }
+   }
+   
+   /**
+    * The view of nodes as a set of {@link Entry} objects.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class EntrySet<K, V> implements RandomAccessSet<Entry<K, V>> {
       private final RandomAccessNavigableMap<K, V> map;
       
       EntrySet(RandomAccessNavigableMap<K, V> map) {
@@ -1523,7 +2213,7 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public Iterator<Map.Entry<K, V>> iterator() {
+      public Iterator<Entry<K, V>> iterator() {
          return map.listIterator();
       }
 
@@ -1538,7 +2228,7 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public boolean add(Map.Entry<K, V> e) {
+      public boolean add(Entry<K, V> e) {
          throw new UnsupportedOperationException("add");
       }
 
@@ -1553,7 +2243,7 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public boolean addAll(Collection<? extends java.util.Map.Entry<K, V>> c) {
+      public boolean addAll(Collection<? extends Entry<K, V>> c) {
          throw new UnsupportedOperationException("addAll");
       }
 
@@ -1573,15 +2263,15 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public Map.Entry<K, V> get(int index) {
+      public Entry<K, V> get(int index) {
          return map.getEntry(index);
       }
 
       @Override
       public int indexOf(Object o) {
-         ListIterator<Map.Entry<K, V>> iter = listIterator();
+         ListIterator<Entry<K, V>> iter = listIterator();
          while (iter.hasNext()) {
-            Map.Entry<K, V> entry = iter.next();
+            Entry<K, V> entry = iter.next();
             if (entry.equals(o)) {
                return iter.previousIndex();
             }
@@ -1590,28 +2280,28 @@ public class WeightBalancedTreeMap<K, V>
       }
 
       @Override
-      public ListIterator<Map.Entry<K, V>> listIterator() {
+      public ListIterator<Entry<K, V>> listIterator() {
          return map.listIterator();
       }
 
       @Override
-      public ListIterator<Map.Entry<K, V>> listIterator(int index) {
+      public ListIterator<Entry<K, V>> listIterator(int index) {
          return map.listIterator(index);
       }
 
       @Override
-      public Map.Entry<K, V> remove(int index) {
+      public Entry<K, V> remove(int index) {
          return map.removeEntry(index);
       }
 
       @Override
-      public RandomAccessSet<Map.Entry<K, V>> subSetByIndices(int fromIndex, int toIndex) {
+      public RandomAccessSet<Entry<K, V>> subSetByIndices(int fromIndex, int toIndex) {
          return new EntrySet<K, V>(map.subMapByIndices(fromIndex,  toIndex));
       }
 
       @Override
-      public List<Map.Entry<K, V>> asList() {
-         return new RandomAccessSetList<Map.Entry<K, V>>(this);
+      public List<Entry<K, V>> asList() {
+         return new RandomAccessSetList<Entry<K, V>>(this);
       }
       
       @Override
@@ -1664,13 +2354,13 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public K pollFirst() {
-         Map.Entry<K, V> entry = map.pollFirstEntry();
+         Entry<K, V> entry = map.pollFirstEntry();
          return entry == null ? null : entry.getKey();
       }
 
       @Override
       public K pollLast() {
-         Map.Entry<K, V> entry = map.pollLastEntry();
+         Entry<K, V> entry = map.pollLastEntry();
          return entry == null ? null : entry.getKey();
       }
 
@@ -1681,10 +2371,10 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public Iterator<K> descendingIterator() {
-         return new TransformingIterator<Map.Entry<K, V>, K>(
+         return new TransformingIterator<Entry<K, V>, K>(
                   CollectionUtils.reverseIterator(map.listIterator(map.size())),
-                  new Function<Map.Entry<K, V>, K>() {
-                     @Override public K apply(Map.Entry<K, V> node) {
+                  new Function<Entry<K, V>, K>() {
+                     @Override public K apply(Entry<K, V> node) {
                         return node.getKey();
                      }
                   });
@@ -1738,7 +2428,7 @@ public class WeightBalancedTreeMap<K, V>
       @Override
       public boolean remove(Object o) {
          @SuppressWarnings("unchecked")
-         Iterator<Map.Entry<K, V>> iter = map.tailMap((K) o).listIterator();
+         Iterator<Entry<K, V>> iter = map.tailMap((K) o).listIterator();
          if (iter.hasNext()) {
             K k = iter.next().getKey();
             if (k == null ? o == null : k.equals(o)) {
@@ -1776,7 +2466,7 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public K get(int index) {
-         Map.Entry<K, V> entry = map.getEntry(index);
+         Entry<K, V> entry = map.getEntry(index);
          return entry == null ? null : entry.getKey();
       }
       
@@ -1792,9 +2482,9 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public ListIterator<K> listIterator(int index) {
-         return new TransformingListIterator<Map.Entry<K, V>, K>(map.listIterator(index),
-               new Function<Map.Entry<K, V>, K>() {
-                  @Override public K apply(Map.Entry<K, V> input) {
+         return new TransformingListIterator<Entry<K, V>, K>(map.listIterator(index),
+               new Function<Entry<K, V>, K>() {
+                  @Override public K apply(Entry<K, V> input) {
                      return input.getKey();
                   }
                });
@@ -1802,7 +2492,7 @@ public class WeightBalancedTreeMap<K, V>
 
       @Override
       public K remove(int index) {
-         Map.Entry<K, V> entry = map.removeEntry(index);
+         Entry<K, V> entry = map.removeEntry(index);
          return entry == null ? null : entry.getKey();
       }
 

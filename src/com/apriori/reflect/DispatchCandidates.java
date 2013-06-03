@@ -1,6 +1,8 @@
 package com.apriori.reflect;
 
 
+import com.apriori.reflect.DispatchSettings.Visibility;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -259,15 +261,16 @@ class DispatchCandidates {
     *       candidates come from this class's set of public methods)
     * @param expandVarArgs if true then additional candidates will be returned that might be
     *       compatible for dynamic dispatch in the event that var-arg arrays are expanded
+    * @param visibility the minimum allowed visibility for candidates
     * @return the set of potentially suitable candidates
     */
    public static DispatchCandidates getEligibleCandidates(Method method, Class<?> dispatchClass,
-         boolean expandVarArgs) {
+         boolean expandVarArgs, Visibility visibility) {
       DispatchCandidates.Builder methods = new DispatchCandidates.Builder();
       int argsLen = method.getParameterTypes().length;
       String name = method.getName();
-      for (Method m : dispatchClass.getMethods()) {
-         if (m.getName().equals(name)) {
+      for (Method m : Members.findMethods(dispatchClass, name)) {
+         if (m.getName().equals(name) && visibility.isVisible(m.getModifiers())) {
             int otherLen = m.getParameterTypes().length;
             if (otherLen == argsLen || (m.isVarArgs() && otherLen <= argsLen + 1)
                   || (expandVarArgs && method.isVarArgs() && argsLen <= otherLen + 1)) {
@@ -282,7 +285,7 @@ class DispatchCandidates {
    static DispatchCandidate getBestCandidate(Method method, Class<?> dispatchClass,
          DispatchSettings settings)
          throws NoSuchMethodException, AmbiguousMethodException {
-      return getEligibleCandidates(method, dispatchClass, false)
+      return getEligibleCandidates(method, dispatchClass, false, settings.visibility())
             .getBestCandidate(method, method.getParameterTypes(), settings);
    }
 }

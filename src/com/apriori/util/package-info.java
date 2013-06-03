@@ -1,5 +1,4 @@
 /**
- * Miscellaneous utility classes. This is currently limited to utility classes to simplify cloning
- * objects.
+ * Miscellaneous utility classes.
  */
 package com.apriori.util;

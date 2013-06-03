@@ -39,7 +39,7 @@ public interface TaskDefinition<V, T> {
    /**
     * Returns the delay, in milliseconds, from the time the task is submitted to
     * the time the first instance of the task should be invoked. A delay of zero
-    * means that it should be exceuted immediately.
+    * means that it should be executed immediately.
     * 
     * @return the delay in milliseconds for the first instance of the task
     */

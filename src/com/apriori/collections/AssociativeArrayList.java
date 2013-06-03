@@ -783,7 +783,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SubListImpl implements AssociativeList<E, K> {
-
+      // TODO: sublist of sublist should work, even if modified through the sublist view
       private final List<E> subList;
       private final int fromIndex;
       int toIndex;

@@ -4,7 +4,6 @@ package com.apriori.collections;
 import org.apache.commons.collections.BulkTest;
 
 import java.util.NavigableSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import junit.framework.TestSuite;
@@ -38,7 +37,7 @@ public class ConcurrentNavigableSetTest extends AbstractTestNavigableSet {
 
    /** {@inheritDoc} */
    @Override
-   public Set<?> makeEmptySet() {
+   public NavigableSet<?> makeEmptySet() {
       return ConcurrentSets.withNavigableSet(new TreeSet<Object>()).create();
    }
    

@@ -194,44 +194,50 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          
          this.fromElement = fromElement;
          this.fromInclusive = fromInclusive;
-         if (fromIndex == -1) {
-            determineFromIndex();
-         } else {
-            this.fromIndex = fromIndex;
-         }
+         this.fromIndex = fromIndex;
          this.toElement = toElement;
          this.toInclusive = toInclusive;
-         if (toIndex == -1) {
-            determineToIndex();
-         } else {
-            this.toIndex = toIndex;
-         }
+         this.toIndex = toIndex;
          this.myModCount = modCount;
       }
       
-      private void determineFromIndex() {
-         if (fromElement == null) {
-            fromIndex = 0;
-         } else {
-            fromIndex = findIndex(fromElement);
-            if (fromIndex < 0) {
-               fromIndex = -fromIndex - 1;
-            } else if (!fromInclusive) {
-               fromIndex++;
+      private int fromIndex() {
+         if (fromIndex == -1) {
+            if (fromElement == null) {
+               fromIndex = 0;
+            } else {
+               fromIndex = findIndex(fromElement);
+               if (fromIndex < 0) {
+                  fromIndex = -fromIndex - 1;
+               } else if (!fromInclusive) {
+                  fromIndex++;
+               }
             }
          }
+         return fromIndex;
       }
       
-      private void determineToIndex() {
-         if (toElement == null) {
-            toIndex = size - 1;
-         } else {
-            toIndex = findIndex(toElement);
-            if (toIndex < 0) {
-               toIndex = -toIndex - 2;
-            } else if (!toInclusive) {
-               toIndex--;
+      private int toIndex() {
+         if (toIndex == -1) {
+            if (toElement == null) {
+               toIndex = size - 1;
+            } else {
+               toIndex = findIndex(toElement);
+               if (toIndex < 0) {
+                  toIndex = -toIndex - 2;
+               } else if (!toInclusive) {
+                  toIndex--;
+               }
             }
+         }
+         return toIndex;
+      }
+      
+      void checkMod() {
+         if (myModCount != modCount) {
+            fromIndex = -1;
+            toIndex = -1;
+            myModCount = modCount;
          }
       }
       
@@ -280,8 +286,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E first() {
-         checkMod(myModCount);
-         if (fromIndex > toIndex) {
+         if (isEmpty()) {
             throw new NoSuchElementException();
          }
          @SuppressWarnings("unchecked")
@@ -292,8 +297,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E last() {
-         checkMod(myModCount);
-         if (fromIndex > toIndex) {
+         if (isEmpty()) {
             throw new NoSuchElementException();
          }
          @SuppressWarnings("unchecked")
@@ -304,37 +308,23 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public boolean add(E e) {
-         checkMod(myModCount);
          checkRange(e);
-         boolean ret = SortedArraySet.this.add(e);
-         if (ret) {
-            toIndex++;
-            myModCount = modCount;
-         }
-         return ret;
+         return SortedArraySet.this.add(e);
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean addAll(Collection<? extends E> coll) {
-         checkMod(myModCount);
          for (Object o : coll) {
             checkRange(o);
          }
-         boolean ret = SortedArraySet.this.addAll(coll);
-         if (ret) {
-            // not sure how many items were added, so re-calculate
-            determineToIndex();
-            myModCount = modCount;
-         }
-         return ret;
+         return SortedArraySet.this.addAll(coll);
       }
 
       /** {@inheritDoc} */
       @Override
       public void clear() {
-         checkMod(myModCount);
-         if (fromIndex <= toIndex) {
+         if (!isEmpty()) {
             int removed = toIndex - fromIndex + 1;
             int tailKeep = size - toIndex - 1;
             // compact the before and after blocks
@@ -344,43 +334,34 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             // and set extraneous references to null
             Arrays.fill(data, fromIndex + tailKeep, size, null);
             size -= removed;
-            toIndex -= removed;
-            myModCount = ++modCount;
+            modCount++;
          }
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean contains(Object o) {
-         checkMod(myModCount);
          return isInRange(o) ? SortedArraySet.this.contains(o) : false;
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean containsAll(Collection<?> coll) {
-         checkMod(myModCount);
          return CollectionUtils.containsAll(this, coll);
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean isEmpty() {
-         checkMod(myModCount);
-         return toIndex < fromIndex;
+         checkMod();
+         return toIndex() < fromIndex();
       }
 
       /** {@inheritDoc} */
       @Override
       public boolean remove(Object o) {
-         checkMod(myModCount);
          if (isInRange(o)) {
-            boolean ret = SortedArraySet.this.remove(o);
-            if (ret) {
-               toIndex--;
-               myModCount = modCount;
-            }
-            return ret;
+            return SortedArraySet.this.remove(o);
          } else {
             return false;
          }
@@ -389,7 +370,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public boolean removeAll(Collection<?> coll) {
-         checkMod(myModCount);
          HashSet<Object> toRemove = new HashSet<Object>(coll);
          for (Iterator<Object> iter = toRemove.iterator(); iter.hasNext(); ) {
             if (!isInRange(iter.next())) {
@@ -397,13 +377,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
             }
          }
          if (!toRemove.isEmpty()) {
-            boolean ret = SortedArraySet.this.removeAll(coll);
-            if (ret) {
-               // not sure how many items were removed so re-calc
-               determineToIndex();
-               myModCount = modCount;
-            }
-            return ret;
+            return SortedArraySet.this.removeAll(coll);
          } else {
             return false;
          }
@@ -412,7 +386,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public boolean retainAll(Collection<?> coll) {
-         checkMod(myModCount);
          ArrayList<Object> toRemove = new ArrayList<Object>();
          for (Object o : this) {
             if (!coll.contains(o)) {
@@ -429,18 +402,17 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public int size() {
-         checkMod(myModCount);
-         return toIndex - fromIndex + 1;
+         checkMod();
+         return toIndex() - fromIndex() + 1;
       }
 
       /** {@inheritDoc} */
       @Override
       public Object[] toArray() {
-         checkMod(myModCount);
          int len = size();
          Object a[] = new Object[len];
          if (len > 0) {
-            System.arraycopy(data, fromIndex, a, 0, len);
+            System.arraycopy(data, fromIndex(), a, 0, len);
          }
          return a;
       }
@@ -449,12 +421,11 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       @Override
       @SuppressWarnings("unchecked")
       public <T> T[] toArray(T[] a) {
-         checkMod(myModCount);
          int len = size();
          if (a.length < len) {
             a = (T[]) Array.newInstance(a.getClass().getComponentType(), len);
          }
-         System.arraycopy(data, fromIndex, a, 0, len);
+         System.arraycopy(data, fromIndex(), a, 0, len);
          if (a.length > len) {
             a[len] = null;
          }
@@ -464,8 +435,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E ceiling(E e) {
-         checkMod(myModCount);
-         if (toIndex >= fromIndex) {
+         if (!isEmpty()) {
             if (isInRangeHigh(e, true)) {
                if (isInRangeLow(e, true)) {
                   E ret = SortedArraySet.this.ceiling(e);
@@ -485,18 +455,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public Iterator<E> descendingIterator() {
-         checkMod(myModCount);
-         return new DescendingIteratorImpl(toIndex + 1, fromIndex, myModCount) {
+         checkMod();
+         return new DescendingIteratorImpl(toIndex() + 1, fromIndex(), myModCount) {
             @Override
             void resetModCount() {
                // update enclosing subset, too
                this.myModCount = modCount;
-               SubSetImpl.this.myModCount = modCount;
-            }
-            @Override
-            public void remove() {
-               super.remove();
-               toIndex--;
+               SubSetImpl.this.checkMod();
             }
          };
       }
@@ -504,15 +469,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public NavigableSet<E> descendingSet() {
-         checkMod(myModCount);
          return new DescendingSet<E>(this);
       }
 
       /** {@inheritDoc} */
       @Override
       public E floor(E e) {
-         checkMod(myModCount);
-         if (toIndex >= fromIndex) {
+         if (!isEmpty()) {
             if (isInRangeLow(e, true)) {
                if (isInRangeHigh(e, true)) {
                   E ret = SortedArraySet.this.floor(e);
@@ -538,7 +501,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public NavigableSet<E> headSet(E to, boolean inclusive) {
-         checkMod(myModCount);
          checkRangeLow(to, false);
          checkRangeHigh(to, inclusive);
          return new SubSetImpl(this.fromElement, this.fromInclusive, this.fromIndex,
@@ -548,8 +510,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E higher(E e) {
-         checkMod(myModCount);
-         if (toIndex >= fromIndex) {
+         if (!isEmpty()) {
             if (isInRangeHigh(e, true)) {
                if (isInRangeLow(e, true)) {
                   E ret = SortedArraySet.this.higher(e);
@@ -569,18 +530,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public Iterator<E> iterator() {
-         checkMod(myModCount);
-         return new IteratorImpl(fromIndex, toIndex + 1, myModCount) {
+         checkMod();
+         return new IteratorImpl(fromIndex(), toIndex() + 1, myModCount) {
             @Override
             void resetModCount() {
                // update enclosing subset, too
                this.myModCount = modCount;
-               SubSetImpl.this.myModCount = modCount;
-            }
-            @Override
-            public void remove() {
-               super.remove();
-               toIndex--;
+               SubSetImpl.this.checkMod();
             }
          };
       }
@@ -588,8 +544,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E lower(E e) {
-         checkMod(myModCount);
-         if (toIndex >= fromIndex) {
+         if (!isEmpty()) {
             if (isInRangeLow(e, true)) {
                if (isInRangeHigh(e, true)) {
                   E ret = SortedArraySet.this.lower(e);
@@ -609,8 +564,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E pollFirst() {
-         checkMod(myModCount);
-         if (fromIndex > toIndex) {
+         if (isEmpty()) {
             return null;
          }
          @SuppressWarnings("unchecked")
@@ -621,8 +575,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public E pollLast() {
-         checkMod(myModCount);
-         if (fromIndex > toIndex) {
+         if (isEmpty()) {
             return null;
          }
          @SuppressWarnings("unchecked")
@@ -639,7 +592,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public NavigableSet<E> subSet(E from, boolean fromInc, E to, boolean toInc) {
-         checkMod(myModCount);
          checkRangeLow(from, fromInc);
          checkRangeHigh(to, toInc);
          return new SubSetImpl(from, fromInc, -1, to, toInc, -1, myModCount);
@@ -654,7 +606,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public NavigableSet<E> tailSet(E from, boolean inclusive) {
-         checkMod(myModCount);
          checkRangeLow(from, inclusive);
          checkRangeHigh(from, false);
          return new SubSetImpl(from, inclusive, -1,

@@ -142,7 +142,13 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
          }
       }
 
-      void updateModCount() {
+      void contractAfterRemove() {
+         // we use internal methods on the tree that modify it w/out incrementing modCount, so
+         // increment it here and now
+         myModCount = ++modCount;
+      }
+      
+      void expandAfterAdd() {
          // we use internal methods on the tree that modify it w/out incrementing modCount, so
          // increment it here and now
          myModCount = ++modCount;
@@ -209,7 +215,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
             nextIndex--;
          }
          removeAndRebalance(lastFetched);
-         updateModCount();
+         contractAfterRemove();
          modState = IteratorModifiedState.REMOVED;
       }
 
@@ -225,7 +231,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
          checkMod(myModCount);
          Node<E> newNode = addAndRebalance(nextIndex++, e);
          previousNode = newNode;
-         updateModCount();
+         expandAfterAdd();
          modState = IteratorModifiedState.ADDED;
       }
    }
@@ -236,18 +242,36 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SubListImpl implements List<E>, RandomAccess {
+      private final TreeList<E>.SubListImpl parent;
       final int fromIndex;
       int toIndex;
       int myModCount;
       
       SubListImpl(int fromIndex, int toIndex) {
+         this(fromIndex, toIndex, null);
+      }
+      
+      SubListImpl(int fromIndex, int toIndex, TreeList<E>.SubListImpl parent) {
+         this.parent = parent;
          this.fromIndex = fromIndex;
          this.toIndex = toIndex;
          myModCount = modCount;
       }
 
-      private void resetModCount() {
+      void contractAfterRemove() {
+         toIndex--;
          myModCount = modCount;
+         if (parent != null) {
+            parent.contractAfterRemove();
+         }
+      }
+
+      void expandAfterAdd(int expandBy) {
+         toIndex += expandBy;
+         myModCount = modCount;
+         if (parent != null) {
+            parent.expandAfterAdd(expandBy);
+         }
       }
       
       private void check(int index) {
@@ -307,8 +331,8 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       @Override
       public boolean add(E e) {
          checkMod(myModCount);
-         TreeList.this.add(toIndex++, e);
-         resetModCount();
+         TreeList.this.add(toIndex, e);
+         expandAfterAdd(1);
          return true;
       }
 
@@ -337,8 +361,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
          checkMod(myModCount);
          checkWide(index);
          if (TreeList.this.addAll(index + fromIndex, c)) {
-            toIndex += c.size();
-            resetModCount();
+            expandAfterAdd(c.size());
             return true;
          }
          return false;
@@ -363,7 +386,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
             iter.next();
             iter.remove();
          }
-         resetModCount();
       }
 
       @Override
@@ -385,8 +407,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
          checkMod(myModCount);
          checkWide(index);
          TreeList.this.add(index + fromIndex, element);
-         toIndex++;
-         resetModCount();
+         expandAfterAdd(1);
       }
 
       @Override
@@ -394,8 +415,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
          checkMod(myModCount);
          check(index);
          E ret = TreeList.this.remove(index + fromIndex);
-         toIndex--;
-         resetModCount();
+         contractAfterRemove();
          return ret;
       }
 
@@ -428,12 +448,12 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       @Override
       public List<E> subList(int from, int to) {
          checkMod(myModCount);
-         check(from);
+         checkWide(from);
          checkWide(to);
          if (from > to) {
             throw new IllegalArgumentException("from > to");
          }
-         return new SubListImpl(fromIndex + from, fromIndex + to);
+         return new SubListImpl(fromIndex + from, fromIndex + to, this);
       }
       
       @Override
@@ -470,10 +490,15 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       }
 
       @Override
-      void updateModCount() {
-         // we use internal methods on the tree that modify it w/out incrementing modCount, so
-         // increment it here and now
-         subList.myModCount = myModCount = ++modCount;
+      void contractAfterRemove() {
+         super.contractAfterRemove();
+         subList.contractAfterRemove();
+      }
+      
+      @Override
+      void expandAfterAdd() {
+         super.expandAfterAdd();
+         subList.expandAfterAdd(1);
       }
       
       @Override
@@ -515,7 +540,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       @Override
       public void remove() {
          super.remove();
-         subList.toIndex--;
       }
 
       @Override
@@ -526,7 +550,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       @Override
       public void add(E e) {
          super.add(e);
-         subList.toIndex++;
       }
    }
    
@@ -991,8 +1014,7 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
 
    @Override
    public List<E> subList(int fromIndex, int toIndex) {
-      // TODO: checkWide(fromIndex)
-      check(fromIndex);
+      checkWide(fromIndex);
       checkWide(toIndex);
       if (fromIndex > toIndex) {
          throw new IllegalArgumentException("from > to");

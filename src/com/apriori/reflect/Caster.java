@@ -1,5 +1,6 @@
 package com.apriori.reflect;
 
+import com.apriori.reflect.DispatchSettings.Visibility;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -218,7 +219,7 @@ public class Caster<T> {
             // bind the actual method at runtime depending on runtime types of the arguments
             final DispatchCandidates candidates =
                   DispatchCandidates.getEligibleCandidates(m, targetClass,
-                        settings.isExpandingVarArgs());
+                        settings.isExpandingVarArgs(), settings.visibility());
             if (candidates.isEmpty()) {
                // no way to even do a dynamic bind
                hasCompatibleMethod = false;
@@ -233,7 +234,18 @@ public class Caster<T> {
             }
          } else {
             try {
-               final Method targetMethod = targetClass.getMethod(m.getName(), m.getParameterTypes());
+               final Method targetMethod;
+               if (settings.visibility() == Visibility.PUBLIC) {
+                  targetMethod = targetClass.getMethod(m.getName(), m.getParameterTypes());
+               } else {
+                  Method candidate = Members.findMethod(targetClass, m.getName(), m.getParameterTypes());
+                  if (settings.visibility().isVisible(candidate.getModifiers())) {
+                     targetMethod = candidate;
+                     targetMethod.setAccessible(true);
+                  } else {
+                     throw new NoSuchMethodException(m.toString());
+                  }
+               }
                ConversionStrategy<?, ?> strategy = ConversionStrategy.getConversionStrategy(targetMethod.getReturnType(),
                      m.getReturnType(), settings.isCastingReturnTypes());
                if (strategy != null) {
@@ -367,6 +379,7 @@ public class Caster<T> {
       private boolean castArguments;
       private boolean expandVarArgs;
       private boolean ignoreAmbiguities;
+      private Visibility visibility;
       
       /**
        * Constructs a new builder.
@@ -397,6 +410,7 @@ public class Caster<T> {
          ret.castArguments = this.castArguments;
          ret.expandVarArgs = this.expandVarArgs;
          ret.ignoreAmbiguities = this.ignoreAmbiguities;
+         ret.visibility = this.visibility;
          return ret;
       }
 
@@ -484,11 +498,18 @@ public class Caster<T> {
       }
       
       // TODO: doc!
+      public Builder<T> withVisibility(Visibility visibility) {
+         this.visibility = visibility;
+         return this;
+      }
+      
+      // TODO: doc!
       public Builder<T> withDispatchSettings(DispatchSettings settings) {
          this.castArguments = settings.isCastingArguments();
          this.castReturnTypes = settings.isCastingReturnTypes();
          this.expandVarArgs = settings.isExpandingVarArgs();
          this.ignoreAmbiguities = settings.isIgnoringAmbiguities();
+         this.visibility = settings.visibility();
          return this;
       }
 
@@ -500,7 +521,7 @@ public class Caster<T> {
       public Caster<T> build() {
          return new Caster<T>(iface, dynamicMethods, allowUnsupportedOperations,
                new DispatchSettings(castReturnTypes, castArguments, expandVarArgs,
-                     ignoreAmbiguities));
+                     ignoreAmbiguities, visibility));
       }
    }
 }
@@ -514,4 +535,3 @@ public class Caster<T> {
 // 2) add hooks to make conversions extensible by app code. provide more control over "casting" of
 //    interface return types and args -- like being to specify which methods and even which types
 // 3) allow any interface method to return void and just discard any non-void return from dispatch
-// 4) add setting to make methods accessible to invoke private methods on object

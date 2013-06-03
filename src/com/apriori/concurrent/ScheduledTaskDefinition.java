@@ -1,6 +1,6 @@
 package com.apriori.concurrent;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -67,13 +67,13 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * 
     * @return the history of past executions
     */
-   Collection<ScheduledTask<V, T>> history();
+   List<ScheduledTask<V, T>> history();
    
    /**
     * Returns details for the most recently completed invocation of this task
     * definition. This is equivalent to:
     * <pre>
-    * scheduledTaskDefinition.history().iterator().next();
+    * scheduledTaskDefinition.history().get(0);
     * </pre>
     * @return details for the latest invocation
     */
@@ -114,7 +114,8 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
    /**
     * Returns whether or not the task definition is finished. It is finished when
     * all invocations are completed and the {@link #scheduleNextTaskPolicy() ScheduleNextTaskPolicy}
-    * indicates that no next task need be scheduled.
+    * indicates that no next task need be scheduled. It is also considered finished if/when it
+    * is cancelled.
     * 
     * @return {@code true} if the task definition is finished; {@code false} otherwise
     */
@@ -124,8 +125,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * Cancels this task definition. No more invocations will be scheduled. If so
     * specified, any currently running invocation will be interrupted.
     * 
-    * <p>Canceling a task definition more than once has no effect. Subsequent calls
-    * will return the same thing as the first call.
+    * <p>Canceling a task definition that is already cancelled does nothing and will {@code false}.
     * 
     * @param interrupt {@code true} if a currently running invocation should be
     *       interrupted via {@link Thread#interrupt()}
@@ -148,8 +148,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * allowed to complete. After the currently running invocation completes, no
     * further invocations will be scheduled until it is {@linkplain #resume() resumed}.
     * 
-    * <p>Pausing a task that is already paused has no effect. Subsequent calls will
-    * return the same thing as the initial call.
+    * <p>Pausing a task that is already paused does nothing and will return {@code false}.
     * 
     * <p>If a task definition needs to be paused with no invocation running, then the
     * caller can check {@link #current()} after pausing. If it is not {@code null} then
@@ -157,7 +156,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * until it finishes}.
     * 
     * @return {@code true} if the task definition was paused; {@code false} if it could
-    *       not be paused because it was already finished or cancelled
+    *       not be paused because it was already finished or paused
     *       
     * @see #resume()       
     */
@@ -185,7 +184,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * <p>Resuming a task definition that is not paused has no effect.
     * 
     * @return {@code true} if the task definition was resumed; {@code false} if it could
-    *       not be resumed because it was already finished or cancelled
+    *       not be resumed because it was already finished or not paused
     *       
     * @see #pause()
     */

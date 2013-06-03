@@ -29,6 +29,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       super(name);
    }
    
+   @Override
+   public abstract NavigableSet<?> makeEmptySet();
+   
    /**
     * Determines if the values returned by {@link NavigableSet#headSet(Object)} return a
     * {@link NavigableSet}. The interface is defined only to return {@link SortedSet} but many

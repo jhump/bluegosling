@@ -5,7 +5,6 @@ import com.apriori.util.Predicate;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -82,9 +81,7 @@ public final class Annotations {
          throw new IllegalArgumentException("Map contains invalid keys for "
                + annotationType.getName() + ": " + keys);
       }
-      @SuppressWarnings("unchecked") // we know that annotationType is T, so this is safe
-      T ret = (T) Proxy.newProxyInstance(annotationType.getClassLoader(),
-            new Class<?>[] { annotationType },
+      T ret = ProxyUtils.newProxyInstance(annotationType,
             new InvocationHandler() {
                @Override
                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {

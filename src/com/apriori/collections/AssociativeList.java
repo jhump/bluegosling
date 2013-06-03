@@ -12,7 +12,7 @@ public interface AssociativeList<E, K> extends List<E> {
     * 
     * @param element the new element to add to the end of the list
     * @param key an associative key for the new element
-    * @return the index previously associated with the specified key or -1 if it was no previously
+    * @return the index previously associated with the specified key or -1 if it was not previously
     *       mapped
     */
    int add(E element, K key);
@@ -56,9 +56,9 @@ public interface AssociativeList<E, K> extends List<E> {
    Map<K, Integer> addAll(int index, Map<? extends K, ? extends E> mappedElements);
 
    /**
-    * Adds a collection of mapped entries from another {@link AssociativeList}. The are added to the
-    * end of the list. Any key that was already associated with an element in the list will be in
-    * the returned map, which also indicates the previously associated list index.
+    * Adds a collection of mapped entries from another {@link AssociativeList}. They are added to
+    * the end of the list. Any key that was already associated with an element in the list will be
+    * in the returned map, which also indicates the previously associated list index.
     * 
     * @param mappedElements the values and associated keys to add to the list
     * @return a map of keys to previously associated indices

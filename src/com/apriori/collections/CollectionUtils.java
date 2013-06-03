@@ -190,8 +190,8 @@ final class CollectionUtils {
       boolean modified = false;
       while (itemsToRemove.hasNext()) {
          Object o = itemsToRemove.next();
-         // if collection allows duplicates, we need to repeat remove operation until it returns
-         // false to make sure we get all of them
+         // in case collection allows duplicates, we need to repeat remove operation until it
+         // returns false to make sure we get all of them
          while (true) {
             if (collection.remove(o)) {
                modified = true;

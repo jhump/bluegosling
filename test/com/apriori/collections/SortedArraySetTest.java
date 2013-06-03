@@ -1,7 +1,7 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
-import java.util.Set;
+import java.util.NavigableSet;
 
 import junit.framework.TestSuite;
 
@@ -36,7 +36,7 @@ public class SortedArraySetTest extends AbstractTestNavigableSet {
    // trimToSize(), etc.
 
    @Override
-   public Set<?> makeEmptySet() {
+   public NavigableSet<?> makeEmptySet() {
       return new SortedArraySet<Object>();
    }
 

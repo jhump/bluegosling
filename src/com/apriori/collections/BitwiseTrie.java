@@ -95,7 +95,7 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
    
    private final BitConverter<? super K> bitConverter;
    private final Comparator<? super K> comparator;
-   private TrieNode<K, V> root = new TrieNode<K, V>();
+   TrieNode<K, V> root = new TrieNode<K, V>();
    int modCount;
    int size;
    
@@ -381,7 +381,6 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
                return removed;
             }
          }
-         // TODO
       } else if (node.value != null) {
          // search for value in the list
          int c = comparator.compare(key, node.value.key);
@@ -526,11 +525,26 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
    public boolean containsKey(Object key) {
       return findNode(key) != null;
    }
+   
+   private boolean findValue(Object value, TrieNode<K, V> node) {
+      for (ValueNode<K, V> valueNode = node.value; valueNode != null; valueNode = valueNode.next) {
+         Object v = valueNode.value;
+         if (value == null ? v == null : value.equals(v)) {
+            return true;
+         }
+      }
+      if (node.s0 != null && findValue(value, node.s0.node)) {
+         return true;
+      }
+      if (node.s1 != null && findValue(value, node.s1.node)) {
+         return true;
+      }
+      return false;
+   }
 
    @Override
    public boolean containsValue(Object value) {
-      // TODO Auto-generated method stub
-      return false;
+      return findValue(value, root);
    }
 
    @Override
@@ -602,8 +616,8 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public K lowerKey(K key) {
-      // TODO Auto-generated method stub
-      return null;
+      Map.Entry<K, V> entry = lowerEntry(key);
+      return entry == null ? null : entry.getKey();
    }
 
    @Override
@@ -614,8 +628,8 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public K floorKey(K key) {
-      // TODO Auto-generated method stub
-      return null;
+      Map.Entry<K, V> entry = floorEntry(key);
+      return entry == null ? null : entry.getKey();
    }
 
    @Override
@@ -626,8 +640,8 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public K ceilingKey(K key) {
-      // TODO Auto-generated method stub
-      return null;
+      Map.Entry<K, V> entry = ceilingEntry(key);
+      return entry == null ? null : entry.getKey();
    }
 
    @Override
@@ -638,20 +652,20 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public K higherKey(K key) {
-      // TODO Auto-generated method stub
-      return null;
+      Map.Entry<K, V> entry = higherEntry(key);
+      return entry == null ? null : entry.getKey();
    }
 
    @Override
    public Map.Entry<K, V> firstEntry() {
-      // TODO Auto-generated method stub
-      return null;
+      ValueNode<K, V> valueNode = firstNode(root);
+      return valueNode == null ? null : mapEntry(valueNode);
    }
 
    @Override
    public Map.Entry<K, V> lastEntry() {
-      // TODO Auto-generated method stub
-      return null;
+      ValueNode<K, V> valueNode = lastNode(root);
+      return valueNode == null ? null : mapEntry(valueNode);
    }
 
    @Override
@@ -674,8 +688,7 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public NavigableSet<K> descendingKeySet() {
-      // TODO Auto-generated method stub
-      return null;
+      return navigableKeySet().descendingSet();
    }
    
    @Override public Comparator<Boolean> componentComparator() {
@@ -689,44 +702,48 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public K firstKey() {
-      // TODO Auto-generated method stub
-      return null;
+      ValueNode<K, V> valueNode = firstNode(root);
+      return valueNode == null ? null : valueNode.key;
    }
 
    @Override
    public K lastKey() {
-      // TODO Auto-generated method stub
-      return null;
+      ValueNode<K, V> valueNode = lastNode(root);
+      return valueNode == null ? null : valueNode.key;
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix) {
-      // TODO Auto-generated method stub
-      return null;
+      return prefixMap(bitConverter.getComponents(prefix));
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix, int numComponents) {
-      // TODO Auto-generated method stub
-      return null;
+      return prefixMap(bitConverter.getComponents(prefix), numComponents);
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
-      // TODO Auto-generated method stub
-      return null;
+      return prefixMap(BitSequences.fromIterator(prefix.iterator()));
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix, int numComponents) {
+      return prefixMap(BitSequences.fromIterator(prefix.iterator()), numComponents);
+   }
+   
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(BitSequence prefix) {
+      return prefixMap(prefix, prefix.length());
+   }
+   
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(BitSequence prefix, int numBits) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> descendingMap() {
-      // TODO Auto-generated method stub
-      return null;
+      return new DescendingCompositeTrie<K, Boolean, V>(this);
    }
 
    @Override

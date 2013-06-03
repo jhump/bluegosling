@@ -5,6 +5,7 @@ import com.apriori.util.Function;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * A single dispatch candidate. A dispatch candidate represents a single method on the cast
@@ -95,6 +96,7 @@ class DispatchCandidate {
     *       the contents of a var-args array expanded into multiple arguments
     * @return the candidate or {@code null} if the specified candidate method is not suitable
     */
+   // TODO: this method is a ugly behemoth! need to simplify or at least break it up
    static DispatchCandidate create(Method candidateMethod, Method targetMethod, Class<?> argTypes[],
          DispatchSettings settings, boolean varArgsExpanded) {
       Class<?> candidateTypes[] = candidateMethod.getParameterTypes();
@@ -228,6 +230,10 @@ class DispatchCandidate {
          @SuppressWarnings("rawtypes") // so we can pass Object as input
          Converter returnConverter = strategy.getConverter();
          // got a good candidate!
+         if (!Modifier.isPublic(candidateMethod.getModifiers())) {
+            // make sure we can invoke it
+            candidateMethod.setAccessible(true);
+         }
          return new DispatchCandidate(candidateMethod, autobox, varArgs, numCastArgs,
                anyArgNeedsConversion ? argConverters : null, varArgsConverter, returnConverter);
       }

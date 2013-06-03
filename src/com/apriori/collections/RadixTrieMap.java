@@ -36,6 +36,11 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
       // TODO
       return null;
    }
+   
+   @Override public V get(Object key) {
+      // ClassCastException if key is not a Number is okay
+      return get(((Number) key).longValue());
+   }
 
    /**
     * Puts a value at the specified key. This is a convenience method that eliminates any
@@ -49,6 +54,10 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
       // TODO
       return null;
    }
+   
+   @Override public V put(Long key, V value) {
+      return put(key.longValue(), value);
+   }
 
    /**
     * Removes a value from the specified key. This is a convenience method that eliminates any
@@ -60,6 +69,11 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
    public V remove(long key) {
       // TODO
       return null;
+   }
+   
+   @Override public V remove(Object key) {
+      // ClassCastException if key is not a Number is okay
+      return remove(((Number) key).longValue());
    }
 
    /**
@@ -77,6 +91,7 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
     *    greater than or equal to {@link Integer#MAX_VALUE}
     */
    public List<V> denseValues() {
+      // TODO
       return null;
    }
 
@@ -96,6 +111,7 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
     * @throws IllegalStateException if the map contains any keys less than zero
     */
    public List<V> denseValues(int size) {
+      // TODO
       return null;
    }
 }

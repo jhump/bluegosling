@@ -140,11 +140,10 @@ public final class ProxyUtils {
    }
 
    /**
-    * Returns true if the first specified method is more specific than the second. This does not
-    * quite use all of the specificity rules described above. It only looks at argument types,
-    * checking if the types of one method are sub-types of corresponding types of the other. If
-    * the two methods have a different number of arguments then {@code false} will always be
-    * returned.
+    * Returns true if the first specified method is more specific than the second. It only looks at
+    * argument types, checking if the types of one method are sub-types of corresponding types of
+    * the other. If the two methods have a different number of arguments then {@code false} will
+    * always be returned.
     * 
     * @param method the first method
     * @param other the second method

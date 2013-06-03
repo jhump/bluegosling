@@ -10,6 +10,8 @@ public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, Navigab
    
    @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix);
 
+   @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents);
+   
    @Override NavigableSequenceTrie<K, V> descendingMap();
 
    @Override NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
