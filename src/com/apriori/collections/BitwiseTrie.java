@@ -6,6 +6,7 @@ import com.apriori.collections.BitSequence.Stream;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -497,7 +498,7 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
       return findNode(castKey, stream(castKey), false, root);
    }
    
-   private Map.Entry<K, V> mapEntry(final ValueNode<K, V> value) {
+   private Entry<K, V> mapEntry(final ValueNode<K, V> value) {
       return new EntryImpl(value);
    }
 
@@ -506,7 +507,7 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
       return nearest == null ? null : nearest.key;
    }
 
-   public Map.Entry<K, V> nearestEntry(K key) {
+   public Entry<K, V> nearestEntry(K key) {
       ValueNode<K, V> nearest = findNode(key, bitConverter.getComponents(key).stream(), true, root);
       return nearest == null ? null : mapEntry(nearest);
    }
@@ -581,7 +582,7 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public void putAll(Map<? extends K, ? extends V> m) {
-      for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+      for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
          put(entry.getKey(), entry.getValue());
       }
    }
@@ -603,79 +604,79 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
    }
 
    @Override
-   public Set<Map.Entry<K, V>> entrySet() {
+   public Set<Entry<K, V>> entrySet() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public Map.Entry<K, V> lowerEntry(K key) {
+   public Entry<K, V> lowerEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
    public K lowerKey(K key) {
-      Map.Entry<K, V> entry = lowerEntry(key);
+      Entry<K, V> entry = lowerEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> floorEntry(K key) {
+   public Entry<K, V> floorEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
    public K floorKey(K key) {
-      Map.Entry<K, V> entry = floorEntry(key);
+      Entry<K, V> entry = floorEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> ceilingEntry(K key) {
+   public Entry<K, V> ceilingEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
    public K ceilingKey(K key) {
-      Map.Entry<K, V> entry = ceilingEntry(key);
+      Entry<K, V> entry = ceilingEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> higherEntry(K key) {
+   public Entry<K, V> higherEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
    public K higherKey(K key) {
-      Map.Entry<K, V> entry = higherEntry(key);
+      Entry<K, V> entry = higherEntry(key);
       return entry == null ? null : entry.getKey();
    }
 
    @Override
-   public Map.Entry<K, V> firstEntry() {
+   public Entry<K, V> firstEntry() {
       ValueNode<K, V> valueNode = firstNode(root);
       return valueNode == null ? null : mapEntry(valueNode);
    }
 
    @Override
-   public Map.Entry<K, V> lastEntry() {
+   public Entry<K, V> lastEntry() {
       ValueNode<K, V> valueNode = lastNode(root);
       return valueNode == null ? null : mapEntry(valueNode);
    }
 
    @Override
-   public Map.Entry<K, V> pollFirstEntry() {
+   public Entry<K, V> pollFirstEntry() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public Map.Entry<K, V> pollLastEntry() {
+   public Entry<K, V> pollLastEntry() {
       // TODO Auto-generated method stub
       return null;
    }
@@ -767,20 +768,17 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> subMap(K fromKey, K toKey) {
-      // TODO Auto-generated method stub
-      return null;
+      return subMap(fromKey, true, toKey, false);
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> headMap(K toKey) {
-      // TODO Auto-generated method stub
-      return null;
+      return headMap(toKey, false);
    }
 
    @Override
    public NavigableCompositeTrie<K, Boolean, V> tailMap(K fromKey) {
-      // TODO Auto-generated method stub
-      return null;
+      return tailMap(fromKey, true);
    }
    
    @Override
@@ -857,6 +855,28 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
       public String toString() {
          return MapUtils.toString(this);
       }
+   }
+   
+   class IteratorImpl implements Iterator<ValueNode<K, V>> {
+
+      @Override
+      public boolean hasNext() {
+         // TODO Auto-generated method stub
+         return false;
+      }
+
+      @Override
+      public ValueNode<K, V> next() {
+         // TODO Auto-generated method stub
+         return null;
+      }
+
+      @Override
+      public void remove() {
+         // TODO Auto-generated method stub
+         
+      }
+      
    }
 
    static class WrappedComparator<K> implements Comparator<K> {

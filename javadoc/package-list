@@ -1,4 +1,11 @@
+com.apriori.apt
+com.apriori.apt.reflect
+com.apriori.apt.testing
 com.apriori.collections
+com.apriori.concurrent
+com.apriori.di
+com.apriori.di.collections
+com.apriori.di.tools
 com.apriori.reflect
 com.apriori.testing
 com.apriori.util

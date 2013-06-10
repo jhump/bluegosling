@@ -39,7 +39,7 @@ public interface RandomAccessSet<E> extends Set<E> {
    int indexOf(Object o);
    
    /**
-    * Returns a {@list ListIterator} for iterating over the set. The iterator will start off before
+    * Returns a {@link ListIterator} for iterating over the set. The iterator will start off before
     * the first element so the first call to {@link ListIterator#next() next()} returns the first
     * element in the set. Iteration is in the same order as that of {@link #iterator()}, but allows
     * for navigating both forwards and backwards in the set and for retrieving the indices of
@@ -53,7 +53,7 @@ public interface RandomAccessSet<E> extends Set<E> {
    ListIterator<E> listIterator();
    
    /**
-    * Returns a {@list ListIterator} for iterating over the set. The iterator will start off before
+    * Returns a {@link ListIterator} for iterating over the set. The iterator will start off before
     * the specified index. Iteration is in the same order as that of {@link #iterator()}, but allows
     * for navigating both forwards and backwards in the set and for retrieving the indices of
     * elements.

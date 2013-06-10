@@ -3,7 +3,7 @@ package com.apriori.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/** An {@link Iterator} thqt can provide primitive (un-boxed) booleans. */
+/** An {@link Iterator} that can provide primitive (un-boxed) booleans. */
 public interface BooleanIterator extends Iterator<Boolean> {
    /**
     * Returns the next boolean in the iteration. Identical to {@link #next()} except that the value

@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>SharedCapacityDequeFactory</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="SharedCapacityDequeFactory";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/collections/SharedCapacityDequeFactory.html" target="_top">Frames</a></li>
+<li><a href="SharedCapacityDequeFactory.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.apriori.collections</div>
+<h2 title="Class SharedCapacityDequeFactory" class="title">Class SharedCapacityDequeFactory</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>com.apriori.collections.SharedCapacityDequeFactory</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public class <span class="strong">SharedCapacityDequeFactory</span>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">A producer of queues and deques that all share a single bound. An individual queue could fill up
+ the total capacity if all of the others are empty. Similarly, if other queues produced by the
+ factory have a large number of items, then the next queue would have a smaller capacity. The
+ capacity is not fixed at the time the queue is generated but rather is determined at runtime by
+ the total number of items across all queues at any given moment in time.
+ 
+ <p>Queues created by this factory can be closed, which releases their share of the capacity (and
+ also makes them inoperable).
+ 
+ <p>This factory provides no new implementations of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> or <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util"><code>Deque</code></a>. Instead,
+ callers provide the implementation, and this factory wraps it so that mutation attempts will have
+ the total capacity enforced.
+ 
+ <p>The queues returned by this factory will generally have all of the properties of the
+ implementation that is wrapped. The exception to this rule is that some methods on the returned
+ queues are <strong>not atomic</strong>, even if the underlying implementation provides an atomic
+ implementation of the operation. This is done so as to accurately track the total size of all
+ queues and to enforce the total capacity. The methods impacted by this exception follow:
+ <ul>
+ <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util"><code>addAll</code></a></li>
+ <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util"><code>removeAll</code></a></li>
+ <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util"><code>retainAll</code></a></li>
+ <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#clear()" title="class or interface in java.util"><code>clear</code></a></li>
+ </ul> 
+ 
+ <p>The queues returned by this factory also have the same concurrency as the implementation that
+ is wrapped. Notably, <strong>if the underlying queue is not thread-safe, neither is the wrapped
+ queue provided by this factory</strong>. If a queue that is not thread-safe is modified
+ concurrently, the results are undefined (but expect that the structure could be unrecoverably
+ corrupted and that the factory's capacity could be exceeded).  
+ 
+ <p><strong>NOTE:</strong> The <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#remove()" title="class or interface in java.util"><code>Iterator.remove()</code></a> method returns no information as to
+ whether the removal succeeded (i.e. modified the backing collection). If used with an
+ implementation of queue or deque that uses weakly consistent iterators, there is no way to know
+ with certainty when an item is actually removed. This means the information about the combined
+ size of all queues provided by this factory could become incorrect if this method is used. Since
+ it behaves when the underlying implementation has strongly consistent iterators, the wrapped
+ queues provided by this factory <em>do</em> support this operation. <em>But</em>, since it
+ doesn't behave properly for all underlying implementations, removing elements via an iterator is
+ <strong>strongly discouraged</strong>.</div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingDeque</a>&lt;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="type parameter in SharedCapacityDequeFactory.CloseableBlockingDeque">T</a>&gt;</strong></code>
+<div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a> that can be closed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingQueue</a>&lt;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingQueue.html" title="type parameter in SharedCapacityDequeFactory.CloseableBlockingQueue">T</a>&gt;</strong></code>
+<div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingQueue</code></a> that can be closed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableDeque</a>&lt;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableDeque.html" title="type parameter in SharedCapacityDequeFactory.CloseableDeque">T</a>&gt;</strong></code>
+<div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util"><code>Deque</code></a> that can be closed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="type parameter in SharedCapacityDequeFactory.CloseableQueue">T</a>&gt;</strong></code>
+<div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> that can be closed.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#SharedCapacityDequeFactory(int)">SharedCapacityDequeFactory</a></strong>(int&nbsp;totalCapacity)</code>
+<div class="block">Constructs a new factory.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#combinedSize()">combinedSize</a></strong>()</code>
+<div class="block">Returns the combined size of all queues.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingDeque</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#createDeque()">createDeque</a></strong>()</code>
+<div class="block">Creates a new <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#remainingCapacity()">remainingCapacity</a></strong>()</code>
+<div class="block">Returns the remaining capacity for this factory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingDeque</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.concurrent.BlockingDeque)">shareCapacityWith</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent">BlockingDeque</a>&lt;T&gt;&nbsp;deque)</code>
+<div class="block">Wraps the specified deque so that it shares the factory's capacity.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingQueue</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.concurrent.BlockingQueue)">shareCapacityWith</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;T&gt;&nbsp;queue)</code>
+<div class="block">Wraps the specified queue so that it shares the factory's capacity.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableDeque</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Deque)">shareCapacityWith</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;T&gt;&nbsp;deque)</code>
+<div class="block">Wraps the specified deque so that it shares the factory's capacity.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)">shareCapacityWith</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;T&gt;&nbsp;queue)</code>
+<div class="block">Wraps the specified queue so that it shares the factory's capacity.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#totalCapacity()">totalCapacity</a></strong>()</code>
+<div class="block">Returns the total capacity for this factory.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="SharedCapacityDequeFactory(int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>SharedCapacityDequeFactory</h4>
+<pre>public&nbsp;SharedCapacityDequeFactory(int&nbsp;totalCapacity)</pre>
+<div class="block">Constructs a new factory.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>totalCapacity</code> - the total capacity shared across all queues provided by this factory</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="totalCapacity()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>totalCapacity</h4>
+<pre>public&nbsp;int&nbsp;totalCapacity()</pre>
+<div class="block">Returns the total capacity for this factory.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the total capacity</dd></dl>
+</li>
+</ul>
+<a name="combinedSize()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>combinedSize</h4>
+<pre>public&nbsp;int&nbsp;combinedSize()</pre>
+<div class="block">Returns the combined size of all queues. This is a snapshot of the total number of elements in
+ all queues provided by this factory.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the combined size of all queues</dd></dl>
+</li>
+</ul>
+<a name="remainingCapacity()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remainingCapacity</h4>
+<pre>public&nbsp;int&nbsp;remainingCapacity()</pre>
+<div class="block">Returns the remaining capacity for this factory. This is the same as:
+ <pre>
+ totalCapacity() - combinedSize()
+ </pre></div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the remaining capacity</dd></dl>
+</li>
+</ul>
+<a name="createDeque()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createDeque</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingDeque</a>&lt;T&gt;&nbsp;createDeque()</pre>
+<div class="block">Creates a new <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a>. The returned deque uses the factory's shared capacity to
+ limit its number of elements. The actual implementation underlying the returned deque is
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/LinkedBlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>LinkedBlockingDeque</code></a>. If you need an alternate implementation, use one of the various
+ <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)"><code>shareCapacityWith(java.util.Queue&lt;T&gt;)</code></a> methods.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a>.</dd></dl>
+</li>
+</ul>
+<a name="shareCapacityWith(java.util.Queue)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shareCapacityWith</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;&nbsp;shareCapacityWith(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;T&gt;&nbsp;queue)</pre>
+<div class="block">Wraps the specified queue so that it shares the factory's capacity. The specified queue must
+ be empty.
+ 
+ <p>After this method returns, no items should be added or removed using the original
+ queue reference (until it is closed). All such operations should be performed using the
+ returned object. If operations are performed directly against the queue, the results are
+ undefined (but expect that the factory's total capacity could be exceeded and other strange
+ runtime exceptions could be thrown). The safest way to use this method is with a queue that
+ has <em>no</em> other references to it. This can be done like so:
+ <pre><code>CloseableQueue&lt;MyObject&gt; queue = factory.shareCapacityWith(new LinkedList&lt;MyObject&gt;()); 
+ </code></pre> 
+ 
+ <p>If the queue already has a bound on capacity then it will be observed, too. At any given
+ time, the number of elements in the queue will not exceed the specified queue's limit. At the
+ same time, the number of elements across all queues provided by this factory, including the
+ one returned from this method, will not exceed the factory's total capacity.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>queue</code> - the queue to wrap</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a queue that shares capacity with this factory</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified queue is not empty</dd></dl>
+</li>
+</ul>
+<a name="shareCapacityWith(java.util.Deque)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shareCapacityWith</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableDeque</a>&lt;T&gt;&nbsp;shareCapacityWith(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;T&gt;&nbsp;deque)</pre>
+<div class="block">Wraps the specified deque so that it shares the factory's capacity.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>deque</code> - the deque to wrap</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a deque that shares capacity with this factory</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified deque is not empty</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)"><code>shareCapacityWith(Queue)</code></a></dd></dl>
+</li>
+</ul>
+<a name="shareCapacityWith(java.util.concurrent.BlockingQueue)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shareCapacityWith</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingQueue</a>&lt;T&gt;&nbsp;shareCapacityWith(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;T&gt;&nbsp;queue)</pre>
+<div class="block">Wraps the specified queue so that it shares the factory's capacity.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>queue</code> - the queue to wrap</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a queue that shares capacity with this factory</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified deque is not empty</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)"><code>shareCapacityWith(Queue)</code></a></dd></dl>
+</li>
+</ul>
+<a name="shareCapacityWith(java.util.concurrent.BlockingDeque)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>shareCapacityWith</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableBlockingDeque</a>&lt;T&gt;&nbsp;shareCapacityWith(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent">BlockingDeque</a>&lt;T&gt;&nbsp;deque)</pre>
+<div class="block">Wraps the specified deque so that it shares the factory's capacity.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>deque</code> - the deque to wrap</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a deque that shares capacity with this factory</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified deque is not empty</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)"><code>shareCapacityWith(Queue)</code></a></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableBlockingDeque.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/collections/SharedCapacityDequeFactory.html" target="_top">Frames</a></li>
+<li><a href="SharedCapacityDequeFactory.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

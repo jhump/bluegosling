@@ -3,7 +3,7 @@ package com.apriori.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/** An {@link Iterator} thqt can provide primitive (un-boxed) longs. */
+/** An {@link Iterator} that can provide primitive (un-boxed) longs. */
 public interface LongIterator extends Iterator<Long> {
    /**
     * Returns the next long in the iteration. Identical to {@link #next()} except that the value

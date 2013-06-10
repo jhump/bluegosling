@@ -110,7 +110,6 @@ public final class Members {
     * 
     * @param clazz the class whose field to find
     * @param name the name of the field to find
-    * @param argTypes the parameter types of the field to find
     * @return the field with the specified name or {@code null}
     */
    public static Field findField(Class<?> clazz, final String name) {

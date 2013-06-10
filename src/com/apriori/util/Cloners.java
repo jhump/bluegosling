@@ -852,9 +852,9 @@ public final class Cloners {
     * <p>
     * If any null values are specified as clones, the corresponding cloner in the returned list will
     * also be null. This is useful for specifying cloners to
-    * {@link InterfaceVerifier.MethodConfigurator#cloneArgumentsWith(List)} under situations where
-    * some of the method arguments do not need to be cloned (like if they are null, primitive, or
-    * not subject to mutation by the method under test).
+    * {@link InterfaceVerifier.MethodConfigurator#cloneArgumentsWith(java.util.List)} under
+    * situations where some of the method arguments do not need to be cloned (like if they are null,
+    * primitive, or not subject to mutation by the method under test).
     * 
     * @param clones The clones
     * @return A list of cloners

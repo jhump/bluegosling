@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>AnnotatedElement</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="AnnotatedElement";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Class</li>
+<li><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?com/apriori/apt/reflect/AnnotatedElement.html" target="_top">Frames</a></li>
+<li><a href="AnnotatedElement.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.apriori.apt.reflect</div>
+<h2 title="Interface AnnotatedElement" class="title">Interface AnnotatedElement</h2>
+</div>
+<div class="contentContainer">
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>, <a href="../../../../com/apriori/apt/reflect/Constructor.html" title="class in com.apriori.apt.reflect">Constructor</a>, <a href="../../../../com/apriori/apt/reflect/Field.html" title="class in com.apriori.apt.reflect">Field</a>, <a href="../../../../com/apriori/apt/reflect/Method.html" title="class in com.apriori.apt.reflect">Method</a>, <a href="../../../../com/apriori/apt/reflect/Package.html" title="class in com.apriori.apt.reflect">Package</a>, <a href="../../../../com/apriori/apt/reflect/Parameter.html" title="class in com.apriori.apt.reflect">Parameter</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">AnnotatedElement</span></pre>
+<div class="block">An element that can have annotations. This includes representations of things
+ in the Java programming language which can be annotated, like packages, types,
+ fields, constructors, methods, and parameters.
+ 
+ <p>The Java programming language also allows local variables (including exception
+ variables defined in catch blocks) to be annotated, but support for this during
+ annotation processing is incomplete, so there currently are no such implementations.
+
+ <p>This interface is analogous to <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect"><code>java.lang.reflect.AnnotatedElement</code></a>,
+ except that it represents a source-level type (during annotation processing) instead
+ of an actual runtime type.  Unlike <code>java.lang.reflect.AnnotatedElement</code>, this
+ interface can be used to inspect annotations whose retention policy is
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#CLASS" title="class or interface in java.lang.annotation"><code>RetentionPolicy.CLASS</code></a> or <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#SOURCE" title="class or interface in java.lang.annotation"><code>RetentionPolicy.SOURCE</code></a>.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedElement</code></a></dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>,<a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect">AnnotatedElement</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#FROM_ELEMENT">FROM_ELEMENT</a></strong></code>
+<div class="block">A function that transforms a <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> to an <a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect"><code>AnnotatedElement</code></a>.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#asElement()">asElement</a></strong>()</code>
+<div class="block">Returns the underlying <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> for this object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getAnnotation(com.apriori.apt.reflect.Class)">getAnnotation</a></strong>(<a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&nbsp;annotationClass)</code>
+<div class="block">Gets the annotation from the object that corresponds to the specified annotation type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getAnnotation(java.lang.Class)">getAnnotation</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</code>
+<div class="block">Gets the annotation from the object that corresponds to the specified annotation type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;T extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;<br>T</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getAnnotationBridge(java.lang.Class)">getAnnotationBridge</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;annotationClass)</code>
+<div class="block">Gets an annotation bridge for the specified annotation type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getAnnotations()">getAnnotations</a></strong>()</code>
+<div class="block">Gets all annotations for this object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getDeclaredAnnotations()">getDeclaredAnnotations</a></strong>()</code>
+<div class="block">Gets the annotations declared on this object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#isAnnotationPresent(com.apriori.apt.reflect.Class)">isAnnotationPresent</a></strong>(<a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&nbsp;annotationClass)</code>
+<div class="block">Determines whether an annotation of the specified type exists on the object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#isAnnotationPresent(java.lang.Class)">isAnnotationPresent</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</code>
+<div class="block">Determines whether an annotation of the specified type exists on the object.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="FROM_ELEMENT">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>FROM_ELEMENT</h4>
+<pre>static final&nbsp;<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>,<a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect">AnnotatedElement</a>&gt; FROM_ELEMENT</pre>
+<div class="block">A function that transforms a <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> to an <a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect"><code>AnnotatedElement</code></a>.
+ 
+ <p>The function will return instances of <a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect"><code>Class</code></a>, <a href="../../../../com/apriori/apt/reflect/Field.html" title="class in com.apriori.apt.reflect"><code>Field</code></a>, <a href="../../../../com/apriori/apt/reflect/Method.html" title="class in com.apriori.apt.reflect"><code>Method</code></a>,
+ <a href="../../../../com/apriori/apt/reflect/Constructor.html" title="class in com.apriori.apt.reflect"><code>Constructor</code></a>, <a href="../../../../com/apriori/apt/reflect/Parameter.html" title="class in com.apriori.apt.reflect"><code>Parameter</code></a>, or <a href="../../../../com/apriori/apt/reflect/Package.html" title="class in com.apriori.apt.reflect"><code>Package</code></a>. If the specified input element
+ does not represent one of these types of elements then <code>null</code> is returned.</div>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getAnnotation(com.apriori.apt.reflect.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotation</h4>
+<pre><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&nbsp;getAnnotation(<a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&nbsp;annotationClass)</pre>
+<div class="block">Gets the annotation from the object that corresponds to the specified annotation type.
+ This will return an inherited annotation if one exists.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>annotationClass</code> - the annotation type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the corresponding annotation or <code>null</code> if there is no such annotation</dd></dl>
+</li>
+</ul>
+<a name="getAnnotation(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotation</h4>
+<pre><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&nbsp;getAnnotation(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</pre>
+<div class="block">Gets the annotation from the object that corresponds to the specified annotation type.
+ This will return an inherited annotation if one exists.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>annotationClass</code> - the annotation type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the corresponding annotation or <code>null</code> if there is no such annotation</dd></dl>
+</li>
+</ul>
+<a name="getAnnotationBridge(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotationBridge</h4>
+<pre>&lt;T extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;T&nbsp;getAnnotationBridge(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;annotationClass)</pre>
+<div class="block">Gets an annotation bridge for the specified annotation type.</div>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of the annotation</dd><dt><span class="strong">Parameters:</span></dt><dd><code>annotationClass</code> - the annotation type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the corresponding <a href="../../../../com/apriori/apt/reflect/AnnotationBridge.html" title="class in com.apriori.apt.reflect">annotation bridge</a> or <code>null</code> if
+       there is no such annotation</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/apt/reflect/AnnotatedElement.html#getAnnotation(java.lang.Class)"><code>getAnnotation(java.lang.Class)</code></a>, 
+<a href="../../../../com/apriori/apt/reflect/AnnotationBridge.html#createBridge(com.apriori.apt.reflect.Annotation, java.lang.Class)"><code>AnnotationBridge.createBridge(Annotation, Class)</code></a></dd></dl>
+</li>
+</ul>
+<a name="isAnnotationPresent(com.apriori.apt.reflect.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAnnotationPresent</h4>
+<pre>boolean&nbsp;isAnnotationPresent(<a href="../../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&nbsp;annotationClass)</pre>
+<div class="block">Determines whether an annotation of the specified type exists on the object. This
+ includes inherited annotations.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>annotationClass</code> - the annotation type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if an annotation of the specified type is present on the object</dd></dl>
+</li>
+</ul>
+<a name="isAnnotationPresent(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAnnotationPresent</h4>
+<pre>boolean&nbsp;isAnnotationPresent(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</pre>
+<div class="block">Determines whether an annotation of the specified type exists on the object. This
+ includes inherited annotations.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>annotationClass</code> - the annotation type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if an annotation of the specified type is present on the object</dd></dl>
+</li>
+</ul>
+<a name="getAnnotations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotations</h4>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&gt;&nbsp;getAnnotations()</pre>
+<div class="block">Gets all annotations for this object. This includes both annotations declared on the object
+ as well as any inherited annotations.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the list of annotations</dd></dl>
+</li>
+</ul>
+<a name="getDeclaredAnnotations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDeclaredAnnotations</h4>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect">Annotation</a>&gt;&nbsp;getDeclaredAnnotations()</pre>
+<div class="block">Gets the annotations declared on this object.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the list of annotations</dd></dl>
+</li>
+</ul>
+<a name="asElement()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>asElement</h4>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element">Element</a>&nbsp;asElement()</pre>
+<div class="block">Returns the underlying <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> for this object.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the underlying element</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Class</li>
+<li><a href="../../../../com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?com/apriori/apt/reflect/AnnotatedElement.html" target="_top">Frames</a></li>
+<li><a href="AnnotatedElement.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

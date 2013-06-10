@@ -92,7 +92,7 @@ public class SharedCapacityDequeFactory {
    }
 
    /**
-    * A {@link Dequeue} that can be closed.
+    * A {@link Deque} that can be closed.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *

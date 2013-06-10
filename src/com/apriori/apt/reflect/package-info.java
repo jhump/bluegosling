@@ -16,11 +16,11 @@
  * 
  * <p>To make the most of the APIs in this package, your annotation processor should extend
  * {@link com.apriori.apt.AbstractProcessor} (instead of {@link javax.annotation.processing.AbstractProcessor
- * javax.annotation.processing.AbstractProcessor}. This alternate base class provides a reference to
+ * javax.annotation.processing.AbstractProcessor}). This alternate base class provides a reference to
  * a {@link com.apriori.apt.RoundEnvironment}, which is very similar to the standard {@link
  * javax.annotation.processing.RoundEnvironment javax.annotation.processing.RoundEnvironment} except
- * that its API is defined in terms of this set of reflection of APIs instead of elements and type
- * mirrors.
+ * that its API is defined in terms of this set of reflection APIs (instead of in terms of elements
+ * and type mirrors).
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

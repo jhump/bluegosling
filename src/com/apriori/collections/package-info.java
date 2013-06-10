@@ -8,24 +8,24 @@
  * <p>In addition to new implementations for standard collection interfaces, this package also
  * contains some new collection interfaces:
  * <ul>
- * <li>{@link AssociativeList}: A {@link java.util.List List} that supports sparse associative keys
+ * <li>{@link com.apriori.collections.AssociativeList}: A {@link java.util.List List} that supports sparse associative keys
  * and can be viewed as a {@link java.util.Map Map}.</li>
- * <li>{@link RandomAccessSet}: A {@link java.util.Set Set} that supports random access of elements
+ * <li>{@link com.apriori.collections.RandomAccessSet}: A {@link java.util.Set Set} that supports random access of elements
  * and can be viewed as a {@link java.util.List List}.</li>
- * <li>{@link RandomAccessMap}: A {@link java.util.Map Map} that supports random access of elements
- * via key- and entry-sets that are {@link RandomAccessSet}s and a view of values as a
+ * <li>{@link com.apriori.collections.RandomAccessNavigableMap}: A {@link java.util.NavigableMap} that supports random access of elements
+ * via key- and entry-sets that are {@link com.apriori.collections.RandomAccessSet}s and a view of values as a
  * {@link java.util.List List}.</li>
- * <li>{@link BitSequence}: An immutable sequence of bits. This is similar to
+ * <li>{@link com.apriori.collections.BitSequence}: An immutable sequence of bits. This is similar to
  * {@link java.util.BitSet} except that it is immutable and provides additional methods for simpler
  * querying.
- * <li>{@link SequenceTrie}: A {@link java.util.Map Map} that organizes keys that represent
+ * <li>{@link com.apriori.collections.SequenceTrie}: A {@link java.util.Map Map} that organizes keys that represent
  * sequences and provides views of sub-maps that all share a common prefix. This data structure is
  * typically known as a prefix tree or <a href="#trie">trie</a>.</li>
- * <li>{@link CompositeTrie}: Like a {@link SequenceTrie} but supports keys that are composite
+ * <li>{@link com.apriori.collections.CompositeTrie}: Like a {@link com.apriori.collections.SequenceTrie} but supports keys that are composite
  * objects (which must be "componentized" into a sequence of sub-objects for search and storage).
- * This provides a more convenient API for things like {@link String}s, whose components are a
- * sequence of {@code char}s. The {@link java.util.Map Map} interface is in terms of the composite
- * type, instead of being in terms of {@link java.util.Iterable Iterable}s of the component
+ * This provides a more convenient API for things like {@link java.lang.String}s, whose components are a
+ * sequence of {@code char}s. The {@link java.util.Map} interface is in terms of the composite
+ * type, instead of being in terms of {@link java.util.Iterable}s of the component
  * type.</li>
  * </ul>
  * 

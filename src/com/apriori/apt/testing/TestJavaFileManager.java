@@ -108,7 +108,7 @@ public class TestJavaFileManager implements JavaFileManager {
     * @return true if deletion was successful; false otherwise (like if the named file
     *    does not exist)
     * 
-    * @see {@link TestJavaFileObject#delete()}
+    * @see TestJavaFileObject#delete()
     */
    synchronized boolean delete(String filePath) {
       return files.remove(filePath) != null;

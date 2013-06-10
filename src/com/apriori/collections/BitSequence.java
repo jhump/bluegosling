@@ -2,14 +2,13 @@ package com.apriori.collections;
 
 import java.util.NoSuchElementException;
 
-
 /**
  * A sequence of bits. This is very similar to a {@link java.util.BitSet} except it provides
  * better API for navigating the bits like a stream (of arbitrarily sized chunks) and less API for
  * general bit-fiddling. Unlike {@link java.util.BitSet}, a {@link BitSequence} is immutable.
  * 
- * <p>Since the sequence is immutable, all attempts to remove elements using {@link Iterator}s will
- * result in an {@link UnsupportedOperationException} being thrown.
+ * <p>Since the sequence is immutable, all attempts to remove elements using
+ * {@link java.util.Iterator}s will result in an {@link UnsupportedOperationException} being thrown.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -143,7 +142,7 @@ public interface BitSequence extends Iterable<Boolean> {
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see Stream#next(int, BitOrder)
+    * @see Stream#next(int, BitSequence.BitOrder)
     */
    LongIterator bitTupleIterator(int tupleSize, BitOrder order);
    
@@ -205,11 +204,12 @@ public interface BitSequence extends Iterable<Boolean> {
     * <pre>
     * hash code = length of the sequence XOR hash code of corresponding list of longs
     * </pre>
-    * The corresponding list of longs means a {@link List} of {@link Long}s whose length is exactly enough
-    * to contain all of the bits in the sequence, whose first element represents the first 64 bits
-    * of the sequence, and whose last element represents the last 1 to 64 bits with trailing bits
-    * zeroed out. The second term in the hash code happens to be the same as calculated by
-    * {@link java.util.Arrays#hashCode(long[])} with an array whose contents correspond to the bits
+    * The corresponding list of longs means a {@link java.util.List} of {@link Long}s whose length
+    * is exactly enough to contain all of the bits in the sequence, whose first element represents
+    * the first 64 bits of the sequence, and whose last element represents the last 1 to 64 bits
+    * with any superfluous bits zeroed out (when the sequence length is not a multiple of 64). The
+    * second term in the hash code happens to be the same as calculated by
+    * {@link java.util.Arrays#hashCode(long[])} with an array whose contents correspond to the bits 
     * in the sequence (in the same manner described above).
     * 
     * @return a hash code for the sequence, calculated as described above
