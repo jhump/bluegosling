@@ -95,6 +95,11 @@
 <br>
 <pre>public class <span class="strong">Stopwatch</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">A utility for measuring elapsed time. It can be stopped and restarted and the resulting elapsed
+ time will represent time elapsed during periods when the stopwatch was "running". It also has a
+ "lap" function so that data can be collected and retained for multiple iterations or laps.
+ 
+ <p>This class is threadsafe, so a single instance could be shared by multiple threads if need be.</div>
 </li>
 </ul>
 </div>
@@ -132,43 +137,65 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lap()">lap</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lap()">lap</a></strong>()</code>
+<div class="block">Records the stopwatch's elapsed time as a lap measurement and resets the elapsed time.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>double</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapAverage()">lapAverage</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapAverage()">lapAverage</a></strong>()</code>
+<div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lap results</a>, in
+ milliseconds.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>double</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapAverage(java.util.concurrent.TimeUnit)">lapAverage</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapAverage(java.util.concurrent.TimeUnit)">lapAverage</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lap results</a>, in the
+ specified unit.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lapResults</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lapResults</a></strong>()</code>
+<div class="block">Queries for recorded lap times, in milliseconds.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapResults(java.util.concurrent.TimeUnit)">lapResults</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#lapResults(java.util.concurrent.TimeUnit)">lapResults</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Queries for recorded lap times, in the specified unit.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#read()">read</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#read()">read</a></strong>()</code>
+<div class="block">Queries for the elapsed time measured by the stopwatch, in milliseconds.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#read(java.util.concurrent.TimeUnit)">read</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#read(java.util.concurrent.TimeUnit)">read</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Queries for the elapased time measured by the stopwatch, in the specified unit.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#reset()">reset</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#reset()">reset</a></strong>()</code>
+<div class="block">Completely resets the stopwatch.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#start()">start</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#start()">start</a></strong>()</code>
+<div class="block">Starts the stopwatch.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#stop()">stop</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Stopwatch.html#stop()">stop</a></strong>()</code>
+<div class="block">Stops the stopwatch.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -216,6 +243,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>start</h4>
 <pre>public&nbsp;void&nbsp;start()</pre>
+<div class="block">Starts the stopwatch. Once started, it is "running". Time that elapses while the clock
+ is running can be queried via <a href="../../../com/apriori/util/Stopwatch.html#read()"><code>read()</code></a>.
+ 
+ <p>If the stopwatch is already running, this method does nothing.</div>
 </li>
 </ul>
 <a name="stop()">
@@ -225,6 +256,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>stop</h4>
 <pre>public&nbsp;void&nbsp;stop()</pre>
+<div class="block">Stops the stopwatch. Once stopped, it is no longer "running". Time that elapses while the
+ watch is stopped will not be measured and will not impact queries.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Stopwatch.html#reset()"><code>reset()</code></a></dd></dl>
 </li>
 </ul>
 <a name="lap()">
@@ -234,6 +268,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>lap</h4>
 <pre>public&nbsp;void&nbsp;lap()</pre>
+<div class="block">Records the stopwatch's elapsed time as a lap measurement and resets the elapsed time. If the
+ stopwatch is stopped when this method is called, it will still be stopped when this method
+ returns.</div>
 </li>
 </ul>
 <a name="read()">
@@ -243,6 +280,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>read</h4>
 <pre>public&nbsp;long&nbsp;read()</pre>
+<div class="block">Queries for the elapsed time measured by the stopwatch, in milliseconds. This returns the
+ total elapsed time during which the stopwatch was "running" since the last call to either
+ <a href="../../../com/apriori/util/Stopwatch.html#lap()"><code>lap()</code></a> or <a href="../../../com/apriori/util/Stopwatch.html#reset()"><code>reset()</code></a>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the elapsed time, in milliseconds</dd></dl>
 </li>
 </ul>
 <a name="read(java.util.concurrent.TimeUnit)">
@@ -252,6 +293,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>read</h4>
 <pre>public&nbsp;long&nbsp;read(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Queries for the elapased time measured by the stopwatch, in the specified unit.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>unit</code> - the unit in which measured elapsed time is returned</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the elapsed time, in the specified unit</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Stopwatch.html#read()"><code>read()</code></a></dd></dl>
 </li>
 </ul>
 <a name="lapResults()">
@@ -261,6 +305,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>lapResults</h4>
 <pre>public&nbsp;long[]&nbsp;lapResults()</pre>
+<div class="block">Queries for recorded lap times, in milliseconds. The returned array will have one value for
+ each call to <a href="../../../com/apriori/util/Stopwatch.html#lap()"><code>lap()</code></a>. If <a href="../../../com/apriori/util/Stopwatch.html#lap()"><code>lap()</code></a> hasn't been called then the array will be
+ empty.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>an array of lap times, in milliseconds</dd></dl>
 </li>
 </ul>
 <a name="lapResults(java.util.concurrent.TimeUnit)">
@@ -270,6 +318,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>lapResults</h4>
 <pre>public&nbsp;long[]&nbsp;lapResults(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Queries for recorded lap times, in the specified unit.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>unit</code> - the unit in which measured lap times are returned</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an array of lap times, in the specified unit</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Stopwatch.html#lapResults()"><code>lapResults()</code></a></dd></dl>
 </li>
 </ul>
 <a name="lapAverage()">
@@ -279,6 +330,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>lapAverage</h4>
 <pre>public&nbsp;double&nbsp;lapAverage()</pre>
+<div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lap results</a>, in
+ milliseconds. If no laps have been recorded then <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Double.html?is-external=true#NaN" title="class or interface in java.lang"><code>Double.NaN</code></a> is returned.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the average of lap results, in milliseconds</dd></dl>
 </li>
 </ul>
 <a name="lapAverage(java.util.concurrent.TimeUnit)">
@@ -288,6 +342,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>lapAverage</h4>
 <pre>public&nbsp;double&nbsp;lapAverage(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults()">lap results</a>, in the
+ specified unit.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>unit</code> - the unit in which measured lap times are returned</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the average of lap results, in the specified unit</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Stopwatch.html#lapAverage()"><code>lapAverage()</code></a></dd></dl>
 </li>
 </ul>
 <a name="reset()">
@@ -297,6 +355,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>reset</h4>
 <pre>public&nbsp;void&nbsp;reset()</pre>
+<div class="block">Completely resets the stopwatch. After this, the stopwatch will be stopped and all
+ collected measurements (elapsed time and lap times) will be cleared.</div>
 </li>
 </ul>
 </li>

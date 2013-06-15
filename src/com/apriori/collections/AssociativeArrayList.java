@@ -19,8 +19,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeMap;
 
-// TODO: tests!
-// TODO: javadoc
 /**
  * An {@link ArrayList} that is also an {@link AssociativeList}. This collection maintains
  * bidirectional mappings to/from list indices and associative keys using a {@link HashMap} (key to
@@ -31,6 +29,8 @@ import java.util.TreeMap;
  * @param <E> the type of element in the list
  * @param <K> the type used for associative keys
  */
+//TODO: tests!
+//TODO: javadoc
 public class AssociativeArrayList<E, K> extends ArrayList<E> implements AssociativeList<E, K> {
 
    private static final long serialVersionUID = 324645810355942807L;

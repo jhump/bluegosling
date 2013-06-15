@@ -8,4 +8,5 @@ com.apriori.di.collections
 com.apriori.di.tools
 com.apriori.reflect
 com.apriori.testing
+com.apriori.tuples
 com.apriori.util

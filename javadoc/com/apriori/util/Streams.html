@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li>Next Class</li>
+<li><a href="../../../com/apriori/util/ToDo.html" title="annotation in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Streams.html" target="_top">Frames</a></li>
@@ -95,6 +95,9 @@
 <br>
 <pre>public final class <span class="strong">Streams</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Utility methods for working with streams. There are helper methods for binary streams
+ (<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a> and <a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>) and for text streams (<code>Reader</code> and
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io"><code>Writer</code></a>).</div>
 </li>
 </ul>
 </div>
@@ -116,30 +119,42 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>static long</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#copyBytes(java.io.InputStream, java.io.OutputStream)">copyBytes</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
-         <a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>&nbsp;</td>
+         <a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>
+<div class="block">Copies binary data by reading from one stream and writing to another.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static long</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#copyText(java.lang.Readable, java.lang.Appendable)">copyText</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;out)</code>&nbsp;</td>
+        <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;out)</code>
+<div class="block">Copies text data by reading from one stream and writing to another.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toByteArray(java.io.InputStream)">toByteArray</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toByteArray(java.io.InputStream)">toByteArray</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>
+<div class="block">Fully consumes the specified stream and returns the results as a byte array.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toByteArray(java.lang.Readable, java.nio.charset.Charset)">toByteArray</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in,
-           <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>&nbsp;</td>
+           <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>
+<div class="block">Fully consumes the specified stream and returns the results as a byte array.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toString(java.io.InputStream, java.nio.charset.Charset)">toString</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>&nbsp;</td>
+        <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>
+<div class="block">Fully consumes the specified stream and returns the results as a string.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toString(java.lang.Readable)">toString</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Streams.html#toString(java.lang.Readable)">toString</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in)</code>
+<div class="block">Fully consumes the specified stream and returns the results as a string.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -172,8 +187,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;long&nbsp;copyBytes(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
              <a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)
                       throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Copies binary data by reading from one stream and writing to another.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the source of data</dd><dd><code>out</code> - the target to which data is copied</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the total number of bytes copied</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read or write from the streams</dd></dl>
 </li>
 </ul>
 <a name="copyText(java.lang.Readable, java.lang.Appendable)">
@@ -185,8 +203,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;long&nbsp;copyText(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in,
             <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;out)
                      throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Copies text data by reading from one stream and writing to another.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the source of data</dd><dd><code>out</code> - the target to which data is copied</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the total number of characters copied</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read or write from the streams</dd></dl>
 </li>
 </ul>
 <a name="toString(java.lang.Readable)">
@@ -197,8 +218,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>toString</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in)
                        throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Fully consumes the specified stream and returns the results as a string.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the stream to read</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the contents of the stream as a string</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read from the stream</dd></dl>
 </li>
 </ul>
 <a name="toString(java.io.InputStream, java.nio.charset.Charset)">
@@ -210,8 +234,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
               <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)
                        throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Fully consumes the specified stream and returns the results as a string.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the stream to read</dd><dd><code>charset</code> - the character set used to decode binary data as characters</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the contents of the stream as a string</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read from the stream</dd></dl>
 </li>
 </ul>
 <a name="toByteArray(java.lang.Readable, java.nio.charset.Charset)">
@@ -223,8 +250,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;byte[]&nbsp;toByteArray(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Readable.html?is-external=true" title="class or interface in java.lang">Readable</a>&nbsp;in,
                  <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)
                           throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Fully consumes the specified stream and returns the results as a byte array.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the stream to read</dd><dd><code>charset</code> - the character set used to encode text as bytes</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the contents of the stream as an array of bytes</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read from the stream</dd></dl>
 </li>
 </ul>
 <a name="toByteArray(java.io.InputStream)">
@@ -235,8 +265,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>toByteArray</h4>
 <pre>public static&nbsp;byte[]&nbsp;toByteArray(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)
                           throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Fully consumes the specified stream and returns the results as a byte array.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>in</code> - the stream to read</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the contents of the stream as an array of bytes</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown trying to read from the stream</dd></dl>
 </li>
 </ul>
 </li>
@@ -265,7 +298,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li>Next Class</li>
+<li><a href="../../../com/apriori/util/ToDo.html" title="annotation in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Streams.html" target="_top">Frames</a></li>
