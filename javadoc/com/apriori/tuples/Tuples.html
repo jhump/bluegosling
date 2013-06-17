@@ -95,6 +95,7 @@
 <br>
 <pre>public final class <span class="strong">Tuples</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Utility methods for creating <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples"><code>Tuple</code></a> instances.</div>
 </li>
 </ul>
 </div>
@@ -115,11 +116,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromArray(java.lang.Object...)">fromArray</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;array)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromArray(java.lang.Object...)">fromArray</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;array)</code>
+<div class="block">Creates a new tuple with the same items as the specified array.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromCollection(java.util.Collection)">fromCollection</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromCollection(java.util.Collection)">fromCollection</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code>
+<div class="block">Creates a new tuple with the same items as the specified collection.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -150,6 +155,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>fromCollection</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&nbsp;fromCollection(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</pre>
+<div class="block">Creates a new tuple with the same items as the specified collection. The first item in the
+ tuple will be the first item returned from the collection's iterator, and so on.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>coll</code> - the collection</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a tuple with the same items as the collection</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/tuples/Tuples.html#fromArray(java.lang.Object...)"><code>fromArray(Object...)</code></a></dd></dl>
 </li>
 </ul>
 <a name="fromArray(java.lang.Object...)">
@@ -159,6 +168,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>fromArray</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&nbsp;fromArray(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;array)</pre>
+<div class="block">Creates a new tuple with the same items as the specified array. The first item in the tuple
+ will be the first item in the array, and so on.
+ 
+ If the specified array is empty, <a href="../../../com/apriori/tuples/Empty.html#INSTANCE"><code>Empty.INSTANCE</code></a> will be returned. If the array has
+ exactly one, two, three, four, or five elements then a <a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples"><code>Unit</code></a>, <a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples"><code>Pair</code></a>,
+ <a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples"><code>Trio</code></a>, <a href="../../../com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples"><code>Quartet</code></a>, or <a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples"><code>Quintet</code></a> will be returned, respectively. If the
+ array has more than five elements than an <a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples"><code>NTuple</code></a> is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>array</code> - the array</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a tuple with the same items as the array</dd></dl>
 </li>
 </ul>
 </li>

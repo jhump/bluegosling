@@ -3,9 +3,16 @@ package com.apriori.tuples;
 import com.apriori.util.Function;
 
 import java.io.Serializable;
+import java.util.List;
 
-// TODO: javadoc
-public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializable, Cloneable {
+/**
+ * A tuple with a single item.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <A> the element type
+ */
+public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializable {
 
    private static final long serialVersionUID = -9201943154135089064L;
    
@@ -15,19 +22,41 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
       this.a = a;
    }
    
+   /**
+    * Creates a new single element tuple.
+    * 
+    * @param t the sole element
+    * @return a new tuple with the one specified item
+    */
    public static <T> Unit<T> create(T t) {
       return new Unit<T>(t);
    }
    
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Since this tuple has exactly one element and we know its type, we can return a precise type
+    * instead of returning {@code List<?>}.
+    */
    @Override
-   @SuppressWarnings("unchecked")
-   public Unit<A> clone() {
-      try {
-         return (Unit<A>) super.clone();
-      } catch (CloneNotSupportedException e) {
-         // this can't happen
-         throw new AssertionError();
-      }
+   @SuppressWarnings("unchecked") // its only element is an A, so cast is safe
+   public List<A> asList() {
+      return (List<A>) super.asList();
+   }
+   
+   @Override
+   public boolean contains(Object o) {
+      return a == null ? o == null : a.equals(o);
+   }
+   
+   @Override
+   public int size() {
+      return 1;
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return false;
    }
    
    @Override

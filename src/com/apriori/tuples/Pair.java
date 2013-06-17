@@ -5,11 +5,27 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.List;
 
-//TODO: javadoc
-public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Serializable, Cloneable {
+/**
+ * A tuple with two items.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <A> the type of the first item
+ * @param <B> the type of the second item
+ */
+public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Serializable {
    
    private static final long serialVersionUID = 6469872298989893473L;
 
+   /**
+    * Returns a list with a tighter upper bound than {@link Tuple#asList()}.
+    * 
+    * <p>Due to limitations in expressiveness of lower bounds and wildcards in Java's generic type
+    * system, achieving the right bounds must be done as a static method.
+    * 
+    * @param pair a pair of items
+    * @return a list view of the specified pair
+    */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
    public static <T> List<T> asTypedList(Pair<? extends T, ? extends T> pair) {
       return (List<T>) pair.asList();
@@ -23,19 +39,31 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
       this.b = b;
    }
    
+   /**
+    * Creates a new pair of items.
+    * 
+    * @param a the first item in the pair
+    * @param b the second item in the pair
+    * @return a new pair
+    */
    public static <A, B> Pair<A, B> create(A a, B b) {
       return new Pair<A, B>(a, b);
    }
 
    @Override
-   @SuppressWarnings("unchecked")
-   public Pair<A, B> clone() {
-      try {
-         return (Pair<A, B>) super.clone();
-      } catch (CloneNotSupportedException e) {
-         // this can't happen
-         throw new AssertionError();
-      }
+   public boolean contains(Object o) {
+      return (a == null ? o == null : a.equals(o))
+            || (b == null ? o == null : b.equals(o));
+   }
+   
+   @Override
+   public int size() {
+      return 2;
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return false;
    }
    
    @Override

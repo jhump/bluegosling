@@ -100,16 +100,13 @@
 <pre>public interface <span class="strong">Tuple</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</pre>
 <div class="block">Base interface implemented by all typesafe tuples. Tuples are immutable and provide a rich
- typesafe interface for typical operations.
+ typesafe interface for typical operations. This interface includes methods provided by every
+ tuple, regardless of the number of items.
  
- <p>This interface includes methods provided by every tuple, regardless of the number of items.
- Additional interfaces are also provided for tuples with up to five items that provide typesafe
- operations on the items contained in the tuple.
- 
- <p>Implementations of this interface offer typesafe operations for instances with up to five
- items. Tuples with more than five items have less rich operations for the sixth and later items
- and also do not have the same level of type safety. If you need tuples with more than five items,
- consider using a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> instead.</div>
+ <p>The enclosed sub-interfaces offer typesafe operations for instances with up to five items.
+ Tuples with more than five items have less rich operations for the sixth and later items and also
+ do not have the same level of type safety. If you need tuples with more than five items, consider
+ using a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> instead.</div>
 <dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples"><code>Tuple.Ops1</code></a>, 
 <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples"><code>Tuple.Ops2</code></a>, 
 <a href="../../../com/apriori/tuples/Tuple.Ops3.html" title="interface in com.apriori.tuples"><code>Tuple.Ops3</code></a>, 
@@ -181,7 +178,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#add(T)">add</a></strong>(T&nbsp;t)</code>
-<div class="block">Adds an item to the existing item of this tuple.</div>
+<div class="block">Adds a new item to this tuple.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -192,35 +189,53 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#contains(java.lang.Object)">contains</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Determines if this tuple contains the specified object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
 <div class="block">Compares this tuple with the specified object.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">Returns the hash code value for this tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#insertFirst(T)">insertFirst</a></strong>(T&nbsp;t)</code>
 <div class="block">Adds an item into the first position of this tuple.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#isEmpty()">isEmpty</a></strong>()</code>
+<div class="block">Determines whether the tuple has any items.</div>
+</td>
+</tr>
 <tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#size()">size</a></strong>()</code>
+<div class="block">Returns the number of items in the tuple.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#toArray()">toArray</a></strong>()</code>
 <div class="block">Returns an array of the items in this tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#toArray(T[])">toArray</a></strong>(T[]&nbsp;a)</code>
 <div class="block">Returns an array of the items in this tuple.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</code>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
@@ -248,6 +263,42 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="size()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>int&nbsp;size()</pre>
+<div class="block">Returns the number of items in the tuple.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the number of items in the tuple</dd></dl>
+</li>
+</ul>
+<a name="isEmpty()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEmpty</h4>
+<pre>boolean&nbsp;isEmpty()</pre>
+<div class="block">Determines whether the tuple has any items.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the item no items; false if it has at least one item</dd></dl>
+</li>
+</ul>
+<a name="contains(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>contains</h4>
+<pre>boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">Determines if this tuple contains the specified object. The tuple contains the object if any
+ of the tuple's items is equal to the object. (An item <code>e1</code> is <em>equal</em> to an
+ object <code>e2</code> if <code>(e1==null ? e2==null : e1.equals(e2))</code>.)</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - the object</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if any of the items in this tuple are equal to the specified object</dd></dl>
+</li>
+</ul>
 <a name="asList()">
 <!--   -->
 </a>
@@ -306,8 +357,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <li class="blockList">
 <h4>add</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;?&gt;&nbsp;add(T&nbsp;t)</pre>
-<div class="block">Adds an item to the existing item of this tuple. The item will be appended and thus ordered
- last in the new tuple.</div>
+<div class="block">Adds a new item to this tuple. The item will be appended and thus ordered last in the new
+ tuple. Since tuples are immutable, a new tuple is returned with the same items as this tuple
+ but with the specified item added to the end.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the item to add</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the specified item appended to this tuple</dd></dl>
 </li>
@@ -322,9 +374,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <h4>insertFirst</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;&nbsp;insertFirst(T&nbsp;t)</pre>
 <div class="block">Adds an item into the first position of this tuple. Existing items are shifted over so the
- first item in this tuple is the second item in the returned tuple.</div>
+ first item in this tuple is the second item in the returned tuple. Since tuples are immutable,
+ a new tuple is returned with the same items as this tuple but with the specified item inserted
+ as the first item.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the item to insert</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the specified item followed by the item in this tuple</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the specified item followed by the items in this tuple</dd></dl>
 </li>
 </ul>
 <a name="transformAll(com.apriori.util.Function)">
@@ -334,8 +388,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <li class="blockList">
 <h4>transformAll</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</pre>
-<div class="block">Transforms every item in this tuple by applying the specified function to each one. The 
- returned tuple will have the same number of items as this tuple.</div>
+<div class="block">Transforms every item in this tuple by applying the specified function to each one. Since
+ tuples are immutable, a new tuple is returned. The returned tuple will have the same number of
+ items as this tuple.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the result of applying the specified function to all elements of
        this tuple</dd></dl>

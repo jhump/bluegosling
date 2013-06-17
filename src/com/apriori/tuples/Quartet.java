@@ -5,12 +5,30 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.List;
 
-//TODO: javadoc
-public class Quartet<A, B, C, D> extends AbstractTuple 
-      implements Tuple.Ops4<A, B, C, D>, Serializable, Cloneable {
+/**
+ * A tuple with four items.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <A> the type of the first item
+ * @param <B> the type of the second item
+ * @param <C> the type of the third item
+ * @param <D> the type of the fourth item
+ */
+public class Quartet<A, B, C, D> extends AbstractTuple
+      implements Tuple.Ops4<A, B, C, D>, Serializable {
 
    private static final long serialVersionUID = -4005223210115823097L;
 
+   /**
+    * Returns a list with a tighter upper bound than {@link Tuple#asList()}.
+    * 
+    * <p>Due to limitations in expressiveness of lower bounds and wildcards in Java's generic type
+    * system, achieving the right bounds must be done as a static method.
+    * 
+    * @param quartet a quartet of items
+    * @return a list view of the specified quartet
+    */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
    public static <T> List<T> asTypedList(Quartet<? extends T, ? extends T, ? extends T, ? extends T> quartet) {
       return (List<T>) quartet.asList();
@@ -28,19 +46,35 @@ public class Quartet<A, B, C, D> extends AbstractTuple
       this.d = d;
    }
    
+   /**
+    * Creates a new quartet of items.
+    * 
+    * @param a the first item in the quartet
+    * @param b the second item in the quartet
+    * @param c the third item in the quartet
+    * @param d the fourth item in the quartet
+    * @return a new quartet
+    */
    public static <A, B, C, D> Quartet<A, B, C, D> create(A a, B b, C c, D d) {
       return new Quartet<A, B, C, D>(a, b, c, d);
    }
 
    @Override
-   @SuppressWarnings("unchecked")
-   public Quartet<A, B, C, D> clone() {
-      try {
-         return (Quartet<A, B, C, D>) super.clone();
-      } catch (CloneNotSupportedException e) {
-         // this can't happen
-         throw new AssertionError();
-      }
+   public boolean contains(Object o) {
+      return (a == null ? o == null : a.equals(o))
+            || (b == null ? o == null : b.equals(o))
+            || (c == null ? o == null : c.equals(o))
+            || (d == null ? o == null : d.equals(o));
+   }
+   
+   @Override
+   public int size() {
+      return 4;
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return false;
    }
    
    @Override

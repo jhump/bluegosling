@@ -5,14 +5,18 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-// TODO: javadoc
+/**
+ * Abstract base class for implementations of {@code Tuple}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public abstract class AbstractTuple implements Tuple {
 
    @Override
    public Iterator<Object> iterator() {
       return Arrays.asList(toArray()).iterator();
    }
-
+   
    @Override
    public List<?> asList() {
       return Collections.unmodifiableList(Arrays.asList(toArray()));

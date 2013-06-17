@@ -140,12 +140,14 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#add(T)">add</a></strong>(T&nbsp;t)</code>
-<div class="block">Adds an item to the existing item of this tuple.</div>
+<div class="block">Adds a new item to this tuple.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#getFirst()">getFirst</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#getFirst()">getFirst</a></strong>()</code>
+<div class="block">Retrieves the first item in the tuple.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;T,<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>&gt;</code></td>
@@ -155,15 +157,21 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#insertSecond(T)">insertSecond</a></strong>(T&nbsp;t)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#insertSecond(T)">insertSecond</a></strong>(T&nbsp;t)</code>
+<div class="block">Inserts an item into the second position of this tuple.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#removeFirst()">removeFirst</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#removeFirst()">removeFirst</a></strong>()</code>
+<div class="block">Removes the first item from the tuple.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#setFirst(T)">setFirst</a></strong>(T&nbsp;t)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#setFirst(T)">setFirst</a></strong>(T&nbsp;t)</code>
+<div class="block">Sets the first item in the tuple.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;</code></td>
@@ -173,7 +181,9 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#transformFirst(com.apriori.util.Function)">transformFirst</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,? extends T&gt;&nbsp;function)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuple.Ops1.html#transformFirst(com.apriori.util.Function)">transformFirst</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,? extends T&gt;&nbsp;function)</code>
+<div class="block">Transforms the first item in the tuple using the specified function.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -181,7 +191,7 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.tuples.<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></h3>
-<code><a href="../../../com/apriori/tuples/Tuple.html#asList()">asList</a>, <a href="../../../com/apriori/tuples/Tuple.html#equals(java.lang.Object)">equals</a>, <a href="../../../com/apriori/tuples/Tuple.html#hashCode()">hashCode</a>, <a href="../../../com/apriori/tuples/Tuple.html#toArray()">toArray</a>, <a href="../../../com/apriori/tuples/Tuple.html#toArray(T[])">toArray</a></code></li>
+<code><a href="../../../com/apriori/tuples/Tuple.html#asList()">asList</a>, <a href="../../../com/apriori/tuples/Tuple.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/tuples/Tuple.html#equals(java.lang.Object)">equals</a>, <a href="../../../com/apriori/tuples/Tuple.html#hashCode()">hashCode</a>, <a href="../../../com/apriori/tuples/Tuple.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/tuples/Tuple.html#size()">size</a>, <a href="../../../com/apriori/tuples/Tuple.html#toArray()">toArray</a>, <a href="../../../com/apriori/tuples/Tuple.html#toArray(T[])">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Iterable">
@@ -211,6 +221,8 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <li class="blockList">
 <h4>getFirst</h4>
 <pre><a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>&nbsp;getFirst()</pre>
+<div class="block">Retrieves the first item in the tuple.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the first item in the tuple</dd></dl>
 </li>
 </ul>
 <a name="setFirst(java.lang.Object)">
@@ -222,6 +234,10 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <li class="blockList">
 <h4>setFirst</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;&nbsp;setFirst(T&nbsp;t)</pre>
+<div class="block">Sets the first item in the tuple. Since tuples are immutable, this returns a new tuple
+ with the first item changed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the new item</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple with the first item set to the specified new item</dd></dl>
 </li>
 </ul>
 <a name="removeFirst()">
@@ -231,6 +247,9 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <li class="blockList">
 <h4>removeFirst</h4>
 <pre><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&nbsp;removeFirst()</pre>
+<div class="block">Removes the first item from the tuple. Since tuples are immutable, this returns a new
+ tuple with one less item.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new tuple with the same items as this tuple except that the first item is removed</dd></dl>
 </li>
 </ul>
 <a name="add(java.lang.Object)">
@@ -243,8 +262,9 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <h4>add</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,?&gt;&nbsp;add(T&nbsp;t)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#add(T)">Tuple</a></code></strong></div>
-<div class="block">Adds an item to the existing item of this tuple. The item will be appended and thus ordered
- last in the new tuple.</div>
+<div class="block">Adds a new item to this tuple. The item will be appended and thus ordered last in the new
+ tuple. Since tuples are immutable, a new tuple is returned with the same items as this tuple
+ but with the specified item added to the end.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/tuples/Tuple.html#add(T)">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></dd>
@@ -263,12 +283,14 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;T,<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>&gt;&nbsp;insertFirst(T&nbsp;t)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#insertFirst(T)">Tuple</a></code></strong></div>
 <div class="block">Adds an item into the first position of this tuple. Existing items are shifted over so the
- first item in this tuple is the second item in the returned tuple.</div>
+ first item in this tuple is the second item in the returned tuple. Since tuples are immutable,
+ a new tuple is returned with the same items as this tuple but with the specified item inserted
+ as the first item.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/tuples/Tuple.html#insertFirst(T)">insertFirst</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the item to insert</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the specified item followed by the item in this tuple</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is the specified item followed by the items in this tuple</dd></dl>
 </li>
 </ul>
 <a name="insertSecond(java.lang.Object)">
@@ -280,6 +302,14 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <li class="blockList">
 <h4>insertSecond</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,T&gt;&nbsp;insertSecond(T&nbsp;t)</pre>
+<div class="block">Inserts an item into the second position of this tuple. Since tuples are immutable, this
+ returns a new tuple with one more item.
+ 
+ <p>If this tuple has only one item then this is the same as calling <a href="../../../com/apriori/tuples/Tuple.Ops1.html#add(T)"><code>add(Object)</code></a>.
+ Otherwise, this will insert an item after the first item but before the second.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the new item</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple with the same items as this tuple except the specified new item is
+       inserted as the second item in the tuple</dd></dl>
 </li>
 </ul>
 <a name="transformAll(com.apriori.util.Function)">
@@ -290,8 +320,9 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <h4>transformAll</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#transformAll(com.apriori.util.Function)">Tuple</a></code></strong></div>
-<div class="block">Transforms every item in this tuple by applying the specified function to each one. The 
- returned tuple will have the same number of items as this tuple.</div>
+<div class="block">Transforms every item in this tuple by applying the specified function to each one. Since
+ tuples are immutable, a new tuple is returned. The returned tuple will have the same number of
+ items as this tuple.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/tuples/Tuple.html#transformAll(com.apriori.util.Function)">transformAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></dd>
@@ -307,6 +338,11 @@ extends <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com
 <li class="blockList">
 <h4>transformFirst</h4>
 <pre>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;T&gt;&nbsp;transformFirst(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="type parameter in Tuple.Ops1">A</a>,? extends T&gt;&nbsp;function)</pre>
+<div class="block">Transforms the first item in the tuple using the specified function. Other items in the
+ tuple are unchanged. Since tuples are immutable, this returns a new tuple.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple with the first item set to the result of applying the specified
+    function to the first item in this tuple</dd></dl>
 </li>
 </ul>
 </li>

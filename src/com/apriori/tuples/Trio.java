@@ -5,12 +5,28 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.List;
 
-//TODO: javadoc
-public class Trio<A, B, C> extends AbstractTuple
-      implements Tuple.Ops3<A, B, C>, Serializable, Cloneable {
+/**
+ * A tuple with three items.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <A> the type of the first item
+ * @param <B> the type of the second item
+ * @param <C> the type of the third item
+ */
+public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>, Serializable {
 
    private static final long serialVersionUID = -2245545958928314038L;
 
+   /**
+    * Returns a list with a tighter upper bound than {@link Tuple#asList()}.
+    * 
+    * <p>Due to limitations in expressiveness of lower bounds and wildcards in Java's generic type
+    * system, achieving the right bounds must be done as a static method.
+    * 
+    * @param trio a trio of items
+    * @return a list view of the specified trio
+    */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
    public static <T> List<T> asTypedList(Trio<? extends T, ? extends T, ? extends T> trio) {
       return (List<T>) trio.asList();
@@ -26,19 +42,33 @@ public class Trio<A, B, C> extends AbstractTuple
       this.c = c;
    }
    
+   /**
+    * Creates a new trio of items.
+    * 
+    * @param a the first item in the trio
+    * @param b the second item in the trio
+    * @param c the third item in the trio
+    * @return a new trio
+    */
    public static <A, B, C> Trio<A, B, C> create(A a, B b, C c) {
       return new Trio<A, B, C>(a, b, c);
    }
 
    @Override
-   @SuppressWarnings("unchecked")
-   public Trio<A, B, C> clone() {
-      try {
-         return (Trio<A, B, C>) super.clone();
-      } catch (CloneNotSupportedException e) {
-         // this can't happen
-         throw new AssertionError();
-      }
+   public boolean contains(Object o) {
+      return (a == null ? o == null : a.equals(o))
+            || (b == null ? o == null : b.equals(o))
+            || (c == null ? o == null : c.equals(o));
+   }
+   
+   @Override
+   public int size() {
+      return 3;
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return false;
    }
    
    @Override

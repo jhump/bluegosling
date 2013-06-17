@@ -5,12 +5,32 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * A tuple with five items.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <A> the type of the first item
+ * @param <B> the type of the second item
+ * @param <C> the type of the third item
+ * @param <D> the type of the fourth item
+ * @param <E> the type of the fifth item
+ */
 //TODO: javadoc
 public class Quintet<A, B, C, D, E> extends AbstractTuple
-      implements Tuple.Ops5<A, B, C, D, E>, Serializable, Cloneable {
+      implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = -6961697944717178646L;
 
+   /**
+    * Returns a list with a tighter upper bound than {@link Tuple#asList()}.
+    * 
+    * <p>Due to limitations in expressiveness of lower bounds and wildcards in Java's generic type
+    * system, achieving the right bounds must be done as a static method.
+    * 
+    * @param quintet a quintet of items
+    * @return a list view of the specified quintet
+    */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
    public static <T> List<T> asTypedList(Quintet<? extends T, ? extends T, ? extends T, ? extends T, ? extends T> quintet) {
       return (List<T>) quintet.asList();
@@ -30,19 +50,37 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
       this.e = e;
    }
    
+   /**
+    * Creates a new quintet of items.
+    * 
+    * @param a the first item in the quintet
+    * @param b the second item in the quintet
+    * @param c the third item in the quintet
+    * @param d the fourth item in the quintet
+    * @param e the fifth item in the quintet
+    * @return a new quintet
+    */
    public static <A, B, C, D, E> Quintet<A, B, C, D, E> create(A a, B b, C c, D d, E e) {
       return new Quintet<A, B, C, D, E>(a, b, c, d, e);
    }
 
    @Override
-   @SuppressWarnings("unchecked")
-   public Quintet<A, B, C, D, E> clone() {
-      try {
-         return (Quintet<A, B, C, D, E>) super.clone();
-      } catch (CloneNotSupportedException ex) {
-         // this can't happen
-         throw new AssertionError();
-      }
+   public boolean contains(Object o) {
+      return (a == null ? o == null : a.equals(o))
+            || (b == null ? o == null : b.equals(o))
+            || (c == null ? o == null : c.equals(o))
+            || (d == null ? o == null : d.equals(o))
+            || (e == null ? o == null : e.equals(o));
+   }
+   
+   @Override
+   public int size() {
+      return 5;
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return false;
    }
    
    @Override
