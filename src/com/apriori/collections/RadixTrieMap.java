@@ -5,7 +5,7 @@ import java.util.NavigableMap;
 
 /**
  * A structure that can be used to perform radix sort and can be used to efficiently represent very
- * sparse arrays. Under the hood, this use a <a href="package-info.html#trie">trie</a> structure,
+ * sparse arrays. Under the hood, this use a <a href="package-summary.html#trie">trie</a> structure,
  * and each level of the trie represents a nybble (4 bits) of the value with the most-significant
  * bits in the top nodes and least-significant in the leaves.
  * 

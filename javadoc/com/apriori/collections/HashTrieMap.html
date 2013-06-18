@@ -102,7 +102,7 @@
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</pre>
 <div class="block">An implementation of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> that uses a hash array-mapped trie (HAMT). Under the hood, this
- structure is the same as a <a href="../../../com/apriori/collections/CompressedBitwiseTrie.html" title="class in com.apriori.collections"><code>CompressedBitwiseTrie</code></a> except that the key bits come from a
+ structure is the same as a <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><code>ArrayMappedBitwiseTrie</code></a> except that the key bits come from a
  key's hash value. Like a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>, a linked list is used to store values
  whose keys' hash values collide. But collisions are far less likely than in a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> because the full 32 bits of hash value are used (vs. hash value

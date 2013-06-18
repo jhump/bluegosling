@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>CompositeTrie.Componentizer</title>
+<title>BitConverter</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CompositeTrie.Componentizer";
+        parent.document.title="BitConverter";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/CompressedBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/BigIntegerRadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/CompositeTrie.Componentizer.html" target="_top">Frames</a></li>
-<li><a href="CompositeTrie.Componentizer.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/BitConverter.html" target="_top">Frames</a></li>
+<li><a href="BitConverter.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,25 +77,20 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.collections</div>
-<h2 title="Interface CompositeTrie.Componentizer" class="title">Interface CompositeTrie.Componentizer&lt;K,C&gt;</h2>
+<h2 title="Interface BitConverter" class="title">Interface BitConverter&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>K</code> - the type of the key</dd><dd><code>C</code> - the type of the component</dd></dl>
 <dl>
-<dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/BitwiseTrie.BitConverter.html" title="interface in com.apriori.collections">BitwiseTrie.BitConverter</a>&lt;K&gt;</dd>
-</dl>
-<dl>
-<dt>Enclosing interface:</dt>
-<dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;</dd>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">CompositeTrie.Componentizer&lt;K,C&gt;</span></pre>
-<div class="block">An interface used to break a key value up into its constituent components.</div>
+<pre>public interface <span class="strong">BitConverter&lt;T&gt;</span>
+extends <a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</pre>
 </li>
 </ul>
 </div>
@@ -115,9 +110,9 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">C</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html#getComponents(K)">getComponents</a></strong>(<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">K</a>&nbsp;key)</code>
-<div class="block">Breaks the specified key into a sequence of components.</div>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitConverter.html#getComponents(T)">getComponents</a></strong>(<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>&nbsp;t)</code>
+<div class="block">Breaks the specified object into a sequence of components.</div>
 </td>
 </tr>
 </table>
@@ -137,16 +132,20 @@
 <h3>Method Detail</h3>
 <a name="getComponents(java.lang.Object)">
 <!--   -->
-</a><a name="getComponents(K)">
+</a><a name="getComponents(T)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getComponents</h4>
-<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">C</a>&gt;&nbsp;getComponents(<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">K</a>&nbsp;key)</pre>
-<div class="block">Breaks the specified key into a sequence of components.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - the key</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the key's sequence of components</dd></dl>
+<pre><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;getComponents(<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>&nbsp;t)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/Componentizer.html#getComponents(T)">Componentizer</a></code></strong></div>
+<div class="block">Breaks the specified object into a sequence of components.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/Componentizer.html#getComponents(T)">getComponents</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the composite object</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the object's sequence of components</dd></dl>
 </li>
 </ul>
 </li>
@@ -174,12 +173,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/CompressedBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/BigIntegerRadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/CompositeTrie.Componentizer.html" target="_top">Frames</a></li>
-<li><a href="CompositeTrie.Componentizer.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/BitConverter.html" target="_top">Frames</a></li>
+<li><a href="BitConverter.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

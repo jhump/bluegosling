@@ -48,7 +48,8 @@ import java.util.Set;
  */
 //TODO: javadoc
 //TODO: implement me (don't forget serialization and cloning)
-public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
+//TODO: also add a (non-compact) BitwiseTrie
+public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
    
    static final Comparator<Boolean> COMPONENT_COMPARATOR = new Comparator<Boolean>() {
       @Override public int compare(Boolean b1, Boolean b2) {
@@ -63,10 +64,6 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
          }
       }
    };
-   
-   public interface BitConverter<K> extends Componentizer<K, Boolean> {
-      @Override BitSequence getComponents(K key);
-   }
    
    private static class ValueNode<K, V> {
       K key;
@@ -100,11 +97,11 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
    int modCount;
    int size;
    
-   public BitwiseTrie(BitConverter<? super K> bitConverter) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter) {
       this(bitConverter, (Comparator<? super K>) null);
    }
 
-   public BitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
       if (bitConverter == null) {
          throw new NullPointerException();
       }
@@ -116,12 +113,12 @@ public class BitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> 
       }
    }
 
-   public BitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
       this(bitConverter);
       putAll(map);
    }
    
-   public BitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator,
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator,
          Map<? extends K, ? extends V> map) {
       this(bitConverter, comparator);
       putAll(map);

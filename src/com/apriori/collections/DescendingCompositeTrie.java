@@ -16,7 +16,7 @@ class DescendingCompositeTrie<K, C, V> extends DescendingMap<K, V>
    }
 
    @Override
-   public CompositeTrie.Componentizer<? super K, ? extends C> componentizer() {
+   public Componentizer<? super K, ? extends C> componentizer() {
       return base().componentizer();
    }
    

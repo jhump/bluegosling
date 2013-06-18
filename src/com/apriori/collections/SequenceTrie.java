@@ -3,7 +3,7 @@ package com.apriori.collections;
 import java.util.Map;
 
 /**
- * A <a href="package-info.html#trie">trie</a> whose keys are {@linkplain Iterable sequences} of
+ * A <a href="package-summary.html#trie">trie</a> whose keys are {@linkplain Iterable sequences} of
  * values.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

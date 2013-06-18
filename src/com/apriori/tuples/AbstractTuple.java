@@ -1,5 +1,6 @@
 package com.apriori.tuples;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -23,8 +24,17 @@ public abstract class AbstractTuple implements Tuple {
    }
 
    @Override
+   @SuppressWarnings("unchecked") // reflective creation of array requires cast but is safe
    public <T> T[] toArray(T[] a) {
-      return Arrays.asList(toArray()).toArray(a);
+      int size = size();
+      if (a.length < size) {
+         a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
+      }
+      System.arraycopy(toArray(), 0, a, 0, size);
+      if (a.length > size) {
+         a[size] = null;
+      }
+      return a;
    }
    
    @Override

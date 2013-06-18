@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * An implementation of {@link Map} that uses a hash array-mapped trie (HAMT). Under the hood, this
- * structure is the same as a {@link CompressedBitwiseTrie} except that the key bits come from a
+ * structure is the same as a {@link ArrayMappedBitwiseTrie} except that the key bits come from a
  * key's hash value. Like a {@link java.util.HashMap HashMap}, a linked list is used to store values
  * whose keys' hash values collide. But collisions are far less likely than in a
  * {@link java.util.HashMap HashMap} because the full 32 bits of hash value are used (vs. hash value

@@ -109,7 +109,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  <li>This trie is a little more efficient since it uses arrays of primitives (<code>char</code>)
  instead of the boxed counterpart (<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang"><code>Character</code></a>).
  </ul></div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompressedStringTrie.html" title="class in com.apriori.collections"><code>CompressedStringTrie</code></a></dd></dl>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections"><code>ArrayMappedStringTrie</code></a></dd></dl>
 </li>
 </ul>
 </div>
@@ -122,13 +122,6 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.collections.CompositeTrie">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a></h3>
-<code><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">C</a>&gt;</code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_java.util.Map">
 <!--   -->
@@ -189,7 +182,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#collator()">collator</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#componentizer()">componentizer</a></strong>()</code>
 <div class="block">The object used to break up single key values into a sequence of components.</div>
 </td>
@@ -323,7 +316,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>componentizer</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;componentizer()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;componentizer()</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer()">CompositeTrie</a></code></strong></div>
 <div class="block">The object used to break up single key values into a sequence of components. This can be
  null for <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><code>CompositeTrie</code></a>s that have their own internal mechanism for breaking a key

@@ -3,7 +3,7 @@ package com.apriori.collections;
 import java.util.Map;
 
 /**
- * A <a href="package-info.html#trie">trie</a> whose keys are composite objects. These composites
+ * A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
  * are first broken down into a {@linkplain Iterable sequence} of constituent components.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -13,24 +13,6 @@ import java.util.Map;
  * @param <V> the type of values in the map
  */
 public interface CompositeTrie<K, C, V> extends Map<K, V> {
-
-   /**
-    * An interface used to break a key value up into its constituent components.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <K> the type of the key
-    * @param <C> the type of the component
-    */
-   interface Componentizer<K, C> {
-      /**
-       * Breaks the specified key into a sequence of components.
-       * 
-       * @param key the key
-       * @return the key's sequence of components
-       */
-      Iterable<C> getComponents(K key);
-   }
 
    /**
     * The object used to break up single key values into a sequence of components. This can be

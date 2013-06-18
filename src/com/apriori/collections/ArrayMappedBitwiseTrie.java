@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.collections.BitwiseTrie.BitConverter;
-import com.apriori.collections.BitwiseTrie.WrappedComparator;
+import com.apriori.collections.CompactBitwiseTrie.WrappedComparator;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -11,16 +10,16 @@ import java.util.Set;
 
 //TODO: javadoc
 //TODO: implement me (don't forget serialization and cloning)
-public class CompressedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
+public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
 
    private final BitConverter<? super K> bitConverter;
    private final Comparator<? super K> comparator;
    
-   public CompressedBitwiseTrie(BitConverter<? super K> bitConverter) {
+   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter) {
       this(bitConverter, (Comparator<? super K>) null);
    }
 
-   public CompressedBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
+   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
       if (bitConverter == null) {
          throw new NullPointerException();
       }
@@ -32,12 +31,12 @@ public class CompressedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Bo
       }
    }
 
-   public CompressedBitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
+   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
       this(bitConverter);
       putAll(map);
    }
    
-   public CompressedBitwiseTrie(BitConverter<? super K> bitConverter,
+   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter,
          Comparator<? super K> comparator, Map<? extends K, ? extends V> map) {
       this(bitConverter, comparator);
       putAll(map);
@@ -48,7 +47,7 @@ public class CompressedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Bo
    }
    
    @Override public Comparator<Boolean> componentComparator() {
-      return BitwiseTrie.COMPONENT_COMPARATOR;
+      return CompactBitwiseTrie.COMPONENT_COMPARATOR;
    }
 
    @Override public Comparator<? super K> comparator() {

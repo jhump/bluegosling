@@ -20,10 +20,11 @@ import java.util.NoSuchElementException;
  *
  * @param <V> the type of value stored in the trie
  * 
- * @see CompressedStringTrie
+ * @see ArrayMappedStringTrie
  */
 //TODO: javadoc
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
+//TODO: also add a CompactStringTrie
 public abstract class SimpleStringTrie<V> implements NavigableCompositeTrie<CharSequence, Character, V> {
 
    private static final Componentizer<CharSequence, Character> COMPONENTIZER =

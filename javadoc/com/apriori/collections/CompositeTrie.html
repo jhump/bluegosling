@@ -33,8 +33,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ConcurrentSets.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/CompositeTrie.html" target="_top">Frames</a></li>
@@ -58,7 +58,7 @@
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
@@ -94,13 +94,13 @@
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/BitwiseTrie.html" title="class in com.apriori.collections">BitwiseTrie</a>, <a href="../../../com/apriori/collections/CompressedBitwiseTrie.html" title="class in com.apriori.collections">CompressedBitwiseTrie</a>, <a href="../../../com/apriori/collections/CompressedStringTrie.html" title="class in com.apriori.collections">CompressedStringTrie</a>, <a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections">HashCompositeTrie</a>, <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections">SimpleStringTrie</a>, <a href="../../../com/apriori/collections/SortedArrayCompositeTrie.html" title="class in com.apriori.collections">SortedArrayCompositeTrie</a></dd>
+<dd><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a>, <a href="../../../com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections">ArrayMappedStringTrie</a>, <a href="../../../com/apriori/collections/CompactBitwiseTrie.html" title="class in com.apriori.collections">CompactBitwiseTrie</a>, <a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections">HashCompositeTrie</a>, <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections">SimpleStringTrie</a>, <a href="../../../com/apriori/collections/SortedArrayCompositeTrie.html" title="class in com.apriori.collections">SortedArrayCompositeTrie</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">CompositeTrie&lt;K,C,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</pre>
-<div class="block">A <a href="package-info.html#trie">trie</a> whose keys are composite objects. These composites
+<div class="block">A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
  are first broken down into a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">sequence</a> of constituent components.</div>
 </li>
 </ul>
@@ -114,19 +114,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="type parameter in CompositeTrie.Componentizer">C</a>&gt;</strong></code>
-<div class="block">An interface used to break a key value up into its constituent components.</div>
-</td>
-</tr>
-</table>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_java.util.Map">
 <!--   -->
@@ -149,7 +136,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;? super <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,? extends <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;? super <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,? extends <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer()">componentizer</a></strong>()</code>
 <div class="block">The object used to break up single key values into a sequence of components.</div>
 </td>
@@ -208,7 +195,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <ul class="blockList">
 <li class="blockList">
 <h4>componentizer</h4>
-<pre><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections">CompositeTrie.Componentizer</a>&lt;? super <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,? extends <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;componentizer()</pre>
+<pre><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;? super <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,? extends <a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;componentizer()</pre>
 <div class="block">The object used to break up single key values into a sequence of components. This can be
  null for <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><code>CompositeTrie</code></a>s that have their own internal mechanism for breaking a key
  into a sequence.</div>
@@ -299,8 +286,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/CompositeTrie.Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ConcurrentSets.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/CompositeTrie.html" target="_top">Frames</a></li>
@@ -324,7 +311,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
