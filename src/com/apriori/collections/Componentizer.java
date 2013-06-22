@@ -5,8 +5,8 @@ package com.apriori.collections;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @param <T> the type of the composite/object
- * @param <U> the type of the component/sub-object
+ * @param <T> the type of the composite object
+ * @param <U> the type of the component (sub-object)
  */
 public interface Componentizer<T, U> {
    /**

@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 
 /**
  * Utility methods for working with streams. There are helper methods for binary streams
- * ({@link InputStream} and {@link OutputStream}) and for text streams ({@link Reader} and
- * {@link Writer}).
+ * ({@link InputStream} and {@link OutputStream}) and for text streams (
+ * {@link java.util.Reader}/{@link Readable} and {@link java.util.Writer}/{@link Appendable}).
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

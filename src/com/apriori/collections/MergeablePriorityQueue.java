@@ -19,7 +19,7 @@ import java.util.SortedSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A priority queue that supports merging of two queues. This data structure uses a Fibonacci heap.
+ * A priority queue that supports merging of two queues and is backed by a Fibonacci heap.
  * Insertion, merging, and finding the minimum (or maximum) value all run in constant time. Removing
  * the minimum element runs in amortized logarithmic time (amortized because remove operations incur
  * heap maintenance work, which will be logarithmic incremental work when averaged over many remove
@@ -37,6 +37,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @param <E> the type of element in the queue
  */
 // TODO: javadoc
+// TODO: tests that exercise all code paths in iterator.remove() and can verify integrity of
+// structure after removing items that way
 public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Cloneable {
    
    private static final long serialVersionUID = -7500815513249839345L;
@@ -635,6 +637,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
       }
       return name;
    }
+
    
    private void printState(String title) {
       System.out.println("*** " + title.toUpperCase() + " ***");

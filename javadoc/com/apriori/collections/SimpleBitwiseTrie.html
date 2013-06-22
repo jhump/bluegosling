@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>SimpleStringTrie</title>
+<title>SimpleBitwiseTrie</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="SimpleStringTrie";
+        parent.document.title="SimpleBitwiseTrie";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/SlowParallelSort.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/SimpleStringTrie.html" target="_top">Frames</a></li>
-<li><a href="SimpleStringTrie.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/SimpleBitwiseTrie.html" target="_top">Frames</a></li>
+<li><a href="SimpleBitwiseTrie.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,40 +77,55 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.collections</div>
-<h2 title="Class SimpleStringTrie" class="title">Class SimpleStringTrie&lt;V&gt;</h2>
+<h2 title="Class SimpleBitwiseTrie" class="title">Class SimpleBitwiseTrie&lt;K,V&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.collections.SimpleStringTrie&lt;V&gt;</li>
+<li>com.apriori.collections.SimpleBitwiseTrie&lt;K,V&gt;</li>
 </ul>
 </li>
 </ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value stored in the trie</dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>K</code> - the type of key in the map</dd><dd><code>V</code> - the type of value in the map</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,V&gt;, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,V&gt;</dd>
+<dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;K,V&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="strong">SimpleStringTrie&lt;V&gt;</span>
+<pre>public abstract class <span class="strong">SimpleBitwiseTrie&lt;K,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,V&gt;</pre>
-<div class="block">A trie that has <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a> keys. This is nearly the same as using a
- <a href="../../../com/apriori/collections/SortedArrayCompositeTrie.html" title="class in com.apriori.collections"><code>SortedArrayCompositeTrie<CharSequence, Character, V></code></a> but has a
- couple of useful advantages:
- <ul>
- <li>This trie supports proper localized sorting of keys via a <a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text"><code>Collator</code></a>.</li>
- <li>This trie is a little more efficient since it uses arrays of primitives (<code>char</code>)
- instead of the boxed counterpart, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang"><code>Character</code></a>.
- </ul></div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompactStringTrie.html" title="class in com.apriori.collections"><code>CompactStringTrie</code></a>, 
-<a href="../../../com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections"><code>ArrayMappedStringTrie</code></a></dd></dl>
+implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;</pre>
+<div class="block">A trie structure that most closely resembles a binary tree. Each node in the trie has only two
+ children. Unlike in a binary search tree, nodes do not have keys and left and right children do
+ not indicate order relative to the node's key. Instead, keys are decomposed into a sequence of
+ bits, and each node represents a single bit in the sequence. Left and right child nodes represent
+ the next bit in the sequence, either 0 or 1.
+ 
+ <p>This class requires calling code to supply a <a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections"><code>BitConverter</code></a> to decompose a key object
+ into its constituent sequence of bits. For purposes of ordering, the first bit in the sequence is
+ considered to be the most significant bit. A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> can also be provided to break
+ ties in the event that two different key objects produce the same sequence of bits. However, this
+ is discouraged since it can induce linear runtime complexity in methods that usually are constant
+ time. Ideally, all objects result in distinct bit sequences. The <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true#comparator()" title="class or interface in java.util"><code>SortedMap.comparator()</code></a> method
+ does not return the supplied comparator. Instead it returns a comparator that would order objects
+ in the actual way they are ordered in this structure. The returned comparator first compares the
+ bit sequences for each key and then uses the supplied comparator only to break ties when two keys
+ result in the same bit sequence. 
+ 
+ <p><a name="xor-metric">In addition to the standard <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">trie</a> interface,
+ this class provides methods for searching for the nearest key using an XOR-distance metric.</a>
+ These methods are <a href="../../../com/apriori/collections/SimpleBitwiseTrie.html#nearestEntry(K)"><code>nearestEntry(Object)</code></a> and <a href="../../../com/apriori/collections/SimpleBitwiseTrie.html#nearestKey(K)"><code>nearestKey(Object)</code></a>. The XOR-distance
+ is, simply, the result of the bitwise-XOR operation between the bits of two keys. The first bit
+ in the sequence is the most significant and the last bit of the longer sequence (in the event the
+ keys are different lengths) is the least significant. When keys are different lengths, the bits
+ not present in the shorter key are considered to be zero (so minimizing XOR-distance means
+ preferring paths with unset bits).</div>
 </li>
 </ul>
 </div>
@@ -144,24 +159,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie()">SimpleStringTrie</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie(java.text.Collator)">SimpleStringTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie(java.text.Collator, java.util.Map)">SimpleStringTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator,
-                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie(java.util.Locale)">SimpleStringTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie(java.util.Locale, java.util.Map)">SimpleStringTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale,
-                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#SimpleStringTrie(java.util.Map)">SimpleStringTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html#SimpleBitwiseTrie()">SimpleBitwiseTrie</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -179,14 +177,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#collator()">collator</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html#nearestEntry(K)">nearestEntry</a></strong>(<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleStringTrie.html#componentizer()">componentizer</a></strong>()</code>
-<div class="block">The object used to break up single key values into a sequence of components.</div>
-</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html#nearestKey(K)">nearestKey</a></strong>(<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -202,6 +198,13 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a></h3>
 <code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#componentComparator()">componentComparator</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#descendingMap()">descendingMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap(K)">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap(K, boolean)">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap(java.lang.Iterable)">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap(java.lang.Iterable, int)">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap(K)">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap(K, int)">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap(K, boolean, K, boolean)">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap(K, K)">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap(K)">tailMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap(K, boolean)">tailMap</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.CompositeTrie">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a></h3>
+<code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer()">componentizer</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.NavigableMap">
@@ -238,60 +241,13 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SimpleStringTrie()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie()</pre>
-</li>
-</ul>
-<a name="SimpleStringTrie(java.util.Locale)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</pre>
-</li>
-</ul>
-<a name="SimpleStringTrie(java.text.Collator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator)</pre>
-</li>
-</ul>
-<a name="SimpleStringTrie(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</pre>
-</li>
-</ul>
-<a name="SimpleStringTrie(java.util.Locale, java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale,
-                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</pre>
-</li>
-</ul>
-<a name="SimpleStringTrie(java.text.Collator, java.util.Map)">
+<a name="SimpleBitwiseTrie()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>SimpleStringTrie</h4>
-<pre>public&nbsp;SimpleStringTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator,
-                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,? extends <a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;&nbsp;map)</pre>
+<h4>SimpleBitwiseTrie</h4>
+<pre>public&nbsp;SimpleBitwiseTrie()</pre>
 </li>
 </ul>
 </li>
@@ -302,31 +258,26 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="collator()">
+<a name="nearestKey(java.lang.Object)">
+<!--   -->
+</a><a name="nearestKey(K)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>collator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator()</pre>
+<h4>nearestKey</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>&nbsp;nearestKey(<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>&nbsp;key)</pre>
 </li>
 </ul>
-<a name="componentizer()">
+<a name="nearestEntry(java.lang.Object)">
+<!--   -->
+</a><a name="nearestEntry(K)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>componentizer</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;componentizer()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer()">CompositeTrie</a></code></strong></div>
-<div class="block">The object used to break up single key values into a sequence of components. This can be
- null for <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><code>CompositeTrie</code></a>s that have their own internal mechanism for breaking a key
- into a sequence.</div>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer()">componentizer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,<a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;</code></dd>
-<dt><span class="strong">Returns:</span></dt><dd>the object used to break up keys into sequences or <code>null</code> if that behavior is
-       intrinsic to the trie implementation</dd></dl>
+<h4>nearestEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">V</a>&gt;&nbsp;nearestEntry(<a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="type parameter in SimpleBitwiseTrie">K</a>&nbsp;key)</pre>
 </li>
 </ul>
 </li>
@@ -354,12 +305,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/SlowParallelSort.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/SimpleStringTrie.html" target="_top">Frames</a></li>
-<li><a href="SimpleStringTrie.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/SimpleBitwiseTrie.html" target="_top">Frames</a></li>
+<li><a href="SimpleBitwiseTrie.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

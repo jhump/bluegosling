@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>HashTrieMap</title>
+<title>HashArrayMappedTrieMap</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="HashTrieMap";
+        parent.document.title="HashArrayMappedTrieMap";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LongIterator.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/FilteringSet.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/HashTrieMap.html" target="_top">Frames</a></li>
-<li><a href="HashTrieMap.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/HashArrayMappedTrieMap.html" target="_top">Frames</a></li>
+<li><a href="HashArrayMappedTrieMap.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,14 +77,14 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.collections</div>
-<h2 title="Class HashTrieMap" class="title">Class HashTrieMap&lt;K,V&gt;</h2>
+<h2 title="Class HashArrayMappedTrieMap" class="title">Class HashArrayMappedTrieMap&lt;K,V&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.collections.HashTrieMap&lt;K,V&gt;</li>
+<li>com.apriori.collections.HashArrayMappedTrieMap&lt;K,V&gt;</li>
 </ul>
 </li>
 </ul>
@@ -98,16 +98,16 @@
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="strong">HashTrieMap&lt;K,V&gt;</span>
+<pre>public abstract class <span class="strong">HashArrayMappedTrieMap&lt;K,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</pre>
 <div class="block">An implementation of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> that uses a hash array-mapped trie (HAMT). Under the hood, this
- structure is the same as a <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><code>ArrayMappedBitwiseTrie</code></a> except that the key bits come from a
- key's hash value. Like a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>, a linked list is used to store values
- whose keys' hash values collide. But collisions are far less likely than in a
- <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> because the full 32 bits of hash value are used (vs. hash value
- modulo array size, which is typically far lower cardinality than the full 32 bits). Since this
- structure doesn't use a fixed size array for the mappings (unlike a
+ structure is the same as an <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><code>ArrayMappedBitwiseTrie</code></a> except that the key bits come from a
+ key's <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hash value</a>. Like a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>, a
+ linked list is used to store values whose keys' hash values collide. But collisions are far less
+ likely than in a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> because the full 32 bits of hash value are
+ used (vs. hash value modulo array size, which is typically far lower cardinality than the full
+ 32 bits). Since this structure doesn't use a fixed size array for the mappings (unlike a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>), it never pays the cost of getting full and requiring an
  internal table resize. However, arrays are used at individual nodes, and these will need to be
  resized during insertion and removal operations. But these arrays are very small (never larger
@@ -146,7 +146,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/HashTrieMap.html#HashTrieMap()">HashTrieMap</a></strong>()</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/HashArrayMappedTrieMap.html#HashArrayMappedTrieMap()">HashArrayMappedTrieMap</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -185,13 +185,13 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="HashTrieMap()">
+<a name="HashArrayMappedTrieMap()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>HashTrieMap</h4>
-<pre>public&nbsp;HashTrieMap()</pre>
+<h4>HashArrayMappedTrieMap</h4>
+<pre>public&nbsp;HashArrayMappedTrieMap()</pre>
 </li>
 </ul>
 </li>
@@ -219,12 +219,12 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LongIterator.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/FilteringSet.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/HashTrieMap.html" target="_top">Frames</a></li>
-<li><a href="HashTrieMap.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/collections/HashArrayMappedTrieMap.html" target="_top">Frames</a></li>
+<li><a href="HashArrayMappedTrieMap.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

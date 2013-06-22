@@ -101,6 +101,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped collection</dd><dd><code>O</code> - the "output" type; the type of elements in this collection</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;O&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;O&gt;</dd>
@@ -117,6 +118,8 @@
 <br>
 <pre>public static class <span class="strong">TransformingCollection.ReadOnly&lt;I,O&gt;</span>
 extends <a href="../../../com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections">TransformingCollection</a>&lt;I,O&gt;</pre>
+<div class="block">An unmodifiable transforming collection. All mutation operations throw
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -150,8 +153,10 @@ extends <a href="../../../com/apriori/collections/TransformingCollection.html" t
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html#TransformingCollection.ReadOnly(java.util.Collection, com.apriori.util.Function)">TransformingCollection.ReadOnly</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>&gt;&nbsp;collection,
-                               <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;&nbsp;function)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html#TransformingCollection.ReadOnly(java.util.Collection, com.apriori.util.Function)">TransformingCollection.ReadOnly</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>&gt;&nbsp;collection,
+                               <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,? extends <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;&nbsp;function)</code>
+<div class="block">Constructs a new read-only transforming collection.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -237,8 +242,10 @@ extends <a href="../../../com/apriori/collections/TransformingCollection.html" t
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TransformingCollection.ReadOnly</h4>
-<pre>public&nbsp;TransformingCollection.ReadOnly(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>&gt;&nbsp;collection,
-                               <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;TransformingCollection.ReadOnly(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>&gt;&nbsp;collection,
+                               <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,? extends <a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;&nbsp;function)</pre>
+<div class="block">Constructs a new read-only transforming collection.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>collection</code> - the wrapped collection</dd><dd><code>function</code> - the function used to transform elements</dd></dl>
 </li>
 </ul>
 </li>

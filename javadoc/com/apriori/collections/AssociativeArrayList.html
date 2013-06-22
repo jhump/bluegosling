@@ -467,7 +467,7 @@ implements <a href="../../../com/apriori/collections/AssociativeList.html" title
       <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>&nbsp;element,
       <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&nbsp;key)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html#add(int, E, K)">AssociativeList</a></code></strong></div>
-<div class="block">Adds an element with an associative key. If the specified key was previous associated with
+<div class="block">Adds an element with an associative key. If the specified key was previously associated with
  a different element, the index of that element is returned.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
@@ -487,8 +487,9 @@ implements <a href="../../../com/apriori/collections/AssociativeList.html" title
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(java.util.Map)">AssociativeList</a></code></strong></div>
 <div class="block">Adds a collection of mapped entries from a map. The elements are added in whatever iteration
  order is for the specified map. The are added to the end of the list. Any key that was
- already associated with an element in the list will be in the returned map, which also
- indicates the previously associated list index.</div>
+ already associated with an element in the list will instead be associated with its
+ corresponding value in the specified map. The returned map, if not empty, contains any such
+ overwritten keys along with their previously associated list index.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(java.util.Map)">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;</code></dd>
@@ -507,7 +508,9 @@ implements <a href="../../../com/apriori/collections/AssociativeList.html" title
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(int, java.util.Map)">AssociativeList</a></code></strong></div>
 <div class="block">Adds a collection of mapped entries from a map. The elements are added in whatever iteration
  order is for the specified map. Any key that was already associated with an element in the
- list will be in the returned map, which also indicates the previously associated list index.</div>
+ list will instead be associated with its corresponding value in the specified map. The
+ returned map, if not empty, contains any such overwritten keys along with their previously
+ associated list index.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(int, java.util.Map)">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;</code></dd>
@@ -524,8 +527,10 @@ implements <a href="../../../com/apriori/collections/AssociativeList.html" title
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;addAll(<a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;? extends <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,? extends <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;&nbsp;mappedElements)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(com.apriori.collections.AssociativeList)">AssociativeList</a></code></strong></div>
 <div class="block">Adds a collection of mapped entries from another <a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections"><code>AssociativeList</code></a>. They are added to
- the end of the list. Any key that was already associated with an element in the list will be
- in the returned map, which also indicates the previously associated list index.</div>
+ the end of the list. Any key that was already associated with an element in the list will
+ instead be associated with its corresponding value in the specified map. The returned map, if
+ not empty, contains any such overwritten keys along with their previously associated list
+ index.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(com.apriori.collections.AssociativeList)">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;</code></dd>
@@ -543,8 +548,9 @@ implements <a href="../../../com/apriori/collections/AssociativeList.html" title
                     <a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;? extends <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,? extends <a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;&nbsp;mappedElements)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(int, com.apriori.collections.AssociativeList)">AssociativeList</a></code></strong></div>
 <div class="block">Adds a collection of mapped entries from another <a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections"><code>AssociativeList</code></a>. Any key that was
- already associated with an element in the list will be in the returned map, which also
- indicates the previously associated list index.</div>
+ already associated with an element in the list will instead be associated with its
+ corresponding value in the specified map. The returned map, if not empty, contains any such
+ overwritten keys along with their previously associated list index.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/AssociativeList.html#addAll(int, com.apriori.collections.AssociativeList)">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections">AssociativeList</a>&lt;<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,<a href="../../../com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt;</code></dd>

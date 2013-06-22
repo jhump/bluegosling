@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped iterator</dd><dd><code>O</code> - the "output" type; the type of elements in this iterator</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;O&gt;</dd>
@@ -104,6 +105,8 @@
 <pre>public class <span class="strong">TransformingIterator&lt;I,O&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;O&gt;</pre>
+<div class="block">An iterator whose elements are the results of applying a function to results from another
+ iterator. This iterator is simply a wrapper.</div>
 </li>
 </ul>
 </div>
@@ -124,7 +127,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="class in com.apriori.collections">TransformingIterator.ReadOnly</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;</strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="class in com.apriori.collections">TransformingIterator.ReadOnly</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;</strong></code>
+<div class="block">An unmodifiable transforming iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -142,7 +147,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.html#TransformingIterator(java.util.Iterator, com.apriori.util.Function)">TransformingIterator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&gt;&nbsp;iterator,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a>&gt;&nbsp;function)</code>&nbsp;</td>
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a>&gt;&nbsp;function)</code>
+<div class="block">Constructs a new transforming iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -161,7 +168,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.html#apply(I)">apply</a></strong>(<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&nbsp;input)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.html#apply(I)">apply</a></strong>(<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&nbsp;input)</code>
+<div class="block">Transforms an element by applying a function.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -169,7 +178,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.html#internal()">internal</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.html#internal()">internal</a></strong>()</code>
+<div class="block">Gets the wrapped iterator.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a></code></td>
@@ -208,7 +219,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>TransformingIterator</h4>
 <pre>public&nbsp;TransformingIterator(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&gt;&nbsp;iterator,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a>&gt;&nbsp;function)</pre>
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a>&gt;&nbsp;function)</pre>
+<div class="block">Constructs a new transforming iterator.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>iterator</code> - the wrapped iterator</dd><dd><code>function</code> - the function used to transform elements</dd></dl>
 </li>
 </ul>
 </li>
@@ -226,6 +239,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>internal</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&gt;&nbsp;internal()</pre>
+<div class="block">Gets the wrapped iterator.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the wrapped iterator</dd></dl>
 </li>
 </ul>
 <a name="apply(java.lang.Object)">
@@ -237,6 +252,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>apply</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">O</a>&nbsp;apply(<a href="../../../com/apriori/collections/TransformingIterator.html" title="type parameter in TransformingIterator">I</a>&nbsp;input)</pre>
+<div class="block">Transforms an element by applying a function.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>input</code> - the element to be transformed</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the transformed result</dd></dl>
 </li>
 </ul>
 <a name="hasNext()">

@@ -106,9 +106,14 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped set</dd><dd><code>O</code> - the "output" type; the type of elements in this set</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;O&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;O&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;O&gt;</dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../com/apriori/collections/TransformingRandomAccessSet.Bidi.html" title="class in com.apriori.collections">TransformingRandomAccessSet.Bidi</a></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -119,6 +124,16 @@
 <pre>public static class <span class="strong">TransformingSet.Bidi&lt;I,O&gt;</span>
 extends <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a>&lt;I,O&gt;
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;O&gt;</pre>
+<div class="block">A transforming set that can transform values in both directions. Since this set can transform
+ values in the other direction (output type -> input type), all operations are supported,
+ including <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#add(O)"><code>TransformingCollection.Bidi.add(Object)</code></a> and <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#addAll(java.util.Collection)"><code>TransformingCollection.Bidi.addAll(Collection)</code></a>.
+ 
+ <p>Several methods are overridden to use the reverse function before delegating to the
+ underlying set. Since some of these interface methods actually accept any type of object
+ (instead of requiring the set's element type), this implementation could result in
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>s if objects with incorrect types are passed to them. These
+ methods are <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#contains(java.lang.Object)"><code>TransformingCollection.Bidi.contains(Object)</code></a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#containsAll(java.util.Collection)"><code>TransformingCollection.Bidi.containsAll(Collection)</code></a>,
+ <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#remove(java.lang.Object)"><code>TransformingCollection.Bidi.remove(Object)</code></a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#removeAll(java.util.Collection)"><code>TransformingCollection.Bidi.removeAll(Collection)</code></a>, and <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#retainAll(java.util.Collection)"><code>TransformingCollection.Bidi.retainAll(Collection)</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -152,9 +167,11 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingSet.Bidi.html#TransformingSet.Bidi(java.util.Set, com.apriori.util.Function, com.apriori.util.Function)">TransformingSet.Bidi</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;collection,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>&gt;&nbsp;function1,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>,<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;function2)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingSet.Bidi.html#TransformingSet.Bidi(java.util.Set, com.apriori.util.Function, com.apriori.util.Function)">TransformingSet.Bidi</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;set,
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>,? extends <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>&gt;&nbsp;function1,
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>,? extends <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;function2)</code>
+<div class="block">Constructs a new bidirectional transforming set.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -179,20 +196,26 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingSet.Bidi.html#hashCode()">hashCode</a></strong>()</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingSet.Bidi.html#internal()">internal</a></strong>()</code>
+<div class="block">Gets the wrapped set.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.TransformingCollection.Bidi">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a></h3>
-<code><a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#add(O)">add</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#addAll(java.util.Collection)">addAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#containsAll(java.util.Collection)">containsAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#remove(java.lang.Object)">remove</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#removeAll(java.util.Collection)">removeAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#retainAll(java.util.Collection)">retainAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#unapply(java.lang.Object)">unapply</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#unapplyAll(java.util.Collection)">unapplyAll</a></code></li>
+<code><a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#add(O)">add</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#addAll(java.util.Collection)">addAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#containsAll(java.util.Collection)">containsAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#inverseFunction()">inverseFunction</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#remove(java.lang.Object)">remove</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#removeAll(java.util.Collection)">removeAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#retainAll(java.util.Collection)">retainAll</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#unapply(java.lang.Object)">unapply</a>, <a href="../../../com/apriori/collections/TransformingCollection.Bidi.html#unapplyAll(java.util.Collection)">unapplyAll</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.TransformingCollection">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections">TransformingCollection</a></h3>
-<code><a href="../../../com/apriori/collections/TransformingCollection.html#clear()">clear</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#internal()">internal</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#size()">size</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toArray(T[])">toArray</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toString()">toString</a></code></li>
+<code><a href="../../../com/apriori/collections/TransformingCollection.html#clear()">clear</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#size()">size</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toArray(T[])">toArray</a>, <a href="../../../com/apriori/collections/TransformingCollection.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.TransformingIterable">
@@ -235,9 +258,15 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TransformingSet.Bidi</h4>
-<pre>public&nbsp;TransformingSet.Bidi(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;collection,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>&gt;&nbsp;function1,
-                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>,<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;function2)</pre>
+<pre>public&nbsp;TransformingSet.Bidi(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;set,
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>,? extends <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>&gt;&nbsp;function1,
+                    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>,? extends <a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;function2)</pre>
+<div class="block">Constructs a new bidirectional transforming set. The two provided functions must be
+ inverses of one another. In other words, for any object <code>i</code> in the input domain,
+ <code>i</code> must <em>equal</em> <code>function2.apply(function1.apply(i))</code>. Similarly, for
+ any object <code>o</code> in the output domain, <code>o</code> must <em>equal</em>
+ <code>function1.apply(function2.apply(o))</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - the wrapped set</dd><dd><code>function1</code> - transforms elements; "input" -> "output"</dd><dd><code>function2</code> - the inverse of <code>function1</code>; "output" -> "input"</dd></dl>
 </li>
 </ul>
 </li>
@@ -248,6 +277,20 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="internal()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>internal</h4>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>&gt;&nbsp;internal()</pre>
+<div class="block">Gets the wrapped set.</div>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/TransformingCollection.html#internal()">internal</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections">TransformingCollection</a>&lt;<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="type parameter in TransformingSet.Bidi">O</a>&gt;</code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>the wrapped set</dd></dl>
+</li>
+</ul>
 <a name="equals(java.lang.Object)">
 <!--   -->
 </a>

@@ -340,20 +340,15 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
          }
          
          @Override public int hashCode() {
-            return key.hashCode();
+            return MapUtils.hashCode(this);
          }
          
          @Override public boolean equals(Object o) {
-            if (o instanceof Map.Entry) {
-               Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
-               return key == null ? other.getKey() == null : key.equals(other.getKey())
-                     && value == null ? other.getValue() == null : value.equals(other.getValue());
-            }
-            return false;
+            return MapUtils.equals(this, o);
          }
          
          @Override public String toString() {
-            return String.valueOf(key) + " -> " + String.valueOf(value);
+            return MapUtils.toString(this);
          }
       };
    }

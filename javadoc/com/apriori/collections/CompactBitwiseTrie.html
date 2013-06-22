@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/CompactStringTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/CompactBitwiseTrie.html" target="_top">Frames</a></li>
@@ -91,7 +91,6 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>K</code> - the type of key in the map</dd><dd><code>V</code> - the type of value in the map</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;K,V&gt;</dd>
@@ -101,34 +100,6 @@
 <pre>public class <span class="strong">CompactBitwiseTrie&lt;K,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;</pre>
-<div class="block">A trie structure that most closely resembles a binary tree. Each node in the trie has only two
- children. Unlike in a binary search tree, nodes do not have keys and left and right children do
- not indicate order relative to the node's key. Instead, keys are decomposed into a sequence of
- bits, and each node represents a single bit in the sequence. Left and right child nodes represent
- the next bit in the sequence, either 0 or 1. Another key difference from a binary search tree is
- that nodes with a single child are "collapsed" such that edges from one node to a child can
- actually encode a whole sequence of bits (all collapsed from what would otherwise be multiple
- intermediate nodes, each with a single child).
- 
- <p>This class requires calling code to supply a <a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections"><code>BitConverter</code></a> to decompose a key object
- into its constituent sequence of bits. For purposes of ordering, the first bit in the sequence is
- considered to be the most significant bit. A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> can also be provided to break
- ties in the event that two different key objects produce the same sequence of bits. However, this
- is discouraged since it can induce linear runtime complexity in methods that usually are constant
- time. Ideally, all objects result in distinct bit sequences. The <a href="../../../com/apriori/collections/CompactBitwiseTrie.html#comparator()"><code>comparator()</code></a> method
- does not return the supplied comparator. Instead it returns a comparator that would order objects
- in the actual way they are ordered in this structure. The returned comparator first compares the
- bit sequences for each key and then uses a supplied comparator only to break ties when two keys
- result in the same bit sequence. 
- 
- <p><a name="xor-metric">In addition to the standard <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">trie</a> interface,
- this class provides methods for searching for the nearest key using an XOR-distance metric.</a>
- These methods are <a href="../../../com/apriori/collections/CompactBitwiseTrie.html#nearestEntry(K)"><code>nearestEntry(Object)</code></a> and <a href="../../../com/apriori/collections/CompactBitwiseTrie.html#nearestKey(K)"><code>nearestKey(Object)</code></a>. The XOR-distance
- is, simply, the result of the bitwise-XOR operation between the bits of two keys. The first bit
- in the sequence is the most significant and the last bit of the longer sequence (in the event the
- keys are different lengths) is the least significant. When keys are different lengths, the bits
- not present in the shorter key are considered to be zero (so minimizing XOR-distance means
- preferring paths with unset bits).</div>
 </li>
 </ul>
 </div>
@@ -1232,7 +1203,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/CompactStringTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/CompactBitwiseTrie.html" target="_top">Frames</a></li>

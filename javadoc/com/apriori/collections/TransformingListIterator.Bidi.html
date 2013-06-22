@@ -101,6 +101,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped iterator</dd><dd><code>O</code> - the "output" type; the type of elements in this iterator</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;O&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;O&gt;</dd>
@@ -113,6 +114,9 @@
 <br>
 <pre>public static class <span class="strong">TransformingListIterator.Bidi&lt;I,O&gt;</span>
 extends <a href="../../../com/apriori/collections/TransformingListIterator.html" title="class in com.apriori.collections">TransformingListIterator</a>&lt;I,O&gt;</pre>
+<div class="block">A transforming list iterator that can transform values in both directions. Since this iterator
+ can transform values in the other direction (output type -> input type), all operations are
+ supported, including <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html#add(O)"><code>add(Object)</code></a> and <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html#set(O)"><code>set(Object)</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -147,8 +151,10 @@ extends <a href="../../../com/apriori/collections/TransformingListIterator.html"
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html#TransformingListIterator.Bidi(java.util.ListIterator, com.apriori.util.Function, com.apriori.util.Function)">TransformingListIterator.Bidi</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;iterator,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&gt;&nbsp;function1,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>,<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;function2)</code>&nbsp;</td>
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>,? extends <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&gt;&nbsp;function1,
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>,? extends <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;function2)</code>
+<div class="block">Constructs a new bidirectional transforming list iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -175,7 +181,9 @@ extends <a href="../../../com/apriori/collections/TransformingListIterator.html"
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html#unapply(O)">unapply</a></strong>(<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&nbsp;input)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html#unapply(O)">unapply</a></strong>(<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&nbsp;input)</code>
+<div class="block">Transforms "output" elements into "input" elements.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -227,8 +235,14 @@ extends <a href="../../../com/apriori/collections/TransformingListIterator.html"
 <li class="blockList">
 <h4>TransformingListIterator.Bidi</h4>
 <pre>public&nbsp;TransformingListIterator.Bidi(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;iterator,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&gt;&nbsp;function1,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>,<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;function2)</pre>
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>,? extends <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&gt;&nbsp;function1,
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>,? extends <a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&gt;&nbsp;function2)</pre>
+<div class="block">Constructs a new bidirectional transforming list iterator. The two provided functions must
+ be inverses of one another. In other words, for any object <code>i</code> in the input domain,
+ <code>i</code> must <em>equal</em> <code>function2.apply(function1.apply(i))</code>. Similarly, for
+ any object <code>o</code> in the output domain, <code>o</code> must <em>equal</em>
+ <code>function1.apply(function2.apply(o))</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>iterator</code> - the wrapped iterator</dd><dd><code>function1</code> - transforms elements; "input" -> "output"</dd><dd><code>function2</code> - the inverse of <code>function1</code>; "output" -> "input"</dd></dl>
 </li>
 </ul>
 </li>
@@ -248,6 +262,10 @@ extends <a href="../../../com/apriori/collections/TransformingListIterator.html"
 <li class="blockList">
 <h4>unapply</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">I</a>&nbsp;unapply(<a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="type parameter in TransformingListIterator.Bidi">O</a>&nbsp;input)</pre>
+<div class="block">Transforms "output" elements into "input" elements. This is the opposite direction as
+ <a href="../../../com/apriori/collections/TransformingIterator.html#apply(I)"><code>TransformingIterator.apply(Object)</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>input</code> - the object to transform</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the transformed result</dd></dl>
 </li>
 </ul>
 <a name="set(java.lang.Object)">

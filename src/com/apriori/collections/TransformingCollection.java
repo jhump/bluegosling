@@ -5,14 +5,49 @@ import com.apriori.util.Function;
 import java.util.Collection;
 import java.util.Iterator;
 
-//TODO: javadoc
+/**
+ * A collection whose elements are the results of applying a function to another collection. This
+ * collection is simply a wrapper. Changes to the underlying collection are visible in the
+ * transformed collection. Accessing elements incurs calls to the transforming function.
+ * 
+ * <p>Functions that perform the transformations should be deterministic so that a stable,
+ * unchanging collection does not appear to be mutating when accessed through this transforming
+ * wrapper.
+ * 
+ * <p>Since transformations can only be done in one direction, some operations are not supported.
+ * Namely, {@link #add(Object)} and {@link #addAll(Collection)} throw
+ * {@link UnsupportedOperationException}.
+ * 
+ * <p>Also due to transformations only working in one direction, some methods are implemented in
+ * terms of the collection's {@linkplain #iterator() transforming iterator} and thus may have worse
+ * performance than the underlying collection's implementation. These methods include
+ * {@link #contains(Object)}, {@link #containsAll(Collection)}, {@link #remove(Object)},
+ * {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <I> the "input" type; the type of the wrapped collection
+ * @param <O> the "output" type; the type of elements in this collection
+ */
 //TODO: tests
 public class TransformingCollection<I, O> extends TransformingIterable<I, O> implements Collection<O> {
 
-   public TransformingCollection(Collection<I> collection, Function<I, O> function) {
+   /**
+    * Constructs a new transforming collection.
+    * 
+    * @param collection the wrapped collection
+    * @param function the function used to transform elements
+    */
+   public TransformingCollection(Collection<I> collection,
+         Function<? super I, ? extends O> function) {
       super(collection, function);
    }
    
+   /**
+    * Gets the wrapped collection.
+    * 
+    * @return the wrapped collection
+    */
    @Override
    protected Collection<I> internal() {
       return (Collection<I>) super.internal();
@@ -83,15 +118,26 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
       return CollectionUtils.toString(this);
    }
 
+   /**
+    * An unmodifiable transforming collection. All mutation operations throw
+    * {@link UnsupportedOperationException}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <I> the "input" type; the type of the wrapped collection
+    * @param <O> the "output" type; the type of elements in this collection
+    */
    public static class ReadOnly<I, O> extends TransformingCollection<I, O> {
 
-      public ReadOnly(Collection<? extends I> collection, Function<I, O> function) {
-         super(cast(collection), function);
-      }
-      
-      @SuppressWarnings({ "unchecked", "rawtypes" })
-      private static <T> Collection<T> cast(Collection<? extends T> input) {
-         return (Collection) input;
+      /**
+       * Constructs a new read-only transforming collection.
+       * 
+       * @param collection the wrapped collection
+       * @param function the function used to transform elements
+       */
+      public ReadOnly(Collection<I> collection,
+            Function<? super I, ? extends O> function) {
+         super(collection, function);
       }
       
       @Override
@@ -120,20 +166,72 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
       }
    }
    
+   /**
+    * A transforming collection that can transform values in both directions. Since this collection
+    * can transform values in the other direction (output type -> input type), all operations are
+    * supported, including {@link #add(Object)} and {@link #addAll(Collection)}.
+    * 
+    * <p>Several methods are overridden to use the reverse function before delegating to the
+    * underlying list. Since some of these interface methods actually accept any type of object
+    * (instead of requiring the list's element type), this implementation could result in
+    * {@link ClassCastException}s if objects with incorrect types are passed to them. These
+    * methods are {@link #contains(Object)}, {@link #containsAll(Collection)},
+    * {@link #remove(Object)}, {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <I> the "input" type; the type of the wrapped collection
+    * @param <O> the "output" type; the type of elements in this collection
+    */
    public static class Bidi<I, O> extends TransformingCollection<I, O> {
 
-      private final Function<O, I> function;
+      private final Function<? super O, ? extends I> function;
       
-      public Bidi(Collection<I> collection, Function<I, O> function1, Function<O, I> function2) {
+      /**
+       * Constructs a new bidirectional transforming collection. The two provided functions must be
+       * inverses of one another. In other words, for any object {@code i} in the input domain,
+       * {@code i} must <em>equal</em> {@code function2.apply(function1.apply(i))}. Similarly, for
+       * any object {@code o} in the output domain, {@code o} must <em>equal</em>
+       * {@code function1.apply(function2.apply(o))}.
+       * 
+       * @param collection the wrapped collection
+       * @param function1 transforms elements; "input" -> "output"
+       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       */
+      public Bidi(Collection<I> collection, Function<? super I, ? extends O> function1,
+            Function<? super O, ? extends I> function2) {
          super(collection, function1);
          this.function = function2;
       }
+      
+      /**
+       * Gets the function used to transform elements from the "output" domain to the "input"
+       * domain. This is the inverse of {@link #function()}.
+       * 
+       * @return the inverse function
+       */
+      protected Function<? super O, ? extends I> inverseFunction() {
+         return function;
+      }
 
+      /**
+       * Transforms "output" elements into "input" elements. This is the opposite direction as
+       * {@link #apply(Object)}.
+       * 
+       * @param input the object to transform, which should be of type {@code O}
+       * @return the transformed result
+       */
       @SuppressWarnings("unchecked")
       protected I unapply(Object input) {
          return function.apply((O) input);
       }
       
+      /**
+       * Transforms a collection of "output" elements into "input" elements.
+       * 
+       * @param c the collection to transform, whose elements should be of type {@code O}
+       * @return the transformed results
+       */
       @SuppressWarnings("unchecked")
       protected Collection<I> unapplyAll(Collection<?> c) {
          @SuppressWarnings("rawtypes")

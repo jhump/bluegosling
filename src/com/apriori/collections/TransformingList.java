@@ -7,14 +7,51 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-//TODO: javadoc
+/**
+ * A list whose elements are the results of applying a function to another list. This list is simply
+ * a wrapper. Changes to the underlying list are visible in the transformed list. Accessing elements
+ * incurs calls to the transforming function.
+ * 
+ * <p>Functions that perform the transformations should be deterministic so that a stable,
+ * unchanging iterable does not appear to be mutating when accessed through this transforming
+ * wrapper.
+ * 
+ * <p>Since transformations can only be done in one direction, some operations are not supported.
+ * Namely, {@link #add(Object)}, {@link #add(int, Object)}, {@link #addAll(Collection)},
+ * {@link #addAll(int, Collection)}, and {@link #set(int, Object)} throw
+ * {@link UnsupportedOperationException}. Similarly, {@link ListIterator} instances returned by
+ * this list will throw exceptions if {@link ListIterator#add(Object)} or
+ * {@link ListIterator#set(Object)} is invoked.
+ * 
+ * <p>Also due to transformations only working in one direction, some methods are implemented in
+ * terms of the collection's {@linkplain #iterator() transforming iterator} and thus may have worse
+ * performance than the underlying collection's implementation. These methods include
+ * {@link #contains(Object)}, {@link #containsAll(Collection)}, {@link #remove(Object)},
+ * {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <I> the "input" type; the type of the wrapped list
+ * @param <O> the "output" type; the type of elements in this list
+ */
 //TODO: tests
 public class TransformingList<I, O> extends TransformingCollection<I, O> implements List<O> {
 
-   public TransformingList(List<I> list, Function<I, O> function) {
+   /**
+    * Constructs a new transforming list.
+    * 
+    * @param list the wrapped list
+    * @param function the function used to transform elements
+    */
+   public TransformingList(List<I> list, Function<? super I, ? extends O> function) {
       super(list, function);
    }
 
+   /**
+    * Gets the wrapped list.
+    * 
+    * @return the wrapped list
+    */
    @Override
    protected List<I> internal() {
       return (List<I>) super.internal();
@@ -95,22 +132,51 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
       return CollectionUtils.hashCode(this);
    }
    
-   public static class RandomAccess<I, O> extends TransformingList<I, O> {
+   /**
+    * A transforming list that supports random access to its elements. Any {@link TransformingList}
+    * that is wrapping a random access list supports efficient random access. But a standard
+    * {@link TransformingList} is missing the {@link java.util.RandomAccess} marker interface that
+    * is an important hint for many APIs (such as
+    * {@link java.util.Collections#binarySearch(List, Object)}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <I> the "input" type; the type of the wrapped list
+    * @param <O> the "output" type; the type of elements in this list
+    */
+   public static class RandomAccess<I, O> extends TransformingList<I, O>
+         implements java.util.RandomAccess {
+      /**
+       * Constructs a new random access transforming list.
+       * 
+       * @param list the wrapped list (must implement {@link java.util.RandomAccess})
+       * @param function the function used to transform elements
+       */
       public <L extends List<I> & java.util.RandomAccess> RandomAccess(L list,
-            Function<I, O> function) {
+            Function<? super I, ? extends O> function) {
          super(list, function);
       }
    }
 
+   /**
+    * An unmodifiable transforming list. All mutation operations throw
+    * {@link UnsupportedOperationException}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <I> the "input" type; the type of the wrapped list
+    * @param <O> the "output" type; the type of elements in this list
+    */
    public static class ReadOnly<I, O> extends TransformingList<I, O> {
 
-      public ReadOnly(List<? extends I> list, Function<I, O> function) {
-         super(cast(list), function);
-      }
-      
-      @SuppressWarnings({ "unchecked", "rawtypes" })
-      private static <T> List<T> cast(List<? extends T> input) {
-         return (List) input;
+      /**
+       * Constructs a new read-only transforming list.
+       * 
+       * @param list the wrapped list
+       * @param function the function used to transform elements
+       */
+      public ReadOnly(List<I> list, Function<? super I, ? extends O> function) {
+         super(list, function);
       }
       
       @Override
@@ -138,28 +204,81 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          return new TransformingList.ReadOnly<I, O>(internal().subList(fromIndex, toIndex), function());
       }
       
+      /**
+       * A read-only transforming list that also has the {@link java.util.RandomAccess} marker
+       * interface.
+       *
+       * @author Joshua Humphries (jhumphries131@gmail.com)
+       *
+       * @param <I> the "input" type; the type of the wrapped list
+       * @param <O> the "output" type; the type of elements in this list
+       * 
+       * @see TransformingList.RandomAccess
+       */
       public static class RandomAccess<I, O> extends TransformingList.ReadOnly<I, O> {
-         public <L extends List<? extends I> & java.util.RandomAccess> RandomAccess(L list,
-               Function<I, O> function) {
+         public <L extends List<I> & java.util.RandomAccess> RandomAccess(L list,
+               Function<? super I, ? extends O> function) {
             super(list, function);
          }
       }
    }
    
+   /**
+    * A transforming list that can transform values in both directions. Since this list
+    * can transform values in the other direction (output type -> input type), all operations are
+    * supported, including {@link #add(Object)} and {@link #addAll(Collection)}.
+    * 
+    * <p>Several methods are overridden to use the reverse function before delegating to the
+    * underlying list. Since some of these interface methods actually accept any type of object
+    * (instead of requiring the list's element type), this implementation could result in
+    * {@link ClassCastException}s if objects with incorrect types are passed to them. These
+    * methods are {@link #contains(Object)}, {@link #containsAll(Collection)},
+    * {@link #remove(Object)}, {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <I> the "input" type; the type of the wrapped list
+    * @param <O> the "output" type; the type of elements in this list
+    */
    public static class Bidi<I, O> extends TransformingList<I, O> {
 
-      private final Function<O, I> function;
+      private final Function<? super O, ? extends I> function;
       
-      public Bidi(List<I> list, Function<I, O> function1, Function<O, I> function2) {
+      /**
+       * Constructs a new bidirectional transforming list. The two provided functions must be
+       * inverses of one another. In other words, for any object {@code i} in the input domain,
+       * {@code i} must <em>equal</em> {@code function2.apply(function1.apply(i))}. Similarly, for
+       * any object {@code o} in the output domain, {@code o} must <em>equal</em>
+       * {@code function1.apply(function2.apply(o))}.
+       * 
+       * @param list the wrapped list
+       * @param function1 transforms elements; "input" -> "output"
+       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       */
+      public Bidi(List<I> list, Function<? super I, ? extends O> function1,
+            Function<? super O, ? extends I> function2) {
          super(list, function1);
          this.function = function2;
       }
       
+      /**
+       * Transforms "output" elements into "input" elements. This is the opposite direction as
+       * {@link #apply(Object)}.
+       * 
+       * @param input the object to transform, which should be of type {@code O}
+       * @return the transformed result
+       */
       @SuppressWarnings("unchecked")
       protected I unapply(Object input) {
          return function.apply((O) input);
       }
       
+      /**
+       * Transforms a collection of "output" elements into "input" elements.
+       * 
+       * @param c the collection to transform, whose elements should be of type {@code O}
+       * @return the transformed results
+       */
       @SuppressWarnings("unchecked")
       protected Collection<I> unapplyAll(Collection<?> c) {
          @SuppressWarnings("rawtypes")
@@ -187,13 +306,9 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          internal().add(index, unapply(element));
       }
       
-      // See TransformingCollection.Bidi.addAll() for explanation
-      @SuppressWarnings("unchecked")
       @Override
       public boolean addAll(int index, Collection<? extends O> c) {
-         @SuppressWarnings("rawtypes")
-         Collection rawCollection = c;
-         return internal().addAll(index, new TransformingCollection<O, I>(rawCollection, function));
+         return internal().addAll(index, unapplyAll(c));
       }
 
       @Override
@@ -236,9 +351,21 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
          return new TransformingList.Bidi<I, O>(internal().subList(fromIndex, toIndex), function(), function);
       }
       
+      /**
+       * A bidirectional transforming list that also has the {@link java.util.RandomAccess} marker
+       * interface.
+       *
+       * @author Joshua Humphries (jhumphries131@gmail.com)
+       *
+       * @param <I> the "input" type; the type of the wrapped list
+       * @param <O> the "output" type; the type of elements in this list
+       * 
+       * @see TransformingList.RandomAccess
+       */
       public static class RandomAccess<I, O> extends TransformingList.Bidi<I, O> {
          public <L extends List<I> & java.util.RandomAccess> RandomAccess(L list,
-               Function<I, O> function1, Function<O, I> function2) {
+               Function<? super I, ? extends O> function1,
+               Function<? super O, ? extends I> function2) {
             super(list, function1, function2);
          }
       }

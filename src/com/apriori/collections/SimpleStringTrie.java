@@ -13,13 +13,14 @@ import java.util.NoSuchElementException;
  * <ul>
  * <li>This trie supports proper localized sorting of keys via a {@link Collator}.</li>
  * <li>This trie is a little more efficient since it uses arrays of primitives ({@code char})
- * instead of the boxed counterpart ({@link Character}).
+ * instead of the boxed counterpart, {@link Character}.
  * </ul>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <V> the type of value stored in the trie
  * 
+ * @see CompactStringTrie
  * @see ArrayMappedStringTrie
  */
 //TODO: javadoc
@@ -27,7 +28,7 @@ import java.util.NoSuchElementException;
 //TODO: also add a CompactStringTrie
 public abstract class SimpleStringTrie<V> implements NavigableCompositeTrie<CharSequence, Character, V> {
 
-   private static final Componentizer<CharSequence, Character> COMPONENTIZER =
+   static final Componentizer<CharSequence, Character> COMPONENTIZER =
          new Componentizer<CharSequence, Character>() {
             @Override public Iterable<Character> getComponents(final CharSequence key) {
                return new Iterable<Character>() {

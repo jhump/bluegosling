@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of element in the collection</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;</dd>
@@ -100,6 +101,11 @@
 <pre>public class <span class="strong">FilteringListIterator&lt;E&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;</pre>
+<div class="block">A filtered view of another list iterator. This is a wrapper that elides all members of the
+ wrapped list iterator that do not match a given predicate.
+ 
+ <p>Attempts to add/set items in the filtering list iterator that do <em>not</em> match the
+ predicate will throw <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a>s.</div>
 </li>
 </ul>
 </div>
@@ -119,12 +125,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#FilteringListIterator(java.util.ListIterator, com.apriori.util.Predicate)">FilteringListIterator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;iterator,
-                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#FilteringListIterator(java.util.ListIterator, com.apriori.util.Predicate, int)">FilteringListIterator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;iterator,
-                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate,
-                     int&nbsp;nextIndex)</code>&nbsp;</td>
+                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate)</code>
+<div class="block">Constructs a new filtering list iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -155,7 +158,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#internal()">internal</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#internal()">internal</a></strong>()</code>
+<div class="block">Gets the wrapped list iterator.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a></code></td>
@@ -166,8 +171,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#nextIndex()">nextIndex</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#predicate()">predicate</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#predicate()">predicate</a></strong>()</code>
+<div class="block">Gets the predicate that is responsible for filtering elements.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a></code></td>
@@ -179,7 +186,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#remove()">remove</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringListIterator.html#remove()">remove</a></strong>()</code>
+<div class="block">Removes the last item retrieved from the underlying iterable.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -210,22 +219,22 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <a name="FilteringListIterator(java.util.ListIterator, com.apriori.util.Predicate)">
 <!--   -->
 </a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FilteringListIterator</h4>
-<pre>public&nbsp;FilteringListIterator(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;iterator,
-                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate)</pre>
-</li>
-</ul>
-<a name="FilteringListIterator(java.util.ListIterator, com.apriori.util.Predicate, int)">
-<!--   -->
-</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FilteringListIterator</h4>
 <pre>public&nbsp;FilteringListIterator(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;iterator,
-                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate,
-                     int&nbsp;nextIndex)</pre>
+                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate)</pre>
+<div class="block">Constructs a new filtering list iterator. Elements in this list iterator will include only the
+ elements from the specified iterator that match the specified predicate. An element <code>e</code>
+ matches the predicate if <code>predicate.apply(e)</code> returns true.
+ 
+ <p>The wrapped iterator must be initialized to the beginning of the list. In other words a
+ call <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true#nextIndex()" title="class or interface in java.util"><code>ListIterator.nextIndex()</code></a> should return zero.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>iterator</code> - the wrapped iterator, which should be initialized to the beginning of the
+       list</dd><dd><code>predicate</code> - the filtering predicate</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified iterator is not initialized to the beginning
+       of the list</dd></dl>
 </li>
 </ul>
 </li>
@@ -243,6 +252,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <li class="blockList">
 <h4>internal</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;internal()</pre>
+<div class="block">Gets the wrapped list iterator.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the wrapped iterator</dd></dl>
 </li>
 </ul>
 <a name="predicate()">
@@ -251,7 +262,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <ul class="blockList">
 <li class="blockList">
 <h4>predicate</h4>
-<pre>protected&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate()</pre>
+<pre>protected&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;&nbsp;predicate()</pre>
+<div class="block">Gets the predicate that is responsible for filtering elements.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the predicate</dd></dl>
 </li>
 </ul>
 <a name="hasNext()">
@@ -317,6 +330,16 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <li class="blockList">
 <h4>remove</h4>
 <pre>public&nbsp;void&nbsp;remove()</pre>
+<div class="block">Removes the last item retrieved from the underlying iterable. If neither <a href="../../../com/apriori/collections/FilteringListIterator.html#next()"><code>next()</code></a> nor
+ <a href="../../../com/apriori/collections/FilteringListIterator.html#previous()"><code>previous()</code></a> has been called then there is no element to remove and an
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> will be thrown.
+ 
+ <p>Due to the filtering logic, a call to <a href="../../../com/apriori/collections/FilteringListIterator.html#hasNext()"><code>hasNext()</code></a> or <a href="../../../com/apriori/collections/FilteringListIterator.html#hasPrevious()"><code>hasPrevious()</code></a> may
+ move the underlying iterator (to search for the next or previous element that matches the
+ predicate). In this case, removal is no longer possible and an <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a>
+ will be thrown. So this filtering iterator adds the extra constraint that you cannot
+ interleave a call to <a href="../../../com/apriori/collections/FilteringListIterator.html#hasNext()"><code>hasNext()</code></a>/<a href="../../../com/apriori/collections/FilteringListIterator.html#hasPrevious()"><code>hasPrevious()</code></a> between the calls to
+ <a href="../../../com/apriori/collections/FilteringListIterator.html#next()"><code>next()</code></a>/<a href="../../../com/apriori/collections/FilteringListIterator.html#previous()"><code>previous()</code></a> and <a href="../../../com/apriori/collections/FilteringListIterator.html#remove()"><code>remove()</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#remove()" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></dd>
@@ -363,7 +386,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true#set(E)" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified object does not match the predicate</dd></dl>
 </li>
 </ul>
 <a name="add(java.lang.Object)">
@@ -378,7 +402,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListItera
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringListIterator.html" title="type parameter in FilteringListIterator">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified object does not match the predicate</dd></dl>
 </li>
 </ul>
 </li>

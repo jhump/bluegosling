@@ -11,6 +11,15 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * A {@link BlockingDeque} implementation based on a {@link RandomAccessArrayDeque}. Like its
+ * super-class, it is based on a growable array and exposes random access operations on its
+ * contents.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <E> the type of element in the deque
+ */
 //TODO: implement me! (don't forget serialization and cloning)
 //TODO: tests
 public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>

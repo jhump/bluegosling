@@ -101,7 +101,7 @@
 <pre>public class <span class="strong">MergeablePriorityQueue&lt;E&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
-<div class="block">A priority queue that supports merging of two queues. This data structure uses a Fibonacci heap.
+<div class="block">A priority queue that supports merging of two queues and is backed by a Fibonacci heap.
  Insertion, merging, and finding the minimum (or maximum) value all run in constant time. Removing
  the minimum element runs in amortized logarithmic time (amortized because remove operations incur
  heap maintenance work, which will be logarithmic incremental work when averaged over many remove

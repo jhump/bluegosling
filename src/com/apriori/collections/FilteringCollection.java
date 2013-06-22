@@ -7,11 +7,31 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-//TODO: javadoc
+/**
+ * A filtered view of another collection. This is a wrapper that elides all members of the wrapped
+ * collection that do not match a given predicate. Changes to the underlying collection will be
+ * visible through the filtering collection (or at least those changes that effect elements that
+ * match the predicate).
+ * 
+ * <p>Attempts to add items to the filtering collection that do <em>not</em> match the predicate
+ * will throw {@link IllegalArgumentException}s.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <E> the type of element in the collection
+ */
 //TODO: tests
 public class FilteringCollection<E> extends FilteringIterable<E> implements Collection<E> {
 
-   public FilteringCollection(Collection<E> collection, Predicate<E> predicate) {
+   /**
+    * Constructs a new filtering collection. Elements in this collection will include only the
+    * elements from the specified collection that match the specified predicate. An element
+    * {@code e} matches the predicate if {@code predicate.apply(e)} returns true. 
+    * 
+    * @param collection the wrapped collection
+    * @param predicate the filtering predicate
+    */
+   public FilteringCollection(Collection<E> collection, Predicate<? super E> predicate) {
       super(collection, predicate);
    }
 
@@ -20,6 +40,11 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
       return Collections.unmodifiableCollection(new ArrayList<E>(this));
    }
    
+   /**
+    * Gets the wrapped collection.
+    * 
+    * @return the wrapped collection
+    */
    @Override
    protected Collection<E> internal() {
       return (Collection<E>) super.internal();
@@ -42,12 +67,7 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
 
    @Override
    public boolean contains(Object o) {
-      for (E element : this) {
-         if (o == null ? element == null : o.equals(element)) {
-            return true;
-         }
-      }
-      return false;
+      return CollectionUtils.contains(iterator(), o);
    }
 
    @Override
@@ -57,90 +77,66 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
 
    @Override
    public Object[] toArray() {
-      return new ArrayList<E>(this).toArray();
+      return CollectionUtils.toArray(this);
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
-      return new ArrayList<E>(this).toArray(a);
+      return CollectionUtils.toArray(this, a);
    }
 
+   /**
+    * @throws IllegalArgumentException if the specified object does not match the predicate
+    */
    @Override
    public boolean add(E e) {
       if (predicate().apply(e)) {
          return internal().add(e);
       } else {
-         throw new IllegalArgumentException("Specified object does not pass filter");
+         throw new IllegalArgumentException("Specified object does not pass filter: " + e);
       }
    }
 
    @Override
    public boolean remove(Object o) {
-      for (Iterator<E> iter = iterator(); iter.hasNext();) {
-         E element = iter.next();
-         if (o == null ? element == null : o.equals(element)) {
-            if (predicate().apply(element)) {
-               iter.remove();
-               return true;
-            }
-         }
-      }
-      return false;
+      return CollectionUtils.removeObject(o, iterator(), true);
    }
 
    @Override
    public boolean containsAll(Collection<?> c) {
-      for (Object o : c) {
-         if (!contains(o)) {
-            return false;
-         }
-      }
-      return true;
+      return CollectionUtils.containsAll(this, c);
    }
 
+   /**
+    * @throws IllegalArgumentException if any element in the specified collection does not match the
+    *       predicate (in which case no element is added)
+    */
    @Override
    public boolean addAll(Collection<? extends E> c) {
-      boolean changed = false;
       for (E e : c) {
-         if (add(e)) {
-            changed = true;
+         if (!predicate().apply(e)) {
+            throw new IllegalArgumentException("Specified object does not pass filter: " + e);
          }
       }
-      return changed;
+      // all items pass, so we can safely add everything
+      return internal().addAll(c);
    }
 
    @Override
    public boolean removeAll(Collection<?> c) {
-      boolean changed = false;
-      for (Iterator<E> iter = this.iterator(); iter.hasNext(); ) {
-         E e = iter.next();
-         if (c.contains(e)) {
-            iter.remove();
-            changed = true;
-         }
-      }
-      return changed;
+      return CollectionUtils.filter(c, iterator(), true);
    }
 
    @Override
    public boolean retainAll(Collection<?> c) {
-      boolean changed = false;
-      for (Iterator<E> iter = this.iterator(); iter.hasNext(); ) {
-         E e = iter.next();
-         if (!c.contains(e)) {
-            iter.remove();
-            changed = true;
-         }
-      }
-      return changed;
+      return CollectionUtils.filter(c, iterator(), false);
    }
 
    @Override
    public void clear() {
       for (Iterator<E> iter = iterator(); iter.hasNext();) {
-         if (predicate().apply(iter.next())) {
-            iter.remove();
-         }
+         iter.next();
+         iter.remove();
       }
    }
 

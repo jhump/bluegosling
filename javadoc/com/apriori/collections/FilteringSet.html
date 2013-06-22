@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/FilteringListIterator.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashArrayMappedTrieMap.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/FilteringSet.html" target="_top">Frames</a></li>
@@ -101,6 +101,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of element in the sets</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;</dd>
@@ -110,6 +111,12 @@
 <pre>public class <span class="strong">FilteringSet&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a>&lt;E&gt;
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;</pre>
+<div class="block">A filtered view of another set. This is a wrapper that elides all members of the wrapped set that
+ do not match a given predicate. Changes to the underlying set will be visible through the
+ filtering set (or at least those changes that effect elements that match the predicate).
+ 
+ <p>Attempts to add items to the filtering set that do <em>not</em> match the predicate will throw
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a>s.</div>
 </li>
 </ul>
 </div>
@@ -129,7 +136,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/FilteringSet.html#FilteringSet(java.util.Set, com.apriori.util.Predicate)">FilteringSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;set,
-            <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;predicate)</code>&nbsp;</td>
+            <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;predicate)</code>
+<div class="block">Constructs a new filtering set.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -148,7 +157,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringSet.html#capture()">capture</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/FilteringSet.html#capture()">capture</a></strong>()</code>
+<div class="block">Capture a snapshot of the filtered elements.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -209,6 +220,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <h4>FilteringSet</h4>
 <pre>public&nbsp;FilteringSet(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;set,
             <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;predicate)</pre>
+<div class="block">Constructs a new filtering set. Elements in this set will include only the elements from the
+ specified set that match the specified predicate. An element <code>e</code> matches the predicate
+ if <code>predicate.apply(e)</code> returns true.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - the wrapped set</dd><dd><code>predicate</code> - the filtering predicate</dd></dl>
 </li>
 </ul>
 </li>
@@ -226,10 +241,13 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <li class="blockList">
 <h4>capture</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;&nbsp;capture()</pre>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/FilteringIterable.html#capture()">FilteringIterable</a></code></strong></div>
+<div class="block">Capture a snapshot of the filtered elements. The returned collection is not a wrapper and will
+ thusly be disconnected from any future modifications to the wrapped iterable.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/FilteringCollection.html#capture()">capture</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a>&lt;<a href="../../../com/apriori/collections/FilteringSet.html" title="type parameter in FilteringSet">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>a snapshot of the filtered elements</dd></dl>
 </li>
 </ul>
 <a name="equals(java.lang.Object)">
@@ -292,7 +310,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/FilteringListIterator.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashArrayMappedTrieMap.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/FilteringSet.html" target="_top">Frames</a></li>

@@ -7,6 +7,15 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.RandomAccess;
 
+/**
+ * Sorts arrays and collections using the <a href="http://en.wikipedia.org/wiki/Smoothsort">
+ * Smoothsort</a> algorithm. This algorithm is very similar to heap sort, but it uses a Leonardo
+ * heap instead of a binary heap. The way the Leonardo heap is represented in-place in the array
+ * or list enables sorting operations to take advantage of partially sorted data (data where there
+ * are runs of sorted elements). This gives the algorithm a linear best case.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: implement me!
 // TODO: javadoc
 public final class SmoothSort {
@@ -132,7 +141,7 @@ public final class SmoothSort {
    
    private static <T extends Comparable<T>> void rebalance(List<T> list, HeapStructure structure,
          int length) {
-      
+      // TODO
    }
    
    private static <T extends Comparable<T>> void sortInPlace(List<T> list) {
@@ -157,7 +166,7 @@ public final class SmoothSort {
    }
    
    public static <T extends Comparable<T>> void sort(List<T> list, Comparator<? super T> comp) {
-      
+      // TODO
    }
    
    public static <T extends Comparable<T>> void sort(T[] array) {
@@ -166,62 +175,62 @@ public final class SmoothSort {
    }
 
    public static <T extends Comparable<T>> void sort(T[] array, Comparator<? super T> comp) {
-      
+      // TODO
    }
 
    public static void sort(int[] array) {
-      
+      // TODO
    }
 
    public static void sort(int[] array, Comparator<? super Integer> comp) {
-      
+      // TODO
    }
 
    public static void sort(byte[] array) {
-      
+      // TODO
    }
    
    public static void sort(byte[] array, Comparator<? super Byte> comp) {
-      
+      // TODO
    }
    
    public static void sort(short[] array) {
-      
+      // TODO
    }
    
    public static void sort(short[] array, Comparator<? super Short> comp) {
-      
+      // TODO
    }
    
    public static void sort(char[] array) {
-      
+      // TODO
    }
    
    public static void sort(char[] array, Comparator<? super Character> comp) {
-      
+      // TODO
    }
    
    public static void sort(long[] array) {
-      
+      // TODO
    }
    
    public static void sort(long[] array, Comparator<? super Long> comp) {
-      
+      // TODO
    }
    
    public static void sort(float[] array) {
-      
+      // TODO
    }
    
    public static void sort(float[] array, Comparator<? super Float> comp) {
-      
+      // TODO
    }
    
    public static void sort(double[] array) {
-      
+      // TODO
    }
 
    public static void sort(double[] array, Comparator<? super Double> comp) {
-      
+      // TODO
    }
 }

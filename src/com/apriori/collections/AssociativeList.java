@@ -4,7 +4,16 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-// TODO: javadoc
+/**
+ * A {@link List} that can have associative keys and can be viewed as a {@link Map}. Each item in
+ * the list can have an optional associative key and can be queried either by its position or by
+ * that associative key.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <E> the type of element in the list
+ * @param <K> the type of optional associative keys
+ */
 public interface AssociativeList<E, K> extends List<E> {
    /**
     * Adds an element with an associative key. If the specified key was previously associated with
@@ -18,7 +27,7 @@ public interface AssociativeList<E, K> extends List<E> {
    int add(E element, K key);
    
    /**
-    * Adds an element with an associative key. If the specified key was previous associated with
+    * Adds an element with an associative key. If the specified key was previously associated with
     * a different element, the index of that element is returned.
     * 
     * @param index the index at which the new element is inserted
@@ -34,8 +43,9 @@ public interface AssociativeList<E, K> extends List<E> {
    /**
     * Adds a collection of mapped entries from a map. The elements are added in whatever iteration
     * order is for the specified map. The are added to the end of the list. Any key that was
-    * already associated with an element in the list will be in the returned map, which also
-    * indicates the previously associated list index.
+    * already associated with an element in the list will instead be associated with its
+    * corresponding value in the specified map. The returned map, if not empty, contains any such
+    * overwritten keys along with their previously associated list index.
     * 
     * @param mappedElements the values and associated keys to add to the list
     * @return a map of keys to previously associated indices
@@ -45,7 +55,9 @@ public interface AssociativeList<E, K> extends List<E> {
    /**
     * Adds a collection of mapped entries from a map. The elements are added in whatever iteration
     * order is for the specified map. Any key that was already associated with an element in the
-    * list will be in the returned map, which also indicates the previously associated list index.
+    * list will instead be associated with its corresponding value in the specified map. The
+    * returned map, if not empty, contains any such overwritten keys along with their previously
+    * associated list index.
     * 
     * @param index the index at which the new elements are inserted
     * @param mappedElements the values and associated keys to add to the list
@@ -57,8 +69,10 @@ public interface AssociativeList<E, K> extends List<E> {
 
    /**
     * Adds a collection of mapped entries from another {@link AssociativeList}. They are added to
-    * the end of the list. Any key that was already associated with an element in the list will be
-    * in the returned map, which also indicates the previously associated list index.
+    * the end of the list. Any key that was already associated with an element in the list will
+    * instead be associated with its corresponding value in the specified map. The returned map, if
+    * not empty, contains any such overwritten keys along with their previously associated list
+    * index.
     * 
     * @param mappedElements the values and associated keys to add to the list
     * @return a map of keys to previously associated indices
@@ -67,8 +81,9 @@ public interface AssociativeList<E, K> extends List<E> {
 
    /**
     * Adds a collection of mapped entries from another {@link AssociativeList}. Any key that was
-    * already associated with an element in the list will be in the returned map, which also
-    * indicates the previously associated list index.
+    * already associated with an element in the list will instead be associated with its
+    * corresponding value in the specified map. The returned map, if not empty, contains any such
+    * overwritten keys along with their previously associated list index.
     * 
     * @param index the index at which the new elements are inserted
     * @param mappedElements the values and associated keys to add to the list

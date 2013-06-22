@@ -1,6 +1,8 @@
 package com.apriori.collections;
 
-import com.apriori.collections.CompactBitwiseTrie.WrappedComparator;
+import static com.apriori.collections.SimpleBitwiseTrie.COMPONENT_COMPARATOR;
+
+import com.apriori.collections.SimpleBitwiseTrie.WrappedComparator;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -47,7 +49,7 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
    
    @Override public Comparator<Boolean> componentComparator() {
-      return CompactBitwiseTrie.COMPONENT_COMPARATOR;
+      return COMPONENT_COMPARATOR;
    }
 
    @Override public Comparator<? super K> comparator() {
@@ -122,13 +124,13 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public Set<java.util.Map.Entry<K, V>> entrySet() {
+   public Set<Entry<K, V>> entrySet() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public java.util.Map.Entry<K, V> lowerEntry(K key) {
+   public Entry<K, V> lowerEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -140,7 +142,7 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public java.util.Map.Entry<K, V> floorEntry(K key) {
+   public Entry<K, V> floorEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -152,7 +154,7 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public java.util.Map.Entry<K, V> ceilingEntry(K key) {
+   public Entry<K, V> ceilingEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -164,7 +166,7 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public java.util.Map.Entry<K, V> higherEntry(K key) {
+   public Entry<K, V> higherEntry(K key) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -176,25 +178,25 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public java.util.Map.Entry<K, V> firstEntry() {
+   public Entry<K, V> firstEntry() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public java.util.Map.Entry<K, V> lastEntry() {
+   public Entry<K, V> lastEntry() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public java.util.Map.Entry<K, V> pollFirstEntry() {
+   public Entry<K, V> pollFirstEntry() {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public java.util.Map.Entry<K, V> pollLastEntry() {
+   public Entry<K, V> pollLastEntry() {
       // TODO Auto-generated method stub
       return null;
    }

@@ -96,6 +96,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped iterator</dd><dd><code>O</code> - the "output" type; the type of elements in this iterator</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;O&gt;</dd>
@@ -108,6 +109,8 @@
 <br>
 <pre>public static class <span class="strong">TransformingIterator.ReadOnly&lt;I,O&gt;</span>
 extends <a href="../../../com/apriori/collections/TransformingIterator.html" title="class in com.apriori.collections">TransformingIterator</a>&lt;I,O&gt;</pre>
+<div class="block">An unmodifiable transforming iterator. Mutation operations (<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html#remove()"><code>remove()</code></a>) throw
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -142,7 +145,9 @@ extends <a href="../../../com/apriori/collections/TransformingIterator.html" tit
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html#TransformingIterator.ReadOnly(java.util.Iterator, com.apriori.util.Function)">TransformingIterator.ReadOnly</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>&gt;&nbsp;iterator,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;&nbsp;function)</code>&nbsp;</td>
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;&nbsp;function)</code>
+<div class="block">Constructs a new read-only transforming iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -199,7 +204,9 @@ extends <a href="../../../com/apriori/collections/TransformingIterator.html" tit
 <li class="blockList">
 <h4>TransformingIterator.ReadOnly</h4>
 <pre>public&nbsp;TransformingIterator.ReadOnly(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>&gt;&nbsp;iterator,
-                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;&nbsp;function)</pre>
+                             <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="type parameter in TransformingIterator.ReadOnly">O</a>&gt;&nbsp;function)</pre>
+<div class="block">Constructs a new read-only transforming iterator.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>iterator</code> - the wrapped iterator</dd><dd><code>function</code> - the function used to transform elements</dd></dl>
 </li>
 </ul>
 </li>

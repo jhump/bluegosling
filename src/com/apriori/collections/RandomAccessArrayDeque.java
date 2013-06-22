@@ -8,9 +8,17 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.RandomAccess;
 
+/**
+ * A double-ended queue that is backed by an array and, in addition to standard {@link Deque}
+ * operations, also exposes random access operations on its contents.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <E> the type of element in the deque
+ */
 //TODO: implement me! (don't forget serialization and cloning)
 //TODO: tests
-public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAccess {
+public class RandomAccessArrayDeque<E> implements Deque<E>, List<E>, RandomAccess {
 
    private transient int head;
    private transient int tail;
@@ -42,7 +50,7 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public boolean addAll(Collection<? extends T> c) {
+   public boolean addAll(Collection<? extends E> c) {
       return addAll(size, c);
    }
    
@@ -66,7 +74,7 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public boolean addAll(int index, Collection<? extends T> c) {
+   public boolean addAll(int index, Collection<? extends E> c) {
       if (c.isEmpty()) {
          return false;
       }
@@ -90,29 +98,29 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    
    @Override
    @SuppressWarnings("unchecked") // we know it's a T because we put it there
-   public T get(int index) {
-      return (T) data[computeIndex(index, false)];
+   public E get(int index) {
+      return (E) data[computeIndex(index, false)];
    }
    
    @Override
-   public T set(int index, T element) {
+   public E set(int index, E element) {
       int arrayIndex = computeIndex(index, false);
       
       @SuppressWarnings("unchecked") // we know it's a T because we put it there
-      T ret = (T) data[arrayIndex];
+      E ret = (E) data[arrayIndex];
       
       data[arrayIndex] = element;
       return ret;
    }
    
    @Override
-   public void add(int index, T element) {
+   public void add(int index, E element) {
       // TODO Auto-generated method stub
       modCount++;
    }
    
    @Override
-   public T remove(int index) {
+   public E remove(int index) {
       // TODO Auto-generated method stub
       modCount++;
       return null;
@@ -131,52 +139,52 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public ListIterator<T> listIterator() {
+   public ListIterator<E> listIterator() {
       return listIterator(0);
    }
    
    @Override
-   public ListIterator<T> listIterator(int index) {
+   public ListIterator<E> listIterator(int index) {
       // TODO Auto-generated method stub
       return null;
    }
    
    @Override
-   public List<T> subList(int fromIndex, int toIndex) {
+   public List<E> subList(int fromIndex, int toIndex) {
       // TODO Auto-generated method stub
       return null;
    }
    
    @Override
-   public void addFirst(T e) {
+   public void addFirst(E e) {
       if (!offerFirst(e)) {
          throw new IllegalStateException("deque is full");
       }
    }
    
    @Override
-   public void addLast(T e) {
+   public void addLast(E e) {
       if (!offerLast(e)) {
          throw new IllegalStateException("deque is full");
       }
    }
    
    @Override
-   public boolean offerFirst(T e) {
+   public boolean offerFirst(E e) {
       // TODO Auto-generated method stub
       modCount++;
       return false;
    }
    
    @Override
-   public boolean offerLast(T e) {
+   public boolean offerLast(E e) {
       // TODO Auto-generated method stub
       modCount++;
       return false;
    }
    
    @Override
-   public T removeFirst() {
+   public E removeFirst() {
       if (size == 0) {
          throw new IllegalStateException("deque is empty");
       }
@@ -184,7 +192,7 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public T removeLast() {
+   public E removeLast() {
       if (size == 0) {
          throw new IllegalStateException("deque is empty");
       }
@@ -192,21 +200,21 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public T pollFirst() {
+   public E pollFirst() {
       // TODO Auto-generated method stub
       modCount++;
       return null;
    }
    
    @Override
-   public T pollLast() {
+   public E pollLast() {
       // TODO Auto-generated method stub
       modCount++;
       return null;
    }
    
    @Override
-   public T getFirst() {
+   public E getFirst() {
       if (size == 0) {
          throw new IllegalStateException("deque is empty");
       }
@@ -214,7 +222,7 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public T getLast() {
+   public E getLast() {
       if (size == 0) {
          throw new IllegalStateException("deque is empty");
       }
@@ -223,14 +231,14 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    
    @Override
    @SuppressWarnings("unchecked") // we know it's a T because we put it there
-   public T peekFirst() {
-      return size == 0 ? null : (T) data[head];
+   public E peekFirst() {
+      return size == 0 ? null : (E) data[head];
    }
    
    @Override
    @SuppressWarnings("unchecked") // we know it's a T because we put it there
-   public T peekLast() {
-      return size == 0 ? null : (T) data[tail];
+   public E peekLast() {
+      return size == 0 ? null : (E) data[tail];
    }
    
    @Override
@@ -248,43 +256,43 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public boolean add(T e) {
+   public boolean add(E e) {
       addLast(e);
       return true;
    }
    
    @Override
-   public boolean offer(T e) {
+   public boolean offer(E e) {
       return offerLast(e);
    }
    
    @Override
-   public T remove() {
+   public E remove() {
       return removeFirst();
    }
    
    @Override
-   public T poll() {
+   public E poll() {
       return pollFirst();
    }
    
    @Override
-   public T element() {
+   public E element() {
       return getFirst();
    }
    
    @Override
-   public T peek() {
+   public E peek() {
       return peekFirst();
    }
    
    @Override
-   public void push(T e) {
+   public void push(E e) {
       addFirst(e);
    }
    
    @Override
-   public T pop() {
+   public E pop() {
       return removeFirst();
    }
    
@@ -305,14 +313,14 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
    }
    
    @Override
-   public Iterator<T> iterator() {
+   public Iterator<E> iterator() {
       return listIterator();
    }
    
    @Override
-   public Iterator<T> descendingIterator() {
-      final ListIterator<T> listIter = listIterator(size());
-      return new Iterator<T>() {
+   public Iterator<E> descendingIterator() {
+      final ListIterator<E> listIter = listIterator(size());
+      return new Iterator<E>() {
 
          @Override
          public boolean hasNext() {
@@ -320,7 +328,7 @@ public class RandomAccessArrayDeque<T> implements Deque<T>, List<T>, RandomAcces
          }
 
          @Override
-         public T next() {
+         public E next() {
             return listIter.previous();
          }
 

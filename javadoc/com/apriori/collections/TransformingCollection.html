@@ -96,6 +96,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the "input" type; the type of the wrapped collection</dd><dd><code>O</code> - the "output" type; the type of elements in this collection</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;O&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;O&gt;</dd>
@@ -109,6 +110,23 @@
 <pre>public class <span class="strong">TransformingCollection&lt;I,O&gt;</span>
 extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="class in com.apriori.collections">TransformingIterable</a>&lt;I,O&gt;
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;O&gt;</pre>
+<div class="block">A collection whose elements are the results of applying a function to another collection. This
+ collection is simply a wrapper. Changes to the underlying collection are visible in the
+ transformed collection. Accessing elements incurs calls to the transforming function.
+ 
+ <p>Functions that perform the transformations should be deterministic so that a stable,
+ unchanging collection does not appear to be mutating when accessed through this transforming
+ wrapper.
+ 
+ <p>Since transformations can only be done in one direction, some operations are not supported.
+ Namely, <a href="../../../com/apriori/collections/TransformingCollection.html#add(O)"><code>add(Object)</code></a> and <a href="../../../com/apriori/collections/TransformingCollection.html#addAll(java.util.Collection)"><code>addAll(Collection)</code></a> throw
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.
+ 
+ <p>Also due to transformations only working in one direction, some methods are implemented in
+ terms of the collection's <a href="../../../com/apriori/collections/TransformingIterable.html#iterator()">transforming iterator</a> and thus may have worse
+ performance than the underlying collection's implementation. These methods include
+ <a href="../../../com/apriori/collections/TransformingCollection.html#contains(java.lang.Object)"><code>contains(Object)</code></a>, <a href="../../../com/apriori/collections/TransformingCollection.html#containsAll(java.util.Collection)"><code>containsAll(Collection)</code></a>, <a href="../../../com/apriori/collections/TransformingCollection.html#remove(java.lang.Object)"><code>remove(Object)</code></a>,
+ <a href="../../../com/apriori/collections/TransformingCollection.html#removeAll(java.util.Collection)"><code>removeAll(Collection)</code></a>, and <a href="../../../com/apriori/collections/TransformingCollection.html#retainAll(java.util.Collection)"><code>retainAll(Collection)</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -129,11 +147,15 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collectio
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="type parameter in TransformingCollection.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="type parameter in TransformingCollection.Bidi">O</a>&gt;</strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="type parameter in TransformingCollection.Bidi">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="type parameter in TransformingCollection.Bidi">O</a>&gt;</strong></code>
+<div class="block">A transforming collection that can transform values in both directions.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="class in com.apriori.collections">TransformingCollection.ReadOnly</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;</strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="class in com.apriori.collections">TransformingCollection.ReadOnly</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="type parameter in TransformingCollection.ReadOnly">O</a>&gt;</strong></code>
+<div class="block">An unmodifiable transforming collection.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -151,7 +173,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collectio
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.html#TransformingCollection(java.util.Collection, com.apriori.util.Function)">TransformingCollection</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>&gt;&nbsp;collection,
-                      <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">O</a>&gt;&nbsp;function)</code>&nbsp;</td>
+                      <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>,? extends <a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">O</a>&gt;&nbsp;function)</code>
+<div class="block">Constructs a new transforming collection.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -190,7 +214,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collectio
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.html#internal()">internal</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/TransformingCollection.html#internal()">internal</a></strong>()</code>
+<div class="block">Gets the wrapped collection.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -267,7 +293,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collectio
 <li class="blockList">
 <h4>TransformingCollection</h4>
 <pre>public&nbsp;TransformingCollection(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>&gt;&nbsp;collection,
-                      <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">O</a>&gt;&nbsp;function)</pre>
+                      <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>,? extends <a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">O</a>&gt;&nbsp;function)</pre>
+<div class="block">Constructs a new transforming collection.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>collection</code> - the wrapped collection</dd><dd><code>function</code> - the function used to transform elements</dd></dl>
 </li>
 </ul>
 </li>
@@ -285,10 +313,11 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collectio
 <li class="blockList">
 <h4>internal</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>&gt;&nbsp;internal()</pre>
+<div class="block">Gets the wrapped collection.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/TransformingIterable.html#internal()">internal</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/TransformingIterable.html" title="class in com.apriori.collections">TransformingIterable</a>&lt;<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">I</a>,<a href="../../../com/apriori/collections/TransformingCollection.html" title="type parameter in TransformingCollection">O</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>the wrapped collection</dd></dl>
 </li>
 </ul>
 <a name="size()">
