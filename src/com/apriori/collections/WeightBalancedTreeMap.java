@@ -350,8 +350,8 @@ public class WeightBalancedTreeMap<K, V>
    @Override
    public void putAll(Map<? extends K, ? extends V> m) {
       if (size == 0 && m instanceof SortedMap
-            && comparator() == null ? ((SortedMap<?,?>)m).comparator() == null
-                  : comparator().equals(((SortedMap<?,?>)m).comparator())) {
+            && (comparator() == null ? ((SortedMap<?,?>) m).comparator() == null
+                  : comparator().equals(((SortedMap<?,?>) m).comparator()))) {
          // we can efficiently construct a balanced tree without rotations
          @SuppressWarnings("unchecked")
          Entry<? extends K, ? extends V> entries[] = new Entry[m.size()];

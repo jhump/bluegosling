@@ -125,7 +125,8 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * Cancels this task definition. No more invocations will be scheduled. If so
     * specified, any currently running invocation will be interrupted.
     * 
-    * <p>Canceling a task definition that is already cancelled does nothing and will {@code false}.
+    * <p>Canceling a task definition that is already cancelled does nothing and will return
+    * {@code false}.
     * 
     * @param interrupt {@code true} if a currently running invocation should be
     *       interrupted via {@link Thread#interrupt()}

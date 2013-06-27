@@ -21,6 +21,12 @@
  * javax.annotation.processing.RoundEnvironment javax.annotation.processing.RoundEnvironment} except
  * that its API is defined in terms of this set of reflection APIs (instead of in terms of elements
  * and type mirrors).
+ * 
+ * <p><strong>NOTE:</strong> APIs in this package requires the executing thread to be {@linkplain
+ * com.apriori.apt.ProcessingEnvironments#setup(javax.annotation.processing.ProcessingEnvironment)
+ * setup for the current processing environment}. If you are running from the same thread on which
+ * the processor was invoked and the processor extends {@link com.apriori.apt.AbstractProcessor}
+ * then this will have already been done for you.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

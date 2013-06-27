@@ -184,7 +184,7 @@ public abstract class Class implements AnnotatedElement, GenericDeclaration, Typ
       } else if (clazz.isArray()) {
          return new ArrayClass(forJavaLangClass(clazz.getComponentType()));
       } else {
-         return forName(clazz.getName());
+         return forName(clazz.getCanonicalName());
       }
    }
    

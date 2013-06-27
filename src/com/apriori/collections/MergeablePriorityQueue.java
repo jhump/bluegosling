@@ -36,7 +36,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @param <E> the type of element in the queue
  */
-// TODO: javadoc
 // TODO: tests that exercise all code paths in iterator.remove() and can verify integrity of
 // structure after removing items that way
 public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Cloneable {
@@ -89,10 +88,19 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
    transient int size;
    transient int modCount;
    
+   /**
+    * Constructs a new empty queue. Elements will be compared using their {@linkplain Comparable
+    * natural ordering}.
+    */
    public MergeablePriorityQueue() {
       this(CollectionUtils.NATURAL_ORDERING);
    }
    
+   /**
+    * Constructs a new empty queue. Elements will be compared using the specified comparator.
+    * 
+    * @param comp a comparator
+    */
    public MergeablePriorityQueue(Comparator<? super E> comp) {
       if (comp == null) {
          this.comp = CollectionUtils.NATURAL_ORDERING;
@@ -101,6 +109,12 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
       }
    }
 
+   /**
+    * Constructs a new queue whose contents are initialized to the elements in the specified
+    * collection. The elements will be compared using their {@linkplain Comparable natural ordering}.
+    * 
+    * @param coll a collection of elements that will be in the constructed queue
+    */
    public MergeablePriorityQueue(Collection<? extends E> coll) {
       this(coll, CollectionUtils.NATURAL_ORDERING);
    }
@@ -110,24 +124,49 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
       addAll(coll);
    }
 
+   /**
+    * Constructs a new queue whose contents and comparator are initialized to those of the specified
+    * queue.
+    * 
+    * @param queue a queue
+    */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(MergeablePriorityQueue<? extends E> coll) {
-      this(coll, (Comparator<? super E>) coll.comparator());
+   public MergeablePriorityQueue(MergeablePriorityQueue<? extends E> queue) {
+      this(queue, (Comparator<? super E>) queue.comparator());
    }
 
+   /**
+    * Constructs a new queue whose contents and comparator are initialized to those of the specified
+    * queue.
+    * 
+    * @param queue a queue
+    */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(PriorityQueue<? extends E> coll) {
-      this(coll, (Comparator<? super E>) coll.comparator());
+   public MergeablePriorityQueue(PriorityQueue<? extends E> queue) {
+      this(queue, (Comparator<? super E>) queue.comparator());
    }
 
+   /**
+    * Constructs a new queue whose contents and comparator are initialized to those of the specified
+    * set.
+    * 
+    * @param set a set
+    */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(SortedSet<? extends E> coll) {
-      this(coll, (Comparator<? super E>) coll.comparator());
+   public MergeablePriorityQueue(SortedSet<? extends E> set) {
+      this(set, (Comparator<? super E>) set.comparator());
    }
    
+   /**
+    * Returns the comparator used to sort elements in the queue. If no comparator is used and
+    * elements are sorted according to their {@linkplain Comparable natural ordering} then
+    * {@code null} is returned.
+    * 
+    * @return the comparator used to sort elements or {@code null}
+    */
    public Comparator<? super E> comparator() {
       return comp == CollectionUtils.NATURAL_ORDERING ? null : comp;
    }
@@ -325,6 +364,23 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
       return min == null ? null : min.element;
    }
    
+   /**
+    * Merges the specified queue into this queue. The other queue will be empty when this operation
+    * completes and this queue will have the union of its own prior contents and those of the
+    * specified queue.
+    * 
+    * <p>This is effectively the same as the following:<pre>
+    * MergeablePriorityQueue&lt;MyType&gt; queue1, queue2;
+    * // merge queue2 into queue1
+    * queue1.addAll(queue2); queue2.clear(); 
+    * </pre>
+    * The main difference is that this specialized method can perform the merge in amortized
+    * constant time (vs. linear time).
+    * 
+    * @param other the queue whose contents are merged into this queue
+    * @return true if this queue was modified as a result (e.g. false if the specified queue was
+    *       empty)
+    */
    public boolean mergeFrom(MergeablePriorityQueue<? extends E> other) {
       if (other.minRoot == null) {
          return false; // other queue is empty, nothing to do

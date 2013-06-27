@@ -15,5 +15,10 @@ public class WeightBalancedTreeMapTest extends AbstractTestSortedMap {
    public Map<?, ?> makeEmptyMap() {
       return new WeightBalancedTreeMap<Object, Object>();
    }
+   
+   @Override
+   protected boolean skipSerializedCanonicalTests() {
+      return true;
+   }
 
 }

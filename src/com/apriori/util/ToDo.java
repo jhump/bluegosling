@@ -26,10 +26,10 @@ import java.lang.annotation.Target;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 @Documented
-@ToDo("Implement annotation processor that can emit TODOs during compilation, possibly as warnings."
-      + " That processor should also emit errors on malformed ToDo annotations. An annotation is"
-      + " malformed if it has neither a value nor a tasks attribute, if it has both, or if it has"
-      + " ambiguous who attributes (e.g. at both ToDo level and at Task level)")
+@ToDo("Implement annotation processor that can emit TODOs during compilation, possibly as\n"
+		+ "warnings. That processor should also emit errors on malformed ToDo annotations. An\n"
+      + "annotation is malformed if it has neither a value nor a tasks attribute, if it has both,\n"
+		+ "or if it has ambiguous who attributes (e.g. at both ToDo level and at Task level)")
 public @interface ToDo {
    /**
     * A description of the task that needs to be done.

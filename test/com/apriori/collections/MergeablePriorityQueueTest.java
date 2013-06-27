@@ -2,7 +2,11 @@ package com.apriori.collections;
 
 import java.util.Queue;
 
-// TODO: javadoc
+/**
+ * Test cases for {@link MergeablePriorityQueue}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public class MergeablePriorityQueueTest extends AbstractTestPriorityQueue {
 
    public MergeablePriorityQueueTest(String testName) {

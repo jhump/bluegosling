@@ -4,9 +4,9 @@ import java.util.concurrent.Callable;
 
 /**
  * A convenient sub-interface, for reducing the number of type parameters needed
- * when declaring a {@link ScheduledTask} whose underlying task type is a {@link Callable}.
+ * when declaring a {@link RepeatingScheduledTask} whose underlying task type is a {@link Callable}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface CallableScheduledTask<V> extends ScheduledTask<V, Callable<V>> {
+public interface CallableRepeatingScheduledTask<V> extends RepeatingScheduledTask<V, Callable<V>> {
 }

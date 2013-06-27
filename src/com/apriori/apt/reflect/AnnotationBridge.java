@@ -1,6 +1,7 @@
 package com.apriori.apt.reflect;
 
 import com.apriori.collections.TransformingList;
+import com.apriori.reflect.ProxyUtils;
 import com.apriori.util.Function;
 
 import java.lang.reflect.Array;
@@ -35,7 +36,8 @@ import java.util.Map;
  * <pre>
  * // The bridge is an instance of the AnnoXyz annotation.
  * AnnoXyz annotation = createBridge(
- *       Class.forName("SomeClass").getAnnotation(AnnoXyz.class),
+ *       com.apriori.apt.reflect.Class.forName("SomeClass")
+ *             .getAnnotation(AnnoXyz.class),
  *       AnnoXyz.class);
  *       
  * // Since classes might not be available, annotation fields that return classes or
@@ -176,9 +178,7 @@ public final class AnnotationBridge {
       if (!clazz.isAnnotation()) {
          throw new IllegalStateException("annotation has improper type");
       }
-      @SuppressWarnings("unchecked")
-      T proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(),
-            new java.lang.Class<?>[] { clazz }, new AnnotationBridgeHandler(annotation, clazz));
+      T proxy = ProxyUtils.newProxyInstance(clazz, new AnnotationBridgeHandler(annotation, clazz));
       return proxy;      
    }
    
@@ -212,6 +212,8 @@ public final class AnnotationBridge {
     * @return the supplied value
     */
    public static <T> T bridge(T val) {
+      // TODO: don't clear this; instead, compare it to provided value to verify that API is
+      // being used correctly
       lastValue.set(null);
       return val;
    }

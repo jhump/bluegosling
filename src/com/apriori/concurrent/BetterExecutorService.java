@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -18,21 +19,73 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * An extension and enhancement to the API provided by {@link ScheduledExecutorService}.
  * 
- * This implementation provides greater configurability over scheduled tasks and greater
- * optics into the results of executions of the tasks.
+ * <p>This implementation provides greater configurability over scheduled tasks and greater
+ * optics into the results of executions of the tasks. It is API-compatible with the standard
+ * {@link ScheduledExecutorService}, so it should behave the same if using only the standard API
+ * and not any of the extensions herein.
+ * 
+ * <h3>Key Interfaces</h3>
+ * <dl>
+ *  <dt>{@link TaskDefinition}</dt>
+ *    <dd>The definition of a scheduled task. This defines when a task runs, if it is repeated and
+ *    how often, what actual code is executed when the task is run, etc.</dd>
+ *  <dt>{@link ScheduledTaskDefinition}</dt>
+ *    <dd>A {@link TaskDefinition} that has been scheduled for execution with a
+ *    {@link BetterExecutorService}. This provides additional API for inspecting the status of task
+ *    invocations and controlling the task, like pausing/suspending executions and cancelling the
+ *    task.</dd>
+ *  <dt>{@link ScheduledTask}</dt>
+ *    <dd>A single invocation of a {@link ScheduledTaskDefinition}. If the task is defined as a
+ *    repeating task, there will be multiple such invocations of this task over time. This interface
+ *    is also a {@link ScheduledFuture} and is returned when submitting scheduled tasks to the
+ *    executor service.</dd>
+ *  <dt>{@link RepeatingScheduledTask}</dt>
+ *    <dd>Represents all invocations of a repeating {@link ScheduledTaskDefinition}. This is for
+ *    API and behavioral compatibility with the {@link ScheduledFuture}s returned by the standard
+ *    {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} and
+ *    {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
+ *    methods.</dd>
+ * </dl>
+ * 
+ * <p>Client code uses a {@link TaskDefinition.Builder} to construct a task and define all of the
+ * parameters for its execution. It is then {@linkplain #schedule(TaskDefinition) scheduled} with 
+ * the {@link BetterExecutorService} for execution.
+ * 
+ * <h3>Features</h3>
+ * <p>The main features in this service, not available with the standard scheduled executor API,
+ * follow:
+ * <ul>
+ *    <li>Greater control over repeated occurrences. Instead of a task either always repeating
+ *    (unless an invocation fails) or never repeating (unless the logic itself schedules a
+ *    successor when invoked), tasks can specify a {@link ScheduleNextTaskPolicy}.</li>
+ *    <li>Notification of individual invocations. For repeated tasks, instead of only being able to
+ *    wait for all invocations to finish (which generally only happens after an invocation fails)
+ *    or cancel all subsequent invocations, this API provides granuality at individual task level.
+ *    You can {@linkplain ScheduledTaskDefinition#addListener(ScheduledTask.Listener) listen} for
+ *    completions of any and all invocations. You can also {@linkplain ScheduledTask#cancel(boolean)
+ *    cancel} individual invocations of a task.</li>
+ *    <li>Greater job control. As mentioned above, you can cancel individual occurrences of a task
+ *    instead of cancelling the entire job. You can also {@linkplain ScheduledTaskDefinition#pause()
+ *    pause} execution of a task temporarily. This does not attempt to suspend any thread currently
+ *    executing the task, but simply stops scheduling future instances of the job until the task
+ *    is {@linkplain ScheduledTaskDefinition#resume() resumed}.</li>
+ *    <li>Exception handling. You can specify an {@link UncaughtExceptionHandler} for each task to
+ *    handle job failures. This, combined with a {@link ScheduleNextTaskPolicy}, provides much more
+ *    flexibility in handling exceptions thrown by task invocations.</li>
+ *    <li>Job History. In addition to listening for task completions, you can access the results of
+ *    recent invocations for a repeated task - the task's {@linkplain
+ *    ScheduledTaskDefinition#history() history}.
+ *    </li>
+ * </ul>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO more javadoc above!!! (more details on extensions, code snippets, etc.)
 //TODO javadoc below!!!
-//TODO scheduling recurring tasks should return a different ScheduledFuture that is API-compatible
-//    with what is returned by normal ScheduledExecutorService (isn't complete until the task is
-//    done-done [fails, stops, cancelled, etc] and cancel() kills whole task and not just current
-//    scheduled instance)
 //TODO consider finer grain concurrency primitives -- e.g. something other than synchronized methods
 //TODO tests!
 public class BetterExecutorService implements ScheduledExecutorService {
@@ -604,34 +657,58 @@ public class BetterExecutorService implements ScheduledExecutorService {
             TaskDefinition.Builder.forRunnable(task).withInitialDelay(delay, unit).build()).first());
    }
 
-   public <V> CallableScheduledTask<V> scheduleAtFixedRate(Callable<V> task, long initialDelay,
-         long period, TimeUnit unit) {
-      return callableScheduledTask(scheduleInternal(
+   public <V> CallableRepeatingScheduledTask<V> scheduleAtFixedRate(Callable<V> task,
+         long initialDelay, long period, TimeUnit unit) {
+      ScheduledTaskDefinitionImpl<V, Callable<V>> taskDef = scheduleInternal(
             TaskDefinition.Builder.forCallable(task).withInitialDelay(initialDelay, unit)
-               .repeatAtFixedRate(period, unit).build()).first());
+            .repeatAtFixedRate(period, unit)
+            // for API compatibility with normal ScheduledExecutorService, we only continue
+            // scheduling instances of the task if it succeeds
+            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+            .build());
+      taskDef.first(); // invoke so we clear the ref
+      return callableScheduledTask(taskDef);
    }
   
    @Override
-   public RunnableScheduledTask scheduleAtFixedRate(Runnable task, long initialDelay,
+   public RunnableRepeatingScheduledTask scheduleAtFixedRate(Runnable task, long initialDelay,
          long period, TimeUnit unit) {
-      return runnableScheduledTask(scheduleInternal(
+      ScheduledTaskDefinitionImpl<Void, Runnable> taskDef = scheduleInternal(
             TaskDefinition.Builder.forRunnable(task).withInitialDelay(initialDelay, unit)
-               .repeatAtFixedRate(period, unit).build()).first());
+            .repeatAtFixedRate(period, unit)
+            // for API compatibility with normal ScheduledExecutorService, we only continue
+            // scheduling instances of the task if it succeeds
+            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+            .build());
+      taskDef.first(); // invoke now so we clear the ref
+      return runnableScheduledTask(taskDef);
    }
    
-   public <V> CallableScheduledTask<V> scheduleWithFixedDelay(Callable<V> task, long initialDelay,
-         long delay, TimeUnit unit) {
-      return callableScheduledTask(scheduleInternal(
+   public <V> CallableRepeatingScheduledTask<V> scheduleWithFixedDelay(Callable<V> task,
+         long initialDelay, long delay, TimeUnit unit) {
+      ScheduledTaskDefinitionImpl<V, Callable<V>> taskDef = scheduleInternal(
             TaskDefinition.Builder.forCallable(task).withInitialDelay(initialDelay, unit)
-               .repeatWithFixedDelay(delay, unit).build()).first());
+            .repeatWithFixedDelay(delay, unit)
+            // for API compatibility with normal ScheduledExecutorService, we only continue
+            // scheduling instances of the task if it succeeds
+            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+            .build());
+      taskDef.first(); // invoke now so we clear the ref
+      return callableScheduledTask(taskDef);
    }
 
    @Override
-   public RunnableScheduledTask scheduleWithFixedDelay(Runnable task, long initialDelay,
+   public RunnableRepeatingScheduledTask scheduleWithFixedDelay(Runnable task, long initialDelay,
          long delay, TimeUnit unit) {
-      return runnableScheduledTask(scheduleInternal(
+      ScheduledTaskDefinitionImpl<Void, Runnable> taskDef = scheduleInternal(
             TaskDefinition.Builder.forRunnable(task).withInitialDelay(initialDelay, unit)
-               .repeatWithFixedDelay(delay, unit).build()).first());
+            .repeatWithFixedDelay(delay, unit)
+            // for API compatibility with normal ScheduledExecutorService, we only continue
+            // scheduling instances of the task if it succeeds
+            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+            .build());
+      taskDef.first(); // invoke now so we clear the ref
+      return runnableScheduledTask(taskDef);
    }
    
    @Override
@@ -703,6 +780,105 @@ public class BetterExecutorService implements ScheduledExecutorService {
       submit(task);
    }
    
+   static <V, T> V getTaskResult(ScheduledTaskDefinition<V, T> taskDef)
+         throws InterruptedException, ExecutionException {
+      final AtomicReference<ScheduledTask<? extends V, ? extends T>> finalTask =
+            new AtomicReference<ScheduledTask<? extends V, ? extends T>>();
+      final CountDownLatch latch = new CountDownLatch(1);
+      ScheduledTask.Listener<V, T> listener =
+            new ScheduledTask.Listener<V, T>() {
+               @Override
+               public void taskCompleted(
+                     ScheduledTask<? extends V, ? extends T> task) {
+                  finalTask.set(task);
+                  latch.countDown();
+               }
+            };
+      taskDef.addListener(listener);
+      try {
+         latch.await();
+         return finalTask.get().get();
+      } finally {
+         taskDef.removeListener(listener);
+      }
+   }
+
+   static <V, T> V getTaskResult(ScheduledTaskDefinition<V, T> taskDef, long timeout,
+         TimeUnit unit) throws InterruptedException, TimeoutException, ExecutionException {
+      final AtomicReference<ScheduledTask<? extends V, ? extends T>> finalTask =
+            new AtomicReference<ScheduledTask<? extends V, ? extends T>>();
+      final CountDownLatch latch = new CountDownLatch(1);
+      ScheduledTask.Listener<V, T> listener =
+            new ScheduledTask.Listener<V, T>() {
+               @Override
+               public void taskCompleted(
+                     ScheduledTask<? extends V, ? extends T> task) {
+                  finalTask.set(task);
+                  latch.countDown();
+               }
+            };
+      taskDef.addListener(listener);
+      try {
+         if (latch.await(timeout, unit)) {
+            throw new TimeoutException();
+         }
+         return finalTask.get().get();
+      } finally {
+         taskDef.removeListener(listener);
+      }
+   }
+
+   private static RunnableRepeatingScheduledTask runnableScheduledTask(
+         final ScheduledTaskDefinition<Void, Runnable> taskDef) {
+      return new RunnableRepeatingScheduledTask() {
+         @Override
+         public boolean isDone() {
+            return taskDef.isFinished();
+         }
+         
+         @Override
+         public boolean isCancelled() {
+            return taskDef.isCancelled();
+         }
+         
+         @Override
+         public Void get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
+               TimeoutException {
+            return getTaskResult(taskDef, timeout, unit);
+         }
+         
+         @Override
+         public Void get() throws InterruptedException, ExecutionException {
+            return getTaskResult(taskDef);
+         }
+         
+         @Override
+         public boolean cancel(boolean mayInterruptIfRunning) {
+            return taskDef.cancel(true);
+         }
+         
+         private Delayed getDelayed() {
+            Delayed d = taskDef.current();
+            return d == null ? taskDef.latest() : d;
+         }
+         
+         @Override
+         public int compareTo(Delayed o) {
+            return getDelayed().compareTo(o);
+         }
+         
+         @Override
+         public long getDelay(TimeUnit unit) {
+            return getDelayed().getDelay(unit);
+         }
+         
+         @Override
+         public ScheduledTaskDefinition<Void, Runnable> taskDefinition() {
+            return taskDef;
+         }
+      };
+   }
+   
    private static RunnableScheduledTask runnableScheduledTask(final ScheduledTask<Void, Runnable> task) {
       return new RunnableScheduledTask() {
          @Override
@@ -771,6 +947,58 @@ public class BetterExecutorService implements ScheduledExecutorService {
          @Override
          public boolean isDone() {
             return task.isDone();
+         }
+      };
+   }
+   
+   private static <V> CallableRepeatingScheduledTask<V> callableScheduledTask(
+         final ScheduledTaskDefinition<V, Callable<V>> taskDef) {
+      return new CallableRepeatingScheduledTask<V>() {
+
+         @Override
+         public ScheduledTaskDefinition<V, Callable<V>> taskDefinition() {
+            return taskDef;
+         }
+
+         private Delayed getDelayed() {
+            Delayed d = taskDef.current();
+            return d == null ? taskDef.latest() : d;
+         }
+         
+         @Override
+         public long getDelay(TimeUnit unit) {
+            return getDelayed().getDelay(unit);
+         }
+
+         @Override
+         public int compareTo(Delayed o) {
+            return getDelayed().compareTo(o);
+         }
+
+         @Override
+         public boolean cancel(boolean mayInterruptIfRunning) {
+            return taskDef.cancel(mayInterruptIfRunning);
+         }
+
+         @Override
+         public boolean isCancelled() {
+            return taskDef.isCancelled();
+         }
+
+         @Override
+         public boolean isDone() {
+            return taskDef.isFinished();
+         }
+
+         @Override
+         public V get() throws InterruptedException, ExecutionException {
+            return getTaskResult(taskDef);
+         }
+
+         @Override
+         public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
+               TimeoutException {
+            return getTaskResult(taskDef, timeout, unit);
          }
       };
    }

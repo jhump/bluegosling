@@ -10,16 +10,16 @@ import java.util.List;
  * 
  * <p>
  * {@code MethodSignature} objects are used in place of {@code java.lang.reflect.Method} objects
- * when configuring the invocation handler. A single invocation handler could implement multiple
- * {@code Method}s with identical signatures if it is constructed for multiple interfaces and an
- * interface with the same signature is defined in more than one of them.
+ * when configuring an {@link com.apriori.testing.InterfaceVerifier InterfaceVerifier}. A proxy
+ * could implement multiple {@code Method}s with identical signatures if it is constructed for
+ * multiple interfaces. A {@link MethodSignature} represents all such methods.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class MethodSignature {
 
-   private String name;
-   private List<Class<?>> argTypes;
+   private final String name;
+   private final List<Class<?>> argTypes;
 
    /**
     * Constructs a new signature for the specified method.
