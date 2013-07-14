@@ -1,0 +1,17 @@
+.idea/
+target/
+.classpath
+.project
+.settings
+eclipsebin
+*.iml
+*.ipr
+*.iws
+.DS_Store
+bin/
+out/
+tmp-out/
+
+# TODO: clean these directories out, or flesh them out and add to git...
+src/com/apriori/apt/util/
+test/com/apriori/apt/reflect/
