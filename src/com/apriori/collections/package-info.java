@@ -53,7 +53,7 @@
  * <ol>
  *    <li><strong>Uncompressed</strong>: A normal, or uncompressed, trie uses a tree structure as
  *    described above.</li>
- *    <li><strong>Compact</strong>: A compact trie also uses a tree strucutre, but removes nodes
+ *    <li><strong>Compact</strong>: A compact trie also uses a tree structure, but removes nodes
  *    that have only one child by combining them with that child. With this type of tree, outgoing
  *    edges from one node have a path that describes all intermediate nodes that were
  *    removed/collapsed. This type of trie is generally better for retrieval but slower for updates
