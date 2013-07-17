@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>I</code> - the type of the argument (e.g. key)</dd><dd><code>O</code> - the type of the result (e.g. value)</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</dd>
@@ -104,6 +105,8 @@
 <pre>public static class <span class="strong">Function.FromMap&lt;I,O&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</pre>
+<div class="block">A utility implementation that determines function results by looking up entries in a
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -137,7 +140,9 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#Function.FromMap(java.util.Map)">Function.FromMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#Function.FromMap(java.util.Map)">Function.FromMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;map)</code>
+<div class="block">Constructs a new function that performs look-ups against the specified map.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -156,15 +161,21 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#apply(I)">apply</a></strong>(<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>&nbsp;input)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#apply(I)">apply</a></strong>(<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>&nbsp;input)</code>
+<div class="block">Invokes the function with the specified argument and returns the result.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#relaxed()">relaxed</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/util/Function.FromMap.html" title="class in com.apriori.util">Function.FromMap</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#relaxed()">relaxed</a></strong>()</code>
+<div class="block">Creates a relaxed function backed by the same map as this instance.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#strict()">strict</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/util/Function.FromMap.html" title="class in com.apriori.util">Function.FromMap</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Function.FromMap.html#strict()">strict</a></strong>()</code>
+<div class="block">Creates a strict function backed by the same map as this instance.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -195,6 +206,11 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 <li class="blockList">
 <h4>Function.FromMap</h4>
 <pre>public&nbsp;Function.FromMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;map)</pre>
+<div class="block">Constructs a new function that performs look-ups against the specified map. When the
+ function is invoked for a given argument, the map is inspected. If the map contains a
+ key equal to the specified argument, then the corresponding value will be the function's
+ result. If there is no such key then <code>null</code> is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - the map that backs this function</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Function.FromMap.html#strict()"><code>strict()</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -211,7 +227,11 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 <ul class="blockList">
 <li class="blockList">
 <h4>strict</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;strict()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/util/Function.FromMap.html" title="class in com.apriori.util">Function.FromMap</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;strict()</pre>
+<div class="block">Creates a strict function backed by the same map as this instance. A strict map will throw
+ an exception if invoked with a value that is not present as a key in the underlying map.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new function that does not allow function arguments that are not represented in
+       the underlying map</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Function.FromMap.html#relaxed()"><code>relaxed()</code></a></dd></dl>
 </li>
 </ul>
 <a name="relaxed()">
@@ -220,7 +240,12 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 <ul class="blockList">
 <li class="blockList">
 <h4>relaxed</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;relaxed()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/util/Function.FromMap.html" title="class in com.apriori.util">Function.FromMap</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;&nbsp;relaxed()</pre>
+<div class="block">Creates a relaxed function backed by the same map as this instance. A relaxed map will
+ return <code>null</code> if invoked with a value that is not present as a key in the underlying
+ map.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new function that allows function arguments that are not represented in the
+       underlying map</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Function.FromMap.html#strict()"><code>strict()</code></a></dd></dl>
 </li>
 </ul>
 <a name="apply(java.lang.Object)">
@@ -232,10 +257,18 @@ implements <a href="../../../com/apriori/util/Function.html" title="interface in
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&nbsp;apply(<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>&nbsp;input)</pre>
+<div class="block">Invokes the function with the specified argument and returns the result.
+ 
+ If the underlying map does not have an entry for the specified argument and this map is
+ <a href="../../../com/apriori/util/Function.FromMap.html#strict()">strict</a> then a runtime exception will occur.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/util/Function.html#apply(I)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">I</a>,<a href="../../../com/apriori/util/Function.FromMap.html" title="type parameter in Function.FromMap">O</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>input</code> - the single argument</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the function's result</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the function cannot produce a value for the specified
+       argument</dd></dl>
 </li>
 </ul>
 </li>

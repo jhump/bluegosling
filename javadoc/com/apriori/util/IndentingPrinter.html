@@ -95,6 +95,8 @@
 <br>
 <pre>public class <span class="strong">IndentingPrinter</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">A utility for printing indented content. Indentation level can be increased or decreased and all
+ text written will be properly indented by that amount.</div>
 </li>
 </ul>
 </div>
@@ -113,12 +115,23 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#IndentingPrinter(java.io.OutputStream, int)">IndentingPrinter</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out,
-                int&nbsp;indentSize)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#IndentingPrinter(java.io.OutputStream, java.nio.charset.Charset, int)">IndentingPrinter</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out,
+                <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset,
+                int&nbsp;indentSize)</code>
+<div class="block">Creates a new printer that sends all output to the specified stream.</div>
+</td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#IndentingPrinter(java.io.OutputStream, int)">IndentingPrinter</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out,
+                int&nbsp;indentSize)</code>
+<div class="block">Creates a new printer that sends all output to the specified stream.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#IndentingPrinter(java.io.Writer, int)">IndentingPrinter</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;writer,
-                int&nbsp;indentSize)</code>&nbsp;</td>
+                int&nbsp;indentSize)</code>
+<div class="block">Creates a new printer that sends all output to the specified writer.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -137,29 +150,47 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#flush()">flush</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#flush()">flush</a></strong>()</code>
+<div class="block">Ensures that all content printed so far is flushed to underlying writer or output stream.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#indent()">indent</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#getIndentLevel()">getIndentLevel</a></strong>()</code>
+<div class="block">Gets the current level of indentation.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#outdent()">outdent</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#indent()">indent</a></strong>()</code>
+<div class="block">Increases the current level of indentation by one.</div>
+</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#outdent()">outdent</a></strong>()</code>
+<div class="block">Decreases the current level of indentation by one.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#print(java.lang.String, java.lang.Object...)">print</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#println()">println</a></strong>()</code>&nbsp;</td>
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>
+<div class="block">Prints indented content.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#println()">println</a></strong>()</code>
+<div class="block">Prints an empty blank line.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/IndentingPrinter.html#println(java.lang.String, java.lang.Object...)">println</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>&nbsp;</td>
+       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)</code>
+<div class="block">Prints indented content and ends it with a newline character.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -191,16 +222,33 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>IndentingPrinter</h4>
 <pre>public&nbsp;IndentingPrinter(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;writer,
                 int&nbsp;indentSize)</pre>
+<div class="block">Creates a new printer that sends all output to the specified writer.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>writer</code> - the writer to which printed output is written</dd><dd><code>indentSize</code> - the number of spaces in a single level of indentation</dd></dl>
 </li>
 </ul>
 <a name="IndentingPrinter(java.io.OutputStream, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>IndentingPrinter</h4>
+<pre>public&nbsp;IndentingPrinter(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out,
+                int&nbsp;indentSize)</pre>
+<div class="block">Creates a new printer that sends all output to the specified stream.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - the stream to which printed output is written using UTF8 for character encoding</dd><dd><code>indentSize</code> - the number of spaces in a single level of indentation</dd></dl>
+</li>
+</ul>
+<a name="IndentingPrinter(java.io.OutputStream, java.nio.charset.Charset, int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>IndentingPrinter</h4>
 <pre>public&nbsp;IndentingPrinter(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out,
+                <a href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset,
                 int&nbsp;indentSize)</pre>
+<div class="block">Creates a new printer that sends all output to the specified stream.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - the stream to which printed output is written</dd><dd><code>charset</code> - the character set used to encode output</dd><dd><code>indentSize</code> - the number of spaces in a single level of indentation</dd></dl>
 </li>
 </ul>
 </li>
@@ -220,8 +268,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public&nbsp;void&nbsp;print(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
          <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)
            throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Prints indented content. Before each new line, spaces for the current level of indentation are
+ written before other content.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>msg</code> - a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html?is-external=true" title="class or interface in java.util">format string</a></dd><dd><code>args</code> - optional format arguments</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown while writing output</dd></dl>
 </li>
 </ul>
 <a name="println(java.lang.String, java.lang.Object...)">
@@ -233,8 +284,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public&nbsp;void&nbsp;println(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
            <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;args)
              throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<div class="block">Prints indented content and ends it with a newline character. Before each new line, spaces for
+ the current level of indentation are written before other content.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>msg</code> - a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html?is-external=true" title="class or interface in java.util">format string</a></dd><dd><code>args</code> - optional format arguments</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown while writing output</dd></dl>
 </li>
 </ul>
 <a name="flush()">
@@ -245,8 +299,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>flush</h4>
 <pre>public&nbsp;void&nbsp;flush()
            throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Ensures that all content printed so far is flushed to underlying writer or output stream.</div>
 <dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if flushing/writing the content results in an exception</dd></dl>
 </li>
 </ul>
 <a name="println()">
@@ -257,8 +312,20 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>println</h4>
 <pre>public&nbsp;void&nbsp;println()
              throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Prints an empty blank line.</div>
 <dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is thrown while writing output</dd></dl>
+</li>
+</ul>
+<a name="getIndentLevel()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIndentLevel</h4>
+<pre>public&nbsp;int&nbsp;getIndentLevel()</pre>
+<div class="block">Gets the current level of indentation.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the current level of indentation</dd></dl>
 </li>
 </ul>
 <a name="indent()">
@@ -268,6 +335,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>indent</h4>
 <pre>public&nbsp;void&nbsp;indent()</pre>
+<div class="block">Increases the current level of indentation by one.</div>
 </li>
 </ul>
 <a name="outdent()">
@@ -277,6 +345,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>outdent</h4>
 <pre>public&nbsp;void&nbsp;outdent()</pre>
+<div class="block">Decreases the current level of indentation by one.</div>
 </li>
 </ul>
 </li>

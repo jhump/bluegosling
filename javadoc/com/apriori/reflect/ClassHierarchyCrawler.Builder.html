@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - result type of invoking the crawler</dd><dd><code>P</code> - parameter type for invoking the crawler (or <code>Void</code> if there is no parameter)</dd></dl>
 <dl>
 <dt>Enclosing class:</dt>
 <dd><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect">ClassHierarchyCrawler</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="type parameter in ClassHierarchyCrawler">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="type parameter in ClassHierarchyCrawler">P</a>&gt;</dd>
@@ -99,6 +100,7 @@
 <br>
 <pre>public static class <span class="strong">ClassHierarchyCrawler.Builder&lt;R,P&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Builder pattern for constructing <a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect"><code>ClassHierarchyCrawler</code></a> instances.</div>
 </li>
 </ul>
 </div>
@@ -119,35 +121,52 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect">ClassHierarchyCrawler</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#build()">build</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#build()">build</a></strong>()</code>
+<div class="block">Builds a crawler with the settings specified via this builder.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#crawlEverything()">crawlEverything</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#crawlEverything()">crawlEverything</a></strong>()</code>
+<div class="block">Indicates that all types are crawled.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#crawlUntilValueFound()">crawlUntilValueFound</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#crawlUntilValueFound()">crawlUntilValueFound</a></strong>()</code>
+<div class="block">Indicates that crawling should end as soon as visiting one of the types results in a
+ non-null value.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#forEachClass(com.apriori.reflect.ClassVisitor)">forEachClass</a></strong>(<a href="../../../com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect">ClassVisitor</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;aVisitor)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#forEachClass(com.apriori.reflect.ClassVisitor)">forEachClass</a></strong>(<a href="../../../com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect">ClassVisitor</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;aVisitor)</code>
+<div class="block">A visitor that is invoked for each class in the hierarchy.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#includingInterfaces()">includingInterfaces</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#includingInterfaces()">includingInterfaces</a></strong>()</code>
+<div class="block">Indicates that all interfaces implemented by a type will be included in the crawl.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#postOrderVisit()">postOrderVisit</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#postOrderVisit()">postOrderVisit</a></strong>()</code>
+<div class="block">Indicates that a post-order traversal is performed.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#preOrderVisit()">preOrderVisit</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#preOrderVisit()">preOrderVisit</a></strong>()</code>
+<div class="block">Indicates that a pre-order traversal is performed.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#skippingInterfaces()">skippingInterfaces</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html#skippingInterfaces()">skippingInterfaces</a></strong>()</code>
+<div class="block">Indicates that interfaces are skipped during the crawl.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -178,6 +197,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>forEachClass</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;forEachClass(<a href="../../../com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect">ClassVisitor</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;aVisitor)</pre>
+<div class="block">A visitor that is invoked for each class in the hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>aVisitor</code> - a visitor</dd>
+<dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="preOrderVisit()">
@@ -187,6 +209,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>preOrderVisit</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;preOrderVisit()</pre>
+<div class="block">Indicates that a pre-order traversal is performed. This means that a class in the hierarchy
+ is visited before its ancestor types are visited.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="postOrderVisit()">
@@ -196,6 +221,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>postOrderVisit</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;postOrderVisit()</pre>
+<div class="block">Indicates that a post-order traversal is performed. This means that a class in the
+ hierarchy is visited after its ancestor types are visited.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="crawlUntilValueFound()">
@@ -205,6 +233,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>crawlUntilValueFound</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;crawlUntilValueFound()</pre>
+<div class="block">Indicates that crawling should end as soon as visiting one of the types results in a
+ non-null value. The first non-null value returned by a visitor is the returned result from
+ the crawl.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="crawlEverything()">
@@ -214,6 +246,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>crawlEverything</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;crawlEverything()</pre>
+<div class="block">Indicates that all types are crawled. Only the last result, from visiting the last type, is
+ returned.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="includingInterfaces()">
@@ -223,6 +258,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>includingInterfaces</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;includingInterfaces()</pre>
+<div class="block">Indicates that all interfaces implemented by a type will be included in the crawl.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="skippingInterfaces()">
@@ -232,6 +269,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>skippingInterfaces</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;skippingInterfaces()</pre>
+<div class="block">Indicates that interfaces are skipped during the crawl. Only non-interface types - classes
+ and ancestor classes - are included in the crawl.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
 <a name="build()">
@@ -241,6 +281,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>build</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect">ClassHierarchyCrawler</a>&lt;<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">R</a>,<a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="type parameter in ClassHierarchyCrawler.Builder">P</a>&gt;&nbsp;build()</pre>
+<div class="block">Builds a crawler with the settings specified via this builder.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a type hierarchy crawler</dd></dl>
 </li>
 </ul>
 </li>

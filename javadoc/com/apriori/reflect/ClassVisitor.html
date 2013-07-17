@@ -83,6 +83,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - result type of invoking the visitor</dd><dd><code>P</code> - parameter type for invoking the visitor (or <code>Void</code> if there is no parameter)</dd></dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
 <dd><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect">ClassHierarchyCrawler</a></dd>
@@ -90,6 +91,7 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">ClassVisitor&lt;R,P&gt;</span></pre>
+<div class="block">An interface for implementing visitor pattern over class tokens.</div>
 </li>
 </ul>
 </div>
@@ -111,7 +113,9 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/ClassVisitor.html" title="type parameter in ClassVisitor">R</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/reflect/ClassVisitor.html#visit(java.lang.Class, P)">visit</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
-     <a href="../../../com/apriori/reflect/ClassVisitor.html" title="type parameter in ClassVisitor">P</a>&nbsp;param)</code>&nbsp;</td>
+     <a href="../../../com/apriori/reflect/ClassVisitor.html" title="type parameter in ClassVisitor">P</a>&nbsp;param)</code>
+<div class="block">Visit a class token.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -138,6 +142,9 @@
 <h4>visit</h4>
 <pre><a href="../../../com/apriori/reflect/ClassVisitor.html" title="type parameter in ClassVisitor">R</a>&nbsp;visit(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
       <a href="../../../com/apriori/reflect/ClassVisitor.html" title="type parameter in ClassVisitor">P</a>&nbsp;param)</pre>
+<div class="block">Visit a class token.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>clazz</code> - a class token</dd><dd><code>param</code> - a parameter which may be <code>null</code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>a result</dd></dl>
 </li>
 </ul>
 </li>

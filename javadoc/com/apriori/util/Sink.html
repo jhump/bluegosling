@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>ScheduleNextTaskPolicy</title>
+<title>Sink</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="ScheduleNextTaskPolicy";
+        parent.document.title="Sink";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/ScheduleNextTaskPolicy.html" target="_top">Frames</a></li>
-<li><a href="ScheduleNextTaskPolicy.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/util/Sink.html" target="_top">Frames</a></li>
+<li><a href="Sink.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -76,23 +76,16 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface ScheduleNextTaskPolicy" class="title">Interface ScheduleNextTaskPolicy&lt;V,T&gt;</h2>
+<div class="subTitle">com.apriori.util</div>
+<h2 title="Interface Sink" class="title">Interface Sink&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd><dd><code>T</code> - the type of the actual task: <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or
-       <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
-<dl>
-<dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent">ScheduleNextTaskPolicies</a></dd>
-</dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">ScheduleNextTaskPolicy&lt;V,T&gt;</span></pre>
-<div class="block">A policy that governs whether a task should be repeated or retried.</div>
+<pre>public interface <span class="strong">Sink&lt;T&gt;</span></pre>
 </li>
 </ul>
 </div>
@@ -112,10 +105,8 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html#shouldScheduleNext(com.apriori.concurrent.ScheduledTask)">shouldScheduleNext</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">V</a>,? extends <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">T</a>&gt;&nbsp;latest)</code>
-<div class="block">Determines whether a given task definition should be invoked again.</div>
-</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Sink.html#accept(T)">accept</a></strong>(<a href="../../../com/apriori/util/Sink.html" title="type parameter in Sink">T</a>&nbsp;t)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -132,16 +123,15 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="shouldScheduleNext(com.apriori.concurrent.ScheduledTask)">
+<a name="accept(java.lang.Object)">
+<!--   -->
+</a><a name="accept(T)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>shouldScheduleNext</h4>
-<pre>boolean&nbsp;shouldScheduleNext(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">V</a>,? extends <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">T</a>&gt;&nbsp;latest)</pre>
-<div class="block">Determines whether a given task definition should be invoked again.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>latest</code> - the most recently completed invocation</dd>
-<dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the task should be invoked again; <code>false</code> otherwise</dd></dl>
+<h4>accept</h4>
+<pre>void&nbsp;accept(<a href="../../../com/apriori/util/Sink.html" title="type parameter in Sink">T</a>&nbsp;t)</pre>
 </li>
 </ul>
 </li>
@@ -169,12 +159,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/ScheduleNextTaskPolicy.html" target="_top">Frames</a></li>
-<li><a href="ScheduleNextTaskPolicy.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/util/Sink.html" target="_top">Frames</a></li>
+<li><a href="Sink.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

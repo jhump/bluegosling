@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>RunnableScheduledTask</title>
+<title>CallableRepeatingScheduledTask</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="RunnableScheduledTask";
+        parent.document.title="CallableRepeatingScheduledTask";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/RunnableScheduledTask.html" target="_top">Frames</a></li>
-<li><a href="RunnableScheduledTask.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/CallableRepeatingScheduledTask.html" target="_top">Frames</a></li>
+<li><a href="CallableRepeatingScheduledTask.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,7 +77,7 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface RunnableScheduledTask" class="title">Interface RunnableScheduledTask</h2>
+<h2 title="Interface CallableRepeatingScheduledTask" class="title">Interface CallableRepeatingScheduledTask&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -85,35 +85,20 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;, <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">RunnableScheduledTask</span>
-extends <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;</pre>
+<pre>public interface <span class="strong">CallableRepeatingScheduledTask&lt;V&gt;</span>
+extends <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&gt;</pre>
 <div class="block">A convenient sub-interface, for reducing the number of type parameters needed
- when declaring a <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
+ when declaring a <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><code>RepeatingScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.concurrent.ScheduledTask">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></h3>
-<code><a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="interface in com.apriori.concurrent">ScheduledTask.Listener</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="type parameter in ScheduledTask.Listener">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="type parameter in ScheduledTask.Listener">T</a>&gt;</code></li>
-</ul>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -121,11 +106,11 @@ extends <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="inte
 </a>
 <h3>Method Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.ScheduledTask">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.RepeatingScheduledTask">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></h3>
-<code><a href="../../../com/apriori/concurrent/ScheduledTask.html#actualTaskEndMillis()">actualTaskEndMillis</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html#actualTaskStartMillis()">actualTaskStartMillis</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html#failed()">failed</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html#hasStarted()">hasStarted</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html#succeeded()">succeeded</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html#taskDefinition()">taskDefinition</a></code></li>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a></h3>
+<code><a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html#taskDefinition()">taskDefinition</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.concurrent.Delayed">
@@ -173,12 +158,12 @@ extends <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="inte
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/RunnableScheduledTask.html" target="_top">Frames</a></li>
-<li><a href="RunnableScheduledTask.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/CallableRepeatingScheduledTask.html" target="_top">Frames</a></li>
+<li><a href="CallableRepeatingScheduledTask.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

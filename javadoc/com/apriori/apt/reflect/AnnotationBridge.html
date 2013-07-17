@@ -119,7 +119,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  <pre>
  // The bridge is an instance of the AnnoXyz annotation.
  AnnoXyz annotation = createBridge(
-       Class.forName("SomeClass").getAnnotation(AnnoXyz.class),
+       com.apriori.apt.reflect.Class.forName("SomeClass")
+             .getAnnotation(AnnoXyz.class),
        AnnoXyz.class);
        
  // Since classes might not be available, annotation fields that return classes or

@@ -430,7 +430,8 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <div class="block">Cancels this task definition. No more invocations will be scheduled. If so
  specified, any currently running invocation will be interrupted.
  
- <p>Canceling a task definition that is already cancelled does nothing and will <code>false</code>.</div>
+ <p>Canceling a task definition that is already cancelled does nothing and will return
+ <code>false</code>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>interrupt</code> - <code>true</code> if a currently running invocation should be
        interrupted via <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.html?is-external=true#interrupt()" title="class or interface in java.lang"><code>Thread.interrupt()</code></a></dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the task was cancelled; <code>false</code> if it could

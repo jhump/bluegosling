@@ -38,7 +38,7 @@ public interface Function<I, O> {
        * @param input2 the second argument
        * @return the function's result
        */
-      O apply(I1 input1, I2 input);
+      O apply(I1 input1, I2 input2);
    }
    
    /**
