@@ -6,6 +6,7 @@ import com.apriori.util.Sink;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -295,32 +296,97 @@ public final class ListenableFutures {
       return result;
    }
    
+   public static <T> ListenableFuture<T> completedFuture(final T value) {
+      return new ListenableFuture<T>() {
+         @Override
+         public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+         }
+
+         @Override
+         public boolean isCancelled() {
+            return false;
+         }
+
+         @Override
+         public boolean isDone() {
+            return true;
+         }
+
+         @Override
+         public T get() {
+            return value;
+         }
+
+         @Override
+         public T get(long timeout, TimeUnit unit) {
+            return value;
+         }
+
+         @Override
+         public void addListener(Runnable listener, Executor executor) {
+            executor.execute(listener);
+         }
+      };
+   }
+   
+   public static <T> ListenableFuture<T> failedFuture(final Throwable failure) {
+      return new ListenableFuture<T>() {
+         @Override
+         public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+         }
+
+         @Override
+         public boolean isCancelled() {
+            return false;
+         }
+
+         @Override
+         public boolean isDone() {
+            return true;
+         }
+
+         @Override
+         public T get() throws ExecutionException {
+            throw new ExecutionException(failure);
+         }
+
+         @Override
+         public T get(long timeout, TimeUnit unit) throws ExecutionException {
+            throw new ExecutionException(failure);
+         }
+
+         @Override
+         public void addListener(Runnable listener, Executor executor) {
+            executor.execute(listener);
+         }
+      };
+   }
+   
    public static <T> ListenableFuture<List<T>> join(ListenableFuture<? extends T>... futures) {
       return join(Arrays.asList(futures));
    }
 
    public static <T> ListenableFuture<List<T>> join(
          final Iterable<ListenableFuture<? extends T>> futures) {
-      final SimpleListenableFuture<List<T>> result = new SimpleListenableFuture<List<T>>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            boolean ret = false;
-            for (ListenableFuture<?> future : futures) {
-               if (future.cancel(mayInterrupt)) {
-                  ret = true;
-               }
-            }
-            if (ret) {
-               // when an element future is cancelled, listener below marks this cancelled, but
-               // listener could be executed async. since we need this to be cancelled before we
-               // return from this method, cancel now and then listener will be a no-op
-               setCancelled();
-            }
-            return ret;
-         }
-      };
       List<ListenableFuture<? extends T>> futureList = 
             new ArrayList<ListenableFuture<? extends T>>();
+      for (ListenableFuture<? extends T> future : futures) {
+         futureList.add(future);
+      }
+      if (futureList.isEmpty()) {
+         return completedFuture(Collections.<T>emptyList());
+      }
       int len = futureList.size();
+      if (len == 1) {
+         return transform(futureList.get(0), new Function<T, List<T>>() {
+            @Override
+            public List<T> apply(T input) {
+               return Collections.singletonList(input);
+            }
+         });
+      }
       final List<T> resolved = new ArrayList<T>(len);
       final List<AtomicBoolean> setList = new ArrayList<AtomicBoolean>();
       for (@SuppressWarnings("unused") Object unused : futures) {
@@ -329,6 +395,17 @@ public final class ListenableFutures {
          setList.add(new AtomicBoolean());
       }
       final AtomicInteger remaining = new AtomicInteger(len);
+      final SimpleListenableFuture<List<T>> result = new SimpleListenableFuture<List<T>>() {
+         @Override public boolean cancel(boolean mayInterrupt) {
+            if (super.cancel(mayInterrupt)) {
+               for (ListenableFuture<?> future : futures) {
+                  future.cancel(mayInterrupt);
+               }
+               return true;
+            }
+            return false;
+         }
+      };
       for (int i = 0; i < len; i++) {
          final int index = i;
          ListenableFuture<? extends T> future = futureList.get(i);
@@ -340,7 +417,7 @@ public final class ListenableFutures {
                   resolved.set(index, t);
                   if (remaining.decrementAndGet() == 0) {
                      // all outstanding futures have completed
-                     result.setValue(resolved);
+                     result.setValue(Collections.unmodifiableList(resolved));
                   }
                }
             }
@@ -357,5 +434,19 @@ public final class ListenableFutures {
          });
       }
       return result;
+   }
+   
+   public static <T, U, V> ListenableFuture<V> combine(
+         ListenableFuture<T> future1, ListenableFuture<U> future2,
+         Function.Bivariate<? super T, ? super U, ? extends V> function) {
+      //TODO
+      return null;
+   }
+
+   public static <T, U, V, W> ListenableFuture<V> combine(ListenableFuture<T> future1,
+         ListenableFuture<U> future2, ListenableFuture<V> future3,
+         Function.Trivariate<? super T, ? super U, ? super V, ? extends W> function) {
+      //TODO
+      return null;
    }
 }

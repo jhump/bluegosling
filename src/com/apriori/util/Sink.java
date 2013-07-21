@@ -1,6 +1,17 @@
 package com.apriori.util;
 
-//TODO: javadoc
+/**
+ * An interface that represents a sink for objects, aka "target" or "consumer".
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <T> the type of element consumed
+ */
 public interface Sink<T> {
+   /**
+    * Sends an object to be consumed.
+    * 
+    * @param t an object
+    */
    void accept(T t);
 }

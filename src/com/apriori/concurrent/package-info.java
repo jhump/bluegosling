@@ -1,13 +1,17 @@
 /**
- * Classes that extend and enhance the API provided by the {@code ScheduledExecutorService}
- * interface.
- * 
- * <p>The idea is to provide a richer API with introspection on status of scheduled tasks, ability
- * to pause recurring tasks, cancel individual instances of the task, and to inject better exception
- * handling when a task throws an exception.
- * 
- * <p><strong>NOTE:</strong> This package is still under construction. See TODOs in 
- * {@code BetterExecutorService.java}.
+ * Classes that extend and enhance the API provided by the {@code java.util.concurrent} package.
+ * The two key extensions follow:
+ * <ol>
+ * <li>Improvements to {@code ScheduledExecutorService} for job tracking and management. The API
+ * here allows introspection on the status and history of scheduled tasks and allows tasks to be
+ * configured with custom exception handling strategies. It also provides more control over
+ * scheduling of subsequent instances for recurring tasks, the ability to pause/resume recurring
+ * tasks, and cancel individual instances of recurring tasks.</li>
+ * <li>{@code Future}s that allow completion callbacks to be registered. This means code has the
+ * flexibility of either doing things asynchronously with callbacks or synchronously by blocking for
+ * the future to complete.
+ * </li>
+ * </ol>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

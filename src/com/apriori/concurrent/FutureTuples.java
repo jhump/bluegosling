@@ -10,12 +10,13 @@ import com.apriori.tuples.Trio;
 import com.apriori.tuples.Tuple;
 import com.apriori.tuples.Tuples;
 import com.apriori.tuples.Unit;
+import com.apriori.util.Fulfillable;
+import com.apriori.util.Fulfillables;
 import com.apriori.util.Function;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //TODO: javadoc
@@ -27,29 +28,6 @@ public class FutureTuples {
             return Unit.create(t);
          }
       });
-   }
-   
-   private static class Fullfillable<T> {
-      private final AtomicBoolean set = new AtomicBoolean();
-      private volatile T t;
-      
-      Fullfillable() {
-      }
-      
-      public boolean fulfill(T value) {
-         if (set.compareAndSet(false, true)) {
-            this.t = value;
-            return true;
-         }
-         return false;
-      }
-      
-      public T get() {
-         if (!set.get()) {
-            throw new IllegalStateException();
-         }
-         return t;
-      }
    }
    
    private static abstract class FutureTuple<T> extends SimpleListenableFuture<T> {
@@ -74,27 +52,21 @@ public class FutureTuples {
       }
       
       @Override public boolean cancel(boolean mayInterrupt) {
-         boolean ret = false;
-         for (ListenableFuture<?> future : components) {
-            if (future.cancel(mayInterrupt)) {
-               ret = true;
+         if (super.cancel(mayInterrupt)) {
+            for (ListenableFuture<?> future : components) {
+               future.cancel(mayInterrupt);
             }
+            return true;
          }
-         if (ret) {
-            // when a component is cancelled, listener below marks this cancelled, but listener
-            // could be executed async. since we need this to be cancelled before we return from
-            // this method, cancel now and then listener will be a no-op
-            setCancelled();
-         }
-         return ret;
+         return false;
       }
    }
 
    private static class FullfillingCallback<T> implements FutureCallback<T> {
-      private final Fullfillable<T> component;
+      private final Fulfillable<T> component;
       private final FutureTuple<?> result;
       
-      FullfillingCallback(Fullfillable<T> component, FutureTuple<?> result) {
+      FullfillingCallback(Fulfillable<T> component, FutureTuple<?> result) {
          this.component = component;
          this.result = result;
       }
@@ -119,8 +91,8 @@ public class FutureTuples {
    
    public static <T, U> ListenableFuture<Pair<T, U>> asPair(ListenableFuture<? extends T> futureT,
          ListenableFuture<? extends U> futureU) {
-      final Fullfillable<T> t = new Fullfillable<T>();
-      final Fullfillable<U> u = new Fullfillable<U>();
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
       FutureTuple<Pair<T, U>> futurePair =
             new FutureTuple<Pair<T,U>>(Arrays.asList(futureT, futureU)) {
@@ -136,9 +108,9 @@ public class FutureTuples {
    public static <T, U, V> ListenableFuture<Trio<T, U, V>> asTrio(
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV) {
-      final Fullfillable<T> t = new Fullfillable<T>();
-      final Fullfillable<U> u = new Fullfillable<U>();
-      final Fullfillable<V> v = new Fullfillable<V>();
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      final Fulfillable<V> v = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
       FutureTuple<Trio<T, U, V>> futureTrio =
             new FutureTuple<Trio<T,U, V>>(Arrays.asList(futureT, futureU, futureV)) {
@@ -155,10 +127,10 @@ public class FutureTuples {
    public static <T, U, V, W> ListenableFuture<Quartet<T, U, V, W>> asQuartet(
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW) {
-      final Fullfillable<T> t = new Fullfillable<T>();
-      final Fullfillable<U> u = new Fullfillable<U>();
-      final Fullfillable<V> v = new Fullfillable<V>();
-      final Fullfillable<W> w = new Fullfillable<W>();
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      final Fulfillable<V> v = Fulfillables.create();
+      final Fulfillable<W> w = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
       FutureTuple<Quartet<T, U, V, W>> futureQuartet =
             new FutureTuple<Quartet<T,U, V, W>>(Arrays.asList(futureT, futureU, futureV, futureW)) {
@@ -177,11 +149,11 @@ public class FutureTuples {
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW,
          ListenableFuture<? extends X> futureX) {
-      final Fullfillable<T> t = new Fullfillable<T>();
-      final Fullfillable<U> u = new Fullfillable<U>();
-      final Fullfillable<V> v = new Fullfillable<V>();
-      final Fullfillable<W> w = new Fullfillable<W>();
-      final Fullfillable<X> x = new Fullfillable<X>();
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      final Fulfillable<V> v = Fulfillables.create();
+      final Fulfillable<W> w = Fulfillables.create();
+      final Fulfillable<X> x = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
       FutureTuple<Quintet<T, U, V, W, X>> futureQuintet =
             new FutureTuple<Quintet<T,U, V, W, X>>(Arrays.asList(futureT, futureU, futureV, futureW,
@@ -203,16 +175,16 @@ public class FutureTuples {
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW,
          ListenableFuture<? extends X> futureX, ListenableFuture<?> futureY,
          ListenableFuture<?>... futures) {
-      final Fullfillable<T> t = new Fullfillable<T>();
-      final Fullfillable<U> u = new Fullfillable<U>();
-      final Fullfillable<V> v = new Fullfillable<V>();
-      final Fullfillable<W> w = new Fullfillable<W>();
-      final Fullfillable<X> x = new Fullfillable<X>();
-      final Fullfillable<Object> y = new Fullfillable<Object>();
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      final Fulfillable<V> v = Fulfillables.create();
+      final Fulfillable<W> w = Fulfillables.create();
+      final Fulfillable<X> x = Fulfillables.create();
+      final Fulfillable<Object> y = Fulfillables.create();
       @SuppressWarnings("unchecked") // can't create generic array, so have to cast from raw type
-      final Fullfillable<Object> fullfillables[] = new Fullfillable[futures.length];
+      final Fulfillable<Object> fullfillables[] = new Fulfillable[futures.length];
       for (int i = 0; i < futures.length; i++) {
-         fullfillables[i] = new Fullfillable<Object>();
+         fullfillables[i] = Fulfillables.create();
       }
       ListenableFuture<?> all[] = new ListenableFuture<?>[futures.length + 6];
       all[0] = futureT;

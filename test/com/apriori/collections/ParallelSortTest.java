@@ -37,7 +37,7 @@ public class ParallelSortTest {
    
    private void warmUp() {
       System.out.println("Making sure VM is warm...");
-      // sort for 3 seconds
+      // sort for 5 seconds
       long start = System.currentTimeMillis();
       int count = 0;
       while (true) {
@@ -54,7 +54,7 @@ public class ParallelSortTest {
          l2 = parallelSortIntegers(1000, 10);
          assertEquals(l1, l2);
          count++;
-         if (System.currentTimeMillis() > start + 3000) {
+         if (System.currentTimeMillis() > start + 5000) {
             break; // done warming up
          }
       }
@@ -80,9 +80,11 @@ public class ParallelSortTest {
    @Test public void sortMillionIntegersTimed() {
       warmUp();
       
+      int numItems = 1000*1000;
+      
       Stopwatch stopwatch = new Stopwatch();
       for (int i = 0; i < 5; i++) {
-         List<Integer> list = getDescendingList(1000*1000);
+         List<Integer> list = getDescendingList(numItems);
          stopwatch.start();
          Collections.sort(list);
          stopwatch.stop();
@@ -94,7 +96,7 @@ public class ParallelSortTest {
 
       stopwatch.reset();
       for (int i = 0; i < 5; i++) {
-         List<Integer> list = getDescendingList(1000*1000);
+         List<Integer> list = getDescendingList(numItems);
          stopwatch.start();
          ParallelSort.sort(list, 4);
          stopwatch.stop();

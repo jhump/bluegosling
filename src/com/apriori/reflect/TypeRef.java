@@ -766,6 +766,15 @@ public abstract class TypeRef<T> {
       }
       return ret;
    }
+   
+   //TODO: javadoc
+   // Constraints on type variables mean this should be safe. Limitations in Java generics prevent
+   // this from being possible, without unchecked cast, as a non-static method
+   @SuppressWarnings("unchecked")
+   public static <S, T extends S> TypeRef<S> getSuperTypeRef(TypeRef<T> subType,
+         Class<S> superType) {
+      return (TypeRef<S>) subType.superTypeRefFor(superType);
+   }
 
    /**
     * Returns a super type of the current type, as a {@code TypeRef}. This could be an ancestor

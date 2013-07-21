@@ -1,9 +1,12 @@
 package com.apriori.concurrent;
 
 import com.apriori.tuples.Pair;
+import com.apriori.util.Fulfillable;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -165,5 +168,41 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       }
       // if we get here, future is complete so run listener immediately
       executor.execute(listener);
+   }
+   
+   @SuppressWarnings("synthetic-access") // accesses private members of enclosing class
+   public Fulfillable<T> asFullfillable() {
+      return new Fulfillable<T>() {
+
+         @Override
+         public boolean isFulfilled() {
+            return done && failure == null;
+         }
+
+         @Override
+         public boolean fulfill(T value) {
+            return setValue(value);
+         }
+
+         @Override
+         public T get() {
+            if (!done) {
+               throw new IllegalStateException("not yet fulfilled");
+            } else if (failure != null) {
+               throw new IllegalStateException("failed to fulfill", failure);
+            }
+            return t;
+         }
+
+         @Override
+         public T getOr(T other) {
+            return done && failure == null ? t : other;
+         }
+
+         @Override
+         public Set<T> asSet() {
+            return done && failure == null ? Collections.singleton(t) : Collections.<T>emptySet();
+         }
+      };
    }
 }
