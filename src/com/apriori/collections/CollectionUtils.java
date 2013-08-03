@@ -64,7 +64,12 @@ final class CollectionUtils {
             sb.append(",");
          }
          sb.append(" ");
-         sb.append(String.valueOf(item));
+         if (item == coll) {
+            // don't overflow stack if collection contains itself
+            sb.append("( this collection )");
+         } else {
+            sb.append(String.valueOf(item));
+         }
       }
       sb.append(" ]");
       return sb.toString();
@@ -78,18 +83,28 @@ final class CollectionUtils {
     * @return true if {@code o} equals {@code list}
     */
    public static boolean equals(List<?> list, Object o) {
-      if (o == null || !(o instanceof List<?>))
+      if (!(o instanceof List)) {
          return false;
+      }
+      if (list == o) {
+         return true;
+      }
       List<?> l = (List<?>) o;
-      if (l.size() != list.size())
+      if (l.size() != list.size()) {
          return false;
+      }
       Iterator<?> iter1 = l.iterator();
       Iterator<?> iter2 = list.iterator();
       while (iter1.hasNext()) {
          Object e1 = iter1.next();
          Object e2 = iter2.next();
-         if (e1 == null ? e2 != null : !e1.equals(e2))
+         if ((e1 == list || e2 == list) && e1 != e2) {
+            // handle case where list contains itself - don't overflow stack
             return false;
+         }
+         if (e1 == null ? e2 != null : !e1.equals(e2)) {
+            return false;
+         }
       }
       return true;
    }
@@ -103,7 +118,10 @@ final class CollectionUtils {
    public static int hashCode(List<?> list) {
       int ret = 1;
       for (Object e : list) {
-         ret = 31 * ret + (e == null ? 0 : e.hashCode());
+         // don't overflow stack if list contains itself -- substitute default hashcode
+         int elementHash = e == list ? System.identityHashCode(list)
+               : (e == null ? 0 : e.hashCode());
+         ret = 31 * ret + elementHash;
       }
       return ret;
    }
@@ -116,12 +134,15 @@ final class CollectionUtils {
     * @return true if {@code o} equals {@code list}
     */
    public static boolean equals(Set<?> set, Object o) {
-      if (o instanceof Set) {
-         Set<?> other = (Set<?>) o;
-         return other.size() == set.size() && set.containsAll(other);
-      } else {
+      if (!(o instanceof Set)) {
          return false;
       }
+      if (set == o) {
+         return true;
+      }
+      // TODO: seems like it's possible for this to stack-overflow if set contains itself...
+      Set<?> other = (Set<?>) o;
+      return other.size() == set.size() && set.containsAll(other);
    }
 
    /**
@@ -134,7 +155,8 @@ final class CollectionUtils {
       int hashCode = 0;
       for (Object item : set) {
          if (item != null) {
-            hashCode += item.hashCode();
+            // don't overflow stack if set contains itself -- substitute default hashcode
+            hashCode += item == set ? System.identityHashCode(set) : item.hashCode();
          }
       }
       return hashCode;
@@ -273,8 +295,8 @@ final class CollectionUtils {
     *       bound is exclusive; true if the object is greater than or equal
     *       to the bound and the bound is inclusive; false otherwise
     */
-   public static boolean isInRangeLow(Object o, boolean oIncluded, Object from,
-         boolean fromInclusive, Comparator<Object> comp) {
+   public static <T> boolean isInRangeLow(T o, boolean oIncluded, T from,
+         boolean fromInclusive, Comparator<? super T> comp) {
       if (from != null) {
          int c = comp.compare(o, from);
          if (c < 0 || (c == 0 && oIncluded && !fromInclusive)) {
@@ -305,8 +327,8 @@ final class CollectionUtils {
     *       bound is exclusive, true if the object is less than or equal
     *       to the bound and the bound is inclusive, and false otherwise
     */
-   public static boolean isInRangeHigh(Object o, boolean oIncluded, Object to, boolean toInclusive,
-         Comparator<Object> comp) {
+   public static <T> boolean isInRangeHigh(T o, boolean oIncluded, T to, boolean toInclusive,
+         Comparator<? super T> comp) {
       if (to != null) {
          int c = comp.compare(o, to);
          if (c > 0 || (c == 0 && oIncluded && !toInclusive)) {
@@ -331,8 +353,8 @@ final class CollectionUtils {
     * @return true if the specified object is within the specified bounds; false
     *       otherwise
     */
-   public static boolean isInRange(Object o, Object from, boolean fromInclusive, Object to,
-         boolean toInclusive, Comparator<Object> comp) {
+   public static <T> boolean isInRange(T o, T from, boolean fromInclusive, T to,
+         boolean toInclusive, Comparator<? super T> comp) {
       return isInRangeLow(o, true, from, fromInclusive, comp)
             && isInRangeHigh(o, true, to, toInclusive, comp);
    }

@@ -15,10 +15,12 @@ import java.util.concurrent.Future;
 /**
  * A utility for sorting large lists using multiple CPUs/cores. This is a simplistic parallel sort
  * that breaks the incoming list into chunks, sorts all of the chunks in parallel, and then finally
- * merges the chunks. Only the sorting of chunks is parallelized.
+ * merges the chunks. Only the sorting of chunks is parallelized. Merging of chunks is done on a
+ * single thread.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
+ * @see ParallelSort2
  * @see SlowParallelSort
  */
 public class ParallelSort {
@@ -58,19 +60,20 @@ public class ParallelSort {
       if (list == null || comparator == null) {
          throw new NullPointerException();
       }
-      if (list.isEmpty()) {
+      if (list.size() <= 1) {
          return;
       }
       if (requestedNumThreads < 1) {
          throw new IllegalArgumentException("number of threads must be >= 1");
-      } else if (requestedNumThreads == 1) {
+      }
+      
+      int remaining = list.size();
+      final int numThreads = requestedNumThreads > remaining/2 ? remaining/2 : requestedNumThreads;
+      if (numThreads == 1) {
          // one thread? just sort it right here
          Collections.sort(list, comparator);
          return;
       }
-      
-      int remaining = list.size();
-      final int numThreads = requestedNumThreads > remaining ? remaining : requestedNumThreads;
       Future<?> results[] = new Future<?>[numThreads - 1];
       ExecutorService svc = Executors.newFixedThreadPool(numThreads - 1);
       try {
@@ -109,6 +112,7 @@ public class ParallelSort {
                results[i].get();
             }
          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // restore interrupt status
             throw new RuntimeException(e);
          } catch (ExecutionException e) {
             Throwable t = e.getCause();

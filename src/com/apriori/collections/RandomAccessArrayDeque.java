@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
@@ -18,13 +19,14 @@ import java.util.RandomAccess;
  */
 //TODO: implement me! (don't forget serialization and cloning)
 //TODO: tests
-public class RandomAccessArrayDeque<E> implements Deque<E>, List<E>, RandomAccess {
+//TODO: use/enforce capacity constraint
+public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<E>, RandomAccess {
 
-   private transient int head;
-   private transient int tail;
+   transient int head;
+   transient int tail;
+   transient int capacity;
    transient int size;
-   private transient Object data[];
-   transient int modCount;
+   transient Object data[];
    
    @Override
    public boolean isEmpty() {
@@ -41,29 +43,6 @@ public class RandomAccessArrayDeque<E> implements Deque<E>, List<E>, RandomAcces
    public <T> T[] toArray(T[] a) {
       // TODO Auto-generated method stub
       return null;
-   }
-   
-   @Override
-   public boolean containsAll(Collection<?> c) {
-      // TODO Auto-generated method stub
-      return false;
-   }
-   
-   @Override
-   public boolean addAll(Collection<? extends E> c) {
-      return addAll(size, c);
-   }
-   
-   @Override
-   public boolean removeAll(Collection<?> c) {
-      // TODO Auto-generated method stub
-      return false;
-   }
-   
-   @Override
-   public boolean retainAll(Collection<?> c) {
-      // TODO Auto-generated method stub
-      return false;
    }
    
    @Override
@@ -124,18 +103,6 @@ public class RandomAccessArrayDeque<E> implements Deque<E>, List<E>, RandomAcces
       // TODO Auto-generated method stub
       modCount++;
       return null;
-   }
-   
-   @Override
-   public int indexOf(Object o) {
-      // TODO Auto-generated method stub
-      return 0;
-   }
-   
-   @Override
-   public int lastIndexOf(Object o) {
-      // TODO Auto-generated method stub
-      return 0;
    }
    
    @Override
@@ -294,17 +261,6 @@ public class RandomAccessArrayDeque<E> implements Deque<E>, List<E>, RandomAcces
    @Override
    public E pop() {
       return removeFirst();
-   }
-   
-   @Override
-   public boolean remove(Object o) {
-      return removeFirstOccurrence(o);
-   }
-   
-   @Override
-   public boolean contains(Object o) {
-      // TODO Auto-generated method stub
-      return false;
    }
    
    @Override

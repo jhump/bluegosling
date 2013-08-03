@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
@@ -25,7 +25,7 @@ import java.util.RandomAccess;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneable {
+public class TreeList<E> extends AbstractList<E> implements RandomAccess, Serializable, Cloneable {
    
    private static final long serialVersionUID = 7578331319603545754L;
 
@@ -236,326 +236,8 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       }
    }
 
-   /**
-    * Implementation of a sub-list view into a {@link TreeList}.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private class SubListImpl implements List<E>, RandomAccess {
-      private final TreeList<E>.SubListImpl parent;
-      final int fromIndex;
-      int toIndex;
-      int myModCount;
-      
-      SubListImpl(int fromIndex, int toIndex) {
-         this(fromIndex, toIndex, null);
-      }
-      
-      SubListImpl(int fromIndex, int toIndex, TreeList<E>.SubListImpl parent) {
-         this.parent = parent;
-         this.fromIndex = fromIndex;
-         this.toIndex = toIndex;
-         myModCount = modCount;
-      }
-
-      void contractAfterRemove() {
-         toIndex--;
-         myModCount = modCount;
-         if (parent != null) {
-            parent.contractAfterRemove();
-         }
-      }
-
-      void expandAfterAdd(int expandBy) {
-         toIndex += expandBy;
-         myModCount = modCount;
-         if (parent != null) {
-            parent.expandAfterAdd(expandBy);
-         }
-      }
-      
-      private void check(int index) {
-         if (index >= toIndex - fromIndex) {
-            throw new IndexOutOfBoundsException("" + index + " >= " + (toIndex - fromIndex));
-         }
-         else if (index < 0) {
-            throw new IndexOutOfBoundsException("" + index + " < 0");
-         }
-      }
-      
-      private void checkWide(int index) {
-         if (index > toIndex - fromIndex) {
-            throw new IndexOutOfBoundsException("" + index + " > " + (toIndex - fromIndex));
-         }
-         else if (index < 0) {
-            throw new IndexOutOfBoundsException("" + index + " < 0");
-         }
-      }
-
-      @Override
-      public int size() {
-         checkMod(myModCount);
-         return toIndex - fromIndex;
-      }
-
-      @Override
-      public boolean isEmpty() {
-         checkMod(myModCount);
-         return toIndex == fromIndex;
-      }
-
-      @Override
-      public boolean contains(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(o, listIterator()) != -1;
-      }
-
-      @Override
-      public Iterator<E> iterator() {
-         checkMod(myModCount);
-         return new SubListIteratorImpl(this, 0);
-      }
-
-      @Override
-      public Object[] toArray() {
-         checkMod(myModCount);
-         return CollectionUtils.toArray(this);
-      }
-
-      @Override
-      public <T> T[] toArray(T[] a) {
-         checkMod(myModCount);
-         return CollectionUtils.toArray(this, a);
-      }
-
-      @Override
-      public boolean add(E e) {
-         checkMod(myModCount);
-         TreeList.this.add(toIndex, e);
-         expandAfterAdd(1);
-         return true;
-      }
-
-      @Override
-      public boolean remove(Object o) {
-         checkMod(myModCount);
-         if (fromIndex == toIndex) {
-            return false;
-         }
-         return CollectionUtils.removeObject(o, iterator(), true);
-      }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-         checkMod(myModCount);
-         return CollectionUtils.containsAll(this,  c);
-      }
-
-      @Override
-      public boolean addAll(Collection<? extends E> c) {
-         return addAll(toIndex - fromIndex, c);
-      }
-
-      @Override
-      public boolean addAll(int index, Collection<? extends E> c) {
-         checkMod(myModCount);
-         checkWide(index);
-         if (TreeList.this.addAll(index + fromIndex, c)) {
-            expandAfterAdd(c.size());
-            return true;
-         }
-         return false;
-      }
-
-      @Override
-      public boolean removeAll(Collection<?> c) {
-         checkMod(myModCount);
-         return CollectionUtils.filter(c, iterator(), true);
-      }
-
-      @Override
-      public boolean retainAll(Collection<?> c) {
-         checkMod(myModCount);
-         return CollectionUtils.filter(c, iterator(), false);
-      }
-
-      @Override
-      public void clear() {
-         checkMod(myModCount);
-         for (Iterator<E> iter = iterator(); iter.hasNext();) {
-            iter.next();
-            iter.remove();
-         }
-      }
-
-      @Override
-      public E get(int index) {
-         checkMod(myModCount);
-         check(index);
-         return TreeList.this.get(index + fromIndex);
-      }
-
-      @Override
-      public E set(int index, E element) {
-         checkMod(myModCount);
-         check(index);
-         return TreeList.this.set(index + fromIndex, element);
-      }
-
-      @Override
-      public void add(int index, E element) {
-         checkMod(myModCount);
-         checkWide(index);
-         TreeList.this.add(index + fromIndex, element);
-         expandAfterAdd(1);
-      }
-
-      @Override
-      public E remove(int index) {
-         checkMod(myModCount);
-         check(index);
-         E ret = TreeList.this.remove(index + fromIndex);
-         contractAfterRemove();
-         return ret;
-      }
-
-      @Override
-      public int indexOf(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(o, listIterator());
-      }
-
-      @Override
-      public int lastIndexOf(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(o,
-               CollectionUtils.reverseIterator(listIterator(toIndex - fromIndex)));
-      }
-
-      @Override
-      public ListIterator<E> listIterator() {
-         checkMod(myModCount);
-         return new SubListIteratorImpl(this, 0);
-      }
-
-      @Override
-      public ListIterator<E> listIterator(int index) {
-         checkMod(myModCount);
-         checkWide(index);
-         return new SubListIteratorImpl(this, index);
-      }
-
-      @Override
-      public List<E> subList(int from, int to) {
-         checkMod(myModCount);
-         checkWide(from);
-         checkWide(to);
-         if (from > to) {
-            throw new IllegalArgumentException("from > to");
-         }
-         return new SubListImpl(fromIndex + from, fromIndex + to, this);
-      }
-      
-      @Override
-      public int hashCode() {
-         checkMod(myModCount);
-         return CollectionUtils.hashCode(this);
-      }
-
-      @Override
-      public boolean equals(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.equals(this, o);
-      }
-      
-      @Override
-      public String toString() {
-         checkMod(myModCount);
-         return CollectionUtils.toString(this);
-      }
-   }
-   
-   /**
-    * Implementation of {@link Iterator} for a sub-list.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private class SubListIteratorImpl extends IteratorImpl {
-      
-      private final SubListImpl subList;
-      
-      SubListIteratorImpl(SubListImpl subList, int index) {
-         super(index + subList.fromIndex);
-         this.subList = subList;
-      }
-
-      @Override
-      void contractAfterRemove() {
-         super.contractAfterRemove();
-         subList.contractAfterRemove();
-      }
-      
-      @Override
-      void expandAfterAdd() {
-         super.expandAfterAdd();
-         subList.expandAfterAdd(1);
-      }
-      
-      @Override
-      public boolean hasNext() {
-         return nextIndex < subList.toIndex;
-      }
-
-      @Override
-      public E next() {
-         if (nextIndex >= subList.toIndex) {
-            throw new NoSuchElementException("At end of list");
-         }
-         return super.next();
-      }
-
-      @Override
-      public boolean hasPrevious() {
-         return nextIndex > subList.fromIndex;
-      }
-
-      @Override
-      public E previous() {
-         if (nextIndex <= subList.fromIndex) {
-            throw new NoSuchElementException("At beginning of list");
-         }
-         return super.previous();
-      }
-
-      @Override
-      public int nextIndex() {
-         return super.nextIndex() - subList.fromIndex;
-      }
-
-      @Override
-      public int previousIndex() {
-         return super.previousIndex() - subList.fromIndex;
-      }
-
-      @Override
-      public void remove() {
-         super.remove();
-      }
-
-      @Override
-      public void set(E e) {
-         super.set(e);
-      }
-
-      @Override
-      public void add(E e) {
-         super.add(e);
-      }
-   }
-   
    transient Node<E> root;
    transient int size;
-   protected transient int modCount;
    
    public TreeList() {
    }
@@ -853,28 +535,8 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
    }
 
    @Override
-   public boolean isEmpty() {
-      return size == 0;
-   }
-   
-   @Override
-   public boolean contains(Object o) {
-      return CollectionUtils.findObject(o, listIterator()) != -1;
-   }
-
-   @Override
    public Iterator<E> iterator() {
       return new IteratorImpl(0);
-   }
-
-   @Override
-   public Object[] toArray() {
-      return CollectionUtils.toArray(this);
-   }
-
-   @Override
-   public <T> T[] toArray(T[] a) {
-      return CollectionUtils.toArray(this, a);
    }
 
    @Override
@@ -882,19 +544,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
       addAndRebalance(size, e);
       modCount++;
       return true;
-   }
-
-   @Override
-   public boolean remove(Object o) {
-      if (size == 0) {
-         return false;
-      }
-      return CollectionUtils.removeObject(o, iterator(), true);
-   }
-
-   @Override
-   public boolean containsAll(Collection<?> c) {
-      return CollectionUtils.containsAll(this, c);
    }
 
    @Override
@@ -944,16 +593,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
    }
 
    @Override
-   public boolean removeAll(Collection<?> c) {
-      return CollectionUtils.filter(c, iterator(), true);
-   }
-
-   @Override
-   public boolean retainAll(Collection<?> c) {
-      return CollectionUtils.filter(c, iterator(), false);
-   }
-
-   @Override
    public void clear() {
       size = 0;
       root = null;
@@ -992,16 +631,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
    }
 
    @Override
-   public int indexOf(Object o) {
-      return CollectionUtils.findObject(o, listIterator());
-   }
-
-   @Override
-   public int lastIndexOf(Object o) {
-      return CollectionUtils.findObject(o, CollectionUtils.reverseIterator(listIterator(size)));
-   }
-
-   @Override
    public ListIterator<E> listIterator() {
       return new IteratorImpl(0);
    }
@@ -1010,31 +639,6 @@ public class TreeList<E> implements List<E>, RandomAccess, Serializable, Cloneab
    public ListIterator<E> listIterator(int index) {
       checkWide(index);
       return new IteratorImpl(index);
-   }
-
-   @Override
-   public List<E> subList(int fromIndex, int toIndex) {
-      checkWide(fromIndex);
-      checkWide(toIndex);
-      if (fromIndex > toIndex) {
-         throw new IllegalArgumentException("from > to");
-      }
-      return new SubListImpl(fromIndex, toIndex);
-   }
-  
-   @Override
-   public boolean equals(Object o) {
-      return CollectionUtils.equals(this,  o);
-   }
-   
-   @Override
-   public int hashCode() {
-      return CollectionUtils.hashCode(this);
-   }
-   
-   @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
    }
    
    @Override

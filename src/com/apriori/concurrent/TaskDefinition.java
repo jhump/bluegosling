@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The definition for a task that will be executed by a {@link BetterExecutorService}.
+ * The definition for a task that will be executed by a {@link ScheduledTaskManager}.
  * This includes several configuration options that are not possible using a normal
  * {@link java.util.concurrent.ScheduledExecutorService ScheduledExecutorService}.
  * 
@@ -104,7 +104,7 @@ public interface TaskDefinition<V, T> {
     * 
     * @return the set of listeners for this task
     */
-   Set<ScheduledTask.Listener<? super V, ? super T>> listeners();
+   Set<ScheduledTaskListener<? super V, ? super T>> listeners();
    
    /**
     * Returns the {@link UncaughtExceptionHandler} for this task. If any invocation
@@ -177,7 +177,7 @@ public interface TaskDefinition<V, T> {
 
       private final T task;
       private final Callable<V> callable;
-      private final Set<ScheduledTask.Listener<? super V, ? super T>> listeners;
+      private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
       private int maxHistorySize = DEFAULT_MAX_HISTORY_SIZE;
       private ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
       private UncaughtExceptionHandler exceptionHandler;
@@ -194,7 +194,7 @@ public interface TaskDefinition<V, T> {
       private Builder(T task, Callable<V> callable) {
          this.task = task;
          this.callable = callable;
-         this.listeners = new LinkedHashSet<ScheduledTask.Listener<? super V, ? super T>>();
+         this.listeners = new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>();
       }
       
       /**
@@ -214,7 +214,7 @@ public interface TaskDefinition<V, T> {
        * @param listener the listener
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> withListener(ScheduledTask.Listener<? super V, ? super T> listener) {
+      public Builder<V, T> withListener(ScheduledTaskListener<? super V, ? super T> listener) {
          listeners.add(listener);
          return this;
       }
@@ -321,7 +321,7 @@ public interface TaskDefinition<V, T> {
          private final T task;
          private final Callable<V> callable;
          private final int maxHistorySize;
-         private final Set<ScheduledTask.Listener<? super V, ? super T>> listeners;
+         private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
          private final ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
          private final UncaughtExceptionHandler exceptionHandler;
          private final long initialDelayMillis;
@@ -329,14 +329,15 @@ public interface TaskDefinition<V, T> {
          private final long periodDelayMillis;
 
          TaskDefinitionImpl(T task, Callable<V> callable, int maxHistorySize,
-               Set<ScheduledTask.Listener<? super V, ? super T>> listeners,
+               Set<ScheduledTaskListener<? super V, ? super T>> listeners,
                ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextPolicy,
                UncaughtExceptionHandler exceptionHandler, long initialDelayMillis,
                boolean isFixedRate, long periodDelayMillis) {
             this.task = task;
             this.callable = callable;
             this.maxHistorySize = maxHistorySize;
-            this.listeners = new LinkedHashSet<ScheduledTask.Listener<? super V, ? super T>>(listeners);
+            this.listeners =
+                  new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>(listeners);
             this.scheduleNextTaskPolicy = scheduleNextPolicy;
             this.exceptionHandler = exceptionHandler;
             this.initialDelayMillis = initialDelayMillis;
@@ -385,7 +386,7 @@ public interface TaskDefinition<V, T> {
          }
 
          @Override
-         public Set<ScheduledTask.Listener<? super V, ? super T>> listeners() {
+         public Set<ScheduledTaskListener<? super V, ? super T>> listeners() {
             return Collections.unmodifiableSet(listeners);
          }
 

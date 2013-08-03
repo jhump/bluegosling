@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * A {@link TaskDefinition} that has been scheduled using a {@link BetterExecutorService}.
+ * A {@link TaskDefinition} that has been scheduled using a {@link ScheduledTaskManager}.
  * This provides additional methods for introspection into the state of the scheduled tasks,
  * including looking at past invocations of the task and canceling or pausing/resuming the
  * scheduled tasks.
@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
 public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
    /**
     * Returns the timestamp, in milliseconds, that this task definition was submitted
-    * to a {@link BetterExecutorService}. This is measured as milliseconds elapsed since
+    * to a {@link ScheduledTaskManager}. This is measured as milliseconds elapsed since
     * midnight, January 1, 1970 UTC.
     * 
     * @return the time the task definition was submitted
@@ -26,13 +26,13 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
    long submitTimeMillis();
    
    /**
-    * Returns the {@link BetterExecutorService} to which this task definition
+    * Returns the {@link ScheduledTaskManager} to which this task definition
     * was submitted.
     * 
-    * @return the {@link BetterExecutorService} to which this task definition
+    * @return the {@link ScheduledTaskManager} to which this task definition
     *       was submitted 
     */
-   BetterExecutorService executor();
+   ScheduledTaskManager executor();
    
    /**
     * Returns the total number of times that tasks have been executed for this
@@ -98,7 +98,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     *  
     * @param listener the listener
     */
-   void addListener(ScheduledTask.Listener<? super V, ? super T> listener);
+   void addListener(ScheduledTaskListener<? super V, ? super T> listener);
    
    /**
     * Removes a listener. No notifications will be sent to the listener after
@@ -109,7 +109,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     *       such as if the listener was never added to this task definition or
     *       has already been removed
     */
-   boolean removeListener(ScheduledTask.Listener<? super V, ? super T> listener);
+   boolean removeListener(ScheduledTaskListener<? super V, ? super T> listener);
    
    /**
     * Returns whether or not the task definition is finished. It is finished when

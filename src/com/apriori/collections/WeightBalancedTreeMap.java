@@ -1989,7 +1989,7 @@ public class WeightBalancedTreeMap<K, V>
                      return mapEntry(input);
                   }
                });
-}
+      }
 
       @Override
       public Entry<K, V> getEntry(int index) {

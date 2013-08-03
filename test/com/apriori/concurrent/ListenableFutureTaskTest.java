@@ -1,5 +1,8 @@
 package com.apriori.concurrent;
 
+import static com.apriori.concurrent.FutureListeners.forRunnable;
+import static com.apriori.concurrent.ListenableFutures.sameThreadExecutor;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -22,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: need more tests/assertions for other ListenableFuture methods
 public class ListenableFutureTaskTest {
 
    private enum State {
@@ -68,11 +72,11 @@ public class ListenableFutureTaskTest {
       assertFalse(future.isDone());
       assertFalse(future.isCancelled());
       
-      future.addListener(new Runnable() {
+      future.addListener(forRunnable(new Runnable() {
          @Override public void run() {
             listenCount.incrementAndGet();
          }
-      }, ListenableFutures.sameThreadExecutor());
+      }), sameThreadExecutor());
       assertEquals(0, listenCount.get());
       
       try {
@@ -100,11 +104,11 @@ public class ListenableFutureTaskTest {
    }
 
    private void postAsserts() {
-      future.addListener(new Runnable() {
+      future.addListener(forRunnable(new Runnable() {
          @Override public void run() {
             listenCount.incrementAndGet();
          }
-      }, ListenableFutures.sameThreadExecutor());
+      }), sameThreadExecutor());
       assertEquals(2, listenCount.get());
       assertTrue(future.isDone());
    }

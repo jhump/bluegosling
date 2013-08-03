@@ -1,7 +1,10 @@
 package com.apriori.concurrent;
 
+import static com.apriori.concurrent.FutureListeners.forVisitor;
+
+import com.apriori.util.Fulfillable;
+import com.apriori.util.Fulfillables;
 import com.apriori.util.Function;
-import com.apriori.util.Sink;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +19,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //TODO: tests
 //TODO: javadoc
+//TODO: makeListenable(ScheduledExecutorService)
+//TODO: makeListenable(ScheduledFuture)
 public final class ListenableFutures {
    private ListenableFutures() {
    }
@@ -38,7 +42,7 @@ public final class ListenableFutures {
       }
    };
 
-   private static class ListeningExecutorServiceWrapper implements ListenableFuture.ExecutorService {
+   private static class ListeningExecutorServiceWrapper implements ListenableExecutorService {
       private final ExecutorService delegate;
       
       ListeningExecutorServiceWrapper(ExecutorService delegate) {
@@ -90,7 +94,7 @@ public final class ListenableFutures {
       }
 
       @Override
-      public ListenableFuture<?> submit(Runnable task) {
+      public ListenableFuture<Void> submit(Runnable task) {
          return submit(task, null);
       }
 
@@ -158,12 +162,8 @@ public final class ListenableFutures {
       }
       final SimpleListenableFuture<T> result = new SimpleListenableFuture<T>() {
          @Override public boolean cancel(boolean mayInterrupt) {
-            if (future.cancel(mayInterrupt)) {
-               // when future is cancelled, listener below marks this cancelled, but
-               // listener could be executed async. since we need this to be cancelled
-               // before we return from this method, cancel now and then listener
-               // will be a no-op
-               setCancelled();
+            if (super.setCancelled()) {
+               future.cancel(mayInterrupt);
                return true;
             }
             return false;
@@ -194,9 +194,9 @@ public final class ListenableFutures {
       return result;
    }
    
-   public static ListenableFuture.ExecutorService makeListenable(ExecutorService executor) {
-      if (executor instanceof ListenableFuture.ExecutorService) {
-         return (ListenableFuture.ExecutorService) executor;
+   public static ListenableExecutorService makeListenable(ExecutorService executor) {
+      if (executor instanceof ListenableExecutorService) {
+         return (ListenableExecutorService) executor;
       }
       return new ListeningExecutorServiceWrapper(executor);
    }
@@ -205,77 +205,45 @@ public final class ListenableFutures {
       return SAME_THREAD_EXECUTOR;
    }
    
-   public static <T> void addListener(ListenableFuture<T> future, Runnable listener) {
-      future.addListener(listener, SAME_THREAD_EXECUTOR);
-   }
-
-   public static <T> void addSink(final ListenableFuture<T> future,
-         final Sink<? super ListenableFuture<T>> sink) {
-      addSink(future, sink, SAME_THREAD_EXECUTOR);
-   }
-   
-   public static <T> void addSink(final ListenableFuture<T> future,
-         final Sink<? super ListenableFuture<T>> sink, Executor executor) {
-      future.addListener(new Runnable() {
-         @Override public void run() {
-            sink.accept(future);
-         }
-      }, executor);
-   }
-   
    public static <T> void addCallback(ListenableFuture<T> future,
-         FutureCallback<? super T> callback) {
-      addCallback(future, callback, SAME_THREAD_EXECUTOR);
+         FutureVisitor<? super T> visitor) {
+      future.addListener(forVisitor(visitor), sameThreadExecutor());
    }
    
-   public static <T> void addCallback(final ListenableFuture<T> future,
-         final FutureCallback<? super T> callback, Executor executor) {
-      future.addListener(new Runnable() {
-         @Override public void run() {
-            if (future.isCancelled()) {
-               callback.onCancel();
-               return;
-            }
-            T result;
+   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, final Callable<T> task,
+         Executor executor) {
+      return chain(future, new Function<Object, T>() {
+         @Override public T apply(Object unused) {
             try {
-               result = future.get();
-            } catch (ExecutionException e) {
-               callback.onFailure(e.getCause());
-               return;
-            } catch (InterruptedException e) {
-               // this shouldn't be possible because future should be complete, no wait needed.
-               // but, just in case, don't want to leave listener waiting forever...
-               AssertionError err = new AssertionError();
-               err.initCause(e);
-               callback.onFailure(err);
-               return;
-            } catch (Throwable t) {
-               callback.onFailure(t);
-               return;
+               return task.call();
+            } catch (Exception e) {
+               throw e instanceof RuntimeException ? (RuntimeException) e : new RuntimeException(e);
             }
-            callback.onSuccess(result);
          }
       }, executor);
    }
 
-   public static <T, U> ListenableFuture<U> transform(final ListenableFuture<T> future,
-         final Function<? super T, ? extends U> function) {
-      final SimpleListenableFuture<U> result = new SimpleListenableFuture<U>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            // when future is cancelled, listener below marks this cancelled, but
-            // listener could be executed async. since we need this to be cancelled
-            // before we return from this method, cancel now and then listener
-            // will be a no-op
-            if (future.cancel(mayInterrupt)) {
-               setCancelled();
-               return true;
-            }
-            return false;
+   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, final Runnable task,
+         final T result, Executor executor) {
+      return chain(future, new Function<Object, T>() {
+         @Override public T apply(Object unused) {
+            task.run();
+            return result;
          }
-      };
-      addCallback(future, new FutureCallback<T>() {
+      }, executor);
+   }
+
+   public static ListenableFuture<Void> chain(ListenableFuture<?> future, Runnable task,
+         Executor executor) {
+      return chain(future, task, null, executor);
+   }
+
+   public static <T, U> ListenableFuture<U> chain(ListenableFuture<T> future,
+         final Function<? super T, ? extends U> function, Executor executor) {
+      final SimpleListenableFuture<U> result = new SimpleListenableFuture<U>();
+      future.addListener(forVisitor(new FutureVisitor<T>() {
          @Override
-         public void onSuccess(T t) {
+         public void successful(T t) {
             try {
                result.setValue(function.apply(t));
             } catch (Throwable th) {
@@ -284,12 +252,46 @@ public final class ListenableFutures {
          }
    
          @Override
-         public void onFailure(Throwable t) {
+         public void failed(Throwable t) {
             result.setFailure(t);
          }
          
          @Override
-         public void onCancel() {
+         public void cancelled() {
+            result.setCancelled();
+         }
+      }), executor);
+      return result;
+   }
+
+   public static <T, U> ListenableFuture<U> transform(final ListenableFuture<T> future,
+         final Function<? super T, ? extends U> function) {
+      final SimpleListenableFuture<U> result = new SimpleListenableFuture<U>() {
+         @Override public boolean cancel(boolean mayInterrupt) {
+            if (super.setCancelled()) {
+               future.cancel(mayInterrupt);
+               return true;
+            }
+            return false;
+         }
+      };
+      addCallback(future, new FutureVisitor<T>() {
+         @Override
+         public void successful(T t) {
+            try {
+               result.setValue(function.apply(t));
+            } catch (Throwable th) {
+               result.setFailure(th);
+            }
+         }
+   
+         @Override
+         public void failed(Throwable t) {
+            result.setFailure(t);
+         }
+         
+         @Override
+         public void cancelled() {
             result.setCancelled();
          }
       });
@@ -324,8 +326,39 @@ public final class ListenableFutures {
          }
 
          @Override
-         public void addListener(Runnable listener, Executor executor) {
-            executor.execute(listener);
+         public boolean isSuccessful() {
+            return true;
+         }
+
+         @Override
+         public T getResult() {
+            return value;
+         }
+
+         @Override
+         public boolean isFailed() {
+            return false;
+         }
+
+         @Override
+         public Throwable getFailure() {
+            throw new IllegalStateException();
+         }
+
+         @Override
+         public void addListener(final FutureListener<? super T> listener, Executor executor) {
+            final ListenableFuture<T> f = this;
+            executor.execute(new Runnable() {
+               @Override
+               public void run() {
+                  listener.onCompletion(f);
+               }
+            });
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super T> visitor) {
+            visitor.successful(value);
          }
       };
    }
@@ -358,8 +391,39 @@ public final class ListenableFutures {
          }
 
          @Override
-         public void addListener(Runnable listener, Executor executor) {
-            executor.execute(listener);
+         public boolean isSuccessful() {
+            return false;
+         }
+
+         @Override
+         public T getResult() {
+            throw new IllegalStateException();
+         }
+
+         @Override
+         public boolean isFailed() {
+            return true;
+         }
+
+         @Override
+         public Throwable getFailure() {
+            return failure;
+         }
+
+         @Override
+         public void addListener(final FutureListener<? super T> listener, Executor executor) {
+            final ListenableFuture<T> f = this;
+            executor.execute(new Runnable() {
+               @Override
+               public void run() {
+                  listener.onCompletion(f);
+               }
+            });
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super T> visitor) {
+            visitor.failed(failure);
          }
       };
    }
@@ -370,15 +434,24 @@ public final class ListenableFutures {
 
    public static <T> ListenableFuture<List<T>> join(
          final Iterable<ListenableFuture<? extends T>> futures) {
-      List<ListenableFuture<? extends T>> futureList = 
-            new ArrayList<ListenableFuture<? extends T>>();
-      for (ListenableFuture<? extends T> future : futures) {
-         futureList.add(future);
+      List<ListenableFuture<? extends T>> futureList;
+      if (futures instanceof List) {
+         futureList = (List<ListenableFuture<? extends T>>) futures;
+      } else {
+         if (futures instanceof Collection) {
+            futureList = new ArrayList<ListenableFuture<? extends T>>(
+                  (Collection<ListenableFuture<? extends T>>) futures);
+         } else {
+            futureList = new ArrayList<ListenableFuture<? extends T>>();
+            for (ListenableFuture<? extends T> future : futures) {
+               futureList.add(future);
+            }
+         }
       }
       if (futureList.isEmpty()) {
          return completedFuture(Collections.<T>emptyList());
       }
-      int len = futureList.size();
+      final int len = futureList.size();
       if (len == 1) {
          return transform(futureList.get(0), new Function<T, List<T>>() {
             @Override
@@ -387,66 +460,163 @@ public final class ListenableFutures {
             }
          });
       }
-      final List<T> resolved = new ArrayList<T>(len);
-      final List<AtomicBoolean> setList = new ArrayList<AtomicBoolean>();
-      for (@SuppressWarnings("unused") Object unused : futures) {
-         // prefill with nulls
-         resolved.add(null);
-         setList.add(new AtomicBoolean());
+      final List<Fulfillable<T>> resolved = new ArrayList<Fulfillable<T>>(len);
+      for (int i = 0; i < len; i++) {
+         resolved.add(Fulfillables.<T>create());
       }
-      final AtomicInteger remaining = new AtomicInteger(len);
-      final SimpleListenableFuture<List<T>> result = new SimpleListenableFuture<List<T>>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.cancel(mayInterrupt)) {
-               for (ListenableFuture<?> future : futures) {
-                  future.cancel(mayInterrupt);
-               }
-               return true;
+      @SuppressWarnings({"unchecked", "rawtypes"}) // java generics not expressive enough
+      CombiningFuture<List<T>> result = new CombiningFuture<List<T>>((Collection)futureList) {
+         @Override List<T> computeValue() {
+            List<T> list = new ArrayList<T>(len);
+            for (Fulfillable<T> f : resolved) {
+               list.add(f.get());
             }
-            return false;
+            return list;
          }
       };
       for (int i = 0; i < len; i++) {
-         final int index = i;
-         ListenableFuture<? extends T> future = futureList.get(i);
-         addCallback(future, new FutureCallback<T>() {
-            @Override
-            public void onSuccess(T t) {
-               // defend against callback being incorrectly called more than once
-               if (setList.get(index).compareAndSet(false, true)) {
-                  resolved.set(index, t);
-                  if (remaining.decrementAndGet() == 0) {
-                     // all outstanding futures have completed
-                     result.setValue(Collections.unmodifiableList(resolved));
-                  }
-               }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-               result.setFailure(t);
-            }
-            
-            @Override
-            public void onCancel() {
-               result.setCancelled();
-            }
-         });
+         futureList.get(i).addListener(
+               forVisitor(new CombiningVisitor<T>(resolved.get(i), result)),
+               sameThreadExecutor());
       }
       return result;
    }
    
    public static <T, U, V> ListenableFuture<V> combine(
          ListenableFuture<T> future1, ListenableFuture<U> future2,
-         Function.Bivariate<? super T, ? super U, ? extends V> function) {
-      //TODO
-      return null;
+         final Function.Bivariate<? super T, ? super U, ? extends V> function) {
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      @SuppressWarnings("unchecked") // generic var-args array is safe here
+      CombiningFuture<V> result = new CombiningFuture<V>(Arrays.asList(future1, future2)) {
+         @Override V computeValue() {
+            return function.apply(t.get(), u.get());
+         }
+      };
+      future1.addListener(forVisitor(new CombiningVisitor<T>(t, result)), sameThreadExecutor());
+      future2.addListener(forVisitor(new CombiningVisitor<U>(u, result)), sameThreadExecutor());
+      return result;
    }
 
-   public static <T, U, V, W> ListenableFuture<V> combine(ListenableFuture<T> future1,
+   public static <T, U, V, W> ListenableFuture<W> combine(ListenableFuture<T> future1,
          ListenableFuture<U> future2, ListenableFuture<V> future3,
-         Function.Trivariate<? super T, ? super U, ? super V, ? extends W> function) {
-      //TODO
-      return null;
+         final Function.Trivariate<? super T, ? super U, ? super V, ? extends W> function) {
+      final Fulfillable<T> t = Fulfillables.create();
+      final Fulfillable<U> u = Fulfillables.create();
+      final Fulfillable<V> v = Fulfillables.create();
+      @SuppressWarnings("unchecked") // generic var-args array is safe here
+      CombiningFuture<W> result = new CombiningFuture<W>(Arrays.asList(future1, future2, future3)) {
+         @Override W computeValue() {
+            return function.apply(t.get(), u.get(), v.get());
+         }
+      };
+      future1.addListener(forVisitor(new CombiningVisitor<T>(t, result)), sameThreadExecutor());
+      future2.addListener(forVisitor(new CombiningVisitor<U>(u, result)), sameThreadExecutor());
+      future3.addListener(forVisitor(new CombiningVisitor<V>(v, result)), sameThreadExecutor());
+      return result;
+   }
+   
+   public static <T> ListenableFuture<T> dereference(
+         final ListenableFuture<? extends ListenableFuture<T>> future) {
+      final SimpleListenableFuture<T> result = new SimpleListenableFuture<T>() {
+         @Override public boolean cancel(boolean mayInterrupt) {
+            if (super.setCancelled()) {
+               future.cancel(mayInterrupt);
+               return true;
+            }
+            return false;
+         }
+      };
+      future.addListener(forVisitor(new FutureVisitor<ListenableFuture<T>>() {
+         @Override
+         public void successful(ListenableFuture<T> value) {
+            value.addListener(forVisitor(new FutureVisitor<T>() {
+               @Override
+               public void successful(T t) {
+                  result.setValue(t);
+               }
+
+               @Override
+               public void failed(Throwable t) {
+                  result.setFailure(t);
+               }
+               
+               @Override
+               public void cancelled() {
+                  result.setCancelled();
+               }
+            }), sameThreadExecutor());
+         }
+   
+         @Override
+         public void failed(Throwable t) {
+            result.setFailure(t);
+         }
+         
+         @Override
+         public void cancelled() {
+            result.setCancelled();
+         }
+      }), sameThreadExecutor());
+      return result;
+   }
+   
+   static abstract class CombiningFuture<T> extends SimpleListenableFuture<T> {
+      private final Collection<ListenableFuture<?>> components;
+      private final AtomicInteger remaining;
+      
+      CombiningFuture(Collection<ListenableFuture<?>> components) {
+         this.components = components;
+         remaining = new AtomicInteger(components.size());
+      }
+      
+      abstract T computeValue();
+      
+      void mark() {
+         if (remaining.decrementAndGet() == 0) {
+            try {
+               setValue(computeValue());
+            } catch (Throwable t) {
+               setFailure(t);
+            }
+         }
+      }
+      
+      @Override public boolean cancel(boolean mayInterrupt) {
+         if (super.cancel(mayInterrupt)) {
+            for (ListenableFuture<?> future : components) {
+               future.cancel(mayInterrupt);
+            }
+            return true;
+         }
+         return false;
+      }
+   }
+
+   static class CombiningVisitor<T> implements FutureVisitor<T> {
+      private final Fulfillable<T> component;
+      private final CombiningFuture<?> result;
+      
+      CombiningVisitor(Fulfillable<T> component, CombiningFuture<?> result) {
+         this.component = component;
+         this.result = result;
+      }
+      
+      @Override
+      public void successful(T t) {
+         if (component.fulfill(t)) {
+            result.mark();
+         }
+      }
+
+      @Override
+      public void failed(Throwable t) {
+         result.setFailure(t);
+      }
+
+      @Override
+      public void cancelled() {
+         result.setCancelled();
+      }
    }
 }

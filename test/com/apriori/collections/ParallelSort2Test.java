@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // TODO: javadoc
-public class ParallelSortTest {
+public class ParallelSort2Test {
 
    private List<Integer> getDescendingList(int numItems) {
       ArrayList<Integer> list = new ArrayList<Integer>(numItems);
@@ -31,7 +31,7 @@ public class ParallelSortTest {
    
    private List<Integer> parallelSortIntegers(int numIntegers, int numThreads) {
       List<Integer> list = getDescendingList(numIntegers);
-      ParallelSort.sort(list, numThreads);
+      ParallelSort2.sort(list, numThreads);
       return list;
    }
    
@@ -65,21 +65,22 @@ public class ParallelSortTest {
       assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), parallelSortIntegers(10, 3));
    }
    
-   @Test public void oneItemPerThread() {
-      assertEquals(Arrays.asList(1, 2, 3), parallelSortIntegers(3, 3));
+   @Test public void lessThanSingleThreadThreshold() {
+      // this will sort immediately
+      assertEquals(sortIntegers(5000), parallelSortIntegers(5000, 4));
    }
    
-   @Test public void fewerItemsThanThreads() {
-      assertEquals(Arrays.asList(1, 2, 3, 4, 5), parallelSortIntegers(5, 3));
+   @Test public void greaterThanSingleThreadThreshold() {
+      assertEquals(sortIntegers(50000), parallelSortIntegers(50000, 4));
    }
    
    @Test public void singleThread() {
-      assertEquals(Arrays.asList(1, 2, 3, 4, 5), parallelSortIntegers(5, 1));
+      assertEquals(sortIntegers(25000), parallelSortIntegers(25000, 1));
    }
    
    @Test public void sortMillionIntegersTimed() {
       warmUp();
-      
+
       int numItems = 1000*1000;
       
       Stopwatch stopwatch = new Stopwatch();
@@ -98,7 +99,7 @@ public class ParallelSortTest {
       for (int i = 0; i < 5; i++) {
          List<Integer> list = getDescendingList(numItems);
          stopwatch.start();
-         ParallelSort.sort(list, 4);
+         ParallelSort2.sort(list, 4);
          stopwatch.stop();
          stopwatch.lap();
       }

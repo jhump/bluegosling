@@ -2,6 +2,8 @@ package com.apriori.concurrent;
 
 import static com.apriori.concurrent.ListenableFutures.addCallback;
 
+import com.apriori.concurrent.ListenableFutures.CombiningFuture;
+import com.apriori.concurrent.ListenableFutures.CombiningVisitor;
 import com.apriori.tuples.NTuple;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Quartet;
@@ -15,9 +17,7 @@ import com.apriori.util.Fulfillables;
 import com.apriori.util.Function;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 //TODO: javadoc
 //TODO: tests
@@ -30,78 +30,19 @@ public class FutureTuples {
       });
    }
    
-   private static abstract class FutureTuple<T> extends SimpleListenableFuture<T> {
-      private final Collection<ListenableFuture<?>> components;
-      private final AtomicInteger remaining;
-      
-      FutureTuple(Collection<ListenableFuture<?>> components) {
-         this.components = components;
-         remaining = new AtomicInteger(components.size());
-      }
-      
-      abstract T computeValue();
-      
-      void mark() {
-         if (remaining.decrementAndGet() == 0) {
-            try {
-               setValue(computeValue());
-            } catch (Throwable t) {
-               setFailure(t);
-            }
-         }
-      }
-      
-      @Override public boolean cancel(boolean mayInterrupt) {
-         if (super.cancel(mayInterrupt)) {
-            for (ListenableFuture<?> future : components) {
-               future.cancel(mayInterrupt);
-            }
-            return true;
-         }
-         return false;
-      }
-   }
-
-   private static class FullfillingCallback<T> implements FutureCallback<T> {
-      private final Fulfillable<T> component;
-      private final FutureTuple<?> result;
-      
-      FullfillingCallback(Fulfillable<T> component, FutureTuple<?> result) {
-         this.component = component;
-         this.result = result;
-      }
-      
-      @Override
-      public void onSuccess(T t) {
-         if (component.fulfill(t)) {
-            result.mark();
-         }
-      }
-
-      @Override
-      public void onFailure(Throwable t) {
-         result.setFailure(t);
-      }
-
-      @Override
-      public void onCancel() {
-         result.setCancelled();
-      }
-   }
-   
    public static <T, U> ListenableFuture<Pair<T, U>> asPair(ListenableFuture<? extends T> futureT,
          ListenableFuture<? extends U> futureU) {
       final Fulfillable<T> t = Fulfillables.create();
       final Fulfillable<U> u = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
-      FutureTuple<Pair<T, U>> futurePair =
-            new FutureTuple<Pair<T,U>>(Arrays.asList(futureT, futureU)) {
+      CombiningFuture<Pair<T, U>> futurePair =
+            new CombiningFuture<Pair<T,U>>(Arrays.asList(futureT, futureU)) {
                @Override Pair<T, U> computeValue() {
                   return Pair.create(t.get(), u.get());
                }
             };
-      addCallback(futureT, new FullfillingCallback<T>(t, futurePair));
-      addCallback(futureU, new FullfillingCallback<U>(u, futurePair));
+      addCallback(futureT, new CombiningVisitor<T>(t, futurePair));
+      addCallback(futureU, new CombiningVisitor<U>(u, futurePair));
       return futurePair;
    }
 
@@ -112,15 +53,15 @@ public class FutureTuples {
       final Fulfillable<U> u = Fulfillables.create();
       final Fulfillable<V> v = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
-      FutureTuple<Trio<T, U, V>> futureTrio =
-            new FutureTuple<Trio<T,U, V>>(Arrays.asList(futureT, futureU, futureV)) {
+      CombiningFuture<Trio<T, U, V>> futureTrio =
+            new CombiningFuture<Trio<T,U, V>>(Arrays.asList(futureT, futureU, futureV)) {
                @Override Trio<T, U, V> computeValue() {
                   return Trio.create(t.get(), u.get(), v.get());
                }
             };
-      addCallback(futureT, new FullfillingCallback<T>(t, futureTrio));
-      addCallback(futureU, new FullfillingCallback<U>(u, futureTrio));
-      addCallback(futureV, new FullfillingCallback<V>(v, futureTrio));
+      addCallback(futureT, new CombiningVisitor<T>(t, futureTrio));
+      addCallback(futureU, new CombiningVisitor<U>(u, futureTrio));
+      addCallback(futureV, new CombiningVisitor<V>(v, futureTrio));
       return futureTrio;
    }
 
@@ -132,16 +73,16 @@ public class FutureTuples {
       final Fulfillable<V> v = Fulfillables.create();
       final Fulfillable<W> w = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
-      FutureTuple<Quartet<T, U, V, W>> futureQuartet =
-            new FutureTuple<Quartet<T,U, V, W>>(Arrays.asList(futureT, futureU, futureV, futureW)) {
+      CombiningFuture<Quartet<T, U, V, W>> futureQuartet =
+            new CombiningFuture<Quartet<T,U, V, W>>(Arrays.asList(futureT, futureU, futureV, futureW)) {
                @Override Quartet<T, U, V, W> computeValue() {
                   return Quartet.create(t.get(), u.get(), v.get(), w.get());
                }
             };
-      addCallback(futureT, new FullfillingCallback<T>(t, futureQuartet));
-      addCallback(futureU, new FullfillingCallback<U>(u, futureQuartet));
-      addCallback(futureV, new FullfillingCallback<V>(v, futureQuartet));
-      addCallback(futureW, new FullfillingCallback<W>(w, futureQuartet));
+      addCallback(futureT, new CombiningVisitor<T>(t, futureQuartet));
+      addCallback(futureU, new CombiningVisitor<U>(u, futureQuartet));
+      addCallback(futureV, new CombiningVisitor<V>(v, futureQuartet));
+      addCallback(futureW, new CombiningVisitor<W>(w, futureQuartet));
       return futureQuartet;
    }
 
@@ -155,18 +96,18 @@ public class FutureTuples {
       final Fulfillable<W> w = Fulfillables.create();
       final Fulfillable<X> x = Fulfillables.create();
       @SuppressWarnings("unchecked") // generic var-arg is safe
-      FutureTuple<Quintet<T, U, V, W, X>> futureQuintet =
-            new FutureTuple<Quintet<T,U, V, W, X>>(Arrays.asList(futureT, futureU, futureV, futureW,
-                  futureX)) {
+      CombiningFuture<Quintet<T, U, V, W, X>> futureQuintet =
+            new CombiningFuture<Quintet<T,U, V, W, X>>(Arrays.asList(futureT, futureU, futureV,
+                  futureW, futureX)) {
                @Override Quintet<T, U, V, W, X> computeValue() {
                   return Quintet.create(t.get(), u.get(), v.get(), w.get(), x.get());
                }
             };
-      addCallback(futureT, new FullfillingCallback<T>(t, futureQuintet));
-      addCallback(futureU, new FullfillingCallback<U>(u, futureQuintet));
-      addCallback(futureV, new FullfillingCallback<V>(v, futureQuintet));
-      addCallback(futureW, new FullfillingCallback<W>(w, futureQuintet));
-      addCallback(futureX, new FullfillingCallback<X>(x, futureQuintet));
+      addCallback(futureT, new CombiningVisitor<T>(t, futureQuintet));
+      addCallback(futureU, new CombiningVisitor<U>(u, futureQuintet));
+      addCallback(futureV, new CombiningVisitor<V>(v, futureQuintet));
+      addCallback(futureW, new CombiningVisitor<W>(w, futureQuintet));
+      addCallback(futureX, new CombiningVisitor<X>(x, futureQuintet));
       return futureQuintet;
    }
 
@@ -194,8 +135,8 @@ public class FutureTuples {
       all[4] = futureX;
       all[5] = futureY;
       System.arraycopy(futures, 0, all, 6, futures.length);
-      FutureTuple<NTuple<T, U, V, W, X>> futureNTuple =
-            new FutureTuple<NTuple<T,U, V, W, X>>(Arrays.asList(all)) {
+      CombiningFuture<NTuple<T, U, V, W, X>> futureNTuple =
+            new CombiningFuture<NTuple<T,U, V, W, X>>(Arrays.asList(all)) {
                @Override NTuple<T, U, V, W, X> computeValue() {
                   Object args[] = new Object[fullfillables.length];
                   for (int i = 0; i < fullfillables.length; i++) {
@@ -204,14 +145,14 @@ public class FutureTuples {
                   return NTuple.create(t.get(), u.get(), v.get(), w.get(), x.get(), y.get(), args);
                }
             };
-      addCallback(futureT, new FullfillingCallback<T>(t, futureNTuple));
-      addCallback(futureU, new FullfillingCallback<U>(u, futureNTuple));
-      addCallback(futureV, new FullfillingCallback<V>(v, futureNTuple));
-      addCallback(futureW, new FullfillingCallback<W>(w, futureNTuple));
-      addCallback(futureX, new FullfillingCallback<X>(x, futureNTuple));
-      addCallback(futureY, new FullfillingCallback<Object>(y, futureNTuple));
+      addCallback(futureT, new CombiningVisitor<T>(t, futureNTuple));
+      addCallback(futureU, new CombiningVisitor<U>(u, futureNTuple));
+      addCallback(futureV, new CombiningVisitor<V>(v, futureNTuple));
+      addCallback(futureW, new CombiningVisitor<W>(w, futureNTuple));
+      addCallback(futureX, new CombiningVisitor<X>(x, futureNTuple));
+      addCallback(futureY, new CombiningVisitor<Object>(y, futureNTuple));
       for (int i = 0; i < futures.length; i++) {
-         addCallback(futures[i], new FullfillingCallback<Object>(fullfillables[i], futureNTuple));
+         addCallback(futures[i], new CombiningVisitor<Object>(fullfillables[i], futureNTuple));
       }
       return futureNTuple;
    }

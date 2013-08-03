@@ -36,8 +36,8 @@ import java.util.concurrent.atomic.AtomicReference;
  *    how often, what actual code is executed when the task is run, etc.</dd>
  *  <dt>{@link ScheduledTaskDefinition}</dt>
  *    <dd>A {@link TaskDefinition} that has been scheduled for execution with a
- *    {@link BetterExecutorService}. This provides additional API for inspecting the status of task
- *    invocations and controlling the task, like pausing/suspending executions and cancelling the
+ *    {@link ScheduledTaskManager}. This provides additional API for inspecting the status of task
+ *    invocations and controlling the task, like pausing/suspending executions and canceling the
  *    task.</dd>
  *  <dt>{@link ScheduledTask}</dt>
  *    <dd>A single invocation of a {@link ScheduledTaskDefinition}. If the task is defined as a
@@ -54,7 +54,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 
  * <p>Client code uses a {@link TaskDefinition.Builder} to construct a task and define all of the
  * parameters for its execution. It is then {@linkplain #schedule(TaskDefinition) scheduled} with 
- * the {@link BetterExecutorService} for execution.
+ * the {@link ScheduledTaskManager} for execution.
  * 
  * <h3>Features</h3>
  * <p>The main features in this service, not available with the standard scheduled executor API,
@@ -65,12 +65,12 @@ import java.util.concurrent.atomic.AtomicReference;
  *    successor when invoked), tasks can specify a {@link ScheduleNextTaskPolicy}.</li>
  *    <li>Notification of individual invocations. For repeated tasks, instead of only being able to
  *    wait for all invocations to finish (which generally only happens after an invocation fails)
- *    or cancel all subsequent invocations, this API provides granuality at individual task level.
+ *    or cancel all subsequent invocations, this API provides granularity at individual task level.
  *    You can {@linkplain ScheduledTaskDefinition#addListener(ScheduledTask.Listener) listen} for
  *    completions of any and all invocations. You can also {@linkplain ScheduledTask#cancel(boolean)
  *    cancel} individual invocations of a task.</li>
  *    <li>Greater job control. As mentioned above, you can cancel individual occurrences of a task
- *    instead of cancelling the entire job. You can also {@linkplain ScheduledTaskDefinition#pause()
+ *    instead of canceling the entire job. You can also {@linkplain ScheduledTaskDefinition#pause()
  *    pause} execution of a task temporarily. This does not attempt to suspend any thread currently
  *    executing the task, but simply stops scheduling future instances of the job until the task
  *    is {@linkplain ScheduledTaskDefinition#resume() resumed}.</li>
@@ -88,7 +88,7 @@ import java.util.concurrent.atomic.AtomicReference;
 //TODO javadoc below!!!
 //TODO consider finer grain concurrency primitives -- e.g. something other than synchronized methods
 //TODO tests!
-public class BetterExecutorService implements ScheduledExecutorService {
+public class ScheduledTaskManager implements ScheduledExecutorService {
 
    /**
     * The concrete implementation of {@link ScheduledTask} used by this service. 
@@ -253,7 +253,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
     */
    private class ScheduledTaskDefinitionImpl<V, T> implements ScheduledTaskDefinition<V, T> {
       private final TaskDefinition<V, T> taskDef;
-      private final Set<ScheduledTask.Listener<? super V, ? super T>> listeners;
+      private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
       private final long submitTimeMillis;
       private final Map<ScheduledTask<V, T>, Void> history;
       private ScheduledTaskImpl<V, T> first;
@@ -270,7 +270,8 @@ public class BetterExecutorService implements ScheduledExecutorService {
       @SuppressWarnings("serial") // don't care about serializing our custom sub-class of LinkedHashMap
       ScheduledTaskDefinitionImpl(TaskDefinition<V, T> taskDef) {
          this.taskDef = taskDef;
-         this.listeners = new LinkedHashSet<ScheduledTask.Listener<? super V, ? super T>>(taskDef.listeners());
+         this.listeners =
+               new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>(taskDef.listeners());
          this.submitTimeMillis = System.currentTimeMillis();
          this.history = new LinkedHashMap<ScheduledTask<V, T>, Void>() {
             @Override
@@ -321,17 +322,18 @@ public class BetterExecutorService implements ScheduledExecutorService {
       }
 
       @Override
-      public synchronized Set<ScheduledTask.Listener<? super V, ? super T>> listeners() {
-         return Collections.unmodifiableSet(new LinkedHashSet<ScheduledTask.Listener<? super V, ? super T>>(listeners));
+      public synchronized Set<ScheduledTaskListener<? super V, ? super T>> listeners() {
+         return Collections.unmodifiableSet(
+               new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>(listeners));
       }
 
       @Override
-      public synchronized void addListener(ScheduledTask.Listener<? super V, ? super T> listener) {
+      public synchronized void addListener(ScheduledTaskListener<? super V, ? super T> listener) {
          listeners.add(listener);
       }
 
       @Override
-      public synchronized boolean removeListener(ScheduledTask.Listener<? super V, ? super T> listener) {
+      public synchronized boolean removeListener(ScheduledTaskListener<? super V, ? super T> listener) {
          return listeners.remove(listener);
       }
 
@@ -346,8 +348,8 @@ public class BetterExecutorService implements ScheduledExecutorService {
       }
 
       @Override
-      public BetterExecutorService executor() {
-         return BetterExecutorService.this;
+      public ScheduledTaskManager executor() {
+         return ScheduledTaskManager.this;
       }
 
       @Override
@@ -533,7 +535,7 @@ public class BetterExecutorService implements ScheduledExecutorService {
        */
       private void nextTask(ScheduledTaskImpl<V, T> task) {
          if (current != null) {
-            for (ScheduledTask.Listener<? super V, ? super T> listener : listeners) {
+            for (ScheduledTaskListener<? super V, ? super T> listener : listeners) {
                try {
                   listener.taskCompleted(current);
                } catch (Throwable ignored) {
@@ -630,19 +632,19 @@ public class BetterExecutorService implements ScheduledExecutorService {
 
    final ScheduledExecutorService delegate;
    
-   private BetterExecutorService(ScheduledExecutorService delegate) {
+   private ScheduledTaskManager(ScheduledExecutorService delegate) {
       this.delegate = delegate;
    }
    
    /**
-    * Improves the specified {@link ScheduledExecutorService} by wrapping it in a
-    * {@link BetterExecutorService}.
+    * Creates a new {@link ScheduledTaskManager} that uses the specified
+    * {@link ScheduledExecutorService} as its basis for scheduling tasks.
     * 
     * @param service the underlying executor service
-    * @return a {@link BetterExecutorService}
+    * @return a {@link ScheduledTaskManager}
     */
-   public static BetterExecutorService improve(ScheduledExecutorService service) {
-      return new BetterExecutorService(service);
+   public static ScheduledTaskManager create(ScheduledExecutorService service) {
+      return new ScheduledTaskManager(service);
    }
    
    @Override
@@ -785,8 +787,8 @@ public class BetterExecutorService implements ScheduledExecutorService {
       final AtomicReference<ScheduledTask<? extends V, ? extends T>> finalTask =
             new AtomicReference<ScheduledTask<? extends V, ? extends T>>();
       final CountDownLatch latch = new CountDownLatch(1);
-      ScheduledTask.Listener<V, T> listener =
-            new ScheduledTask.Listener<V, T>() {
+      ScheduledTaskListener<V, T> listener =
+            new ScheduledTaskListener<V, T>() {
                @Override
                public void taskCompleted(
                      ScheduledTask<? extends V, ? extends T> task) {
@@ -808,8 +810,8 @@ public class BetterExecutorService implements ScheduledExecutorService {
       final AtomicReference<ScheduledTask<? extends V, ? extends T>> finalTask =
             new AtomicReference<ScheduledTask<? extends V, ? extends T>>();
       final CountDownLatch latch = new CountDownLatch(1);
-      ScheduledTask.Listener<V, T> listener =
-            new ScheduledTask.Listener<V, T>() {
+      ScheduledTaskListener<V, T> listener =
+            new ScheduledTaskListener<V, T>() {
                @Override
                public void taskCompleted(
                      ScheduledTask<? extends V, ? extends T> task) {

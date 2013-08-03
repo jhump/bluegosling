@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import com.apriori.concurrent.ListenableExecutorService;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutures;
 import com.apriori.util.Sink;
@@ -52,7 +53,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  *                   \- Chunk #5 -----------------------------/
  * </pre>
  * A given thread serves the role of both a chunk sorter and a merger. So in the above example, once
- * the last chunk is sorted, one of the threads will terminate since it has no merging work to do.
+ * the last chunk is sorted, one of the threads will immediately terminate since it has no merging
+ * work to do.
+ * 
+ * @see ParallelSort
+ * @see ParallelSort2
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -152,7 +157,7 @@ public class SlowParallelSort {
       AtomicInteger chunksSorted = new AtomicInteger();
       AtomicInteger mergersStarted = new AtomicInteger();
       ListenableFuture<?> results[] = new ListenableFuture<?>[numThreads];
-      ListenableFuture.ExecutorService svc =
+      ListenableExecutorService svc =
             ListenableFutures.makeListenable(Executors.newFixedThreadPool(numThreads));
       
       try {
@@ -187,6 +192,14 @@ public class SlowParallelSort {
     */
    static final Object NULL_SENTINEL = new Object();
    
+   /**
+    * Performs a subset of sorting and merging work in a parallel sort. Each thread in such a
+    * parallel sort runs an instance of this class.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <T> the type of elements being sorted
+    */
    private static class SorterMerger<T> implements Runnable {
       private final int numThreads;
       private final T[] chunk;
@@ -212,7 +225,7 @@ public class SlowParallelSort {
          try {
             // sort the chunk
             Arrays.sort(chunk, comparator);
-            sources.add(new ProducerFromChunk<T>(chunk));
+            sources.add(new ChunkSource<T>(chunk));
             if (chunksSorted.incrementAndGet() == numThreads) {
                // we are the last thread to finish sorting - nothing left to do
                return;
@@ -223,11 +236,11 @@ public class SlowParallelSort {
             Sink<T> sink;
             if (mergersStarted.incrementAndGet() == numThreads - 1) {
                // we are the last merger, so we send results directly to final list
-               sink = new ConsumerToCollection<T>(result);
+               sink = new CollectionSink<T>(result);
             } else {
                BlockingQueue<Object> stream = new ArrayBlockingQueue<Object>(512);
-               sink = new ConsumerToQueue<T>(stream);
-               sources.put(new ProducerFromQueue<T>(stream));
+               sink = new QueueSink<T>(stream);
+               sources.put(new QueueSource<T>(stream));
             }
             // now merge
             T item1 = source1.get();
@@ -258,16 +271,16 @@ public class SlowParallelSort {
    }
    
    /**
-    * A consumer that puts consumed elements into a collection.
+    * A sink that puts consumed elements into a collection.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <T> the type of element consumed
     */
-   private static class ConsumerToCollection<T> implements Sink<T> {
+   private static class CollectionSink<T> implements Sink<T> {
       private final Collection<T> target;
 
-      ConsumerToCollection(Collection<T> target) {
+      CollectionSink(Collection<T> target) {
          this.target = target;
       }
       
@@ -281,16 +294,16 @@ public class SlowParallelSort {
    }
    
    /**
-    * A consumer that adds consumed elements into a {@link BlockingQueue}.
+    * A sink that adds consumed elements into a {@link BlockingQueue}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <T> the type of element consumed
     */
-   private static class ConsumerToQueue<T> implements Sink<T> {
+   private static class QueueSink<T> implements Sink<T> {
       private final BlockingQueue<Object> target;
 
-      ConsumerToQueue(BlockingQueue<Object> target) {
+      QueueSink(BlockingQueue<Object> target) {
          this.target = target;
       }
       
@@ -310,16 +323,16 @@ public class SlowParallelSort {
    }
    
    /**
-    * A producer that is backed by a {@link BlockingQueue}.
+    * A source that is backed by a {@link BlockingQueue}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <T> the type of element produced
     */
-   private static class ProducerFromQueue<T> implements Source<T> {
+   private static class QueueSource<T> implements Source<T> {
       private final BlockingQueue<Object> source;
       
-      ProducerFromQueue(BlockingQueue<Object> source) {
+      QueueSource(BlockingQueue<Object> source) {
          this.source = source;
       }
       
@@ -340,21 +353,18 @@ public class SlowParallelSort {
    }
    
    /**
-    * A producer that is backed by a sorted array of elements. The array, or "chunk", may start off
-    * unsorted, so the first element cannot be produced until the chunk is sorted. A latch is used
-    * to signal that the chunk is ready. When all elements of the array have been provided, the
-    * producer provides a null element to indicate the end of the stream.
+    * A source that is backed by a sorted array of elements.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <T> the type of element produced
     */
-   private static class ProducerFromChunk<T> implements Source<T> {
+   private static class ChunkSource<T> implements Source<T> {
       private final T[] chunk;
       private final int len;
       private int idx;
       
-      ProducerFromChunk(T[] chunk) {
+      ChunkSource(T[] chunk) {
          this.chunk = chunk;
          this.len = chunk.length;
          this.idx = 0;

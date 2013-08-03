@@ -80,8 +80,8 @@ public interface RandomAccessSet<E> extends Set<E> {
     * index (exclusive). The returned set is a view so updates to this set are reflected in the
     * sub-set view and vice versa. Items cannot be added using the sub-set view.
     * 
-    * @param fromIndex the starting index
-    * @param toIndex the ending index
+    * @param fromIndex the starting index, inclusive
+    * @param toIndex the ending index, exclusive
     * @return the sub-set of elements
     */
    RandomAccessSet<E> subSetByIndices(int fromIndex, int toIndex);

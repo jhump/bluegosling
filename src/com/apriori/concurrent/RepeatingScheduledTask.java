@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledFuture;
  * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
  *       {@link RunnableWithResult}
  */
+//TODO: should extend ListenableRepeatingFuture<V>
 public interface RepeatingScheduledTask<V, T> extends ScheduledFuture<V> {
    /**
     * Returns the task definition for which this task was created.

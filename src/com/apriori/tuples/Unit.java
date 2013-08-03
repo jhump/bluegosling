@@ -102,5 +102,10 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
    @Override
    public <T> Unit<T> transformFirst(Function<? super A, ? extends T> function) {
       return Unit.<T>create(function.apply(a));
+      
+   }
+   
+   public <B> B transform(Function<? super A, ? extends B> function) {
+      return function.apply(a);
    }
 }

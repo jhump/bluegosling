@@ -135,4 +135,8 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
    public <T> Pair<A, T> transformSecond(Function<? super B, ? extends T> function) {
       return Pair.<A, T>create(a, function.apply(b));
    }
+   
+   public <C> C combine(Function.Bivariate<? super A, ? super B, ? extends C> function) {
+      return function.apply(a, b);
+   }
 }

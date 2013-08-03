@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledFuture;
 
 /**
  * The type of {@link ScheduledFuture} returned by submissions to a
- * {@link BetterExecutorService}. This extension provides various utility
+ * {@link ScheduledTaskManager}. This extension provides various utility
  * methods as well as access to the {@link ScheduledTaskDefinition} for which
  * the task was created.
  * 
@@ -18,6 +18,7 @@ import java.util.concurrent.ScheduledFuture;
  * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
  *       {@link RunnableWithResult}
  */
+//TODO: should extend ListenableScheduledFuture<V>
 public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
    /**
     * Returns the task definition for which this task was created.
@@ -26,6 +27,12 @@ public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
     */
    ScheduledTaskDefinition<V, T> taskDefinition();
    
+   /**
+    * Returns whether the scheduled task has begun executing or not.
+    * 
+    * @return true if the task has begun executing (including if it's already finished); false
+    *       otherwise
+    */
    boolean hasStarted();
    
    /**
@@ -68,19 +75,4 @@ public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
     * @throws IllegalStateException if the task not yet completed
     */
    boolean succeeded();
-
-   /**
-    * A listener for completions of {@link ScheduledTask}s.
-    */
-   public interface Listener<V, T> {
-      /**
-       * Called when the specified task completes (either normally or
-       * abnormally). You can easily distinguish between successful and
-       * failed tasks via {@link ScheduledTask#succeeded()} and
-       * {@link ScheduledTask#failed()}.
-       * 
-       * @param task the completed task
-       */
-      void taskCompleted(ScheduledTask<? extends V, ? extends T> task);
-   }
 }

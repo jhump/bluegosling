@@ -26,7 +26,6 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
       implements BlockingDeque<E> {
 
    private transient Lock lock = new ReentrantLock();
-   private transient int capacity; // TODO: move this to super-class?
    private transient Condition notEmpty = lock.newCondition();
    private transient Condition notFull = lock.newCondition();
    
@@ -42,13 +41,20 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
 
    @Override
    public int drainTo(Collection<? super E> c) {
+      int head, tail, size;
+      Object data[];
       lock.lock();
       try {
-         // TODO Auto-generated method stub
-         return 0;
+         head = this.head;
+         tail = this.tail;
+         size = this.size;
+         data = this.data;
+         super.clear();
       } finally {
          lock.unlock();
       }
+      // TODO: add items to collection
+      return size;
    }
 
    @Override
@@ -57,16 +63,6 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
       try {
          // TODO Auto-generated method stub
          return 0;
-      } finally {
-         lock.unlock();
-      }
-   }
-
-   @Override
-   public boolean isEmpty() {
-      lock.lock();
-      try {
-         return size == 0;
       } finally {
          lock.unlock();
       }
@@ -90,12 +86,6 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
          list.add(iter.next());
       }
       return list.toArray(a);
-   }
-
-   @Override
-   public boolean containsAll(Collection<?> c) {
-      // TODO Auto-generated method stub
-      return false;
    }
 
    @Override

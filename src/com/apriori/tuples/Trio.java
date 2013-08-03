@@ -165,4 +165,9 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
    public <T> Trio<A, B, T> transformThird(Function<? super C, ? extends T> function) {
       return Trio.<A, B, T>create(a, b, function.apply(c));
    }
+   
+   public <D> D combine(
+         Function.Trivariate<? super A, ? super B, ? super C, ? extends D> function) {
+      return function.apply(a, b, c);
+   }
 }

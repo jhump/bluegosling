@@ -1,11 +1,8 @@
 package com.apriori.concurrent;
 
-import com.apriori.tuples.Pair;
 import com.apriori.util.Fulfillable;
 
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -22,34 +19,31 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
 
    private final Lock lock = new ReentrantLock();
    private final Condition complete = lock.newCondition();
-   private List<Pair<Runnable, Executor>> listeners = new LinkedList<Pair<Runnable, Executor>>();
+   private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
    private volatile T t;
    private volatile Throwable failure;
    private volatile boolean cancelled;
    private volatile boolean done;
    
    private boolean doIfNotDone(Runnable r) {
-      List<Pair<Runnable, Executor>> toExecute;
+      FutureListenerSet<T> toExecute;
       lock.lock();
       try {
          if (done) {
             return false;
          }
-         done = true;
          r.run();
+         // done is set last - for perfect consistency when reading volatile values, done
+         // must be set to true for the future to be considered "complete" (even if cancelled,
+         // failure, or t fields are set -- if done isn't true, it's not yet complete)
+         done = true;
          complete.signalAll();
          toExecute = listeners;
          listeners = null;
       } finally {
          lock.unlock();
       }
-      for (Pair<Runnable, Executor> listener : toExecute) {
-         try {
-            listener.getSecond().execute(listener.getFirst());
-         } catch (RuntimeException e) {
-            // TODO: log?
-         }
-      }
+      toExecute.runListeners();
       return true;
    }
    
@@ -102,7 +96,7 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
    
    @Override
    public boolean isCancelled() {
-      return cancelled;
+      return done && cancelled;
    }
 
    @Override
@@ -156,20 +150,20 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
    }
 
    @Override
-   public void addListener(Runnable listener, Executor executor) {
+   public void addListener(FutureListener<? super T> listener, Executor executor) {
       lock.lock();
       try {
          if (!done) {
-            listeners.add(Pair.create(listener, executor));
+            listeners.addListener(listener, executor);
             return;
          }
       } finally {
          lock.unlock();
       }
       // if we get here, future is complete so run listener immediately
-      executor.execute(listener);
+      FutureListenerSet.runListener(this, listener, executor);
    }
-   
+
    @SuppressWarnings("synthetic-access") // accesses private members of enclosing class
    public Fulfillable<T> asFullfillable() {
       return new Fulfillable<T>() {
@@ -204,5 +198,45 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
             return done && failure == null ? Collections.singleton(t) : Collections.<T>emptySet();
          }
       };
+   }
+
+   @Override
+   public boolean isSuccessful() {
+      return done && !cancelled && failure == null;
+   }
+
+   @Override
+   public T getResult() {
+      if (!isSuccessful()) {
+         throw new IllegalStateException();
+      }
+      return t;
+   }
+
+   @Override
+   public boolean isFailed() {
+      return done && failure != null;
+   }
+
+   @Override
+   public Throwable getFailure() {
+      if (!isFailed()) {
+         throw new IllegalStateException();
+      }
+      return failure;
+   }
+
+   @Override
+   public void visit(FutureVisitor<? super T> visitor) {
+      if (!done) {
+         throw new IllegalStateException();
+      }
+      if (cancelled) {
+         visitor.cancelled();
+      } else if (failure != null) {
+         visitor.failed(failure);
+      } else {
+         visitor.successful(t);
+      }
    }
 }

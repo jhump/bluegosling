@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -110,7 +111,8 @@ import java.util.RandomAccess;
  * 
  * @param <E> The type of element in the array
  */
-public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, Serializable {
+public class ArrayBackedLinkedList<E> extends AbstractList<E>
+      implements Deque<E>, Cloneable, Serializable {
 
    /**
     * Concrete implementation of {@code ListIterator}. This same class is used for both iterators
@@ -145,7 +147,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       /**
        * Snapshot of {@code modCount} for detecting concurrent modifications.
        */
-      int myModCount = modCount;
+      int myModCount = getModCount();
 
       /**
        * Creates an iterator for the list starting at the first element.
@@ -179,7 +181,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       }
       
       void resetModCount() {
-         myModCount = modCount;
+         myModCount = getModCount();
       }
 
       @Override
@@ -315,7 +317,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class RandomAccessImpl implements List<E>, RandomAccess {
+   private class RandomAccessImpl extends AbstractList<E> implements RandomAccess {
 
       public RandomAccessImpl() {}
 
@@ -375,20 +377,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       }
 
       @Override
-      public boolean equals(Object o) {
-         return CollectionUtils.equals(ArrayBackedLinkedList.this, o);
-      }
-
-      @Override
       public E get(int idx) {
          checkOptimized();
          return ArrayBackedLinkedList.this.get(idx);
-      }
-
-      @Override
-      public int hashCode() {
-         checkOptimized();
-         return CollectionUtils.hashCode(ArrayBackedLinkedList.this);
       }
 
       @Override
@@ -475,12 +466,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          checkOptimized();
          return ArrayBackedLinkedList.this.toArray(array);
       }
-      
-      @Override
-      public String toString() {
-         checkOptimized();
-         return CollectionUtils.toString(ArrayBackedLinkedList.this);
-      }
    }
 
    /**
@@ -488,25 +473,24 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class SubListImpl implements List<E> {
+   private class SubListImpl extends AbstractList<E> {
 
       int low;
       int high;
       int subHead;
       int subTail;
-      int myModCount;
 
       SubListImpl(int low, int high) {
          this.low = low;
          this.high = high;
          this.subHead = find(low);
          this.subTail = find(high - 1);
-         this.myModCount = modCount;
+         this.modCount = getModCount();
       }
 
       @Override
       public boolean add(E e) {
-         checkMod(myModCount);
+         checkMod(modCount);
          if (subTail == tail) {
             ArrayBackedLinkedList.this.add(e);
             subTail = tail;
@@ -528,7 +512,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
             subHead = head;
          }
          high++;
-         myModCount = modCount;
+         modCount = getModCount();
          return true;
       }
 
@@ -539,10 +523,10 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          }
          else {
             checkWide(idx);
-            checkMod(myModCount);
+            checkMod(modCount);
             ArrayBackedLinkedList.this.add(low + idx, e);
             high++;
-            myModCount = modCount;
+            modCount = getModCount();
          }
       }
 
@@ -554,13 +538,13 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       @Override
       public boolean addAll(int idx, Collection<? extends E> coll) {
          checkWide(idx);
-         checkMod(myModCount);
+         checkMod(modCount);
          if (coll.size() == 0)
             return false;
          for (E e : coll) {
             add(idx++, e);
          }
-         myModCount = modCount;
+         modCount = getModCount();
          return true;
       }
 
@@ -584,99 +568,84 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public void clear() {
-         checkMod(myModCount);
-         Iterator<E> iter = iterator();
-         while (iter.hasNext()) {
-            iter.next();
-            iter.remove();
-         }
-         myModCount = modCount;
+         checkMod(modCount);
+         super.clear();
+         modCount = getModCount();
       }
 
       @Override
       public boolean contains(Object item) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(item, listIterator()) != -1;
+         checkMod(modCount);
+         return super.contains(item);
       }
 
       @Override
       public boolean containsAll(Collection<?> coll) {
-         checkMod(myModCount);
-         return CollectionUtils.containsAll(this, coll);
-      }
-
-      @Override
-      public boolean equals(Object o) {
-         return CollectionUtils.equals(this, o);
+         checkMod(modCount);
+         return super.containsAll(coll);
       }
 
       @SuppressWarnings("unchecked")
       @Override
       public E get(int idx) {
          check(idx);
-         checkMod(myModCount);
+         checkMod(modCount);
          return (E) data[find(idx + low)];
       }
 
       @Override
-      public int hashCode() {
-         checkMod(myModCount);
-         return CollectionUtils.hashCode(this);
-      }
-
-      @Override
       public int indexOf(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(o, listIterator());
+         checkMod(modCount);
+         return super.indexOf(o);
       }
 
       @Override
       public boolean isEmpty() {
-         checkMod(myModCount);
+         checkMod(modCount);
          return high == low;
       }
 
       @Override
       public Iterator<E> iterator() {
-         checkMod(myModCount);
+         checkMod(modCount);
          return new SubListIteratorImpl(this);
       }
 
       @Override
       public int lastIndexOf(Object o) {
-         checkMod(myModCount);
-         return CollectionUtils.findObject(o, CollectionUtils.reverseIterator(listIterator(high - low)));
+         checkMod(modCount);
+         return super.lastIndexOf(o);
       }
 
       @Override
       public ListIterator<E> listIterator() {
-         checkMod(myModCount);
+         checkMod(modCount);
          return new SubListIteratorImpl(this);
       }
 
       @Override
       public ListIterator<E> listIterator(int idx) {
-         checkMod(myModCount);
+         checkMod(modCount);
          checkWide(idx);
          return new SubListIteratorImpl(this, low + idx - 1);
       }
 
       @Override
       public E remove(int idx) {
-         checkMod(myModCount);
+         checkMod(modCount);
          check(idx);
          high--;
          subTail = prev[subTail];
          E ret = ArrayBackedLinkedList.this.remove(low + idx);
-         myModCount = modCount;
+         modCount = getModCount();
          return ret;
       }
 
       @Override
       public boolean remove(Object o) {
-         checkMod(myModCount);
-         if (CollectionUtils.removeObject(o, iterator(), true)) {
-            myModCount = modCount;
+         checkMod(modCount);
+         if (super.remove(o)) {
+            modCount = getModCount();
             return true;
          }
          return false;
@@ -684,9 +653,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public boolean removeAll(Collection<?> coll) {
-         checkMod(myModCount);
-         if (CollectionUtils.filter(coll, iterator(), true)) {
-            myModCount = modCount;
+         checkMod(modCount);
+         if (super.removeAll(coll)) {
+            modCount = getModCount();
             return true;
          }
          return false;
@@ -694,9 +663,9 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public boolean retainAll(Collection<?> coll) {
-         checkMod(myModCount);
-         if (CollectionUtils.filter(coll, iterator(), false)) {
-            myModCount = modCount;
+         checkMod(modCount);
+         if (super.retainAll(coll)) {
+            modCount = getModCount();
             return true;
          }
          return false;
@@ -704,7 +673,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public E set(int idx, E e) {
-         checkMod(myModCount);
+         checkMod(modCount);
          check(idx);
          int pos = find(idx + low);
          @SuppressWarnings("unchecked")
@@ -715,15 +684,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public int size() {
-         checkMod(myModCount);
+         checkMod(modCount);
          return high - low;
       }
 
       @Override
       public List<E> subList(int from, int to) {
-         checkMod(myModCount);
-         // TODO: checkWide(from)
-         check(from);
+         checkMod(modCount);
+         checkWide(from);
          checkWide(to);
          if (from > to) {
             throw new IllegalArgumentException("from > to");
@@ -733,7 +701,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
       @Override
       public Object[] toArray() {
-         checkMod(myModCount);
+         checkMod(modCount);
          int sz = high - low;
          Object ret[] = new Object[sz];
          if (isOptimized) {
@@ -751,7 +719,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       @SuppressWarnings("unchecked")
       @Override
       public <T> T[] toArray(T[] array) {
-         checkMod(myModCount);
+         checkMod(modCount);
          int sz = high - low;
          if (array.length < sz) {
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), sz);
@@ -771,9 +739,12 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          return array;
       }
       
-      @Override
-      public String toString() {
-         return CollectionUtils.toString(this);
+      int getSubListModCount() {
+         return modCount;
+      }
+      
+      void resetSubListModCount() {
+         this.modCount = getModCount();
       }
    }
 
@@ -799,7 +770,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          super(sublist.low - 1);
          this.sublist = sublist;
          // at same rev as source sub-list
-         myModCount = sublist.myModCount;
+         myModCount = sublist.getSubListModCount();
       }
 
       /**
@@ -813,15 +784,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          super(idx);
          this.sublist = sublist;
          // at same rev as source sub-list
-         myModCount = sublist.myModCount;
+         myModCount = sublist.getSubListModCount();
       }
 
       @Override
       void resetModCount() {
-         myModCount = modCount;
+         myModCount = getModCount();
          // update sublist, too, so sublist doesn't throw concurrent modifications from add/remove
          // operations from its iterator
-         sublist.myModCount = modCount;
+         sublist.resetSubListModCount();
       }
       
       @Override
@@ -914,7 +885,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       private int myModCount;
 
       UnorderedIteratorImpl() {
-         myModCount = modCount;
+         myModCount = getModCount();
          advance();
       }
 
@@ -955,7 +926,7 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          checkMod(myModCount);
          modState = IteratorModifiedState.REMOVED;
          removeInternal(lastFetched);
-         myModCount = modCount;
+         myModCount = getModCount();
       }
    }
 
@@ -963,13 +934,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
    
    private static final int DEFAULT_INITIAL_CAPACITY = 10;
    
-   /**
-    * The list's current revision level. Every modification to the list causes this count to be
-    * incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
-    * modifications to the list.
-    */
-   protected transient int modCount;
-
    /**
     * The buffer in which list elements are stored.
     */
@@ -1101,21 +1065,14 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
    @Override
    public boolean addAll(Collection<? extends E> coll) {
       maybeGrowBy(coll.size());
-      for (E e : coll) {
-         add(e);
-      }
-      return true;
+      return super.addAll(coll);
    }
 
    /** {@inheritDoc} */
    @Override
    public boolean addAll(int index, Collection<? extends E> coll) {
       maybeGrowBy(coll.size());
-      ListIterator<E> iter = listIterator(index);
-      for (E e : coll) {
-         iter.add(e);
-      }
-      return true;
+      return super.addAll(index, coll);
    }
 
    /** {@inheritDoc} */
@@ -1219,6 +1176,15 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
          throw new ConcurrentModificationException();
       }
    }
+   
+   /**
+    * Gets the list's mod count. This method would have to be synthesized if not provided since
+    * enclosed classes that are not sub-classes do not otherwise have access to protected members.
+    * @return
+    */
+   int getModCount() {
+      return modCount;
+   }
 
    /**
     * Checks that the specified list index is valid. The method differs from {@code check} in that
@@ -1313,18 +1279,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
    /** {@inheritDoc} */
    @Override
-   public boolean contains(Object item) {
-      return CollectionUtils.findObject(item, listIterator()) != -1;
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public boolean containsAll(Collection<?> coll) {
-      return CollectionUtils.containsAll(this, coll);
-   }
-
-   /** {@inheritDoc} */
-   @Override
    public Iterator<E> descendingIterator() {
       return reverseIterator(size);
    }
@@ -1352,12 +1306,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       if (data.length < capacity) {
          growTo(capacity);
       }
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public boolean equals(Object o) {
-      return CollectionUtils.equals(this, o);
    }
 
    /**
@@ -1451,32 +1399,8 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
    /** {@inheritDoc} */
    @Override
-   public int hashCode() {
-      return CollectionUtils.hashCode(this);
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public int indexOf(Object item) {
-      return CollectionUtils.findObject(item, listIterator());
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public boolean isEmpty() {
-      return size == 0;
-   }
-
-   /** {@inheritDoc} */
-   @Override
    public Iterator<E> iterator() {
       return new IteratorImpl();
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public int lastIndexOf(Object item) {
-      return CollectionUtils.findObject(item, reverseIterator(size));
    }
 
    /** {@inheritDoc} */
@@ -1716,35 +1640,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
 
    /** {@inheritDoc} */
    @Override
-   public boolean remove(Object item) {
-      if (size == 0)
-         return false;
-      return CollectionUtils.removeObject(item, iterator(), true);
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public boolean removeAll(Collection<?> coll) {
-      return CollectionUtils.filter(coll, unorderedIterator(), true);
-   }
-
-   /**
-    * Removes all occurrences of the specified object. Unlike {@link #remove(Object)},
-    * {@link #removeFirstOccurrence(Object)}, and {@link #removeLastOccurrence(Object)}, which
-    * remove only the first or last occurrence of an object in the list, this method removes any and
-    * all such instances from the list.
-    * 
-    * @param item the item to remove
-    * @return true if the item was found and removed or false if the item was not found
-    */
-   public boolean removeAll(Object item) {
-      if (size == 0)
-         return false;
-      return CollectionUtils.removeObject(item, iterator(), false);
-   }
-
-   /** {@inheritDoc} */
-   @Override
    public E removeFirst() {
       return remove();
    }
@@ -1801,12 +1696,6 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
    public boolean removeLastOccurrence(Object item) {
       if (size == 0) return false;
       return CollectionUtils.removeObject(item, reverseIterator(size), true);
-   }
-
-   /** {@inheritDoc} */
-   @Override
-   public boolean retainAll(Collection<?> coll) {
-      return CollectionUtils.filter(coll, unorderedIterator(), false);
    }
 
    private ListIterator<E> reverseIterator(int idx) {
@@ -1951,11 +1840,5 @@ public class ArrayBackedLinkedList<E> implements List<E>, Deque<E>, Cloneable, S
       for (E e : this) {
          out.writeObject(e);
       }
-   }
-   
-   /** {@inheritDoc} */
-   @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
    }
 }

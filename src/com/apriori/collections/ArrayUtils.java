@@ -30,7 +30,7 @@ final class ArrayUtils {
     * @param size the actual number of items in the array
     * @return an array with the specified element inserted at the specified index
     */
-   public static Object[] insertItem(Object element, int index, Object data[], int size) {
+   public static <T> T[] insertItem(T element, int index, T data[], int size) {
       int prevLen = data.length;
       if (prevLen > size) {
          // no need to grow the array
@@ -49,7 +49,8 @@ final class ArrayUtils {
          if (len <= prevLen) {
             len = Integer.MAX_VALUE - 8;
          }
-         Object newData[] = new Object[len];
+         @SuppressWarnings("unchecked")
+         T newData[] = (T[]) Array.newInstance(data.getClass().getComponentType(), len);
          // copy items prior to index
          if (index > 0) {
             System.arraycopy(data, 0, newData, 0, index);
