@@ -59,7 +59,7 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
@@ -84,7 +84,17 @@
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">java.util.AbstractList</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.apriori.collections.RandomAccessArrayDeque&lt;E&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -103,8 +113,8 @@
 <hr>
 <br>
 <pre>public class <span class="strong">RandomAccessArrayDeque&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></pre>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;E&gt;
+implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></pre>
 <div class="block">A double-ended queue that is backed by an array and, in addition to standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util"><code>Deque</code></a>
  operations, also exposes random access operations on its contents.</div>
 </li>
@@ -113,6 +123,21 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#modCount" title="class or interface in java.util">modCount</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_summary">
@@ -153,56 +178,40 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#addAll(java.util.Collection)">addAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#addAll(int, java.util.Collection)">addAll</a></strong>(int&nbsp;index,
       <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#addFirst(E)">addFirst</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#addLast(E)">addLast</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#clear()">clear</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#contains(java.lang.Object)">contains</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#containsAll(java.util.Collection)">containsAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#descendingIterator()">descendingIterator</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#element()">element</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#get(int)">get</a></strong>(int&nbsp;index)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#getFirst()">getFirst</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#getLast()">getLast</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#indexOf(java.lang.Object)">indexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -213,96 +222,80 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#iterator()">iterator</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#listIterator()">listIterator</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#listIterator(int)">listIterator</a></strong>(int&nbsp;index)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#offer(E)">offer</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#offerFirst(E)">offerFirst</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#offerLast(E)">offerLast</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#peek()">peek</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#peekFirst()">peekFirst</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#peekLast()">peekLast</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#poll()">poll</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#pollFirst()">pollFirst</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#pollLast()">pollLast</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#pop()">pop</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#push(E)">push</a></strong>(<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#remove()">remove</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#remove(int)">remove</a></strong>(int&nbsp;index)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#remove(java.lang.Object)">remove</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeAll(java.util.Collection)">removeAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeFirst()">removeFirst</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeFirstOccurrence(java.lang.Object)">removeFirstOccurrence</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeLast()">removeLast</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
-</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#retainAll(java.util.Collection)">retainAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a></code></td>
@@ -328,25 +321,46 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#removeRange(int, int)" title="class or interface in java.util">removeRange</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractCollection">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toString()" title="class or interface in java.util">toString</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.Deque">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.Collection">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.List">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code></li>
 </ul>
 </li>
 </ul>
@@ -391,6 +405,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -406,6 +422,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -423,66 +441,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="containsAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>containsAll</h4>
-<pre>public&nbsp;boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="addAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addAll</h4>
-<pre>public&nbsp;boolean&nbsp;addAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;&nbsp;c)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="removeAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="retainAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>retainAll</h4>
-<pre>public&nbsp;boolean&nbsp;retainAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -498,6 +458,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -512,6 +474,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -525,6 +489,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -541,6 +507,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -557,6 +525,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -570,32 +540,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="indexOf(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="lastIndexOf(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>lastIndexOf</h4>
-<pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -609,6 +555,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -622,6 +570,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -636,6 +586,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -847,6 +799,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -955,40 +909,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 </dl>
 </li>
 </ul>
-<a name="remove(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="contains(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a name="size()">
 <!--   -->
 </a>
@@ -1003,6 +923,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1022,6 +944,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="type parameter in RandomAccessArrayDeque">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1089,7 +1013,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.htm
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>

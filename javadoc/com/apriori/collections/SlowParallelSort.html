@@ -97,13 +97,42 @@
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A thought experiment into sorting large lists using multiple CPUs/cores. This breaks up the
  incoming list into chunks which are sorted in parallel. The chunks are then merged in parallel
- as well: a single thread merged two chunks and multiple threads are used to merge all resulting
+ as well: a single thread merges two chunks, and multiple threads are used to merge all resulting
  pairs of chunks.
  
  <p>This is just a thought experiment. The extra overhead of using queues to stream partial
- results from one thread to another (and synchronization that necessitates) is so significant that
- the algorithm always performs much worse than a single-threaded sort. The code lives, despite its
- poor performance and thus lack of practical value, as a fun exercise.</div>
+ results from one thread to another is so significant that the algorithm always performs much
+ worse than a single-threaded sort. The code lives, despite its poor performance and thus lack of
+ practical value, because it was a fun exercise.
+ 
+ <p>The first thing done in the algorithm is to divide the collection into <code>n</code> chunks, where
+ <code>n</code> is the number of concurrent threads that will be used to sort the collection. Each
+ chunk is then sorted in its own thread -- all concurrently.
+ 
+ <p>Once a chunk is sorted that chunk is enqueued as a ready source for merging. The thread then
+ goes into merge mode, where it will dequeue two sources and then enqueue itself. It performs a
+ simple merge of the two streams and provides the resulting stream as a source for another merger.
+ The final step, once all streams have been merged into one, is to store the elements into a new
+ list.
+ 
+ <p>For <code>n</code> chunks, there will be exactly <code>n - 1</code> merger tasks required to assemble
+ all chunks back into a single stream. This diagram shows an example with five chunks:
+ <pre>
+                   /- Chunk #1 -\
+                  /              >- Merger #1 -\
+                 /--- Chunk #2 -/               \
+                /                                >- Merger #3 -\
+ Unsorted List <----- Chunk #3 -\               /               >- Merger #4 -> Sorted List
+                \                >- Merger #2 -/               /
+                 \--- Chunk #4 -/                             /
+                  \                                          /
+                   \- Chunk #5 -----------------------------/
+ </pre>
+ A given thread serves the role of both a chunk sorter and a merger. So in the above example, once
+ the last chunk is sorted, one of the threads will immediately terminate since it has no merging
+ work to do.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/ParallelSort.html" title="class in com.apriori.collections"><code>ParallelSort</code></a>, 
+<a href="../../../com/apriori/collections/ParallelSort2.html" title="class in com.apriori.collections"><code>ParallelSort2</code></a></dd></dl>
 </li>
 </ul>
 </div>

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
@@ -55,7 +54,7 @@ public class ParallelSort2 {
     * @param <T> the type of element in the list
     * @param list the list to sort
     * @param comparator the comparator to use for ordering items relative to one another
-    * @param executor the {@link ExecutorService} used to run concurrent sub-tasks
+    * @param requestedNumThreads the number of threads to use
     * @throws NullPointerException if any of the reference arguments are null or if the specified
     *       list contains any null elements
     * @throws IllegalArgumentException if the specified number of threads is zero or negative

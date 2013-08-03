@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/AbstractBitSequence.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -59,13 +59,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -84,7 +84,17 @@
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">java.util.AbstractList</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.apriori.collections.ArrayBackedLinkedList&lt;E&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -99,8 +109,8 @@
 <hr>
 <br>
 <pre>public class <span class="strong">ArrayBackedLinkedList&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;E&gt;
+implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
 <div class="block">A list implementation that attempts to achieve some of the benefits of a linked list without
  sacrificing the overwhelming performance advantages and memory efficiency of arrays.
  
@@ -202,19 +212,13 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#modCount">modCount</a></strong></code>
-<div class="block">The list's current revision level.</div>
-</td>
-</tr>
-</table>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#modCount" title="class or interface in java.util">modCount</a></code></li>
+</ul>
 </li>
 </ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -305,14 +309,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#contains(java.lang.Object)">contains</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code></td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#containsAll(java.util.Collection)">containsAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code></td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#descendingIterator()">descendingIterator</a></strong>()</code></td>
 </tr>
@@ -328,121 +324,87 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code></td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#get(int)">get</a></strong>(int&nbsp;index)</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#getFirst()">getFirst</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#getLast()">getLast</a></strong>()</code></td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#hashCode()">hashCode</a></strong>()</code></td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#indexOf(java.lang.Object)">indexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code></td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#isEmpty()">isEmpty</a></strong>()</code></td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#iterator()">iterator</a></strong>()</code></td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code></td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#listIterator()">listIterator</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#listIterator(int)">listIterator</a></strong>(int&nbsp;idx)</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#offer(E)">offer</a></strong>(<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&nbsp;e)</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#offerFirst(E)">offerFirst</a></strong>(<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&nbsp;e)</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#offerLast(E)">offerLast</a></strong>(<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&nbsp;e)</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#optimize()">optimize</a></strong>()</code>
 <div class="block">Rearranges storage in internal buffers to optimize traversal and minimize storage size (to
  reduce memory pressure).</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#peek()">peek</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#peekFirst()">peekFirst</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#peekLast()">peekLast</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#poll()">poll</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#pollFirst()">pollFirst</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#pollLast()">pollLast</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#pop()">pop</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#push(E)">push</a></strong>(<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#remove()">remove</a></strong>()</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#remove(int)">remove</a></strong>(int&nbsp;idx)</code></td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#remove(java.lang.Object)">remove</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code></td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#removeAll(java.util.Collection)">removeAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code></td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#removeAll(java.lang.Object)">removeAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code>
-<div class="block">Removes all occurrences of the specified object.</div>
-</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
@@ -461,46 +423,38 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</code></td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#retainAll(java.util.Collection)">retainAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code></td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#set(int, E)">set</a></strong>(int&nbsp;idx,
    <a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&nbsp;e)</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#size()">size</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#sort()">sort</a></strong>()</code>
 <div class="block">Sorts the list.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#sort(java.util.Comparator)">sort</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;&nbsp;c)</code>
 <div class="block">Sorts the list.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#subList(int, int)">subList</a></strong>(int&nbsp;from,
        int&nbsp;to)</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#toArray()">toArray</a></strong>()</code></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#toArray(T[])">toArray</a></strong>(T[]&nbsp;array)</code></td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#toString()">toString</a></strong>()</code></td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -517,11 +471,46 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#removeRange(int, int)" title="class or interface in java.util">removeRange</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractCollection">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toString()" title="class or interface in java.util">toString</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.Deque">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.Collection">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.List">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code></li>
 </ul>
 </li>
 </ul>
@@ -531,26 +520,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field_detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a name="modCount">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>modCount</h4>
-<pre>protected transient&nbsp;int modCount</pre>
-<div class="block">The list's current revision level. Every modification to the list causes this count to be
- incremented. It is used to implement the "fail-fast" behavior for detecting concurrent
- modifications to the list.</div>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_detail">
@@ -616,6 +585,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -632,6 +603,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -647,6 +620,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -661,6 +636,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -736,6 +713,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -761,38 +740,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <pre>public&nbsp;void&nbsp;compact()</pre>
 <div class="block">Compacts the internal buffers for the list. This is like <code>trimToSize()</code> except that it
  first rearranges items to fill in any gaps in the buffers caused by fragmentation.</div>
-</li>
-</ul>
-<a name="contains(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="containsAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>containsAll</h4>
-<pre>public&nbsp;boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
 </li>
 </ul>
 <a name="descendingIterator()">
@@ -835,23 +782,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>capacity</code> - number of items that need to fit in the list</dd></dl>
 </li>
 </ul>
-<a name="equals(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
-</li>
-</ul>
 <a name="get(int)">
 <!--   -->
 </a>
@@ -862,6 +792,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -891,51 +823,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </dl>
 </li>
 </ul>
-<a name="hashCode()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hashCode</h4>
-<pre>public&nbsp;int&nbsp;hashCode()</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="indexOf(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="isEmpty()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isEmpty</h4>
-<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a name="iterator()">
 <!--   -->
 </a>
@@ -952,19 +839,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="lastIndexOf(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>lastIndexOf</h4>
-<pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -978,6 +854,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -991,6 +869,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1194,54 +1074,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
-</li>
-</ul>
-<a name="remove(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="removeAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="removeAll(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;item)</pre>
-<div class="block">Removes all occurrences of the specified object. Unlike <a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#remove(java.lang.Object)"><code>remove(Object)</code></a>,
- <a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#removeFirstOccurrence(java.lang.Object)"><code>removeFirstOccurrence(Object)</code></a>, and <a href="../../../com/apriori/collections/ArrayBackedLinkedList.html#removeLastOccurrence(java.lang.Object)"><code>removeLastOccurrence(Object)</code></a>, which
- remove only the first or last occurrence of an object in the list, this method removes any and
- all such instances from the list.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>item</code> - the item to remove</dd>
-<dt><span class="strong">Returns:</span></dt><dd>true if the item was found and removed or false if the item was not found</dd></dl>
 </li>
 </ul>
 <a name="removeFirst()">
@@ -1296,21 +1131,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </dl>
 </li>
 </ul>
-<a name="retainAll(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>retainAll</h4>
-<pre>public&nbsp;boolean&nbsp;retainAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a name="set(int,java.lang.Object)">
 <!--   -->
 </a><a name="set(int, E)">
@@ -1324,6 +1144,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1341,6 +1163,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1385,6 +1209,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1400,6 +1226,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1417,6 +1245,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1437,7 +1267,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <a name="unorderedIterator()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>unorderedIterator</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt;&nbsp;unorderedIterator()</pre>
@@ -1447,19 +1277,6 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
  list, regardless of order.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>an iterator whose order of items may not match the list order of items but whose
          traversal may perform more efficiently</dd></dl>
-</li>
-</ul>
-<a name="toString()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
-<dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
 </li>
 </ul>
 </li>
@@ -1487,7 +1304,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/AbstractBitSequence.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -1513,13 +1330,13 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>

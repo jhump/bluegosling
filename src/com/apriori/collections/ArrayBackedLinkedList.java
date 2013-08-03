@@ -1178,9 +1178,11 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
    }
    
    /**
-    * Gets the list's mod count. This method would have to be synthesized if not provided since
-    * enclosed classes that are not sub-classes do not otherwise have access to protected members.
-    * @return
+    * Gets the list's modification count. This method would have to be synthesized if not provided
+    * since enclosed classes that are not sub-classes do not otherwise have access to protected
+    * members.
+    * 
+    * @return the list's modification count
     */
    int getModCount() {
       return modCount;

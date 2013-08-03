@@ -98,7 +98,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation delegates to {@link #navigableEntrySet()}.
+    * <p>This default implementation delegates to {@link #navigableKeySet()}.
     */
    @Override
    public Set<K> keySet() {
@@ -221,7 +221,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation simply calls {@link pollFirstEntry()} until the map is empty.
+    * <p>This default implementation simply calls {@link #pollFirstEntry()} until the map is empty.
     */
    @Override
    public void clear() {
@@ -233,8 +233,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation simply calls {@link #lowerEntry()} and, if non-null, returns
-    * the entry's key.
+    * <p>This default implementation simply calls {@link #lowerEntry(Object)} and, if non-null,
+    * returns the entry's key.
     */
    @Override
    public K lowerKey(K key) {
@@ -256,8 +256,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation simply calls {@link #floorEntry()} and, if non-null, returns
-    * the entry's key.
+    * <p>This default implementation simply calls {@link #floorEntry(Object)} and, if non-null,
+    * returns the entry's key.
     */
    @Override
    public K floorKey(K key) {
@@ -279,8 +279,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation simply calls {@link #ceilingEntry()} and, if non-null, returns
-    * the entry's key.
+    * <p>This default implementation simply calls {@link #ceilingEntry(Object)} and, if non-null,
+    * returns the entry's key.
     */
    @Override
    public K ceilingKey(K key) {
@@ -290,8 +290,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation simply calls {@link #higherEntry()} and, if non-null, returns
-    * the entry's key.
+    * <p>This default implementation simply calls {@link #higherEntry(Object)} and, if non-null,
+    * returns the entry's key.
     */
    @Override
    public K higherKey(K key) {
@@ -1019,7 +1019,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    }
    
    /**
-    * The view of nodes as a set of {@link Entry} objects.
+    * The view of mappings as a set of {@linkplain java.util.Map.Entry map entries}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */

@@ -99,8 +99,8 @@ public interface TaskDefinition<V, T> {
     * task.
     * 
     * <p>The set of listeners can actually be changed after the task definition has been
-    * scheduled using {@link ScheduledTaskDefinition#addListener(ScheduledTask.Listener)}
-    * and {@link ScheduledTaskDefinition#removeListener(ScheduledTask.Listener)}.
+    * scheduled using {@link ScheduledTaskDefinition#addListener(ScheduledTaskListener)}
+    * and {@link ScheduledTaskDefinition#removeListener(ScheduledTaskListener)}.
     * 
     * @return the set of listeners for this task
     */

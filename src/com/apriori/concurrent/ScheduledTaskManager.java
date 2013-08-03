@@ -66,7 +66,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *    <li>Notification of individual invocations. For repeated tasks, instead of only being able to
  *    wait for all invocations to finish (which generally only happens after an invocation fails)
  *    or cancel all subsequent invocations, this API provides granularity at individual task level.
- *    You can {@linkplain ScheduledTaskDefinition#addListener(ScheduledTask.Listener) listen} for
+ *    You can {@linkplain ScheduledTaskDefinition#addListener(ScheduledTaskListener) listen} for
  *    completions of any and all invocations. You can also {@linkplain ScheduledTask#cancel(boolean)
  *    cancel} individual invocations of a task.</li>
  *    <li>Greater job control. As mentioned above, you can cancel individual occurrences of a task

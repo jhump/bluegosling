@@ -1,0 +1,750 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>AbstractNavigableMap.SubMap</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="AbstractNavigableMap.SubMap";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/collections/AbstractNavigableMap.SubMap.html" target="_top">Frames</a></li>
+<li><a href="AbstractNavigableMap.SubMap.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_com.apriori.collections.AbstractNavigableMap">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_com.apriori.collections.AbstractNavigableMap">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.apriori.collections</div>
+<h2 title="Class AbstractNavigableMap.SubMap" class="title">Class AbstractNavigableMap.SubMap</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">com.apriori.collections.AbstractNavigableMap</a>&lt;K,V&gt;</li>
+<li>
+<ul class="inheritance">
+<li>com.apriori.collections.AbstractNavigableMap.SubMap</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;K,V&gt;</dd>
+</dl>
+<dl>
+<dt>Enclosing class:</dt>
+<dd><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</dd>
+</dl>
+<hr>
+<br>
+<pre>protected class <span class="strong">AbstractNavigableMap.SubMap</span>
+extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;K,V&gt;</pre>
+<div class="block">A sub-map view, with bounds on the range of included keys. This implementation defines its
+ operations in terms of operations on the main map. Sub-classes rarely need to extend this
+ class, but may do so if (for example) they can provide more efficient implementations for some
+ operations.
+ 
+ <p>For example, overriding the <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a> implementation for a map's <a href="../../../com/apriori/collections/AbstractNavigableMap.html#navigableKeySet()"><code>AbstractNavigableMap.navigableKeySet()</code></a> can often be done more efficiently (depending on the exact data structures
+ used). If it is overridden in the main map implementation (likely by extending <a href="../../../com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections"><code>AbstractNavigableMap.KeySet</code></a>
+ and overriding the map's <a href="../../../com/apriori/collections/AbstractNavigableMap.html#navigableKeySet()"><code>AbstractNavigableMap.navigableKeySet()</code></a> method) then it is also prudent to extend
+ this class and override in the same way so that sub-map views can also take advantage of the
+ faster implementation.</div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.collections.AbstractNavigableMap">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="type parameter in AbstractNavigableMap.BaseIteratorImpl">T</a>&gt;, <a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections">AbstractNavigableMap.BoundType</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.DescendingKeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.DescendingKeyIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.EntryIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.EntryIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.EntrySet.html" title="class in com.apriori.collections">AbstractNavigableMap.EntrySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.KeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.KeyIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections">AbstractNavigableMap.KeySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections">AbstractNavigableMap.SubMap</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_java.util.Map">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+</ul>
+</li>
+</ul>
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_com.apriori.collections.AbstractNavigableMap">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#comparator">comparator</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount">modCount</a></code></li>
+</ul>
+</li>
+</ul>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#AbstractNavigableMap.SubMap(K, com.apriori.collections.AbstractNavigableMap.BoundType, K, com.apriori.collections.AbstractNavigableMap.BoundType)">AbstractNavigableMap.SubMap</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;lowerBound,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections">AbstractNavigableMap.BoundType</a>&nbsp;lowerBoundType,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;upperBound,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections">AbstractNavigableMap.BoundType</a>&nbsp;upperBoundType)</code>
+<div class="block">Constructs a new sub-map view with the given bounds.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#ceilingEntry(K)">ceilingEntry</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</code>
+<div class="block">Finds the entry in this sub-map with the smallest key that is greater than or equal to the
+ specified key.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#clear()">clear</a></strong>()</code>
+<div class="block">Removes all elements within the sub-map's bounds.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#firstEntry()">firstEntry</a></strong>()</code>
+<div class="block">Finds the entry in the map with the smallest key or <code>null</code> if the sub-map is empty.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#floorEntry(K)">floorEntry</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</code>
+<div class="block">Finds the entry in this sub-map with the greatest key that is less than or equal to the
+ specified key.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#getEntry(java.lang.Object)">getEntry</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
+<div class="block">Finds an entry for a specified key.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#getModCount()">getModCount</a></strong>()</code>
+<div class="block">Returns the main map's modification count.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#headMap(K, boolean)">headMap</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;toKey,
+       boolean&nbsp;inclusive)</code>
+<div class="block">Provides a new view of the head of this sub-map.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#higherEntry(K)">higherEntry</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</code>
+<div class="block">Finds the entry in this sub-map with the smallest key that is greater than the specified
+ key.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#isInRange(java.lang.Object)">isInRange</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
+<div class="block">Returns true if the specified key is within the sub-map's bounds.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lastEntry()">lastEntry</a></strong>()</code>
+<div class="block">Finds the entry in the map with the greatest key or <code>null</code> if the sub-map is empty.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lowerEntry(K)">lowerEntry</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</code>
+<div class="block">Finds the entry in this sub-map with the greatest key that is less than the specified key.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#put(K, V)">put</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key,
+   <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&nbsp;value)</code></td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#putAll(java.util.Map)">putAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,? extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;m)</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#removeEntry(java.lang.Object)">removeEntry</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
+<div class="block">Removes a mapping for the specified key and returns the removed entry.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#size()">size</a></strong>()</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#subMap(K, boolean, K, boolean)">subMap</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;fromKey,
+      boolean&nbsp;fromInclusive,
+      <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;toKey,
+      boolean&nbsp;toInclusive)</code>
+<div class="block">Provides a new sub-map view (sub-sub-map?).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#tailMap(K, boolean)">tailMap</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;fromKey,
+       boolean&nbsp;inclusive)</code>
+<div class="block">Provides a new view of the tail of this sub-map.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.AbstractNavigableMap">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#ceilingKey(K)">ceilingKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#comparator()">comparator</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#containsKey(java.lang.Object)">containsKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#containsValue(java.lang.Object)">containsValue</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#descendingKeySet()">descendingKeySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#descendingMap()">descendingMap</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()">entrySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#equals(java.lang.Object)">equals</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#firstKey()">firstKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#floorKey(K)">floorKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#get(java.lang.Object)">get</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#hashCode()">hashCode</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#headMap(K)">headMap</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#higherKey(K)">higherKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#keySet()">keySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#lastKey()">lastKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#lowerKey(K)">lowerKey</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#navigableKeySet()">navigableKeySet</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#pollFirstEntry()">pollFirstEntry</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#pollLastEntry()">pollLastEntry</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#remove(java.lang.Object)">remove</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#subMap(K, K)">subMap</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#tailMap(K)">tailMap</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#toString()">toString</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.html#values()">values</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="AbstractNavigableMap.SubMap(java.lang.Object,com.apriori.collections.AbstractNavigableMap.BoundType,java.lang.Object,com.apriori.collections.AbstractNavigableMap.BoundType)">
+<!--   -->
+</a><a name="AbstractNavigableMap.SubMap(K, com.apriori.collections.AbstractNavigableMap.BoundType, K, com.apriori.collections.AbstractNavigableMap.BoundType)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AbstractNavigableMap.SubMap</h4>
+<pre>protected&nbsp;AbstractNavigableMap.SubMap(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;lowerBound,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections">AbstractNavigableMap.BoundType</a>&nbsp;lowerBoundType,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;upperBound,
+                           <a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections">AbstractNavigableMap.BoundType</a>&nbsp;upperBoundType)</pre>
+<div class="block">Constructs a new sub-map view with the given bounds.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>lowerBound</code> - the lower bound, ignored when
+       <code>lowerBoundType == </code><a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html#NO_BOUND"><code>AbstractNavigableMap.BoundType.NO_BOUND</code></a></dd><dd><code>lowerBoundType</code> - the lower bound type</dd><dd><code>upperBound</code> - the upper bound, ignored when
+       <code>upperBoundType == </code><a href="../../../com/apriori/collections/AbstractNavigableMap.BoundType.html#NO_BOUND"><code>AbstractNavigableMap.BoundType.NO_BOUND</code></a></dd><dd><code>upperBoundType</code> - the upper bound type</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="isInRange(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isInRange</h4>
+<pre>protected&nbsp;boolean&nbsp;isInRange(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<div class="block">Returns true if the specified key is within the sub-map's bounds.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - a key</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the key is within the sub-map's bounds</dd></dl>
+</li>
+</ul>
+<a name="getEntry(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEntry</h4>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;getEntry(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<div class="block">Finds an entry for a specified key. If the key does not exist in the map then <code>null</code>
+ is returned.
+ 
+ <p>This checks if the key is in range and returns <code>null</code> if not. If it is in range,
+ then the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#getEntry(java.lang.Object)"><code>getEntry(Object)</code></a> method is called.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#getEntry(java.lang.Object)">getEntry</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - the key</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the entry in the map for the specified key or <code>null</code> if one does not exist</dd></dl>
+</li>
+</ul>
+<a name="removeEntry(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeEntry</h4>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;removeEntry(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<div class="block">Removes a mapping for the specified key and returns the removed entry. If the key does not
+ exist in the map then <code>null</code> is returned.
+ 
+ <p>This checks if the key is in range and returns <code>null</code> if not. If it is in range,
+ then the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#removeEntry(java.lang.Object)"><code>removeEntry(Object)</code></a> method is called.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#removeEntry(java.lang.Object)">removeEntry</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - the key</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the entry in the map that was removed or <code>null</code> if no such entry exists</dd></dl>
+</li>
+</ul>
+<a name="size()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>public&nbsp;int&nbsp;size()</pre>
+<div class="block">
+ 
+ <p>This implementation actually counts the number of entries within the sub-map's bounds
+ using the <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>AbstractNavigableMap.entrySet()</code></a>'s iterator. This runs in linear, O(n), time but the result
+ is memo-ized between calls. It will only count the number of entries again if it detects
+ that the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>AbstractNavigableMap.modCount</code></a> has changed since the last time the entries were
+ counted.</div>
+</li>
+</ul>
+<a name="put(java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="put(K, V)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&nbsp;put(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key,
+    <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&nbsp;value)</pre>
+<div class="block">
+ 
+ <p>This checks if the key is in range and throws an <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> if
+ not. If it is in range, then the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#put(K, V)"><code>put(Object, Object)</code></a> method is called.</div>
+</li>
+</ul>
+<a name="putAll(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>putAll</h4>
+<pre>public&nbsp;void&nbsp;putAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,? extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;m)</pre>
+<div class="block">
+ 
+ <p>This default implementation simply loops over all entries in the specified map and calls
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util"><code>Map.put(Object, Object)</code></a> for each one.
+ 
+ <p>This checks that if <em>all</em> keys in the specified map are in range and throws an
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> if any of them are not. If all keys are in range, then the
+ main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#putAll(java.util.Map)"><code>putAll(Map)</code></a> method is called.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#putAll(java.util.Map)" title="class or interface in java.util">putAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#putAll(java.util.Map)">putAll</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="clear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;void&nbsp;clear()</pre>
+<div class="block">Removes all elements within the sub-map's bounds.
+ 
+ <p>This uses the same implementation as the <a href="../../../com/apriori/collections/AbstractNavigableMap.html#clear()">default</a>. It also updates its memo-ized size to zero (so <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#size()"><code>size()</code></a> will not need to
+ count elements unless items are actually added to the map).</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#clear()">clear</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="subMap(java.lang.Object,boolean,java.lang.Object,boolean)">
+<!--   -->
+</a><a name="subMap(K, boolean, K, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;fromKey,
+                       boolean&nbsp;fromInclusive,
+                       <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;toKey,
+                       boolean&nbsp;toInclusive)</pre>
+<div class="block">Provides a new sub-map view (sub-sub-map?). If the specified bounds are not within this
+ sub-map's bounds then a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> is thrown. This delegates to the
+ main map's implementation after range-checking the specified bounds.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#subMap(K, boolean, K, boolean)" title="class or interface in java.util">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#subMap(K, boolean, K, boolean)">subMap</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="headMap(java.lang.Object,boolean)">
+<!--   -->
+</a><a name="headMap(K, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;toKey,
+                        boolean&nbsp;inclusive)</pre>
+<div class="block">Provides a new view of the head of this sub-map. If the specified upper bound is not within
+ this sub-map's bounds then a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> is thrown. This delegates to
+ the main map's implementation after range-checking the specified bound.
+ 
+ <p>If this sub-map has no lower bound, then the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#headMap(K, boolean)"><code>headMap(Object, boolean)</code></a>
+ method is used. If this sub-map <em>does</em> have a lower bound, then the main map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#subMap(K, boolean, K, boolean)"><code>subMap(Object, boolean, Object, boolean)</code></a> method is used and supplied this
+ sub-map's lower bound and the specified upper bound.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#headMap(K, boolean)" title="class or interface in java.util">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#headMap(K, boolean)">headMap</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="tailMap(java.lang.Object,boolean)">
+<!--   -->
+</a><a name="tailMap(K, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;fromKey,
+                        boolean&nbsp;inclusive)</pre>
+<div class="block">Provides a new view of the tail of this sub-map. If the specified lower bound is not within
+ this sub-map's bounds then a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> is thrown. This delegates to
+ the main map's implementation after range-checking the specified bound.
+ 
+ <p>If this sub-map has no upper bound, then the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#tailMap(K, boolean)"><code>tailMap(Object, boolean)</code></a>
+ method is used. If this sub-map <em>does</em> have an upper bound, then the main map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#subMap(K, boolean, K, boolean)"><code>subMap(Object, boolean, Object, boolean)</code></a> method is used and supplied the specified
+ lower bound and this sub-map's upper bound.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#tailMap(K, boolean)" title="class or interface in java.util">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#tailMap(K, boolean)">tailMap</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="lowerEntry(java.lang.Object)">
+<!--   -->
+</a><a name="lowerEntry(K)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lowerEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;lowerEntry(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</pre>
+<div class="block">Finds the entry in this sub-map with the greatest key that is less than the specified key.
+ This first calls the main map's implementation of <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lowerEntry(K)"><code>lowerEntry(Object)</code></a>. If it is not
+ null then it is range checked and returned if within the sub-map's bounds. If it is less
+ than the sub-map's lower bound then null is returned. If it is greater than the sub-map's
+ upper bound, then the sub-map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lastEntry()"><code>lastEntry()</code></a> is returned.</div>
+</li>
+</ul>
+<a name="floorEntry(java.lang.Object)">
+<!--   -->
+</a><a name="floorEntry(K)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>floorEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;floorEntry(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</pre>
+<div class="block">Finds the entry in this sub-map with the greatest key that is less than or equal to the
+ specified key. This first calls the main map's implementation of <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#floorEntry(K)"><code>floorEntry(Object)</code></a>.
+ If it is not null then it is range checked and returned if within the sub-map's bounds. If
+ it is less than the sub-map's lower bound then null is returned. If it is greater than the
+ sub-map's upper bound, then the sub-map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lastEntry()"><code>lastEntry()</code></a> is returned.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#floorEntry(K)" title="class or interface in java.util">floorEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#floorEntry(K)">floorEntry</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="ceilingEntry(java.lang.Object)">
+<!--   -->
+</a><a name="ceilingEntry(K)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ceilingEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;ceilingEntry(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</pre>
+<div class="block">Finds the entry in this sub-map with the smallest key that is greater than or equal to the
+ specified key. This first calls the main map's implementation of <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#ceilingEntry(K)"><code>ceilingEntry(Object)</code></a>. If it is not null then it is range checked and returned if within
+ the sub-map's bounds. If it is greater than the sub-map's upper bound then null is
+ returned. If it is less than the sub-map's lower bound, then the sub-map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#firstEntry()"><code>firstEntry()</code></a> is returned.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#ceilingEntry(K)" title="class or interface in java.util">ceilingEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#ceilingEntry(K)">ceilingEntry</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="higherEntry(java.lang.Object)">
+<!--   -->
+</a><a name="higherEntry(K)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>higherEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;higherEntry(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;key)</pre>
+<div class="block">Finds the entry in this sub-map with the smallest key that is greater than the specified
+ key. This first calls the main map's implementation of <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#higherEntry(K)"><code>higherEntry(Object)</code></a>. If it
+ is not null then it is range checked and returned if within the sub-map's bounds. If it is
+ greater than the sub-map's upper bound then null is returned. If it is less than the
+ sub-map's lower bound, then the sub-map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#firstEntry()"><code>firstEntry()</code></a> is returned.</div>
+</li>
+</ul>
+<a name="firstEntry()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>firstEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;firstEntry()</pre>
+<div class="block">Finds the entry in the map with the smallest key or <code>null</code> if the sub-map is empty.
+ If the sub-map has no lower bound, the main map's first entry is queried. If the sub-map's
+ lower bound is inclusive, then this finds the entry using the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#ceilingEntry(K)"><code>ceilingEntry(Object)</code></a> method and passing the lower bound. If exclusive, the main map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#higherEntry(K)"><code>higherEntry(Object)</code></a> method is used instead. If the resulting entry is non-null and
+ within the sub-map's bounds then it is returned. If, however, it is null or greater than
+ the sub-map's upper bound, <code>null</code> is returned.</div>
+</li>
+</ul>
+<a name="lastEntry()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastEntry</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;lastEntry()</pre>
+<div class="block">Finds the entry in the map with the greatest key or <code>null</code> if the sub-map is empty.
+ If the sub-map has no upper bound, the main map's last entry is queried. If the sub-map's
+ upper bound is inclusive, then this finds the entry using the main map's <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#floorEntry(K)"><code>floorEntry(Object)</code></a> method and passing the upper bound. If exclusive, the main map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html#lowerEntry(K)"><code>lowerEntry(Object)</code></a> method is used instead. If the resulting entry is non-null and
+ within the sub-map's bounds then it is returned. If, however, it is null or less than the
+ sub-map's lower bound, <code>null</code> is returned.</div>
+</li>
+</ul>
+<a name="getModCount()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getModCount</h4>
+<pre>protected&nbsp;int&nbsp;getModCount()</pre>
+<div class="block">Returns the main map's modification count. This allows iterators over sub-map views to
+ properly fail-fast.
+ 
+ <p>Since a <a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><code>AbstractNavigableMap.SubMap</code></a> <em>extends</em> <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections"><code>AbstractNavigableMap</code></a>, it also inherits
+ a <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>AbstractNavigableMap.modCount</code></a> field. For sub-maps, that field is used to detect
+ when the sub-map's memo-ized size is stale and elements need to be counted.</div>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.html#getModCount()">getModCount</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>the map's modification count</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/collections/AbstractNavigableMap.SubMap.html" target="_top">Frames</a></li>
+<li><a href="AbstractNavigableMap.SubMap.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_com.apriori.collections.AbstractNavigableMap">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_com.apriori.collections.AbstractNavigableMap">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

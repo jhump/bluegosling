@@ -214,12 +214,16 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interfac
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>&lt;B&gt;&nbsp;B</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Unit.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Unit.html" title="type parameter in Unit">A</a>,? extends B&gt;&nbsp;function)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Unit.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</code>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Unit.html#transformFirst(com.apriori.util.Function)">transformFirst</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Unit.html" title="type parameter in Unit">A</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the first item in the tuple using the specified function.</div>
@@ -507,7 +511,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interfac
 <a name="transformFirst(com.apriori.util.Function)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>transformFirst</h4>
 <pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;&nbsp;transformFirst(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Unit.html" title="type parameter in Unit">A</a>,? extends T&gt;&nbsp;function)</pre>
@@ -520,6 +524,15 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interfac
 <dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a new tuple with the first item set to the result of applying the specified
     function to the first item in this tuple</dd></dl>
+</li>
+</ul>
+<a name="transform(com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>transform</h4>
+<pre>public&nbsp;&lt;B&gt;&nbsp;B&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Unit.html" title="type parameter in Unit">A</a>,? extends B&gt;&nbsp;function)</pre>
 </li>
 </ul>
 </li>

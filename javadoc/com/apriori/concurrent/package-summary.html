@@ -62,8 +62,7 @@
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;com.apriori.concurrent</h1>
 <div class="docSummary">
-<div class="block">Classes that extend and enhance the API provided by the <code>ScheduledExecutorService</code>
- interface.</div>
+<div class="block">Classes that extend and enhance the API provided by the <code>java.util.concurrent</code> package.</div>
 </div>
 <p>See:&nbsp;<a href="#package_description">Description</a></p>
 </div>
@@ -96,7 +95,15 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureCallback.html" title="interface in com.apriori.concurrent">FutureCallback</a>&lt;T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -104,7 +111,15 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableFuture.ExecutorService.html" title="interface in com.apriori.concurrent">ListenableFuture.ExecutorService</a></td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -137,19 +152,19 @@
 <td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;V,T&gt;</td>
 <td class="colLast">
 <div class="block">The type of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> returned by submissions to a
- <a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><code>BetterExecutorService</code></a>.</div>
+ <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="interface in com.apriori.concurrent">ScheduledTask.Listener</a>&lt;V,T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;V,T&gt;</td>
 <td class="colLast">
-<div class="block">A listener for completions of <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a>s.</div>
+<div class="block">A <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> that has been scheduled using a <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;V,T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;V,T&gt;</td>
 <td class="colLast">
-<div class="block">A <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> that has been scheduled using a <a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><code>BetterExecutorService</code></a>.</div>
+<div class="block">A listener for completions of <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a>s.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -161,7 +176,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;</td>
 <td class="colLast">
-<div class="block">The definition for a task that will be executed by a <a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><code>BetterExecutorService</code></a>.</div>
+<div class="block">The definition for a task that will be executed by a <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -176,36 +191,40 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent">BetterExecutorService</a></td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent">Cancellables</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent">FutureListeners</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent">FutureTuples</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></td>
 <td class="colLast">
 <div class="block">An extension and enhancement to the API provided by <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent">Cancellables</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureCallback.SimpleCallback.html" title="class in com.apriori.concurrent">FutureCallback.SimpleCallback</a>&lt;T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="class in com.apriori.concurrent">SimpleFutureVisitor</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent">FutureTuples</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>&lt;T&gt;</td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V,T&gt;</td>
 <td class="colLast">
 <div class="block">A builder for configuring <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> instances.</div>
@@ -236,15 +255,20 @@
 <!--   -->
 </a>
 <h2 title="Package com.apriori.concurrent Description">Package com.apriori.concurrent Description</h2>
-<div class="block">Classes that extend and enhance the API provided by the <code>ScheduledExecutorService</code>
- interface.
- 
- <p>The idea is to provide a richer API with introspection on status of scheduled tasks, ability
- to pause recurring tasks, cancel individual instances of the task, and to inject better exception
- handling when a task throws an exception.
- 
- <p><strong>NOTE:</strong> This package is still under construction. See TODOs in 
- <code>BetterExecutorService.java</code>.</div>
+<div class="block">Classes that extend and enhance the API provided by the <code>java.util.concurrent</code> package.
+ The two key extensions follow:
+ <ol>
+ <li><a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>: Improvements over the
+ <code>ScheduledExecutorService</code> API for job tracking and management. The API here allows
+ introspection on the status and history of scheduled tasks and allows tasks to be configured
+ with custom exception handling strategies. It also provides more control over scheduling of
+ subsequent instances for recurring tasks, the ability to pause/resume recurring tasks, and cancel
+ individual instances of recurring tasks.</li>
+ <li><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>: <code>Future</code>s that allow completion
+ callbacks to be registered. This means code has the flexibility of either doing things
+ asynchronously with callbacks or synchronously by blocking for the future to complete.
+ </li>
+ </ol></div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar_bottom">

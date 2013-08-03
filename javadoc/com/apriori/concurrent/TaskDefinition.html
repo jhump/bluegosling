@@ -92,7 +92,7 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">TaskDefinition&lt;V,T&gt;</span></pre>
-<div class="block">The definition for a task that will be executed by a <a href="../../../com/apriori/concurrent/BetterExecutorService.html" title="class in com.apriori.concurrent"><code>BetterExecutorService</code></a>.
+<div class="block">The definition for a task that will be executed by a <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.
  This includes several configuration options that are not possible using a normal
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>.</div>
 </li>
@@ -176,7 +176,7 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="interface in com.apriori.concurrent">ScheduledTask.Listener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#listeners()">listeners</a></strong>()</code>
 <div class="block">Returns the set of listeners for this task.</div>
 </td>
@@ -362,14 +362,14 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>listeners</h4>
-<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.Listener.html" title="interface in com.apriori.concurrent">ScheduledTask.Listener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;&gt;&nbsp;listeners()</pre>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;&gt;&nbsp;listeners()</pre>
 <div class="block">Returns the set of listeners for this task. These objects are notified upon
  completion (including failures/abnormal completions) of each invocation of the
  task.
  
  <p>The set of listeners can actually be changed after the task definition has been
- scheduled using <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTask.Listener)"><code>ScheduledTaskDefinition.addListener(ScheduledTask.Listener)</code></a>
- and <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTask.Listener)"><code>ScheduledTaskDefinition.removeListener(ScheduledTask.Listener)</code></a>.</div>
+ scheduled using <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTaskListener)"><code>ScheduledTaskDefinition.addListener(ScheduledTaskListener)</code></a>
+ and <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTaskListener)"><code>ScheduledTaskDefinition.removeListener(ScheduledTaskListener)</code></a>.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the set of listeners for this task</dd></dl>
 </li>
 </ul>
