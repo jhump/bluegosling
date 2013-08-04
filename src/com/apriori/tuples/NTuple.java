@@ -332,10 +332,10 @@ public class NTuple<A, B, C, D, E> extends AbstractTuple
    public <T> NTuple<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
       return this.<T>setFifth(function.apply(e));
    }
-   
+
    /**
-    * Customizes de-serialization to populate the typesafe fields representing the first five
-    * members of the tuple.
+    * Customizes de-serialization to populate the typed (but transient) fields representing the
+    * first five members of the tuple.
     * 
     * @param in the stream from which the list is read
     * @throws IOException if an exception is raised when reading from {@code in}

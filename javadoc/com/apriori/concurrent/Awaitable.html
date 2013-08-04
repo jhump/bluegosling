@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>Cancellable</title>
+<title>Awaitable</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Cancellable";
+        parent.document.title="Awaitable";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li>Prev Class</li>
+<li><a href="../../../com/apriori/concurrent/Awaitables.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/Cancellable.html" target="_top">Frames</a></li>
-<li><a href="Cancellable.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/Awaitable.html" target="_top">Frames</a></li>
+<li><a href="Awaitable.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,7 +77,7 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface Cancellable" class="title">Interface Cancellable</h2>
+<h2 title="Interface Awaitable" class="title">Interface Awaitable</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -85,7 +85,7 @@
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;V,T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -93,7 +93,7 @@
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">Cancellable</span></pre>
+<pre>public interface <span class="strong">Awaitable</span></pre>
 </li>
 </ul>
 </div>
@@ -113,8 +113,13 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Awaitable.html#await()">await</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterrupt)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Awaitable.html#await(long, java.util.concurrent.TimeUnit)">await</a></strong>(long&nbsp;limit,
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -131,13 +136,29 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="cancel(boolean)">
+<a name="await()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>await</h4>
+<pre>void&nbsp;await()
+           throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd></dl>
+</li>
+</ul>
+<a name="await(long, java.util.concurrent.TimeUnit)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>cancel</h4>
-<pre>boolean&nbsp;cancel(boolean&nbsp;mayInterrupt)</pre>
+<h4>await</h4>
+<pre>boolean&nbsp;await(long&nbsp;limit,
+            <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
+              throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd></dl>
 </li>
 </ul>
 </li>
@@ -165,12 +186,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li>Prev Class</li>
+<li><a href="../../../com/apriori/concurrent/Awaitables.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/concurrent/Cancellable.html" target="_top">Frames</a></li>
-<li><a href="Cancellable.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/Awaitable.html" target="_top">Frames</a></li>
+<li><a href="Awaitable.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

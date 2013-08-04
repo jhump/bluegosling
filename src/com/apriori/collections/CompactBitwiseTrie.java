@@ -16,7 +16,6 @@ import java.util.Set;
 
 //TODO: javadoc
 //TODO: implement me (don't forget serialization and cloning)
-//TODO: also add a (non-compact) BitwiseTrie
 public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
 
    private static class TrieNode<K, V> {

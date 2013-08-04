@@ -87,12 +87,12 @@
        <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">ScheduledTaskDefinition&lt;V,T&gt;</span>
-extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;</pre>
+extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></pre>
 <div class="block">A <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> that has been scheduled using a <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.
  This provides additional methods for introspection into the state of the scheduled tasks,
  including looking at past invocations of the task and canceling or pausing/resuming the
@@ -432,7 +432,10 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
  
  <p>Canceling a task definition that is already cancelled does nothing and will return
  <code>false</code>.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>interrupt</code> - <code>true</code> if a currently running invocation should be
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>interrupt</code> - <code>true</code> if a currently running invocation should be
        interrupted via <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.html?is-external=true#interrupt()" title="class or interface in java.lang"><code>Thread.interrupt()</code></a></dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the task was cancelled; <code>false</code> if it could
        not be cancelled because it was already finished</dd></dl>

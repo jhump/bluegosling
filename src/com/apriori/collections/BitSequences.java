@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
  */
 //TODO: finish javadoc
 //TODO: optimization -- new implementation of BitSequence that stores bits MSB instead of LSB
+//TODO: bit sequence implementations should be serializable
 public final class BitSequences {
    
    /** Masks for extracting a prefix from a long, clearing trailing bits. */

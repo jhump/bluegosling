@@ -107,9 +107,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
  
  <p>This set uses an array internally to store the items in the set. Lookups are
  <em>O(log<sub>2</sub>n)</em>. Due to the way the elements are stored in the array, mutations
- (insertions and removals can involve <em>O(n)</em> operations to shuffle elements around.
+ (insertions and removals) can involve <em>O(n)</em> operations to shuffle elements around.
  
- <p>This set does not support <code>null</code> values.</div>
+ <p>This set only supports <code>null</code> values when using a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> that can compare
+ <code>null</code> values.</div>
 <dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../serialized-form.html#com.apriori.collections.SortedArraySet">Serialized Form</a></dd></dl>
 </li>
 </ul>

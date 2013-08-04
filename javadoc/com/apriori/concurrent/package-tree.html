@@ -71,6 +71,7 @@
 <ul>
 <li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><span class="strong">Object</span></a>
 <ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitables.html" title="class in com.apriori.concurrent"><span class="strong">Awaitables</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent"><span class="strong">Cancellables</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent"><span class="strong">FutureListeners</span></a></li>
 <li type="circle">java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/FutureTask.html?is-external=true" title="class or interface in java.util.concurrent"><span class="strong">FutureTask</span></a>&lt;V&gt; (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;V&gt;)
@@ -89,9 +90,9 @@
 </ul>
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent"><span class="strong">Cancellable</span></a>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><span class="strong">Awaitable</span></a>
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
@@ -100,6 +101,20 @@
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent"><span class="strong">Cancellable</span></a>
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableRepeatingFuture</span></a>&lt;T&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;V,T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;)</li>
 </ul>
 </li>
 <li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang"><span class="strong">Comparable</span></a>&lt;T&gt;
@@ -151,7 +166,7 @@
 </li>
 <li type="circle">java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><span class="strong">Future</span></a>&lt;V&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
@@ -190,7 +205,7 @@
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduleNextTaskPolicy</span></a>&lt;V,T&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">TaskDefinition</span></a>&lt;V,T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;V,T&gt;</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;V,T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)</li>
 </ul>
 </li>
 </ul>

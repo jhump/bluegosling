@@ -8,38 +8,81 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * A {@linkplain possible} value that, even if present, can be null.
+ * A {@linkplain Possible possible} value that, even if present, can be {@code null}. A reference
+ * can either be set or unset. If set, a value is present; if unset, the value is absent. References
+ * are immutable. A similar possible value that is mutable is {@link Holder}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <T> the type of the possible value
  */
-// TODO: javadoc
 // TODO: tests
 public abstract class Reference<T> implements Possible<T> {
 
    private Reference() {
    }
    
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
    @Override
    public abstract <U> Reference<U> transform(Function<T, U> function);
    
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
    @Override
    public abstract Reference<T> filter(Predicate<T> predicate);
    
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}. If
+    * the specified {@linkplain Possible possible} value is not a {@link Reference} then it will be
+    * {@linkplain #asReference(Possible) converted}.
+    */
    @Override
    public abstract Reference<T> or(Possible<T> alternate);
-   
+
+   /**
+    * Returns the current reference if a value is present or the specified reference if not.
+    * 
+    * @param alternate an alternate value
+    * @return returns the current reference if a value is present or the alternate if not
+    */
    public abstract Reference<T> or(Reference<T> alternate);
 
+   /**
+    * Creates a reference where the value is unset (absent).
+    * 
+    * @return an unset reference
+    */
    public static <T> Reference<T> unset() {
       return UnsetReference.instance();
    }
    
+   /**
+    * Creates a reference set to the specified value.
+    * 
+    * @param t the value
+    * @return a set reference
+    */
    public static <T> Reference<T> set(T t) {
       return new SetReference<T>(t);
    }
    
+   /**
+    * Converts a possible value to a reference. If the specified object is a reference, it is
+    * returned. Otherwise, if the specified value is present then a reference set to the same value
+    * is returned. If the specified value is absent then an unset reference is returned.
+    * 
+    * @param possible a possible value
+    * @return the possible value, converted to a reference
+    */
    public static <T> Reference<T> asReference(Possible<T> possible) {
       if (possible instanceof Reference) {
          return (Reference<T>) possible;
@@ -47,6 +90,13 @@ public abstract class Reference<T> implements Possible<T> {
       return possible.isPresent() ? set(possible.get()) : Reference.<T>unset();
    }
    
+   /**
+    * A reference with a value present.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <T> the type of the value
+    */
    private static class SetReference<T> extends Reference<T> implements Serializable {
 
       private static final long serialVersionUID = 7364438623841250389L;
@@ -128,16 +178,28 @@ public abstract class Reference<T> implements Possible<T> {
       }
    }
 
+   /**
+    * An unset reference (no value present).
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    *
+    * @param <T> the type of the value
+    */
    private static class UnsetReference<T> extends Reference<T> implements Serializable {
       
       private static final long serialVersionUID = -7792329235520529671L;
+      
+      /** 
+       * The singleton unset reference. Since references are immutable, and this form has no
+       * present value, the same instance can be used for all usages.
+       */
       private static final UnsetReference<?> INSTANCE = new UnsetReference<Object>();
       
       @SuppressWarnings("synthetic-access") // super-class ctor is private
       private UnsetReference() {
       }
       
-      @SuppressWarnings("unchecked") // only need one instance (immutable and type arg is unused)
+      @SuppressWarnings("unchecked") // only need one instance, regardless of type
       static <T> UnsetReference<T> instance() {
          return (UnsetReference<T>) INSTANCE;
       }
@@ -207,6 +269,11 @@ public abstract class Reference<T> implements Possible<T> {
          return "Reference, unset";
       }
       
+      /**
+       * Ensures that the singleton pattern is enforced during serialization.
+       * 
+       * @return {@link #INSTANCE}
+       */
       private Object readResolve() {
          return INSTANCE;
       }

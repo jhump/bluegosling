@@ -4,9 +4,21 @@ import com.apriori.reflect.TypeRef;
 
 import java.lang.reflect.TypeVariable;
 
-/** Utility methods for working with instances of {@link DerivedFrom}. */
-// TODO: javadoc
-// TODO: tests
+/**
+ * Utility methods for determining if types are derived from one another. A type, {@code TypeA}, is
+ * derived from another type, {@code TypeB}, if any of the following are true:
+ * <ul>
+ * <li>{@code TypeA} implements {@link DerivedFrom DerivedFrom}{@code <TypeB>}</li>
+ * <li>{@code TypeA} implements {@link DerivedFrom DerivedFrom}{@code <TypeC>} and {@code TypeC} is
+ * derived from {@code TypeB}</li>
+ * <li>{@code TypeA} is annotated with {@link IsDerivedFrom @IsDerivedFrom(TypeB.class)}</li>
+ * <li>{@code TypeA} is annotated with {@link IsDerivedFrom @IsDerivedFrom(TypeC.class)} and
+ * {@code TypeC} is derived from {@code TypeB}</li>
+ * </ul>
+ */
+//TODO: unify the two methods so derivation via interface and via annotation are equivalent
+//TODO: javadoc
+//TODO: tests
 public final class Derivatives {
    private Derivatives() {
    }
@@ -24,7 +36,10 @@ public final class Derivatives {
    }
    
    @SuppressWarnings("unchecked") // in the one unchecked cast, we've just checked the type
-   public static boolean isDerivedFrom(Class<?> type, Class<? extends DerivedFrom<?>> derivedType) {
+   public static boolean isDerivedFrom(Class<? extends DerivedFrom<?>> derivedType, Class<?> type) {
+      if (type.equals(derivedType)) {
+         return true;
+      }
       TypeRef<? extends DerivedFrom<?>> derivedTypeRef = TypeRef.forClass(derivedType);
       while (derivedTypeRef != null) {
          @SuppressWarnings("rawtypes") // can only get raw type from class token...
@@ -44,5 +59,21 @@ public final class Derivatives {
          }
       }
       return false;
+   }
+   
+   public static boolean isDerivedViaAnnotationFrom(Class<?> derivedType, Class<?> type) {
+      if (type.equals(derivedType)) {
+         return true;
+      }
+      IsDerivedFrom derivedFromAnnotation = derivedType.getAnnotation(IsDerivedFrom.class);
+      while (derivedFromAnnotation != null) {
+         Class<?> derivedFrom = derivedFromAnnotation.value();
+         if (derivedFrom.equals(type)) {
+            return true;
+         } else {
+            derivedFromAnnotation = derivedFrom.getAnnotation(IsDerivedFrom.class);
+         }
+      }
+      return false;  
    }
 }

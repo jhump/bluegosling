@@ -83,9 +83,10 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of the future value</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -98,7 +99,20 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">ListenableFuture&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></pre>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></pre>
+<div class="block">The future to end all futures. This provides API improvements over the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> in
+ several categories:
+ <ol>
+ <li><strong>Callbacks</strong>: This is allows for real asynchronous processing of futures and
+ is what gives this future its name. You can add listeners that are invoked when the future
+ completes.</li>
+ <li><strong>Blocking</strong>: This interface extends <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a>, giving you more API
+ choices for blocking until the future completes.</li>
+ <li><strong>Inspecting</strong>: Numerous new methods are provided for inspecting the result of
+ a completed future, none of which require a <code>try/catch</code> block (<a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>isSuccessful()</code></a>,
+ <a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()"><code>getResult()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()"><code>isFailed()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()"><code>getFailure()</code></a>, and
+ <a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)"><code>visit(FutureVisitor)</code></a>).</li>
+ </ol></div>
 </li>
 </ul>
 </div>
@@ -120,27 +134,40 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListener</a></strong>(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt;&nbsp;listener,
-           <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+           <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Adds a listener that will be called when the future completes.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()">getFailure</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()">getFailure</a></strong>()</code>
+<div class="block">Gets the cause of failure for a future.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()">getResult</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()">getResult</a></strong>()</code>
+<div class="block">Gets the result of a successful future.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()">isFailed</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()">isFailed</a></strong>()</code>
+<div class="block">Returns true if the future is done and failed.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()">isSuccessful</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()">isSuccessful</a></strong>()</code>
+<div class="block">Returns true if the future is done and was successful.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)">visit</a></strong>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt;&nbsp;visitor)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)">visit</a></strong>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt;&nbsp;visitor)</code>
+<div class="block">Invokes applicable methods on the specified visitor, depending on the disposition of this
+ future.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -156,6 +183,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></h3>
 <code><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.Awaitable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></h3>
+<code><a href="../../../com/apriori/concurrent/Awaitable.html#await()">await</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#await(long, java.util.concurrent.TimeUnit)">await</a></code></li>
 </ul>
 </li>
 </ul>
@@ -178,6 +212,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <li class="blockList">
 <h4>isSuccessful</h4>
 <pre>boolean&nbsp;isSuccessful()</pre>
+<div class="block">Returns true if the future is done and was successful.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the future is done and was successful; false otherwise</dd></dl>
 </li>
 </ul>
 <a name="getResult()">
@@ -187,6 +223,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <li class="blockList">
 <h4>getResult</h4>
 <pre><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&nbsp;getResult()</pre>
+<div class="block">Gets the result of a successful future. This method can only be called when the future is
+ done and was successful.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the result</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the future is not complete or was not successful</dd></dl>
 </li>
 </ul>
 <a name="isFailed()">
@@ -196,6 +237,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <li class="blockList">
 <h4>isFailed</h4>
 <pre>boolean&nbsp;isFailed()</pre>
+<div class="block">Returns true if the future is done and failed.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the future is done and failed; false otherwise</dd></dl>
 </li>
 </ul>
 <a name="getFailure()">
@@ -205,6 +248,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <li class="blockList">
 <h4>getFailure</h4>
 <pre><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;getFailure()</pre>
+<div class="block">Gets the cause of failure for a future. This method can only be called when the future is done
+ and has failed.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the cause of failure</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the future is not complete or did not fail</dd></dl>
 </li>
 </ul>
 <a name="addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">
@@ -215,6 +263,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <h4>addListener</h4>
 <pre>void&nbsp;addListener(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt;&nbsp;listener,
                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Adds a listener that will be called when the future completes. The listener will be invoked
+ using the specified executor. If the future is already complete when the listener is added,
+ the listener will be immediately invoked. If the listener can be called synchronously (e.g.
+ it will complete very quickly and not block) then consider using <a href="../../../com/apriori/concurrent/ListenableFutures.html#sameThreadExecutor()"><code>ListenableFutures.sameThreadExecutor()</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd><dd><code>executor</code> - the executor used when calling the listener</dd></dl>
 </li>
 </ul>
 <a name="visit(com.apriori.concurrent.FutureVisitor)">
@@ -224,6 +277,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <li class="blockList">
 <h4>visit</h4>
 <pre>void&nbsp;visit(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt;&nbsp;visitor)</pre>
+<div class="block">Invokes applicable methods on the specified visitor, depending on the disposition of this
+ future. The future must be complete in order to be visited.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>visitor</code> - the visitor</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the future is not complete</dd></dl>
 </li>
 </ul>
 </li>

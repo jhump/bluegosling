@@ -6,6 +6,7 @@ com.apriori.concurrent
 com.apriori.di
 com.apriori.di.collections
 com.apriori.di.tools
+com.apriori.possible
 com.apriori.reflect
 com.apriori.testing
 com.apriori.tuples

@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>Fulfillables</title>
+<title>Awaitables</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Fulfillables";
+        parent.document.title="Awaitables";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Fulfillables.html" target="_top">Frames</a></li>
-<li><a href="Fulfillables.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/Awaitables.html" target="_top">Frames</a></li>
+<li><a href="Awaitables.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -60,13 +60,13 @@
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
@@ -76,15 +76,15 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">com.apriori.util</div>
-<h2 title="Class Fulfillables" class="title">Class Fulfillables</h2>
+<div class="subTitle">com.apriori.concurrent</div>
+<h2 title="Class Awaitables" class="title">Class Awaitables</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.util.Fulfillables</li>
+<li>com.apriori.concurrent.Awaitables</li>
 </ul>
 </li>
 </ul>
@@ -93,7 +93,7 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>public class <span class="strong">Fulfillables</span>
+<pre>public final class <span class="strong">Awaitables</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 </li>
 </ul>
@@ -101,23 +101,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor_summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Constructor and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/util/Fulfillables.html#Fulfillables()">Fulfillables</a></strong>()</code>&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -131,12 +114,14 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util">Fulfillable</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillables.html#create()">create</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Awaitables.html#awaitUninterruptibly(com.apriori.concurrent.Awaitable)">awaitUninterruptibly</a></strong>(<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;a)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util">Fulfillable</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillables.html#fulfilled(T)">fulfilled</a></strong>(T&nbsp;value)</code>&nbsp;</td>
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Awaitables.html#awaitUninterruptibly(com.apriori.concurrent.Awaitable, long, java.util.concurrent.TimeUnit)">awaitUninterruptibly</a></strong>(<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;a,
+                    long&nbsp;limit,
+                    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -154,47 +139,30 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor_detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a name="Fulfillables()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>Fulfillables</h4>
-<pre>public&nbsp;Fulfillables()</pre>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="fulfilled(java.lang.Object)">
-<!--   -->
-</a><a name="fulfilled(T)">
+<a name="awaitUninterruptibly(com.apriori.concurrent.Awaitable)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>fulfilled</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util">Fulfillable</a>&lt;T&gt;&nbsp;fulfilled(T&nbsp;value)</pre>
+<h4>awaitUninterruptibly</h4>
+<pre>public static&nbsp;void&nbsp;awaitUninterruptibly(<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;a)</pre>
 </li>
 </ul>
-<a name="create()">
+<a name="awaitUninterruptibly(com.apriori.concurrent.Awaitable, long, java.util.concurrent.TimeUnit)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>create</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util">Fulfillable</a>&lt;T&gt;&nbsp;create()</pre>
+<h4>awaitUninterruptibly</h4>
+<pre>public static&nbsp;boolean&nbsp;awaitUninterruptibly(<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;a,
+                           long&nbsp;limit,
+                           <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 </li>
 </ul>
 </li>
@@ -222,12 +190,12 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/Fulfillable.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Fulfillables.html" target="_top">Frames</a></li>
-<li><a href="Fulfillables.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/Awaitables.html" target="_top">Frames</a></li>
+<li><a href="Awaitables.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -249,13 +217,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
 </div>

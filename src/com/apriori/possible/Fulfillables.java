@@ -7,10 +7,21 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//TODO:javadoc
-//TODO:test
+/**
+ * Factory methods for creating instances of {@link Fulfillable}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+//TODO: test
+//TODO: should fulfillables be serializable?
 public class Fulfillables {
 
+   /**
+    * Creates a value that is already fulfilled.
+    * 
+    * @param value the fulfilled value
+    * @return an object that is already fulfilled
+    */
    public static <T> Fulfillable<T> fulfilled(final T value) {
       return new Fulfillable<T>() {
 
@@ -66,6 +77,11 @@ public class Fulfillables {
       };
    }
    
+   /**
+    * Creates a new fulfillable value. The returned object is thread-safe.
+    * 
+    * @return a new fulfillable value
+    */
    public static <T> Fulfillable<T> create() {
       return new Fulfillable<T>() {
          private final AtomicBoolean set = new AtomicBoolean();

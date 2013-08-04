@@ -33,11 +33,11 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/DerivedFrom.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Fulfillables.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li>Prev Class</li>
+<li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Fulfillable.html" target="_top">Frames</a></li>
+<li><a href="../../../index.html?com/apriori/possible/Fulfillable.html" target="_top">Frames</a></li>
 <li><a href="Fulfillable.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -76,22 +76,45 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">com.apriori.util</div>
+<div class="subTitle">com.apriori.possible</div>
 <h2 title="Interface Fulfillable" class="title">Interface Fulfillable&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of fulfilled value</dd></dl>
+<dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</dd>
+</dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">Fulfillable&lt;T&gt;</span></pre>
+<pre>public interface <span class="strong">Fulfillable&lt;T&gt;</span>
+extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</pre>
+<div class="block">A possible value that can be set exactly once. Setting a value when not already is present is
+ called "fulfilling" the value.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.possible.Possible">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.possible.<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></h3>
+<code><a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;<a href="../../../com/apriori/possible/Possible.Visitor.html" title="type parameter in Possible.Visitor">T</a>,<a href="../../../com/apriori/possible/Possible.Visitor.html" title="type parameter in Possible.Visitor">R</a>&gt;</code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -105,26 +128,19 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillable.html#asSet()">asSet</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillable.html#fulfill(T)">fulfill</a></strong>(<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;value)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillable.html#get()">get</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillable.html#getOr(T)">getOr</a></strong>(<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;other)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Fulfillable.html#isFulfilled()">isFulfilled</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Fulfillable.html#fulfill(T)">fulfill</a></strong>(<a href="../../../com/apriori/possible/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;value)</code>
+<div class="block">Fulfills the value.</div>
+</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.possible.Possible">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.possible.<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></h3>
+<code><a href="../../../com/apriori/possible/Possible.html#asSet()">asSet</a>, <a href="../../../com/apriori/possible/Possible.html#filter(com.apriori.util.Predicate)">filter</a>, <a href="../../../com/apriori/possible/Possible.html#get()">get</a>, <a href="../../../com/apriori/possible/Possible.html#getOr(T)">getOr</a>, <a href="../../../com/apriori/possible/Possible.html#getOr(X)">getOr</a>, <a href="../../../com/apriori/possible/Possible.html#isPresent()">isPresent</a>, <a href="../../../com/apriori/possible/Possible.html#or(com.apriori.possible.Possible)">or</a>, <a href="../../../com/apriori/possible/Possible.html#transform(com.apriori.util.Function)">transform</a>, <a href="../../../com/apriori/possible/Possible.html#visit(com.apriori.possible.Possible.Visitor)">visit</a></code></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -139,53 +155,19 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="isFulfilled()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isFulfilled</h4>
-<pre>boolean&nbsp;isFulfilled()</pre>
-</li>
-</ul>
 <a name="fulfill(java.lang.Object)">
 <!--   -->
 </a><a name="fulfill(T)">
 <!--   -->
 </a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fulfill</h4>
-<pre>boolean&nbsp;fulfill(<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;value)</pre>
-</li>
-</ul>
-<a name="get()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>get</h4>
-<pre><a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;get()</pre>
-</li>
-</ul>
-<a name="getOr(java.lang.Object)">
-<!--   -->
-</a><a name="getOr(T)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getOr</h4>
-<pre><a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;getOr(<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;other)</pre>
-</li>
-</ul>
-<a name="asSet()">
-<!--   -->
-</a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>asSet</h4>
-<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/util/Fulfillable.html" title="type parameter in Fulfillable">T</a>&gt;&nbsp;asSet()</pre>
+<h4>fulfill</h4>
+<pre>boolean&nbsp;fulfill(<a href="../../../com/apriori/possible/Fulfillable.html" title="type parameter in Fulfillable">T</a>&nbsp;value)</pre>
+<div class="block">Fulfills the value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - the fulfilled value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the value was set to the specified value; false if the value was already
+       fulfilled</dd></dl>
 </li>
 </ul>
 </li>
@@ -213,11 +195,11 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/DerivedFrom.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Fulfillables.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li>Prev Class</li>
+<li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Fulfillable.html" target="_top">Frames</a></li>
+<li><a href="../../../index.html?com/apriori/possible/Fulfillable.html" target="_top">Frames</a></li>
 <li><a href="Fulfillable.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
