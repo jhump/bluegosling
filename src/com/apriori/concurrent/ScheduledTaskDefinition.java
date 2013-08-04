@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
  * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
  *       {@link RunnableWithResult}
  */
-public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
+public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Cancellable {
    /**
     * Returns the timestamp, in milliseconds, that this task definition was submitted
     * to a {@link ScheduledTaskManager}. This is measured as milliseconds elapsed since
@@ -133,6 +133,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T> {
     * @return {@code true} if the task was cancelled; {@code false} if it could
     *       not be cancelled because it was already finished
     */
+   @Override
    boolean cancel(boolean interrupt);
    
    /**

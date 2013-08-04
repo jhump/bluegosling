@@ -4,6 +4,8 @@ import static com.apriori.concurrent.ListenableFutures.addCallback;
 
 import com.apriori.concurrent.ListenableFutures.CombiningFuture;
 import com.apriori.concurrent.ListenableFutures.CombiningVisitor;
+import com.apriori.possible.Fulfillable;
+import com.apriori.possible.Fulfillables;
 import com.apriori.tuples.NTuple;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Quartet;
@@ -12,8 +14,6 @@ import com.apriori.tuples.Trio;
 import com.apriori.tuples.Tuple;
 import com.apriori.tuples.Tuples;
 import com.apriori.tuples.Unit;
-import com.apriori.util.Fulfillable;
-import com.apriori.util.Fulfillables;
 import com.apriori.util.Function;
 
 import java.util.Arrays;

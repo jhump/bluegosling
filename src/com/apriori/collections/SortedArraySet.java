@@ -23,13 +23,15 @@ import java.util.SortedSet;
  * 
  * <p>This set uses an array internally to store the items in the set. Lookups are
  * <em>O(log<sub>2</sub>n)</em>. Due to the way the elements are stored in the array, mutations
- * (insertions and removals can involve <em>O(n)</em> operations to shuffle elements around.
+ * (insertions and removals) can involve <em>O(n)</em> operations to shuffle elements around.
  * 
- * <p>This set does not support {@code null} values.
+ * <p>This set only supports {@code null} values when using a {@link Comparator} that can compare
+ * {@code null} values.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * @param <E> the type of element in the set
  */
+// TODO: add maybeGrow() and maybeGrowBy() to be more efficient about array resizing
 // TODO: implement RandomAccessNavigableSet<E>
 public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializable {
 

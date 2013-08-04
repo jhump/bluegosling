@@ -2,8 +2,8 @@ package com.apriori.concurrent;
 
 import static com.apriori.concurrent.FutureListeners.forVisitor;
 
-import com.apriori.util.Fulfillable;
-import com.apriori.util.Fulfillables;
+import com.apriori.possible.Fulfillable;
+import com.apriori.possible.Fulfillables;
 import com.apriori.util.Function;
 
 import java.util.ArrayList;
@@ -162,8 +162,8 @@ public final class ListenableFutures {
       }
       final SimpleListenableFuture<T> result = new SimpleListenableFuture<T>() {
          @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.setCancelled()) {
-               future.cancel(mayInterrupt);
+            if (future.cancel(mayInterrupt)) {
+               setCancelled();
                return true;
             }
             return false;
@@ -360,6 +360,15 @@ public final class ListenableFutures {
          public void visit(FutureVisitor<? super T> visitor) {
             visitor.successful(value);
          }
+
+         @Override
+         public void await() throws InterruptedException {
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return true;
+         }
       };
    }
    
@@ -424,6 +433,15 @@ public final class ListenableFutures {
          @Override
          public void visit(FutureVisitor<? super T> visitor) {
             visitor.failed(failure);
+         }
+         
+         @Override
+         public void await() throws InterruptedException {
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return true;
          }
       };
    }

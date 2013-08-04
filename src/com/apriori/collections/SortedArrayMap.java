@@ -9,6 +9,8 @@ import java.util.SortedMap;
 // TODO: implement me: more efficient iterator, serialization, and cloning!
 // TODO: javadoc
 // TODO: tests!
+// TODO: add maybeGrow() and maybeGrowBy() to be more efficient about array resizing
+// TODO: implement RandomAccessNavigableMap<K, V>
 public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
       implements Serializable, Cloneable {
 

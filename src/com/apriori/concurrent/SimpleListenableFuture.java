@@ -1,6 +1,10 @@
 package com.apriori.concurrent;
 
-import com.apriori.util.Fulfillable;
+import com.apriori.possible.Fulfillable;
+import com.apriori.possible.Possible;
+import com.apriori.possible.Reference;
+import com.apriori.util.Function;
+import com.apriori.util.Predicate;
 
 import java.util.Collections;
 import java.util.Set;
@@ -116,35 +120,15 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
 
    @Override
    public T get() throws InterruptedException, ExecutionException {
-      if (!done) {
-         lock.lock();
-         try {
-            while (!done) {
-               complete.await();
-            }
-         } finally {
-            lock.unlock();
-         }
-      }
+      await();
       return getValue();
    }
 
    @Override
    public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
          TimeoutException {
-      if (!done) {
-         long startNanos = System.nanoTime();
-         lock.lock();
-         try {
-            long spent = System.nanoTime() - startNanos;
-            long nanosLeft = unit.toNanos(timeout) - spent;
-            while (!done) {
-               if (nanosLeft <= 0) throw new TimeoutException();
-               nanosLeft = complete.awaitNanos(nanosLeft);
-            }
-         } finally {
-            lock.unlock();
-         }
+      if (!await(timeout, unit)) {
+         throw new TimeoutException();
       }
       return getValue();
    }
@@ -169,8 +153,8 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       return new Fulfillable<T>() {
 
          @Override
-         public boolean isFulfilled() {
-            return done && failure == null;
+         public boolean isPresent() {
+            return done && !cancelled && failure == null;
          }
 
          @Override
@@ -180,7 +164,7 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
 
          @Override
          public T get() {
-            if (!done) {
+            if (!done || cancelled) {
                throw new IllegalStateException("not yet fulfilled");
             } else if (failure != null) {
                throw new IllegalStateException("failed to fulfill", failure);
@@ -189,13 +173,41 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
          }
 
          @Override
-         public T getOr(T other) {
-            return done && failure == null ? t : other;
+         public T getOr(T alternate) {
+            return isPresent() ? t : alternate;
          }
 
          @Override
+         public <X extends Throwable> T getOr(X throwable) throws X {
+            if (isPresent()) {
+               return t;
+            }
+            throw throwable;
+         }
+
+         @Override
+         public Possible<T> or(Possible<T> alternate) {
+            return isPresent() ? this : alternate;
+         }
+
+         @Override
+         public <U> Possible<U> transform(Function<T, U> function) {
+            return isPresent() ? Reference.set(function.apply(t)) : Reference.<U>unset();
+         }
+
+         @Override
+         public Possible<T> filter(Predicate<T> predicate) {
+            return isPresent() && predicate.apply(t) ? this : Reference.<T>unset();
+         }
+         
+         @Override
          public Set<T> asSet() {
-            return done && failure == null ? Collections.singleton(t) : Collections.<T>emptySet();
+            return isPresent() ? Collections.singleton(t) : Collections.<T>emptySet();
+         }
+
+         @Override
+         public <R> R visit(Possible.Visitor<T, R> visitor) {
+            return isPresent() ? visitor.present(t) : visitor.absent();
          }
       };
    }
@@ -238,5 +250,41 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       } else {
          visitor.successful(t);
       }
+   }
+
+   @Override
+   public void await() throws InterruptedException {
+      if (!done) {
+         lock.lock();
+         try {
+            while (!done) {
+               complete.await();
+            }
+         } finally {
+            lock.unlock();
+         }
+      }
+   }
+
+   @Override
+   public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+      if (!done) {
+         long startNanos = System.nanoTime();
+         long limitNanos = unit.toNanos(limit);
+         lock.lock();
+         try {
+            long spentNanos = System.nanoTime() - startNanos;
+            long nanosLeft = limitNanos - spentNanos;
+            while (!done) {
+               if (nanosLeft <= 0) {
+                  return false;
+               }
+               nanosLeft = complete.awaitNanos(nanosLeft);
+            }
+         } finally {
+            lock.unlock();
+         }
+      }
+      return true;
    }
 }

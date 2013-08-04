@@ -1,9 +1,12 @@
 package com.apriori.concurrent;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -114,5 +117,27 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
       } else {
          visitor.successful(getResult());
       }
+   }
+
+   @Override
+   public void await() throws InterruptedException {
+      try {
+         get();
+      } catch (ExecutionException unused) {
+      } catch (CancellationException unused) {
+      }
+   }
+
+   @Override
+   public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+      try {
+         get(limit, unit);
+      } catch (ExecutionException unused) {
+      } catch (CancellationException unused) {
+      } catch (TimeoutException e) {
+         // icky that timing out and returning false requires an exception be thrown and caught :(
+         return false;
+      }
+      return true;
    }
 }
