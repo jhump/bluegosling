@@ -14,7 +14,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 //TODO: test
 //TODO: should fulfillables be serializable?
-public class Fulfillables {
+public final class Fulfillables {
+   private Fulfillables() {
+   }
 
    /**
     * Creates a value that is already fulfilled.
