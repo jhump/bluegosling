@@ -178,7 +178,7 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
          }
 
          @Override
-         public <X extends Throwable> T getOr(X throwable) throws X {
+         public <X extends Throwable> T getOrThrow(X throwable) throws X {
             if (isPresent()) {
                return t;
             }

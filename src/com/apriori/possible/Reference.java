@@ -124,7 +124,7 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
-      public <X extends Throwable> T getOr(X throwable) throws X {
+      public <X extends Throwable> T getOrThrow(X throwable) throws X {
          return t;
       }
 
@@ -220,7 +220,7 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
-      public <X extends Throwable> T getOr(X throwable) throws X {
+      public <X extends Throwable> T getOrThrow(X throwable) throws X {
          throw throwable;
       }
 

@@ -2360,6 +2360,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/Cancellables.html#fromFuture(java.util.concurrent.Future)">fromFuture(Future&lt;?&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent">Cancellables</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/possible/Possibles.html#fromFuture(java.util.concurrent.Future)">fromFuture(Future&lt;? extends T&gt;)</a></span> - Static method in class com.apriori.possible.<a href="./com/apriori/possible/Possibles.html" title="class in com.apriori.possible">Possibles</a></dt>
+<dd>
+<div class="block">Returns a view of a future as a possible value.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/Cancellables.html#fromFutures(java.util.concurrent.Future...)">fromFutures(Future&lt;?&gt;...)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent">Cancellables</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/Cancellables.html#fromFutures(java.lang.Iterable)">fromFutures(Iterable&lt;? extends Future&lt;?&gt;&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent">Cancellables</a></dt>
@@ -3054,13 +3058,13 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Holder.html#getOr(T)">getOr(T)</a></span> - Method in class com.apriori.possible.<a href="./com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/possible/Holder.html#getOr(X)">getOr(X)</a></span> - Method in class com.apriori.possible.<a href="./com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Possible.html#getOr(T)">getOr(T)</a></span> - Method in interface com.apriori.possible.<a href="./com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
 <dd>
 <div class="block">Gets the contained value if present or the specified value if not.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/possible/Possible.html#getOr(X)">getOr(X)</a></span> - Method in interface com.apriori.possible.<a href="./com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
+<dt><span class="strong"><a href="./com/apriori/possible/Holder.html#getOrThrow(X)">getOrThrow(X)</a></span> - Method in class com.apriori.possible.<a href="./com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/possible/Possible.html#getOrThrow(X)">getOrThrow(X)</a></span> - Method in interface com.apriori.possible.<a href="./com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
 <dd>
 <div class="block">Gets the contained value or throws the specified exception if not</div>
 </dd>
@@ -4578,6 +4582,11 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/di/AbstractScoper.html#NULL_SENTINEL">NULL_SENTINEL</a></span> - Static variable in class com.apriori.di.<a href="./com/apriori/di/AbstractScoper.html" title="class in com.apriori.di">AbstractScoper</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/possible/Possibles.html#nullIfNotPresent(java.util.Collection)">nullIfNotPresent(Collection&lt;? extends Possible&lt;T&gt;&gt;)</a></span> - Static method in class com.apriori.possible.<a href="./com/apriori/possible/Possibles.html" title="class in com.apriori.possible">Possibles</a></dt>
+<dd>
+<div class="block">Returns a list of the values, <code>null</code> if no value is present, from the specified
+ collection of possible values.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/testing/ObjectVerifiers.html#NULLS">NULLS</a></span> - Static variable in class com.apriori.testing.<a href="./com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing">ObjectVerifiers</a></dt>
 <dd>
 <div class="block">An object that verifies that the test object is null if the reference object is null and
@@ -4817,6 +4826,10 @@
 <dd>
 <div class="block">A visitor of possible values.</div>
 </dd>
+<dt><a href="./com/apriori/possible/Possibles.html" title="class in com.apriori.possible"><span class="strong">Possibles</span></a> - Class in <a href="./com/apriori/possible/package-summary.html">com.apriori.possible</a></dt>
+<dd>
+<div class="block">Utility methods for instances of <a href="./com/apriori/possible/Possible.html" title="interface in com.apriori.possible"><code>Possible</code></a>.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/reflect/ClassHierarchyCrawler.Builder.html#postOrderVisit()">postOrderVisit()</a></span> - Method in class com.apriori.reflect.<a href="./com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a></dt>
 <dd>
 <div class="block">Indicates that a post-order traversal is performed.</div>
@@ -4908,6 +4921,10 @@
 <dt><span class="strong"><a href="./com/apriori/possible/Possible.Visitor.html#present(T)">present(T)</a></span> - Method in interface com.apriori.possible.<a href="./com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a></dt>
 <dd>
 <div class="block">Visits a possible value where a value is present.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/possible/Possibles.html#presentOnly(java.util.Collection)">presentOnly(Collection&lt;? extends Possible&lt;T&gt;&gt;)</a></span> - Static method in class com.apriori.possible.<a href="./com/apriori/possible/Possibles.html" title="class in com.apriori.possible">Possibles</a></dt>
+<dd>
+<div class="block">Returns a list of the present values from the specified collection of possible values.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/collections/FilteringListIterator.html#previous()">previous()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/FilteringListIterator.html" title="class in com.apriori.collections">FilteringListIterator</a></dt>
 <dd>&nbsp;</dd>

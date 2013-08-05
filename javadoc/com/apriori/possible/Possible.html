@@ -164,7 +164,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#getOr(X)">getOr</a></strong>(X&nbsp;throwable)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#getOrThrow(X)">getOrThrow</a></strong>(X&nbsp;throwable)</code>
 <div class="block">Gets the contained value or throws the specified exception if not</div>
 </td>
 </tr>
@@ -285,16 +285,16 @@
 <dt><span class="strong">Returns:</span></dt><dd>the contained value if present or the alternate if not</dd></dl>
 </li>
 </ul>
-<a name="getOr(java.lang.Throwable)">
+<a name="getOrThrow(java.lang.Throwable)">
 <!--   -->
-</a><a name="getOr(X)">
+</a><a name="getOrThrow(X)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getOr</h4>
-<pre>&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;getOr(X&nbsp;throwable)
-        throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<h4>getOrThrow</h4>
+<pre>&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;getOrThrow(X&nbsp;throwable)
+             throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <div class="block">Gets the contained value or throws the specified exception if not</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>throwable</code> - the exception to throw if a value is not present</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the contained value</dd>

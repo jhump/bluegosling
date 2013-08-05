@@ -63,7 +63,7 @@ public final class Fulfillables {
          }
          
          @Override
-         public <X extends Throwable> T getOr(X throwable) throws X {
+         public <X extends Throwable> T getOrThrow(X throwable) throws X {
             return value;
          }
 
@@ -132,7 +132,7 @@ public final class Fulfillables {
          }
          
          @Override
-         public <X extends Throwable> T getOr(X throwable) throws X {
+         public <X extends Throwable> T getOrThrow(X throwable) throws X {
             if (isPresent()) {
                return t;
             }

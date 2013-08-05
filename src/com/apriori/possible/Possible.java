@@ -74,7 +74,7 @@ public interface Possible<T> {
     * @return the contained value
     * @throws X if a value is not present
     */
-   <X extends Throwable> T getOr(X throwable) throws X;
+   <X extends Throwable> T getOrThrow(X throwable) throws X;
    
    /**
     * Returns a view of this possible value as a set. If a value is present, a singleton set with
