@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.apriori.util.Function;
 
@@ -14,6 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -135,5 +138,65 @@ public class TrioTest {
       Trio<?, ?, ?> deserialized = (Trio<?, ?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(t, deserialized);
+   }
+
+   // separate, combine
+   
+   @Test public void separate() {
+      assertEquals(
+            Trio.create(Collections.emptyList(), Collections.emptyList(), Collections.emptyList()),
+            Trio.separate(Collections.<Trio<Integer, String, Double>>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Trio<Integer, String, Double>> trios = Arrays.asList(Trio.create(1, "a", 101.0),
+            Trio.create(2, "b", 222.0), Trio.create(3, "c", 330.3));
+      assertEquals(
+            Trio.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+                  Arrays.asList(101.0, 222.0, 330.3)),
+            Trio.separate(trios));
+   }
+
+   private <A, B, C> void assertCombinedEquals(List<Trio<A, B, C>> expectedTrios,
+         Collection<? extends A> a, Collection<? extends B> b, Collection<? extends C> c) {
+      assertEquals(expectedTrios, Trio.combine(a, b, c));
+      assertEquals(expectedTrios, Trio.combine(Trio.create(a, b, c)));
+   }
+   
+   @SuppressWarnings("unchecked") // dang generic var-args...
+   @Test public void combine() {
+      assertCombinedEquals(Collections.<Trio<Integer, String, Double>>emptyList(),
+            Collections.<Integer>emptyList(), Collections.<String>emptyList(),
+            Collections.<Double>emptyList());
+
+      assertCombinedEquals(
+            Arrays.asList(Trio.create(1, "a", 101.0), Trio.create(2, "b", 222.0),
+                  Trio.create(3, "c", 330.3)),
+            Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3));
+   }
+
+   private void assertCombineFails(Collection<?> a, Collection<?> b, Collection<?> c) {
+      try {
+         Trio.combine(a, b, c);
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+
+      try {
+         Trio.combine(Trio.create(a, b, c));
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+}
+
+   @Test public void combine_unequalSizes() {
+      assertCombineFails(Collections.emptySet(), Collections.emptySet(),
+            Collections.singleton("abc"));
+      assertCombineFails(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c", "d", "e"),
+            Arrays.asList(101.0, 222.0, 330.3));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3, 400.4, 555.5));
    }
 }

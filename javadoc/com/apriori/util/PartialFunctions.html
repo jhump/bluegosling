@@ -1,0 +1,657 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>PartialFunctions</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="PartialFunctions";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/util/PartialFunctions.html" target="_top">Frames</a></li>
+<li><a href="PartialFunctions.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.apriori.util</div>
+<h2 title="Class PartialFunctions" class="title">Class PartialFunctions</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>com.apriori.util.PartialFunctions</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public final class <span class="strong">PartialFunctions</span>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Numerous utility methods for using <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util"><code>PartialFunction</code></a>s.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Functions.html" title="class in com.apriori.util"><code>Functions</code></a></dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#chain(com.apriori.util.PartialFunction.Bivariate, com.apriori.util.PartialFunction.Bivariate)">chain</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function1,
+     <a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function2)</code>
+<div class="block">Returns a bivariate partial function that chains two bivariate partial functions together.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#chain(com.apriori.util.PartialFunction.Trivariate, com.apriori.util.PartialFunction.Trivariate)">chain</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function1,
+     <a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function2)</code>
+<div class="block">Returns a bivariate partial function that chains two bivariate partial functions together.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#chain(com.apriori.util.PartialFunction, com.apriori.util.PartialFunction)">chain</a></strong>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function1,
+     <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function2)</code>
+<div class="block">Returns a partial function that chains two partial functions together.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#fromFunction(com.apriori.util.Function.Bivariate)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</code>
+<div class="block">Adapts a compatible bivariate function to the <a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util"><code>PartialFunction.Bivariate</code></a> interface.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#fromFunction(com.apriori.util.Function.Trivariate)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</code>
+<div class="block">Adapts a compatible three-argument function to the <a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util"><code>PartialFunction.Trivariate</code></a>
+ interface.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#fromFunction(com.apriori.util.Function)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</code>
+<div class="block">Adapts a compatible function to the <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util"><code>PartialFunction</code></a> interface.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#fromMap(java.util.Map)">fromMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? super K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Returns a partial function that is backed by a map.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Bivariate)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function)</code>
+<div class="block">Lifts a bivariate partial function to a regular function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Bivariate, java.lang.Class)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</code>
+<div class="block">Lifts a bivariate partial function to a regular function that throws a custom exception for
+ incomputable inputs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Bivariate, com.apriori.util.Function.Bivariate)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+    <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;fallback)</code>
+<div class="block">Lifts a bivariate partial function to a regular function via a fallback function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Bivariate, O)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+    O&nbsp;ifUndefined)</code>
+<div class="block">Lifts a bivariate partial function to a regular function via default value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Trivariate)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function)</code>
+<div class="block">Lifts a three-argument partial function to a regular function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Trivariate, java.lang.Class)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</code>
+<div class="block">Lifts a three-argument partial function to a regular function that throws a custom exception
+ for incomputable inputs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Trivariate, com.apriori.util.Function.Trivariate)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+    <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;fallback)</code>
+<div class="block">Lifts a three-argument partial function to a regular function via a fallback function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction.Trivariate, O)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+    O&nbsp;ifUndefined)</code>
+<div class="block">Lifts a three-argument partial function to a regular function via default value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function)</code>
+<div class="block">Lifts a partial function to a regular function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction, java.lang.Class)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</code>
+<div class="block">Lifts a partial function to a regular function that throws a custom exception for incomputable
+ inputs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction, com.apriori.util.Function)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+    <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,? extends O&gt;&nbsp;fallback)</code>
+<div class="block">Lifts a partial function to a regular function via a fallback function.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/PartialFunctions.html#lift(com.apriori.util.PartialFunction, O)">lift</a></strong>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+    O&nbsp;ifUndefined)</code>
+<div class="block">Lifts a partial function to a regular function via default value.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="fromFunction(com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;I,O&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</pre>
+<div class="block">Adapts a compatible function to the <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util"><code>PartialFunction</code></a> interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function that returns an optional result</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that is equivalent to the specified function</dd></dl>
+</li>
+</ul>
+<a name="fromFunction(com.apriori.util.Function.Bivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</pre>
+<div class="block">Adapts a compatible bivariate function to the <a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util"><code>PartialFunction.Bivariate</code></a> interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function that returns an optional result</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that is equivalent to the specified function</dd></dl>
+</li>
+</ul>
+<a name="fromFunction(com.apriori.util.Function.Trivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;? extends O&gt;&gt;&nbsp;function)</pre>
+<div class="block">Adapts a compatible three-argument function to the <a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util"><code>PartialFunction.Trivariate</code></a>
+ interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function that returns an optional result</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that is equivalent to the specified function</dd></dl>
+</li>
+</ul>
+<a name="fromMap(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;K,V&gt;&nbsp;fromMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? super K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Returns a partial function that is backed by a map. The set of supported inputs are those for
+ which keys exist in the map. For other inputs, <a href="../../../com/apriori/possible/Optional.html#none()">none</a> is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - a map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that computes results by looking up values in the map</dd></dl>
+</li>
+</ul>
+<a name="chain(com.apriori.util.PartialFunction, com.apriori.util.PartialFunction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>chain</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;I,O&gt;&nbsp;chain(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function1,
+                               <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function2)</pre>
+<div class="block">Returns a partial function that chains two partial functions together. If the first function
+ does not support an input, then the second function will be invoked. The result for a given
+ input will be absent only if neither function can compute it. If both functions can compute
+ a result for an input, the result from the first function will be used.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function1</code> - the first partial function</dd><dd><code>function2</code> - the second partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that invokes the first function and then, if necessary, the second
+       in order to compute result</dd></dl>
+</li>
+</ul>
+<a name="chain(com.apriori.util.PartialFunction.Bivariate, com.apriori.util.PartialFunction.Bivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>chain</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;chain(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function1,
+                                                 <a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function2)</pre>
+<div class="block">Returns a bivariate partial function that chains two bivariate partial functions together. If
+ the first function does not support an input, then the second function will be invoked. The
+ result for a given input will be absent only if neither function can compute it. If both
+ functions can compute a result for an input, the result from the first function will be used.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function1</code> - the first partial function</dd><dd><code>function2</code> - the second partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that invokes the first function and then, if necessary, the second
+       in order to compute result</dd></dl>
+</li>
+</ul>
+<a name="chain(com.apriori.util.PartialFunction.Trivariate, com.apriori.util.PartialFunction.Trivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>chain</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;chain(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function1,
+                                                        <a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function2)</pre>
+<div class="block">Returns a bivariate partial function that chains two bivariate partial functions together. If
+ the first function does not support an input, then the second function will be invoked. The
+ result for a given input will be absent only if neither function can compute it. If both
+ functions can compute a result for an input, the result from the first function will be used.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function1</code> - the first partial function</dd><dd><code>function2</code> - the second partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a partial function that invokes the first function and then, if necessary, the second
+       in order to compute result</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction,java.lang.Object)">
+<!--   -->
+</a><a name="lift(com.apriori.util.PartialFunction, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+                       O&nbsp;ifUndefined)</pre>
+<div class="block">Lifts a partial function to a regular function via default value. The returned value of the
+ regular function is not optional.
+ 
+ <p>This form of the method returns a default value for elements in the input domain for which
+ the partial function cannot compute a result.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>ifUndefined</code> - the value to return for unsupported inputs</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that returns a default value for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction, com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+                       <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,? extends O&gt;&nbsp;fallback)</pre>
+<div class="block">Lifts a partial function to a regular function via a fallback function. The returned value of
+ the regular function is not optional.
+ 
+ <p>This form of the method returns a value for incomputable elements in the input domain by
+ falling back to another function to supply those results.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>fallback</code> - the fallback function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that invokes a fallback function for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function)</pre>
+<div class="block">Lifts a partial function to a regular function. The returned value of the regular function is
+ not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> when given
+ an input that isn't supported.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super I,? extends O&gt;&nbsp;function,
+                       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</pre>
+<div class="block">Lifts a partial function to a regular function that throws a custom exception for incomputable
+ inputs. The returned value of the regular function is not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw a custom exception when given an input
+ that isn't supported. The specified exception type must be unchecked (since a partial function
+ cannot throw a checked exception due to its signature). It also must have a default,
+ no-argument constructor which will be used to construct instances of the exception.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>throwIfUndefined</code> - the type of exception to</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="lift(com.apriori.util.PartialFunction.Bivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+                                         O&nbsp;ifUndefined)</pre>
+<div class="block">Lifts a bivariate partial function to a regular function via default value. The returned value
+ of the regular function is not optional.
+ 
+ <p>This form of the method returns a default value for elements in the input domain for which
+ the partial function cannot compute a result.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>ifUndefined</code> - the value to return for unsupported inputs</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that returns a default value for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Bivariate, com.apriori.util.Function.Bivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+                                         <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;fallback)</pre>
+<div class="block">Lifts a bivariate partial function to a regular function via a fallback function. The returned
+ value of the regular function is not optional.
+ 
+ <p>This form of the method returns a value for incomputable elements in the input domain by
+ falling back to another function to supply those results.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>fallback</code> - the fallback function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that invokes a fallback function for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Bivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function)</pre>
+<div class="block">Lifts a bivariate partial function to a regular function. The returned value of the regular
+ function is not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> when given
+ an input that isn't supported.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Bivariate, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I1,I2,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+                                         <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</pre>
+<div class="block">Lifts a bivariate partial function to a regular function that throws a custom exception for
+ incomputable inputs. The returned value of the regular function is not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw a custom exception when given an input
+ that isn't supported. The specified exception type must be unchecked (since a partial function
+ cannot throw a checked exception due to its signature). It also must have a default,
+ no-argument constructor which will be used to construct instances of the exception.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>throwIfUndefined</code> - the type of exception to</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Trivariate,java.lang.Object)">
+<!--   -->
+</a><a name="lift(com.apriori.util.PartialFunction.Trivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                                                O&nbsp;ifUndefined)</pre>
+<div class="block">Lifts a three-argument partial function to a regular function via default value. The returned
+ value of the regular function is not optional.
+ 
+ <p>This form of the method returns a default value for elements in the input domain for which
+ the partial function cannot compute a result.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>ifUndefined</code> - the value to return for unsupported inputs</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that returns a default value for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Trivariate, com.apriori.util.Function.Trivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                                                <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;fallback)</pre>
+<div class="block">Lifts a three-argument partial function to a regular function via a fallback function. The
+ returned value of the regular function is not optional.
+ 
+ <p>This form of the method returns a value for incomputable elements in the input domain by
+ falling back to another function to supply those results.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>fallback</code> - the fallback function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that invokes a fallback function for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Trivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function)</pre>
+<div class="block">Lifts a three-argument partial function to a regular function. The returned value of the
+ regular function is not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> when given
+ an input that isn't supported.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+<a name="lift(com.apriori.util.PartialFunction.Trivariate, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>lift</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;lift(<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                                                <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;&nbsp;throwIfUndefined)</pre>
+<div class="block">Lifts a three-argument partial function to a regular function that throws a custom exception
+ for incomputable inputs. The returned value of the regular function is not optional.
+ 
+ <p>This form of the method does not provide a real fallback strategy for inputs that cannot be
+ computed. Instead, the returned function will throw a custom exception when given an input
+ that isn't supported. The specified exception type must be unchecked (since a partial function
+ cannot throw a checked exception due to its signature). It also must have a default,
+ no-argument constructor which will be used to construct instances of the exception.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a partial function</dd><dd><code>throwIfUndefined</code> - the type of exception to</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a regular function that throws an exception for unsupported inputs</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/util/PartialFunctions.html" target="_top">Frames</a></li>
+<li><a href="PartialFunctions.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

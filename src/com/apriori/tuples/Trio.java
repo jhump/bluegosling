@@ -1,8 +1,12 @@
 package com.apriori.tuples;
 
 import com.apriori.util.Function;
+import com.apriori.util.Predicate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,6 +34,74 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
    public static <T> List<T> asTypedList(Trio<? extends T, ? extends T, ? extends T> trio) {
       return (List<T>) trio.asList();
+   }
+   
+   /**
+    * Separates the values in a collection of trios to produce a trio of collections. The returned
+    * lists will have the same size as the specified collection and items will be in the same order
+    * as returned by iteration over the specified collection (e.g. the first items in the returned
+    * lists represent the items extracted from the first trio in the collection).
+    * 
+    * @param trios a collection of trios
+    * @return a trio of lists whose values were extracted from the collection of trios
+    */
+   public static <T, U, V> Trio<List<T>, List<U>, List<V>> separate(
+         Collection<Trio<T, U, V>> trios) {
+      List<T> t = new ArrayList<T>(trios.size());
+      List<U> u = new ArrayList<U>(trios.size());
+      List<V> v = new ArrayList<V>(trios.size());
+      for (Trio<T, U, V> trio : trios) {
+         t.add(trio.getFirst());
+         u.add(trio.getSecond());
+         v.add(trio.getThird());
+      }
+      return create(t, u, v);
+   }
+
+   /**
+    * Combines a trio of collections into a collection of trios. The returned list will have the
+    * same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first trio in the returned list is a trio
+    * with the first value from each collection).
+    * 
+    * @param trio a trio of collections
+    * @return a list of trios, each one representing corresponding values from the collection
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */   
+   public static <T, U, V> List<Trio<T, U, V>> combine(
+         Trio<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>> trio) {
+      return combine(trio.getFirst(), trio.getSecond(), trio.getThird());
+   }
+   
+   /**
+    * Combines three collections into a collection of trios. The returned list will have the
+    * same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first trio in the returned list is a trio
+    * with the first value from each collection).
+    * 
+    * @param t a collection whose elements will constitute the first value of a trio
+    * @param u a collection whose elements will constitute the second value of a trio
+    * @param v a collection whose elements will constitute the third value of a trio
+    * @return a list of trios, each one representing corresponding values from the collections
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */
+   public static <T, U, V> List<Trio<T, U, V>> combine(Collection<T> t, Collection<U> u,
+         Collection<V> v) {
+      if (t.size() != u.size() || t.size() != v.size()) {
+         throw new IllegalArgumentException();
+      }
+      List<Trio<T, U, V>> list = new ArrayList<Trio<T, U, V>>(t.size());
+      Iterator<T> tIter = t.iterator();
+      Iterator<U> uIter = u.iterator();
+      Iterator<V> vIter = v.iterator();
+      while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext()) {
+         list.add(create(tIter.next(), uIter.next(), vIter.next()));
+      }
+      if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext()) {
+         // size changed since check above such that collections differ
+         throw new IllegalArgumentException();
+      }
+      return list;
    }
    
    private final A a;
@@ -166,8 +238,24 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
       return Trio.<A, B, T>create(a, b, function.apply(c));
    }
    
+   /**
+    * Combines the three values in this trio into a single result using the specified function.
+    * 
+    * @param function the function
+    * @return the result of applying the function to the three elements of this trio
+    */
    public <D> D combine(
          Function.Trivariate<? super A, ? super B, ? super C, ? extends D> function) {
       return function.apply(a, b, c);
+   }
+   
+   /**
+    * Tests the trio of values using the specified predicate.
+    * 
+    * @param predicate the predicate
+    * @return true if the contained values match the predicate; false otherwise
+    */
+   public boolean test(Predicate.Trivariate<? super A, ? super B, ? super C> predicate) {
+      return predicate.test(a, b, c);
    }
 }

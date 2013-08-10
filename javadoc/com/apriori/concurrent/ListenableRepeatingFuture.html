@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/ListenableRepeatingFuture.html" target="_top">Frames</a></li>
@@ -87,6 +87,14 @@
 <dt>All Superinterfaces:</dt>
 <dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;</dd>
 </dl>
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">CallableRepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V,T&gt;, <a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RunnableRepeatingScheduledTask</a></dd>
+</dl>
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">ListenableRepeatingFuture&lt;T&gt;</span>
@@ -111,12 +119,16 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html#addListenerForEachAttempt(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListenerForEachAttempt</a></strong>(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&gt;&nbsp;listener,
-                         <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html#addListenerForEachInstance(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListenerForEachInstance</a></strong>(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&gt;&nbsp;listener,
+                          <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html#executionCount()">executionCount</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html#getMostRecentResult()">getMostRecentResult</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -175,14 +187,23 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="addListenerForEachAttempt(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">
+<a name="getMostRecentResult()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>addListenerForEachAttempt</h4>
-<pre>void&nbsp;addListenerForEachAttempt(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&gt;&nbsp;listener,
-                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<h4>getMostRecentResult</h4>
+<pre><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&nbsp;getMostRecentResult()</pre>
+</li>
+</ul>
+<a name="addListenerForEachInstance(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addListenerForEachInstance</h4>
+<pre>void&nbsp;addListenerForEachInstance(<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&gt;&nbsp;listener,
+                              <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 </li>
 </ul>
 <a name="executionCount()">
@@ -220,7 +241,7 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/ListenableRepeatingFuture.html" target="_top">Frames</a></li>

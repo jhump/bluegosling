@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.apriori.util.Function;
 
@@ -14,6 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -125,5 +128,53 @@ public class PairTest {
       Pair<?, ?> deserialized = (Pair<?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(p, deserialized);
+   }
+
+   // separate, combine
+   
+   @Test public void separate() {
+      assertEquals(Pair.create(Collections.emptyList(), Collections.emptyList()),
+            Pair.separate(Collections.<Pair<Integer, String>>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Pair<Integer, String>> pairs =
+            Arrays.asList(Pair.create(1, "a"), Pair.create(2, "b"), Pair.create(3, "c"));
+      assertEquals(Pair.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c")),
+            Pair.separate(pairs));
+   }
+
+   private <A, B> void assertCombinedEquals(List<Pair<A, B>> expectedPairs,
+         Collection<? extends A> a, Collection<? extends B> b) {
+      assertEquals(expectedPairs, Pair.combine(a, b));
+      assertEquals(expectedPairs, Pair.combine(Pair.create(a, b)));
+   }
+   
+   @SuppressWarnings("unchecked") // dang generic var-args...
+   @Test public void combine() {
+      assertCombinedEquals(Collections.<Pair<Integer, String>>emptyList(),
+            Collections.<Integer>emptyList(), Collections.<String>emptyList());
+
+      assertCombinedEquals(
+            Arrays.asList(Pair.create(1, "a"), Pair.create(2, "b"), Pair.create(3, "c")),
+            Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"));
+   }
+
+   private void assertCombineFails(Collection<?> a, Collection<?> b) {
+      try {
+         Pair.combine(a, b);
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+
+      try {
+         Pair.combine(Pair.create(a, b));
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+}
+
+   @Test public void combine_unequalSizes() {
+      assertCombineFails(Collections.emptySet(), Collections.singleton("abc"));
+      assertCombineFails(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("a", "b", "c"));
    }
 }

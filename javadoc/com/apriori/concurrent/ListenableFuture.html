@@ -90,11 +90,11 @@
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">CallableRepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent">CallableScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V,T&gt;, <a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RunnableRepeatingScheduledTask</a>, <a href="../../../com/apriori/concurrent/RunnableScheduledTask.html" title="interface in com.apriori.concurrent">RunnableScheduledTask</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;V,T&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dd>
+<dd><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a>, <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dd>
 </dl>
 <hr>
 <br>
@@ -103,7 +103,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <div class="block">The future to end all futures. This provides API improvements over the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> in
  several categories:
  <ol>
- <li><strong>Callbacks</strong>: This is allows for real asynchronous processing of futures and
+ <li><strong>Callbacks</strong>: This allows for real asynchronous processing of futures and
  is what gives this future its name. You can add listeners that are invoked when the future
  completes.</li>
  <li><strong>Blocking</strong>: This interface extends <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a>, giving you more API
@@ -111,7 +111,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
  <li><strong>Inspecting</strong>: Numerous new methods are provided for inspecting the result of
  a completed future, none of which require a <code>try/catch</code> block (<a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>isSuccessful()</code></a>,
  <a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()"><code>getResult()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()"><code>isFailed()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()"><code>getFailure()</code></a>, and
- <a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)"><code>visit(FutureVisitor)</code></a>).</li>
+ <a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)"><code>visit(FutureVisitor)</code></a>). All of these new methods are non-blocking and are intended to
+ assist with implementing listeners and with writing asynchronous code. Many will throw an
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> if invoked before the future is done.</li>
  </ol></div>
 </li>
 </ul>

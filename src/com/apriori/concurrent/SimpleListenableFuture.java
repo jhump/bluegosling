@@ -6,7 +6,10 @@ import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
 
+import java.util.AbstractSet;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -18,7 +21,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 //TODO: javadoc
-//TODO: test
+//TODO: more tests
 public class SimpleListenableFuture<T> implements ListenableFuture<T> {
 
    private final Lock lock = new ReentrantLock();
@@ -191,18 +194,59 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
          }
 
          @Override
-         public <U> Possible<U> transform(Function<T, U> function) {
-            return isPresent() ? Reference.set(function.apply(t)) : Reference.<U>unset();
+         public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
+            return isPresent() ? Reference.<U>setTo(function.apply(t)) : Reference.<U>unset();
          }
 
          @Override
-         public Possible<T> filter(Predicate<T> predicate) {
-            return isPresent() && predicate.apply(t) ? this : Reference.<T>unset();
+         public Possible<T> filter(Predicate<? super T> predicate) {
+            return isPresent() && predicate.test(t) ? this : Reference.<T>unset();
          }
          
          @Override
          public Set<T> asSet() {
-            return isPresent() ? Collections.singleton(t) : Collections.<T>emptySet();
+            // since it can never be unset, we can just return a singleton set if
+            // the value has been fulfilled
+            if (isPresent()) {
+               return Collections.singleton(t);
+            }
+            // otherwise, we return a view that is empty but will become a singleton
+            // set once the value is fulfilled
+            return new AbstractSet<T>() {
+               @Override
+               public Iterator<T> iterator() {
+                  return new Iterator<T>() {
+                     boolean consumed;
+                     
+                     @Override
+                     public boolean hasNext() {
+                        // This could possibly return true after returning false, but that should
+                        // be harmless. Since a fulfillable can only be set once and cannot be
+                        // cleared, it can never return false after returning true.
+                        return isPresent() && !consumed;
+                     }
+
+                     @Override
+                     public T next() {
+                        if (consumed || !isPresent()) {
+                           throw new NoSuchElementException();
+                        }
+                        consumed = true;
+                        return get();
+                     }
+
+                     @Override
+                     public void remove() {
+                        throw new UnsupportedOperationException();
+                     }
+                  };
+               }
+
+               @Override
+               public int size() {
+                  return isPresent() ? 1 : 0;
+               }
+            };
          }
 
          @Override

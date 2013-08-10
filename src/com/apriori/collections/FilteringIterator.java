@@ -57,7 +57,7 @@ public class FilteringIterator<E> implements Iterator<E> {
    private void findNext() {
       while (internal().hasNext()) {
          E candidate = internal().next();
-         if (predicate().apply(candidate)) {
+         if (predicate().test(candidate)) {
             next = candidate == null ? NULL_SENTINEL : candidate;
             needNext = false;
             return;

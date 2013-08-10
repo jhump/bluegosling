@@ -1,33 +1,20 @@
 package com.apriori.util;
 
 /**
- * A {@linkplain Function function} that returns a boolean value.
+ * Like a {@link Function}, but returns a primitive boolean value.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <T> the argument type
  */
-public interface Predicate<T> extends Function<T, Boolean> {
-
+public interface Predicate<T> {
    /**
-    * A predicate that always returns true.
+    * Tests an object.
+    * 
+    * @param input the single argument
+    * @return the predicate's result
     */
-   Predicate<Object> ALL = new Predicate<Object>() {
-      @Override
-      public Boolean apply(Object input) {
-         return true;
-      }
-   };
-
-   /**
-    * A predicate that always returns false.
-    */
-   Predicate<Object> NONE = new Predicate<Object>() {
-      @Override
-      public Boolean apply(Object input) {
-         return false;
-      }
-   };
+   boolean test(T input);
    
    /**
     * A {@link Function.Bivariate function} that returns a boolean value.
@@ -37,28 +24,15 @@ public interface Predicate<T> extends Function<T, Boolean> {
     * @param <T1> the first argument type
     * @param <T2> the second argument type
     */
-   interface Bivariate<T1, T2> extends Function.Bivariate<T1, T2, Boolean> {
+   interface Bivariate<T1, T2> {
       /**
-       * A predicate that always returns true.
+       * Tests two objects.
+       * 
+       * @param input1 the first argument
+       * @param input2 the second argument
+       * @return the predicate's result
        */
-      @SuppressWarnings("hiding")
-      Bivariate<Object, Object> ALL = new Bivariate<Object, Object>() {
-         @Override
-         public Boolean apply(Object input1, Object input2) {
-            return true;
-         }
-      };
-
-      /**
-       * A predicate that always returns false.
-       */
-      @SuppressWarnings("hiding")
-      Bivariate<Object, Object> NONE = new Bivariate<Object, Object>() {
-         @Override
-         public Boolean apply(Object input1, Object input2) {
-            return false;
-         }
-      };
+      boolean test(T1 input1, T2 input2);
    }
    
    /**
@@ -70,27 +44,15 @@ public interface Predicate<T> extends Function<T, Boolean> {
     * @param <T2> the second argument type
     * @param <T3> the third argument type
     */
-   interface Trivariate<T1, T2, T3> extends Function.Trivariate<T1, T2, T3, Boolean> {
+   interface Trivariate<T1, T2, T3> {
       /**
-       * A predicate that always returns true.
+       * Tests three objects.
+       * 
+       * @param input1 the first argument
+       * @param input2 the second argument
+       * @param input3 the third argument
+       * @return the predicate's result
        */
-      @SuppressWarnings("hiding")
-      Trivariate<Object, Object, Object> ALL = new Trivariate<Object, Object, Object>() {
-         @Override
-         public Boolean apply(Object input1, Object input2, Object input3) {
-            return true;
-         }
-      };
-
-      /**
-       * A predicate that always returns false.
-       */
-      @SuppressWarnings("hiding")
-      Trivariate<Object, Object, Object> NONE = new Trivariate<Object, Object, Object>() {
-         @Override
-         public Boolean apply(Object input1, Object input2, Object input3) {
-            return false;
-         }
-      };
+      boolean test(T1 input1, T2 input2, T3 input3);
    }
 }

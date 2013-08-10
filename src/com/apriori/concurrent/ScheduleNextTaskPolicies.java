@@ -21,13 +21,13 @@ public enum ScheduleNextTaskPolicies implements ScheduleNextTaskPolicy<Object, O
    ON_SUCCESS() {
       @Override
       public boolean shouldScheduleNext(ScheduledTask<? extends Object, ? extends Object> latest) {
-         return latest.succeeded();
+         return latest.isSuccessful();
       }
    },
    ON_FAILURE() {
       @Override
       public boolean shouldScheduleNext(ScheduledTask<? extends Object, ? extends Object> latest) {
-         return latest.failed();
+         return latest.isFailed();
       }
    }
 }

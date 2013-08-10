@@ -93,17 +93,17 @@
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/tuples/AbstractTuple.html" title="class in com.apriori.tuples">AbstractTuple</a>, <a href="../../../com/apriori/tuples/Empty.html" title="class in com.apriori.tuples">Empty</a>, <a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>, <a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>, <a href="../../../com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples">Quartet</a>, <a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples">Quintet</a>, <a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>, <a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a></dd>
+<dd><a href="../../../com/apriori/tuples/Empty.html" title="class in com.apriori.tuples">Empty</a>, <a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>, <a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>, <a href="../../../com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples">Quartet</a>, <a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples">Quintet</a>, <a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>, <a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">Tuple</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</pre>
-<div class="block">Base interface implemented by all typesafe tuples. Tuples are immutable and provide a rich
- typesafe interface for typical operations. This interface includes methods provided by every
+<div class="block">Base interface implemented by all type-safe tuples. Tuples are immutable and provide a rich
+ type-safe interface for typical operations. This interface includes methods provided by every
  tuple, regardless of the number of items.
  
- <p>The enclosed sub-interfaces offer typesafe operations for instances with up to five items.
+ <p>The enclosed sub-interfaces offer type-safe operations for instances with up to five items.
  Tuples with more than five items have less rich operations for the sixth and later items and also
  do not have the same level of type safety. If you need tuples with more than five items, consider
  using a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> instead.</div>

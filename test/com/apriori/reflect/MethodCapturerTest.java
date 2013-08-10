@@ -1,18 +1,24 @@
 package com.apriori.reflect;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-
-import junit.framework.TestCase;
 
 /**
  * Tests the functionality in {@link MethodCapturer}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class MethodCapturerTest extends TestCase {
+public class MethodCapturerTest {
 
    // Sample interfaces whose methods will be captured
 
@@ -42,7 +48,7 @@ public class MethodCapturerTest extends TestCase {
     * Tests creating a {@code MethodCapturer} for one interface and tests that its proxy and
     * accessor methods work as expected.
     */
-   public void testCaptureOneInterface() {
+   @Test public void captureOneInterface() {
       MethodCapturer<TestInterface1> c = new MethodCapturer<TestInterface1>(TestInterface1.class);
       assertEquals(Collections.singleton(TestInterface1.class), c.getInterfaces());
       TestInterface1 i = c.capture();
@@ -83,7 +89,7 @@ public class MethodCapturerTest extends TestCase {
     * Tests creating a {@code MethodCapturer} for multiple interfaces by specifying a {@code Set} to
     * the constructor and tests that its proxy and accessor methods work as expected.
     */
-   public void testCaptureMultipleInterfacesSet() {
+   @Test public void captureMultipleInterfacesSet() {
       @SuppressWarnings("unchecked")
       HashSet<Class<? extends Object>> ifaces =
             new HashSet<Class<? extends Object>>(Arrays.asList(TestInterface1.class,
@@ -141,7 +147,7 @@ public class MethodCapturerTest extends TestCase {
     * of interfaces to the constructor and tests that its proxy and accessor methods work as
     * expected.
     */
-   public void testCaptureMultipleInterfacesVarArgs() {
+   @Test public void captureMultipleInterfacesVarArgs() {
       @SuppressWarnings("unchecked")
       MethodCapturer<Object> c = new MethodCapturer<Object>(TestInterface1.class,
             TestInterface3.class);
@@ -198,7 +204,7 @@ public class MethodCapturerTest extends TestCase {
     * Tests that getting two proxies for a {@code MethodCapturer} results in expected behavior (last
     * call "wins", regardless of which proxy instance).
     */
-   public void testCaptureMultipleProxies() {
+   @Test public void captureMultipleProxies() {
       MethodCapturer<TestInterface1> c = new MethodCapturer<TestInterface1>(TestInterface1.class);
 
       TestInterface1 t1 = c.capture();
@@ -224,7 +230,7 @@ public class MethodCapturerTest extends TestCase {
     * Tests that changes to the set provided to the constructor are not reflected in the capturer.
     * Also tests that set of interfaces returned from the capturer cannot be changed.
     */
-   public void testCapturerDefendsSetOfInterfaces() {
+   @Test public void capturerDefendsSetOfInterfaces() {
       @SuppressWarnings("unchecked")
       HashSet<Class<? extends Object>> ifaces =
             new HashSet<Class<? extends Object>>(Arrays.asList(TestInterface1.class,
@@ -268,7 +274,7 @@ public class MethodCapturerTest extends TestCase {
     * Tests that constructor throws exceptions under error conditions (like null or invalid class
     * tokens specified).
     */
-   public void testExceptionInConstructor() {
+   @Test public void exceptionInConstructor() {
       boolean caught = false;
       try {
          Class<Object> clazz = null;

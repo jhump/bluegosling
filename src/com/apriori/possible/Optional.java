@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @param <T> the type of the optional value
  */
-//TODO: tests
+//TODO: tests for cast, upcast
 public abstract class Optional<T> implements Possible<T> {
 
    private Optional() {
@@ -29,7 +29,7 @@ public abstract class Optional<T> implements Possible<T> {
     * #none() no value} is returned.
     */
    @Override
-   public abstract <U> Optional<U> transform(Function<T, U> function);
+   public abstract <U> Optional<U> transform(Function<? super T, ? extends U> function);
    
    /**
     * {@inheritDoc}
@@ -37,7 +37,7 @@ public abstract class Optional<T> implements Possible<T> {
     * <p>Overrides the return type to indicate that it will be an instance of {@link Optional}.
     */
    @Override
-   public abstract Optional<T> filter(Predicate<T> predicate);
+   public abstract Optional<T> filter(Predicate<? super T> predicate);
    
    /**
     * {@inheritDoc}
@@ -87,9 +87,8 @@ public abstract class Optional<T> implements Possible<T> {
     *       otherwise {@linkplain #none() none}
     */
    public static <T> Optional<T> of(T t) {
-      return t == null ? some(t) : Optional.<T>none();
+      return t != null ? some(t) : Optional.<T>none();
    }
-   
    
    /**
     * Converts a possible value to an optional one. If the specified object is an optional value, it
@@ -104,9 +103,49 @@ public abstract class Optional<T> implements Possible<T> {
       if (possible instanceof Optional) {
          return (Optional<T>) possible;
       }
-      return possible.isPresent() ? some(possible.get()) : Optional.<T>none();
+      return possible.isPresent() ? of(possible.get()) : Optional.<T>none();
    }
    
+   /**
+    * Casts an optional value to a different type. The present value must be assignable to the new
+    * type. Using this method is much more efficient than creating a new optional value with a
+    * different type. Since optional values are immutable, the type on an existing instance can
+    * safely be re-cast when a present value is an instance of the cast type.
+    * 
+    * @param from the optional value from which we are casting
+    * @param target the type to which the value will be cast
+    * @return {@code this} but re-cast to an {@code Optional<T>} where {@code T} is the target type
+    * @throws ClassCastException if the optional value is present and is not an instance of the
+    *       specified type
+    */
+   @SuppressWarnings("unchecked") // we're doing a type check using the token, so it will be safe
+   public static <S, T> Optional<T> cast(Optional<S> from, Class<T> target) {
+      if (from.isPresent()) {
+         S s = from.get();
+         if (target.isInstance(s)) {
+            return (Optional<T>) from;
+         } else {
+            throw new ClassCastException(target.getName());
+         }
+      } else {
+         return none();
+      }
+   }
+
+   /**
+    * Upcasts an optional value to a super-type. This relies on the compiler to ensure that the
+    * types are compatible, so no class token argument is needed. Also, this version will never
+    * throw a {@link ClassCastException}.
+    * 
+    * @param from the optional value from which we are casting
+    * @return {@code this} but re-cast to an {@code Optional<S>} where {@code S} is the super-type
+    * @see #cast(Optional, Class)
+    */
+   @SuppressWarnings("unchecked") // since Optionals are immutable, upcast is always safe
+   public static <S, T extends S> Optional<S> upcast(Optional<T> from) {
+      return (Optional<S>) from;
+   }
+
    /**
     * An optional value that has some value. The value cannot be {@code null}.
     *
@@ -159,13 +198,13 @@ public abstract class Optional<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Optional<U> transform(Function<T, U> function) {
-         return of(function.apply(t));
+      public <U> Optional<U> transform(Function<? super T, ? extends U> function) {
+         return Optional.<U>of(function.apply(t));
       }
 
       @Override
-      public Optional<T> filter(Predicate<T> predicate) {
-         return predicate.apply(t) ? this : None.<T>instance();
+      public Optional<T> filter(Predicate<? super T> predicate) {
+         return predicate.test(t) ? this : None.<T>instance();
       }
 
       @Override
@@ -262,12 +301,12 @@ public abstract class Optional<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Optional<U> transform(Function<T, U> function) {
+      public <U> Optional<U> transform(Function<? super T, ? extends U> function) {
          return instance();
       }
 
       @Override
-      public Optional<T> filter(Predicate<T> predicate) {
+      public Optional<T> filter(Predicate<? super T> predicate) {
          return this;
       }
       

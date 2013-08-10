@@ -3,6 +3,9 @@ package com.apriori.tuples;
 import com.apriori.util.Function;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,7 +19,6 @@ import java.util.List;
  * @param <D> the type of the fourth item
  * @param <E> the type of the fifth item
  */
-//TODO: javadoc
 public class Quintet<A, B, C, D, E> extends AbstractTuple
       implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
@@ -36,6 +38,87 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
       return (List<T>) quintet.asList();
    }
    
+   /**
+    * Separates the values in a collection of quintets to produce a quintet of collections. The
+    * returned lists will have the same size as the specified collection and items will be in the
+    * same order as returned by iteration over the specified collection (e.g. the first items in the
+    * returned lists represent the items extracted from the first quintet in the collection).
+    * 
+    * @param quintets a collection of quintet
+    * @return a quintet of lists whose values were extracted from the collection of quintets
+    */
+   public static <T, U, V, W, X> Quintet<List<T>, List<U>, List<V>, List<W>, List<X>> separate(
+         Collection<Quintet<T, U, V, W, X>> quintets) {
+      List<T> t = new ArrayList<T>(quintets.size());
+      List<U> u = new ArrayList<U>(quintets.size());
+      List<V> v = new ArrayList<V>(quintets.size());
+      List<W> w = new ArrayList<W>(quintets.size());
+      List<X> x = new ArrayList<X>(quintets.size());
+      for (Quintet<T, U, V, W, X> quintet : quintets) {
+         t.add(quintet.getFirst());
+         u.add(quintet.getSecond());
+         v.add(quintet.getThird());
+         w.add(quintet.getFourth());
+         x.add(quintet.getFifth());
+      }
+      return create(t, u, v, w, x);
+   }
+
+   /**
+    * Combines a quintet of collections into a collection of quintets. The returned list will have
+    * the same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first quintet in the returned list is a
+    * quintet with the first value from each collection).
+    * 
+    * @param quintet a quintet of collections
+    * @return a list of quintets, each one representing corresponding values from the collections
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */   
+   public static <T, U, V, W, X> List<Quintet<T, U, V, W, X>> combine(
+         Quintet<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
+               ? extends Collection<W>, ? extends Collection<X>> quintet) {
+      return combine(quintet.getFirst(), quintet.getSecond(), quintet.getThird(),
+            quintet.getFourth(), quintet.getFifth());
+   }
+   
+   /**
+    * Combines five collections into a collection of quintet. The returned list will have the
+    * same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first quintet in the returned list is a
+    * quintet with the first value from each collection).
+    * 
+    * @param t a collection whose elements will constitute the first value of a quintet
+    * @param u a collection whose elements will constitute the second value of a quintet
+    * @param v a collection whose elements will constitute the third value of a quintet
+    * @param w a collection whose elements will constitute the fourth value of a quintet
+    * @param x a collection whose elements will constitute the fifth value of a quintet
+    * @return a list of quintets, each one representing corresponding values from the collections
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */
+   public static <T, U, V, W, X> List<Quintet<T, U, V, W, X>> combine(Collection<T> t,
+         Collection<U> u, Collection<V> v, Collection<W> w, Collection<X> x) {
+      if (t.size() != u.size() || t.size() != v.size() || t.size() != w.size()
+            || t.size() != x.size()) {
+         throw new IllegalArgumentException();
+      }
+      List<Quintet<T, U, V, W, X>> list = new ArrayList<Quintet<T, U, V, W, X>>(t.size());
+      Iterator<T> tIter = t.iterator();
+      Iterator<U> uIter = u.iterator();
+      Iterator<V> vIter = v.iterator();
+      Iterator<W> wIter = w.iterator();
+      Iterator<X> xIter = x.iterator();
+      while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext() && wIter.hasNext()
+            && xIter.hasNext()) {
+         list.add(create(tIter.next(), uIter.next(), vIter.next(), wIter.next(), xIter.next()));
+      }
+      if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext() || wIter.hasNext()
+            || xIter.hasNext()) {
+         // size changed since check above such that collections differ
+         throw new IllegalArgumentException();
+      }
+      return list;
+   }
+
    private final A a;
    private final B b;
    private final C c;

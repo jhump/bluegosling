@@ -37,23 +37,26 @@ public interface TaskDefinition<V, T> {
    Callable<V> taskAsCallable();
    
    /**
-    * Returns the delay, in milliseconds, from the time the task is submitted to
-    * the time the first instance of the task should be invoked. A delay of zero
-    * means that it should be executed immediately.
+    * Returns the delay, in nanoseconds, from the time the task is submitted to
+    * the time the first instance of the task should be invoked. A negative or
+    * zero delay means that it should be executed immediately.
     * 
-    * @return the delay in milliseconds for the first instance of the task
+    * @return the delay in nanoseconds for the first instance of the task
     */
-   long initialDelayMillis();
+   long initialDelayNanos();
    
    /**
     * Returns whether or not this is a repeating task vs. a one-time task. A task
     * is a one-time task if its {@link #scheduleNextTaskPolicy() ScheduleNextTaskPolicy}
     * is {@link ScheduleNextTaskPolicies#NEVER}. Otherwise, it is considered a
-    * repeating task.
+    * repeating task. Repeating tasks will also have a non-null {@link #rescheduler() Rescheduler}.
     * 
     * @return {@code true} if this is a repeating task; {@code} false otherwise
     */
    boolean isRepeating();
+   
+   // TODO: javadoc
+   Rescheduler rescheduler();
    
    /**
     * Returns whether or not a repeating task is scheduled based on a fixed
@@ -67,13 +70,14 @@ public interface TaskDefinition<V, T> {
    /**
     * Returns the period (for fixed rate tasks) or delay (for fixed delay tasks)
     * for this task. If this is not a repeating task, zero is returned. If this is
-    * a repeating task and this method returns zero, then subsequent invocations are
-    * scheduled immediately upon completion of the previous invocation, running the
-    * tasks sequentially as quickly as possible.
+    * a repeating task and this method returns zero, then a custom {@link #rescheduler()
+    * Rescheduler} is in use and the period or delay between invocations isn't known.
     * 
-    * @return the period or delay, in milliseconds, for this task
+    * @return the period or delay, in nanoseconds, for this task or zero if this is not
+    *       a repeating task or if the period or delay of the current {@link Rescheduler}
+    *       is unknown
     */
-   long periodDelayMillis();
+   long periodDelayNanos();
    
    /**
     * Returns the {@link ScheduleNextTaskPolicy} for this repeating task. If this
@@ -181,10 +185,8 @@ public interface TaskDefinition<V, T> {
       private int maxHistorySize = DEFAULT_MAX_HISTORY_SIZE;
       private ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
       private UncaughtExceptionHandler exceptionHandler;
-      private long initialDelayMillis;
-      private boolean isRepeating;
-      private boolean isFixedRate;
-      private long periodDelayMillis;
+      private long initialDelayNanos;
+      private Rescheduler rescheduler;
       
       /**
        * Constructs a new builder.
@@ -259,7 +261,13 @@ public interface TaskDefinition<V, T> {
        * @return {@code this}, for method chaining
        */
       public Builder<V, T> withInitialDelay(long delay, TimeUnit unit) {
-         this.initialDelayMillis = unit.toMillis(delay);
+         this.initialDelayNanos = unit.toNanos(delay);
+         return this;
+      }
+      
+      //TODO: javadoc
+      public Builder<V, T> repeat(Rescheduler nextTaskScheduler) {
+         this.rescheduler = nextTaskScheduler;
          return this;
       }
 
@@ -279,9 +287,7 @@ public interface TaskDefinition<V, T> {
        * @return {@code this}, for method chaining
        */
       public Builder<V, T> repeatAtFixedRate(long period, TimeUnit unit) {
-         this.isRepeating = true;
-         this.isFixedRate = true;
-         this.periodDelayMillis = unit.toMillis(period);
+         this.rescheduler = Reschedulers.atFixedRate(period, unit);
          return this;
       }
 
@@ -293,9 +299,7 @@ public interface TaskDefinition<V, T> {
        * @return {@code this}, for method chaining
        */
       public Builder<V, T> repeatWithFixedDelay(long delay, TimeUnit unit) {
-         this.isRepeating = true;
-         this.isFixedRate = false;
-         this.periodDelayMillis = unit.toMillis(delay);
+         this.rescheduler = Reschedulers.withFixedDelay(delay, unit);
          return this;
       }
       
@@ -305,12 +309,16 @@ public interface TaskDefinition<V, T> {
        * @return a new {@link TaskDefinition}
        */
       public TaskDefinition<V, T> build() {
-         ScheduleNextTaskPolicy<? super V, ? super T> policy = scheduleNextTaskPolicy;
-         if (policy == null) {
-            policy = isRepeating ? ScheduleNextTaskPolicies.ALWAYS : ScheduleNextTaskPolicies.NEVER;
+         ScheduleNextTaskPolicy<? super V, ? super T> policy;
+         if (rescheduler == null) {
+            policy = ScheduleNextTaskPolicies.NEVER;
+         } else if (scheduleNextTaskPolicy == null) {
+            policy = ScheduleNextTaskPolicies.ALWAYS;
+         } else {
+            policy = scheduleNextTaskPolicy;
          }
          return new TaskDefinitionImpl<V, T>(task, callable, maxHistorySize, listeners,
-               policy, exceptionHandler, initialDelayMillis, isFixedRate, periodDelayMillis);
+               policy, exceptionHandler, initialDelayNanos, rescheduler);
       }
 
       /**
@@ -324,15 +332,14 @@ public interface TaskDefinition<V, T> {
          private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
          private final ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
          private final UncaughtExceptionHandler exceptionHandler;
-         private final long initialDelayMillis;
-         private final boolean isFixedRate;
-         private final long periodDelayMillis;
+         private final long initialDelayNanos;
+         private final Rescheduler rescheduler;
 
          TaskDefinitionImpl(T task, Callable<V> callable, int maxHistorySize,
                Set<ScheduledTaskListener<? super V, ? super T>> listeners,
                ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextPolicy,
-               UncaughtExceptionHandler exceptionHandler, long initialDelayMillis,
-               boolean isFixedRate, long periodDelayMillis) {
+               UncaughtExceptionHandler exceptionHandler, long initialDelayNanos,
+               Rescheduler rescheduler) {
             this.task = task;
             this.callable = callable;
             this.maxHistorySize = maxHistorySize;
@@ -340,9 +347,8 @@ public interface TaskDefinition<V, T> {
                   new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>(listeners);
             this.scheduleNextTaskPolicy = scheduleNextPolicy;
             this.exceptionHandler = exceptionHandler;
-            this.initialDelayMillis = initialDelayMillis;
-            this.isFixedRate = isFixedRate;
-            this.periodDelayMillis = periodDelayMillis;
+            this.initialDelayNanos = initialDelayNanos;
+            this.rescheduler = rescheduler;
          }
          
          @Override
@@ -356,23 +362,35 @@ public interface TaskDefinition<V, T> {
          }
 
          @Override
-         public long initialDelayMillis() {
-            return initialDelayMillis;
+         public long initialDelayNanos() {
+            return initialDelayNanos;
          }
 
          @Override
          public boolean isRepeating() {
             return scheduleNextTaskPolicy != ScheduleNextTaskPolicies.NEVER;
          }
-
+         
          @Override
-         public boolean isFixedRate() {
-            return isFixedRate;
+         public Rescheduler rescheduler() {
+            return rescheduler;
          }
 
          @Override
-         public long periodDelayMillis() {
-            return periodDelayMillis;
+         public boolean isFixedRate() {
+            if (rescheduler == null) {
+               return false;
+            }
+            return Reschedulers.getFixedRatePeriodNanos(rescheduler) != 0;
+         }
+
+         @Override
+         public long periodDelayNanos() {
+            if (rescheduler == null) {
+               return 0;
+            }
+            long periodNanos = Reschedulers.getFixedRatePeriodNanos(rescheduler);
+            return periodNanos != 0 ? periodNanos : Reschedulers.getFixedDelayNanos(rescheduler);
          }
 
          @Override

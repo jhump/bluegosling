@@ -59,15 +59,15 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
 <a name="skip-navbar_top">
@@ -85,17 +85,12 @@
 <li class="blockList">
 <dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T1</code> - the first argument type</dd><dd><code>T2</code> - the second argument type</dd></dl>
 <dl>
-<dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T1,T2,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</dd>
-</dl>
-<dl>
 <dt>Enclosing interface:</dt>
 <dd><a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/util/Predicate.html" title="type parameter in Predicate">T</a>&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">Predicate.Bivariate&lt;T1,T2&gt;</span>
-extends <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T1,T2,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</pre>
+<pre>public static interface <span class="strong">Predicate.Bivariate&lt;T1,T2&gt;</span></pre>
 <div class="block">A <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util"><code>function</code></a> that returns a boolean value.</div>
 </li>
 </ul>
@@ -103,46 +98,26 @@ extends <a href="../../../com/apriori/util/Function.Bivariate.html" title="inter
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field_summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicate.Bivariate.html#ALL">ALL</a></strong></code>
-<div class="block">A predicate that always returns true.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicate.Bivariate.html#NONE">NONE</a></strong></code>
-<div class="block">A predicate that always returns false.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.util.Function.Bivariate">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.apriori.util.<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a></h3>
-<code><a href="../../../com/apriori/util/Function.Bivariate.html#apply(I1, I2)">apply</a></code></li>
-</ul>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicate.Bivariate.html#test(T1, T2)">test</a></strong>(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="type parameter in Predicate.Bivariate">T1</a>&nbsp;input1,
+    <a href="../../../com/apriori/util/Predicate.Bivariate.html" title="type parameter in Predicate.Bivariate">T2</a>&nbsp;input2)</code>
+<div class="block">Tests two objects.</div>
+</td>
+</tr>
+</table>
 </li>
 </ul>
 </li>
@@ -151,30 +126,25 @@ extends <a href="../../../com/apriori/util/Function.Bivariate.html" title="inter
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
+<!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_detail">
+<li class="blockList"><a name="method_detail">
 <!--   -->
 </a>
-<h3>Field Detail</h3>
-<a name="ALL">
+<h3>Method Detail</h3>
+<a name="test(java.lang.Object,java.lang.Object)">
 <!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ALL</h4>
-<pre>static final&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt; ALL</pre>
-<div class="block">A predicate that always returns true.</div>
-</li>
-</ul>
-<a name="NONE">
+</a><a name="test(T1, T2)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>NONE</h4>
-<pre>static final&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt; NONE</pre>
-<div class="block">A predicate that always returns false.</div>
+<h4>test</h4>
+<pre>boolean&nbsp;test(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="type parameter in Predicate.Bivariate">T1</a>&nbsp;input1,
+           <a href="../../../com/apriori/util/Predicate.Bivariate.html" title="type parameter in Predicate.Bivariate">T2</a>&nbsp;input2)</pre>
+<div class="block">Tests two objects.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>input1</code> - the first argument</dd><dd><code>input2</code> - the second argument</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the predicate's result</dd></dl>
 </li>
 </ul>
 </li>
@@ -228,15 +198,15 @@ extends <a href="../../../com/apriori/util/Function.Bivariate.html" title="inter
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
 <a name="skip-navbar_bottom">

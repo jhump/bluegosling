@@ -38,7 +38,7 @@ public interface Possible<T> {
     * @return returns the current value, transformed by the specified function, if present;
     *       otherwise returns a possible value that is absent
     */
-   <U> Possible<U> transform(Function<T, U> function);
+   <U> Possible<U> transform(Function<? super T, ? extends U> function);
    
    /**
     * Filters the current value per the specified predicate. If a value is present and it matches
@@ -49,7 +49,7 @@ public interface Possible<T> {
     * @return returns the current value if present and it matches the specified predicate; otherwise
     *       returns a possible value that is absent
     */
-   Possible<T> filter(Predicate<T> predicate);
+   Possible<T> filter(Predicate<? super T> predicate);
    
    /**
     * Gets the contained value if present.

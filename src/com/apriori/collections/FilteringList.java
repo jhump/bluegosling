@@ -59,7 +59,7 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
    public boolean addAll(int index, Collection<? extends E> c) {
       // check all of the items before trying to add them
       for (E e : c) {
-         if (!predicate().apply(e)) {
+         if (!predicate().test(e)) {
             throw new IllegalArgumentException("Specified object does not pass filter: " + e);
          }
       }
@@ -161,7 +161,7 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
       int endIndex = -1;
       int i = -1;
       for (E e : internal()) {
-         if (predicate().apply(e)) {
+         if (predicate().test(e)) {
             i++;
             if (i == fromIndex) {
                startIndex = i;

@@ -133,6 +133,12 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="block">Returns a list of the present values from the specified collection of possible values.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possibles.html#snapshot(com.apriori.possible.Possible)">snapshot</a></strong>(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;possible)</code>
+<div class="block">Captures the current possible value into a new immutable possible value.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
@@ -164,7 +170,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;fromFuture(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;? extends T&gt;&nbsp;future)</pre>
 <div class="block">Returns a view of a future as a possible value. If the future is incomplete, fails, or is
  cancelled then the value is not present. If and when the future completes successfully, the
- value will become present and will be the future result.</div>
+ value will become present. The actual value is the future's result.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - the future</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a view of the future as a <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible"><code>Possible</code></a></dd></dl>
 </li>
@@ -187,7 +193,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <a name="nullIfNotPresent(java.util.Collection)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>nullIfNotPresent</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;nullIfNotPresent(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</pre>
@@ -198,6 +204,20 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>possibles</code> - a collection of possible values</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a list of values extracted from the collection, <code>null</code> for objects where a value
        was not present</dd></dl>
+</li>
+</ul>
+<a name="snapshot(com.apriori.possible.Possible)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>snapshot</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;snapshot(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;possible)</pre>
+<div class="block">Captures the current possible value into a new immutable possible value. The returned object
+ is an immutable copy of the specified value. If the specified object is mutable and later
+ changes, those changes will not be reflected in the returned snapshot.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>possible</code> - a possible value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an immutable snapshot of the possible value</dd></dl>
 </li>
 </ul>
 </li>

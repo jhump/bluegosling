@@ -144,39 +144,52 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</code>
-<div class="block">Filters the current value per the specified predicate.</div>
+<td class="colFirst"><code>static &lt;S,T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#cast(com.apriori.possible.Reference, java.lang.Class)">cast</a></strong>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;from,
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;target)</code>
+<div class="block">Casts a reference to a different type.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</code>
+<div class="block">Filters the current value per the specified predicate.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#or(com.apriori.possible.Possible)">or</a></strong>(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</code>
 <div class="block">Returns the current possible value if present or the specified value if not.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#or(com.apriori.possible.Reference)">or</a></strong>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</code>
 <div class="block">Returns the current reference if a value is present or the specified reference if not.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#set(T)">set</a></strong>(T&nbsp;t)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#setTo(T)">setTo</a></strong>(T&nbsp;t)</code>
 <div class="block">Creates a reference set to the specified value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,U&gt;&nbsp;function)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#unset()">unset</a></strong>()</code>
 <div class="block">Creates a reference where the value is unset (absent).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;S,T extends S&gt;&nbsp;<br><a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Reference.html#upcast(com.apriori.possible.Reference)">upcast</a></strong>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;from)</code>
+<div class="block">Upcasts an reference to a super-type.</div>
 </td>
 </tr>
 </table>
@@ -214,7 +227,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transform</h4>
-<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,U&gt;&nbsp;function)</pre>
+<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.
  
  <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
@@ -232,7 +245,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
+<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Filters the current value per the specified predicate. If a value is present and it matches
  the specified predicate then it is returned. Otherwise a possible value that is absent is
  returned.
@@ -288,15 +301,15 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <dl><dt><span class="strong">Returns:</span></dt><dd>an unset reference</dd></dl>
 </li>
 </ul>
-<a name="set(java.lang.Object)">
+<a name="setTo(java.lang.Object)">
 <!--   -->
-</a><a name="set(T)">
+</a><a name="setTo(T)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;set(T&nbsp;t)</pre>
+<h4>setTo</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;setTo(T&nbsp;t)</pre>
 <div class="block">Creates a reference set to the specified value.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the value</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a set reference</dd></dl>
@@ -305,7 +318,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <a name="asReference(com.apriori.possible.Possible)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>asReference</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;asReference(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;possible)</pre>
@@ -314,6 +327,39 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
  is returned. If the specified value is absent then an unset reference is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>possible</code> - a possible value</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the possible value, converted to a reference</dd></dl>
+</li>
+</ul>
+<a name="cast(com.apriori.possible.Reference, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cast</h4>
+<pre>public static&nbsp;&lt;S,T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;cast(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;from,
+                      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;target)</pre>
+<div class="block">Casts a reference to a different type. The present value must be assignable to the new type.
+ Using this method is much more efficient than creating a new reference value with a different
+ type. Since reference values are immutable, the type on an existing instance can safely be
+ re-cast when a present value is <code>null</code> or an instance of the cast type.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>from</code> - the reference value from which we are casting</dd><dd><code>target</code> - the type to which the value will be cast</dd>
+<dt><span class="strong">Returns:</span></dt><dd><code>this</code> but re-cast to a <code>Reference&lt;T&gt;</code> where <code>T</code> is the target type</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang">ClassCastException</a></code> - if the reference is set but the value is neither an instance of the
+       specified type nor <code>null</code></dd></dl>
+</li>
+</ul>
+<a name="upcast(com.apriori.possible.Reference)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>upcast</h4>
+<pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;upcast(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;from)</pre>
+<div class="block">Upcasts an reference to a super-type. This relies on the compiler to ensure that the types are
+ compatible, so no class token argument is needed. Also, this version will never throw a
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>from</code> - the reference value from which we are casting</dd>
+<dt><span class="strong">Returns:</span></dt><dd><code>this</code> but re-cast to a <code>Reference&lt;S&gt;</code> where <code>S</code> is the super-type</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/possible/Reference.html#cast(com.apriori.possible.Reference, java.lang.Class)"><code>cast(Reference, Class)</code></a></dd></dl>
 </li>
 </ul>
 </li>

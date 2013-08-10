@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public abstract class AbstractTuple implements Tuple {
+abstract class AbstractTuple implements Tuple {
 
    @Override
    public Iterator<Object> iterator() {

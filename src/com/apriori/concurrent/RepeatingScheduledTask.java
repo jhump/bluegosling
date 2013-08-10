@@ -1,7 +1,6 @@
 package com.apriori.concurrent;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ScheduledFuture;
 
 /**
  * Represents a repeating task. Cancelling a repeating task will cancel all future occurrences of
@@ -15,7 +14,7 @@ import java.util.concurrent.ScheduledFuture;
  *       {@link RunnableWithResult}
  */
 //TODO: should extend ListenableRepeatingFuture<V>
-public interface RepeatingScheduledTask<V, T> extends ScheduledFuture<V> {
+public interface RepeatingScheduledTask<V, T> extends ListenableRepeatingFuture<V> {
    /**
     * Returns the task definition for which this task was created.
     * 

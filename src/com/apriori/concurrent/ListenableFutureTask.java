@@ -11,10 +11,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 //TODO: javadoc
-//TODO: test
+//TODO: more tests
 public class ListenableFutureTask<T> extends FutureTask<T> implements ListenableFuture<T> {
 
-   private final Lock completionLock = new ReentrantLock();
+   protected final Lock completionLock = new ReentrantLock();
    private boolean complete;
    private Throwable failure;
    private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
@@ -46,13 +46,16 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
    protected void done() {
       FutureListenerSet<T> toExecute;
       completionLock.lock();
-      toExecute = listeners;
-      complete = true;
-      if (!isCancelled()) {
-         checkForFailure();
+      try {
+         toExecute = listeners;
+         complete = true;
+         if (!isCancelled()) {
+            checkForFailure();
+         }
+         listeners = null;
+      } finally {
+         completionLock.unlock();
       }
-      listeners = null;
-      completionLock.unlock();
       toExecute.runListeners();
    }
    

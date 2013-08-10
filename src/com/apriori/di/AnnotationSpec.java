@@ -12,7 +12,7 @@ public class AnnotationSpec<T extends Annotation> {
    
    private static final Predicate<Method> EXCLUDE_NONBINDING_ATTRIBUTES =
          new Predicate<Method>() {
-            @Override public Boolean apply(Method input) {
+            @Override public boolean test(Method input) {
                return !input.isAnnotationPresent(NonBinding.class);
             }
          };

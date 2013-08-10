@@ -3,6 +3,9 @@ package com.apriori.tuples;
 import com.apriori.util.Function;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,7 +36,81 @@ public class Quartet<A, B, C, D> extends AbstractTuple
    public static <T> List<T> asTypedList(Quartet<? extends T, ? extends T, ? extends T, ? extends T> quartet) {
       return (List<T>) quartet.asList();
    }
+
+   /**
+    * Separates the values in a collection of quartets to produce a quartet of collections. The
+    * returned lists will have the same size as the specified collection and items will be in the
+    * same order as returned by iteration over the specified collection (e.g. the first items in the
+    * returned lists represent the items extracted from the first quartet in the collection).
+    * 
+    * @param quartets a collection of quartet
+    * @return a quartet of lists whose values were extracted from the collection of quartets
+    */
+   public static <T, U, V, W> Quartet<List<T>, List<U>, List<V>, List<W>> separate(
+         Collection<Quartet<T, U, V, W>> quartets) {
+      List<T> t = new ArrayList<T>(quartets.size());
+      List<U> u = new ArrayList<U>(quartets.size());
+      List<V> v = new ArrayList<V>(quartets.size());
+      List<W> w = new ArrayList<W>(quartets.size());
+      for (Quartet<T, U, V, W> quartet : quartets) {
+         t.add(quartet.getFirst());
+         u.add(quartet.getSecond());
+         v.add(quartet.getThird());
+         w.add(quartet.getFourth());
+      }
+      return create(t, u, v, w);
+   }
+
+   /**
+    * Combines a quartet of collections into a collection of quartets. The returned list will have
+    * the same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first quartet in the returned list is a
+    * quartet with the first value from each collection).
+    * 
+    * @param quartet a quartet of collections
+    * @return a list of quartets, each one representing corresponding values from the collections
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */   
+   public static <T, U, V, W> List<Quartet<T, U, V, W>> combine(
+         Quartet<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
+               ? extends Collection<W>> quartet) {
+      return combine(quartet.getFirst(), quartet.getSecond(), quartet.getThird(),
+            quartet.getFourth());
+   }
    
+   /**
+    * Combines four collections into a collection of quartets. The returned list will have the
+    * same size as the specified collections and items will be in the same order as returned by
+    * iteration over the specified collections (e.g. the first quartet in the returned list is a
+    * quartet with the first value from each collection).
+    * 
+    * @param t a collection whose elements will constitute the first value of a quartet
+    * @param u a collection whose elements will constitute the second value of a quartet
+    * @param v a collection whose elements will constitute the third value of a quartet
+    * @param w a collection whose elements will constitute the fourth value of a quartet
+    * @return a list of quartets, each one representing corresponding values from the collections
+    * @throws IllegalArgumentException if any collection has a different size than the others
+    */
+   public static <T, U, V, W> List<Quartet<T, U, V, W>> combine(Collection<T> t, Collection<U> u,
+         Collection<V> v, Collection<W> w) {
+      if (t.size() != u.size() || t.size() != v.size() || t.size() != w.size()) {
+         throw new IllegalArgumentException();
+      }
+      List<Quartet<T, U, V, W>> list = new ArrayList<Quartet<T, U, V, W>>(t.size());
+      Iterator<T> tIter = t.iterator();
+      Iterator<U> uIter = u.iterator();
+      Iterator<V> vIter = v.iterator();
+      Iterator<W> wIter = w.iterator();
+      while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext() && wIter.hasNext()) {
+         list.add(create(tIter.next(), uIter.next(), vIter.next(), wIter.next()));
+      }
+      if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext() || wIter.hasNext()) {
+         // size changed since check above such that collections differ
+         throw new IllegalArgumentException();
+      }
+      return list;
+   }
+
    private final A a;
    private final B b;
    private final C c;

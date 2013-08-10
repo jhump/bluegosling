@@ -37,4 +37,11 @@ public final class FutureListeners {
          }
       };
    }
+   
+   public static <T> FutureListener<T> assemble(Sink<? super T> onSuccess,
+         Sink<? super Throwable> onFailure, Runnable onCancel) {
+      return forVisitor(new SimpleFutureVisitor.Builder<T>()
+            .onSuccess(onSuccess).onFailure(onFailure).onCancel(onCancel)
+            .build());
+   }
 }

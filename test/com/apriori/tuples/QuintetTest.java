@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.apriori.util.Function;
 
@@ -14,6 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -156,5 +159,84 @@ public class QuintetTest {
             (Quintet<?, ?, ?, ?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(q, deserialized);
+   }
+   
+   // separate, combine
+   
+   @Test public void separate() {
+      assertEquals(
+            Quintet.create(Collections.emptyList(), Collections.emptyList(),
+                  Collections.emptyList(), Collections.emptyList(), Collections.emptyList()),
+            Quintet.separate(
+                  Collections.<Quintet<Integer, String, Double, Boolean, Float>>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Quintet<Integer, String, Double, Boolean, Float>> quintets =
+            Arrays.asList(Quintet.create(1, "a", 101.0, true, 321f),
+                  Quintet.create(2, "b", 222.0, false, 432f),
+                  Quintet.create(3, "c", 330.3, true, 543f));
+      assertEquals(
+            Quintet.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+                  Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true),
+                  Arrays.asList(321f, 432f, 543f)),
+            Quintet.separate(quintets));
+   }
+
+   private <A, B, C, D, E> void assertCombinedEquals(List<Quintet<A, B, C, D, E>> expectedQuintets,
+         Collection<? extends A> a, Collection<? extends B> b, Collection<? extends C> c,
+         Collection<? extends D> d, Collection<? extends E> e) {
+      assertEquals(expectedQuintets, Quintet.combine(a, b, c, d, e));
+      assertEquals(expectedQuintets, Quintet.combine(Quintet.create(a, b, c, d, e)));
+   }
+   
+   @SuppressWarnings("unchecked") // dang generic var-args...
+   @Test public void combine() {
+      assertCombinedEquals(Collections.<Quintet<Integer, String, Double, Boolean, Float>>emptyList(),
+            Collections.<Integer>emptyList(), Collections.<String>emptySet(),
+            Collections.<Double>emptyList(), Collections.<Boolean>emptySet(),
+            Collections.<Float>emptyList());
+
+      assertCombinedEquals(
+            Arrays.asList(Quintet.create(1, "a", 101.0, true, 321f),
+                  Quintet.create(2, "b", 222.0, false, 432f),
+                  Quintet.create(3, "c", 330.3, true, 543f)),
+            Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true),
+            Arrays.asList(321f, 432f, 543f));
+   }
+
+   private void assertCombineFails(Collection<?> a, Collection<?> b, Collection<?> c,
+         Collection<?> d, Collection<?> e) {
+      try {
+         Quintet.combine(a, b, c, d, e);
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+
+      try {
+         Quintet.combine(Quintet.create(a, b, c, d, e));
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+   }
+
+   @Test public void combine_unequalSizes() {
+      assertCombineFails(Collections.emptySet(), Collections.emptySet(), Collections.emptyList(),
+            Collections.emptyList(), Collections.singleton("abc"));
+      assertCombineFails(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true),
+            Arrays.asList(321f, 432f, 543f));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c", "d", "e"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true),
+            Arrays.asList(321f, 432f, 543f));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3, 400.4, 555.5), Arrays.asList(true, false, true),
+            Arrays.asList(321f, 432f, 543f));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true, false, true),
+            Arrays.asList(321f, 432f, 543f));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true),
+            Arrays.asList(321f, 432f, 543f, 654f, 765f));
    }
 }

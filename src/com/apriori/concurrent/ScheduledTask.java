@@ -19,7 +19,7 @@ import java.util.concurrent.ScheduledFuture;
  *       {@link RunnableWithResult}
  */
 //TODO: should extend ListenableScheduledFuture<V>
-public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
+public interface ScheduledTask<V, T> extends ListenableScheduledFuture<V> {
    /**
     * Returns the task definition for which this task was created.
     * 
@@ -55,24 +55,4 @@ public interface ScheduledTask<V, T> extends ScheduledFuture<V> {
     * @throws IllegalStateException if the task not yet completed
     */
    long actualTaskEndMillis();
-   
-   /**
-    * Returns whether this task failed or not. A task failed if it completed
-    * abnormally due to throwing an uncaught exception.
-    * 
-    * @return {@code true} if the task failed; {@code false} otherwise
-    * 
-    * @throws IllegalStateException if the task not yet completed
-    */
-   boolean failed();
-   
-   /**
-    * Returns whether this task succeeded or not. A task succeeded if it
-    * completed normally (no exception thrown).
-    * 
-    * @return {@code true} if the task succeeded; {@code false} otherwise
-    * 
-    * @throws IllegalStateException if the task not yet completed
-    */
-   boolean succeeded();
 }

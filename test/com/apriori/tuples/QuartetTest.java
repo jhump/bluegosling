@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.apriori.util.Function;
 
@@ -14,6 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -146,5 +149,71 @@ public class QuartetTest {
             (Quartet<?, ?, ?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(q, deserialized);
+   }
+
+   // separate, combine
+   
+   @Test public void separate() {
+      assertEquals(
+            Quartet.create(Collections.emptyList(), Collections.emptyList(),
+                  Collections.emptyList(), Collections.emptyList()),
+            Quartet.separate(Collections.<Quartet<Integer, String, Double, Boolean>>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Quartet<Integer, String, Double, Boolean>> quartets =
+            Arrays.asList(Quartet.create(1, "a", 101.0, true), Quartet.create(2, "b", 222.0, false),
+                  Quartet.create(3, "c", 330.3, true));
+      assertEquals(
+            Quartet.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+                  Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true)),
+            Quartet.separate(quartets));
+   }
+
+   private <A, B, C, D> void assertCombinedEquals(List<Quartet<A, B, C, D>> expectedQuartets,
+         Collection<? extends A> a, Collection<? extends B> b, Collection<? extends C> c,
+         Collection<? extends D> d) {
+      assertEquals(expectedQuartets, Quartet.combine(a, b, c, d));
+      assertEquals(expectedQuartets, Quartet.combine(Quartet.create(a, b, c, d)));
+   }
+   
+   @SuppressWarnings("unchecked") // dang generic var-args...
+   @Test public void combine() {
+      assertCombinedEquals(Collections.<Quartet<Integer, String, Double, Boolean>>emptyList(),
+            Collections.<Integer>emptyList(), Collections.<String>emptySet(),
+            Collections.<Double>emptyList(), Collections.<Boolean>emptySet());
+
+      assertCombinedEquals(
+            Arrays.asList(Quartet.create(1, "a", 101.0, true), Quartet.create(2, "b", 222.0, false),
+                  Quartet.create(3, "c", 330.3, true)),
+            Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true));
+   }
+
+   private void assertCombineFails(Collection<?> a, Collection<?> b, Collection<?> c,
+         Collection<?> d) {
+      try {
+         Quartet.combine(a, b, c, d);
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+
+      try {
+         Quartet.combine(Quartet.create(a, b, c, d));
+         fail("expecting IllegalArgumentException but never thrown");
+      } catch (IllegalArgumentException expected) {
+      }
+}
+
+   @Test public void combine_unequalSizes() {
+      assertCombineFails(Collections.emptySet(), Collections.emptySet(), Collections.emptyList(),
+            Collections.singleton("abc"));
+      assertCombineFails(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c", "d", "e"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3, 400.4, 555.5), Arrays.asList(true, false, true));
+      assertCombineFails(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true, false, true));
    }
 }

@@ -157,8 +157,8 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#initialDelayMillis()">initialDelayMillis</a></strong>()</code>
-<div class="block">Returns the delay, in milliseconds, from the time the task is submitted to
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#initialDelayNanos()">initialDelayNanos</a></strong>()</code>
+<div class="block">Returns the delay, in nanoseconds, from the time the task is submitted to
  the time the first instance of the task should be invoked.</div>
 </td>
 </tr>
@@ -189,30 +189,34 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#periodDelayMillis()">periodDelayMillis</a></strong>()</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#periodDelayNanos()">periodDelayNanos</a></strong>()</code>
 <div class="block">Returns the period (for fixed rate tasks) or delay (for fixed delay tasks)
  for this task.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#rescheduler()">rescheduler</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#scheduleNextTaskPolicy()">scheduleNextTaskPolicy</a></strong>()</code>
 <div class="block">Returns the <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> for this repeating task.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#task()">task</a></strong>()</code>
 <div class="block">Returns the underlying task.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#taskAsCallable()">taskAsCallable</a></strong>()</code>
 <div class="block">Returns the underlying task as a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.html#uncaughtExceptionHandler()">uncaughtExceptionHandler</a></strong>()</code>
 <div class="block">Returns the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task.</div>
@@ -275,17 +279,17 @@
 <dl><dt><span class="strong">Returns:</span></dt><dd>the underlying task</dd></dl>
 </li>
 </ul>
-<a name="initialDelayMillis()">
+<a name="initialDelayNanos()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>initialDelayMillis</h4>
-<pre>long&nbsp;initialDelayMillis()</pre>
-<div class="block">Returns the delay, in milliseconds, from the time the task is submitted to
- the time the first instance of the task should be invoked. A delay of zero
- means that it should be executed immediately.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the delay in milliseconds for the first instance of the task</dd></dl>
+<h4>initialDelayNanos</h4>
+<pre>long&nbsp;initialDelayNanos()</pre>
+<div class="block">Returns the delay, in nanoseconds, from the time the task is submitted to
+ the time the first instance of the task should be invoked. A negative or
+ zero delay means that it should be executed immediately.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the delay in nanoseconds for the first instance of the task</dd></dl>
 </li>
 </ul>
 <a name="isRepeating()">
@@ -298,8 +302,17 @@
 <div class="block">Returns whether or not this is a repeating task vs. a one-time task. A task
  is a one-time task if its <a href="../../../com/apriori/concurrent/TaskDefinition.html#scheduleNextTaskPolicy()"><code>ScheduleNextTaskPolicy</code></a>
  is <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicies.html#NEVER"><code>ScheduleNextTaskPolicies.NEVER</code></a>. Otherwise, it is considered a
- repeating task.</div>
+ repeating task. Repeating tasks will also have a non-null <a href="../../../com/apriori/concurrent/TaskDefinition.html#rescheduler()"><code>Rescheduler</code></a>.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> if this is a repeating task; <code></code> false otherwise</dd></dl>
+</li>
+</ul>
+<a name="rescheduler()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rescheduler</h4>
+<pre><a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;rescheduler()</pre>
 </li>
 </ul>
 <a name="isFixedRate()">
@@ -315,19 +328,19 @@
        on a fixed rate; <code>false otherwise</code></dd></dl>
 </li>
 </ul>
-<a name="periodDelayMillis()">
+<a name="periodDelayNanos()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>periodDelayMillis</h4>
-<pre>long&nbsp;periodDelayMillis()</pre>
+<h4>periodDelayNanos</h4>
+<pre>long&nbsp;periodDelayNanos()</pre>
 <div class="block">Returns the period (for fixed rate tasks) or delay (for fixed delay tasks)
  for this task. If this is not a repeating task, zero is returned. If this is
- a repeating task and this method returns zero, then subsequent invocations are
- scheduled immediately upon completion of the previous invocation, running the
- tasks sequentially as quickly as possible.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the period or delay, in milliseconds, for this task</dd></dl>
+ a repeating task and this method returns zero, then a custom <a href="../../../com/apriori/concurrent/TaskDefinition.html#rescheduler()"><code>Rescheduler</code></a> is in use and the period or delay between invocations isn't known.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the period or delay, in nanoseconds, for this task or zero if this is not
+       a repeating task or if the period or delay of the current <a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent"><code>Rescheduler</code></a>
+       is unknown</dd></dl>
 </li>
 </ul>
 <a name="scheduleNextTaskPolicy()">

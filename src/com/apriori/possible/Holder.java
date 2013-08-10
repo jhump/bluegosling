@@ -4,7 +4,10 @@ import com.apriori.util.Function;
 import com.apriori.util.Predicate;
 
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.AbstractSet;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,7 +24,6 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @param <T> the type of the held value
  */
-// TODO: tests
 public class Holder<T> implements Possible<T>, Serializable {
    
    private static final long serialVersionUID = -1290017626307767440L;
@@ -94,24 +96,26 @@ public class Holder<T> implements Possible<T>, Serializable {
    /**
     * {@inheritDoc}
     * 
-    * The returned object will not be a {@link Holder} and thus not be mutable.
+    * <p>The returned object will not be a {@link Holder} and thus not be mutable. Its value, if
+    * present, is a snapshot of applying the function to the held value.
     */
    @Override
-   public <U> Possible<U> transform(Function<T, U> function) {
+   public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
       return isPresent
-            ? Reference.set(function.apply(value))
+            ? Reference.<U>setTo(function.apply(value))
             : Reference.<U>unset();
    }
 
    /**
     * {@inheritDoc}
     * 
-    * The returned object will not be a {@link Holder} and thus not be mutable.
+    * <p>The returned object will not be a {@link Holder} and thus not be mutable. Its value, if
+    * present, is a snapshot of applying the predicate to the held value.
     */
    @Override
-   public Possible<T> filter(Predicate<T> predicate) {
-      return isPresent && predicate.apply(value)
-            ? Reference.set(value)
+   public Possible<T> filter(Predicate<? super T> predicate) {
+      return isPresent && predicate.test(value)
+            ? Reference.setTo(value)
             : Reference.<T>unset();
    }
 
@@ -136,9 +140,90 @@ public class Holder<T> implements Possible<T>, Serializable {
       return value;
    }
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>The returned set, being a view of this possible value, is mutable. If it is empty then the
+    * held value is absent and a call to {@link Set#add(Object)} will effectively set the held
+    * value. If a held value is already present, however, trying to add an item to the set will
+    * throw an {@link IllegalStateException} since only a single held value is permitted. If a held
+    * value is present, it can be removed from the set, effectively clearing the held value.
+    * 
+    * <p>As the held value is changed via calls to {@link #set(Object)} or {@link #clear()}, the
+    * set will also change. If the held value is changed directly through the {@link Holder}
+    * interface while a set iteration is in progress, the iterator will throw a
+    * {@link ConcurrentModificationException}. Since this class is not thread-safe, do not count on
+    * this exception for correctness. It is just a best effort to fail-fast in the case of what is
+    * clearly a programming error.
+    */
+   @SuppressWarnings("synthetic-access") // anonymous sub-class accesses private fields
    @Override
    public Set<T> asSet() {
-      return isPresent ? Collections.singleton(value) : Collections.<T>emptySet();
+      return new AbstractSet<T>() {
+         
+         @Override
+         public boolean add(T t) {
+            if (isPresent) {
+               if (value == null ? t == null : value.equals(t)) {
+                  return false;
+               }
+               throw new IllegalStateException("Holder cannot contain more than one element");
+            } else {
+               set(t);
+            }
+            return true;
+         }
+         
+         @Override
+         public int size() {
+            return isPresent ? 1 : 0;
+         }
+         
+         @Override
+         public Iterator<T> iterator() {
+            return new Iterator<T>() {
+               private final boolean hasNext = isPresent;
+               private final T next = isPresent ? value : null;
+               private boolean consumed;
+               private boolean removed;
+               
+               private void checkMod() {
+                  if (hasNext != isPresent || (hasNext && next != value)) {
+                     throw new ConcurrentModificationException();
+                  }
+               }
+               
+               @Override
+               public boolean hasNext() {
+                  if (removed) {
+                     return false;
+                  }
+                  checkMod();
+                  return hasNext && !consumed;
+               }
+
+               @Override
+               public T next() {
+                  checkMod();
+                  if (consumed || !hasNext) {
+                     throw new NoSuchElementException();
+                  }
+                  consumed = true;
+                  return next;
+               }
+
+               @Override
+               public void remove() {
+                  if (!consumed || removed) {
+                     throw new IllegalStateException();
+                  }
+                  checkMod();
+                  Holder.this.clear();
+                  removed = true;
+               }
+            };
+         }
+      };
    }
 
    @Override
@@ -153,14 +238,14 @@ public class Holder<T> implements Possible<T>, Serializable {
       }
       Holder<?> other = (Holder<?>) o;
       return isPresent
-            ? (value == null ? other.value == null : value.equals(other.value))
+            ? other.isPresent && (value == null ? other.value == null : value.equals(other.value))
             : !other.isPresent;
    }
    
    @Override
    public int hashCode() {
       return Holder.class.hashCode() ^
-            (isPresent ? (value != null ? value.hashCode() : 0) : -1);
+            (isPresent ? (value == null ? 0 : value.hashCode()) : -1);
    }
    
    @Override

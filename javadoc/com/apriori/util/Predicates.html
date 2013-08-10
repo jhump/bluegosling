@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>Predicates</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Predicates";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/util/Predicates.html" target="_top">Frames</a></li>
+<li><a href="Predicates.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.apriori.util</div>
+<h2 title="Class Predicates" class="title">Class Predicates</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>com.apriori.util.Predicates</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public final class <span class="strong">Predicates</span>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Numerous utility methods related to using <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util"><code>Predicate</code></a>s.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/util/Functions.html" title="class in com.apriori.util"><code>Functions</code></a></dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#acceptAll()">acceptAll</a></strong>()</code>
+<div class="block">Returns a predicate that always returns true.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#acceptAllBivariate()">acceptAllBivariate</a></strong>()</code>
+<div class="block">Returns a bivariate predicate that always returns true.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#acceptAllTrivariate()">acceptAllTrivariate</a></strong>()</code>
+<div class="block">Returns a three-argument predicate that always returns true.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#and(com.apriori.util.Predicate, com.apriori.util.Predicate)">and</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+   <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</code>
+<div class="block">Returns a predicate that combines the results from two predicates using an AND operation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#fromFunction(com.apriori.util.Function.Bivariate)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T1,T2,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</code>
+<div class="block">Converts a bivarite function into a bivariate predicate.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#fromFunction(com.apriori.util.Function.Trivariate)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;T1,T2,T3,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</code>
+<div class="block">Converts a three-argument function into a three-argument predicate.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#fromFunction(com.apriori.util.Function)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</code>
+<div class="block">Converts a function into a predicate.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#not(com.apriori.util.Predicate)">not</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p)</code>
+<div class="block">Returns a predicate that negates the results of the specified predicate.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#or(com.apriori.util.Predicate, com.apriori.util.Predicate)">or</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+  <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</code>
+<div class="block">Returns a predicate that combines the results from two predicates using an OR operation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAll()">rejectAll</a></strong>()</code>
+<div class="block">Returns a predicate that always returns false.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAllBivariate()">rejectAllBivariate</a></strong>()</code>
+<div class="block">Returns a bivariate predicate that always returns false.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAllTrivariate()">rejectAllTrivariate</a></strong>()</code>
+<div class="block">Returns a three-argument predicate that always returns false.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#xor(com.apriori.util.Predicate, com.apriori.util.Predicate)">xor</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+   <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</code>
+<div class="block">Returns a predicate that combines the results from two predicates using an XOR operation.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="acceptAll()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>acceptAll</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;acceptAll()</pre>
+<div class="block">Returns a predicate that always returns true.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns true</dd></dl>
+</li>
+</ul>
+<a name="acceptAllBivariate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>acceptAllBivariate</h4>
+<pre>public static&nbsp;&lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;&nbsp;acceptAllBivariate()</pre>
+<div class="block">Returns a bivariate predicate that always returns true.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns true</dd></dl>
+</li>
+</ul>
+<a name="acceptAllTrivariate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>acceptAllTrivariate</h4>
+<pre>public static&nbsp;&lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;&nbsp;acceptAllTrivariate()</pre>
+<div class="block">Returns a three-argument predicate that always returns true.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns true</dd></dl>
+</li>
+</ul>
+<a name="rejectAll()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rejectAll</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;rejectAll()</pre>
+<div class="block">Returns a predicate that always returns false.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns false</dd></dl>
+</li>
+</ul>
+<a name="rejectAllBivariate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rejectAllBivariate</h4>
+<pre>public static&nbsp;&lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;&nbsp;rejectAllBivariate()</pre>
+<div class="block">Returns a bivariate predicate that always returns false.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns false</dd></dl>
+</li>
+</ul>
+<a name="rejectAllTrivariate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rejectAllTrivariate</h4>
+<pre>public static&nbsp;&lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;&nbsp;rejectAllTrivariate()</pre>
+<div class="block">Returns a three-argument predicate that always returns false.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns false</dd></dl>
+</li>
+</ul>
+<a name="and(com.apriori.util.Predicate, com.apriori.util.Predicate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>and</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;and(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+                   <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</pre>
+<div class="block">Returns a predicate that combines the results from two predicates using an AND operation. The
+ operation is short-circuited so that the second predicate will not be invoked if the first
+ predicate returns false.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>p1</code> - the first predicate</dd><dd><code>p2</code> - the second predicate</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a predicate that returns <code>p1.test(input) &amp;&amp; p2.test(input)</code></dd></dl>
+</li>
+</ul>
+<a name="or(com.apriori.util.Predicate, com.apriori.util.Predicate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>or</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;or(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+                  <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</pre>
+<div class="block">Returns a predicate that combines the results from two predicates using an OR operation. The
+ operation is short-circuited so that the second predicate will not be invoked if the first
+ predicate returns true.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>p1</code> - the first predicate</dd><dd><code>p2</code> - the second predicate</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a predicate that returns <code>p1.test(input) || p2.test(input)</code></dd></dl>
+</li>
+</ul>
+<a name="xor(com.apriori.util.Predicate, com.apriori.util.Predicate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>xor</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;xor(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
+                   <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</pre>
+<div class="block">Returns a predicate that combines the results from two predicates using an XOR operation.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>p1</code> - the first predicate</dd><dd><code>p2</code> - the second predicate</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a predicate that returns <code>p1.test(input) ^ p2.test(input)</code></dd></dl>
+</li>
+</ul>
+<a name="not(com.apriori.util.Predicate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>not</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;not(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p)</pre>
+<div class="block">Returns a predicate that negates the results of the specified predicate.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>p</code> - a predicate</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a predicate that returns <code>!p.test(input)</code></dd></dl>
+</li>
+</ul>
+<a name="fromFunction(com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</pre>
+<div class="block">Converts a function into a predicate. Functions return boxed booleans instead of primitives,
+ and thus can return a <code>null</code>. The returned predicate returns true if the function
+ returns true and false otherwise, so a <code>null</code> function result is considered false.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the specified function converted to a predicate</dd></dl>
+</li>
+</ul>
+<a name="fromFunction(com.apriori.util.Function.Bivariate)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T1,T2,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</pre>
+<div class="block">Converts a bivarite function into a bivariate predicate. Functions return boxed booleans
+ instead of primitives, and thus can return a <code>null</code>. The returned predicate returns
+ true if the function returns true and false otherwise, so a <code>null</code> function result is
+ considered false.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the specified function converted to a predicate</dd></dl>
+</li>
+</ul>
+<a name="fromFunction(com.apriori.util.Function.Trivariate)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>fromFunction</h4>
+<pre>public static&nbsp;&lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;T1,T2,T3,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</pre>
+<div class="block">Converts a three-argument function into a three-argument predicate. Functions return boxed
+ booleans instead of primitives, and thus can return a <code>null</code>. The returned predicate
+ returns true if the function returns true and false otherwise, so a <code>null</code> function
+ result is considered false.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the specified function converted to a predicate</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?com/apriori/util/Predicates.html" target="_top">Frames</a></li>
+<li><a href="Predicates.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

@@ -1,5 +1,15 @@
 package com.apriori.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,19 +22,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import junit.framework.TestCase;
-
 /**
  * Tests the functionality in {@link Cloners}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ClonersTest extends TestCase {
+public class ClonersTest {
 
    /**
     * Tests {@link Cloners#checkClone(Object, Object)}.
     */
-   public void testCheckClone() {
+   @Test public void checkClone() {
       Object o1 = new ArrayList<Object>(Arrays.asList(1, 2, 3));
       Object o2 = new ArrayList<Object>(Arrays.asList(1, 2, 3));
       Object o3 = new ArrayList<Object>(Arrays.asList(4, 5, 6));
@@ -109,7 +117,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#forCloneable()}.
     */
-   public void testForCloneable() {
+   @Test public void forCloneable() {
       SimpleCloneable obj = new SimpleCloneable();
       obj.int1 = 100;
       obj.int2 = 200;
@@ -248,7 +256,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#forSerializable()}.
     */
-   public void testForSerializable() {
+   @Test public void forSerializable() {
       Cloner<SimpleSerializable> objCloner = Cloners.forSerializable();
       doSerializableClonerTest(objCloner);
 
@@ -618,7 +626,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#findCopyConstructor(Class)}.
     */
-   public void testFindCopyConstructor() {
+   @Test public void findCopyConstructor() {
       // make sure it finds the correct constructor for each one
       doTestFindCopyConstructor(MyClass_MyClass.class, MyClass_MyClass.class);
       doTestFindCopyConstructor(MyClass_Class3.class, Class3.class);
@@ -656,7 +664,7 @@ public class ClonersTest extends TestCase {
     * 
     * @throws Exception on error
     */
-   public void testWithCopyConstructor() throws Exception {
+   @Test public void withCopyConstructor() throws Exception {
       // too many parameters
       boolean caught = false;
       Constructor<?> cons = MyClass_MyClass.class.getDeclaredConstructor(MyClass_MyClass.class,
@@ -726,8 +734,8 @@ public class ClonersTest extends TestCase {
    }
 
    // helper method for invoking withCopyConstructor and checking its result
-   private <T extends Class3> void
-         doTestWithCopyConstructor(T obj, Class<T> clazz, Class<?> argType) {
+   private <T extends Class3> void doTestWithCopyConstructor(T obj, Class<T> clazz,
+         Class<?> argType) {
       Cloner<T> c = Cloners.withCopyConstructor(clazz);
       T clone = c.clone(obj);
       assertNotSame(obj, clone);
@@ -738,7 +746,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#withCopyConstructor(Class)}.
     */
-   public void testWithCopyConstructorFind() {
+   @Test public void withCopyConstructorFind() {
       // make sure it finds the correct constructor for each one
       doTestWithCopyConstructor(new MyClass_MyClass(null), MyClass_MyClass.class,
             MyClass_MyClass.class);
@@ -785,7 +793,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#withCopyConstructor(Class, Class)}.
     */
-   public void testWithCopyConstructorSpecific() {
+   @Test public void withCopyConstructorSpecific() {
       // npe
       boolean caught = false;
       try {
@@ -838,7 +846,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#findStaticCopyMethod(Class, String)}.
     */
-   public void testFindStaticCopyMethod() {
+   @Test public void findStaticCopyMethod() {
       // make sure it finds the correct method for each one
       doTestFindStaticCopyMethod(MyClass_MyClass.class, MyClass_MyClass.class);
       doTestFindStaticCopyMethod(MyClass_Class3.class, Class3.class);
@@ -900,7 +908,7 @@ public class ClonersTest extends TestCase {
     * 
     * @throws Exception on error
     */
-   public void testWithCopyMethod() throws Exception {
+   @Test public void withCopyMethod() throws Exception {
       // too many parameters static method
       boolean caught = false;
       Method method = MyClass_MyClass.class.getDeclaredMethod("staticCopyBadSignature",
@@ -994,7 +1002,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#withInstanceCopyMethod(Class, String)}.
     */
-   public void testWithInstanceCopyMethod() {
+   @Test public void withInstanceCopyMethod() {
       // no such method
       boolean caught = false;
       try {
@@ -1100,7 +1108,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#withStaticCopyMethod(Class, String)}.
     */
-   public void testWithStaticCopyMethodFind() {
+   @Test public void withStaticCopyMethodFind() {
       // make sure it finds the correct constructor for each one
       doTestWithStaticCopyMethod(new MyClass_MyClass(null), MyClass_MyClass.class,
             MyClass_MyClass.class);
@@ -1175,7 +1183,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#withStaticCopyMethod(Class, String, Class)}.
     */
-   public void testWithStaticCopyMethodSpecific() {
+   @Test public void withStaticCopyMethodSpecific() {
       // npe
       boolean caught = false;
       try {
@@ -1240,7 +1248,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#fromInstance(Object)},
     */
-   public void testFromInstance() {
+   @Test public void fromInstance() {
       Class3 obj1 = new MyClass_MyClass(null);
       Class3 obj2 = new MyClass_MyClass(null);
       Class3 obj3 = new MyClass_Class1((Class1) null);
@@ -1304,7 +1312,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#fromInstances}.
     */
-   public void testFromInstances() {
+   @Test public void fromInstances() {
       Class3 obj1 = new MyClass_MyClass(null);
       Class3 obj2 = new MyClass_MyClass(null);
       Class3 obj3 = new MyClass_Class1((Class1) null);
@@ -1359,9 +1367,9 @@ public class ClonersTest extends TestCase {
    }
 
    /**
-    * Tests {@link Cloners#fromCallable(java.util.concurrent.Callable)}.
+    * Tests {@link Cloners#fromCallable(Callable)}.
     */
-   public void testFromCallable() {
+   @Test public void fromCallable() {
       final Class3 obj1 = new MyClass_MyClass(null);
       Class3 obj2 = new MyClass_MyClass(null);
       Class3 obj3 = new MyClass_Class1((Class1) null);
@@ -1429,7 +1437,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#forArray(Cloner)}.
     */
-   public void testForArray() {
+   @Test public void forArray() {
       Cloner<String> cloner = new Cloner<String>() {
          @Override
          public String clone(String o) {
@@ -1499,7 +1507,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#forNestedArray(Class, Cloner)}.
     */
-   public void testForNestedArray() {
+   @Test public void forNestedArray() {
       Cloner<String> cloner = new Cloner<String>() {
          @Override
          public String clone(String o) {
@@ -1730,7 +1738,7 @@ public class ClonersTest extends TestCase {
    /**
     * Tests {@link Cloners#defaultClonerFor(Class)}.
     */
-   public void testDefaultClonerFor() {
+   @Test public void defaultClonerFor() {
       // get "canonical" cloners for these scenarios
       Cloner<?> clnblClonerCanon = Cloners.forCloneable();
       Cloner<?> srlzblClonerCanon = Cloners.forSerializable();
@@ -1813,7 +1821,7 @@ public class ClonersTest extends TestCase {
     * Tests {@link Cloners#GENERIC_CLONER}.
     */
    @SuppressWarnings({ "unchecked", "rawtypes" })
-   public void testGenericCloner() {
+   @Test public void genericCloner() {
       Cloner cloner = Cloners.GENERIC_CLONER;
       // run same tests as above, but all using same cloner instance
       doCloneableClonerTest(cloner);

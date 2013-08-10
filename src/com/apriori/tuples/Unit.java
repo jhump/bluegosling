@@ -1,8 +1,11 @@
 package com.apriori.tuples;
 
 import com.apriori.util.Function;
+import com.apriori.util.Predicate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,6 +19,40 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
 
    private static final long serialVersionUID = -9201943154135089064L;
    
+   /**
+    * Extracts values from a collection of units into a collection of values. The returned list will
+    * have the same size as the specified collection and items will be in the same order as returned
+    * by iteration over the specified collection (e.g. the first item in the returned list is the
+    * value extracted from the first unit in the collection).
+    * 
+    * @param units a collection of units
+    * @return the list of values, extracted from the units
+    */
+   public static <T> List<T> extract(Collection<Unit<T>> units) {
+      List<T> extracted = new ArrayList<T>(units.size());
+      for (Unit<T> unit : units) {
+         extracted.add(unit.getFirst());
+      }
+      return extracted;
+   }
+
+   /**
+    * Encloses a collection of values into a collection of units. The returned list will have the
+    * same size as the specified collection and items will be in the same order as returned by
+    * iteration over the specified collection (e.g. the first item in the returned list is a unit
+    * with the first value of the collection).
+    * 
+    * @param coll a collection of values
+    * @return a list of units, each one representing a corresponding value in the collection
+    */
+   public static <T> List<Unit<T>> enclose(Collection<? extends T> coll) {
+      List<Unit<T>> enclosed = new ArrayList<Unit<T>>(coll.size());
+      for (T t : coll) {
+         enclosed.add(create(t));
+      }
+      return enclosed;
+   }
+
    private final A a;
    
    private Unit(A a) {
@@ -105,7 +142,23 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
       
    }
    
+   /**
+    * Transforms the contained value and returns the results.
+    * 
+    * @param function the function
+    * @return the result of applying the function to the contained value
+    */
    public <B> B transform(Function<? super A, ? extends B> function) {
       return function.apply(a);
+   }
+   
+   /**
+    * Tests the contained value using the specified predicate.
+    * 
+    * @param predicate the predicate
+    * @return true if the contained value matches the predicate; false otherwise
+    */
+   public boolean test(Predicate<? super A> predicate) {
+      return predicate.test(a);
    }
 }

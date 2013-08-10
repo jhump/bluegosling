@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -116,5 +117,23 @@ public class UnitTest {
       Unit<?> deserialized = (Unit<?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(u, deserialized);
+   }
+   
+   // extract, enclose
+   
+   @Test public void extract() {
+      assertEquals(Collections.emptyList(), Unit.extract(Collections.<Unit<String>>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Unit<Integer>> units = Arrays.asList(Unit.create(1), Unit.create(2), Unit.create(3));
+      assertEquals(Arrays.asList(1, 2, 3), Unit.extract(units));
+   }
+
+   @Test public void enclose() {
+      assertEquals(Collections.emptyList(), Unit.enclose(Collections.<String>emptyList()));
+
+      @SuppressWarnings("unchecked") // dang generic var-args...
+      List<Unit<Integer>> units = Arrays.asList(Unit.create(1), Unit.create(2), Unit.create(3));
+      assertEquals(units, Unit.enclose(Arrays.asList(1, 2, 3)));
    }
 }

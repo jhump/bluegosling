@@ -1,24 +1,28 @@
 package com.apriori.reflect;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-
-import junit.framework.TestCase;
 
 /**
  * Tests the functionality in {@link MethodSignature}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class MethodSignatureTest extends TestCase {
+public class MethodSignatureTest {
 
    /**
     * Tests creating a signature using a name and argument type list. Also tests the accessor
     * methods.
     */
-   public void testMethodSignature() {
+   @Test public void methodSignature() {
       MethodSignature sig = new MethodSignature("myMethodName", int.class, String.class,
             Object[].class);
 
@@ -35,7 +39,7 @@ public class MethodSignatureTest extends TestCase {
    /**
     * Tests creating a signature using a null name.
     */
-   public void testMethodSignatureNullName() {
+   @Test public void methodSignatureNullName() {
       boolean caught = false;
       try {
          @SuppressWarnings("unused")
@@ -60,7 +64,7 @@ public class MethodSignatureTest extends TestCase {
    /**
     * Tests creating a signature using a null argument type.
     */
-   public void testMethodSignatureNullArgType() {
+   @Test public void methodSignatureNullArgType() {
       boolean caught = false;
       try {
          @SuppressWarnings("unused")
@@ -88,7 +92,7 @@ public class MethodSignatureTest extends TestCase {
     * 
     * @throws Exception If reflective method look-up fails
     */
-   public void testMethodSignatureForMethod() throws Exception {
+   @Test public void methodSignatureForMethod() throws Exception {
       Method m = Arrays.class.getMethod("binarySearch", Object[].class, Object.class,
             Comparator.class);
       MethodSignature sig = new MethodSignature(m);
@@ -101,7 +105,7 @@ public class MethodSignatureTest extends TestCase {
    /**
     * Tests creating a signature using a null method.
     */
-   public void testMethodSignatureNullMethod() {
+   @Test public void methodSignatureNullMethod() {
       boolean caught = false;
       try {
          Method m = null;
@@ -119,7 +123,7 @@ public class MethodSignatureTest extends TestCase {
     * 
     * @throws Exception If reflective method look-up fails
     */
-   public void testEquals() throws Exception {
+   @Test public void equals() throws Exception {
       Method m = Arrays.class.getMethod("binarySearch", Object[].class, Object.class,
             Comparator.class);
       MethodSignature sig1 = new MethodSignature(m);
@@ -145,7 +149,7 @@ public class MethodSignatureTest extends TestCase {
     * 
     * @throws Exception If reflective method look-up fails
     */
-   public void testHashCode() throws Exception {
+   @Test public void computeHashCode() throws Exception {
       Method m = Arrays.class.getMethod("binarySearch", Object[].class, Object.class,
             Comparator.class);
       MethodSignature sig1 = new MethodSignature(m);
@@ -161,7 +165,7 @@ public class MethodSignatureTest extends TestCase {
    /**
     * Tests the implementation of {@code toString()}.
     */
-   public void testToString() {
+   @Test public void convertToString() {
       MethodSignature sig = new MethodSignature("binarySearch", Object[].class, Object.class,
             Comparator.class);
       String sigStr = sig.toString();

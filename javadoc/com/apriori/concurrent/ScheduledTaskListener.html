@@ -136,8 +136,8 @@
 <pre>void&nbsp;taskCompleted(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>,? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">T</a>&gt;&nbsp;task)</pre>
 <div class="block">Called when the specified task completes (either normally or
  abnormally). You can easily distinguish between successful and
- failed tasks via <a href="../../../com/apriori/concurrent/ScheduledTask.html#succeeded()"><code>ScheduledTask.succeeded()</code></a> and
- <a href="../../../com/apriori/concurrent/ScheduledTask.html#failed()"><code>ScheduledTask.failed()</code></a>.</div>
+ failed tasks via <a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>ListenableFuture.isSuccessful()</code></a> and
+ <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()"><code>ListenableFuture.isFailed()</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>task</code> - the completed task</dd></dl>
 </li>
 </ul>

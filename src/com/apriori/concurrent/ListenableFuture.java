@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
  * The future to end all futures. This provides API improvements over the standard {@link Future} in
  * several categories:
  * <ol>
- * <li><strong>Callbacks</strong>: This is allows for real asynchronous processing of futures and
+ * <li><strong>Callbacks</strong>: This allows for real asynchronous processing of futures and
  * is what gives this future its name. You can add listeners that are invoked when the future
  * completes.</li>
  * <li><strong>Blocking</strong>: This interface extends {@link Awaitable}, giving you more API
@@ -15,7 +15,9 @@ import java.util.concurrent.Future;
  * <li><strong>Inspecting</strong>: Numerous new methods are provided for inspecting the result of
  * a completed future, none of which require a {@code try/catch} block ({@link #isSuccessful()},
  * {@link #getResult()}, {@link #isFailed()}, {@link #getFailure()}, and
- * {@link #visit(FutureVisitor)}).</li>
+ * {@link #visit(FutureVisitor)}). All of these new methods are non-blocking and are intended to
+ * assist with implementing listeners and with writing asynchronous code. Many will throw an
+ * {@link IllegalStateException} if invoked before the future is done.</li>
  * </ol>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

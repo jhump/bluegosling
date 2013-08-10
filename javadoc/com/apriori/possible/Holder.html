@@ -172,7 +172,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</code>
 <div class="block">Filters the current value per the specified predicate.</div>
 </td>
 </tr>
@@ -222,7 +222,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,U&gt;&nbsp;function)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
@@ -341,10 +341,11 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transform</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,U&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.
  
- The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable.</div>
+ <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
+ present, is a snapshot of applying the function to the held value.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#transform(com.apriori.util.Function)">transform</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
@@ -359,12 +360,13 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Filters the current value per the specified predicate. If a value is present and it matches
  the specified predicate then it is returned. Otherwise a possible value that is absent is
  returned.
  
- The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable.</div>
+ <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
+ present, is a snapshot of applying the predicate to the held value.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#filter(com.apriori.util.Predicate)">filter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
@@ -435,9 +437,21 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <li class="blockList">
 <h4>asSet</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;asSet()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#asSet()">Possible</a></code></strong></div>
 <div class="block">Returns a view of this possible value as a set. If a value is present, a singleton set with
- that value is returned. Otherwise, an empty set is returned.</div>
+ that value is returned. Otherwise, an empty set is returned.
+ 
+ <p>The returned set, being a view of this possible value, is mutable. If it is empty then the
+ held value is absent and a call to <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true#add(E)" title="class or interface in java.util"><code>Set.add(Object)</code></a> will effectively set the held
+ value. If a held value is already present, however, trying to add an item to the set will
+ throw an <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> since only a single held value is permitted. If a held
+ value is present, it can be removed from the set, effectively clearing the held value.
+ 
+ <p>As the held value is changed via calls to <a href="../../../com/apriori/possible/Holder.html#set(T)"><code>set(Object)</code></a> or <a href="../../../com/apriori/possible/Holder.html#clear()"><code>clear()</code></a>, the
+ set will also change. If the held value is changed directly through the <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a>
+ interface while a set iteration is in progress, the iterator will throw a
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>. Since this class is not thread-safe, do not count on
+ this exception for correctness. It is just a best effort to fail-fast in the case of what is
+ clearly a programming error.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#asSet()">asSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>

@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @param <T> the type of the possible value
  */
-// TODO: tests
+//TODO: tests for cast, upcast
 public abstract class Reference<T> implements Possible<T> {
 
    private Reference() {
@@ -28,7 +28,7 @@ public abstract class Reference<T> implements Possible<T> {
     * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
     */
    @Override
-   public abstract <U> Reference<U> transform(Function<T, U> function);
+   public abstract <U> Reference<U> transform(Function<? super T, ? extends U> function);
    
    /**
     * {@inheritDoc}
@@ -36,7 +36,7 @@ public abstract class Reference<T> implements Possible<T> {
     * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
     */
    @Override
-   public abstract Reference<T> filter(Predicate<T> predicate);
+   public abstract Reference<T> filter(Predicate<? super T> predicate);
    
    /**
     * {@inheritDoc}
@@ -71,7 +71,7 @@ public abstract class Reference<T> implements Possible<T> {
     * @param t the value
     * @return a set reference
     */
-   public static <T> Reference<T> set(T t) {
+   public static <T> Reference<T> setTo(T t) {
       return new SetReference<T>(t);
    }
    
@@ -87,7 +87,47 @@ public abstract class Reference<T> implements Possible<T> {
       if (possible instanceof Reference) {
          return (Reference<T>) possible;
       }
-      return possible.isPresent() ? set(possible.get()) : Reference.<T>unset();
+      return possible.isPresent() ? setTo(possible.get()) : Reference.<T>unset();
+   }
+   
+   /**
+    * Casts a reference to a different type. The present value must be assignable to the new type.
+    * Using this method is much more efficient than creating a new reference value with a different
+    * type. Since reference values are immutable, the type on an existing instance can safely be
+    * re-cast when a present value is {@code null} or an instance of the cast type.
+    * 
+    * @param from the reference value from which we are casting
+    * @param target the type to which the value will be cast
+    * @return {@code this} but re-cast to a {@code Reference<T>} where {@code T} is the target type
+    * @throws ClassCastException if the reference is set but the value is neither an instance of the
+    *       specified type nor {@code null}
+    */
+   @SuppressWarnings("unchecked") // we're doing a type check using the token, so it will be safe
+   public static <S, T> Reference<T> cast(Reference<S> from, Class<T> target) {
+      if (from.isPresent()) {
+         S s = from.get();
+         if (s == null || target.isInstance(s)) {
+            return (Reference<T>) from;
+         } else {
+            throw new ClassCastException(target.getName());
+         }
+      } else {
+         return unset();
+      }
+   }
+
+   /**
+    * Upcasts an reference to a super-type. This relies on the compiler to ensure that the types are
+    * compatible, so no class token argument is needed. Also, this version will never throw a
+    * {@link ClassCastException}.
+    * 
+    * @param from the reference value from which we are casting
+    * @return {@code this} but re-cast to a {@code Reference<S>} where {@code S} is the super-type
+    * @see #cast(Reference, Class)
+    */
+   @SuppressWarnings("unchecked") // since References are immutable, upcast is always safe
+   public static <S, T extends S> Reference<S> upcast(Reference<T> from) {
+      return (Reference<S>) from;
    }
    
    /**
@@ -139,13 +179,13 @@ public abstract class Reference<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Reference<U> transform(Function<T, U> function) {
-         return set(function.apply(t));
+      public <U> Reference<U> transform(Function<? super T, ? extends U> function) {
+         return Reference.<U>setTo(function.apply(t));
       }
 
       @Override
-      public Reference<T> filter(Predicate<T> predicate) {
-         return predicate.apply(t) ? this : UnsetReference.<T>instance();
+      public Reference<T> filter(Predicate<? super T> predicate) {
+         return predicate.test(t) ? this : UnsetReference.<T>instance();
       }
 
       @Override
@@ -245,12 +285,12 @@ public abstract class Reference<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Reference<U> transform(Function<T, U> function) {
+      public <U> Reference<U> transform(Function<? super T, ? extends U> function) {
          return instance();
       }
 
       @Override
-      public Reference<T> filter(Predicate<T> predicate) {
+      public Reference<T> filter(Predicate<? super T> predicate) {
          return this;
       }
       

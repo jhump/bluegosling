@@ -78,7 +78,7 @@ public class FilteringListIterator<E> implements ListIterator<E> {
    private void findNext() {
       while (internal().hasNext()) {
          E candidate = internal().next();
-         if (predicate().apply(candidate)) {
+         if (predicate().test(candidate)) {
             next = candidate == null ? NULL_SENTINEL : candidate;
             needNext = false;
             needPrevious = true;
@@ -93,7 +93,7 @@ public class FilteringListIterator<E> implements ListIterator<E> {
    private void findPrevious() {
       while (internal().hasPrevious()) {
          E candidate = internal().previous();
-         if (predicate().apply(candidate)) {
+         if (predicate().test(candidate)) {
             previous = candidate == null ? NULL_SENTINEL : candidate;
             needPrevious = false;
             needNext = true;
@@ -188,7 +188,7 @@ public class FilteringListIterator<E> implements ListIterator<E> {
    public void set(E e) {
       if (!needNext || !needPrevious) {
          throw new IllegalStateException("Underlying iterator has moved and last fetched item can no longer be set");
-      } else if (predicate().apply(e)) {
+      } else if (predicate().test(e)) {
          internal().set(e);
       } else {
          throw new IllegalArgumentException("Specified object does not pass filter");
@@ -200,7 +200,7 @@ public class FilteringListIterator<E> implements ListIterator<E> {
     */
    @Override
    public void add(E e) {
-      if (!predicate().apply(e)) {
+      if (!predicate().test(e)) {
          throw new IllegalArgumentException("Specified object does not pass filter");
       }
       // if we've already moved underlying iterator to search for next or previous item, reposition

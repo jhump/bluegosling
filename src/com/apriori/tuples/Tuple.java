@@ -5,11 +5,11 @@ import com.apriori.util.Function;
 import java.util.List;
 
 /**
- * Base interface implemented by all typesafe tuples. Tuples are immutable and provide a rich
- * typesafe interface for typical operations. This interface includes methods provided by every
+ * Base interface implemented by all type-safe tuples. Tuples are immutable and provide a rich
+ * type-safe interface for typical operations. This interface includes methods provided by every
  * tuple, regardless of the number of items.
  * 
- * <p>The enclosed sub-interfaces offer typesafe operations for instances with up to five items.
+ * <p>The enclosed sub-interfaces offer type-safe operations for instances with up to five items.
  * Tuples with more than five items have less rich operations for the sixth and later items and also
  * do not have the same level of type safety. If you need tuples with more than five items, consider
  * using a {@link List} instead.

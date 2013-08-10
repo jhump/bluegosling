@@ -87,7 +87,7 @@
        <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -96,7 +96,7 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">ScheduledTask&lt;V,T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</pre>
+extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;</pre>
 <div class="block">The type of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> returned by submissions to a
  <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>. This extension provides various utility
  methods as well as access to the <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><code>ScheduledTaskDefinition</code></a> for which
@@ -136,20 +136,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/S
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#failed()">failed</a></strong>()</code>
-<div class="block">Returns whether this task failed or not.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#hasStarted()">hasStarted</a></strong>()</code>
 <div class="block">Returns whether the scheduled task has begun executing or not.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#succeeded()">succeeded</a></strong>()</code>
-<div class="block">Returns whether this task succeeded or not.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -159,6 +147,27 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/S
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.ListenableFuture">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></h3>
+<code><a href="../../../com/apriori/concurrent/ListenableFuture.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListener</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()">getFailure</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()">getResult</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()">isFailed</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()">isSuccessful</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)">visit</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.Cancellable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></h3>
+<code><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.Awaitable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></h3>
+<code><a href="../../../com/apriori/concurrent/Awaitable.html#await()">await</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#await(long, java.util.concurrent.TimeUnit)">await</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.concurrent.Delayed">
 <!--   -->
@@ -234,7 +243,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/S
 <a name="actualTaskEndMillis()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>actualTaskEndMillis</h4>
 <pre>long&nbsp;actualTaskEndMillis()</pre>
@@ -242,34 +251,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/S
  time the task either completed normally or the time it aborted due to thrown
  exception.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the end time of this invocation</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the task not yet completed</dd></dl>
-</li>
-</ul>
-<a name="failed()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>failed</h4>
-<pre>boolean&nbsp;failed()</pre>
-<div class="block">Returns whether this task failed or not. A task failed if it completed
- abnormally due to throwing an uncaught exception.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the task failed; <code>false</code> otherwise</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the task not yet completed</dd></dl>
-</li>
-</ul>
-<a name="succeeded()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>succeeded</h4>
-<pre>boolean&nbsp;succeeded()</pre>
-<div class="block">Returns whether this task succeeded or not. A task succeeded if it
- completed normally (no exception thrown).</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the task succeeded; <code>false</code> otherwise</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the task not yet completed</dd></dl>
 </li>

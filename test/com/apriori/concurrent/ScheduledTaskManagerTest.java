@@ -1,21 +1,23 @@
 package com.apriori.concurrent;
 
+import org.junit.Test;
+
 
 public class ScheduledTaskManagerTest {
 
-   public void schedule() {
+   @Test public void schedule() {
       
    }
    
-   public void scheduleAtFixedRate() {
+   @Test public void scheduleAtFixedRate() {
       
    }
    
-   public void scheduleWithFixedDelay() {
+   @Test public void scheduleWithFixedDelay() {
       
    }
    
-   public void submit() {
+   @Test public void submit() {
       
    }
 }

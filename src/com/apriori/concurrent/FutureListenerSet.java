@@ -7,13 +7,20 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 
-class FutureListenerSet<T> {
+final class FutureListenerSet<T> implements Cloneable {
    private final ListenableFuture<T> future;
    private final List<Pair<FutureListener<? super T>, Executor>> listeners =
          new LinkedList<Pair<FutureListener<? super T>, Executor>>();
    
    FutureListenerSet(ListenableFuture<T> future) {
       this.future = future;
+   }
+   
+   @Override
+   protected FutureListenerSet<T> clone() {
+      FutureListenerSet<T> clone = new FutureListenerSet<T>(this.future);
+      clone.listeners.addAll(this.listeners);
+      return clone;
    }
 
    void addListener(FutureListener<? super T> listener, Executor executor) {

@@ -146,7 +146,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#filter(com.apriori.util.Predicate)">filter</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</code>
 <div class="block">Filters the current value per the specified predicate.</div>
 </td>
 </tr>
@@ -182,7 +182,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,U&gt;&nbsp;function)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Possible.html#transform(com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
@@ -236,7 +236,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>transform</h4>
-<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,U&gt;&nbsp;function)</pre>
+<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function used to transform the value</dd>
 <dt><span class="strong">Returns:</span></dt><dd>returns the current value, transformed by the specified function, if present;
@@ -249,7 +249,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</pre>
+<pre><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;filter(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Filters the current value per the specified predicate. If a value is present and it matches
  the specified predicate then it is returned. Otherwise a possible value that is absent is
  returned.</div>

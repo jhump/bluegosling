@@ -14,6 +14,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -60,9 +61,16 @@ import java.util.concurrent.atomic.AtomicReference;
  * <p>The main features in this service, not available with the standard scheduled executor API,
  * follow:
  * <ul>
- *    <li>Greater control over repeated occurrences. Instead of a task either always repeating
- *    (unless an invocation fails) or never repeating (unless the logic itself schedules a
- *    successor when invoked), tasks can specify a {@link ScheduleNextTaskPolicy}.</li>
+ *    <li>Asynchronous processing using {@link FutureListener}s. All of the futures returned by
+ *    this service are instances of {@link ListenableFuture}, which has a broader and more usable
+ *    API than the standard {@link Future}, including the ability to add listeners to process
+ *    results asynchronously.</li>
+ *    <li>Greater control over repeated occurrences and how they are scheduled. Instead of a task
+ *    either always repeating (unless an invocation fails) or never repeating (unless the logic
+ *    itself schedules a successor when invoked), tasks specify a {@link ScheduleNextTaskPolicy}.
+ *    Also, tasks specify a {@link Rescheduler}, which provides greater flexibility over the timing
+ *    of subsequent tasks. {@link Rescheduler} implementations are provided for simple fixed-rate
+ *    and fixed-delay scheduled.</li>
  *    <li>Notification of individual invocations. For repeated tasks, instead of only being able to
  *    wait for all invocations to finish (which generally only happens after an invocation fails)
  *    or cancel all subsequent invocations, this API provides granularity at individual task level.
@@ -86,9 +94,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO javadoc below!!!
-//TODO consider finer grain concurrency primitives -- e.g. something other than synchronized methods
+//TODO consider finer grain concurrency primitives throughout (e.g. other than synchronized methods)
 //TODO tests!
-public class ScheduledTaskManager implements ScheduledExecutorService {
+public class ScheduledTaskManager implements ListenableScheduledExecutorService {
 
    /**
     * The concrete implementation of {@link ScheduledTask} used by this service. 
@@ -96,10 +104,32 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class ScheduledTaskImpl<V, T> implements ScheduledTask<V, T> {
+      private static final ThreadLocal<Boolean> runningListener = new ThreadLocal<Boolean>() {
+         @Override protected Boolean initialValue() {
+            return false;
+         }
+      };
+      
+      private static <T> FutureListener<T> protect(final FutureListener<T> listener) {
+         return new FutureListener<T>() {
+            @SuppressWarnings("synthetic-access") // access private static field of enclosing class
+            @Override
+            public void onCompletion(ListenableFuture<? extends T> completedFuture) {
+               runningListener.set(true);
+               try {
+                  listener.onCompletion(completedFuture);
+               } finally {
+                  runningListener.set(false);
+               }
+            }
+         };
+      }
+      
       private final ScheduledTaskDefinitionImpl<V, T> taskDef;
+      private FutureListenerSet<V> listeners = new FutureListenerSet<V>(this);
       private ScheduledFuture<?> future;
-      long actualStartMillis;
-      private long actualEndMillis;
+      private volatile long actualStartMillis;
+      private volatile long actualEndMillis;
       private volatile V result;
       private volatile Throwable failure;
       
@@ -123,6 +153,9 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
 
       @Override
       public boolean cancel(boolean interrupt) {
+         if (isDone()) {
+            return false;
+         }
          // to prevent deadlock, must always acquire lock for definition before the acquiring the
          // lock for task instance
          synchronized (taskDef) {
@@ -151,7 +184,7 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
        * @return the result of the completed task
        * @throws ExecutionException if the task failed
        */
-      private V getResult() throws ExecutionException {
+      private V result() throws ExecutionException {
          if (failure == null) {
             return result;
          } else {
@@ -161,15 +194,19 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       
       @Override
       public V get() throws InterruptedException, ExecutionException {
-         future.get();
-         return getResult();
+         if (!isDone()) {
+            future.get();
+         }
+         return result();
       }
 
       @Override
       public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
             TimeoutException {
-         future.get(timeout, unit);
-         return getResult();
+         if (!isDone()) {
+            future.get(timeout, unit);
+         }
+         return result();
       }
 
       @Override
@@ -179,7 +216,11 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
 
       @Override
       public boolean isDone() {
-         return future.isDone();
+         // If we are running listener, task has completed but underlying future
+         // isn't yet done since we invoke listeners from inside its Runnable (other
+         // approaches involve spinning up other thread(s) to watch the underlying
+         // future and run listeners once it's done, but that's even ickier)
+         return runningListener.get() || future.isDone();
       }
 
       @Override
@@ -188,12 +229,12 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       }
 
       @Override
-      public synchronized boolean hasStarted() {
+      public boolean hasStarted() {
          return actualStartMillis != 0;
       }
 
       @Override
-      public synchronized long actualTaskStartMillis() {
+      public long actualTaskStartMillis() {
          if (actualStartMillis == 0) {
             throw new IllegalStateException("Task not yet started");
          }
@@ -201,31 +242,34 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       }
 
       @Override
-      public synchronized long actualTaskEndMillis() {
-         if (!future.isDone()) {
+      public long actualTaskEndMillis() {
+         if (!isDone()) {
             throw new IllegalStateException("Task not yet finished");
          }
          return actualEndMillis;
       }
 
       @Override
-      public boolean failed() {
-         return !succeeded();
+      public boolean isFailed() {
+         if (!isDone()) {
+            return false;
+         }
+         return failure != null;
       }
 
       @Override
-      public boolean succeeded() {
-         if (!future.isDone()) {
-            throw new IllegalStateException("Task not yet finished");
+      public boolean isSuccessful() {
+         if (!isDone()) {
+            return false;
          }
          return failure == null;
       }
       
-      synchronized void markStart() {
+      void markStart() {
          actualStartMillis = System.currentTimeMillis();
       }
       
-      synchronized void markEnd() {
+      void markEnd() {
          actualEndMillis = System.currentTimeMillis();
       }
       
@@ -244,6 +288,84 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          }
          return false;
       }
+
+      @Override
+      public V getResult() {
+         if (!isSuccessful()) {
+            throw new IllegalStateException();
+         }
+         return result;
+      }
+
+      @Override
+      public Throwable getFailure() {
+         if (!isFailed()) {
+            throw new IllegalStateException();
+         }
+         return failure;
+      }
+
+      @Override
+      public void addListener(FutureListener<? super V> listener, Executor executor) {
+         synchronized (this) {
+            if (!isDone()) {
+               listeners.addListener(protect(listener), executor);
+               return;
+            }
+         }
+         FutureListenerSet.runListener(this, listener, executor);
+      }
+      
+      void runListeners() {
+         FutureListenerSet<V> toExecute;
+         synchronized (this) {
+            toExecute = listeners;
+            listeners = null;
+         }
+         if (toExecute != null) {
+            toExecute.runListeners();
+         }
+      }
+
+      @Override
+      public void visit(FutureVisitor<? super V> visitor) {
+         if (!isDone()) {
+            throw new IllegalStateException();
+         } else if (isCancelled()) {
+            visitor.cancelled();
+         } else if (isFailed()) {
+            visitor.failed(failure);
+         } else {
+            visitor.successful(result);
+         }
+      }
+
+      @Override
+      public void await() throws InterruptedException {
+         if (isDone()) {
+            return;
+         }
+         try {
+            future.get();
+         } catch (Exception e) {
+            // don't care if it failed, just waiting for it to finish
+         }
+      }
+
+      @Override
+      public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+         if (isDone()) {
+            return true;
+         }
+         try {
+            future.get(limit, unit);
+         } catch (TimeoutException e) {
+            return false;
+         } catch (Exception e) {
+            // don't care if it failed, just waiting for it to finish
+         }
+         return true;
+      }
    }
    
    /**
@@ -259,7 +381,7 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       private ScheduledTaskImpl<V, T> first;
       private ScheduledTaskImpl<V, T> current;
       private ScheduledTaskImpl<V, T> latest;
-      private long lastScheduledTimeMillis;
+      private long lastScheduledTimeNanos;
       private int executionCount;
       private int successCount;
       private int failureCount;
@@ -292,8 +414,8 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       }
 
       @Override
-      public long initialDelayMillis() {
-         return taskDef.initialDelayMillis();
+      public long initialDelayNanos() {
+         return taskDef.initialDelayNanos();
       }
 
       @Override
@@ -307,8 +429,13 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
       }
 
       @Override
-      public long periodDelayMillis() {
-         return taskDef.periodDelayMillis();
+      public Rescheduler rescheduler() {
+         return taskDef.rescheduler();
+      }
+      
+      @Override
+      public long periodDelayNanos() {
+         return taskDef.periodDelayNanos();
       }
 
       @Override
@@ -465,8 +592,8 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          current = task;
          first = task;
          task.setScheduledFuture(delegate.schedule(makeRunnable(task),
-               taskDef.initialDelayMillis(), TimeUnit.MILLISECONDS));
-         lastScheduledTimeMillis = System.currentTimeMillis() + taskDef.initialDelayMillis();
+               taskDef.initialDelayNanos(), TimeUnit.NANOSECONDS));
+         lastScheduledTimeNanos = System.nanoTime() + taskDef.initialDelayNanos();
       }
 
       /**
@@ -486,25 +613,12 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
             nextTask(null);
          } else {
             ScheduledTaskImpl<V, T> task = new ScheduledTaskImpl<V, T>(this);
-            long periodDelayMillis = taskDef.periodDelayMillis();
-            long nextScheduledTimeMillis;
-            // if previous task was cancelled before it started, schedule its successor as if it
-            // started on time and took no time to complete
-            if (isFixedRate()) {
-               long previousStartMillis = prevTask.hasStarted()
-                     ? prevTask.actualTaskStartMillis()
-                     : System.currentTimeMillis() + prevTask.getDelay(TimeUnit.MILLISECONDS);
-               nextScheduledTimeMillis = nextTimeForFixedRate(lastScheduledTimeMillis,
-                     previousStartMillis, periodDelayMillis);
-            } else {
-               long previousEndMillis = prevTask.hasStarted()
-                     ? prevTask.actualTaskEndMillis()
-                     : System.currentTimeMillis() + prevTask.getDelay(TimeUnit.MILLISECONDS);
-               nextScheduledTimeMillis = previousEndMillis + periodDelayMillis;
-            }
-            task.setScheduledFuture(delegate.schedule(makeRunnable(task),
-                  nextScheduledTimeMillis - System.currentTimeMillis(), TimeUnit.MILLISECONDS));
-            lastScheduledTimeMillis = nextScheduledTimeMillis;
+            long nextScheduledTimeNanos =
+                  taskDef.rescheduler().scheduleNextStartTime(lastScheduledTimeNanos);
+            long delayNanos = nextScheduledTimeNanos - System.nanoTime();
+            task.setScheduledFuture(delegate.schedule(makeRunnable(task), delayNanos,
+                  TimeUnit.NANOSECONDS));
+            lastScheduledTimeNanos = nextScheduledTimeNanos;
             nextTask(task);
          }
       }
@@ -542,8 +656,9 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
                   // don't let listener cause the thread to die
                }
             }
+            current.runListeners();
             executionCount++;
-            if (current.succeeded()) {
+            if (current.isSuccessful()) {
                successCount++;
             } else {
                failureCount++;
@@ -833,6 +948,9 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
    private static RunnableRepeatingScheduledTask runnableScheduledTask(
          final ScheduledTaskDefinition<Void, Runnable> taskDef) {
       return new RunnableRepeatingScheduledTask() {
+         private final AtomicReference<CountDownLatch> awaitLatch =
+               new AtomicReference<CountDownLatch>();
+         
          @Override
          public boolean isDone() {
             return taskDef.isFinished();
@@ -861,7 +979,13 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          
          private Delayed getDelayed() {
             Delayed d = taskDef.current();
-            return d == null ? taskDef.latest() : d;
+            if (d == null) {
+               d = taskDef.latest();
+               if (d == null) {
+                  throw new IllegalStateException("Task is paused. Delay cannot be computed");
+               }
+            }
+            return d;
          }
          
          @Override
@@ -877,6 +1001,113 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          @Override
          public ScheduledTaskDefinition<Void, Runnable> taskDefinition() {
             return taskDef;
+         }
+
+         @Override
+         public Void getMostRecentResult() {
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            if (task == null) {
+               throw new IllegalStateException();
+            }
+            return task.getResult();
+         }
+
+         @Override
+         public void addListenerForEachInstance(final FutureListener<? super Void> listener,
+               Executor executor) {
+            final ListenableFuture<Void> self = this; 
+            taskDef.addListener(new ScheduledTaskListener<Void, Runnable>() {
+               @Override
+               public void taskCompleted(ScheduledTask<? extends Void, ? extends Runnable> task) {
+                  listener.onCompletion(self);
+               }
+            });
+         }
+
+         @Override
+         public int executionCount() {
+            return taskDef.executionCount();
+         }
+         
+         @Override
+         public boolean isSuccessful() {
+            if (!isDone()) {
+               return false;
+            }
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            return task != null && task.isSuccessful();
+         }
+
+         @Override
+         public Void getResult() {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            return task.getResult();
+         }
+
+         @Override
+         public boolean isFailed() {
+            if (!isDone()) {
+               return false;
+            }
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            return task != null && task.isSuccessful();
+         }
+
+         @Override
+         public Throwable getFailure() {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            return task.getFailure();
+         }
+
+         @Override
+         public void addListener(final FutureListener<? super Void> listener, Executor executor) {
+            final ListenableFuture<Void> self = this; 
+            taskDef.addListener(new ScheduledTaskListener<Void, Runnable>() {
+               @Override
+               public void taskCompleted(ScheduledTask<? extends Void, ? extends Runnable> task) {
+                  if (isDone()) {
+                     listener.onCompletion(self);
+                  }
+               }
+            });
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super Void> visitor) {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            if (isCancelled()) {
+               visitor.cancelled();
+               return;
+            }
+            ScheduledTask<Void, Runnable> task = taskDef.latest();
+            task.visit(visitor);
+         }
+
+         private CountDownLatch getAwaitLatch() {
+            CountDownLatch latch = awaitLatch.get();
+            if (latch != null) {
+               return latch;
+            }
+            latch = new CountDownLatch(1);
+            return awaitLatch.compareAndSet(null, latch) ? latch : awaitLatch.get();
+         }
+         
+         @Override
+         public void await() throws InterruptedException {
+            getAwaitLatch().await();
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return getAwaitLatch().await(limit, unit);
          }
       };
    }
@@ -904,13 +1135,13 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          }
 
          @Override
-         public boolean failed() {
-            return task.failed();
+         public boolean isFailed() {
+            return task.isFailed();
          }
 
          @Override
-         public boolean succeeded() {
-            return task.succeeded();
+         public boolean isSuccessful() {
+            return task.isSuccessful();
          }
 
          @Override
@@ -950,13 +1181,45 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          public boolean isDone() {
             return task.isDone();
          }
+
+         @Override
+         public Void getResult() {
+            return task.getResult();
+         }
+
+         @Override
+         public Throwable getFailure() {
+            return task.getFailure();
+         }
+
+         @Override
+         public void addListener(FutureListener<? super Void> listener, Executor executor) {
+            task.addListener(listener, executor);
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super Void> visitor) {
+            task.visit(visitor);
+         }
+
+         @Override
+         public void await() throws InterruptedException {
+            task.await();
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return task.await(limit, unit);
+         }
       };
    }
    
    private static <V> CallableRepeatingScheduledTask<V> callableScheduledTask(
          final ScheduledTaskDefinition<V, Callable<V>> taskDef) {
       return new CallableRepeatingScheduledTask<V>() {
-
+         private final AtomicReference<CountDownLatch> awaitLatch =
+               new AtomicReference<CountDownLatch>();
+         
          @Override
          public ScheduledTaskDefinition<V, Callable<V>> taskDefinition() {
             return taskDef;
@@ -1002,6 +1265,113 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
                TimeoutException {
             return getTaskResult(taskDef, timeout, unit);
          }
+         
+         @Override
+         public V getMostRecentResult() {
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            if (task == null) {
+               throw new IllegalStateException();
+            }
+            return task.getResult();
+         }
+
+         @Override
+         public void addListenerForEachInstance(final FutureListener<? super V> listener,
+               Executor executor) {
+            final ListenableFuture<V> self = this; 
+            taskDef.addListener(new ScheduledTaskListener<V, Callable<V>>() {
+               @Override
+               public void taskCompleted(ScheduledTask<? extends V, ? extends Callable<V>> task) {
+                  listener.onCompletion(self);
+               }
+            });
+         }
+
+         @Override
+         public int executionCount() {
+            return taskDef.executionCount();
+         }
+         
+         @Override
+         public boolean isSuccessful() {
+            if (!isDone()) {
+               return false;
+            }
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            return task != null && task.isSuccessful();
+         }
+
+         @Override
+         public V getResult() {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            return task.getResult();
+         }
+
+         @Override
+         public boolean isFailed() {
+            if (!isDone()) {
+               return false;
+            }
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            return task != null && task.isSuccessful();
+         }
+
+         @Override
+         public Throwable getFailure() {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            return task.getFailure();
+         }
+
+         @Override
+         public void addListener(final FutureListener<? super V> listener, Executor executor) {
+            final ListenableFuture<V> self = this; 
+            taskDef.addListener(new ScheduledTaskListener<V, Callable<V>>() {
+               @Override
+               public void taskCompleted(ScheduledTask<? extends V, ? extends Callable<V>> task) {
+                  if (isDone()) {
+                     listener.onCompletion(self);
+                  }
+               }
+            });
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super V> visitor) {
+            if (!isDone()) {
+               throw new IllegalStateException();
+            }
+            if (isCancelled()) {
+               visitor.cancelled();
+               return;
+            }
+            ScheduledTask<V, Callable<V>> task = taskDef.latest();
+            task.visit(visitor);
+         }
+
+         private CountDownLatch getAwaitLatch() {
+            CountDownLatch latch = awaitLatch.get();
+            if (latch != null) {
+               return latch;
+            }
+            latch = new CountDownLatch(1);
+            return awaitLatch.compareAndSet(null, latch) ? latch : awaitLatch.get();
+         }
+         
+         @Override
+         public void await() throws InterruptedException {
+            getAwaitLatch().await();
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return getAwaitLatch().await(limit, unit);
+         }
       };
    }
    
@@ -1028,13 +1398,13 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          }
 
          @Override
-         public boolean failed() {
-            return task.failed();
+         public boolean isFailed() {
+            return task.isFailed();
          }
 
          @Override
-         public boolean succeeded() {
-            return task.succeeded();
+         public boolean isSuccessful() {
+            return task.isSuccessful();
          }
 
          @Override
@@ -1071,6 +1441,36 @@ public class ScheduledTaskManager implements ScheduledExecutorService {
          @Override
          public boolean isDone() {
             return task.isDone();
+         }
+         
+         @Override
+         public V getResult() {
+            return task.getResult();
+         }
+
+         @Override
+         public Throwable getFailure() {
+            return task.getFailure();
+         }
+
+         @Override
+         public void addListener(FutureListener<? super V> listener, Executor executor) {
+            task.addListener(listener, executor);
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super V> visitor) {
+            task.visit(visitor);
+         }
+
+         @Override
+         public void await() throws InterruptedException {
+            task.await();
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return task.await(limit, unit);
          }
       };
    }

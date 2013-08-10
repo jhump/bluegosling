@@ -1,17 +1,21 @@
 package com.apriori.reflect;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-
-import junit.framework.TestCase;
 
 /**
  * Tests the functionality in {@link ProxyUtils}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ProxyUtilTest extends TestCase {
+public class ProxyUtilTest {
 
    // helper interface with methods of various return types to
    // make sure "null" values returned by getNullReturnValue()
@@ -64,7 +68,7 @@ public class ProxyUtilTest extends TestCase {
    /**
     * Tests {@link ProxyUtils#getNullReturnValue(Class)}.
     */
-   public void testGetNullReturnValue() {
+   @Test public void getNullReturnValue() {
       // use an actual proxy so we not only check that returned values are what we
       // expect but further verify that expected values are appropriate and correct
       // (and won't generate NullPointerExceptions or ClassCastExceptions)
@@ -78,7 +82,7 @@ public class ProxyUtilTest extends TestCase {
                }
             });
 
-      // this just makes sure no exceptions occurs (no return value to inspect)
+      // this just makes sure no exception occurs (no return value to inspect)
       proxy.voidMethod();
       // zeroes
       assertEquals(0, proxy.intMethod());
@@ -86,8 +90,8 @@ public class ProxyUtilTest extends TestCase {
       assertEquals(0, proxy.byteMethod());
       assertEquals(0, proxy.longMethod());
       assertEquals(0, proxy.charMethod());
-      assertEquals(0.0, proxy.doubleMethod());
-      assertEquals(0.0F, proxy.floatMethod());
+      assertEquals(0.0, proxy.doubleMethod(), 0.0 /* exactly zero */);
+      assertEquals(0.0F, proxy.floatMethod(), 0.0F /* exactly zero */);
       // false
       assertFalse(proxy.booleanMethod());
 

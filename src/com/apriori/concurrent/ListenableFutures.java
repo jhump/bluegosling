@@ -155,6 +155,28 @@ public final class ListenableFutures {
          return delegate.invokeAny(tasks, timeout, unit);
       }
    }
+   
+   static <T> void copyFutureInto(Future<T> future, SimpleListenableFuture<T> copy) {
+      try {
+         boolean interrupted = false;
+         while (true) {
+            try {
+               // if future is not done, this will block until it is
+               copy.setValue(future.get());
+               break;
+            } catch (InterruptedException e) {
+               interrupted = true;
+            }
+         }
+         if (interrupted) {
+            Thread.currentThread().interrupt(); // restore interrupt status
+         }
+      } catch (ExecutionException e) {
+         copy.setFailure(e.getCause());
+      } catch (CancellationException e) {
+         copy.setCancelled();
+      }
+   }
 
    public static <T> ListenableFuture<T> makeListenable(final Future<T> future) {
       if (future instanceof ListenableFuture) {
@@ -169,28 +191,17 @@ public final class ListenableFutures {
             return false;
          }
       };
-      new Thread() {
-         @Override public void run() {
-            try {
-               boolean interrupted = false;
-               while (true) {
-                  try {
-                     result.setValue(future.get());
-                     break;
-                  } catch (InterruptedException e) {
-                     interrupted = true;
-                  }
-               }
-               if (interrupted) {
-                  Thread.currentThread().interrupt(); // restore interrupt status
-               }
-            } catch (ExecutionException e) {
-               result.setFailure(e.getCause());
-            } catch (CancellationException e) {
-               result.setCancelled();
+      if (future.isDone()) {
+         // can get the value immediately
+         copyFutureInto(future,  result);
+      } else {
+         // use a new thread that just blocks for the future and then completes the result
+         new Thread() {
+            @Override public void run() {
+               copyFutureInto(future,  result);
             }
-         }
-      }.start();
+         }.start();
+      }
       return result;
    }
    
@@ -348,12 +359,7 @@ public final class ListenableFutures {
          @Override
          public void addListener(final FutureListener<? super T> listener, Executor executor) {
             final ListenableFuture<T> f = this;
-            executor.execute(new Runnable() {
-               @Override
-               public void run() {
-                  listener.onCompletion(f);
-               }
-            });
+            FutureListenerSet.runListener(f,  listener, executor);
          }
 
          @Override
@@ -422,12 +428,7 @@ public final class ListenableFutures {
          @Override
          public void addListener(final FutureListener<? super T> listener, Executor executor) {
             final ListenableFuture<T> f = this;
-            executor.execute(new Runnable() {
-               @Override
-               public void run() {
-                  listener.onCompletion(f);
-               }
-            });
+            FutureListenerSet.runListener(f,  listener, executor);
          }
 
          @Override
@@ -445,7 +446,76 @@ public final class ListenableFutures {
          }
       };
    }
-   
+
+   public static <T> ListenableFuture<T> cancelledFuture() {
+      return new ListenableFuture<T>() {
+         @Override
+         public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+         }
+
+         @Override
+         public boolean isCancelled() {
+            return true;
+         }
+
+         @Override
+         public boolean isDone() {
+            return true;
+         }
+
+         @Override
+         public T get() throws ExecutionException {
+            throw new CancellationException();
+         }
+
+         @Override
+         public T get(long timeout, TimeUnit unit) throws ExecutionException {
+            throw new CancellationException();
+         }
+
+         @Override
+         public boolean isSuccessful() {
+            return false;
+         }
+
+         @Override
+         public T getResult() {
+            throw new IllegalStateException();
+         }
+
+         @Override
+         public boolean isFailed() {
+            return false;
+         }
+
+         @Override
+         public Throwable getFailure() {
+            throw new IllegalStateException();
+         }
+
+         @Override
+         public void addListener(final FutureListener<? super T> listener, Executor executor) {
+            final ListenableFuture<T> f = this;
+            FutureListenerSet.runListener(f,  listener, executor);
+         }
+
+         @Override
+         public void visit(FutureVisitor<? super T> visitor) {
+            visitor.cancelled();
+         }
+         
+         @Override
+         public void await() throws InterruptedException {
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return true;
+         }
+      };
+   }
+
    public static <T> ListenableFuture<List<T>> join(ListenableFuture<? extends T>... futures) {
       return join(Arrays.asList(futures));
    }

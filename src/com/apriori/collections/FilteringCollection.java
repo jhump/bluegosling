@@ -90,7 +90,7 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
     */
    @Override
    public boolean add(E e) {
-      if (predicate().apply(e)) {
+      if (predicate().test(e)) {
          return internal().add(e);
       } else {
          throw new IllegalArgumentException("Specified object does not pass filter: " + e);
@@ -114,7 +114,7 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
    @Override
    public boolean addAll(Collection<? extends E> c) {
       for (E e : c) {
-         if (!predicate().apply(e)) {
+         if (!predicate().test(e)) {
             throw new IllegalArgumentException("Specified object does not pass filter: " + e);
          }
       }

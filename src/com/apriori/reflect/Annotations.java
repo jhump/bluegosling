@@ -1,10 +1,13 @@
 package com.apriori.reflect;
 
 import com.apriori.util.Predicate;
+import com.apriori.util.Predicates;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Inherited;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,12 +20,72 @@ import java.util.Set;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: finish javadoc
 public final class Annotations {
    /**
     * Prevents instantiation.
     */
    private Annotations() {}
+   
+   /**
+    * Returns an annotation, possibly searching for the annotation on super-types if not declared
+    * on the specified type.
+    * 
+    * <p>If the annotation is not declared on the specified type and is not {@linkplain Inherited
+    * inheritable} then the type's super-classes are searched for the annotation.
+    * 
+    * <p>If the annotation is still not found, then implemented interfaces are searched. Interfaces
+    * declared on the specified type are preferred over their super-interfaces. Furthermore,
+    * interfaces implemented directly by the specified type (both declared interfaces and their
+    * super-interfaces) are preferred over "inherited interfaces", which are those declared on
+    * super-types. Finally, interfaces earlier in the declaration order are preferred over those
+    * later in the {@code implements} declaration. Similarly, super-interfaces earlier in the
+    * declaration order are preferred over ones later in the {@code extends} declaration.
+    * 
+    * @param clazz the type from which the annotation is queried
+    * @param annotationType the annotaition type to find
+    * @return the annotation, possibly on a super-type, or {@code null} if not found
+    */
+   public static <A extends Annotation> A findAnnotation(Class<?> clazz, Class<A> annotationType) {
+      A annotation = clazz.getAnnotation(annotationType);
+      if (annotation != null) {
+         return annotation;
+      }
+      // if not @Inherited, then look at super-type(s)
+      if (annotationType.getAnnotation(Inherited.class) == null) {
+         for (Class<?> ancestor = clazz.getSuperclass(); ancestor != null;
+               ancestor = ancestor.getSuperclass()) {
+            annotation = ancestor.getAnnotation(annotationType);
+            if (annotation != null) {
+               return annotation;
+            }
+         }
+      }
+      // Still not found? Now we move on to inspecting implemented interfaces. We do a breadth-first
+      // search so that interfaces that are "closer" to the specified class as preferred (e.g. we
+      // prefer an interface implemented directly by the class vs. by a super-class, and we prefer
+      // an interface declared directly on the class vs. annotations on one a super-interface)
+      Set<Class<?>> interfacesChecked = new HashSet<Class<?>>(); 
+      ArrayDeque<Class<?>> queue = new ArrayDeque<Class<?>>();
+      while (clazz != null) {
+         // start with specified class, looking through interfaces
+         queue.addAll(Arrays.asList(clazz.getInterfaces()));
+         while (!queue.isEmpty()) {
+            Class<?> iface = queue.remove();
+            if (interfacesChecked.add(iface)) {
+               annotation = iface.getAnnotation(annotationType);
+               if (annotation != null) {
+                  return annotation;
+               }
+               // look at super-interfaces
+               queue.addAll(Arrays.asList(clazz.getInterfaces()));
+            }
+         }
+         // move on to interfaces declared on super-classes
+         clazz = clazz.getSuperclass();
+      }
+      // still not found -- annotation does not exist
+      return null;
+   }
    
    /**
     * Creates an annotation instance. Any values that are not specified will return their default
@@ -116,14 +179,23 @@ public final class Annotations {
     *       method)
     */
    public static Map<String, Object> asMap(Annotation annotation) {
-      return asMap(annotation, Predicate.ALL);
+      return asMap(annotation, Predicates.acceptAll());
    }
 
+   /**
+    * Returns a map of values that correspond to the annotation's methods that match the specified
+    * predicate.
+    * 
+    * @param annotation the annotation
+    * @param filterAttributes a predicate, for filtering the annotation's methods
+    * @return a map of values where keys are the annotation method names and values are the values
+    *       returned by those methods, filtered according to the specified predicate
+    */
    public static Map<String, Object> asMap(Annotation annotation,
          Predicate<? super Method> filterAttributes) {
       Map<String, Object> ret = new HashMap<String, Object>();
       for (Method m : annotation.annotationType().getDeclaredMethods()) {
-         if (filterAttributes.apply(m)) {
+         if (filterAttributes.test(m)) {
             Object value = getAnnotationFieldValue(m, annotation);
             if (value instanceof Annotation) {
                value = asMap((Annotation) value, filterAttributes);
@@ -134,16 +206,41 @@ public final class Annotations {
       return ret;
    }
    
+   /**
+    * Determines if two annotation objects are equal according to the contract defined on
+    * {@link Annotation}. This is useful for creating proxies that implement annotation interfaces
+    * so as to completely adhere to the annotation spec.
+    * 
+    * @param annotation an annotation
+    * @param other another object to which the annotation is compared
+    * @return true if the other object has the same annotation type and returns equal values from
+    *       the various annotation attributes
+    * @see Annotation#equals(Object)
+    */
    public static <T extends Annotation> boolean equal(T annotation, Object other) {
-      return equal(annotation, other, Predicate.ALL);
+      return equal(annotation, other, Predicates.acceptAll());
    }
 
+   /**
+    * Determines if two annotation objects are equal, only considering attributes that match the
+    * specified predicate. This implements the logic defined in the contract for equals defined on
+    * {@link Annotation}, except that it only compares methods that match the specified predicate.
+    * This is useful for determining similarity between two annotations where not all annotation
+    * attributes are important.
+    * 
+    * @param annotation an annotation
+    * @param other another object to which the annotation is compared
+    * @param filterAttributes a predicate, for filtering the annotation's methods
+    * @return true if the other object has the same annotation type and returns equal values from
+    *       the annotation attributes that match the predicate
+    */
    public static <T extends Annotation> boolean equal(T annotation, Object other,
          Predicate<? super Method> filterAttributes) {
       Class<?> annotationType = annotation.annotationType();
-      if (annotationType.isInstance(other)) {
+      if (annotationType.isInstance(other)
+            && annotationType.equals(((Annotation) other).annotationType())) {
          for (Method annotationField : annotationType.getDeclaredMethods()) {
-            if (filterAttributes.apply(annotationField)) {
+            if (filterAttributes.test(annotationField)) {
                Object v1 = getAnnotationFieldValue(annotationField, annotation);
                Object v2 = getAnnotationFieldValue(annotationField, other);
                if (v1 instanceof Object[]) {
@@ -161,15 +258,33 @@ public final class Annotations {
       return false;
    }
    
+   /**
+    * Computes the hash code for an annotation as defined in the contract on {@link Annotation}.
+    * This is useful for creating proxies that implement annotation interfaces so as to completely
+    * adhere to the annotation spec. This implements the logic defined in the contract for hash code
+    * defined on {@link Annotation}, except that it only uses methods that match the specified
+    * predicate as part of the computation.
+    * 
+    * @param annotation the annotation
+    * @return the annotation's hash code
+    */
    public static <T extends Annotation> int hashCode(T annotation) {
-      return hashCode(annotation, Predicate.ALL);
+      return hashCode(annotation, Predicates.acceptAll());
    }
    
+   /**
+    * Computes the has code for an annotation, only considering attributes that match the specified
+    * predicate.
+    * 
+    * @param annotation an annotation
+    * @param filterAttributes a predicate, for filtering the annotation's methods
+    * @return the annotation's hash code, computed based only on attributes that match the predicate
+    */
    public static <T extends Annotation> int hashCode(T annotation,
          Predicate<? super Method> filterAttributes) {
       int ret = 0;
       for (Method annotationField : annotation.annotationType().getDeclaredMethods()) {
-         if (filterAttributes.apply(annotationField)) {
+         if (filterAttributes.test(annotationField)) {
             Object val = getAnnotationFieldValue(annotationField, annotation);
             int memberCode;
             if (val == null) {
@@ -185,10 +300,31 @@ public final class Annotations {
       return ret;
    }
    
+   /**
+    * Returns a string representation of the specified annotation object. The string will be in the
+    * form:<pre>
+    * {@literal @}package.Class(attribute1 = attribute1 value, attribute2 = attribute2 value)
+    * </pre>
+    * The values come from the string representation of annotation attribute values.
+    * 
+    * @param annotation the annotation
+    * @return a string representation of the annotation
+    */
    public static <T extends Annotation> String toString(T annotation) {
-      return toString(annotation, Predicate.ALL);
+      return toString(annotation, Predicates.acceptAll());
    }
    
+   /**
+    * Returns a string representation of the annotation, with only the attributes that match the
+    * specified predicate. The string representation is in the same form as
+    * {@link #toString(Annotation)} but it only includes annotation attributes that match the
+    * specified predicate.
+    * 
+    * @param annotation the annotation
+    * @param filterAttributes a predicate, for filtering the annotation's methods
+    * @return a string representation of the annotation with only the attributes that match the
+    *       predicate
+    */
    public static <T extends Annotation> String toString(T annotation,
          Predicate<? super Method> filterAttributes) {
       StringBuilder sb = new StringBuilder();
@@ -197,7 +333,7 @@ public final class Annotations {
       sb.append(annotationType.getName());
       boolean first = true;
       for (Method annotationField : annotation.annotationType().getDeclaredMethods()) {
-         if (filterAttributes.apply(annotationField)) {
+         if (filterAttributes.test(annotationField)) {
             Object val = getAnnotationFieldValue(annotationField, annotation);
             if (val != null) {
                if (first) {
