@@ -10,8 +10,22 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//TODO: javadoc
-//TODO: more tests
+/**
+ * A future task that implements the {@link ListenableFuture} interface. This builds on the
+ * {@link FutureTask} implementation provided by the Java runtime library and extends it with
+ * additional API.
+ * 
+ * <p>Another implementation of the {@link ListenableFuture} interface that doesn't necessarily
+ * represent a runnable task is {@link SimpleListenableFuture}. That other class also implements
+ * some of the new API more efficiently since it doesn't operate within constraints inherited from
+ * {@link FutureTask} (which was designed to provide a more simplistic API).
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <T> the type of result produced by the future task
+ * 
+ * @see SimpleListenableFuture
+ */
 public class ListenableFutureTask<T> extends FutureTask<T> implements ListenableFuture<T> {
 
    protected final Lock completionLock = new ReentrantLock();
@@ -19,10 +33,23 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
    private Throwable failure;
    private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
    
+   /**
+    * Constructs a new task for the specified callable. When {@linkplain #run() run}, the callable
+    * is invoked and the future completes.
+    * 
+    * @param callable the task that produces the future result
+    */
    public ListenableFutureTask(Callable<T> callable) {
       super(callable);
    }
 
+   /**
+    * Constructs a new task for the specified command and result. When {@linkplain #run() run}, the
+    * runnable is invoked and the future completes.
+    * 
+    * @param runnable the task that is executed
+    * @param result the future result
+    */
    public ListenableFutureTask(Runnable runnable, T result) {
       super(runnable, result);
    }
@@ -85,7 +112,7 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
    @Override
    public T getResult() {
       if (!isSuccessful()) {
-         throw new IllegalArgumentException();
+         throw new IllegalStateException();
       }
       try {
          return get();

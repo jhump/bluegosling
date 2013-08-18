@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -77,25 +77,20 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface ScheduledTask" class="title">Interface ScheduledTask&lt;V,T&gt;</h2>
+<h2 title="Interface ScheduledTask" class="title">Interface ScheduledTask&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd><dd><code>T</code> - the type of the actual task: <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or
-       <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
 <dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</dd>
 </dl>
-<dl>
-<dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent">CallableScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/RunnableScheduledTask.html" title="interface in com.apriori.concurrent">RunnableScheduledTask</a></dd>
-</dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">ScheduledTask&lt;V,T&gt;</span>
+<pre>public interface <span class="strong">ScheduledTask&lt;V&gt;</span>
 extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;</pre>
 <div class="block">The type of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> returned by submissions to a
  <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>. This extension provides various utility
@@ -124,24 +119,30 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#actualTaskEndMillis()">actualTaskEndMillis</a></strong>()</code>
-<div class="block">Returns the actual end time of this invocation, in milliseconds.</div>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#actualStartTimeMillis()">actualStartTimeMillis</a></strong>()</code>
+<div class="block">Returns the actual start time of this invocation, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#actualTaskStartMillis()">actualTaskStartMillis</a></strong>()</code>
-<div class="block">Returns the actual start time of this invocation, in milliseconds.</div>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#finishTimeMillis()">finishTimeMillis</a></strong>()</code>
+<div class="block">Returns the actual end time of this invocation, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#hasStarted()">hasStarted</a></strong>()</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#isStarted()">isStarted</a></strong>()</code>
 <div class="block">Returns whether the scheduled task has begun executing or not.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">T</a>&gt;</code></td>
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#scheduledStartTimeMillis()">scheduledStartTimeMillis</a></strong>()</code>
+<div class="block">Returns the scheduled start time of this invocation, in milliseconds.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTask.html#taskDefinition()">taskDefinition</a></strong>()</code>
 <div class="block">Returns the task definition for which this task was created.</div>
 </td>
@@ -209,44 +210,56 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>taskDefinition</h4>
-<pre><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">T</a>&gt;&nbsp;taskDefinition()</pre>
+<pre><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>&gt;&nbsp;taskDefinition()</pre>
 <div class="block">Returns the task definition for which this task was created.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the task's definition</dd></dl>
 </li>
 </ul>
-<a name="hasStarted()">
+<a name="isStarted()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>hasStarted</h4>
-<pre>boolean&nbsp;hasStarted()</pre>
+<h4>isStarted</h4>
+<pre>boolean&nbsp;isStarted()</pre>
 <div class="block">Returns whether the scheduled task has begun executing or not.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>true if the task has begun executing (including if it's already finished); false
        otherwise</dd></dl>
 </li>
 </ul>
-<a name="actualTaskStartMillis()">
+<a name="scheduledStartTimeMillis()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>actualTaskStartMillis</h4>
-<pre>long&nbsp;actualTaskStartMillis()</pre>
+<h4>scheduledStartTimeMillis</h4>
+<pre>long&nbsp;scheduledStartTimeMillis()</pre>
+<div class="block">Returns the scheduled start time of this invocation, in milliseconds.
+ This is measured as milliseconds elapsed since midnight, January 1, 1970 UTC.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the scheduled start time of this invocation</dd></dl>
+</li>
+</ul>
+<a name="actualStartTimeMillis()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>actualStartTimeMillis</h4>
+<pre>long&nbsp;actualStartTimeMillis()</pre>
 <div class="block">Returns the actual start time of this invocation, in milliseconds.
  This is measured as milliseconds elapsed since midnight, January 1, 1970 UTC.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the start time of this invocation</dd>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the actual start time of this invocation</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the task has not actually started yet</dd></dl>
 </li>
 </ul>
-<a name="actualTaskEndMillis()">
+<a name="finishTimeMillis()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>actualTaskEndMillis</h4>
-<pre>long&nbsp;actualTaskEndMillis()</pre>
+<h4>finishTimeMillis</h4>
+<pre>long&nbsp;finishTimeMillis()</pre>
 <div class="block">Returns the actual end time of this invocation, in milliseconds. This is the
  time the task either completed normally or the time it aborted due to thrown
  exception.</div>
@@ -280,7 +293,7 @@ extends <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html"
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

@@ -77,15 +77,16 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface ScheduledTaskListener" class="title">Interface ScheduledTaskListener&lt;V,T&gt;</h2>
+<h2 title="Interface ScheduledTaskListener" class="title">Interface ScheduledTaskListener&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned by the task</dd></dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">ScheduledTaskListener&lt;V,T&gt;</span></pre>
+<pre>public interface <span class="strong">ScheduledTaskListener&lt;V&gt;</span></pre>
 <div class="block">A listener for completions of <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a>s.</div>
 </li>
 </ul>
@@ -107,9 +108,8 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskListener.html#taskCompleted(com.apriori.concurrent.ScheduledTask)">taskCompleted</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>,? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">T</a>&gt;&nbsp;task)</code>
-<div class="block">Called when the specified task completes (either normally or
- abnormally).</div>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskListener.html#taskCompleted(com.apriori.concurrent.ScheduledTask)">taskCompleted</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>&gt;&nbsp;task)</code>
+<div class="block">Called when the specified task completes (either normally or abnormally).</div>
 </td>
 </tr>
 </table>
@@ -133,10 +133,9 @@
 <ul class="blockListLast">
 <li class="blockList">
 <h4>taskCompleted</h4>
-<pre>void&nbsp;taskCompleted(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>,? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">T</a>&gt;&nbsp;task)</pre>
-<div class="block">Called when the specified task completes (either normally or
- abnormally). You can easily distinguish between successful and
- failed tasks via <a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>ListenableFuture.isSuccessful()</code></a> and
+<pre>void&nbsp;taskCompleted(<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;? extends <a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>&gt;&nbsp;task)</pre>
+<div class="block">Called when the specified task completes (either normally or abnormally). Successful and
+ failed tasks can easily be distinguished using <a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>ListenableFuture.isSuccessful()</code></a> and
  <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()"><code>ListenableFuture.isFailed()</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>task</code> - the completed task</dd></dl>
 </li>

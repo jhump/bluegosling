@@ -90,11 +90,11 @@
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">CallableRepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent">CallableScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V,T&gt;, <a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RunnableRepeatingScheduledTask</a>, <a href="../../../com/apriori/concurrent/RunnableScheduledTask.html" title="interface in com.apriori.concurrent">RunnableScheduledTask</a>, <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;V,T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;V&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a>, <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dd>
+<dd><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a>, <a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a>, <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dd>
 </dl>
 <hr>
 <br>
@@ -107,7 +107,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
  is what gives this future its name. You can add listeners that are invoked when the future
  completes.</li>
  <li><strong>Blocking</strong>: This interface extends <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a>, giving you more API
- choices for blocking until the future completes.</li>
+ choices for blocking until the future completes (that do not require catching <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutionException</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/CancellationException.html?is-external=true" title="class or interface in java.util.concurrent"><code>CancellationException</code></a>, or <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent"><code>TimeoutException</code></a>).</li>
  <li><strong>Inspecting</strong>: Numerous new methods are provided for inspecting the result of
  a completed future, none of which require a <code>try/catch</code> block (<a href="../../../com/apriori/concurrent/ListenableFuture.html#isSuccessful()"><code>isSuccessful()</code></a>,
  <a href="../../../com/apriori/concurrent/ListenableFuture.html#getResult()"><code>getResult()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#isFailed()"><code>isFailed()</code></a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#getFailure()"><code>getFailure()</code></a>, and
@@ -268,7 +268,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/F
 <div class="block">Adds a listener that will be called when the future completes. The listener will be invoked
  using the specified executor. If the future is already complete when the listener is added,
  the listener will be immediately invoked. If the listener can be called synchronously (e.g.
- it will complete very quickly and not block) then consider using <a href="../../../com/apriori/concurrent/ListenableFutures.html#sameThreadExecutor()"><code>ListenableFutures.sameThreadExecutor()</code></a>.</div>
+ it will complete very quickly and not block) then consider using <a href="../../../com/apriori/concurrent/ListenableExecutors.html#sameThreadExecutor()"><code>ListenableExecutors.sameThreadExecutor()</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd><dd><code>executor</code> - the executor used when calling the listener</dd></dl>
 </li>
 </ul>

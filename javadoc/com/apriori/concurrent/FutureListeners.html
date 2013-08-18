@@ -95,6 +95,7 @@
 <br>
 <pre>public final class <span class="strong">FutureListeners</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Factory methods for creating instances of <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -117,19 +118,27 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#assemble(com.apriori.util.Sink, com.apriori.util.Sink, java.lang.Runnable)">assemble</a></strong>(<a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super T&gt;&nbsp;onSuccess,
         <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</code>&nbsp;</td>
+        <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</code>
+<div class="block">Assembles a listener using all of the specified callbacks.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forRunnable(java.lang.Runnable)">forRunnable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forRunnable(java.lang.Runnable)">forRunnable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<div class="block">Creates a listener that will execute the specified task when the future completes.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forSink(com.apriori.util.Sink)">forSink</a></strong>(<a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;sink)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forSink(com.apriori.util.Sink)">forSink</a></strong>(<a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;sink)</code>
+<div class="block">Adapts a <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><code>Sink</code></a> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forVisitor(com.apriori.concurrent.FutureVisitor)">forVisitor</a></strong>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;&nbsp;visitor)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListeners.html#forVisitor(com.apriori.concurrent.FutureVisitor)">forVisitor</a></strong>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;&nbsp;visitor)</code>
+<div class="block">Creates a listener that will visit the completed future.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -160,6 +169,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>forVisitor</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forVisitor(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;&nbsp;visitor)</pre>
+<div class="block">Creates a listener that will visit the completed future. When the listener is called from a
+ completed future, that listener uses the specified visitor to visit the completed future.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>visitor</code> - the visitor</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a listener that uses the visitor when invoked</dd></dl>
 </li>
 </ul>
 <a name="forRunnable(java.lang.Runnable)">
@@ -169,6 +182,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>forRunnable</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<div class="block">Creates a listener that will execute the specified task when the future completes.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>runnable</code> - the task to run when the future completes</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a listener that invokes the specified task</dd></dl>
 </li>
 </ul>
 <a name="forSink(com.apriori.util.Sink)">
@@ -178,6 +194,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>forSink</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forSink(<a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;sink)</pre>
+<div class="block">Adapts a <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><code>Sink</code></a> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>sink</code> - a sink</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a listener that calls <code>sink.accept(completedFuture)</code> when invoked</dd></dl>
 </li>
 </ul>
 <a name="assemble(com.apriori.util.Sink, com.apriori.util.Sink, java.lang.Runnable)">
@@ -189,6 +208,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;assemble(<a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super T&gt;&nbsp;onSuccess,
                              <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util">Sink</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
                              <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</pre>
+<div class="block">Assembles a listener using all of the specified callbacks. Each callback is invoked depending
+ on the disposition of the completed futures.
+ 
+ <p>This method uses only functional interfaces, so will make it easier to assemble listeners
+ in Java 8.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>onSuccess</code> - invoked when the completed future is successful; the future's result is
+       passed to the sink</dd><dd><code>onFailure</code> - invoked when the completed future has failed; the cause of failure is passed
+       to the sink</dd><dd><code>onCancel</code> - invoked when the completed future is cancelled</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a listener that will call one of the specified callbacks when invoked</dd></dl>
 </li>
 </ul>
 </li>

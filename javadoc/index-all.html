@@ -191,11 +191,7 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/di/Injector.html#acceptsSelector(com.apriori.di.Key)">acceptsSelector(Key&lt;?&gt;)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#actualTaskEndMillis()">actualTaskEndMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
-<dd>
-<div class="block">Returns the actual end time of this invocation, in milliseconds.</div>
-</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#actualTaskStartMillis()">actualTaskStartMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#actualStartTimeMillis()">actualStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
 <dd>
 <div class="block">Returns the actual start time of this invocation, in milliseconds.</div>
 </dd>
@@ -336,7 +332,9 @@
 <dt><span class="strong"><a href="./com/apriori/collections/TreeList.html#addAll(int, java.util.Collection)">addAll(int, Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/TreeList.html" title="class in com.apriori.collections">TreeList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#addCallback(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.FutureVisitor)">addCallback(ListenableFuture&lt;T&gt;, FutureVisitor&lt;? super T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds a listener that visits the specified future using a <a href="./com/apriori/concurrent/ListenableExecutors.html#sameThreadExecutor()">same thread executor</a>.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/ArrayBackedLinkedList.html#addFirst(E)">addFirst(E)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections">ArrayBackedLinkedList</a></dt>
 <dt><span class="strong"><a href="./com/apriori/collections/RandomAccessArrayBlockingDeque.html#addFirst(E)">addFirst(E)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
@@ -353,14 +351,16 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutureTask.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListener(FutureListener&lt;? super T&gt;, Executor)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTaskListener)">addListener(ScheduledTaskListener&lt;? super V, ? super T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTaskListener)">addListener(ScheduledTaskListener&lt;? super V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
 <dd>
 <div class="block">Adds a listener that will be notified when task invocations complete.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListener(FutureListener&lt;? super T&gt;, Executor)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFuture.html#addListenerForEachInstance(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListenerForEachInstance(FutureListener&lt;? super T&gt;, Executor)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds a listener that is invoked after each occurrence of the task.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#addListenerForEachInstance(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListenerForEachInstance(FutureListener&lt;? super T&gt;, Executor)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#advance(K)">advance(K)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a></dt>
@@ -570,8 +570,12 @@
 <dd>
 <div class="block">Returns the actual enum instance represented by this enum constant field.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#asFullfillable()">asFullfillable()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SettableListenableFuture.html#asFulfillable()">asFulfillable()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#asFulfillable()">asFulfillable()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dd>
+<div class="block">Returns a view of this future as a <a href="./com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/Types.html#asGenericArrayType(com.apriori.apt.reflect.Type)">asGenericArrayType(Type)</a></span> - Static method in class com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/Types.html" title="class in com.apriori.apt.reflect">Types</a></dt>
 <dd>
 <div class="block">Downcasts the specified type as a <a href="./com/apriori/apt/reflect/GenericArrayType.html" title="class in com.apriori.apt.reflect"><code>GenericArrayType</code></a>.</div>
@@ -646,7 +650,9 @@
 <div class="block">Converts a possible value to a reference.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureListeners.html#assemble(com.apriori.util.Sink, com.apriori.util.Sink, java.lang.Runnable)">assemble(Sink&lt;? super T&gt;, Sink&lt;? super Throwable&gt;, Runnable)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent">FutureListeners</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Assembles a listener using all of the specified callbacks.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Holder.html#asSet()">asSet()</a></span> - Method in class com.apriori.possible.<a href="./com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>
 <div class="block">Returns a view of this possible value as a set.</div>
@@ -718,6 +724,8 @@
 <div class="block">Downcasts the specified type as a <a href="./com/apriori/apt/reflect/WildcardType.html" title="class in com.apriori.apt.reflect"><code>WildcardType</code></a>.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/Reschedulers.html#atFixedRate(long, java.util.concurrent.TimeUnit)">atFixedRate(long, TimeUnit)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/Reschedulers.html" title="class in com.apriori.concurrent">Reschedulers</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/Reschedulers.html#atFixedRateSkippingMissedOccurrences(long, java.util.concurrent.TimeUnit)">atFixedRateSkippingMissedOccurrences(long, TimeUnit)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/Reschedulers.html" title="class in com.apriori.concurrent">Reschedulers</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/AnnotationSpec.html#attributes()">attributes()</a></span> - Method in class com.apriori.di.<a href="./com/apriori/di/AnnotationSpec.html" title="class in com.apriori.di">AnnotationSpec</a></dt>
 <dd>&nbsp;</dd>
@@ -932,16 +940,6 @@
 </a>
 <h2 class="title">C</h2>
 <dl>
-<dt><a href="./com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">CallableRepeatingScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="type parameter in CallableRepeatingScheduledTask">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A convenient sub-interface, for reducing the number of type parameters needed
- when declaring a <a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><code>RepeatingScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
-</dd>
-<dt><a href="./com/apriori/concurrent/CallableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">CallableScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/CallableScheduledTask.html" title="type parameter in CallableScheduledTask">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A convenient sub-interface, for reducing the number of type parameters needed
- when declaring a <a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
-</dd>
 <dt><a href="./com/apriori/di/Calls.html" title="annotation in com.apriori.di"><span class="strong">Calls</span></a> - Annotation Type in <a href="./com/apriori/di/package-summary.html">com.apriori.di</a></dt>
 <dd>
 <div class="block">A marker for an injectable wrapper method.</div>
@@ -959,10 +957,17 @@
 <dt><a href="./com/apriori/concurrent/Cancellables.html" title="class in com.apriori.concurrent"><span class="strong">Cancellables</span></a> - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureVisitor.html#cancelled()">cancelled()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Invoked when the visited future was cancelled.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleFutureVisitor.html#cancelled()">cancelled()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleFutureVisitor.html" title="class in com.apriori.concurrent">SimpleFutureVisitor</a></dt>
+<dd>
+<div class="block">Invoked when the visited future was cancelled.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#cancelledFuture()">cancelledFuture()</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a future that has already been cancelled.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/reflect/TypeRef.html#canResolveTypeVariable(java.lang.String)">canResolveTypeVariable(String)</a></span> - Method in class com.apriori.reflect.<a href="./com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Determines if the specified type variable can be resolved into a <code>TypeRef</code>.</div>
@@ -1072,8 +1077,6 @@
 <dd>
 <div class="block">Returns a bivariate partial function that chains two bivariate partial functions together.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#changeStartTimeNanos(long)">changeStartTimeNanos(long)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/util/Cloners.html#checkClone(java.lang.Object, java.lang.Object)">checkClone(Object, Object)</a></span> - Static method in class com.apriori.util.<a href="./com/apriori/util/Cloners.html" title="class in com.apriori.util">Cloners</a></dt>
 <dd>
 <div class="block">Checks that the clone is valid.</div>
@@ -1396,6 +1399,8 @@
 <dt><span class="strong"><a href="./com/apriori/collections/SortedArraySet.html#comparator()">comparator()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a></dt>
 <dt><span class="strong"><a href="./com/apriori/collections/WeightBalancedTreeMap.html#comparator()">comparator()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/Scheduled.html#COMPARATOR">COMPARATOR</a></span> - Static variable in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#compareTo(java.util.concurrent.Delayed)">compareTo(Delayed)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="./com/apriori/apt/testing/CompilationFailedException.html" title="class in com.apriori.apt.testing"><span class="strong">CompilationFailedException</span></a> - Exception in <a href="./com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
@@ -1415,7 +1420,9 @@
 <div class="block">Creates a new exception with the specified cause and set of error diagnostics.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#completedFuture(T)">completedFuture(T)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a future that has already successfully completed with the specified value.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutureTask.html#completionLock">completionLock</a></span> - Variable in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/ArrayMappedBitwiseTrie.html#componentComparator()">componentComparator()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a></dt>
@@ -1660,11 +1667,6 @@
 <dt><span class="strong"><a href="./com/apriori/collections/ConcurrentSets.Builder.html#create()">create()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/ConcurrentSets.Builder.html" title="class in com.apriori.collections">ConcurrentSets.Builder</a></dt>
 <dd>
 <div class="block">Creates a set.</div>
-</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#create(java.util.concurrent.ScheduledExecutorService)">create(ScheduledExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
-<dd>
-<div class="block">Creates a new <a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a> that uses the specified
- <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a> as its basis for scheduling tasks.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Fulfillables.html#create()">create()</a></span> - Static method in class com.apriori.possible.<a href="./com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible">Fulfillables</a></dt>
 <dd>
@@ -1996,13 +1998,14 @@
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#execute(java.lang.Runnable)">execute(Runnable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFuture.html#executionCount()">executionCount()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the number of occurrences of this task that have completed.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#executionCount()">executionCount()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#executionCount()">executionCount()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
 <dd>
-<div class="block">Returns the total number of times that tasks have been executed for this
- task definition.</div>
+<div class="block">Returns the total number of times that tasks have been executed for this task definition.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#executor()">executor()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
 <dd>
@@ -2028,18 +2031,25 @@
 <div class="block">A marker for an injectable factory method.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureVisitor.html#failed(java.lang.Throwable)">failed(Throwable)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Invoked when the visited future failed.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleFutureVisitor.html#failed(java.lang.Throwable)">failed(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleFutureVisitor.html" title="class in com.apriori.concurrent">SimpleFutureVisitor</a></dt>
+<dd>
+<div class="block">Invoked when the visited future failed.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/reflect/Blaster.Result.html#failed()">failed()</a></span> - Method in class com.apriori.reflect.<a href="./com/apriori/reflect/Blaster.Result.html" title="class in com.apriori.reflect">Blaster.Result</a></dt>
 <dd>
 <div class="block">Returns true if the method invocation failed (e.g.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#failedFuture(java.lang.Throwable)">failedFuture(Throwable)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a future that has already failed due to the specified cause.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#failureCount()">failureCount()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
 <dd>
-<div class="block">Returns the number of times that tasks have been failed (completed abnormally)
- for this task definition.</div>
+<div class="block">Returns the number of times that tasks have failed (completed abnormally) for this task
+ definition.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/collections/ConcurrentSets.Builder.html#fair(boolean)">fair(boolean)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/ConcurrentSets.Builder.html" title="class in com.apriori.collections">ConcurrentSets.Builder</a></dt>
 <dd>
@@ -2172,6 +2182,10 @@
 <dd>
 <div class="block">Finds a static copy method for the specified class with the specified name.</div>
 </dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#finishTimeMillis()">finishTimeMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
+<dd>
+<div class="block">Returns the actual end time of this invocation, in milliseconds.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/AbstractNavigableMap.KeySet.html#first()">first()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections">AbstractNavigableMap.KeySet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/ConcurrentSortedArraySet.html#first()">first()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections">ConcurrentSortedArraySet</a></dt>
@@ -2245,6 +2259,10 @@
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.html#forCallable(java.util.concurrent.Callable)">forCallable(Callable&lt;V&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent">TaskImplementation</a></dt>
+<dd>
+<div class="block">Returns a task for the specified callable implementation.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/reflect/TypeRef.html#forClass(java.lang.Class)">forClass(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="./com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
@@ -2330,7 +2348,9 @@
 <div class="block">Returns a class that represents the specified primitive type.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureListeners.html#forRunnable(java.lang.Runnable)">forRunnable(Runnable)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent">FutureListeners</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a listener that will execute the specified task when the future completes.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.Builder.html#forRunnable(java.lang.Runnable)">forRunnable(Runnable)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a></dt>
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
@@ -2340,6 +2360,14 @@
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> that has an associated result value.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.html#forRunnable(java.lang.Runnable)">forRunnable(Runnable)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent">TaskImplementation</a></dt>
+<dd>
+<div class="block">Returns a task for the specified runnable implementation.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.html#forRunnable(java.lang.Runnable, V)">forRunnable(Runnable, V)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent">TaskImplementation</a></dt>
+<dd>
+<div class="block">Returns a task for the specified runnable implementation.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/di/AbstractBinding.BindBuilder.html#forSelector(java.lang.Object)">forSelector(Object)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/AbstractBinding.BindBuilder.html" title="interface in com.apriori.di">AbstractBinding.BindBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -2352,11 +2380,17 @@
 <dt><span class="strong"><a href="./com/apriori/di/collections/CollectionBinding.html#forSet()">forSet()</a></span> - Static method in class com.apriori.di.collections.<a href="./com/apriori/di/collections/CollectionBinding.html" title="class in com.apriori.di.collections">CollectionBinding</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureListeners.html#forSink(com.apriori.util.Sink)">forSink(Sink&lt;? super ListenableFuture&lt;T&gt;&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent">FutureListeners</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adapts a <a href="./com/apriori/util/Sink.html" title="interface in com.apriori.util"><code>Sink</code></a> to the <a href="./com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/di/collections/CollectionBinding.html#forSortedMap()">forSortedMap()</a></span> - Static method in class com.apriori.di.collections.<a href="./com/apriori/di/collections/CollectionBinding.html" title="class in com.apriori.di.collections">CollectionBinding</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/collections/CollectionBinding.html#forSortedSet()">forSortedSet()</a></span> - Static method in class com.apriori.di.collections.<a href="./com/apriori/di/collections/CollectionBinding.html" title="class in com.apriori.di.collections">CollectionBinding</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.html#forSource(com.apriori.util.Source)">forSource(Source&lt;V&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent">TaskImplementation</a></dt>
+<dd>
+<div class="block">Returns a task for the specified source implementation.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/testing/ObjectVerifiers.html#forTesting(java.lang.Class)">forTesting(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.testing.<a href="./com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing">ObjectVerifiers</a></dt>
 <dd>
 <div class="block">Returns a special object verifier that returns a testing proxy.</div>
@@ -2398,7 +2432,9 @@
 <div class="block">Creates a wildcard type from the specified type mirror.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureListeners.html#forVisitor(com.apriori.concurrent.FutureVisitor)">forVisitor(FutureVisitor&lt;T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent">FutureListeners</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a listener that will visit the completed future.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/di/collections/CollectionBinding.MapKeyBindBuilder.html#from(K)">from(K)</a></span> - Method in interface com.apriori.di.collections.<a href="./com/apriori/di/collections/CollectionBinding.MapKeyBindBuilder.html" title="interface in com.apriori.di.collections">CollectionBinding.MapKeyBindBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/AnnotatedElement.html#FROM_ELEMENT">FROM_ELEMENT</a></span> - Static variable in interface com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect">AnnotatedElement</a></dt>
@@ -2620,15 +2656,21 @@
 <div class="block">Numerous utility methods for using <a href="./com/apriori/util/Function.html" title="interface in com.apriori.util"><code>Function</code></a>s.</div>
 </dd>
 <dt><a href="./com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><span class="strong">FutureListener</span></a>&lt;<a href="./com/apriori/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A listener for the completion of a future.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/FutureListeners.html" title="class in com.apriori.concurrent"><span class="strong">FutureListeners</span></a> - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Factory methods for creating instances of <a href="./com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a>.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent"><span class="strong">FutureTuples</span></a> - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureTuples.html#FutureTuples()">FutureTuples()</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent">FutureTuples</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="./com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent"><span class="strong">FutureVisitor</span></a>&lt;<a href="./com/apriori/concurrent/FutureVisitor.html" title="type parameter in FutureVisitor">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Interface for the visitor pattern with <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>s.</div>
+</dd>
 </dl>
 <a name="_G_">
 <!--   -->
@@ -3190,7 +3232,9 @@
 <div class="block">Returns the modifiers that apply to this member.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFuture.html#getMostRecentResult()">getMostRecentResult()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the result returned by the most recent completed occurrence.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#getMostRecentResult()">getMostRecentResult()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/testing/InterfaceVerifier.MethodConfiguration.html#getMutatorVerifier()">getMutatorVerifier()</a></span> - Method in interface com.apriori.testing.<a href="./com/apriori/testing/InterfaceVerifier.MethodConfiguration.html" title="interface in com.apriori.testing">InterfaceVerifier.MethodConfiguration</a></dt>
@@ -3304,10 +3348,6 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutureTask.html#getResult()">getResult()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/RunnableWithResult.html#getResult()">getResult()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent">RunnableWithResult</a></dt>
-<dd>
-<div class="block">Returns the result value for this pair.</div>
-</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#getResult()">getResult()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/Method.html#getReturnType()">getReturnType()</a></span> - Method in class com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/Method.html" title="class in com.apriori.apt.reflect">Method</a></dt>
@@ -3322,10 +3362,10 @@
 <dd>
 <div class="block">Returns the verifier used to check values returned from method calls.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/RunnableWithResult.html#getRunnable()">getRunnable()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent">RunnableWithResult</a></dt>
-<dd>
-<div class="block">Returns the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> for this pair.</div>
-</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#getScheduledNanoTime()">getScheduledNanoTime()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/Scheduled.html#getScheduledNanoTime()">getScheduledNanoTime()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/ScoperFactory.html#getScoper(java.lang.annotation.Annotation)">getScoper(Annotation)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/ScoperFactory.html" title="interface in com.apriori.di">ScoperFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/ScopeSpec.html#getScoper()">getScoper()</a></span> - Method in class com.apriori.di.<a href="./com/apriori/di/ScopeSpec.html" title="class in com.apriori.di">ScopeSpec</a></dt>
@@ -3370,8 +3410,6 @@
 <dd>
 <div class="block">Returns the simple name of this class.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#getStartTimeNanos()">getStartTimeNanos()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/WildcardType.html#getSuperBound()">getSuperBound()</a></span> - Method in class com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/WildcardType.html" title="class in com.apriori.apt.reflect">WildcardType</a></dt>
 <dd>
 <div class="block">Returns a bound of which the wildcard type must be a super-type.</div>
@@ -3596,10 +3634,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/Key.html#hasSelector()">hasSelector()</a></span> - Method in class com.apriori.di.<a href="./com/apriori/di/Key.html" title="class in com.apriori.di">Key</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#hasStarted()">hasStarted()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
-<dd>
-<div class="block">Returns whether the scheduled task has begun executing or not.</div>
-</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/AbstractNavigableMap.html#headMap(K, boolean)">headMap(K, boolean)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></dt>
 <dt><span class="strong"><a href="./com/apriori/collections/AbstractNavigableMap.html#headMap(K)">headMap(K)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></dt>
 <dt><span class="strong"><a href="./com/apriori/collections/AbstractNavigableMap.SubMap.html#headMap(K, boolean)">headMap(K, boolean)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections">AbstractNavigableMap.SubMap</a></dt>
@@ -3742,9 +3776,9 @@
 <dd>
 <div class="block">Sets the initial contents of the set.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#initialDelayNanos()">initialDelayNanos()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#initialDelay(java.util.concurrent.TimeUnit)">initialDelay(TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
 <dd>
-<div class="block">Returns the delay, in nanoseconds, from the time the task is submitted to
+<div class="block">Returns the delay, in the specified unit, from the time the task is submitted to
  the time the first instance of the task should be invoked.</div>
 </dd>
 <dt><a href="./com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><span class="strong">InitializeProcessorField</span></a> - Annotation Type in <a href="./com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
@@ -3967,23 +4001,23 @@
 <div class="block">Gets the wrapped set.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#interrupt()">interrupt()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Invoked when the task is cancelled and allowed to interrupt a running task.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/TransformingCollection.Bidi.html#inverseFunction()">inverseFunction()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a></dt>
 <dd>
 <div class="block">Gets the function used to transform elements from the "output" domain to the "input"
  domain.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutorService.html#invokeAll(java.util.Collection)">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutorService.html#invokeAll(java.util.Collection, long, java.util.concurrent.TimeUnit)">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAll(java.util.Collection)">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAll(java.util.Collection)">invokeAll(Collection&lt;? extends Callable&lt;V&gt;&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAll(java.util.Collection, long, java.util.concurrent.TimeUnit)">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAll(java.util.Collection, long, java.util.concurrent.TimeUnit)">invokeAll(Collection&lt;? extends Callable&lt;V&gt;&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAny(java.util.Collection)">invokeAny(Collection&lt;? extends Callable&lt;T&gt;&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAny(java.util.Collection)">invokeAny(Collection&lt;? extends Callable&lt;V&gt;&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAny(java.util.Collection, long, java.util.concurrent.TimeUnit)">invokeAny(Collection&lt;? extends Callable&lt;V&gt;&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#invokeAny(java.util.Collection, long, java.util.concurrent.TimeUnit)">invokeAny(Collection&lt;? extends Callable&lt;T&gt;&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/testing/TestEnvironment.html#invokeProcessor()">invokeProcessor()</a></span> - Method in class com.apriori.apt.testing.<a href="./com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
@@ -4163,6 +4197,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#isShutdown()">isShutdown()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#isStarted()">isStarted()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
+<dd>
+<div class="block">Returns whether the scheduled task has begun executing or not.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/Class.html#isSubTypeOf(com.apriori.apt.reflect.Class)">isSubTypeOf(Class)</a></span> - Method in class com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a></dt>
 <dd>
 <div class="block">Returns true if this class is a sub-type of the specified class.</div>
@@ -4424,22 +4462,38 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/apt/testing/TestJavaFileManager.html#list(javax.tools.JavaFileManager.Location, java.lang.String, java.util.Set, boolean)">list(JavaFileManager.Location, String, Set&lt;JavaFileObject.Kind&gt;, boolean)</a></span> - Method in class com.apriori.apt.testing.<a href="./com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableExecutorService</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent"><span class="strong">ListenableExecutors</span></a> - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#ListenableExecutors()">ListenableExecutors()</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableExecutorService</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">An executor service that returns <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>s.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableFuture</span></a>&lt;<a href="./com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">The future to end all futures.</div>
 </dd>
 <dt><a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent"><span class="strong">ListenableFutures</span></a> - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Lots of goodies related to <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>s.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableFutureTask</span></a>&lt;<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="type parameter in ListenableFutureTask">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A future task that implements the <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a> interface.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutureTask.html#ListenableFutureTask(java.util.concurrent.Callable)">ListenableFutureTask(Callable&lt;T&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new task for the specified callable.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutureTask.html#ListenableFutureTask(java.lang.Runnable, T)">ListenableFutureTask(Runnable, T)</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new task for the specified command and result.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableRepeatingFuture</span></a>&lt;<a href="./com/apriori/concurrent/ListenableRepeatingFuture.html" title="type parameter in ListenableRepeatingFuture">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A <a href="./com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledFuture</code></a> that represents a repeating task.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableRepeatingFutureTask</span></a>&lt;<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask(java.util.concurrent.Callable, long, com.apriori.concurrent.Rescheduler)">ListenableRepeatingFutureTask(Callable&lt;T&gt;, long, Rescheduler)</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
@@ -4447,9 +4501,13 @@
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask(java.lang.Runnable, T, long, com.apriori.concurrent.Rescheduler)">ListenableRepeatingFutureTask(Runnable, T, long, Rescheduler)</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableScheduledExecutorService</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A scheduled executor service that returns <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>s.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="strong">ListenableScheduledFuture</span></a>&lt;<a href="./com/apriori/concurrent/ListenableScheduledFuture.html" title="type parameter in ListenableScheduledFuture">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A future that is both <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">scheduled</a> and <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">listenable</a>.</div>
+</dd>
 <dt><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableScheduledFutureTask</span></a>&lt;<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="type parameter in ListenableScheduledFutureTask">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#ListenableScheduledFutureTask(java.util.concurrent.Callable, long)">ListenableScheduledFutureTask(Callable&lt;T&gt;, long)</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
@@ -4557,9 +4615,21 @@
 <dd>
 <div class="block">A marker for an injectable static main method.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.Future)">makeListenable(Future&lt;T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#makeListenable(java.util.concurrent.ExecutorService)">makeListenable(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dd>
+<div class="block">Converts the specified service into a <a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a>.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#makeListenable(java.util.concurrent.ScheduledExecutorService)">makeListenable(ScheduledExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.ExecutorService)">makeListenable(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.Future)">makeListenable(Future&lt;T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
+<dd>
+<div class="block">Converts the specified future into a <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.ScheduledFuture)">makeListenable(ScheduledFuture&lt;T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#makeListenableScheduled(java.util.concurrent.ExecutorService, boolean)">makeListenableScheduled(ExecutorService, boolean)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#makeListenableScheduled(java.util.concurrent.ExecutorService)">makeListenableScheduled(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#maxHistorySize()">maxHistorySize()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
 <dd>
@@ -4898,7 +4968,9 @@
 <div class="block">Defines the action for visiting cancelled futures.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureListener.html#onCompletion(com.apriori.concurrent.ListenableFuture)">onCompletion(ListenableFuture&lt;? extends T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Invoked when a future completes.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleFutureVisitor.Builder.html#onFailure(com.apriori.util.Sink)">onFailure(Sink&lt;? super Throwable&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent">SimpleFutureVisitor.Builder</a></dt>
 <dd>
 <div class="block">Defines the action for visiting failed futures.</div>
@@ -5049,7 +5121,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/RandomAccessArrayDeque.html#peekLast()">peekLast()</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#periodDelayNanos()">periodDelayNanos()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#periodDelay(java.util.concurrent.TimeUnit)">periodDelay(TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
 <dd>
 <div class="block">Returns the period (for fixed rate tasks) or delay (for fixed delay tasks)
  for this task.</div>
@@ -5603,7 +5675,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/RandomAccessArrayDeque.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence(Object)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTaskListener)">removeListener(ScheduledTaskListener&lt;? super V, ? super T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTaskListener)">removeListener(ScheduledTaskListener&lt;? super V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
 <dd>
 <div class="block">Removes a listener.</div>
 </dd>
@@ -5655,7 +5727,7 @@
 <dd>
 <div class="block">Configures the task to repeat on a fixed rate schedule.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">RepeatingScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>,<a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">RepeatingScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">Represents a repeating task.</div>
 </dd>
@@ -5747,20 +5819,6 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html#run()">run()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="./com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">RunnableRepeatingScheduledTask</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A convenient sub-interface, for reducing the number of type parameters needed
- when declaring a <a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
-</dd>
-<dt><a href="./com/apriori/concurrent/RunnableScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">RunnableScheduledTask</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A convenient sub-interface, for reducing the number of type parameters needed
- when declaring a <a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a> whose underlying task type is a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
-</dd>
-<dt><a href="./com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><span class="strong">RunnableWithResult</span></a>&lt;<a href="./com/apriori/concurrent/RunnableWithResult.html" title="type parameter in RunnableWithResult">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> combined with a specified result value.</div>
-</dd>
 </dl>
 <a name="_S_">
 <!--   -->
@@ -5772,34 +5830,43 @@
 <div class="block">An object that verifies that the test object is the same instance as the reference object (via
  the == operator).</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableFutures.html#sameThreadExecutor()">sameThreadExecutor()</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent">ListenableFutures</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#sameThreadExecutor()">sameThreadExecutor()</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutors.html#sameThreadExecutorService()">sameThreadExecutorService()</a></span> - Static method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule(java.lang.Runnable, long, java.util.concurrent.TimeUnit)">schedule(Runnable, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule(java.util.concurrent.Callable, long, java.util.concurrent.TimeUnit)">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#schedule(java.util.concurrent.Callable, long, java.util.concurrent.TimeUnit)">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#schedule(java.lang.Runnable, long, java.util.concurrent.TimeUnit)">schedule(Runnable, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#schedule(com.apriori.concurrent.TaskDefinition)">schedule(TaskDefinition&lt;V, T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#schedule(com.apriori.concurrent.TaskDefinition)">schedule(TaskDefinition&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#scheduleAtFixedRate(java.util.concurrent.Callable, long, long, java.util.concurrent.TimeUnit)">scheduleAtFixedRate(Callable&lt;V&gt;, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#scheduleAtFixedRate(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>,<a href="./com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent"><span class="strong">Scheduled</span></a> - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#scheduledStartNanoTime()">scheduledStartNanoTime()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTask.html#scheduledStartTimeMillis()">scheduledStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a></dt>
+<dd>
+<div class="block">Returns the scheduled start time of this invocation, in milliseconds.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html#scheduledStartTimeMillis()">scheduledStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTask</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">The type of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> returned by submissions to a
  <a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">A <a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> that has been scheduled using a <a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskListener</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>,<a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskListener</span></a>&lt;<a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="type parameter in ScheduledTaskListener">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">A listener for completions of <a href="./com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><code>ScheduledTask</code></a>s.</div>
 </dd>
@@ -5813,7 +5880,7 @@
 <dd>
 <div class="block">An enumeration of commonly used <a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> implementations.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduleNextTaskPolicy</span></a>&lt;<a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">V</a>,<a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduleNextTaskPolicy</span></a>&lt;<a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="type parameter in ScheduleNextTaskPolicy">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">A policy that governs whether a task should be repeated or retried.</div>
 </dd>
@@ -5822,7 +5889,6 @@
 <div class="block">Returns the <a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> for this repeating task.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#scheduleWithFixedDelay(java.util.concurrent.Callable, long, long, java.util.concurrent.TimeUnit)">scheduleWithFixedDelay(Callable&lt;V&gt;, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#scheduleWithFixedDelay(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
@@ -5906,7 +5972,9 @@
 <div class="block">Sets the held value.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#setCancelled()">setCancelled()</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the future as cancelled.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/testing/InterfaceVerifier.html#setCheckHashCodesAfterMutation(boolean)">setCheckHashCodesAfterMutation(boolean)</a></span> - Method in class com.apriori.testing.<a href="./com/apriori/testing/InterfaceVerifier.html" title="class in com.apriori.testing">InterfaceVerifier</a></dt>
 <dd>
 <div class="block">Sets whether hash codes are verified after mutator methods are invoked.</div>
@@ -5919,8 +5987,12 @@
 <dd>
 <div class="block">Sets the default verifier used to verify the implementations of mutator methods.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#setFailure(java.lang.Throwable)">setFailure(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SettableListenableFuture.html#setFailure(java.lang.Throwable)">setFailure(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#setFailure(java.lang.Throwable)">setFailure(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dd>
+<div class="block">Sets the future as failed with the specified cause of failure.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/NTuple.html#setFifth(T)">setFifth(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/Quintet.html#setFifth(T)">setFifth(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples">Quintet</a></dt>
@@ -5970,6 +6042,8 @@
 <div class="block">Sets the default verifier used to verify the exceptions thrown by methods to use relaxed
  checking.</div>
 </dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html#setScheduledNanoTime(long)">setScheduledNanoTime(long)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/NTuple.html#setSecond(T)">setSecond(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/Pair.html#setSecond(T)">setSecond(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a></dt>
@@ -5999,6 +6073,12 @@
 <dd>
 <div class="block">Sets whether exceptions should be suppressed during method invocation.</div>
 </dd>
+<dt><a href="./com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">SettableListenableFuture</span></a>&lt;<a href="./com/apriori/concurrent/SettableListenableFuture.html" title="type parameter in SettableListenableFuture">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A future whose result is set programmatically.</div>
+</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SettableListenableFuture.html#SettableListenableFuture()">SettableListenableFuture()</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/NTuple.html#setThird(T)">setThird(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/Quartet.html#setThird(T)">setThird(T)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples">Quartet</a></dt>
@@ -6021,8 +6101,12 @@
 </dd>
 <dt><span class="strong"><a href="./com/apriori/apt/ProcessingEnvironments.html#setup(javax.annotation.processing.ProcessingEnvironment)">setup(ProcessingEnvironment)</a></span> - Static method in class com.apriori.apt.<a href="./com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt">ProcessingEnvironments</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#setValue(T)">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SettableListenableFuture.html#setValue(T)">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#setValue(T)">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
+<dd>
+<div class="block">Sets the future as successfully completed with the specified result.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/collections/SharedCapacityDequeFactory.html#shareCapacityWith(java.util.Queue)">shareCapacityWith(Queue&lt;T&gt;)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/SharedCapacityDequeFactory.html" title="class in com.apriori.collections">SharedCapacityDequeFactory</a></dt>
 <dd>
 <div class="block">Wraps the specified queue so that it shares the factory's capacity.</div>
@@ -6063,7 +6147,7 @@
 <dd>
 <div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> that can be closed.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html#shouldScheduleNext(com.apriori.concurrent.ScheduledTask)">shouldScheduleNext(ScheduledTask&lt;? extends V, ? extends T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html#shouldScheduleNext(com.apriori.concurrent.ScheduledTask)">shouldScheduleNext(ScheduledTask&lt;? extends V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a></dt>
 <dd>
 <div class="block">Determines whether a given task definition should be invoked again.</div>
 </dd>
@@ -6090,7 +6174,9 @@
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleFutureVisitor.Builder.html#SimpleFutureVisitor.Builder()">SimpleFutureVisitor.Builder()</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent">SimpleFutureVisitor.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">SimpleListenableFuture</span></a>&lt;<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A <a href="./com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a> implementation that is suitable for sub-classing.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#SimpleListenableFuture()">SimpleListenableFuture()</a></span> - Constructor for class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="./com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections"><span class="strong">SimpleStringTrie</span></a>&lt;<a href="./com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt; - Class in <a href="./com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
@@ -6426,11 +6512,8 @@
 <dt><span class="strong"><a href="./com/apriori/collections/WeightBalancedTreeMap.html#subMapByIndices(int, int)">subMapByIndices(int, int)</a></span> - Method in class com.apriori.collections.<a href="./com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutorService.html#submit(java.util.concurrent.Callable)">submit(Callable&lt;T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutorService.html#submit(java.lang.Runnable, T)">submit(Runnable, T)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ListenableExecutorService.html#submit(java.lang.Runnable)">submit(Runnable)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#submit(java.util.concurrent.Callable)">submit(Callable&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskManager.html#submit(java.lang.Runnable)">submit(Runnable)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent">ScheduledTaskManager</a></dt>
@@ -6482,8 +6565,13 @@
  definition.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/FutureVisitor.html#successful(T)">successful(T)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Invoked when the visited future completed successfully.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleFutureVisitor.html#successful(T)">successful(T)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleFutureVisitor.html" title="class in com.apriori.concurrent">SimpleFutureVisitor</a></dt>
+<dd>
+<div class="block">Invoked when the visited future completed successfully.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/reflect/TypeRef.html#superTypeRef()">superTypeRef()</a></span> - Method in class com.apriori.reflect.<a href="./com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.</div>
@@ -6552,16 +6640,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#task()">task()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
 <dd>
-<div class="block">Returns the underlying task.</div>
+<div class="block">Returns the implementation of the task.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.html#taskAsCallable()">taskAsCallable()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskListener.html#taskCompleted(com.apriori.concurrent.ScheduledTask)">taskCompleted(ScheduledTask&lt;? extends V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a></dt>
 <dd>
-<div class="block">Returns the underlying task as a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
-</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/ScheduledTaskListener.html#taskCompleted(com.apriori.concurrent.ScheduledTask)">taskCompleted(ScheduledTask&lt;? extends V, ? extends T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a></dt>
-<dd>
-<div class="block">Called when the specified task completes (either normally or
- abnormally).</div>
+<div class="block">Called when the specified task completes (either normally or abnormally).</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/RepeatingScheduledTask.html#taskDefinition()">taskDefinition()</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a></dt>
 <dd>
@@ -6571,13 +6654,21 @@
 <dd>
 <div class="block">Returns the task definition for which this task was created.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">TaskDefinition</span></a>&lt;<a href="./com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,<a href="./com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">TaskDefinition</span></a>&lt;<a href="./com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">The definition for a task that will be executed by a <a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
 </dd>
-<dt><a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent"><span class="strong">TaskDefinition.Builder</span></a>&lt;<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dt><a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent"><span class="strong">TaskDefinition.Builder</span></a>&lt;<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">A builder for configuring <a href="./com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> instances.</div>
+</dd>
+<dt><a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent"><span class="strong">TaskImplementation</span></a>&lt;<a href="./com/apriori/concurrent/TaskImplementation.html" title="type parameter in TaskImplementation">V</a>&gt; - Class in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">The implementation for a task that is executed using a <a href="./com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.</div>
+</dd>
+<dt><a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent"><span class="strong">TaskImplementation.Visitor</span></a>&lt;<a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="type parameter in TaskImplementation.Visitor">R</a>,<a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="type parameter in TaskImplementation.Visitor">V</a>&gt; - Interface in <a href="./com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A visitor, for accessing the underlying task implementation using the visitor pattern.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/tuples/Pair.html#test(com.apriori.util.Predicate.Bivariate)">test(Predicate.Bivariate&lt;? super A, ? super B&gt;)</a></span> - Method in class com.apriori.tuples.<a href="./com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a></dt>
 <dd>
@@ -7588,6 +7679,10 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/concurrent/SimpleListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)">visit(FutureVisitor&lt;? super T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.html#visit(com.apriori.concurrent.TaskImplementation.Visitor)">visit(TaskImplementation.Visitor&lt;R, ? super V&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent">TaskImplementation</a></dt>
+<dd>
+<div class="block">Visits this task using the specified visitor.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Holder.html#visit(com.apriori.possible.Possible.Visitor)">visit(Possible.Visitor&lt;T, R&gt;)</a></span> - Method in class com.apriori.possible.<a href="./com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/possible/Possible.html#visit(com.apriori.possible.Possible.Visitor)">visit(Possible.Visitor&lt;T, R&gt;)</a></span> - Method in interface com.apriori.possible.<a href="./com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
@@ -7604,6 +7699,10 @@ the order they are declared.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/di/Binding.TargetVisitor.html#visitAdapter(com.apriori.di.Binding.TargetAdapter, P)">visitAdapter(Binding.TargetAdapter&lt;T&gt;, P)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/Binding.TargetVisitor.html" title="interface in com.apriori.di">Binding.TargetVisitor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.Visitor.html#visitCallable(java.util.concurrent.Callable)">visitCallable(Callable&lt;? extends V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent">TaskImplementation.Visitor</a></dt>
+<dd>
+<div class="block">Visits the underlying callable, for tasks implemented by a callable.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/Type.Visitor.html#visitClass(com.apriori.apt.reflect.Class, P)">visitClass(Class, P)</a></span> - Method in interface com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/Type.Visitor.html" title="interface in com.apriori.apt.reflect">Type.Visitor</a></dt>
 <dd>
 <div class="block">Called from <a href="./com/apriori/apt/reflect/Type.html#accept(com.apriori.apt.reflect.Type.Visitor, P)"><code>Type.accept(Visitor, Object)</code></a> to visit a <a href="./com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect"><code>Class</code></a>.</div>
@@ -7626,8 +7725,16 @@ the order they are declared.</div>
 </dd>
 <dt><span class="strong"><a href="./com/apriori/di/Binding.TargetVisitor.html#visitProvider(com.apriori.di.Binding.TargetProvider, P)">visitProvider(Binding.TargetProvider&lt;T, ?&gt;, P)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/Binding.TargetVisitor.html" title="interface in com.apriori.di">Binding.TargetVisitor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.Visitor.html#visitRunnable(java.lang.Runnable, V)">visitRunnable(Runnable, V)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent">TaskImplementation.Visitor</a></dt>
+<dd>
+<div class="block">Visits the underlying runnable and associated result, for tasks implemented by a runnable.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/di/Binding.TargetVisitor.html#visitSelectionProvider(com.apriori.di.Binding.TargetSelectionProvider, P)">visitSelectionProvider(Binding.TargetSelectionProvider&lt;T, ?&gt;, P)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/Binding.TargetVisitor.html" title="interface in com.apriori.di">Binding.TargetVisitor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskImplementation.Visitor.html#visitSource(com.apriori.util.Source)">visitSource(Source&lt;? extends V&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent">TaskImplementation.Visitor</a></dt>
+<dd>
+<div class="block">Visits the underlying source, for tasks implemented by a source.</div>
+</dd>
 <dt><span class="strong"><a href="./com/apriori/apt/reflect/Type.Visitor.html#visitTypeVariable(com.apriori.apt.reflect.TypeVariable, P)">visitTypeVariable(TypeVariable&lt;?&gt;, P)</a></span> - Method in interface com.apriori.apt.reflect.<a href="./com/apriori/apt/reflect/Type.Visitor.html" title="interface in com.apriori.apt.reflect">Type.Visitor</a></dt>
 <dd>
 <div class="block">Called from <a href="./com/apriori/apt/reflect/Type.html#accept(com.apriori.apt.reflect.Type.Visitor, P)"><code>Type.accept(Visitor, Object)</code></a> to visit a <a href="./com/apriori/apt/reflect/TypeVariable.html" title="class in com.apriori.apt.reflect"><code>TypeVariable</code></a>.</div>
@@ -7693,7 +7800,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Returns a cloner that uses an instance method on the class to perform the cloning operation.</div>
 </dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.Builder.html#withListener(com.apriori.concurrent.ScheduledTaskListener)">withListener(ScheduledTaskListener&lt;? super V, ? super T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.Builder.html#withListener(com.apriori.concurrent.ScheduledTaskListener)">withListener(ScheduledTaskListener&lt;? super V&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a></dt>
 <dd>
 <div class="block">Adds a listener to the task.</div>
 </dd>
@@ -7718,7 +7825,7 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./com/apriori/di/AbstractBinding.BindBuilder.html#withResolver(java.lang.Class)">withResolver(Class&lt;? extends ConflictResolver&lt;? super T&gt;&gt;)</a></span> - Method in interface com.apriori.di.<a href="./com/apriori/di/AbstractBinding.BindBuilder.html" title="interface in com.apriori.di">AbstractBinding.BindBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.Builder.html#withScheduleNextTaskPolicy(com.apriori.concurrent.ScheduleNextTaskPolicy)">withScheduleNextTaskPolicy(ScheduleNextTaskPolicy&lt;? super V, ? super T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a></dt>
+<dt><span class="strong"><a href="./com/apriori/concurrent/TaskDefinition.Builder.html#withScheduleNextTaskPolicy(com.apriori.concurrent.ScheduleNextTaskPolicy)">withScheduleNextTaskPolicy(ScheduleNextTaskPolicy&lt;? super V&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="./com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a></dt>
 <dd>
 <div class="block">Configures the <a href="./com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> for this task.</div>
 </dd>

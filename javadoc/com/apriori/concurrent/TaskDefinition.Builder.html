@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li>Next Class</li>
+<li><a href="../../../com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/TaskDefinition.Builder.html" target="_top">Frames</a></li>
@@ -77,29 +77,28 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Class TaskDefinition.Builder" class="title">Class TaskDefinition.Builder&lt;V,T&gt;</h2>
+<h2 title="Class TaskDefinition.Builder" class="title">Class TaskDefinition.Builder&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.concurrent.TaskDefinition.Builder&lt;V,T&gt;</li>
+<li>com.apriori.concurrent.TaskDefinition.Builder&lt;V&gt;</li>
 </ul>
 </li>
 </ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd><dd><code>T</code> - the type of the actual task: <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or
-       <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd></dl>
 <dl>
 <dt>Enclosing interface:</dt>
-<dd><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">T</a>&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public static class <span class="strong">TaskDefinition.Builder&lt;V,T&gt;</span>
+<pre>public static class <span class="strong">TaskDefinition.Builder&lt;V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A builder for configuring <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> instances.</div>
 </li>
@@ -121,27 +120,27 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#build()">build</a></strong>()</code>
 <div class="block">Builds a new <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> using the current configuration.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&gt;</code></td>
+<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#forCallable(java.util.concurrent.Callable)">forCallable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</code>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;</code></td>
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#forRunnable(java.lang.Runnable)">forRunnable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V,<a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent">RunnableWithResult</a>&lt;V&gt;&gt;</code></td>
+<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#forRunnable(java.lang.Runnable, V)">forRunnable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
            V&nbsp;result)</code>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
@@ -149,31 +148,31 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#keepHistoryFor(int)">keepHistoryFor</a></strong>(int&nbsp;numExecutions)</code>
 <div class="block">Configures the maximum history size for the task.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#repeat(com.apriori.concurrent.Rescheduler)">repeat</a></strong>(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;nextTaskScheduler)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#repeatAtFixedRate(long, java.util.concurrent.TimeUnit)">repeatAtFixedRate</a></strong>(long&nbsp;period,
                  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Configures the task to repeat on a fixed rate schedule.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#repeatWithFixedDelay(long, java.util.concurrent.TimeUnit)">repeatWithFixedDelay</a></strong>(long&nbsp;delay,
                     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Configures the task to repeat with a fixed delay between invocations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withInitialDelay(long, java.util.concurrent.TimeUnit)">withInitialDelay</a></strong>(long&nbsp;delay,
                 <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Configures the delay between the time this task is submitted for execution and the
@@ -181,19 +180,19 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withListener(com.apriori.concurrent.ScheduledTaskListener)">withListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;listener)</code>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withListener(com.apriori.concurrent.ScheduledTaskListener)">withListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;listener)</code>
 <div class="block">Adds a listener to the task.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withScheduleNextTaskPolicy(com.apriori.concurrent.ScheduleNextTaskPolicy)">withScheduleNextTaskPolicy</a></strong>(<a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;policy)</code>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withScheduleNextTaskPolicy(com.apriori.concurrent.ScheduleNextTaskPolicy)">withScheduleNextTaskPolicy</a></strong>(<a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;policy)</code>
 <div class="block">Configures the <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> for this task.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#withUncaughtExceptionHandler(java.lang.Thread.UncaughtExceptionHandler)">withUncaughtExceptionHandler</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;handler)</code>
 <div class="block">Configures the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task.</div>
 </td>
@@ -226,7 +225,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>forCallable</h4>
-<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&gt;&nbsp;forCallable(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</pre>
+<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V&gt;&nbsp;forCallable(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</pre>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>callable</code> - the underlying task</dd>
@@ -239,7 +238,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>forRunnable</h4>
-<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>runnable</code> - the underlying task</dd>
@@ -254,8 +253,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>forRunnable</h4>
-<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V,<a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent">RunnableWithResult</a>&lt;V&gt;&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
-                                                              V&nbsp;result)</pre>
+<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;V&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+                                        V&nbsp;result)</pre>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> that has an associated result value.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>runnable</code> - the underlying task</dd><dd><code>result</code> - the result returned upon completion of this task</dd>
@@ -268,7 +267,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>keepHistoryFor</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;keepHistoryFor(int&nbsp;numExecutions)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;keepHistoryFor(int&nbsp;numExecutions)</pre>
 <div class="block">Configures the maximum history size for the task.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>numExecutions</code> - the maximum number of executions for which history information is retained</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
@@ -280,7 +279,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withListener</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;withListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;listener)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;withListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;listener)</pre>
 <div class="block">Adds a listener to the task.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
@@ -292,7 +291,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withScheduleNextTaskPolicy</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;withScheduleNextTaskPolicy(<a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;policy)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;withScheduleNextTaskPolicy(<a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;policy)</pre>
 <div class="block">Configures the <a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><code>ScheduleNextTaskPolicy</code></a> for this task.
  
  <p>If this is never configured and the task is a repeating task, then it defaults to
@@ -309,7 +308,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withUncaughtExceptionHandler</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;withUncaughtExceptionHandler(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;handler)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;withUncaughtExceptionHandler(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;handler)</pre>
 <div class="block">Configures the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task. If this is set, it will
  be used instead of the thread's normal <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> to handle any
  uncaught exceptions (including <code>Throwable</code>s) raised by an instance of the task.</div>
@@ -323,8 +322,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withInitialDelay</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;withInitialDelay(long&nbsp;delay,
-                                           <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;withInitialDelay(long&nbsp;delay,
+                                         <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 <div class="block">Configures the delay between the time this task is submitted for execution and the
  time the first invocation starts.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>delay</code> - the delay</dd><dd><code>unit</code> - the time unit of <code>delay</code></dd>
@@ -337,7 +336,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>repeat</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;repeat(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;nextTaskScheduler)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;repeat(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;nextTaskScheduler)</pre>
 </li>
 </ul>
 <a name="repeatAtFixedRate(long, java.util.concurrent.TimeUnit)">
@@ -346,8 +345,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>repeatAtFixedRate</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;repeatAtFixedRate(long&nbsp;period,
-                                            <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;repeatAtFixedRate(long&nbsp;period,
+                                          <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 <div class="block">Configures the task to repeat on a fixed rate schedule. As long as executions of
  the task take less time than the specified period, each subsequent invocation will
  be scheduled at even intervals around this period. So a period of one minute will
@@ -367,8 +366,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>repeatWithFixedDelay</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;repeatWithFixedDelay(long&nbsp;delay,
-                                               <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;repeatWithFixedDelay(long&nbsp;delay,
+                                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 <div class="block">Configures the task to repeat with a fixed delay between invocations.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>delay</code> - the delay between invocations</dd><dd><code>unit</code> - the time unit of <code>period</code></dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
@@ -380,7 +379,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>build</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;&nbsp;build()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;build()</pre>
 <div class="block">Builds a new <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> using the current configuration.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a new <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a></dd></dl>
 </li>
@@ -411,7 +410,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
-<li>Next Class</li>
+<li><a href="../../../com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/TaskDefinition.Builder.html" target="_top">Frames</a></li>

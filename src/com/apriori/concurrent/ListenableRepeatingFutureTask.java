@@ -18,14 +18,9 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
       Callable<T> wrapped = new Callable<T>() {
          @Override
          public T call() throws Exception {
-            try {
-               T result = callable.call();
-               latestResult.set(result);
-               return result;
-            } catch (Exception e) {
-               latestResult.set(null);
-               throw e;
-            }
+            T result = callable.call();
+            latestResult.set(result);
+            return result;
          }
       };
       lastCreatedResultHolder.set(latestResult);
@@ -93,7 +88,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
          // okay since this can only happen if run() is called by misbehaving client. An actual
          // executor won't be able to call next scheduled run until after we fire these listeners.
          if (toExecute != null) {
-            changeStartTimeNanos(rescheduler.scheduleNextStartTime(this, getStartTimeNanos()));
+            setScheduledNanoTime(rescheduler.scheduleNextStartTime(getScheduledNanoTime()));
             toExecute.runListeners();
          }
       }

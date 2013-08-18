@@ -20,8 +20,17 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//TODO: javadoc
-//TODO: more tests
+/**
+ * A {@link ListenableFuture} implementation that is suitable for sub-classing. Setting the value
+ * (or cause of failure) is achieved by invoking protected methods ({@link #setValue(Object)},
+ * {@link #setFailure(Throwable)}, and {@link #setCancelled()}).
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <T> the type of future result
+ * 
+ * @see ListenableFutureTask
+ */
 public class SimpleListenableFuture<T> implements ListenableFuture<T> {
 
    private final Lock lock = new ReentrantLock();
@@ -54,6 +63,13 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       return true;
    }
    
+   /**
+    * Invoked when the task is cancelled and allowed to interrupt a running task. This method is
+    * invoked when {@code cancel(true)} is called and should perform the interruption, if such an
+    * operation is supported.
+    * 
+    * <p>This default implementation does nothing.
+    */
    protected void interrupt() {
    }
    
@@ -70,7 +86,15 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
          }
       });
    }
-   
+
+   /**
+    * Sets the future as cancelled. This is effectively the same as {@code cancel(false)}. It is
+    * defined separately so that {@link #cancel(boolean)} can be overridden but code can still use
+    * this protected method to cancel without going through overridden behavior (or vice versa).
+    * 
+    * @return true if the future was cancelled; false if it could not be cancelled because it was
+    *       already complete
+    */
    protected boolean setCancelled() {
       return doIfNotDone(new Runnable() {
          @SuppressWarnings("synthetic-access")
@@ -81,6 +105,13 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       });
    }
    
+   /**
+    * Sets the future as successfully completed with the specified result.
+    * 
+    * @param t the future's result
+    * @return true if the result was set; false if it could not be set because the future was
+    *       already complete
+    */
    protected boolean setValue(final T t) {
       return doIfNotDone(new Runnable() {
          @SuppressWarnings("synthetic-access")
@@ -91,6 +122,13 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       });
    }
    
+   /**
+    * Sets the future as failed with the specified cause of failure.
+    * 
+    * @param failure the cause of failure
+    * @return true if the result was marked as failed; false if it could not be so marked because it
+    *       was already complete
+    */
    protected boolean setFailure(final Throwable failure) {
       return doIfNotDone(new Runnable() {
          @SuppressWarnings("synthetic-access")
@@ -151,8 +189,14 @@ public class SimpleListenableFuture<T> implements ListenableFuture<T> {
       FutureListenerSet.runListener(this, listener, executor);
    }
 
+   /**
+    * Returns a view of this future as a {@link Fulfillable}. Fulfilling the returned object will
+    * successfully complete the future.
+    * 
+    * @return a view of this future as a {@link Fulfillable}
+    */
    @SuppressWarnings("synthetic-access") // accesses private members of enclosing class
-   public Fulfillable<T> asFullfillable() {
+   protected Fulfillable<T> asFulfillable() {
       return new Fulfillable<T>() {
 
          @Override

@@ -9,9 +9,13 @@ public final class Reschedulers {
    }
 
    public static Rescheduler atFixedRate(long period, TimeUnit unit) {
-      return new RescheduleAtFixedRate(unit.toNanos(period));
+      return new RescheduleAtFixedRate(unit.toNanos(period), false);
    }
-   
+
+   public static Rescheduler atFixedRateSkippingMissedOccurrences(long period, TimeUnit unit) {
+      return new RescheduleAtFixedRate(unit.toNanos(period), true);
+   }
+
    public static long getFixedRatePeriodNanos(Rescheduler rescheduler) {
       return rescheduler instanceof RescheduleAtFixedRate
             ? ((RescheduleAtFixedRate) rescheduler).periodNanos : 0;
@@ -28,12 +32,14 @@ public final class Reschedulers {
 
    private static class RescheduleAtFixedRate implements Rescheduler {
       final long periodNanos;
+      private final boolean skipMissedOccurrences;
       
-      RescheduleAtFixedRate(long periodNanos) {
+      RescheduleAtFixedRate(long periodNanos, boolean skipMissedOccurrences) {
          if (periodNanos <= 0) {
             throw new IllegalArgumentException();
          }
          this.periodNanos = periodNanos;
+         this.skipMissedOccurrences = skipMissedOccurrences;
       }
       
       @Override
@@ -43,12 +49,13 @@ public final class Reschedulers {
       
       long computeNextStartTime(long priorStartTimeNanos, long now) {
          long nextStartTimeNanos = priorStartTimeNanos + periodNanos;
-         long behind = now - nextStartTimeNanos;
-         if (behind > periodNanos) {
-            // we missed some executions and cannot recover
-            // so just skip them
-            long numMissed = behind / periodNanos;
-            nextStartTimeNanos += numMissed * periodNanos;
+         if (skipMissedOccurrences) {
+            long behind = now - nextStartTimeNanos;
+            if (behind > periodNanos) {
+               // we missed some executions, just skip them
+               long numMissed = behind / periodNanos;
+               nextStartTimeNanos += numMissed * periodNanos;
+            }
          }
          return nextStartTimeNanos;
       }

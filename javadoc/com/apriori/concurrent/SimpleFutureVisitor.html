@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -160,7 +160,9 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#cancelled()">cancelled</a></strong>()</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#cancelled()">cancelled</a></strong>()</code>
+<div class="block">Invoked when the visited future was cancelled.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -170,11 +172,15 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#failed(java.lang.Throwable)">failed</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#failed(java.lang.Throwable)">failed</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code>
+<div class="block">Invoked when the visited future failed.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#successful(T)">successful</a></strong>(<a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="type parameter in SimpleFutureVisitor">T</a>&nbsp;result)</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#successful(T)">successful</a></strong>(<a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="type parameter in SimpleFutureVisitor">T</a>&nbsp;result)</code>
+<div class="block">Invoked when the visited future completed successfully.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -235,13 +241,13 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 <li class="blockList">
 <h4>successful</h4>
 <pre>public&nbsp;void&nbsp;successful(<a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="type parameter in SimpleFutureVisitor">T</a>&nbsp;result)</pre>
-<div class="block">
+<div class="block">Invoked when the visited future completed successfully.
  
  <p>This default implementation just calls <a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#defaultAction()"><code>defaultAction()</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/FutureVisitor.html#successful(T)">successful</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;<a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="type parameter in SimpleFutureVisitor">T</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>result</code> - the result of the visited future</dd></dl>
 </li>
 </ul>
 <a name="failed(java.lang.Throwable)">
@@ -251,13 +257,13 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 <li class="blockList">
 <h4>failed</h4>
 <pre>public&nbsp;void&nbsp;failed(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</pre>
-<div class="block">
+<div class="block">Invoked when the visited future failed.
  
  <p>This default implementation just calls <a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#defaultAction()"><code>defaultAction()</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/FutureVisitor.html#failed(java.lang.Throwable)">failed</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;<a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html" title="type parameter in SimpleFutureVisitor">T</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>failure</code> - the cause of failure of the visited future</dd></dl>
 </li>
 </ul>
 <a name="cancelled()">
@@ -267,7 +273,7 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 <li class="blockList">
 <h4>cancelled</h4>
 <pre>public&nbsp;void&nbsp;cancelled()</pre>
-<div class="block">
+<div class="block">Invoked when the visited future was cancelled.
  
  <p>This default implementation calls the <a href="../../../com/apriori/concurrent/SimpleFutureVisitor.html#failed(java.lang.Throwable)"><code>failed(Throwable)</code></a> visit method with a fresh
  instance of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/CancellationException.html?is-external=true" title="class or interface in java.util.concurrent"><code>CancellationException</code></a>.</div>
@@ -302,7 +308,7 @@ implements <a href="../../../com/apriori/concurrent/FutureVisitor.html" title="i
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

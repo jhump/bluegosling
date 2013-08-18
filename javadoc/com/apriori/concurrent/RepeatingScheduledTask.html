@@ -77,25 +77,20 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface RepeatingScheduledTask" class="title">Interface RepeatingScheduledTask&lt;V,T&gt;</h2>
+<h2 title="Interface RepeatingScheduledTask" class="title">Interface RepeatingScheduledTask&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd><dd><code>T</code> - the type of the actual task: <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or
-       <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
 <dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;</dd>
 </dl>
-<dl>
-<dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/CallableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">CallableRepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/RunnableRepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RunnableRepeatingScheduledTask</a></dd>
-</dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">RepeatingScheduledTask&lt;V,T&gt;</span>
+<pre>public interface <span class="strong">RepeatingScheduledTask&lt;V&gt;</span>
 extends <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;V&gt;</pre>
 <div class="block">Represents a repeating task. Cancelling a repeating task will cancel all future occurrences of
  the task. This future will not complete until the last execution of the task completes, usually
@@ -119,7 +114,7 @@ extends <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html"
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>,<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html#taskDefinition()">taskDefinition</a></strong>()</code>
 <div class="block">Returns the task definition for which this task was created.</div>
 </td>
@@ -194,7 +189,7 @@ extends <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html"
 <ul class="blockListLast">
 <li class="blockList">
 <h4>taskDefinition</h4>
-<pre><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>,<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">T</a>&gt;&nbsp;taskDefinition()</pre>
+<pre><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;<a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="type parameter in RepeatingScheduledTask">V</a>&gt;&nbsp;taskDefinition()</pre>
 <div class="block">Returns the task definition for which this task was created.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the task's definition</dd></dl>
 </li>

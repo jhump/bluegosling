@@ -1,7 +1,6 @@
 package com.apriori.concurrent;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * A {@link TaskDefinition} that has been scheduled using a {@link ScheduledTaskManager}.
@@ -12,10 +11,8 @@ import java.util.concurrent.Callable;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <V> the type of value returned upon completion of the task
- * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
- *       {@link RunnableWithResult}
  */
-public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Cancellable {
+public interface ScheduledTaskDefinition<V> extends TaskDefinition<V>, Cancellable {
    /**
     * Returns the timestamp, in milliseconds, that this task definition was submitted
     * to a {@link ScheduledTaskManager}. This is measured as milliseconds elapsed since
@@ -24,6 +21,12 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
     * @return the time the task definition was submitted
     */
    long submitTimeMillis();
+   
+   //TODO: javadoc
+   long scheduledStartTimeMillis();
+   
+   // TODO: javadoc
+   long scheduledStartNanoTime();
    
    /**
     * Returns the {@link ScheduledTaskManager} to which this task definition
@@ -35,16 +38,17 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
    ScheduledTaskManager executor();
    
    /**
-    * Returns the total number of times that tasks have been executed for this
-    * task definition. This number includes both normal and abnormal completions.
+    * Returns the total number of times that tasks have been executed for this task definition. This
+    * number includes both normal and abnormal completions. This only includes completed occurrences
+    * and does not include any currently scheduled or currently running occurrence.
     * 
     * @return the count of executions
     */
    int executionCount();
    
    /**
-    * Returns the number of times that tasks have been failed (completed abnormally)
-    * for this task definition.
+    * Returns the number of times that tasks have failed (completed abnormally) for this task
+    * definition.
     * 
     * @return the count of failed executions
     */
@@ -67,7 +71,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
     * 
     * @return the history of past executions
     */
-   List<ScheduledTask<V, T>> history();
+   List<ScheduledTask<V>> history();
    
    /**
     * Returns details for the most recently completed invocation of this task
@@ -75,9 +79,10 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
     * <pre>
     * scheduledTaskDefinition.history().get(0);
     * </pre>
+    * 
     * @return details for the latest invocation
     */
-   ScheduledTask<V, T> latest();
+   ScheduledTask<V> latest();
    
    /**
     * Returns details for the currently scheduled invocation, which might be
@@ -91,14 +96,16 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
     *   
     * @return the currently scheduled invocation
     */
-   ScheduledTask<V, T> current();
+   ScheduledTask<V> current();
    
    /**
     * Adds a listener that will be notified when task invocations complete.
     *  
     * @param listener the listener
+    * @return {@code true} if the listeners was added; {@code false} otherwise, such as if the
+    *       listener was already added to this task definition
     */
-   void addListener(ScheduledTaskListener<? super V, ? super T> listener);
+   boolean addListener(ScheduledTaskListener<? super V> listener);
    
    /**
     * Removes a listener. No notifications will be sent to the listener after
@@ -109,7 +116,7 @@ public interface ScheduledTaskDefinition<V, T> extends TaskDefinition<V, T>, Can
     *       such as if the listener was never added to this task definition or
     *       has already been removed
     */
-   boolean removeListener(ScheduledTaskListener<? super V, ? super T> listener);
+   boolean removeListener(ScheduledTaskListener<? super V> listener);
    
    /**
     * Returns whether or not the task definition is finished. It is finished when

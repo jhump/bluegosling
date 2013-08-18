@@ -83,9 +83,12 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of future result support by this listener</dd></dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">FutureListener&lt;T&gt;</span></pre>
+<div class="block">A listener for the completion of a future. When <a href="../../../com/apriori/concurrent/ListenableFuture.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">registered with a
+ future</a>, the listener will be called once the future completes.</div>
 </li>
 </ul>
 </div>
@@ -106,7 +109,9 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListener.html#onCompletion(com.apriori.concurrent.ListenableFuture)">onCompletion</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/FutureListener.html#onCompletion(com.apriori.concurrent.ListenableFuture)">onCompletion</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</code>
+<div class="block">Invoked when a future completes.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -130,6 +135,8 @@
 <li class="blockList">
 <h4>onCompletion</h4>
 <pre>void&nbsp;onCompletion(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</pre>
+<div class="block">Invoked when a future completes.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>completedFuture</code> - the completed future</dd></dl>
 </li>
 </ul>
 </li>

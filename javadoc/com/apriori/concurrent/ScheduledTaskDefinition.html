@@ -77,22 +77,21 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface ScheduledTaskDefinition" class="title">Interface ScheduledTaskDefinition&lt;V,T&gt;</h2>
+<h2 title="Interface ScheduledTaskDefinition" class="title">Interface ScheduledTaskDefinition&lt;V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd><dd><code>T</code> - the type of the actual task: <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or
-       <a href="../../../com/apriori/concurrent/RunnableWithResult.html" title="interface in com.apriori.concurrent"><code>RunnableWithResult</code></a></dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>V</code> - the type of value returned upon completion of the task</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">ScheduledTaskDefinition&lt;V,T&gt;</span>
-extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V,T&gt;, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></pre>
+<pre>public interface <span class="strong">ScheduledTaskDefinition&lt;V&gt;</span>
+extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></pre>
 <div class="block">A <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><code>TaskDefinition</code></a> that has been scheduled using a <a href="../../../com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><code>ScheduledTaskManager</code></a>.
  This provides additional methods for introspection into the state of the scheduled tasks,
  including looking at past invocations of the task and canceling or pausing/resuming the
@@ -114,7 +113,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></h3>
-<code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>,<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">T</a>&gt;</code></li>
+<code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -146,8 +145,8 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTaskListener)">addListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;listener)</code>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#addListener(com.apriori.concurrent.ScheduledTaskListener)">addListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;listener)</code>
 <div class="block">Adds a listener that will be notified when task invocations complete.</div>
 </td>
 </tr>
@@ -158,7 +157,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#current()">current</a></strong>()</code>
 <div class="block">Returns details for the currently scheduled invocation, which might be
  executing currently.</div>
@@ -167,8 +166,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#executionCount()">executionCount</a></strong>()</code>
-<div class="block">Returns the total number of times that tasks have been executed for this
- task definition.</div>
+<div class="block">Returns the total number of times that tasks have been executed for this task definition.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -181,12 +179,12 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#failureCount()">failureCount</a></strong>()</code>
-<div class="block">Returns the number of times that tasks have been failed (completed abnormally)
- for this task definition.</div>
+<div class="block">Returns the number of times that tasks have failed (completed abnormally) for this task
+ definition.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#history()">history</a></strong>()</code>
 <div class="block">Returns the history of past executions for this task definition.</div>
 </td>
@@ -210,7 +208,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#latest()">latest</a></strong>()</code>
 <div class="block">Returns details for the most recently completed invocation of this task
  definition.</div>
@@ -224,7 +222,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTaskListener)">removeListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;listener)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#removeListener(com.apriori.concurrent.ScheduledTaskListener)">removeListener</a></strong>(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;listener)</code>
 <div class="block">Removes a listener.</div>
 </td>
 </tr>
@@ -233,6 +231,14 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#resume()">resume</a></strong>()</code>
 <div class="block">Resumes this task definition.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#scheduledStartNanoTime()">scheduledStartNanoTime</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html#scheduledStartTimeMillis()">scheduledStartTimeMillis</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
@@ -254,7 +260,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a></h3>
-<code><a href="../../../com/apriori/concurrent/TaskDefinition.html#initialDelayNanos()">initialDelayNanos</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#isFixedRate()">isFixedRate</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#isRepeating()">isRepeating</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#listeners()">listeners</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#maxHistorySize()">maxHistorySize</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#periodDelayNanos()">periodDelayNanos</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#rescheduler()">rescheduler</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#scheduleNextTaskPolicy()">scheduleNextTaskPolicy</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#task()">task</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#taskAsCallable()">taskAsCallable</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#uncaughtExceptionHandler()">uncaughtExceptionHandler</a></code></li>
+<code><a href="../../../com/apriori/concurrent/TaskDefinition.html#initialDelay(java.util.concurrent.TimeUnit)">initialDelay</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#isFixedRate()">isFixedRate</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#isRepeating()">isRepeating</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#listeners()">listeners</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#maxHistorySize()">maxHistorySize</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#periodDelay(java.util.concurrent.TimeUnit)">periodDelay</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#rescheduler()">rescheduler</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#scheduleNextTaskPolicy()">scheduleNextTaskPolicy</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#task()">task</a>, <a href="../../../com/apriori/concurrent/TaskDefinition.html#uncaughtExceptionHandler()">uncaughtExceptionHandler</a></code></li>
 </ul>
 </li>
 </ul>
@@ -283,6 +289,24 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <dl><dt><span class="strong">Returns:</span></dt><dd>the time the task definition was submitted</dd></dl>
 </li>
 </ul>
+<a name="scheduledStartTimeMillis()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>scheduledStartTimeMillis</h4>
+<pre>long&nbsp;scheduledStartTimeMillis()</pre>
+</li>
+</ul>
+<a name="scheduledStartNanoTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>scheduledStartNanoTime</h4>
+<pre>long&nbsp;scheduledStartNanoTime()</pre>
+</li>
+</ul>
 <a name="executor()">
 <!--   -->
 </a>
@@ -303,8 +327,9 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <li class="blockList">
 <h4>executionCount</h4>
 <pre>int&nbsp;executionCount()</pre>
-<div class="block">Returns the total number of times that tasks have been executed for this
- task definition. This number includes both normal and abnormal completions.</div>
+<div class="block">Returns the total number of times that tasks have been executed for this task definition. This
+ number includes both normal and abnormal completions. This only includes completed occurrences
+ and does not include any currently scheduled or currently running occurrence.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the count of executions</dd></dl>
 </li>
 </ul>
@@ -315,8 +340,8 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <li class="blockList">
 <h4>failureCount</h4>
 <pre>int&nbsp;failureCount()</pre>
-<div class="block">Returns the number of times that tasks have been failed (completed abnormally)
- for this task definition.</div>
+<div class="block">Returns the number of times that tasks have failed (completed abnormally) for this task
+ definition.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the count of failed executions</dd></dl>
 </li>
 </ul>
@@ -338,7 +363,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>history</h4>
-<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&gt;&nbsp;history()</pre>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;&nbsp;history()</pre>
 <div class="block">Returns the history of past executions for this task definition. Only a
  limited number of past executions are retained and returned in this
  collection. Iteration order of the returned collection is such that
@@ -353,7 +378,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>latest</h4>
-<pre><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;latest()</pre>
+<pre><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;latest()</pre>
 <div class="block">Returns details for the most recently completed invocation of this task
  definition. This is equivalent to:
  <pre>
@@ -368,7 +393,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>current</h4>
-<pre><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;current()</pre>
+<pre><a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;<a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;current()</pre>
 <div class="block">Returns details for the currently scheduled invocation, which might be
  executing currently. This instance will not appear in the history until
  it has completed.
@@ -386,9 +411,11 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>addListener</h4>
-<pre>void&nbsp;addListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;listener)</pre>
+<pre>boolean&nbsp;addListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;listener)</pre>
 <div class="block">Adds a listener that will be notified when task invocations complete.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd>
+<dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the listeners was added; <code>false</code> otherwise, such as if the
+       listener was already added to this task definition</dd></dl>
 </li>
 </ul>
 <a name="removeListener(com.apriori.concurrent.ScheduledTaskListener)">
@@ -397,7 +424,7 @@ extends <a href="../../../com/apriori/concurrent/TaskDefinition.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>removeListener</h4>
-<pre>boolean&nbsp;removeListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>,? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">T</a>&gt;&nbsp;listener)</pre>
+<pre>boolean&nbsp;removeListener(<a href="../../../com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent">ScheduledTaskListener</a>&lt;? super <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&nbsp;listener)</pre>
 <div class="block">Removes a listener. No notifications will be sent to the listener after
  it is removed.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd>

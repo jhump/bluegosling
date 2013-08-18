@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,34 +15,26 @@ import java.util.concurrent.TimeUnit;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <V> the type of value returned upon completion of the task
- * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
- *       {@link RunnableWithResult}
  */
-public interface TaskDefinition<V, T> {
+public interface TaskDefinition<V> {
    
    /**
-    * Returns the underlying task. This is the object that will be submitted to
-    * the {@code ExecutorService}.
+    * Returns the implementation of the task. 
     * 
-    * @return the underlying task
+    * @return the task implementation
     */
-   T task();
+   TaskImplementation<V> task();
    
    /**
-    * Returns the underlying task as a {@link Callable}.
-    * 
-    * @return the underlying task
-    */
-   Callable<V> taskAsCallable();
-   
-   /**
-    * Returns the delay, in nanoseconds, from the time the task is submitted to
+    * Returns the delay, in the specified unit, from the time the task is submitted to
     * the time the first instance of the task should be invoked. A negative or
     * zero delay means that it should be executed immediately.
     * 
-    * @return the delay in nanoseconds for the first instance of the task
+    * @param unit the unit of the returned value
+    * @return the delay between the time the task is submitted for execution and the time that
+    *       the first instance of the task is scheduled to start
     */
-   long initialDelayNanos();
+   long initialDelay(TimeUnit unit);
    
    /**
     * Returns whether or not this is a repeating task vs. a one-time task. A task
@@ -51,7 +42,7 @@ public interface TaskDefinition<V, T> {
     * is {@link ScheduleNextTaskPolicies#NEVER}. Otherwise, it is considered a
     * repeating task. Repeating tasks will also have a non-null {@link #rescheduler() Rescheduler}.
     * 
-    * @return {@code true} if this is a repeating task; {@code} false otherwise
+    * @return {@code true} if this is a repeating task; {@code false} otherwise
     */
    boolean isRepeating();
    
@@ -63,7 +54,7 @@ public interface TaskDefinition<V, T> {
     * rate or with fixed delays between invocations.
     * 
     * @return {@code true} if this is a repeating task and it is scheduled based
-    *       on a fixed rate; {@code false otherwise}
+    *       on a fixed rate; {@code false} otherwise
     */
    boolean isFixedRate();
    
@@ -73,11 +64,12 @@ public interface TaskDefinition<V, T> {
     * a repeating task and this method returns zero, then a custom {@link #rescheduler()
     * Rescheduler} is in use and the period or delay between invocations isn't known.
     * 
-    * @return the period or delay, in nanoseconds, for this task or zero if this is not
+    * @param unit the unit of the returned value
+    * @return the period or delay, in the specified unit, for this task or zero if this is not
     *       a repeating task or if the period or delay of the current {@link Rescheduler}
     *       is unknown
     */
-   long periodDelayNanos();
+   long periodDelay(TimeUnit unit);
    
    /**
     * Returns the {@link ScheduleNextTaskPolicy} for this repeating task. If this
@@ -85,7 +77,7 @@ public interface TaskDefinition<V, T> {
     * 
     * @return the {@code ScheduleNextTaskPolicy} for this task
     */
-   ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy();
+   ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy();
    
    /**
     * Returns the maximum size of invocation history to maintain for this task. This
@@ -108,7 +100,7 @@ public interface TaskDefinition<V, T> {
     * 
     * @return the set of listeners for this task
     */
-   Set<ScheduledTaskListener<? super V, ? super T>> listeners();
+   Set<ScheduledTaskListener<? super V>> listeners();
    
    /**
     * Returns the {@link UncaughtExceptionHandler} for this task. If any invocation
@@ -131,10 +123,8 @@ public interface TaskDefinition<V, T> {
     * A builder for configuring {@link TaskDefinition} instances.
     * 
     * @param <V> the type of value returned upon completion of the task
-    * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
-    *       {@link RunnableWithResult}
     */
-   public class Builder<V, T> {
+   public class Builder<V> {
       /**
        * Returns a new builder for a task definition whose underlying task is a
        * {@link Callable}.
@@ -142,8 +132,8 @@ public interface TaskDefinition<V, T> {
        * @param callable the underlying task
        * @return a new builder
        */
-      public static <V> Builder<V, Callable<V>> forCallable(Callable<V> callable) {
-         return new Builder<V, Callable<V>>(callable, callable);
+      public static <V> Builder<V> forCallable(Callable<V> callable) {
+         return new Builder<V>(TaskImplementation.forCallable(callable));
       }
       
       /**
@@ -153,8 +143,8 @@ public interface TaskDefinition<V, T> {
        * @param runnable the underlying task
        * @return a new builder
        */
-      public static Builder<Void, Runnable> forRunnable(Runnable runnable) {
-         return new Builder<Void, Runnable>(runnable, Executors.callable(runnable, (Void) null));
+      public static Builder<Void> forRunnable(Runnable runnable) {
+         return forRunnable(runnable, null);
       }
 
       /**
@@ -165,38 +155,26 @@ public interface TaskDefinition<V, T> {
        * @param result the result returned upon completion of this task
        * @return a new builder
        */
-      public static <V> Builder<V, RunnableWithResult<V>> forRunnable(final Runnable runnable,
-            final V result) {
-         return new Builder<V, RunnableWithResult<V>>(new RunnableWithResult<V>() {
-            @Override
-            public Runnable getRunnable() {
-               return runnable;
-            }
-            @Override
-            public V getResult() {
-               return result;
-            }
-         }, Executors.callable(runnable, result));
+      public static <V> Builder<V> forRunnable(final Runnable runnable, final V result) {
+         return new Builder<V>(TaskImplementation.forRunnable(runnable, result));
       }
 
-      private final T task;
-      private final Callable<V> callable;
-      private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
+      private final TaskImplementation<V> task;
+      private final Set<ScheduledTaskListener<? super V>> listeners;
       private int maxHistorySize = DEFAULT_MAX_HISTORY_SIZE;
-      private ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
+      private ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy;
       private UncaughtExceptionHandler exceptionHandler;
       private long initialDelayNanos;
       private Rescheduler rescheduler;
       
       /**
        * Constructs a new builder.
+       * 
        * @param task the underlying task
-       * @param callable the underlying task as (possibly wrapped by) an instance of {@link Callable}
        */
-      private Builder(T task, Callable<V> callable) {
+      private Builder(TaskImplementation<V> task) {
          this.task = task;
-         this.callable = callable;
-         this.listeners = new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>();
+         this.listeners = new LinkedHashSet<ScheduledTaskListener<? super V>>();
       }
       
       /**
@@ -205,7 +183,7 @@ public interface TaskDefinition<V, T> {
        * @param numExecutions the maximum number of executions for which history information is retained
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> keepHistoryFor(int numExecutions) {
+      public Builder<V> keepHistoryFor(int numExecutions) {
          this.maxHistorySize = numExecutions;
          return this;
       }
@@ -216,7 +194,7 @@ public interface TaskDefinition<V, T> {
        * @param listener the listener
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> withListener(ScheduledTaskListener<? super V, ? super T> listener) {
+      public Builder<V> withListener(ScheduledTaskListener<? super V> listener) {
          listeners.add(listener);
          return this;
       }
@@ -234,7 +212,7 @@ public interface TaskDefinition<V, T> {
        * @see #repeatAtFixedRate(long, TimeUnit)
        * @see #repeatWithFixedDelay(long, TimeUnit)
        */
-      public Builder<V, T> withScheduleNextTaskPolicy(ScheduleNextTaskPolicy<? super V, ? super T> policy) {
+      public Builder<V> withScheduleNextTaskPolicy(ScheduleNextTaskPolicy<? super V> policy) {
          this.scheduleNextTaskPolicy = policy;
          return this;
       }
@@ -247,7 +225,7 @@ public interface TaskDefinition<V, T> {
        * @param handler the {@code UncaughtExceptionHandler}
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> withUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
+      public Builder<V> withUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
          this.exceptionHandler = handler;
          return this;
       }
@@ -260,13 +238,13 @@ public interface TaskDefinition<V, T> {
        * @param unit the time unit of {@code delay}
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> withInitialDelay(long delay, TimeUnit unit) {
+      public Builder<V> withInitialDelay(long delay, TimeUnit unit) {
          this.initialDelayNanos = unit.toNanos(delay);
          return this;
       }
       
       //TODO: javadoc
-      public Builder<V, T> repeat(Rescheduler nextTaskScheduler) {
+      public Builder<V> repeat(Rescheduler nextTaskScheduler) {
          this.rescheduler = nextTaskScheduler;
          return this;
       }
@@ -286,7 +264,7 @@ public interface TaskDefinition<V, T> {
        * @param unit the time unit of {@code period}
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> repeatAtFixedRate(long period, TimeUnit unit) {
+      public Builder<V> repeatAtFixedRate(long period, TimeUnit unit) {
          this.rescheduler = Reschedulers.atFixedRate(period, unit);
          return this;
       }
@@ -298,7 +276,7 @@ public interface TaskDefinition<V, T> {
        * @param unit the time unit of {@code period}
        * @return {@code this}, for method chaining
        */
-      public Builder<V, T> repeatWithFixedDelay(long delay, TimeUnit unit) {
+      public Builder<V> repeatWithFixedDelay(long delay, TimeUnit unit) {
          this.rescheduler = Reschedulers.withFixedDelay(delay, unit);
          return this;
       }
@@ -308,8 +286,8 @@ public interface TaskDefinition<V, T> {
        * 
        * @return a new {@link TaskDefinition}
        */
-      public TaskDefinition<V, T> build() {
-         ScheduleNextTaskPolicy<? super V, ? super T> policy;
+      public TaskDefinition<V> build() {
+         ScheduleNextTaskPolicy<? super V> policy;
          if (rescheduler == null) {
             policy = ScheduleNextTaskPolicies.NEVER;
          } else if (scheduleNextTaskPolicy == null) {
@@ -317,34 +295,32 @@ public interface TaskDefinition<V, T> {
          } else {
             policy = scheduleNextTaskPolicy;
          }
-         return new TaskDefinitionImpl<V, T>(task, callable, maxHistorySize, listeners,
-               policy, exceptionHandler, initialDelayNanos, rescheduler);
+         return new TaskDefinitionImpl<V>(task, maxHistorySize, listeners, policy, exceptionHandler,
+               initialDelayNanos, rescheduler);
       }
 
       /**
        * The concrete implementation of {@link TaskDefinition} returned by
        * {@link Builder#build()}.
        */
-      private static class TaskDefinitionImpl<V, T> implements TaskDefinition<V, T> {
-         private final T task;
-         private final Callable<V> callable;
+      private static class TaskDefinitionImpl<V> implements TaskDefinition<V> {
+         private final TaskImplementation<V> task;
          private final int maxHistorySize;
-         private final Set<ScheduledTaskListener<? super V, ? super T>> listeners;
-         private final ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy;
+         private final Set<ScheduledTaskListener<? super V>> listeners;
+         private final ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy;
          private final UncaughtExceptionHandler exceptionHandler;
          private final long initialDelayNanos;
          private final Rescheduler rescheduler;
 
-         TaskDefinitionImpl(T task, Callable<V> callable, int maxHistorySize,
-               Set<ScheduledTaskListener<? super V, ? super T>> listeners,
-               ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextPolicy,
+         TaskDefinitionImpl(TaskImplementation<V> task, int maxHistorySize,
+               Set<ScheduledTaskListener<? super V>> listeners,
+               ScheduleNextTaskPolicy<? super V> scheduleNextPolicy,
                UncaughtExceptionHandler exceptionHandler, long initialDelayNanos,
                Rescheduler rescheduler) {
             this.task = task;
-            this.callable = callable;
             this.maxHistorySize = maxHistorySize;
             this.listeners =
-                  new LinkedHashSet<ScheduledTaskListener<? super V, ? super T>>(listeners);
+                  new LinkedHashSet<ScheduledTaskListener<? super V>>(listeners);
             this.scheduleNextTaskPolicy = scheduleNextPolicy;
             this.exceptionHandler = exceptionHandler;
             this.initialDelayNanos = initialDelayNanos;
@@ -352,18 +328,13 @@ public interface TaskDefinition<V, T> {
          }
          
          @Override
-         public T task() {
+         public TaskImplementation<V> task() {
             return task;
          }
          
          @Override
-         public Callable<V> taskAsCallable() {
-            return callable;
-         }
-
-         @Override
-         public long initialDelayNanos() {
-            return initialDelayNanos;
+         public long initialDelay(TimeUnit unit) {
+            return unit.convert(initialDelayNanos, TimeUnit.NANOSECONDS);
          }
 
          @Override
@@ -385,16 +356,18 @@ public interface TaskDefinition<V, T> {
          }
 
          @Override
-         public long periodDelayNanos() {
+         public long periodDelay(TimeUnit unit) {
             if (rescheduler == null) {
                return 0;
             }
             long periodNanos = Reschedulers.getFixedRatePeriodNanos(rescheduler);
-            return periodNanos != 0 ? periodNanos : Reschedulers.getFixedDelayNanos(rescheduler);
+            return unit.convert(
+                  periodNanos != 0 ? periodNanos : Reschedulers.getFixedDelayNanos(rescheduler),
+                  TimeUnit.NANOSECONDS);
          }
 
          @Override
-         public ScheduleNextTaskPolicy<? super V, ? super T> scheduleNextTaskPolicy() {
+         public ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy() {
             return scheduleNextTaskPolicy;
          }
 
@@ -404,7 +377,7 @@ public interface TaskDefinition<V, T> {
          }
 
          @Override
-         public Set<ScheduledTaskListener<? super V, ? super T>> listeners() {
+         public Set<ScheduledTaskListener<? super V>> listeners() {
             return Collections.unmodifiableSet(listeners);
          }
 

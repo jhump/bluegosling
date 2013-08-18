@@ -1,6 +1,5 @@
 package com.apriori.concurrent;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
 
 /**
@@ -15,17 +14,14 @@ import java.util.concurrent.ScheduledFuture;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <V> the type of value returned upon completion of the task
- * @param <T> the type of the actual task: {@link Callable}, {@link Runnable}, or
- *       {@link RunnableWithResult}
  */
-//TODO: should extend ListenableScheduledFuture<V>
-public interface ScheduledTask<V, T> extends ListenableScheduledFuture<V> {
+public interface ScheduledTask<V> extends ListenableScheduledFuture<V> {
    /**
     * Returns the task definition for which this task was created.
     * 
     * @return the task's definition
     */
-   ScheduledTaskDefinition<V, T> taskDefinition();
+   ScheduledTaskDefinition<V> taskDefinition();
    
    /**
     * Returns whether the scheduled task has begun executing or not.
@@ -33,17 +29,25 @@ public interface ScheduledTask<V, T> extends ListenableScheduledFuture<V> {
     * @return true if the task has begun executing (including if it's already finished); false
     *       otherwise
     */
-   boolean hasStarted();
-   
+   boolean isStarted();
+
+   /**
+    * Returns the scheduled start time of this invocation, in milliseconds.
+    * This is measured as milliseconds elapsed since midnight, January 1, 1970 UTC.
+    * 
+    * @return the scheduled start time of this invocation
+    */
+   long scheduledStartTimeMillis();
+
    /**
     * Returns the actual start time of this invocation, in milliseconds.
     * This is measured as milliseconds elapsed since midnight, January 1, 1970 UTC.
     * 
-    * @return the start time of this invocation
+    * @return the actual start time of this invocation
     * 
     * @throws IllegalStateException if the task has not actually started yet
     */
-   long actualTaskStartMillis();
+   long actualStartTimeMillis();
 
    /**
     * Returns the actual end time of this invocation, in milliseconds. This is the
@@ -54,5 +58,5 @@ public interface ScheduledTask<V, T> extends ListenableScheduledFuture<V> {
     * 
     * @throws IllegalStateException if the task not yet completed
     */
-   long actualTaskEndMillis();
+   long finishTimeMillis();
 }

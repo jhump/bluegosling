@@ -1,23 +1,13 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.FutureListeners.forRunnable;
-import static com.apriori.concurrent.ListenableFutures.sameThreadExecutor;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -25,26 +15,38 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: need more tests/assertions for other ListenableFuture methods
-public class ListenableFutureTaskTest {
+public class ListenableFutureTaskTest extends AbstractListenableFutureTest {
 
-   private enum State {
-      NOT_STARTED, RUNNING, FINISHED
-   }
+   /**
+    * How long the task will wait, in milliseconds, before completing. Set this field from a test
+    * case before running the task.
+    */
+   int completionDelay;
    
-   ListenableFutureTask<String> future;
-   volatile int completionDelay;
+   /**
+    * A latch that is counted down when the task completes.
+    */
    CountDownLatch completedLatch;
-   String value;
-   Exception failure;
-   AtomicInteger runCount;
-   AtomicInteger listenCount;
-   AtomicInteger interruptCount;
    
-   @Before public void setUp() {
-      completionDelay = 0;
-      completedLatch = new CountDownLatch(1);
-      future = new ListenableFutureTask<String>(new Callable<String>() {
+   /**
+    * The value returned by the task. Set this field from a test case to control the task's result.
+    */
+   String value;
+   
+   /**
+    * The exception thrown by the task. If not null, the task will fail and {@link #value} is
+    * ignored. Set this field from a test case to cause the task to fail.
+    */
+   Throwable failure;
+   
+   /**
+    * The number of times the task has run. The task itself increments this value when it runs.
+    */
+   AtomicInteger runCount;
+   
+   @Override
+   protected ListenableFuture<String> makeFuture() {
+      return new ListenableFutureTask<String>(new Callable<String>() {
          @Override public String call() throws Exception {
             runCount.incrementAndGet();
             try {
@@ -52,7 +54,10 @@ public class ListenableFutureTaskTest {
                   Thread.sleep(completionDelay);
                }
                if (failure != null) {
-                  throw failure;
+                  if (failure instanceof Error) {
+                     throw (Error) failure;
+                  }
+                  throw (Exception) failure;
                }
                return value;
             } catch (InterruptedException e) {
@@ -63,34 +68,63 @@ public class ListenableFutureTaskTest {
             }
          }
       });
-      runCount = new AtomicInteger();
-      listenCount = new AtomicInteger();
-      interruptCount = new AtomicInteger();
-   }
-   
-   private void preAsserts() throws Exception {
-      assertFalse(future.isDone());
-      assertFalse(future.isCancelled());
-      
-      future.addListener(forRunnable(new Runnable() {
-         @Override public void run() {
-            listenCount.incrementAndGet();
-         }
-      }), sameThreadExecutor());
-      assertEquals(0, listenCount.get());
-      
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but not catch TimeoutException");
-      } catch (TimeoutException expected) {
-      }
    }
 
-   private void assertDone(State taskState) throws Exception {
-      assertTrue(future.isDone());
-      assertEquals(1, listenCount.get());
-      assertFalse(future.cancel(false));
-      assertFalse(future.cancel(true));
+   protected ListenableFutureTask<String> future() {
+      return (ListenableFutureTask<String>) future;
+   }
+   
+   @Override
+   protected State completeSuccessfully(String result) {
+      this.value = result;
+      future().run();
+      return State.FINISHED;
+   }
+
+   @Override
+   protected void completeAsynchronously(String result, int millisDelay) {
+      value = result;
+      completionDelay = millisDelay;
+      new Thread(future()).start();
+   }
+
+   @Override
+   protected State completeUnsuccessfully(Throwable cause) {
+      if (!(cause instanceof Error || cause instanceof Exception)) {
+         throw new IllegalArgumentException();
+      }
+      this.failure = cause;
+      future().run();
+      return State.FINISHED;
+   }
+   
+   @Override
+   protected State cancelNoInterrupt() {
+      assertTrue(future.cancel(false));
+      future().run(); // run to make sure this doesn't "overwrite" the cancellation above
+      return State.NOT_STARTED;
+   }
+   
+   @Override
+   protected State cancelMayInterruptIfRunning() throws Exception {
+      completionDelay = 1000;
+      new Thread(future()).start();
+      Thread.sleep(200); // make sure thread has begun executing
+      assertTrue(future.cancel(true));
+      return State.RUNNING;
+   }
+   
+   @Override
+   public void setUp() {
+      super.setUp();
+      completionDelay = 0;
+      completedLatch = new CountDownLatch(1);
+      runCount = new AtomicInteger();
+   }
+
+   @Override
+   protected void assertDone(State taskState) throws Exception {
+      super.assertDone(taskState);
       if (taskState == State.FINISHED) {
          assertTrue(completedLatch.getCount() == 0);
          assertEquals(1, runCount.get());
@@ -103,130 +137,15 @@ public class ListenableFutureTaskTest {
       }
    }
 
-   private void postAsserts() {
-      future.addListener(forRunnable(new Runnable() {
-         @Override public void run() {
-            listenCount.incrementAndGet();
-         }
-      }), sameThreadExecutor());
-      assertEquals(2, listenCount.get());
-      assertTrue(future.isDone());
-   }
-
-   private void doSuccessfullyComplete(String s) throws Exception {
-      preAsserts();
-      
-      this.value = s;
-      future.run();
-      assertDone(State.FINISHED);
-      assertFalse(future.isCancelled());
-      assertEquals(s, future.get(0, TimeUnit.MILLISECONDS));
-      assertEquals(s, future.get());
-
-      postAsserts();
-      
-      assertEquals(0, interruptCount.get());
-   }
-   
-   @Test public void successfulCompletion() throws Exception {
-      doSuccessfullyComplete("abc");
-   }
-   
-   @Test public void successfulCompletion_null() throws Exception {
-      doSuccessfullyComplete(null);
-   }
-   
-   @Test public void failedCompletion() throws Exception {
-      preAsserts();
-      
-      Throwable t = failure = new RuntimeException();
-      future.run();
-      assertDone(State.FINISHED);
-      assertFalse(future.isCancelled());
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but not catch ExecutionException");
-      } catch (ExecutionException e) {
-         assertSame(t, e.getCause());
-      }
-      try {
-         future.get();
-         fail("Expected but not catch ExecutionException");
-      } catch (ExecutionException e) {
-         assertSame(t, e.getCause());
-      }
-
-      postAsserts();
-      
-      assertEquals(0, interruptCount.get());
-   }   
-
-   private void doCancel(Callable<State> cancel) throws Exception {
-      preAsserts();
-
-      assertDone(cancel.call());
-      assertTrue(future.isCancelled());
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but not catch CancellationException");
-      } catch (CancellationException expected) {
-      }
-      try {
-         future.get();
-         fail("Expected but not catch CancellationException");
-      } catch (CancellationException expected) {
-      }
-
-      postAsserts();
-   }
-   
-   @Test public void cancellation() throws Exception {
-      doCancel(new Callable<State>() {
-         @Override public State call() {
-            assertTrue(future.cancel(false));
-            future.run();
-            return State.NOT_STARTED;
-         }
-      });
-      assertEquals(0, interruptCount.get());
-   }   
-
    @Test public void cancellation_noOpInterrupt() throws Exception {
-      doCancel(new Callable<State>() {
-         @Override public State call() {
+      doCancellation(new Callable<State>() {
+         @Override public State call() throws Exception {
             // may interrupt, but since task never started there's nothing to interrupt
             assertTrue(future.cancel(true));
-            future.run();
+            future().run();
             return State.NOT_STARTED;
          }
       });
       assertEquals(0, interruptCount.get());
-   }
-
-   @Test(timeout = 500) public void cancellation_interrupt() throws Exception {
-      completionDelay = 1000;
-      doCancel(new Callable<State>() {
-         @Override public State call() throws InterruptedException {
-            new Thread(future).start();
-            Thread.sleep(200);
-            assertTrue(future.cancel(true));
-            return State.RUNNING;
-         }
-      });
-      assertEquals(1, interruptCount.get());
-   }
-
-   @Test(timeout = 500) public void asyncCompletion_get() throws Exception {
-      value = "done";
-      completionDelay = 200;
-      new Thread(future).start();
-      assertEquals("done", future.get());
-   }
-
-   @Test(timeout = 500) public void asyncCompletion_timedGet() throws Exception {
-      value = "done";
-      completionDelay = 200;
-      new Thread(future).start();
-      assertEquals("done", future.get(1, TimeUnit.SECONDS));
    }
 }

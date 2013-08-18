@@ -95,6 +95,7 @@
 <br>
 <pre>public interface <span class="strong">ListenableScheduledExecutorService</span>
 extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></pre>
+<div class="block">A scheduled executor service that returns <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>s.</div>
 </li>
 </ul>
 </div>
@@ -117,27 +118,27 @@ extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html"
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule(java.util.concurrent.Callable, long, java.util.concurrent.TimeUnit)">schedule</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable,
         long&nbsp;delay,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule(java.lang.Runnable, long, java.util.concurrent.TimeUnit)">schedule</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;command,
         long&nbsp;delay,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleAtFixedRate</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;command,
                    long&nbsp;initialDelay,
                    long&nbsp;period,
-                   <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                   <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)">scheduleWithFixedDelay</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;command,
                       long&nbsp;initialDelay,
                       long&nbsp;delay,
-                      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
 </tr>
 </table>
 <ul class="blockList">
@@ -184,6 +185,9 @@ extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html"
 <pre><a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;schedule(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;command,
                                        long&nbsp;delay,
                                        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">
+ 
+ <p>Overrides the return type to be listenable.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule(java.lang.Runnable, long, java.util.concurrent.TimeUnit)" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
@@ -199,6 +203,9 @@ extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html"
 <pre>&lt;V&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;V&gt;&nbsp;schedule(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable,
                                         long&nbsp;delay,
                                         <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">
+ 
+ <p>Overrides the return type to be listenable.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule(java.util.concurrent.Callable, long, java.util.concurrent.TimeUnit)" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
@@ -215,6 +222,9 @@ extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html"
                                                   long&nbsp;initialDelay,
                                                   long&nbsp;period,
                                                   <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">
+ 
+ <p>Overrides the return type to be listenable.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleAtFixedRate(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)" title="class or interface in java.util.concurrent">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
@@ -231,6 +241,9 @@ extends <a href="../../../com/apriori/concurrent/ListenableExecutorService.html"
                                                      long&nbsp;initialDelay,
                                                      long&nbsp;delay,
                                                      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">
+ 
+ <p>Overrides the return type to be listenable.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleWithFixedDelay(java.lang.Runnable, long, long, java.util.concurrent.TimeUnit)" title="class or interface in java.util.concurrent">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>

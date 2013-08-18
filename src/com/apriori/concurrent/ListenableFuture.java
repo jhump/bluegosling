@@ -1,7 +1,10 @@
 package com.apriori.concurrent;
 
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 /**
  * The future to end all futures. This provides API improvements over the standard {@link Future} in
@@ -11,7 +14,8 @@ import java.util.concurrent.Future;
  * is what gives this future its name. You can add listeners that are invoked when the future
  * completes.</li>
  * <li><strong>Blocking</strong>: This interface extends {@link Awaitable}, giving you more API
- * choices for blocking until the future completes.</li>
+ * choices for blocking until the future completes (that do not require catching {@link
+ * ExecutionException}, {@link CancellationException}, or {@link TimeoutException}).</li>
  * <li><strong>Inspecting</strong>: Numerous new methods are provided for inspecting the result of
  * a completed future, none of which require a {@code try/catch} block ({@link #isSuccessful()},
  * {@link #getResult()}, {@link #isFailed()}, {@link #getFailure()}, and
@@ -62,7 +66,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * using the specified executor. If the future is already complete when the listener is added,
     * the listener will be immediately invoked. If the listener can be called synchronously (e.g.
     * it will complete very quickly and not block) then consider using {@link
-    * ListenableFutures#sameThreadExecutor()}.
+    * ListenableExecutors#sameThreadExecutor()}.
     * 
     * @param listener the listener
     * @param executor the executor used when calling the listener

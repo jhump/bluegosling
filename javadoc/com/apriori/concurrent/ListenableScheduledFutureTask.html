@@ -103,7 +103,7 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, <a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -113,7 +113,7 @@
 <br>
 <pre>public class <span class="strong">ListenableScheduledFutureTask&lt;T&gt;</span>
 extends <a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>&lt;T&gt;
-implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</pre>
+implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></pre>
 </li>
 </ul>
 </div>
@@ -133,6 +133,13 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 <h3>Fields inherited from class&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></h3>
 <code><a href="../../../com/apriori/concurrent/ListenableFutureTask.html#completionLock">completionLock</a></code></li>
 </ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_com.apriori.concurrent.Scheduled">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></h3>
+<code><a href="../../../com/apriori/concurrent/Scheduled.html#COMPARATOR">COMPARATOR</a></code></li>
+</ul>
 </li>
 </ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -148,12 +155,12 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#ListenableScheduledFutureTask(java.util.concurrent.Callable, long)">ListenableScheduledFutureTask</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="type parameter in ListenableScheduledFutureTask">T</a>&gt;&nbsp;callable,
-                             long&nbsp;startTimeNanos)</code>&nbsp;</td>
+                             long&nbsp;scheduledNanoTime)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#ListenableScheduledFutureTask(java.lang.Runnable, T, long)">ListenableScheduledFutureTask</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
                              <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="type parameter in ListenableScheduledFutureTask">T</a>&nbsp;result,
-                             long&nbsp;startTimeNanos)</code>&nbsp;</td>
+                             long&nbsp;scheduledNanoTime)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -171,20 +178,20 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#changeStartTimeNanos(long)">changeStartTimeNanos</a></strong>(long&nbsp;newStartTimeNanos)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#compareTo(java.util.concurrent.Delayed)">compareTo</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getDelay(java.util.concurrent.TimeUnit)">getDelay</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getScheduledNanoTime()">getScheduledNanoTime</a></strong>()</code>&nbsp;</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getStartTimeNanos()">getStartTimeNanos</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#setScheduledNanoTime(long)">setScheduledNanoTime</a></strong>(long&nbsp;newStartTimeNanos)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -257,7 +264,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 <li class="blockList">
 <h4>ListenableScheduledFutureTask</h4>
 <pre>public&nbsp;ListenableScheduledFutureTask(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="type parameter in ListenableScheduledFutureTask">T</a>&gt;&nbsp;callable,
-                             long&nbsp;startTimeNanos)</pre>
+                             long&nbsp;scheduledNanoTime)</pre>
 </li>
 </ul>
 <a name="ListenableScheduledFutureTask(java.lang.Runnable,java.lang.Object,long)">
@@ -270,7 +277,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 <h4>ListenableScheduledFutureTask</h4>
 <pre>public&nbsp;ListenableScheduledFutureTask(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
                              <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="type parameter in ListenableScheduledFutureTask">T</a>&nbsp;result,
-                             long&nbsp;startTimeNanos)</pre>
+                             long&nbsp;scheduledNanoTime)</pre>
 </li>
 </ul>
 </li>
@@ -307,22 +314,26 @@ implements <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.ht
 </dl>
 </li>
 </ul>
-<a name="getStartTimeNanos()">
+<a name="getScheduledNanoTime()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getStartTimeNanos</h4>
-<pre>protected&nbsp;long&nbsp;getStartTimeNanos()</pre>
+<h4>getScheduledNanoTime</h4>
+<pre>public&nbsp;long&nbsp;getScheduledNanoTime()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/concurrent/Scheduled.html#getScheduledNanoTime()">getScheduledNanoTime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="changeStartTimeNanos(long)">
+<a name="setScheduledNanoTime(long)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>changeStartTimeNanos</h4>
-<pre>protected&nbsp;void&nbsp;changeStartTimeNanos(long&nbsp;newStartTimeNanos)</pre>
+<h4>setScheduledNanoTime</h4>
+<pre>protected&nbsp;void&nbsp;setScheduledNanoTime(long&nbsp;newStartTimeNanos)</pre>
 </li>
 </ul>
 </li>
