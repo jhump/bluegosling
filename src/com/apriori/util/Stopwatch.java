@@ -13,13 +13,31 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: tests
 public class Stopwatch {
    
+   private final Clock clock;
    private final LinkedList<Long> lapNanos = new LinkedList<Long>();
    private final ReentrantReadWriteLock guard = new ReentrantReadWriteLock(true);
    private long soFar;
    private long currentBase;
    private boolean running;
+   
+   /**
+    * Constructs a new stopwatch. This uses the system clock.
+    */
+   public Stopwatch() {
+      this(SystemClock.INSTANCE);
+   }
+
+   /**
+    * Constructs a new stopwatch using the specified clock. This is suitable for mocking/testing.
+    * 
+    * @param clock the clock used to measure elapsed time
+    */
+   public Stopwatch(Clock clock) {
+      this.clock = clock;
+   }
 
    /**
     * Starts the stopwatch. Once started, it is "running". Time that elapses while the clock
@@ -32,7 +50,7 @@ public class Stopwatch {
       try {
          if (!running) {
             lapNanos.clear();
-            currentBase = System.nanoTime();
+            currentBase = clock.nanoTime();
             running = true;
          }
       } finally {
@@ -50,7 +68,7 @@ public class Stopwatch {
       guard.writeLock().lock();
       try {
          if (running) {
-            soFar += System.nanoTime() - currentBase;
+            soFar += clock.nanoTime() - currentBase;
             running = false;
          }
       } finally {
@@ -67,7 +85,7 @@ public class Stopwatch {
       guard.writeLock().lock();
       try {
          if (running) {
-            long now = System.nanoTime();
+            long now = clock.nanoTime();
             lapNanos.add(now - currentBase + soFar);
             currentBase = now;
          } else {
@@ -92,7 +110,7 @@ public class Stopwatch {
          if (!running) {
             return soFar;
          } else {
-            return System.nanoTime() - currentBase + soFar;
+            return clock.nanoTime() - currentBase + soFar;
          }
       } finally {
          guard.readLock().unlock();

@@ -20,29 +20,20 @@ public class ListenableScheduledFutureTask<T> extends ListenableFutureTask<T>
       super(runnable, result);
       this.scheduledNanoTime = scheduledNanoTime;
    }
-
+   
+   long now() {
+      return System.nanoTime();
+   }
+   
    @Override
    public long getDelay(TimeUnit unit) {
-      long delayNanos = scheduledNanoTime - System.nanoTime();
+      long delayNanos = scheduledNanoTime - now();
       return unit.convert(delayNanos, TimeUnit.NANOSECONDS);
    }
 
    @Override
    public int compareTo(Delayed o) {
-      if (o instanceof ListenableScheduledFutureTask) {
-         ListenableScheduledFutureTask<?> other = (ListenableScheduledFutureTask<?>) o;
-         long myStart;
-         long otherStart;
-         // read values once (so we don't get inconsistent reads from volatile value)
-         myStart = scheduledNanoTime;
-         otherStart = other.scheduledNanoTime;
-         return myStart > otherStart ? 1 : (myStart < otherStart ? -1 : 0);
-      } else {
-         long delayNanos = scheduledNanoTime - System.nanoTime();
-         long otherDelayNanos = o.getDelay(TimeUnit.NANOSECONDS);
-         return delayNanos > otherDelayNanos ? 1 
-               : (delayNanos < otherDelayNanos ? -1 : 0);
-      }
+      return Scheduled.COMPARATOR.compare(this,  o);
    }
    
    @Override

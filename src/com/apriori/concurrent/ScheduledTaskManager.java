@@ -93,7 +93,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO javadoc below!!!
 //TODO tests!
 public class ScheduledTaskManager implements ListenableScheduledExecutorService {
    
@@ -106,27 +105,61 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
       return queue;
    }
    
-   private ScheduledTaskManager(int numThreads) {
+   /**
+    * Constructs a new task manager that uses the specified number of threads to execute tasks.
+    * 
+    * @param numThreads the number of threads in the pool
+    */
+   public ScheduledTaskManager(int numThreads) {
       executor = new ThreadPoolExecutor(numThreads, numThreads, 0, TimeUnit.NANOSECONDS, 
             createWorkQueue());
    }
 
-   private ScheduledTaskManager(int numThreads, ThreadFactory threadFactory) {
+   /**
+    * Constructs a new task manager with the specified number of threads and specified thread
+    * factory.
+    * 
+    * @param numThreads the number of threads in the pool
+    * @param threadFactory used to create threads in the pool
+    */
+   public ScheduledTaskManager(int numThreads, ThreadFactory threadFactory) {
       executor = new ThreadPoolExecutor(numThreads, numThreads, 0, TimeUnit.NANOSECONDS,
             createWorkQueue(), threadFactory);
    }
 
-   private ScheduledTaskManager(int numThreads, ThreadFactory threadFactory,
+   /**
+    * Constructs a new task manager with the specified number of threads, specified thread factory,
+    * and specified rejection handler.
+    * 
+    * @param numThreads the number of threads in the pool
+    * @param threadFactory used to create threads in the pool
+    * @param rejectedHandler handles rejected tasks (those submitted after the task manager is
+    *       shutdown)
+    */
+   public ScheduledTaskManager(int numThreads, ThreadFactory threadFactory,
          RejectedExecutionHandler rejectedHandler) {
       executor = new ThreadPoolExecutor(numThreads, numThreads, 0, TimeUnit.NANOSECONDS,
             createWorkQueue(), threadFactory, rejectedHandler);
    }
 
-   private ScheduledTaskManager(int numThreads, RejectedExecutionHandler rejectedHandler) {
+   /**
+    * Constructs a new task manager with the specified number of threads and specified rejection
+    * handler.
+    * 
+    * @param numThreads the number of threads in the pool
+    * @param rejectedHandler handles rejected tasks (those submitted after the task manager is
+    *       shutdown)
+    */
+   public ScheduledTaskManager(int numThreads, RejectedExecutionHandler rejectedHandler) {
       executor = new ThreadPoolExecutor(numThreads, numThreads, 0, TimeUnit.NANOSECONDS,
             createWorkQueue(), rejectedHandler);
    }
    
+   /**
+    * Schedules the specified task for execution. If the specified delay is zero or negative, it is
+    * scheduled for immediate execution. The returned object will not only be a listenable future,
+    * it will be a {@link ScheduledTask}.
+    */
    @Override
    public <V> ScheduledTask<V> schedule(Callable<V> task, long delay, TimeUnit unit) {
       return scheduleInternal(
@@ -134,6 +167,11 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
             .scheduleFirst();
    }
    
+   /**
+    * Schedules the specified task for execution. If the specified delay is zero or negative, it is
+    * scheduled for immediate execution. The returned object will not only be a listenable future,
+    * it will be a {@link ScheduledTask}.
+    */
    @Override
    public ScheduledTask<Void> schedule(Runnable task, long delay, TimeUnit unit) {
       return scheduleInternal(
@@ -141,6 +179,30 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
             .scheduleFirst();
    }
 
+   /**
+    * Schedules the specified task for periodic execution. If the specified initial delay is zero or
+    * negative, it is scheduled for immediate execution. The task will execute at a fixed rate per
+    * the specified period, but never more than a single instance will be executing at a given time.
+    * Instead of running tasks concurrently, if a single occurrence takes longer than the period,
+    * subsequent instances will be delayed and be scheduled to start as soon as the slow occurrence
+    * completes.
+    * 
+    * <p>This is very similar to {@link #scheduleAtFixedRate(Runnable, long, long, TimeUnit)}, which
+    * is API provided by {@link ScheduledExecutorService}. But this version can run a callable that
+    * produces a value. The returned future has additional methods for inspecting the results
+    * produced by past executions.
+    * 
+    * @param task the task to execute
+    * @param initialDelay the delay from submission time when the first occurrence should execute
+    * @param period the period of time between occurrences
+    * @param unit the unit for {@code initialDelay} and {@code period}
+    * @return a listenable scheduled future that can be used to inspect the task's state and past
+    *       results
+    * @throws NullPointerException if {@code task} or {@code unit} is {@code null}
+    * @throws IllegalArgumentException if {@code period} is non-positive
+    * 
+    * @see #scheduleAtFixedRate(Runnable, long, long, TimeUnit)
+    */
    public <V> RepeatingScheduledTask<V> scheduleAtFixedRate(Callable<V> task,
          long initialDelay, long period, TimeUnit unit) {
       ScheduledTaskDefinitionImpl<V> taskDef = scheduleInternal(
@@ -168,6 +230,27 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
       return new RepeatingScheduledTaskImpl<Void>(taskDef);
    }
    
+   /**
+    * Schedules the specified task for repeated execution. If the specified initial delay is zero or
+    * negative, it is scheduled for immediate execution. The task will execute with a fixed delay
+    * between invocations.
+    * 
+    * <p>This is very similar to {@link #scheduleWithFixedDelay(Runnable, long, long, TimeUnit)},
+    * which is API provided by {@link ScheduledExecutorService}. But this version can run a callable
+    * that produces a value. The returned future has additional methods for inspecting the results
+    * produced by past executions.
+    * 
+    * @param task the task to execute
+    * @param initialDelay the delay from submission time when the first occurrence should execute
+    * @param delay the delay between occurrences
+    * @param unit the unit for {@code initialDelay} and {@code delay}
+    * @return a listenable scheduled future that can be used to inspect the task's state and past
+    *       results
+    * @throws NullPointerException if {@code task} or {@code unit} is {@code null}
+    * @throws IllegalArgumentException if {@code delay} is non-positive
+    * 
+    * @see #scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
+    */
    public <V> RepeatingScheduledTask<V> scheduleWithFixedDelay(Callable<V> task,
          long initialDelay, long delay, TimeUnit unit) {
       ScheduledTaskDefinitionImpl<V> taskDef = scheduleInternal(
@@ -196,7 +279,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    }
    
    private void cancelUnwantedTasks() {
-      
+      //TODO: policy on whether to wait for or cancel delayed tasks
    }
    
    @Override
@@ -220,18 +303,40 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
             });
    }
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This implementation is the same as using the {@link #schedule(Callable, long, TimeUnit)}
+    * method but indicating a zero delay so the task is scheduled for immediate execution. The
+    * returned future is not just a listenable future, but is a {@link ScheduledTask}.
+    */
    @Override
    public <V> ScheduledTask<V> submit(Callable<V> task) {
       return scheduleInternal(TaskDefinition.Builder.forCallable(task).build())
             .scheduleFirst();
    }
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This implementation is the same as using the {@link #schedule(Runnable, long, TimeUnit)}
+    * method but indicating a zero delay so the task is scheduled for immediate execution. The
+    * returned future is not just a listenable future, but is a {@link ScheduledTask}.
+    */
    @Override
    public ScheduledTask<Void> submit(Runnable task) {
       return scheduleInternal(TaskDefinition.Builder.forRunnable(task).build())
             .scheduleFirst();
    }
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This implementation is similar to using the {@link #schedule(Runnable, long, TimeUnit)}
+    * method with a zero delay so the task is scheduled for immediate execution. The key difference
+    * being that this form allows a non-null value to be used as the result. The returned future is
+    * not just a listenable future, but is a {@link ScheduledTask}.
+    */
    @Override
    public <V> ScheduledTask<V> submit(Runnable task, V result) {
       return scheduleInternal(TaskDefinition.Builder.forRunnable(task, result).build())
@@ -263,6 +368,13 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
       }
    }
 
+   /**
+    * Schedules the specified task definition for execution. On return, the first occurrence of the
+    * task (or only occurrence if not a repeating task) will be scheduled.
+    * 
+    * @param taskDef the definition of the task to schedule
+    * @return the scheduled form of the task definition
+    */
    public <V> ScheduledTaskDefinition<V> schedule(TaskDefinition<V> taskDef) {
       ScheduledTaskDefinitionImpl<V> scheduledTaskDef = scheduleInternal(taskDef);
       scheduledTaskDef.scheduleFirst();

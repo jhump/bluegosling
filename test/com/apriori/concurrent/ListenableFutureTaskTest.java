@@ -44,9 +44,8 @@ public class ListenableFutureTaskTest extends AbstractListenableFutureTest {
     */
    AtomicInteger runCount;
    
-   @Override
-   protected ListenableFuture<String> makeFuture() {
-      return new ListenableFutureTask<String>(new Callable<String>() {
+   protected Callable<String> underlyingTask() {
+      return new Callable<String>() {
          @Override public String call() throws Exception {
             runCount.incrementAndGet();
             try {
@@ -67,7 +66,12 @@ public class ListenableFutureTaskTest extends AbstractListenableFutureTest {
                completedLatch.countDown();
             }
          }
-      });
+      };
+   }
+   
+   @Override
+   protected ListenableFuture<String> makeFuture() {
+      return new ListenableFutureTask<String>(underlyingTask());
    }
 
    protected ListenableFutureTask<String> future() {

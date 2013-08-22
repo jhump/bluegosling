@@ -19,7 +19,6 @@ public interface Scheduled extends Delayed {
          } else {
             nanos1 = o1.getDelay(TimeUnit.NANOSECONDS);
             nanos2 = o2.getDelay(TimeUnit.NANOSECONDS);
-            return nanos1 > nanos2 ? 1 : (nanos1 < nanos2 ? -1 : 0);
          }
          return nanos1 > nanos2 ? 1 : (nanos1 < nanos2 ? -1 : 0);
       }

@@ -360,8 +360,7 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class ScheduledTaskImpl extends ListenableScheduledFutureTask<V>
-         implements ScheduledTask<V> {
+   class ScheduledTaskImpl extends ListenableScheduledFutureTask<V> implements ScheduledTask<V> {
       
       private final long taskScheduledStartMillis;
       private final AtomicLong taskStartMillis;
@@ -404,11 +403,19 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
             if (current != this) {
                throw new IllegalStateException();
             }
+            
             listenersToRun = new ArrayList<ScheduledTaskListener<? super V>>(listeners);
             history.addFirst(current);
             if (history.size() > maxHistorySize()) {
                history.removeLast();
             }
+            
+            if (current.isSuccessful()) {
+               successCount++;
+            } else {
+               failedCount++;
+            }
+            
             if (finished || !reschedule) {
                finished = true;
                current = null;

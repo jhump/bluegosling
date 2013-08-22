@@ -17,21 +17,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Test cases for the {@link Fulfillable} implementation returned by
- * {@link SimpleListenableFuture#asFulfillable()}.
+ * {@link SettableListenableFuture#asFulfillable()}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SimpleListenableFutureAsFullfillableTest extends AbstractPossibleTest {
+public class SettableListenableFutureAsFullfillableTest extends AbstractPossibleTest {
    @Override
    protected Fulfillable<String> valuePresent(String s) {
-      SimpleListenableFuture<String> future = new SimpleListenableFuture<String>();
+      SettableListenableFuture<String> future = new SettableListenableFuture<String>();
       future.setValue(s);
       return future.asFulfillable();
    }
 
    @Override
    protected Fulfillable<String> valueAbsent() {
-      return new SimpleListenableFuture<String>().asFulfillable();
+      return new SettableListenableFuture<String>().asFulfillable();
    }
 
    @Test public void fulfill() throws Exception {
@@ -44,7 +44,7 @@ public class SimpleListenableFutureAsFullfillableTest extends AbstractPossibleTe
       checkSingletonSet(set, "abc");
 
       // initially unfulfilled
-      SimpleListenableFuture<String> future = new SimpleListenableFuture<String>();
+      SettableListenableFuture<String> future = new SettableListenableFuture<String>();
       final AtomicInteger listenerCount = new AtomicInteger();
       future.addListener(forRunnable(new Runnable() {
          @Override public void run() {
