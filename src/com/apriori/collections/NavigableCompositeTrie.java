@@ -9,9 +9,11 @@ public interface NavigableCompositeTrie<K, C, V>
 
    Comparator<? extends C> componentComparator();
    
-   @Override NavigableCompositeTrie<K, C, V> prefixMap(K prefix);
+   @Override NavigableCompositeTrie<K, C, V> prefixMapByKey(K prefix);
    
-   @Override NavigableCompositeTrie<K, C, V> prefixMap(K prefix, int numComponents);
+   @Override NavigableCompositeTrie<K, C, V> prefixMapByKey(K prefix, int numComponents);
+   
+   @Override NavigableCompositeTrie<K, C, V> prefixMap(C prefix);
    
    @Override NavigableCompositeTrie<K, C, V> prefixMap(Iterable<C> prefix);
    

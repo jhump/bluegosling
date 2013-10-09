@@ -1,11 +1,15 @@
 package com.apriori.collections;
 
-import org.apache.commons.collections.map.AbstractTestSortedMap;
-
 import java.util.Map;
 
+import junit.framework.TestSuite;
+
 // TODO make this test work (fix WeightBalancedTreeMap where necessary)
-public class WeightBalancedTreeMapTest extends AbstractTestSortedMap {
+public class WeightBalancedTreeMapTest extends AbstractTestRandomAccessNavigableMap {
+
+   public static TestSuite suite() {
+      return makeSuite(WeightBalancedTreeMapTest.class);
+   }
 
    public WeightBalancedTreeMapTest(String testName) {
       super(testName);
@@ -20,5 +24,4 @@ public class WeightBalancedTreeMapTest extends AbstractTestSortedMap {
    protected boolean skipSerializedCanonicalTests() {
       return true;
    }
-
 }

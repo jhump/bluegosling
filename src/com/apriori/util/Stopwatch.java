@@ -44,8 +44,10 @@ public class Stopwatch {
     * is running can be queried via {@link #read()}.
     * 
     * <p>If the stopwatch is already running, this method does nothing.
+    * 
+    * @return {@code this}, for method chaining
     */
-   public void start() {
+   public Stopwatch start() {
       guard.writeLock().lock();
       try {
          if (!running) {
@@ -56,15 +58,18 @@ public class Stopwatch {
       } finally {
          guard.writeLock().unlock();
       }
+      return this;
    }
 
    /**
     * Stops the stopwatch. Once stopped, it is no longer "running". Time that elapses while the
     * watch is stopped will not be measured and will not impact queries.
     * 
+    * @return {@code this}, for method chaining
+    * 
     * @see #reset()
     */
-   public void stop() {
+   public Stopwatch stop() {
       guard.writeLock().lock();
       try {
          if (running) {
@@ -74,14 +79,17 @@ public class Stopwatch {
       } finally {
          guard.writeLock().unlock();
       }
+      return this;
    }
 
    /**
     * Records the stopwatch's elapsed time as a lap measurement and resets the elapsed time. If the
     * stopwatch is stopped when this method is called, it will still be stopped when this method
     * returns.
+    * 
+    * @return {@code this}, for method chaining
     */
-   public void lap() {
+   public Stopwatch lap() {
       guard.writeLock().lock();
       try {
          if (running) {
@@ -95,14 +103,15 @@ public class Stopwatch {
       } finally {
          guard.writeLock().unlock();
       }
+      return this;
    }
    
    /**
-    * Queries for the elapsed time measured by the stopwatch, in milliseconds. This returns the
+    * Queries for the elapsed time measured by the stopwatch, in nanoseconds. This returns the
     * total elapsed time during which the stopwatch was "running" since the last call to either
     * {@link #lap()} or {@link #reset()}.
     * 
-    * @return the elapsed time, in milliseconds
+    * @return the elapsed time, in nanoseconds
     */
    public long read() {
       guard.readLock().lock();
@@ -130,11 +139,11 @@ public class Stopwatch {
    }
 
    /**
-    * Queries for recorded lap times, in milliseconds. The returned array will have one value for
+    * Queries for recorded lap times, in nanoseconds. The returned array will have one value for
     * each call to {@link #lap()}. If {@link #lap()} hasn't been called then the array will be
     * empty.
     * 
-    * @return an array of lap times, in milliseconds
+    * @return an array of lap times, in nanoseconds
     */
    public long[] lapResults() {
       guard.readLock().lock();
@@ -168,9 +177,9 @@ public class Stopwatch {
 
    /**
     * Convenience method that computes the average of {@linkplain #lapResults() lap results}, in
-    * milliseconds. If no laps have been recorded then {@link Double#NaN} is returned.
+    * nanoseconds. If no laps have been recorded then {@link Double#NaN} is returned.
     * 
-    * @return the average of lap results, in milliseconds
+    * @return the average of lap results, in nanoseconds
     */
    public double lapAverage() {
       long sum = 0;
@@ -210,8 +219,10 @@ public class Stopwatch {
    /**
     * Completely resets the stopwatch. After this, the stopwatch will be stopped and all
     * collected measurements (elapsed time and lap times) will be cleared.
+    * 
+    * @return {@code this}, for method chaining
     */
-   public void reset() {
+   public Stopwatch reset() {
       guard.writeLock().lock();
       try {
          soFar = 0;
@@ -219,6 +230,30 @@ public class Stopwatch {
          lapNanos.clear();
       } finally {
          guard.writeLock().unlock();
+      }
+      return this;
+   }
+   
+   @Override
+   public String toString() {
+      long nanos = read();
+      if (nanos < TimeUnit.MICROSECONDS.toNanos(2)) {
+         return "" + nanos + "ns";
+      } else if (nanos < TimeUnit.MILLISECONDS.toNanos(2)) {
+         return String.format("%1.3fus", nanos / 1000.0);
+      } else if (nanos < TimeUnit.SECONDS.toNanos(2)) {
+         return String.format("%1.3fms", nanos / 1000000.0);
+      } else if (nanos <= TimeUnit.SECONDS.toNanos(90)) {
+         return String.format("%1.3fsec", nanos / 1000000000.0);
+      } else if (nanos <= TimeUnit.MINUTES.toNanos(90)) {
+         long min = TimeUnit.NANOSECONDS.toMinutes(nanos);
+         long sec = TimeUnit.NANOSECONDS.toSeconds(nanos) % 60;
+         return String.format("%d:%d", min, sec);
+      } else {
+         long hr = TimeUnit.NANOSECONDS.toHours(nanos);
+         long min = TimeUnit.NANOSECONDS.toMinutes(nanos) % 60;
+         long sec = TimeUnit.NANOSECONDS.toSeconds(nanos) % 60;
+         return String.format("%d:%d:%d", hr, min, sec);
       }
    }
 }

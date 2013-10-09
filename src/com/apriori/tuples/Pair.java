@@ -96,7 +96,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
       }
       return list;
    }
-
+   
    private final A a;
    private final B b;
    

@@ -21,6 +21,11 @@ class DescendingSequenceTrie<K, V> extends DescendingMap<Iterable<K>, V>
    }
    
    @Override 
+   public NavigableSequenceTrie<K, V> prefixMap(K prefix) {
+      return new DescendingSequenceTrie<K, V>(base().prefixMap(prefix));
+   }
+
+   @Override 
    public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix) {
       return new DescendingSequenceTrie<K, V>(base().prefixMap(prefix));
    }

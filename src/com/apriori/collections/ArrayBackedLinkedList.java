@@ -954,7 +954,7 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
    /**
     * The number of items currently in the list.
     */
-   transient int size;
+   int size;
 
    /**
     * The index in the buffer of the first element in the list.
@@ -1600,7 +1600,6 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
    private void readObject(ObjectInputStream in) throws IOException,
          ClassNotFoundException {
       in.defaultReadObject();
-      size = in.readInt();
       data = new Object[size];
       next = new int[size];
       prev = new int[size];
@@ -1838,7 +1837,6 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
       out.defaultWriteObject();
-      out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);
       }

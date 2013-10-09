@@ -13,7 +13,26 @@ import java.util.Map;
  */
 public interface SequenceTrie<K, V> extends Map<Iterable<K>, V> {
    /**
-    * Generates a view of all mappings whose keys have the specified prefix.
+    * Generates a view of all mappings whose keys start with the specified value. The returned map's
+    * keys will just be the tail sequences: the specified initial value, which prefixes all of its
+    * keys will be omitted.
+    * 
+    * @param prefix the key prefix
+    * @return a view of this map that represents the subset of keys with the specified prefix
+    */
+   SequenceTrie<K, V> prefixMap(K prefix);
+   
+   /**
+    * Generates a view of all mappings whose keys have the specified prefix. The returned map's
+    * keys will just be the tail sequences: the specified sequence, which prefixes all of its keys,
+    * will be omitted.
+    * 
+    * <p>This is effectively shorthand for repeated calls to {@link #prefixMap(Object)}, like so:<pre>
+    * SequenceTrie<K, V> result = someTrie;
+    * for (K value : prefix) {
+    *   result = result.prefixMap(value);
+    * }
+    * </pre>
     * 
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix

@@ -21,7 +21,6 @@ import java.util.Set;
  * {@code TypeC} is derived from {@code TypeB}</li>
  * </ul>
  */
-//TODO: javadoc
 //TODO: tests
 public final class Derivations {
    private Derivations() {

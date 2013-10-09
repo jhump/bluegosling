@@ -65,11 +65,6 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
    }
 
    @Override
-   public boolean isEqualsCheckable() {
-      return true;
-   }
-
-   @Override
    protected boolean skipSerializedCanonicalTests() {
       return true;
    }
@@ -82,7 +77,7 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
     */
    public static class BulkTestAsRandomAccess extends AbstractTestList {
 
-      private ArrayBackedLinkedListTest outer;
+      private final ArrayBackedLinkedListTest outer;
 
       /**
        * Constructs a new test.

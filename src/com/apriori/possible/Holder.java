@@ -118,6 +118,34 @@ public class Holder<T> implements Possible<T>, Serializable {
             ? Reference.setTo(value)
             : Reference.<T>unset();
    }
+   
+   // TODO: tests for apply(...)
+   
+   /**
+    * Applies the specified function to the held value, if present. If no value is present, nothing
+    * is done. Upon return, the held value will be the function's result.
+    *
+    * @param function the function to apply
+    */
+   public void apply(Function<? super T, ? extends T> function) {
+      if (isPresent) {
+         value = function.apply(value);
+      }
+   }
+   
+   /**
+    * Applies the specified predicate to the held value, if present. If no value is present, nothing
+    * is done. Upon return, a held value will only be present if a held value was initially present,
+    * and it matched the given predicate.
+    *
+    * @param predicate the predicate to apply
+    */
+   public void apply(Predicate<? super T> predicate) {
+      if (isPresent && !predicate.test(value)) {
+         isPresent = false;
+         value = null;
+      }
+   }
 
    @Override
    public T get() {

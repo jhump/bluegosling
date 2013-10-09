@@ -49,11 +49,6 @@ public class TreeListTest extends AbstractTestList {
    }
 
    @Override
-   public boolean isEqualsCheckable() {
-      return true;
-   }
-
-   @Override
    protected boolean skipSerializedCanonicalTests() {
       return true;
    }

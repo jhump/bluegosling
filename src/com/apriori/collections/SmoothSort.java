@@ -51,13 +51,26 @@ public final class SmoothSort {
       }
    }
    
+   /**
+    * Describes the structure of the in-place heap in the list. Since a leonardo heap is a
+    * set of trees, this structure tracks what order trees are in the heap and where.
+    * 
+    * @author jh
+    */
    private static class HeapStructure {
-      // bitmask of which order trees are present in the heap
+      /**
+       * Bitmask of which order trees are present in the heap.
+       */
       long trees;
-      // indicates order of least-significant bit in trees mask
+      
+      /**
+       * The order of the least-significant bit in trees mask.
+       */
       int offset;
       
-      // provides visibility w/out need for synthetic accessor
+      /**
+       * Provides visibility w/out need for synthetic accessor.
+       */
       HeapStructure() {
       }
    }

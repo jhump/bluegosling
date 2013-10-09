@@ -495,7 +495,7 @@ public class ListenableExecutors {
       private void startSchedulerThread() {
          Thread newScheduler = new Thread() {
             @Override public void run() {
-               
+               // TODO
             }
          };
          // we don't bother starting thread if we lost race to set the scheduler
@@ -665,7 +665,7 @@ public class ListenableExecutors {
       @Override
       public List<Runnable> shutdownNow() {
          // no need to look at this method's return value since, even if already shutdown, we need
-         // to proceed just in case this call to shutdownNow() follows call to shutdown()
+         // to proceed just in case this call to shutdownNow() follows a call to shutdown()
          setShutdown();
          
          List<Runnable> scheduled = drainDelayQueue();

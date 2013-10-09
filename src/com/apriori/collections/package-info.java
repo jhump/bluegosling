@@ -65,9 +65,9 @@
  *    corresponding bit in the bitmask at that index is queried. If it is set, the trie contains
  *    those bits and traversal continues to a child node. If the bit is unset, the requested key is
  *    not in the map. The array of children only has as many elements as there are bits set in the
- *    bitmask. To determine the index of a child in that array, just count the number set bits in
+ *    bitmask. To determine the index of a child in that array, just count the number of set bits in
  *    the bitmask that are less significant than the one of interest. (Also see
- *    {@link com.apriori.collections.HashArrayMappedTrieMap}.)</li>
+ *    {@link com.apriori.collections.HamtMap}.)</li>
  * </ol>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -76,5 +76,5 @@
 // probably time to move this code into the mainstream
 // TODO: fix nested sublist/subset/submap (most impls here will mistakenly throw
 // ConcurrentModificationException from a sub-* view if the collection is modified from a sub-view
-// of that sub-view).
+// of that sub-view). Probably should add tests for this, too...
 package com.apriori.collections;

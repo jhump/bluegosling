@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 /**
  * The implementation for a task that is executed using a {@link ScheduledTaskManager}. The task
- * can be implemented by either a {@link Callable} or a {@link Runnable}.
+ * can be implemented by either a {@link Callable}, a {@link Runnable}, or a {@link Source}.
  * 
  * <p>This class implements {@link Callable}. Calling this task will forward to the underlying
  * implementation, so this object also serves as an adapter from any type of implementation to

@@ -65,6 +65,7 @@ public abstract class AbstractTestQueue extends AbstractTestCollection {
               final Object o2 = iterator2.next();
               assertEquals(o1, o2);
           }
+          assertFalse(iterator1.hasNext());
        } else {
           Map<Object, Integer> items1 = getItems(getCollection());
           Map<Object, Integer> items2 = getItems(getConfirmed());
@@ -160,4 +161,17 @@ public abstract class AbstractTestQueue extends AbstractTestCollection {
       } catch (NoSuchElementException expected) {
       }
    }
+   
+   public void testOffer() {
+      // TODO
+   }
+
+   public void testPoll() {
+      // TODO
+   }
+   
+   public void testPeek() {
+      // TODO
+   }
+
 }

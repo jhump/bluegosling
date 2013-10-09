@@ -653,13 +653,18 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix) {
       return prefixMap(bitConverter.getComponents(prefix));
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix, int numComponents) {
       return prefixMap(bitConverter.getComponents(prefix), numComponents);
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Boolean prefix) {
+      return prefixMap(BitSequences.singleton(prefix));
    }
 
    @Override

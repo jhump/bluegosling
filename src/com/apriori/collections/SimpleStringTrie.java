@@ -24,8 +24,8 @@ import java.util.NoSuchElementException;
  * @see ArrayMappedStringTrie
  */
 //TODO: javadoc
+//TODO: tests
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
-//TODO: also add a CompactStringTrie
 public abstract class SimpleStringTrie<V> implements NavigableCompositeTrie<CharSequence, Character, V> {
 
    static final Componentizer<CharSequence, Character> COMPONENTIZER =

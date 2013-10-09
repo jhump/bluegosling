@@ -75,6 +75,19 @@ public final class Predicates {
                return false;
             }
          };
+         
+   // TODO: javadoc
+   private static Predicate<Object> IS_NULL = new Predicate<Object>() {
+      @Override public boolean test(Object input) {
+         return input == null;
+      }
+   };
+
+   private static Predicate<Object> NOT_NULL = new Predicate<Object>() {
+      @Override public boolean test(Object input) {
+         return input != null;
+      }
+   };
 
    /**
     * Returns a predicate that always returns true.
@@ -136,6 +149,32 @@ public final class Predicates {
       return (Predicate.Trivariate<T1, T2, T3>) NONE_TRIVARIATE;
    }
    
+   // TODO: isNull(), isNotNull(), javadoc...
+   
+   public static <T> Predicate<T> isEqualTo(final T object) {
+      return new Predicate<T>() {
+         @Override public boolean test(T input) {
+            return object == null ? input == null : object.equals(input);
+         }
+      };
+   }
+
+   public static <T> Predicate<T> isSameAs(final T object) {
+      return new Predicate<T>() {
+         @Override public boolean test(T input) {
+            return object == input;
+         }
+      };
+   }
+
+   public static <T> Predicate<T> isInstanceOf(final Class<? extends T> clazz) {
+      return new Predicate<T>() {
+         @Override public boolean test(T input) {
+            return clazz.isInstance(input);
+         }
+      };
+   }
+
    /**
     * Returns a predicate that combines the results from two predicates using an AND operation. The
     * operation is short-circuited so that the second predicate will not be invoked if the first
@@ -261,6 +300,65 @@ public final class Predicates {
          @Override
          public boolean test(T1 input1, T2 input2, T3 input3) {
             return toPrimitive(function.apply(input1, input2, input3));
+         }
+      };
+   }
+   
+   // TODO: javadoc
+   public static <I> Source<Boolean> curry(final Predicate<? super I> predicate, final I arg) {
+      return new Source<Boolean>() {
+         @Override public Boolean get() {
+            return predicate.test(arg);
+         }
+      };
+   }
+
+   public static <I1, I2> Source<Boolean> curry(
+         final Predicate.Bivariate<? super I1, ? super I2> predicate,
+         final I1 arg1, final I2 arg2) {
+      return new Source<Boolean>() {
+         @Override public Boolean get() {
+            return predicate.test(arg1, arg2);
+         }
+      };
+   }
+
+   public static <I1, I2> Predicate<I2> curry(
+         final Predicate.Bivariate<? super I1, ? super I2> predicate,
+         final I1 arg1) {
+      return new Predicate<I2>() {
+         @Override public boolean test(I2 arg2) {
+            return predicate.test(arg1, arg2);
+         }
+      };
+   }
+
+   public static <I1, I2, I3> Source<Boolean> curry(
+         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
+         final I1 arg1, final I2 arg2, final I3 arg3) {
+      return new Source<Boolean>() {
+         @Override public Boolean get() {
+            return predicate.test(arg1, arg2, arg3);
+         }
+      };
+   }
+   
+   public static <I1, I2, I3> Predicate<I3> curry(
+         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
+         final I1 arg1, final I2 arg2) {
+      return new Predicate<I3>() {
+         @Override public boolean test(I3 arg3) {
+            return predicate.test(arg1, arg2, arg3);
+         }
+      };
+   }
+   
+   public static <I1, I2, I3> Predicate.Bivariate<I2, I3> curry(
+         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
+         final I1 arg1) {
+      return new Predicate.Bivariate<I2, I3>() {
+         @Override public boolean test(I2 arg2, I3 arg3) {
+            return predicate.test(arg1, arg2, arg3);
          }
       };
    }

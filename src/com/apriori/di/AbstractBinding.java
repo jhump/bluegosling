@@ -79,7 +79,7 @@ public abstract class AbstractBinding implements Binding {
       } else {
          target = resolvedBindings.get(targetKey);
          if (target == null) {
-            // make target from targetKey
+            // TODO: make target from targetKey
          }
       }
       resolvedBindings.put(keyToResolve, target);

@@ -26,13 +26,18 @@ class DescendingCompositeTrie<K, C, V> extends DescendingMap<K, V>
    }
    
    @Override
-   public NavigableCompositeTrie<K, C, V> prefixMap(K prefix) {
-      return new DescendingCompositeTrie<K, C, V>(base().prefixMap(prefix));
+   public NavigableCompositeTrie<K, C, V> prefixMapByKey(K prefix) {
+      return new DescendingCompositeTrie<K, C, V>(base().prefixMapByKey(prefix));
    }
    
    @Override 
-   public NavigableCompositeTrie<K, C, V> prefixMap(K prefix, int numComponents) {
-      return new DescendingCompositeTrie<K, C, V>(base().prefixMap(prefix, numComponents));
+   public NavigableCompositeTrie<K, C, V> prefixMapByKey(K prefix, int numComponents) {
+      return new DescendingCompositeTrie<K, C, V>(base().prefixMapByKey(prefix, numComponents));
+   }
+   
+   @Override 
+   public NavigableCompositeTrie<K, C, V> prefixMap(C prefix) {
+      return new DescendingCompositeTrie<K, C, V>(base().prefixMap(prefix));
    }
    
    @Override 

@@ -12,7 +12,7 @@ import java.util.NavigableMap;
  */
 //TODO: javadoc
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
-public abstract class BigIntegerRadixTrieMap<V>
+public abstract class BigIntRadixTrieMap<V>
       implements NavigableMap<BigInteger, V> {
 
 }

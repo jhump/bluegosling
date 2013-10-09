@@ -226,13 +226,19 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(K prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix, int numComponents) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Boolean prefix) {
       // TODO Auto-generated method stub
       return null;
    }

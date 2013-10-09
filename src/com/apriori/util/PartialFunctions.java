@@ -465,4 +465,65 @@ public final class PartialFunctions {
          }
       };
    }
+   
+   // TODO: javadoc
+   public static <I, O> Source<Optional<O>> curry(
+         final PartialFunction<? super I, ? extends O> function,
+         final I arg) {
+      return new Source<Optional<O>>() {
+         @Override public Optional<O> get() {
+            return Optional.upcast(function.apply(arg));
+         }
+      };
+   }
+
+   public static <I1, I2, O> Source<Optional<O>> curry(
+         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
+         final I1 arg1, final I2 arg2) {
+      return new Source<Optional<O>>() {
+         @Override public Optional<O> get() {
+            return Optional.upcast(function.apply(arg1, arg2));
+         }
+      };
+   }
+
+   public static <I1, I2, O> PartialFunction<I2, O> curry(
+         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
+         final I1 arg1) {
+      return new PartialFunction<I2, O>() {
+         @Override public Optional<O> apply(I2 arg2) {
+            return Optional.upcast(function.apply(arg1, arg2));
+         }
+      };
+   }
+
+   public static <I1, I2, I3, O> Source<Optional<O>> curry(
+         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1, final I2 arg2, final I3 arg3) {
+      return new Source<Optional<O>>() {
+         @Override public Optional<O> get() {
+            return Optional.upcast(function.apply(arg1, arg2, arg3));
+         }
+      };
+   }
+   
+   public static <I1, I2, I3, O> PartialFunction<I3, O> curry(
+         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1, final I2 arg2) {
+      return new PartialFunction<I3, O>() {
+         @Override public Optional<O> apply(I3 arg3) {
+            return Optional.upcast(function.apply(arg1, arg2, arg3));
+         }
+      };
+   }
+   
+   public static <I1, I2, I3, O> PartialFunction.Bivariate<I2, I3, O> curry(
+         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1) {
+      return new PartialFunction.Bivariate<I2, I3, O>() {
+         @Override public Optional<O> apply(I2 arg2, I3 arg3) {
+            return Optional.upcast(function.apply(arg1, arg2, arg3));
+         }
+      };
+   }
 }

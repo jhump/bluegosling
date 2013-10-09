@@ -25,27 +25,12 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
    Componentizer<? super K, ? extends C> componentizer();
    
    /**
-    * Generates a view of all mappings whose keys have the specified prefix. The specified key
-    * is broken up into components, and the resulting sequence is used as a prefix.
+    * Generates a view of all mappings whose keys have the specified prefix.
     * 
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
-    * 
-    * @see #prefixMap(Iterable)
     */
-   CompositeTrie<K, C, V> prefixMap(K prefix);
-   
-   /**
-    * Generates a view of all mappings whose keys have the specified prefix. The specified key
-    * is broken up into components, and the resulting sequence is used as a prefix.
-    * 
-    * @param prefix a key prefix
-    * @param numComponents the maximum number of components of the prefix
-    * @return a view of this map that represents the subset of keys with the specified prefix
-    * 
-    * @see #prefixMap(Iterable, int)
-    */
-   CompositeTrie<K, C, V> prefixMap(K prefix, int numComponents);
+   CompositeTrie<K, C, V> prefixMap(C prefix);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix.
@@ -65,4 +50,27 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @return a view of this map that represents the subset of keys with the specified prefix
     */
    CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents);
+   
+   /**
+    * Generates a view of all mappings whose keys have the specified prefix. The specified key
+    * is broken up into components, and the resulting sequence is used as a prefix.
+    * 
+    * @param prefix a key prefix
+    * @return a view of this map that represents the subset of keys with the specified prefix
+    * 
+    * @see #prefixMap(Iterable)
+    */
+   CompositeTrie<K, C, V> prefixMapByKey(K prefix);
+   
+   /**
+    * Generates a view of all mappings whose keys have the specified prefix. The specified key
+    * is broken up into components, and the resulting sequence is used as a prefix.
+    * 
+    * @param prefix a key prefix
+    * @param numComponents the maximum number of components of the prefix
+    * @return a view of this map that represents the subset of keys with the specified prefix
+    * 
+    * @see #prefixMap(Iterable, int)
+    */
+   CompositeTrie<K, C, V> prefixMapByKey(K prefix, int numComponents);
 }

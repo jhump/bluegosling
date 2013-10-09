@@ -46,11 +46,6 @@ public class SortedArraySetTest extends AbstractTestNavigableSet {
    }
 
    @Override
-   public boolean isEqualsCheckable() {
-      return true;
-   }
-
-   @Override
    protected boolean skipSerializedCanonicalTests() {
       return true;
    }

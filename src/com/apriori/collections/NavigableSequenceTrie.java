@@ -8,6 +8,8 @@ public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, Navigab
 
    Comparator<? extends K> componentComparator();
    
+   @Override NavigableSequenceTrie<K, V> prefixMap(K prefix);
+   
    @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix);
 
    @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents);

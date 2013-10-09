@@ -40,7 +40,16 @@ import java.util.Set;
 // TODO: test serialization support
 public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    
+   /**
+    * The map's current comparator. This will never be null. If no comparator is specified during
+    * construction then this is set to {@link CollectionUtils#NATURAL_ORDERING}.
+    */
    protected transient Comparator<? super K> comparator;
+   
+   /**
+    * A monotonically increasing count of modifications. This is used to provide best effort
+    * detection of concurrent modification (for failing fast).
+    */
    protected transient int modCount;
    
    /**
@@ -610,7 +619,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
        * {@inheritDoc}
        * 
        * <p>This implementation actually counts the number of entries within the sub-map's bounds
-       * using the {@link #entrySet()}'s iterator. This runs in linear, O(n), time but the result
+       * using the {@link #entrySet()}'s iterator. This runs in linear time, O(n), but the result
        * is memo-ized between calls. It will only count the number of entries again if it detects
        * that the main map's {@link #modCount} has changed since the last time the entries were
        * counted.

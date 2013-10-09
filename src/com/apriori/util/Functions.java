@@ -1,8 +1,12 @@
 package com.apriori.util;
 
 import com.apriori.possible.Optional;
+import com.apriori.tuples.Pair;
+import com.apriori.tuples.Trio;
 
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Numerous utility methods for using {@link Function}s.
@@ -38,6 +42,21 @@ public final class Functions {
             }
          };
          
+   private static Function.Bivariate<Object, Object, Pair<Object, Object>> PAIR =
+         new Function.Bivariate<Object, Object, Pair<Object, Object>>() {
+            @Override public Pair<Object, Object> apply(Object input1, Object input2) {
+               return Pair.create(input1, input2);
+            }
+         };
+
+   private static Function.Trivariate<Object, Object, Object, Trio<Object, Object, Object>> TRIO =
+         new Function.Trivariate<Object, Object, Object, Trio<Object, Object, Object>>() {
+            @Override
+            public Trio<Object, Object, Object> apply(Object input1, Object input2, Object input3) {
+               return Trio.create(input1, input2, input3);
+            }
+         };
+
    /**
     * Returns a function that always returns its argument unchanged.
     * 
@@ -66,6 +85,29 @@ public final class Functions {
    @SuppressWarnings("unchecked") // safe since HASH_CODE accepts all args
    public static <T> Function<T, Integer> hashCodeFunction() {
       return (Function<T, Integer>) HASH_CODE;
+   }
+
+   // TODO: javadoc
+   
+   public static <T> Function<Object, T> returning(final T value) {
+      return new Function<Object, T>() {
+         @Override public T apply(Object input) {
+            return value;
+         }
+         
+      };
+   }
+   
+   @SuppressWarnings({"unchecked", "rawtypes"}) // PAIR accepts all args and returns pair
+   public static <T, U> Function.Bivariate<T, U, Pair<T, U>> pairFunction() {
+      Function.Bivariate ret = PAIR;
+      return ret;
+   }
+
+   @SuppressWarnings({"unchecked", "rawtypes"}) // TRIO accepts all args and returns pair
+   public static <T, U, V> Function.Trivariate<T, U, V, Trio<T, U, V>> trioFunction() {
+      Function.Trivariate ret = TRIO;
+      return ret;
    }
 
    /**
@@ -299,6 +341,147 @@ public final class Functions {
          @Override
          public Optional<O> apply(I1 input1, I2 input2, I3 input3) {
             return Optional.<O>of(function.apply(input1, input2, input3));
+         }
+      };
+   }
+   
+   // TODO: javadoc
+   /**
+    * Performs a fold-right operation over the specified values and returns the result. This
+    * operation is recursive and is defined as follows:<pre>
+    *  foldr(list, fun, seed) => list.empty?
+    *                              then seed
+    *                              else fun(list.first, foldr(list.rest, fun, seed)
+    * </pre> 
+    *
+    * @param values
+    * @param function
+    * @param seed
+    * @return
+    */
+   public static <I, O> O foldRight(Iterable<I> values,
+         Function.Bivariate<? super I, ? super O, ? extends O> function, O seed) {
+      return foldRight(values.iterator(), function, seed);
+   }
+
+   public static <I, O> O foldLeft(Iterable<I> values,
+         Function.Bivariate<? super O, ? super I, ? extends O> function, O seed) {
+      return foldLeft(values.iterator(), function, seed);
+   }
+
+   public static <I, O> O foldRight(Iterator<I> values,
+         Function.Bivariate<? super I, ? super O, ? extends O> function, O seed) {
+      return values.hasNext() ? function.apply(values.next(), foldRight(values, function, seed))
+            : seed;
+   }
+
+   public static <I, O> O foldLeft(Iterator<I> values,
+         Function.Bivariate<? super O, ? super I, ? extends O> function, O seed) {
+      return values.hasNext() ? foldLeft(values, function, function.apply(seed, values.next()))
+            : seed;
+   }
+   
+   public static <T> Iterable<T> unfold(final Function<? super T, Pair<T, T>> unspool,
+         final Predicate<? super T> finished, final T seed) {
+      return new Iterable<T>() {
+         @Override public Iterator<T> iterator() {
+            return new Iterator<T>() {
+               private T val = seed;
+               private Boolean hasNext;
+               
+               @Override
+               public boolean hasNext() {
+                  if (hasNext == null) {
+                     hasNext = !finished.test(val);
+                  }
+                  return hasNext;
+               }
+
+               @Override
+               public T next() {
+                  if (!hasNext()) {
+                     throw new NoSuchElementException();
+                  }
+                  Pair<T, T> unspooled = unspool.apply(val);
+                  T result = unspooled.getFirst();
+                  val = unspooled.getSecond();
+                  hasNext = null;
+                  return result;
+               }
+
+               @Override
+               public void remove() {
+                  throw new UnsupportedOperationException("remove");
+               }
+            };
+         }
+      };
+   }
+   
+   public static <I, O> Source<O> curry(final Function<? super I, ? extends O> function,
+         final I arg) {
+      return new Source<O>() {
+         @Override public O get() {
+            return function.apply(arg);
+         }
+      };
+   }
+
+   public static <I1, I2, O> Source<O> curry(
+         final Function.Bivariate<? super I1, ? super I2, ? extends O> function,
+         final I1 arg1, final I2 arg2) {
+      return new Source<O>() {
+         @Override public O get() {
+            return function.apply(arg1, arg2);
+         }
+      };
+   }
+
+   public static <I1, I2, O> Function<I2, O> curry(
+         final Function.Bivariate<? super I1, ? super I2, ? extends O> function,
+         final I1 arg1) {
+      return new Function<I2, O>() {
+         @Override public O apply(I2 arg2) {
+            return function.apply(arg1, arg2);
+         }
+      };
+   }
+
+   public static <I1, I2, I3, O> Source<O> curry(
+         final Function.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1, final I2 arg2, final I3 arg3) {
+      return new Source<O>() {
+         @Override public O get() {
+            return function.apply(arg1, arg2, arg3);
+         }
+      };
+   }
+   
+   public static <I1, I2, I3, O> Function<I3, O> curry(
+         final Function.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1, final I2 arg2) {
+      return new Function<I3, O>() {
+         @Override public O apply(I3 arg3) {
+            return function.apply(arg1, arg2, arg3);
+         }
+      };
+   }
+   
+   public static <I1, I2, I3, O> Function.Bivariate<I2, I3, O> curry(
+         final Function.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+         final I1 arg1) {
+      return new Function.Bivariate<I2, I3, O>() {
+         @Override public O apply(I2 arg2, I3 arg3) {
+            return function.apply(arg1, arg2, arg3);
+         }
+      };
+   }
+   
+   public static <T> Function<T, T> yCombinator(
+         final Function<Function<? super T, ? extends T>, Function<? super T, ? extends T>> funcGen) {
+      return new Function<T, T>() {
+         @Override public T apply(T input) {
+            return funcGen.apply(this).apply(input);
          }
       };
    }
