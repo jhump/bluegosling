@@ -28,7 +28,22 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
  * never be properly released. An exclusive or shared lock that has been acquired by one thread
  * cannot be manipulated by another. An attempt to acquire a shared lock followed by an exclusive
  * lock (or vice versa) without using the lock promotion methods (or demotion methods) will fail
- * with a deadlock exception. 
+ * with a deadlock exception.
+ * 
+ * <p>When a child lock is acquired, whether it be a shared lock or an exclusive lock, a shared lock
+ * on the parent is implicitly acquired. So, an attempt to acquire a shared lock on one component
+ * and then an exclusive lock on its parent will fail with a deadlock exception. Instead, the first
+ * lock must be promoted to a lock on the parent, and then that resulting lock must be promoted to
+ * exclusive. This also means that demoting a shared lock to a child doesn't actually release the
+ * parent lock as it is still held implicitly by having a lock on the child. But the parent lock
+ * object cannot be used to release it; it will be released implicitly when the lock on the child is
+ * released.
+ * 
+ * <p><strong>NOTE:</strong> Deadlock detection in this class only works when other waiting threads
+ * are also waiting for a {@link HierarchicalLock}. It is still possible for deadlock to occur if
+ * threads in the graph are waiting on other kinds of synchronizers. Code that acquires a
+ * {@link HierarchicalLock} should generally not do so while holding any other kind of synchronizer
+ * so that deadlock detection works properly.
  *
  * @see SharedLock
  * @see ExclusiveLock
@@ -39,86 +54,205 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 // TODO: tests
 public class HierarchicalLock {
 
+   /**
+    * A map of waiting threads to the exclusive lock on which they wait. This is maintained to
+    * enable deadlock detection.
+    */
    static ConcurrentHashMap<Thread, HierarchicalLock> blockedForExclusive =
          new ConcurrentHashMap<Thread, HierarchicalLock>(16, 0.75F, 100);
+
+   /**
+    * A map of waiting threads to the shared lock on which they wait. This is maintained to enable
+    * deadlock detection.
+    */
    static ConcurrentHashMap<Thread, HierarchicalLock> blockedForShared =
          new ConcurrentHashMap<Thread, HierarchicalLock>(16, 0.75F, 100);
-   
+
+   /**
+    * Constructs a new lock that is unfair.
+    *
+    * @return a new unfair lock
+    * 
+    * @see #create(boolean)
+    */
    public static HierarchicalLock create() {
-      return new HierarchicalLock();
+      return new HierarchicalLock(false);
+   }
+
+   /**
+    * Constructs a new lock with the specified fairness. A fair lock means that acquisitions will
+    * be fairly ordered with regards to the order that threads request the lock. However, fair locks
+    * have lower throughput.
+    * 
+    * <p>An unfair lock, on the other hand, has higher throughput but allows barging and possible
+    * starvation of threads that are waiting to acquire the lock in exclusive mode.
+    * 
+    * <p>The fairness setting applies to the whole hierarchy. So creating a fair lock means that all
+    * child locks (and every descendant) created will also be fair.
+    * 
+    * <p>Note that promoting a lock from shared to exclusive <em>can</em> barge in front of queued
+    * threads that are also waiting for the lock in exclusive mode, even if the lock was created
+    * as a fair lock.
+    *
+    * @return a new lock
+    */
+   public static HierarchicalLock create(boolean fair) {
+      return new HierarchicalLock(fair);
+   }
+
+   /**
+    * The lock's queued synchronizer.
+    */
+   final Sync sync;
+   
+   /**
+    * Constructs a new lock
+    * 
+    * @see #create()
+    * @see #create(boolean)
+    */
+   HierarchicalLock(boolean fair) {
+      sync = new Sync(fair);
    }
    
-   final Sync sync = new Sync();
-   private final Set<HierarchicalLock> children =
-         Collections.newSetFromMap(new ConcurrentHashMap<HierarchicalLock, Boolean>());
-   
-   
-   HierarchicalLock() {
-   }
-   
+   /**
+    * Marks the current thread as blocking for this lock in exclusive mode.
+    */
    void beginBlockingForExclusive() {
       blockedForExclusive.put(Thread.currentThread(), this);
    }
    
+   /**
+    * Marks the current thread as no longer blocking for this lock in exclusive mode.
+    */
    boolean endBlockingForExclusive() {
       return blockedForExclusive.remove(Thread.currentThread()) != null;
    }
 
+   /**
+    * Marks the current thread as blocking for this lock in shared mode.
+    */
    void beginBlockingForShared() {
       blockedForShared.put(Thread.currentThread(), this);
    }
    
+   /**
+    * Marks the current thread as no longer blocking for this lock in shared mode.
+    */
    boolean endBlockingForShared() {
       return blockedForShared.remove(Thread.currentThread()) != null;
    }
 
+   /**
+    * Creates a new child of this lock.
+    *
+    * @return a new child of this lock
+    */
+   @SuppressWarnings("synthetic-access") // let it peek at private field of sync
    public HierarchicalLock newChild() {
-      HierarchicalLock child = new ChildLock();
-      children.add(child);
-      return child;
+      return new ChildLock(sync.fair);
    }
    
-   public Set<HierarchicalLock> getChildren() {
-      return Collections.unmodifiableSet(new HashSet<HierarchicalLock>(children));
-   }
-   
+   /**
+    * Gets the lock's parent. If this lock was created using {@link #create()} then it has no
+    * parent. If it was created using {@link #newChild()} then it does have a parent.
+    *
+    * @return the lock's parent or {@code null} if it has no parent
+    */
    public HierarchicalLock getParent() {
       return null;
    }
    
+   /**
+    * Gets the thread that holds this lock in exclusive mode. Unless it is the current thread that
+    * holds the lock, this method is best effort as it is possible that the other thread actually
+    * releases the lock before this method can return. Similarly, it is possible that this method
+    * returns {@code null} but that a thread acquired the lock before this method returns.
+    *
+    * @return the thread that holds this lock in exclusive mode or {@code null} if no thread holds
+    *       the lock in exclusive mode
+    *       
+    * @see #getSharedHolders()
+    */
    public Thread getExclusiveHolder() {
       return sync.getExclusiveHolder();
    }
 
+   /**
+    * Gets the set of threads that hold this lock in shared mode. This method is best effort as it
+    * is possible for the set of lock-holders to change before this method returns its answer.
+    *
+    * @return the threads that hold this lock in shared mode; an empty list if held by none
+    * 
+    * @see #getExclusiveHolder()
+    */
    public Collection<Thread> getSharedHolders() {
       return sync.getSharedHolders();
    }
 
+   /**
+    * Gets the first queued thread. This is the thread that has been waiting the longest to acquire
+    * the lock.
+    *
+    * @return the first queued thread
+    * 
+    * @see AbstractQueuedSynchronizer#getFirstQueuedThread()
+    */
    public Thread getFirstQueuedThread() {
       return sync.getFirstQueuedThread();
    }
    
+   /**
+    * Gets the collection of all queued threads.
+    *
+    * @return the collection of all queued threads
+    * 
+    * @see AbstractQueuedSynchronizer#getQueuedThreads()
+    */
    public Collection<Thread> getQueuedThreads() {
       return sync.getQueuedThreads();
    }
 
+   /**
+    * A factory method to create a new {@link SharedLock} for this object.
+    *
+    * @param parentLock the implicit lock on the parent, may be {@code null}
+    * @return a new {@link SharedLock}
+    */
    SharedLock newSharedLock(SharedLock parentLock) {
       assert parentLock == null;
       return new SharedLock();
    }
    
+   /**
+    * Tries to acquire this lock in shared mode, but does not block if it is not available.
+    *
+    * @return a {@link SharedLock} on success or {@code null} if it is unavailable
+    */
    public SharedLock trySharedLock() {
       return doTrySharedLock(null);
    }
    
    SharedLock doTrySharedLock(SharedLock parentLock) {
-      if (sync.tryAcquireShared(1) >= 0) {
+      if (sync.tryAcquireShared(2) >= 0) {
          return newSharedLock(parentLock);
       } else {
          return null;
       }
    }
 
+   /**
+    * Tries to acquire this lock in shared mode and waits up to the specified amount of time if the
+    * lock is unavailable.
+    *
+    * @param timeLimit the maximum amount of time to wait for the lock to become available
+    * @param unit the time limit's unit
+    * @return a {@link SharedLock} on success or {@code null} if it is unavailable
+    * @throws InterruptedException if this thread is interrupted while waiting for the lock
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public SharedLock trySharedLock(long timeLimit, TimeUnit unit) throws InterruptedException {
       return doTrySharedLock(timeLimit, unit, null);
    }
@@ -141,6 +275,17 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Acquires the lock in shared mode, waiting if necessary for it to be available. The wait will
+    * not be interrupted
+    *
+    * @return a {@link SharedLock}
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    *    
+    * @see #sharedLockInterruptibly()
+    */
    public SharedLock sharedLock() {
       return doSharedLock(null);
    }
@@ -159,6 +304,15 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Acquires the lock in shared mode, waiting interruptibly if necessary for it to be available.
+    *
+    * @return a {@link SharedLock}
+    * @throws InterruptedException if this thread is interrupted while waiting for the lock
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public SharedLock sharedLockInterruptibly() throws InterruptedException {
       return doSharedLockInterruptibly(null);
    }
@@ -180,6 +334,18 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Invokes the specified callable while holding this lock in shared mode. This first {@linkplain
+    * #sharedLock() acquires the lock}, then executes the callable, and then finally releases the
+    * lock.
+    *
+    * @param callable the task to execute under lock
+    * @return the value returned from the specified task
+    * @throws DeadlockException if waiting to acquire this lock would result in a deadlock (e.g.
+    *    this thread holds a lock for which another thread is waiting, and that thread, or some
+    *    other thread that directly or indirectly is waiting on it, is holding this lock)
+    * @throws Exception if the task throws an exception during its execution
+    */
    public <T> T callWithSharedLock(Callable<T> callable) throws Exception {
       SharedLock lock = sharedLock();
       try {
@@ -189,6 +355,16 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Invokes the specified runnable while holding this lock in shared mode. This first {@linkplain
+    * #sharedLock() acquires the lock}, then executes the runnable, and then finally releases the
+    * lock.
+    *
+    * @param runnable the task to execute under lock
+    * @throws DeadlockException if waiting to acquire this lock would result in a deadlock (e.g.
+    *    this thread holds a lock for which another thread is waiting, and that thread, or some
+    *    other thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public void runWithSharedLock(Runnable runnable) {
       SharedLock lock = sharedLock();
       try {
@@ -198,23 +374,46 @@ public class HierarchicalLock {
       }
    }
 
+   /**
+    * A factory method to create a new {@link ExclusiveLock} for this object.
+    *
+    * @param parentLock the implicit lock on the parent, may be {@code null}
+    * @return a new {@link ExclusiveLock}
+    */
    ExclusiveLock newExclusiveLock(SharedLock parentLock) {
       assert parentLock == null;
       return new ExclusiveLock();
    }
    
+   /**
+    * Tries to acquire this lock in exclusive mode, but does not block if it is not available.
+    *
+    * @return a {@link ExclusiveLock} on success or {@code null} if it is unavailable
+    */
    public ExclusiveLock tryExclusiveLock() {
       return doTryExclusiveLock(null);
    }
    
    ExclusiveLock doTryExclusiveLock(SharedLock parentLock) {
-      if (sync.tryAcquire(1)) {
+      if (sync.tryAcquire(2)) {
          return newExclusiveLock(parentLock);
       } else {
          return null;
       }
    }
    
+   /**
+    * Tries to acquire this lock in exclusive mode and waits up to the specified amount of time if
+    * the lock is unavailable.
+    *
+    * @param timeLimit the maximum amount of time to wait for the lock to become available
+    * @param unit the time limit's unit
+    * @return a {@link ExclusiveLock} on success or {@code null} if it is unavailable
+    * @throws InterruptedException if this thread is interrupted while waiting for the lock
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public ExclusiveLock tryExclusiveLock(long timeLimit, TimeUnit unit)
       throws InterruptedException {
       return doTryExclusiveLock(timeLimit, unit, null);
@@ -241,6 +440,17 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Acquires the lock in exclusive mode, waiting if necessary for it to be available. The wait will
+    * not be interrupted
+    *
+    * @return a {@link ExclusiveLock}
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    *    
+    * @see #sharedLockInterruptibly()
+    */
    public ExclusiveLock exclusiveLock() {
       return doExclusiveLock(null);
    }
@@ -259,6 +469,16 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Acquires the lock in exclusive mode, waiting interruptibly if necessary for it to be
+    * available.
+    *
+    * @return a {@link ExclusiveLock}
+    * @throws InterruptedException if this thread is interrupted while waiting for the lock
+    * @throws DeadlockException if waiting for this lock would result in a deadlock (e.g. this
+    *    thread holds a lock for which another thread is waiting, and that thread, or some other
+    *    thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public ExclusiveLock exclusiveLockInterruptibly() throws InterruptedException {
       return doExclusiveLockInterruptibly(null);
    }
@@ -280,6 +500,18 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Invokes the specified callable while holding this lock in exclusive mode. This first
+    * {@linkplain #exclusiveLock() acquires the lock}, then executes the callable, and then finally
+    * releases the lock.
+    *
+    * @param callable the task to execute under lock
+    * @return the value returned from the specified task
+    * @throws DeadlockException if waiting to acquire this lock would result in a deadlock (e.g.
+    *    this thread holds a lock for which another thread is waiting, and that thread, or some
+    *    other thread that directly or indirectly is waiting on it, is holding this lock)
+    * @throws Exception if the task throws an exception during its execution
+    */
    public <T> T callWithExclusiveLock(Callable<T> callable) throws Exception {
       ExclusiveLock lock = exclusiveLock();
       try {
@@ -289,6 +521,16 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Invokes the specified runnable while holding this lock in exclusive mode. This first
+    * {@linkplain #exclusiveLock() acquires the lock}, then executes the runnable, and then finally
+    * releases the lock.
+    *
+    * @param runnable the task to execute under lock
+    * @throws DeadlockException if waiting to acquire this lock would result in a deadlock (e.g.
+    *    this thread holds a lock for which another thread is waiting, and that thread, or some
+    *    other thread that directly or indirectly is waiting on it, is holding this lock)
+    */
    public void runWithExclusiveLock(Runnable runnable) {
       ExclusiveLock lock = exclusiveLock();
       try {
@@ -298,6 +540,12 @@ public class HierarchicalLock {
       }
    }
    
+   /**
+    * Confirms that the specified lock is a child of this lock.
+    *
+    * @param child the child to check
+    * @throws IllegalArgumentException if the specified object is not a child of this lock
+    */
    void checkRelationship(HierarchicalLock child) {
       if (child.getParent() != this) {
          throw new IllegalArgumentException("specified object is not a child of this lock");
@@ -408,13 +656,15 @@ public class HierarchicalLock {
          return state & STAMP_MASK;
       }
 
-      Sync() {
-      }
-    
+      private final boolean fair;
       private final transient AtomicReference<HolderNode> holders =
             new AtomicReference<HolderNode>();
       private final transient ThreadLocal<HolderNode> currentHolder = new ThreadLocal<HolderNode>();
       
+      Sync(boolean fair) {
+         this.fair = fair;
+      }
+    
       private void checkForDeadlock(long i, boolean isWaitingForExclusive) {
          if (i > 1 || i < -1) {
             // calling code was just trying for the lock, not blocking on it, so there's
@@ -426,7 +676,9 @@ public class HierarchicalLock {
       }
 
       private void checkForDeadlock(boolean isWaitingForExclusive, Set<Thread> blocked) {
-         Collection<Thread> threads = Collections.singleton(getExclusiveHolder());
+         Thread exclusive = getExclusiveHolder();
+         Collection<Thread> threads = exclusive == null
+               ? Collections.<Thread>emptySet() : Collections.singleton(getExclusiveHolder());
          if (isWaitingForExclusive && threads.isEmpty()) {
             threads = getSharedHolders();
          }
@@ -470,6 +722,9 @@ public class HierarchicalLock {
                return true;
             }
             // non-reentrant
+            if (fair && hasQueuedPredecessors()) {
+               return false;
+            }
             while (true) {
                long state = getState();
                if (sharedCount(state) > 0 || exclusiveCount(state) > 0) {
@@ -526,7 +781,7 @@ public class HierarchicalLock {
          assert holders.get() == node && node.next == null && node.previous == null;
          assert sharedCount(state) == 0;
          assert exclusiveCount(state) == node.holdCount;
-         if (node.holdCount == 1) {
+         if (--node.holdCount == 0) {
             holders.set(null);
             currentHolder.set(null);
          }
@@ -557,6 +812,9 @@ public class HierarchicalLock {
                }
             }
             // non-reentrant
+            if (fair && hasQueuedPredecessors()) {
+               return -1;
+            }
             while (true) {
                long state = getState();
                if (exclusiveCount(state) > 0) {
@@ -594,7 +852,7 @@ public class HierarchicalLock {
          // got a new shared lock!
          assert node == null;
          
-         node = new HolderNode(true);
+         node = new HolderNode(false);
          addHolder(node);
          currentHolder.set(node);
          return 1;
@@ -605,7 +863,7 @@ public class HierarchicalLock {
          if (node == null || node.isExclusive) {
             return false;
          }
-         if (node.holdCount == 1) {
+         if (--node.holdCount == 0) {
             removeHolder(node);
             currentHolder.set(null);
          }
@@ -737,10 +995,11 @@ public class HierarchicalLock {
    }
    
    /**
-    * The result of acquiring a shared lock on a {@link HierarchicalLock}.
+    * The result of acquiring a shared lock on a {@link HierarchicalLock}. This object is used to
+    * release the lock or to change it (via promotion or demotion).
     *
     * @see HierarchicalLock#sharedLock()
-    * @see HierarchicalLock#sharedLockInteruptibly()
+    * @see HierarchicalLock#sharedLockInterruptibly()
     * @see HierarchicalLock#trySharedLock()
     * @see HierarchicalLock#trySharedLock(long, TimeUnit)
     * 
@@ -899,10 +1158,11 @@ public class HierarchicalLock {
    }
    
    /**
-    * The result of acquiring an exclusive lock on a {@link HierarchicalLock}.
+    * The result of acquiring an exclusive lock on a {@link HierarchicalLock}. This object is used
+    * to release the lock or to change it (via promotion or demotion).
     *
     * @see HierarchicalLock#exclusiveLock()
-    * @see HierarchicalLock#exclusiveLockInteruptibly()
+    * @see HierarchicalLock#exclusiveLockInterruptibly()
     * @see HierarchicalLock#tryExclusiveLock()
     * @see HierarchicalLock#tryExclusiveLock(long, TimeUnit)
     * 
@@ -915,7 +1175,7 @@ public class HierarchicalLock {
          this.owner = Thread.currentThread();
       }
       
-      private void checkLock() {
+      void checkLock() {
          if (owner != Thread.currentThread()) {
             throw new IllegalStateException("current thread does not hold this lock");
          }
@@ -954,6 +1214,7 @@ public class HierarchicalLock {
          throw new IllegalStateException("this lock has no parent");
       }
       
+      @SuppressWarnings("unused") // needed by sub-class ChildExclusiveLock
       public ExclusiveLock promoteToParentInterruptibly() throws InterruptedException {
          throw new IllegalStateException("this lock has no parent");
       }
@@ -962,6 +1223,7 @@ public class HierarchicalLock {
          throw new IllegalStateException("this lock has no parent");
       }
       
+      @SuppressWarnings("unused") // needed by sub-class ChildExclusiveLock
       public ExclusiveLock tryPromoteToParent(long timeLimit, TimeUnit unit)
             throws InterruptedException {
          throw new IllegalStateException("this lock has no parent");
@@ -977,7 +1239,8 @@ public class HierarchicalLock {
     */
    private class ChildLock extends HierarchicalLock {
 
-      ChildLock() {
+      ChildLock(boolean fair) {
+         super(fair);
       }
       
       @Override public HierarchicalLock getParent() {
@@ -1144,7 +1407,32 @@ public class HierarchicalLock {
             this.parentLock = parentLock;
          }
          
-         // TODO: Override all locks to handle parentLock and implement parent-related methods
+         @Override public void unlock() {
+            super.unlock();
+            parentLock.unlock();
+         }
+         
+         @Override public ExclusiveLock promoteToExclusive() {
+            return doPromoteToExclusive(parentLock);
+         }
+         
+         @Override public ExclusiveLock promoteToExclusiveInterruptibly() throws InterruptedException {
+            return doPromoteToExclusiveInterruptibly(parentLock);
+         }
+         
+         @Override  public ExclusiveLock tryPromoteToExclusive() {
+            return doTryPromoteToExclusive(parentLock);
+         }
+         
+         @Override public ExclusiveLock tryPromoteToExclusive(long timeLimit, TimeUnit unit)
+               throws InterruptedException {
+            return doTryPromoteToExclusive(timeLimit, unit, parentLock);
+         }
+         
+         @Override public SharedLock promoteToParent() {
+            super.unlock();
+            return parentLock;
+         }
       }
       
       /**
@@ -1158,8 +1446,48 @@ public class HierarchicalLock {
          ChildExclusiveLock(SharedLock parentLock) {
             this.parentLock = parentLock;
          }
-
-         // TODO: Override all locks to handle parentLock and implement parent-related methods
+         
+         @Override public void unlock() {
+            super.unlock();
+            parentLock.unlock();
+         }
+         
+         @Override public SharedLock demoteToShared() {
+            return doDemoteToShared(parentLock);
+         }
+         
+         @Override public ExclusiveLock promoteToParent() {
+            checkLock();
+            ExclusiveLock newLock = parentLock.promoteToExclusive();
+            super.unlock();
+            return newLock;
+         }
+         
+         @Override public ExclusiveLock promoteToParentInterruptibly() throws InterruptedException {
+            checkLock();
+            ExclusiveLock newLock = parentLock.promoteToExclusiveInterruptibly();
+            super.unlock();
+            return newLock;
+         }
+         
+         @Override public ExclusiveLock tryPromoteToParent() {
+            checkLock();
+            ExclusiveLock newLock = parentLock.tryPromoteToExclusive();
+            if (newLock != null) {
+               super.unlock();
+            }
+            return newLock;
+         }
+         
+         @Override public ExclusiveLock tryPromoteToParent(long timeLimit, TimeUnit unit)
+               throws InterruptedException {
+            checkLock();
+            ExclusiveLock newLock = parentLock.tryPromoteToExclusive(timeLimit, unit);
+            if (newLock != null) {
+               super.unlock();
+            }
+            return newLock;
+         }
       }
    }
 }

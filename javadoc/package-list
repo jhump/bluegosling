@@ -3,6 +3,7 @@ com.apriori.apt.reflect
 com.apriori.apt.testing
 com.apriori.collections
 com.apriori.concurrent
+com.apriori.concurrent.atoms
 com.apriori.di
 com.apriori.di.collections
 com.apriori.di.tools

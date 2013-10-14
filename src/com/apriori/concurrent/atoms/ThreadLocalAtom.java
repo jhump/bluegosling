@@ -5,25 +5,50 @@ import com.apriori.util.Predicate;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-// TODO: javadoc
+/**
+ * An atom whose values are in thread-local storage.  This varies a bit from other atoms in that
+ * one thread <em>cannot</em> see changes made to the atom by other threads. For that reason, the
+ * normal "watcher" behavior does not make sense. Instead, watchers of thread-local atoms will only
+ * be notified when the root value changes. The root value is the one used to seed the atom's
+ * value for new threads.
+ *
+ * @param <T> the type of the atom's value
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
    
+   /** 
+    * The root value, used to seed the atom's value in new threads.
+    */
    private final AtomicReference<T> rootValue;
+   
+   /**
+    * The atom's thread-local value.
+    */
    private final ThreadLocal<T> value = new ThreadLocal<T>() {
       @Override protected T initialValue() {
          return getRootValue();
       }
    };
 
+   /**
+    * Constructs a new thread-local atom with a {@code null} value and no validator.
+    */
    public ThreadLocalAtom() {
       rootValue = new AtomicReference<T>(null);
    }
 
+   /**
+    * Constructs a new thread-local atom with the specified value and no validator.
+    */
    public ThreadLocalAtom(T rootValue) {
       this.rootValue = new AtomicReference<T>(rootValue);
    }
 
+   /**
+    * Constructs a new thread-local atom with the specified value and the specified validator.
+    */
    public ThreadLocalAtom(T rootValue, Predicate<? super T> validator) {
       super(validator);
       this.rootValue = new AtomicReference<T>(rootValue);
@@ -42,17 +67,6 @@ public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAt
       return oldValue;
    }
 
-   public T getRootValue() {
-      return rootValue.get();
-   }
-   
-   public T setRootValue(T newRootValue) {
-      validate(newRootValue);
-      T oldRootValue = rootValue.getAndSet(newRootValue);
-      notify(oldRootValue, newRootValue);
-      return oldRootValue;
-   }
-
    @Override
    public T apply(Function<? super T, ? extends T> function) {
       T oldValue = value.get();
@@ -60,5 +74,28 @@ public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAt
       validate(newValue);
       value.set(newValue);
       return newValue;
+   }
+   
+   /**
+    * Returns the atom's root value, used to seed the thread-local value for new threads.
+    *
+    * @return the atom's root value
+    */
+   public T getRootValue() {
+      return rootValue.get();
+   }
+   
+   /**
+    * Sets the atom's root value. Watchers will be notified of this change and passed the specified
+    * new value as well as the previous root value.
+    *
+    * @param newRootValue the new root value
+    * @return the previous root value
+    */
+   public T setRootValue(T newRootValue) {
+      validate(newRootValue);
+      T oldRootValue = rootValue.getAndSet(newRootValue);
+      notify(oldRootValue, newRootValue);
+      return oldRootValue;
    }
 }

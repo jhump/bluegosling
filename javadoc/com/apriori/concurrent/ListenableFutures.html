@@ -134,39 +134,51 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#chain(com.apriori.concurrent.ListenableFuture, java.util.concurrent.Callable, java.util.concurrent.Executor)">chain</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;?&gt;&nbsp;future,
      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Chains the specified task to the completion of the specified future.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#chain(com.apriori.concurrent.ListenableFuture, java.lang.Runnable, java.util.concurrent.Executor)">chain</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;?&gt;&nbsp;future,
      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Chains the specified task to the completion of the specified future.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#chain(com.apriori.concurrent.ListenableFuture, java.lang.Runnable, T, java.util.concurrent.Executor)">chain</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;?&gt;&nbsp;future,
      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
      T&nbsp;result,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Chains the specified task to the completion of the specified future.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#chain(com.apriori.concurrent.ListenableFuture, com.apriori.util.Function, java.util.concurrent.Executor)">chain</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future,
-     <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;function,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
+     <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;task,
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Chains the specified task to the completion of the specified future.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T,U,V&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#combine(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.util.Function.Bivariate)">combine</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future1,
        <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;future2,
-       <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super T,? super U,? extends V&gt;&nbsp;function)</code>&nbsp;</td>
+       <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super T,? super U,? extends V&gt;&nbsp;function)</code>
+<div class="block">Combines two futures into one by applying a function.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T,U,V,W&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;W&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#combine(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.util.Function.Trivariate)">combine</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future1,
        <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;future2,
        <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;&nbsp;future3,
-       <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super T,? super U,? super V,? extends W&gt;&nbsp;function)</code>&nbsp;</td>
+       <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super T,? super U,? super V,? extends W&gt;&nbsp;function)</code>
+<div class="block">Combines three futures into one by applying a function.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
@@ -176,7 +188,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#dereference(com.apriori.concurrent.ListenableFuture)">dereference</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;future)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#dereference(com.apriori.concurrent.ListenableFuture)">dereference</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;future)</code>
+<div class="block">Dereferences a future future.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
@@ -186,11 +200,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#join(java.lang.Iterable)">join</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;&gt;&nbsp;futures)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#join(java.lang.Iterable)">join</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;&gt;&nbsp;futures)</code>
+<div class="block">Joins a list of futures into one future list.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#join(com.apriori.concurrent.ListenableFuture...)">join</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;...&nbsp;futures)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#join(com.apriori.concurrent.ListenableFuture...)">join</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;...&nbsp;futures)</code>
+<div class="block">Joins multiple futures into one future list.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
@@ -200,12 +218,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.ScheduledFuture)">makeListenable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;&nbsp;future)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#makeListenable(java.util.concurrent.ScheduledFuture)">makeListenable</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;&nbsp;future)</code>
+<div class="block">Converts the specified future into a <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledFuture</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutures.html#transform(com.apriori.concurrent.ListenableFuture, com.apriori.util.Function)">transform</a></strong>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future,
-         <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;function)</code>&nbsp;</td>
+         <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;function)</code>
+<div class="block">Transforms the specified future value using the specified function.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -256,6 +278,17 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>makeListenable</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;&nbsp;makeListenable(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;T&gt;&nbsp;future)</pre>
+<div class="block">Converts the specified future into a <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledFuture</code></a>. If the specified
+ future <em>is</em> a <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledFuture</code></a>, it is returned without any conversion.
+ Note that if the specified future is not yet done, conversion requires creating a new thread.
+ The thread simply blocks until the specified future completes, at which time the returned
+ listenable future is also completed (asynchronously).
+ 
+ <p>The returned future's cancellation status will be kept in sync with the specified future.
+ So if the returned future is cancelled, so too will the underlying future be cancelled, and
+ vice versa.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - the scheduled future</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a listenable version of the specified future</dd></dl>
 </li>
 </ul>
 <a name="addCallback(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.FutureVisitor)">
@@ -281,6 +314,17 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;chain(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;?&gt;&nbsp;future,
                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task,
                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Chains the specified task to the completion of the specified future. The specified task will
+ be initiated once the specified future completes successfully. The returned future will
+ complete successfully once the specified future and specified task have completed. The
+ returned future will fail if the specified future fails or if the task throws an exception.
+ 
+ <p>If the specified future is cancelled then the returned future will be cancelled. But if the
+ returned future is cancelled, only the task will be cancelled (and interrupted, if
+ appropriate). Canceling the returned future does not cancel the specified future, even if it
+ is not yet complete.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - a future</dd><dd><code>task</code> - a task that should execute when the future completes</dd><dd><code>executor</code> - the executor used to run the task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future whose value will be the result of the specified task</dd></dl>
 </li>
 </ul>
 <a name="chain(com.apriori.concurrent.ListenableFuture,java.lang.Runnable,java.lang.Object,java.util.concurrent.Executor)">
@@ -295,6 +339,18 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                             <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                             T&nbsp;result,
                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Chains the specified task to the completion of the specified future. The specified task will
+ be initiated once the specified future completes successfully. The returned future will
+ complete successfully once the specified future and specified task have completed. The
+ returned future will fail if the specified future fails or if the task throws an exception.
+ 
+ <p>If the specified future is cancelled then the returned future will be cancelled. But if the
+ returned future is cancelled, only the task will be cancelled (and interrupted, if
+ appropriate). Canceling the returned future does not cancel the specified future, even if it
+ is not yet complete.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - a future</dd><dd><code>task</code> - a task that should execute when the future completes</dd><dd><code>result</code> - the result of the task when it completes</dd><dd><code>executor</code> - the executor used to run the task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that will complete with the specified result when the specified task
+       completes</dd></dl>
 </li>
 </ul>
 <a name="chain(com.apriori.concurrent.ListenableFuture, java.lang.Runnable, java.util.concurrent.Executor)">
@@ -306,6 +362,18 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;chain(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;?&gt;&nbsp;future,
                            <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                            <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Chains the specified task to the completion of the specified future. The specified task will
+ be initiated once the specified future completes successfully. The returned future will
+ complete successfully once the specified future and specified task have completed. The
+ returned future will fail if the specified future fails or if the task throws an exception.
+ 
+ <p>If the specified future is cancelled then the returned future will be cancelled. But if the
+ returned future is cancelled, only the task will be cancelled (and interrupted, if
+ appropriate). Canceling the returned future does not cancel the specified future, even if it
+ is not yet complete.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - a future</dd><dd><code>task</code> - a task that should execute when the future completes</dd><dd><code>executor</code> - the executor used to run the task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that will complete with a <code>null</code> value when the specified task
+       completes</dd></dl>
 </li>
 </ul>
 <a name="chain(com.apriori.concurrent.ListenableFuture, com.apriori.util.Function, java.util.concurrent.Executor)">
@@ -315,8 +383,19 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>chain</h4>
 <pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;chain(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future,
-                              <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;function,
+                              <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;task,
                               <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Chains the specified task to the completion of the specified future. The specified task will
+ be initiated once the specified future completes successfully. The returned future will
+ complete successfully once the specified future and specified task have completed. The
+ returned future will fail if the specified future fails or if the task throws an exception.
+ 
+ <p>If the specified future is cancelled then the returned future will be cancelled. But if the
+ returned future is cancelled, only the task will be cancelled (and interrupted, if
+ appropriate). Canceling the returned future does not cancel the specified future, even if it
+ is not yet complete.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - a future</dd><dd><code>task</code> - a task whose input is the result of the specified future</dd><dd><code>executor</code> - the executor used to run the task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future whose value will be the result of the specified task</dd></dl>
 </li>
 </ul>
 <a name="transform(com.apriori.concurrent.ListenableFuture, com.apriori.util.Function)">
@@ -327,6 +406,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>transform</h4>
 <pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;transform(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future,
                                   <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends U&gt;&nbsp;function)</pre>
+<div class="block">Transforms the specified future value using the specified function. This is similar to
+ using <a href="../../../com/apriori/concurrent/ListenableFutures.html#chain(com.apriori.concurrent.ListenableFuture, com.apriori.util.Function, java.util.concurrent.Executor)"><code>chain(ListenableFuture, Function, Executor)</code></a> except that no executor is
+ specified. The function will be executed in the same thread that completes the future, so it
+ should run quickly and be safe to run from <em>any</em> thread. The function cannot be
+ interrupted.
+ 
+ <p>Also unlike using <code>chain(...)</code>, when the returned future is cancelled, the underlying
+ future will also be cancelled (and vice versa).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - a future</dd><dd><code>function</code> - a function used to compute the transformed value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that is the result of applying the function to the specified future</dd></dl>
 </li>
 </ul>
 <a name="completedFuture(java.lang.Object)">
@@ -373,6 +462,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>join</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&gt;&nbsp;join(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;...&nbsp;futures)</pre>
+<div class="block">Joins multiple futures into one future list. The returned future will complete successfully
+ once all constituent futures complete successfully. The returned future will fail if any of
+ the constituent futures fails.
+ 
+ <p>The returned future's cancellation status will be kept in sync with the constituent
+ futures. So if the returned future is cancelled, any unfinished constituent futures will also
+ be cancelled. If any of the constituent futures is cancelled, the returned future will also
+ be cancelled.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>futures</code> - the future values</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future list whose elements are the values from the specified futures</dd></dl>
 </li>
 </ul>
 <a name="join(java.lang.Iterable)">
@@ -382,6 +481,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>join</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&gt;&nbsp;join(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends T&gt;&gt;&nbsp;futures)</pre>
+<div class="block">Joins a list of futures into one future list. The returned future will complete successfully
+ once all constituent futures complete successfully. The returned future will fail if any of
+ the constituent futures fails. 
+ 
+ <p>The returned future's cancellation status will be kept in sync with the constituent
+ futures. So if the returned future is cancelled, any unfinished constituent futures will also
+ be cancelled. If any of the constituent futures is cancelled, the returned future will also
+ be cancelled.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>futures</code> - the future values</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future list whose elements are the values from the specified futures</dd></dl>
 </li>
 </ul>
 <a name="combine(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.util.Function.Bivariate)">
@@ -393,6 +502,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;T,U,V&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;&nbsp;combine(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;future1,
                                   <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;future2,
                                   <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super T,? super U,? extends V&gt;&nbsp;function)</pre>
+<div class="block">Combines two futures into one by applying a function. The value of the returned future is the
+ result of applying the specified function to the values of the two futures. The returned
+ future will complete successfully both input futures complete successfully. The returned
+ future will fail if either of the input futures fails. 
+
+ <p>The returned future's cancellation status will be kept in sync with the two input futures.
+ So if the returned future is cancelled, any unfinished input futures will also be cancelled.
+ If either of the input futures is cancelled, the returned future will also be cancelled.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future1</code> - a future</dd><dd><code>future2</code> - another future</dd><dd><code>function</code> - a function that combines two input values into one result</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the future result of applying the function to the two future values</dd></dl>
 </li>
 </ul>
 <a name="combine(com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.concurrent.ListenableFuture, com.apriori.util.Function.Trivariate)">
@@ -405,6 +524,17 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                                     <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;future2,
                                     <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;V&gt;&nbsp;future3,
                                     <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super T,? super U,? super V,? extends W&gt;&nbsp;function)</pre>
+<div class="block">Combines three futures into one by applying a function. The value of the returned future is
+ the result of applying the specified function to the values of the three futures. The returned
+ future will complete successfully all three input futures complete successfully. The returned
+ future will fail if any of the input futures fails. 
+
+ <p>The returned future's cancellation status will be kept in sync with the three input
+ futures. So if the returned future is cancelled, any unfinished input futures will also be
+ cancelled. If any of the input futures is cancelled, the returned future will also be
+ cancelled.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future1</code> - a future</dd><dd><code>future2</code> - another future</dd><dd><code>future3</code> - a third future</dd><dd><code>function</code> - a function that combines three input values into one result</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the future result of applying the function to the three future values</dd></dl>
 </li>
 </ul>
 <a name="dereference(com.apriori.concurrent.ListenableFuture)">
@@ -414,6 +544,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>dereference</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;dereference(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;future)</pre>
+<div class="block">Dereferences a future future. The returned future will complete successfully when the
+ specified future and its value complete. The future will fail if either the input future or
+ its value fails. 
+
+ <p>The returned future's cancellation status will be kept in sync with the input futures. So
+ if the returned future is cancelled, the input future or its value will also be cancelled. If
+ the input future or its value is cancelled, the returned future will also be cancelled.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - the future future</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future value that represents the value of the future future</dd></dl>
 </li>
 </ul>
 </li>

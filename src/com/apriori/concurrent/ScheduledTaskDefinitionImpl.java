@@ -125,7 +125,7 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
    }
 
    @Override
-   public Rescheduler rescheduler() {
+   public Rescheduler<? super V> rescheduler() {
       return taskDef.rescheduler();
    }
 
@@ -340,7 +340,8 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
                scheduleTask(scheduledStartNanoTime());
             } else {
                long newScheduledNanoTime =
-                     rescheduler().scheduleNextStartTime(latest.getScheduledNanoTime());
+                     rescheduler().computeNextStartTime(asRepeatingFuture(),
+                           latest.getScheduledNanoTime());
                scheduleTask(newScheduledNanoTime);
             }
             needToExecute = true;
@@ -353,6 +354,10 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
          executor.execute(current);
       }
       return true;
+   }
+   
+   ListenableRepeatingFuture<V> asRepeatingFuture() {
+      return new RepeatingScheduledTaskImpl<V>(this);
    }
    
    /**
@@ -392,7 +397,9 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
          // schedule the next occurrence if necessary
          boolean reschedule = scheduleNextTaskPolicy().shouldScheduleNext(this);
          long newScheduledNanoTime = reschedule
-               ? rescheduler().scheduleNextStartTime(current.getScheduledNanoTime()) : 0;
+               ? rescheduler().computeNextStartTime(asRepeatingFuture(),
+                     current.getScheduledNanoTime())
+               : 0;
          Collection<ScheduledTaskListener<? super V>> listenersToRun;
          lock.lock();
          try {

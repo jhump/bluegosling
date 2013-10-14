@@ -152,90 +152,84 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible">Fulfillable</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#asFulfillable()">asFulfillable</a></strong>()</code>
-<div class="block">Returns a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#await()">await</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#await(long, java.util.concurrent.TimeUnit)">await</a></strong>(long&nbsp;limit,
      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterruptIfRunning)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#get()">get</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#get(long, java.util.concurrent.TimeUnit)">get</a></strong>(long&nbsp;timeout,
    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#getFailure()">getFailure</a></strong>()</code>
 <div class="block">Gets the cause of failure for a future.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#getResult()">getResult</a></strong>()</code>
 <div class="block">Gets the result of a successful future.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#interrupt()">interrupt</a></strong>()</code>
 <div class="block">Invoked when the task is cancelled and allowed to interrupt a running task.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isCancelled()">isCancelled</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isDone()">isDone</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isFailed()">isFailed</a></strong>()</code>
 <div class="block">Returns true if the future is done and failed.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isSuccessful()">isSuccessful</a></strong>()</code>
 <div class="block">Returns true if the future is done and was successful.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#setCancelled()">setCancelled</a></strong>()</code>
 <div class="block">Sets the future as cancelled.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#setFailure(java.lang.Throwable)">setFailure</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code>
 <div class="block">Sets the future as failed with the specified cause of failure.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#setValue(T)">setValue</a></strong>(<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&nbsp;t)</code>
 <div class="block">Sets the future as successfully completed with the specified result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#visit(com.apriori.concurrent.FutureVisitor)">visit</a></strong>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;? super <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;&nbsp;visitor)</code>
 <div class="block">Invokes applicable methods on the specified visitor, depending on the disposition of this
@@ -374,6 +368,8 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <pre>public&nbsp;boolean&nbsp;isDone()</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/concurrent/Awaitable.html#isDone()">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></dd>
+<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true#isDone()" title="class or interface in java.util.concurrent">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;</code></dd>
 </dl>
 </li>
@@ -432,18 +428,6 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/ListenableFuture.html#addListener(com.apriori.concurrent.FutureListener, java.util.concurrent.Executor)">addListener</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;</code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>listener</code> - the listener</dd><dd><code>executor</code> - the executor used when calling the listener</dd></dl>
-</li>
-</ul>
-<a name="asFulfillable()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>asFulfillable</h4>
-<pre>protected&nbsp;<a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible">Fulfillable</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;&nbsp;asFulfillable()</pre>
-<div class="block">Returns a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>. Fulfilling the returned object will
- successfully complete the future.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a></dd></dl>
 </li>
 </ul>
 <a name="isSuccessful()">

@@ -27,13 +27,13 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
       return  wrapped;
    }
    
-   private final Rescheduler rescheduler;
+   private final Rescheduler<? super T> rescheduler;
    private final AtomicInteger executionCount = new AtomicInteger();
    private final AtomicReference<T> latestResult;
    private FutureListenerSet<T> occurrenceListeners = new FutureListenerSet<T>(this);
    
    public ListenableRepeatingFutureTask(Callable<T> callable, long startTimeNanos,
-         Rescheduler rescheduler) {
+         Rescheduler<? super T> rescheduler) {
       super(wrap(callable), startTimeNanos);
       this.rescheduler = rescheduler;
       @SuppressWarnings("unchecked") // we just put object of right type in call to wrap()
@@ -43,7 +43,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
    }
 
    public ListenableRepeatingFutureTask(Runnable runnable, T result, long startTimeNanos,
-         Rescheduler rescheduler) {
+         Rescheduler<? super T> rescheduler) {
       super(runnable, result, startTimeNanos);
       this.rescheduler = rescheduler;
       // No need to wrap the runnable and set the result per invocation because it is
@@ -88,7 +88,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
          // okay since this can only happen if run() is called by misbehaving client. An actual
          // executor won't be able to call next scheduled run until after we fire these listeners.
          if (toExecute != null) {
-            setScheduledNanoTime(rescheduler.scheduleNextStartTime(getScheduledNanoTime()));
+            setScheduledNanoTime(rescheduler.computeNextStartTime(this, getScheduledNanoTime()));
             toExecute.runListeners();
          }
       }

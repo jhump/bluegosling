@@ -73,10 +73,13 @@
 <ul>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Cloners.html" title="class in com.apriori.util"><span class="strong">Cloners</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Derivations.html" title="class in com.apriori.util"><span class="strong">Derivations</span></a></li>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/FakeClock.html" title="class in com.apriori.util"><span class="strong">FakeClock</span></a> (implements com.apriori.util.<a href="../../../com/apriori/util/Clock.html" title="interface in com.apriori.util">Clock</a>)</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Functions.html" title="class in com.apriori.util"><span class="strong">Functions</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util"><span class="strong">IndentingPrinter</span></a></li>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Operators.html" title="class in com.apriori.util"><span class="strong">Operators</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/PartialFunctions.html" title="class in com.apriori.util"><span class="strong">PartialFunctions</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Predicates.html" title="class in com.apriori.util"><span class="strong">Predicates</span></a></li>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/PrimeGenerator.html" title="class in com.apriori.util"><span class="strong">PrimeGenerator</span></a>&lt;T&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Sources.html" title="class in com.apriori.util"><span class="strong">Sources</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="strong">Stopwatch</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Streams.html" title="class in com.apriori.util"><span class="strong">Streams</span></a></li>
@@ -98,6 +101,7 @@
 </ul>
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Clock.html" title="interface in com.apriori.util"><span class="strong">Clock</span></a></li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Cloner.html" title="interface in com.apriori.util"><span class="strong">Cloner</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/DerivedFrom.html" title="interface in com.apriori.util"><span class="strong">DerivedFrom</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util"><span class="strong">Function</span></a>&lt;I,O&gt;
@@ -107,6 +111,7 @@
 </li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util"><span class="strong">Function.Bivariate</span></a>&lt;I1,I2,O&gt;
 <ul>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/Operator.html" title="interface in com.apriori.util"><span class="strong">Operator</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util"><span class="strong">PartialFunction.Bivariate</span></a>&lt;I1,I2,O&gt;</li>
 </ul>
 </li>
@@ -126,6 +131,18 @@
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/ToDo.html" title="annotation in com.apriori.util"><span class="strong">ToDo</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util"><span class="strong">ToDo.Task</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
 <li type="circle">com.apriori.util.<a href="../../../com/apriori/util/IsDerivedFrom.html" title="annotation in com.apriori.util"><span class="strong">IsDerivedFrom</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
+</ul>
+<h2 title="Enum Hierarchy">Enum Hierarchy</h2>
+<ul>
+<li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><span class="strong">Object</span></a>
+<ul>
+<li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang"><span class="strong">Enum</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)
+<ul>
+<li type="circle">com.apriori.util.<a href="../../../com/apriori/util/SystemClock.html" title="enum in com.apriori.util"><span class="strong">SystemClock</span></a> (implements com.apriori.util.<a href="../../../com/apriori/util/Clock.html" title="interface in com.apriori.util">Clock</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->

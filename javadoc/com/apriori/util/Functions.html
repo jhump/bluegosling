@@ -155,6 +155,66 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I2,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function.Bivariate, I1)">curry</a></strong>(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+     I1&nbsp;arg1)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function.Bivariate, I1, I2)">curry</a></strong>(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I2,I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function.Trivariate, I1)">curry</a></strong>(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+     I1&nbsp;arg1)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I3,O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function.Trivariate, I1, I2)">curry</a></strong>(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3,O&gt;&nbsp;<br><a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function.Trivariate, I1, I2, I3)">curry</a></strong>(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2,
+     I3&nbsp;arg3)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#curry(com.apriori.util.Function, I)">curry</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,? extends O&gt;&nbsp;function,
+     I&nbsp;arg)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;O</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#foldLeft(java.lang.Iterable, com.apriori.util.Function.Bivariate, O)">foldLeft</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;I&gt;&nbsp;values,
+        <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super O,? super I,? extends O&gt;&nbsp;function,
+        O&nbsp;seed)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;O</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#foldLeft(java.util.Iterator, com.apriori.util.Function.Bivariate, O)">foldLeft</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;I&gt;&nbsp;values,
+        <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super O,? super I,? extends O&gt;&nbsp;function,
+        O&nbsp;seed)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;O</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#foldRight(java.lang.Iterable, com.apriori.util.Function.Bivariate, O)">foldRight</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;I&gt;&nbsp;values,
+         <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I,? super O,? extends O&gt;&nbsp;function,
+         O&nbsp;seed)</code>
+<div class="block">Performs a fold-right operation over the specified values and returns the result.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I,O&gt;&nbsp;O</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#foldRight(java.util.Iterator, com.apriori.util.Function.Bivariate, O)">foldRight</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;I&gt;&nbsp;values,
+         <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I,? super O,? extends O&gt;&nbsp;function,
+         O&nbsp;seed)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;A&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;A,A,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#fromComparator(java.util.Comparator)">fromComparator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super A&gt;&nbsp;comparator)</code>
 <div class="block">Converts a comparator to a bivariate function.</div>
@@ -191,10 +251,28 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T,U,<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#pairFunction()">pairFunction</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#returning(T)">returning</a></strong>(T&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#toStringFunction()">toStringFunction</a></strong>()</code>
 <div class="block">Returns a function that returns the string representation of its argument.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T,U,V&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;T,U,V,<a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>&lt;T,U,V&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#trioFunction()">trioFunction</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#unfold(com.apriori.util.Function, com.apriori.util.Predicate, T)">unfold</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,T&gt;&gt;&nbsp;unspool,
+      <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;finished,
+      T&nbsp;seed)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;</code></td>
@@ -213,6 +291,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#unlift(com.apriori.util.Function)">unlift</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,? extends O&gt;&nbsp;function)</code>
 <div class="block">Returns a partial function for the specified function.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Functions.html#yCombinator(com.apriori.util.Function)">yCombinator</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends T&gt;,<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends T&gt;&gt;&nbsp;funcGen)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -267,6 +349,35 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;hashCodeFunction()</pre>
 <div class="block">Returns a function that returns the hash code value of its argument.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a function that returns the hash code value of its argument</dd></dl>
+</li>
+</ul>
+<a name="returning(java.lang.Object)">
+<!--   -->
+</a><a name="returning(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>returning</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;returning(T&nbsp;value)</pre>
+</li>
+</ul>
+<a name="pairFunction()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pairFunction</h4>
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T,U,<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;pairFunction()</pre>
+</li>
+</ul>
+<a name="trioFunction()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>trioFunction</h4>
+<pre>public static&nbsp;&lt;T,U,V&gt;&nbsp;<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;T,U,V,<a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>&lt;T,U,V&gt;&gt;&nbsp;trioFunction()</pre>
 </li>
 </ul>
 <a name="compose(com.apriori.util.Function, com.apriori.util.Function)">
@@ -434,7 +545,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <a name="unlift(com.apriori.util.Function.Trivariate)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>unlift</h4>
 <pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;&nbsp;unlift(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function)</pre>
@@ -446,6 +557,164 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a partial function that is defined for all values in the input domain except the ones
        where the specified function returns <code>null</code></dd></dl>
+</li>
+</ul>
+<a name="foldRight(java.lang.Iterable,com.apriori.util.Function.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="foldRight(java.lang.Iterable, com.apriori.util.Function.Bivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>foldRight</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;O&nbsp;foldRight(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;I&gt;&nbsp;values,
+                <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I,? super O,? extends O&gt;&nbsp;function,
+                O&nbsp;seed)</pre>
+<div class="block">Performs a fold-right operation over the specified values and returns the result. This
+ operation is recursive and is defined as follows:<pre>
+  foldr(list, fun, seed) => list.empty?
+                              then seed
+                              else fun(list.first, foldr(list.rest, fun, seed)
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>values</code> - </dd><dd><code>function</code> - </dd><dd><code>seed</code> - </dd>
+<dt><span class="strong">Returns:</span></dt><dd></dd></dl>
+</li>
+</ul>
+<a name="foldLeft(java.lang.Iterable,com.apriori.util.Function.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="foldLeft(java.lang.Iterable, com.apriori.util.Function.Bivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>foldLeft</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;O&nbsp;foldLeft(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;I&gt;&nbsp;values,
+               <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super O,? super I,? extends O&gt;&nbsp;function,
+               O&nbsp;seed)</pre>
+</li>
+</ul>
+<a name="foldRight(java.util.Iterator,com.apriori.util.Function.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="foldRight(java.util.Iterator, com.apriori.util.Function.Bivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>foldRight</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;O&nbsp;foldRight(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;I&gt;&nbsp;values,
+                <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I,? super O,? extends O&gt;&nbsp;function,
+                O&nbsp;seed)</pre>
+</li>
+</ul>
+<a name="foldLeft(java.util.Iterator,com.apriori.util.Function.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="foldLeft(java.util.Iterator, com.apriori.util.Function.Bivariate, O)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>foldLeft</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;O&nbsp;foldLeft(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;I&gt;&nbsp;values,
+               <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super O,? super I,? extends O&gt;&nbsp;function,
+               O&nbsp;seed)</pre>
+</li>
+</ul>
+<a name="unfold(com.apriori.util.Function,com.apriori.util.Predicate,java.lang.Object)">
+<!--   -->
+</a><a name="unfold(com.apriori.util.Function, com.apriori.util.Predicate, T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unfold</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;&nbsp;unfold(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,T&gt;&gt;&nbsp;unspool,
+                     <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;finished,
+                     T&nbsp;seed)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function, I)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I,O&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super I,? extends O&gt;&nbsp;function,
+                    I&nbsp;arg)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function.Bivariate,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function.Bivariate, I1, I2)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+                        I1&nbsp;arg1,
+                        I2&nbsp;arg2)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function.Bivariate, I1)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I2,O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super I1,? super I2,? extends O&gt;&nbsp;function,
+                             I1&nbsp;arg1)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function.Trivariate,java.lang.Object,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function.Trivariate, I1, I2, I3)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                           I1&nbsp;arg1,
+                           I2&nbsp;arg2,
+                           I3&nbsp;arg3)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function.Trivariate,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function.Trivariate, I1, I2)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;I3,O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                                I1&nbsp;arg1,
+                                I2&nbsp;arg2)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Function.Trivariate,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Function.Trivariate, I1)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3,O&gt;&nbsp;<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;I2,I3,O&gt;&nbsp;curry(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;? super I1,? super I2,? super I3,? extends O&gt;&nbsp;function,
+                                             I1&nbsp;arg1)</pre>
+</li>
+</ul>
+<a name="yCombinator(com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>yCombinator</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;T,T&gt;&nbsp;yCombinator(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends T&gt;,<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super T,? extends T&gt;&gt;&nbsp;funcGen)</pre>
 </li>
 </ul>
 </li>

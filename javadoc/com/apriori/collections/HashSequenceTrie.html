@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LongIterator.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/HashSequenceTrie.html" target="_top">Frames</a></li>
@@ -58,16 +58,16 @@
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_java.util.AbstractMap">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#methods_inherited_from_class_java.lang.Object">Method</a></li>
+<li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
 <a name="skip-navbar_top">
@@ -84,7 +84,12 @@
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">java.util.AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;K&gt;,V&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.apriori.collections.HashSequenceTrie&lt;K,V&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,8 +102,8 @@
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="strong">HashSequenceTrie&lt;K,V&gt;</span>
-extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+<pre>public class <span class="strong">HashSequenceTrie&lt;K,V&gt;</span>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;K&gt;,V&gt;
 implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;K,V&gt;</pre>
 </li>
 </ul>
@@ -112,6 +117,13 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_java.util.AbstractMap">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleEntry</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleImmutableEntry</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_java.util.Map">
 <!--   -->
@@ -135,6 +147,9 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#HashSequenceTrie()">HashSequenceTrie</a></strong>()</code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#HashSequenceTrie(java.util.Map)">HashSequenceTrie</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,? extends <a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&nbsp;map)</code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -144,26 +159,73 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#containsKey(java.lang.Object)">containsKey</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#entrySet()">entrySet</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#get(java.lang.Object)">get</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#prefixMap(java.lang.Iterable)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;prefix)</code>
+<div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#prefixMap(java.lang.Iterable, int)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;prefix,
+         int&nbsp;numComponents)</code>
+<div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#prefixMap(K)">prefixMap</a></strong>(<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&nbsp;prefix)</code>
+<div class="block">Generates a view of all mappings whose keys start with the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#put(java.lang.Iterable, V)">put</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;key,
+   <a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/HashSequenceTrie.html#remove(java.lang.Object)">remove</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractMap">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#clear()" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#clone()" title="class or interface in java.util">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#containsValue(java.lang.Object)" title="class or interface in java.util">containsValue</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#keySet()" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#putAll(java.util.Map)" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#size()" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#toString()" title="class or interface in java.util">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#values()" title="class or interface in java.util">values</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.SequenceTrie">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a></h3>
-<code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable)">prefixMap</a>, <a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable, int)">prefixMap</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.util.Map">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#clear()" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#containsKey(java.lang.Object)" title="class or interface in java.util">containsKey</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#containsValue(java.lang.Object)" title="class or interface in java.util">containsValue</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#entrySet()" title="class or interface in java.util">entrySet</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#get(java.lang.Object)" title="class or interface in java.util">get</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#keySet()" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util">put</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#putAll(java.util.Map)" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#size()" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#values()" title="class or interface in java.util">values</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#clear()" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#containsValue(java.lang.Object)" title="class or interface in java.util">containsValue</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#keySet()" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#putAll(java.util.Map)" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#size()" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#values()" title="class or interface in java.util">values</a></code></li>
 </ul>
 </li>
 </ul>
@@ -182,10 +244,169 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <a name="HashSequenceTrie()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>HashSequenceTrie</h4>
 <pre>public&nbsp;HashSequenceTrie()</pre>
+</li>
+</ul>
+<a name="HashSequenceTrie(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>HashSequenceTrie</h4>
+<pre>public&nbsp;HashSequenceTrie(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,? extends <a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&nbsp;map)</pre>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="prefixMap(java.lang.Object)">
+<!--   -->
+</a><a name="prefixMap(K)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>prefixMap</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&nbsp;prefixMap(<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&nbsp;prefix)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(K)">SequenceTrie</a></code></strong></div>
+<div class="block">Generates a view of all mappings whose keys start with the specified value. The returned map's
+ keys will just be the tail sequences: the specified initial value, which prefixes all of its
+ keys will be omitted.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(K)">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - the key prefix</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd></dl>
+</li>
+</ul>
+<a name="prefixMap(java.lang.Iterable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>prefixMap</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;prefix)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable)">SequenceTrie</a></code></strong></div>
+<div class="block">Generates a view of all mappings whose keys have the specified prefix. The returned map's
+ keys will just be the tail sequences: the specified sequence, which prefixes all of its keys,
+ will be omitted.
+ 
+ <p>This is effectively shorthand for repeated calls to <a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(K)"><code>SequenceTrie.prefixMap(Object)</code></a>, like so:<pre>
+ SequenceTrie<K, V> result = someTrie;
+ for (K value : prefix) {
+   result = result.prefixMap(value);
+ }
+ </pre></div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable)">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - a key prefix</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd></dl>
+</li>
+</ul>
+<a name="prefixMap(java.lang.Iterable, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>prefixMap</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;prefix,
+                          int&nbsp;numComponents)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable, int)">SequenceTrie</a></code></strong></div>
+<div class="block">Generates a view of all mappings whose keys have the specified prefix. A maximum number of
+ components of the specified prefix are considered. So the effective prefix is the specified
+ sequence but truncated to no more than the specified number of elements.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../com/apriori/collections/SequenceTrie.html#prefixMap(java.lang.Iterable, int)">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections">SequenceTrie</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - a key prefix</dd><dd><code>numComponents</code> - the maximum number of components of the prefix</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd></dl>
+</li>
+</ul>
+<a name="get(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&nbsp;get(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#get(java.lang.Object)" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#get(java.lang.Object)" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="remove(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&nbsp;remove(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="containsKey(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>containsKey</h4>
+<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#containsKey(java.lang.Object)" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#containsKey(java.lang.Object)" title="class or interface in java.util">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="put(java.lang.Iterable,java.lang.Object)">
+<!--   -->
+</a><a name="put(java.lang.Iterable, V)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&nbsp;put(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;&nbsp;key,
+    <a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&nbsp;value)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#put(K, V)" title="class or interface in java.util">put</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="entrySet()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>entrySet</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#entrySet()" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true#entrySet()" title="class or interface in java.util">entrySet</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt;</code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -214,7 +435,7 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LongIterator.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/HashSequenceTrie.html" target="_top">Frames</a></li>
@@ -238,16 +459,16 @@ implements <a href="../../../com/apriori/collections/SequenceTrie.html" title="i
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_java.util.AbstractMap">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#methods_inherited_from_class_java.lang.Object">Method</a></li>
+<li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
 <a name="skip-navbar_bottom">

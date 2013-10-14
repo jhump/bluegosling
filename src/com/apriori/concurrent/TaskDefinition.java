@@ -47,7 +47,7 @@ public interface TaskDefinition<V> {
    boolean isRepeating();
    
    // TODO: javadoc
-   Rescheduler rescheduler();
+   Rescheduler<? super V> rescheduler();
    
    /**
     * Returns whether or not a repeating task is scheduled based on a fixed
@@ -165,7 +165,7 @@ public interface TaskDefinition<V> {
       private ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy;
       private UncaughtExceptionHandler exceptionHandler;
       private long initialDelayNanos;
-      private Rescheduler rescheduler;
+      private Rescheduler<? super V> rescheduler;
       
       /**
        * Constructs a new builder.
@@ -180,7 +180,8 @@ public interface TaskDefinition<V> {
       /**
        * Configures the maximum history size for the task.
        * 
-       * @param numExecutions the maximum number of executions for which history information is retained
+       * @param numExecutions the maximum number of executions for which history information is
+       *       retained
        * @return {@code this}, for method chaining
        */
       public Builder<V> keepHistoryFor(int numExecutions) {
@@ -244,7 +245,7 @@ public interface TaskDefinition<V> {
       }
       
       //TODO: javadoc
-      public Builder<V> repeat(Rescheduler nextTaskScheduler) {
+      public Builder<V> repeat(Rescheduler<? super V> nextTaskScheduler) {
          this.rescheduler = nextTaskScheduler;
          return this;
       }
@@ -310,13 +311,13 @@ public interface TaskDefinition<V> {
          private final ScheduleNextTaskPolicy<? super V> scheduleNextTaskPolicy;
          private final UncaughtExceptionHandler exceptionHandler;
          private final long initialDelayNanos;
-         private final Rescheduler rescheduler;
+         private final Rescheduler<? super V> rescheduler;
 
          TaskDefinitionImpl(TaskImplementation<V> task, int maxHistorySize,
                Set<ScheduledTaskListener<? super V>> listeners,
                ScheduleNextTaskPolicy<? super V> scheduleNextPolicy,
                UncaughtExceptionHandler exceptionHandler, long initialDelayNanos,
-               Rescheduler rescheduler) {
+               Rescheduler<? super V> rescheduler) {
             this.task = task;
             this.maxHistorySize = maxHistorySize;
             this.listeners =
@@ -343,7 +344,7 @@ public interface TaskDefinition<V> {
          }
          
          @Override
-         public Rescheduler rescheduler() {
+         public Rescheduler<? super V> rescheduler() {
             return rescheduler;
          }
 

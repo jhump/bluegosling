@@ -105,8 +105,9 @@
 <br>
 <pre>public class <span class="strong">SettableListenableFuture&lt;T&gt;</span>
 extends <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a>&lt;T&gt;</pre>
-<div class="block">A future whose result is set programmatically. This merely exposes protected API in
- <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><code>SimpleListenableFuture</code></a> as public API.</div>
+<div class="block">A future whose result is set programmatically. This exposes protected API in
+ <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><code>SimpleListenableFuture</code></a> as public API. It also provides a view of the future as an
+ instance of <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -249,13 +250,9 @@ extends <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" ti
 <li class="blockList">
 <h4>asFulfillable</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible">Fulfillable</a>&lt;<a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="type parameter in SettableListenableFuture">T</a>&gt;&nbsp;asFulfillable()</pre>
-<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#asFulfillable()">SimpleListenableFuture</a></code></strong></div>
 <div class="block">Returns a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>. Fulfilling the returned object will
  successfully complete the future.</div>
-<dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#asFulfillable()">asFulfillable</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent">SimpleListenableFuture</a>&lt;<a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="type parameter in SettableListenableFuture">T</a>&gt;</code></dd>
-<dt><span class="strong">Returns:</span></dt><dd>a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a></dd></dl>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a view of this future as a <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a></dd></dl>
 </li>
 </ul>
 </li>

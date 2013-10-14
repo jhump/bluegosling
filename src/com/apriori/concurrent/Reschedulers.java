@@ -8,29 +8,29 @@ public final class Reschedulers {
    private Reschedulers() {
    }
 
-   public static Rescheduler atFixedRate(long period, TimeUnit unit) {
+   public static Rescheduler<Object> atFixedRate(long period, TimeUnit unit) {
       return new RescheduleAtFixedRate(unit.toNanos(period), false);
    }
 
-   public static Rescheduler atFixedRateSkippingMissedOccurrences(long period, TimeUnit unit) {
+   public static Rescheduler<Object> atFixedRateSkippingMissedOccurrences(long period, TimeUnit unit) {
       return new RescheduleAtFixedRate(unit.toNanos(period), true);
    }
 
-   public static long getFixedRatePeriodNanos(Rescheduler rescheduler) {
+   public static long getFixedRatePeriodNanos(Rescheduler<?> rescheduler) {
       return rescheduler instanceof RescheduleAtFixedRate
             ? ((RescheduleAtFixedRate) rescheduler).periodNanos : 0;
    }
 
-   public static Rescheduler withFixedDelay(long delay, TimeUnit unit) {
+   public static Rescheduler<Object> withFixedDelay(long delay, TimeUnit unit) {
       return new RescheduleWithFixedDelay(unit.toNanos(delay));
    }
 
-   public static long getFixedDelayNanos(Rescheduler rescheduler) {
+   public static long getFixedDelayNanos(Rescheduler<?> rescheduler) {
       return rescheduler instanceof RescheduleWithFixedDelay
             ? ((RescheduleWithFixedDelay) rescheduler).delayNanos : 0;
    }
 
-   private static class RescheduleAtFixedRate implements Rescheduler {
+   private static class RescheduleAtFixedRate implements Rescheduler<Object> {
       final long periodNanos;
       private final boolean skipMissedOccurrences;
       
@@ -43,7 +43,8 @@ public final class Reschedulers {
       }
       
       @Override
-      public long scheduleNextStartTime(long priorStartTimeNanos) {
+      public long computeNextStartTime(ListenableRepeatingFuture<? extends Object> future,
+            long priorStartTimeNanos) {
          return computeNextStartTime(priorStartTimeNanos, System.nanoTime());
       }
       
@@ -61,7 +62,7 @@ public final class Reschedulers {
       }
    }
 
-   private static class RescheduleWithFixedDelay implements Rescheduler {
+   private static class RescheduleWithFixedDelay implements Rescheduler<Object> {
       final long delayNanos;
       
       RescheduleWithFixedDelay(long delayNanos) {
@@ -72,7 +73,8 @@ public final class Reschedulers {
       }
       
       @Override
-      public long scheduleNextStartTime(long priorStartTimeNanos) {
+      public long computeNextStartTime(ListenableRepeatingFuture<? extends Object> future,
+            long priorStartTimeNanos) {
          return System.nanoTime() + delayNanos;
       }
    }

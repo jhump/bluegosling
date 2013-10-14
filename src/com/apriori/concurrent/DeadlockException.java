@@ -7,6 +7,9 @@ package com.apriori.concurrent;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class DeadlockException extends RuntimeException {
+
+   private static final long serialVersionUID = 810179938753238669L;
+
    public DeadlockException() {
    }
 

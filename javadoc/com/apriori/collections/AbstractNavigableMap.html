@@ -98,7 +98,7 @@
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections">AbstractNavigableMap.SubMap</a>, <a href="../../../com/apriori/collections/SortedArrayMap.html" title="class in com.apriori.collections">SortedArrayMap</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections">AbstractNavigableMap.SubMap</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap</a>, <a href="../../../com/apriori/collections/SortedArrayMap.html" title="class in com.apriori.collections">SortedArrayMap</a></dd>
 </dl>
 <hr>
 <br>
@@ -199,11 +199,15 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.html#comparator">comparator</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.html#comparator">comparator</a></strong></code>
+<div class="block">The map's current comparator.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount">modCount</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount">modCount</a></strong></code>
+<div class="block">A monotonically increasing count of modifications.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -447,6 +451,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <li class="blockList">
 <h4>comparator</h4>
 <pre>protected transient&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&gt; comparator</pre>
+<div class="block">The map's current comparator. This will never be null. If no comparator is specified during
+ construction then this is set to <code>CollectionUtils.NATURAL_ORDERING</code>.</div>
 </li>
 </ul>
 <a name="modCount">
@@ -456,6 +462,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <li class="blockList">
 <h4>modCount</h4>
 <pre>protected transient&nbsp;int modCount</pre>
+<div class="block">A monotonically increasing count of modifications. This is used to provide best effort
+ detection of concurrent modification (for failing fast).</div>
 </li>
 </ul>
 </li>

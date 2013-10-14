@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/util/PrimeGenerator.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Predicates.html" target="_top">Frames</a></li>
@@ -141,6 +141,40 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;I2&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate.Bivariate, I1)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;? super I1,? super I2&gt;&nbsp;predicate,
+     I1&nbsp;arg1)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate.Bivariate, I1, I2)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;? super I1,? super I2&gt;&nbsp;predicate,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;I2,I3&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate.Trivariate, I1)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+     I1&nbsp;arg1)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;I3&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate.Trivariate, I1, I2)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate.Trivariate, I1, I2, I3)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+     I1&nbsp;arg1,
+     I2&nbsp;arg2,
+     I3&nbsp;arg3)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;I&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#curry(com.apriori.util.Predicate, I)">curry</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super I&gt;&nbsp;predicate,
+     I&nbsp;arg)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#fromFunction(com.apriori.util.Function.Bivariate)">fromFunction</a></strong>(<a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;T1,T2,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</code>
 <div class="block">Converts a bivarite function into a bivariate predicate.</div>
@@ -160,36 +194,48 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#isEqualTo(T)">isEqualTo</a></strong>(T&nbsp;object)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#isInstanceOf(java.lang.Class)">isInstanceOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;clazz)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#isSameAs(T)">isSameAs</a></strong>(T&nbsp;object)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#not(com.apriori.util.Predicate)">not</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p)</code>
 <div class="block">Returns a predicate that negates the results of the specified predicate.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#or(com.apriori.util.Predicate, com.apriori.util.Predicate)">or</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
   <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</code>
 <div class="block">Returns a predicate that combines the results from two predicates using an OR operation.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAll()">rejectAll</a></strong>()</code>
 <div class="block">Returns a predicate that always returns false.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T1,T2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAllBivariate()">rejectAllBivariate</a></strong>()</code>
 <div class="block">Returns a bivariate predicate that always returns false.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#rejectAllTrivariate()">rejectAllTrivariate</a></strong>()</code>
 <div class="block">Returns a three-argument predicate that always returns false.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/util/Predicates.html#xor(com.apriori.util.Predicate, com.apriori.util.Predicate)">xor</a></strong>(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p1,
    <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;p2)</code>
@@ -284,6 +330,37 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Returns:</span></dt><dd>a predicate that always returns false</dd></dl>
 </li>
 </ul>
+<a name="isEqualTo(java.lang.Object)">
+<!--   -->
+</a><a name="isEqualTo(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEqualTo</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;isEqualTo(T&nbsp;object)</pre>
+</li>
+</ul>
+<a name="isSameAs(java.lang.Object)">
+<!--   -->
+</a><a name="isSameAs(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSameAs</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;isSameAs(T&nbsp;object)</pre>
+</li>
+</ul>
+<a name="isInstanceOf(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isInstanceOf</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;&nbsp;isInstanceOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;clazz)</pre>
+</li>
+</ul>
 <a name="and(com.apriori.util.Predicate, com.apriori.util.Predicate)">
 <!--   -->
 </a>
@@ -371,7 +448,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <a name="fromFunction(com.apriori.util.Function.Trivariate)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>fromFunction</h4>
 <pre>public static&nbsp;&lt;T1,T2,T3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;&nbsp;fromFunction(<a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util">Function.Trivariate</a>&lt;T1,T2,T3,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;function)</pre>
@@ -381,6 +458,82 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  result is considered false.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a function</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the specified function converted to a predicate</dd></dl>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate, I)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super I&gt;&nbsp;predicate,
+                        I&nbsp;arg)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate.Bivariate,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate.Bivariate, I1, I2)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;? super I1,? super I2&gt;&nbsp;predicate,
+                            I1&nbsp;arg1,
+                            I2&nbsp;arg2)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate.Bivariate,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate.Bivariate, I1)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;I2&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;? super I1,? super I2&gt;&nbsp;predicate,
+                          I1&nbsp;arg1)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate.Trivariate,java.lang.Object,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate.Trivariate, I1, I2, I3)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+                               I1&nbsp;arg1,
+                               I2&nbsp;arg2,
+                               I3&nbsp;arg3)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate.Trivariate,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate.Trivariate, I1, I2)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;I3&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+                             I1&nbsp;arg1,
+                             I2&nbsp;arg2)</pre>
+</li>
+</ul>
+<a name="curry(com.apriori.util.Predicate.Trivariate,java.lang.Object)">
+<!--   -->
+</a><a name="curry(com.apriori.util.Predicate.Trivariate, I1)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>curry</h4>
+<pre>public static&nbsp;&lt;I1,I2,I3&gt;&nbsp;<a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;I2,I3&gt;&nbsp;curry(<a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;? super I1,? super I2,? super I3&gt;&nbsp;predicate,
+                                          I1&nbsp;arg1)</pre>
 </li>
 </ul>
 </li>
@@ -409,7 +562,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/util/PrimeGenerator.html" title="class in com.apriori.util"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Predicates.html" target="_top">Frames</a></li>

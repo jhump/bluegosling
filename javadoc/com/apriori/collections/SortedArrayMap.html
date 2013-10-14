@@ -247,6 +247,12 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializabl
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/SortedArrayMap.html#size()">size</a></strong>()</code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SortedArrayMap.html#trimToSize()">trimToSize</a></strong>()</code>
+<div class="block">Shrinks the internal array so that it is exactly the necessary size.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.AbstractNavigableMap">
@@ -349,6 +355,17 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializabl
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="trimToSize()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>trimToSize</h4>
+<pre>public&nbsp;void&nbsp;trimToSize()</pre>
+<div class="block">Shrinks the internal array so that it is exactly the necessary size. Attempts to add an item
+ to the set after this is called will cause it to grow the internal array to fit the new item.</div>
+</li>
+</ul>
 <a name="putAll(java.util.Map)">
 <!--   -->
 </a>

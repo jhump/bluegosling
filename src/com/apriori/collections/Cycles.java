@@ -403,20 +403,21 @@ public final class Cycles {
    
    /**
     * Returns a view of the specified cycle as a {@link ListIterator}. Invoking {@link
-    * ListIterator#next()} is equivalent to calling {@link #current()} followed by
-    * {@link #advance()}. Invoking {@link ListIterator#previous()} is equivalent to calling
-    * {@link #retreat()} followed by {@link #current()}.
+    * ListIterator#next()} is equivalent to calling {@link Cycle#current()} followed by
+    * {@link Cycle#advance()}. Invoking {@link ListIterator#previous()} is equivalent to calling
+    * {@link Cycle#retreat()} followed by {@link Cycle#current()}.
     * 
     * <p>The list indices returned by this iterator do not have much meaning. The initial element
     * is considered to be list index zero. However, little attempt is made to keep this consistent,
     * especially in the face of concurrent modifications being made to the sequence through the
     * standard {@link Cycle} interface, or through other {@link ListIterator} views. Specifically,
-    * the first call to {@link #next()} will be the item at list index zero. Each call to {@link
-    * #next()} increments the current list index. Each call to {@link #previous()} decrements it.
-    * If the index would be become negative, it is set to {@code size() - 1}. If it would become
-    * greater than or equal to {@code size()}, it is set to zero. Unless the sequence is empty,
-    * {@link ListIterator#hasNext()} and {@link ListIterator#hasPrevious()} always return true,
-    * and movement through the sequence is cyclic and unending.
+    * the first call to {@link ListIterator#next()} will be the item at list index zero. Each call
+    * to {@link ListIterator#next()} increments the current list index. Each call to
+    * {@link ListIterator#previous()} decrements it. If the index would be become negative, it is
+    * set to {@code size() - 1}. If it would become greater than or equal to {@code size()}, it is
+    * set to zero. Unless the sequence is empty, {@link ListIterator#hasNext()} and
+    * {@link ListIterator#hasPrevious()} always return true, and movement through the sequence is
+    * cyclic and unending.
     *
     * @return a view of this cycle as a list iterator
     */

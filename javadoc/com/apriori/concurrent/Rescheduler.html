@@ -77,15 +77,20 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent</div>
-<h2 title="Interface Rescheduler" class="title">Interface Rescheduler</h2>
+<h2 title="Interface Rescheduler" class="title">Interface Rescheduler&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of future value for which a subsequent calculation may be rescheduled</dd></dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">Rescheduler</span></pre>
+<pre>public interface <span class="strong">Rescheduler&lt;T&gt;</span></pre>
+<div class="block">Handles rescheduling a periodic task. This computes the next scheduled execution time for a
+ repeating task. An interface provides greater flexibility than does simple API where the only
+ options for repeating tasks are to run at a fixed rate or with a fixed delay. Complicated
+ recurring schedules can be implemented this way.</div>
 </li>
 </ul>
 </div>
@@ -106,7 +111,10 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Rescheduler.html#scheduleNextStartTime(long)">scheduleNextStartTime</a></strong>(long&nbsp;priorStartTimeNanos)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Rescheduler.html#computeNextStartTime(com.apriori.concurrent.ListenableRepeatingFuture, long)">computeNextStartTime</a></strong>(<a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/Rescheduler.html" title="type parameter in Rescheduler">T</a>&gt;&nbsp;future,
+                    long&nbsp;priorStartTimeNanos)</code>
+<div class="block">Computes the next scheduled execution time for a repeating task, in system nano-time.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -123,13 +131,19 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="scheduleNextStartTime(long)">
+<a name="computeNextStartTime(com.apriori.concurrent.ListenableRepeatingFuture, long)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>scheduleNextStartTime</h4>
-<pre>long&nbsp;scheduleNextStartTime(long&nbsp;priorStartTimeNanos)</pre>
+<h4>computeNextStartTime</h4>
+<pre>long&nbsp;computeNextStartTime(<a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/Rescheduler.html" title="type parameter in Rescheduler">T</a>&gt;&nbsp;future,
+                        long&nbsp;priorStartTimeNanos)</pre>
+<div class="block">Computes the next scheduled execution time for a repeating task, in system nano-time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>future</code> - the task that completed and is being rescheduled</dd><dd><code>priorStartTimeNanos</code> - the start time, in <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/System.html?is-external=true#nanoTime()" title="class or interface in java.lang">nano-time</a>, of the
+       previously scheduled occurrence of the task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the new start time, in <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/System.html?is-external=true#nanoTime()" title="class or interface in java.lang">nano-time</a>, for the next
+       scheduled occurrence of the task</dd></dl>
 </li>
 </ul>
 </li>

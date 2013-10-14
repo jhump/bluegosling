@@ -155,7 +155,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#repeat(com.apriori.concurrent.Rescheduler)">repeat</a></strong>(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;nextTaskScheduler)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html#repeat(com.apriori.concurrent.Rescheduler)">repeat</a></strong>(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;nextTaskScheduler)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;</code></td>
@@ -269,7 +269,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>keepHistoryFor</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;keepHistoryFor(int&nbsp;numExecutions)</pre>
 <div class="block">Configures the maximum history size for the task.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>numExecutions</code> - the maximum number of executions for which history information is retained</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>numExecutions</code> - the maximum number of executions for which history information is
+       retained</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for method chaining</dd></dl>
 </li>
 </ul>
@@ -336,7 +337,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>repeat</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;repeat(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&nbsp;nextTaskScheduler)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent">TaskDefinition.Builder</a>&lt;<a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;repeat(<a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;nextTaskScheduler)</pre>
 </li>
 </ul>
 <a name="repeatAtFixedRate(long, java.util.concurrent.TimeUnit)">

@@ -3,37 +3,62 @@ package com.apriori.concurrent.atoms;
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-//TODO: javadoc
+/**
+ * An atom with a volatile value. Atomic updates are made using atomic compare-and-set operations
+ * on the value. 
+ *
+ * @param <T> the type of the atom's value
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: tests
 public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
 
-   private final AtomicReference<T> value;
+   /**
+    * The object used to update the value atomically.
+    */
+   @SuppressWarnings("rawtypes") // cannot use type args with class token
+   private static final AtomicReferenceFieldUpdater<SimpleAtom, Object> updater =
+         AtomicReferenceFieldUpdater.newUpdater(SimpleAtom.class, Object.class, "value");
    
+   /**
+    * The atom's value.
+    */
+   private volatile T value;
+   
+   /**
+    * Constructs a new atom with a {@code null} value and no validator.
+    */
    public SimpleAtom() {
-      value = new AtomicReference<T>();
    }
    
+   /**
+    * Constructs a new atom with the specified value and no validator.
+    */
    public SimpleAtom(T value) {
-      this.value = new AtomicReference<T>(value);
+      this.value = value;
    }
 
+   /**
+    * Constructs a new atom with the specified value and the specified validator.
+    */
    public SimpleAtom(T value, Predicate<? super T> validator) {
       super(validator);
-      this.value = new AtomicReference<T>(value);
+      this.value = value;
    }
 
    @Override
    public T get() {
-      return value.get();
+      return value;
    }
 
    @Override
    public T set(T newValue) {
       validate(newValue);
-      T oldValue = value.get();
-      value.set(newValue);
+      @SuppressWarnings("unchecked") // compiler checks type during construction and on mutation
+      T oldValue = (T) updater.getAndSet(this, newValue);
       notify(oldValue, newValue);
       return oldValue;
    }
@@ -43,10 +68,10 @@ public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T>
       T oldValue;
       T newValue;
       while (true) {
-         oldValue = value.get();
+         oldValue = value;
          newValue = function.apply(oldValue);
          validate(newValue);
-         if (value.compareAndSet(oldValue, newValue)) {
+         if (updater.compareAndSet(this, oldValue, newValue)) {
             break;
          }
       }
