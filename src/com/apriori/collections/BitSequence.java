@@ -147,7 +147,7 @@ public interface BitSequence extends Iterable<Boolean> {
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see Stream#next(int, BitOrder)
+    * @see BitSequence.Stream#next(int, BitSequence.BitOrder)
     */
    LongIterator bitTupleIterator(int tupleSize, BitOrder order);
    

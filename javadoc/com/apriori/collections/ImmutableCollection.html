@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ImmutableCollection.html" target="_top">Frames</a></li>
@@ -83,43 +83,34 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of element in the collection</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/HamtPersistentList.html" title="class in com.apriori.collections">HamtPersistentList</a>, <a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>, <a href="../../../com/apriori/collections/AbstractImmutableSet.html" title="class in com.apriori.collections">AbstractImmutableSet</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>, <a href="../../../com/apriori/collections/HamtPersistentList.html" title="class in com.apriori.collections">HamtPersistentList</a>, <a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">ImmutableCollection&lt;E&gt;</span>
-extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a>&lt;E&gt;</pre>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</pre>
+<div class="block">An immutable, read-only collection. This interface is similar to the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a>
+ interface except that it defines no mutation operations.
+ 
+ <p>The <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#remove()" title="class or interface in java.util"><code>remove()</code></a> operation of an immutable collection's
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true#iterator()" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> always throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="interface in com.apriori.collections">ImmutableIterable.Bidi</a>&lt;<a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="type parameter in ImmutableIterable.Bidi">E</a>&gt;</code></li>
-</ul>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -134,40 +125,48 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#contains(java.lang.Object)">contains</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#contains(java.lang.Object)">contains</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Determines if the specified object is a member of this collection.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<div class="block">Determines if this collection contains all of the specified items.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<div class="block">Determines if this collection contains any one of the specified items.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty()">isEmpty</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty()">isEmpty</a></strong>()</code>
+<div class="block">Determines if the collection is empty or not.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#size()">size</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#size()">size</a></strong>()</code>
+<div class="block">Determines the size of the collection.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray()">toArray</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray()">toArray</a></strong>()</code>
+<div class="block">Returns an array with the same elements as this collection.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray(T[])">toArray</a></strong>(T[]&nbsp;array)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray(T[])">toArray</a></strong>(T[]&nbsp;array)</code>
+<div class="block">Returns an array with the same elements as this collection and the same component type as the
+ specified array.</div>
+</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.html#immutableIterator()">immutableIterator</a></code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Iterable">
 <!--   -->
@@ -196,6 +195,8 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>size</h4>
 <pre>int&nbsp;size()</pre>
+<div class="block">Determines the size of the collection.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the number of elements in this collection</dd></dl>
 </li>
 </ul>
 <a name="isEmpty()">
@@ -205,6 +206,8 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>isEmpty</h4>
 <pre>boolean&nbsp;isEmpty()</pre>
+<div class="block">Determines if the collection is empty or not.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the collection is empty, false otherwise</dd></dl>
 </li>
 </ul>
 <a name="toArray()">
@@ -214,6 +217,10 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>toArray</h4>
 <pre><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
+<div class="block">Returns an array with the same elements as this collection. The order of elements in the
+ returned array is the same as the order that elements are returned by the collection's
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true#iterator()" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>an array with the same elements as this collection</dd><dt><span class="strong">See Also:</span></dt><dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util"><code>Collection.toArray()</code></a></dd></dl>
 </li>
 </ul>
 <a name="toArray(java.lang.Object[])">
@@ -225,6 +232,16 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>toArray</h4>
 <pre>&lt;T&gt;&nbsp;T[]&nbsp;toArray(T[]&nbsp;array)</pre>
+<div class="block">Returns an array with the same elements as this collection and the same component type as the
+ specified array. If the elements will fit in the specified array, they are copied there and
+ a <code>null</code> terminator is stored after the elements if the array can hold more. Otherwise,
+ a new array with the same element type is allocated and the elements are copied into it.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>array</code> - an array</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an array with the same elements as this collection and the same component type as
+       the specified array (possibly the same instance as the one specified)</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ArrayStoreException.html?is-external=true" title="class or interface in java.lang">ArrayStoreException</a></code> - if any of the elements are not assignable to the component type
+       of the specified array</dd><dt><span class="strong">See Also:</span></dt><dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util"><code>Collection.toArray(Object[])</code></a></dd></dl>
 </li>
 </ul>
 <a name="contains(java.lang.Object)">
@@ -234,6 +251,9 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>contains</h4>
 <pre>boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">Determines if the specified object is a member of this collection.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - an object</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the specified object is a member of this collection, false otherwise</dd></dl>
 </li>
 </ul>
 <a name="containsAll(java.lang.Iterable)">
@@ -243,6 +263,9 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>containsAll</h4>
 <pre>boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<div class="block">Determines if this collection contains all of the specified items.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>items</code> - a sequence of items</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if this collection contains all of the specified items</dd></dl>
 </li>
 </ul>
 <a name="containsAny(java.lang.Iterable)">
@@ -252,6 +275,9 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <li class="blockList">
 <h4>containsAny</h4>
 <pre>boolean&nbsp;containsAny(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<div class="block">Determines if this collection contains any one of the specified items.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>items</code> - a sequence of items</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if this collection contains at least one of the specified items</dd></dl>
 </li>
 </ul>
 </li>
@@ -280,7 +306,7 @@ extends <a href="../../../com/apriori/collections/ImmutableIterable.html" title=
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ImmutableCollection.html" target="_top">Frames</a></li>

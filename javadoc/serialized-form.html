@@ -235,6 +235,79 @@
 </li>
 </ul>
 </li>
+<li class="blockList"><a name="com.apriori.collections.HamtMap">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">com.apriori.collections.HamtMap</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-9064441005458513893L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serialized_methods">
+<!--   -->
+</a>
+<h3>Serialization Methods</h3>
+<ul class="blockList">
+<li class="blockList"><a name="readObject(java.io.ObjectInputStream)">
+<!--   -->
+</a>
+<h4>readObject</h4>
+<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
+                 throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
+                        <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<div class="block">Customizes de-serialization to read list of mappings the same way as written by
+ <a href="com/apriori/collections/HamtMap.html#writeObject(java.io.ObjectOutputStream)"><code>HamtMap.writeObject(ObjectOutputStream)</code></a>.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+            class</dd></dl>
+</li>
+<li class="blockListLast"><a name="writeObject(java.io.ObjectOutputStream)">
+<!--   -->
+</a>
+<h4>writeObject</h4>
+<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
+                  throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Customizes serialization by just writing the mappings as a sequence of key, value, key, value,
+ etc.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.collections.LinkedPersistentList">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">com.apriori.collections.LinkedPersistentList</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-4079904855716212892L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>value</h4>
+<pre><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> value</pre>
+</li>
+<li class="blockList">
+<h4>next</h4>
+<pre><a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a>&lt;<a href="com/apriori/collections/LinkedPersistentList.html" title="type parameter in LinkedPersistentList">E</a>&gt; next</pre>
+</li>
+<li class="blockListLast">
+<h4>size</h4>
+<pre>int size</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a name="com.apriori.collections.MergeablePriorityQueue">
 <!--   -->
 </a>
@@ -298,7 +371,7 @@
 <pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/6/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
                  throws <a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
                         <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
-<div class="block">Customizes de-serialization to read set of mappings same way as written by
+<div class="block">Customizes de-serialization to read the set of mappings the same way as written by
  <a href="com/apriori/collections/SortedArrayMap.html#writeObject(java.io.ObjectOutputStream)"><code>SortedArrayMap.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
@@ -827,6 +900,15 @@
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-3746546051862930866L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="com.apriori.util.SequenceFinishedException">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">com.apriori.util.SequenceFinishedException</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1224425258285484624L</dd>
 </dl>
 </li>
 </ul>

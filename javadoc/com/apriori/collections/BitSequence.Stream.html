@@ -240,6 +240,8 @@
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>numberOfBits</code> - the number of bits to fetch</dd><dd><code>order</code> - the order of bits in the returned value</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the next chunk of bits</dd>
 <dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the requested number of bits is less than one or
+       greater than sixty-four</dd>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the requested number of bits is greater than the number
        of bits remaining in the stream</dd></dl>
 </li>
@@ -256,6 +258,8 @@
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>numberOfBits</code> - the number of bits to fetch</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the next chunk of bits</dd>
 <dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the requested number of bits is less than one or
+       greater than sixty-four</dd>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the requested number of bits is greater than the number
        of bits remaining in the stream</dd></dl>
 </li>
@@ -272,6 +276,7 @@
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>numberOfBits</code> - the number of bits to fetch</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the next chunk of bits, as a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a></dd>
 <dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the requested number of bits is negative</dd>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the requested number of bits is greater than the number
        of bits remaining in the stream</dd></dl>
 </li>

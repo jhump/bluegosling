@@ -61,7 +61,7 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     * 
-    * @see #prefixMap(Iterable)
+    * @see #prefixMap(List)
     */
    CompositeTrie<K, C, V> prefixMapByKey(K prefix);
    
@@ -73,7 +73,7 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @param numComponents the maximum number of components of the prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     * 
-    * @see #prefixMap(Iterable, int)
+    * @see #prefixMap(List, int)
     */
    CompositeTrie<K, C, V> prefixMapByKey(K prefix, int numComponents);
 }

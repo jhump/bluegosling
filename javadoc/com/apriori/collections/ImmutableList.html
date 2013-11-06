@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/ImmutableIterator.Bidi.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -85,7 +85,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -93,7 +93,7 @@
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/HamtPersistentList.html" title="class in com.apriori.collections">HamtPersistentList</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractLinkedImmutableList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>, <a href="../../../com/apriori/collections/HamtPersistentList.html" title="class in com.apriori.collections">HamtPersistentList</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dd>
 </dl>
 <hr>
 <br>
@@ -105,21 +105,6 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="interface in com.apriori.collections">ImmutableIterable.Bidi</a>&lt;<a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="type parameter in ImmutableIterable.Bidi">E</a>&gt;</code></li>
-</ul>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -172,13 +157,6 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
 <code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#size()">size</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray(T[])">toArray</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.html#immutableIterator()">immutableIterator</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Iterable">
@@ -307,7 +285,7 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/ImmutableIterator.Bidi.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

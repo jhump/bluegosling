@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of element fetched from the iterator</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;T&gt;</dd>
@@ -108,6 +109,10 @@
 <pre>protected abstract class <span class="strong">AbstractNavigableMap.BaseIteratorImpl&lt;T&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;T&gt;</pre>
+<div class="block">An iterator over the mappings in this map. This is the base class used for iterators over the
+ map's keys, its entries, and its values.
+ 
+ <p>This iterator implements fail-fast behavior.</div>
 </li>
 </ul>
 </div>
@@ -128,7 +133,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#AbstractNavigableMap.BaseIteratorImpl()">AbstractNavigableMap.BaseIteratorImpl</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#AbstractNavigableMap.BaseIteratorImpl()">AbstractNavigableMap.BaseIteratorImpl</a></strong>()</code>
+<div class="block">Constructs a new iterator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -147,11 +154,15 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#advance(K)">advance</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;previousKey)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#advance(K)">advance</a></strong>(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;previousKey)</code>
+<div class="block">Advances the iterator and returns the next entry to be visited during iteration.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="type parameter in AbstractNavigableMap.BaseIteratorImpl">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</code>
+<div class="block">Computes the value fetched from this iterator based on the given map entry.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -167,7 +178,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#start()">start</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#start()">start</a></strong>()</code>
+<div class="block">Returns the first entry that will be visited during iteration.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -198,6 +211,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>AbstractNavigableMap.BaseIteratorImpl</h4>
 <pre>protected&nbsp;AbstractNavigableMap.BaseIteratorImpl()</pre>
+<div class="block">Constructs a new iterator.</div>
 </li>
 </ul>
 </li>
@@ -215,6 +229,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>start</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;start()</pre>
+<div class="block">Returns the first entry that will be visited during iteration. The default is the map's
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#firstEntry()" title="class or interface in java.util">first entry</a>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the entry returned by the very first call to <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next()"><code>next()</code></a> or <code>null</code> if
+       the map is empty</dd></dl>
 </li>
 </ul>
 <a name="advance(java.lang.Object)">
@@ -226,6 +244,11 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>advance</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;advance(<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;previousKey)</pre>
+<div class="block">Advances the iterator and returns the next entry to be visited during iteration. The
+ default, for ascending iteration, returns the lowest key that is greater than the specified
+ previous key (using <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#higherEntry(K)" title="class or interface in java.util"><code>NavigableMap.higherEntry(Object)</code></a>).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>previousKey</code> - the previous key visited during iteration</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the next entry to be visited</dd></dl>
 </li>
 </ul>
 <a name="compute(java.util.Map.Entry)">
@@ -235,6 +258,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>compute</h4>
 <pre>protected abstract&nbsp;<a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="type parameter in AbstractNavigableMap.BaseIteratorImpl">T</a>&nbsp;compute(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</pre>
+<div class="block">Computes the value fetched from this iterator based on the given map entry.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - the visisted map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the value to return from <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next()"><code>next()</code></a></dd></dl>
 </li>
 </ul>
 <a name="hasNext()">

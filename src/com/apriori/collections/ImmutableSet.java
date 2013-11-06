@@ -26,7 +26,7 @@ public interface ImmutableSet<E> extends ImmutableCollection<E> {
     * Returns the hash code value for this set. The hash code of a set is defined to be the sum of
     * the hash codes of the elements in the set, where the hash code of a {@code null} element is
     * defined to be zero. This ensures that {@code s1.equals(s2)} implies that
-    * {@code s1.hashCode()==s2.hashCode()} for any two sets {@coe s1} and {@code s2}, as required
+    * {@code s1.hashCode()==s2.hashCode()} for any two sets {@code s1} and {@code s2}, as required
     * by the general contract of {@link Object#hashCode}.
     *
     * @return the hash code for this set

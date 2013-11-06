@@ -109,43 +109,55 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">Represents the output of a generated sequence.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Operator.html" title="interface in com.apriori.util">Operator</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A function that does not fully map the input domain to the output domain.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/PartialFunction.Bivariate.html" title="interface in com.apriori.util">PartialFunction.Bivariate</a>&lt;I1,I2,O&gt;</td>
 <td class="colLast">
 <div class="block">A partial function that computes a value from two inputs.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/PartialFunction.Trivariate.html" title="interface in com.apriori.util">PartialFunction.Trivariate</a>&lt;I1,I2,I3,O&gt;</td>
 <td class="colLast">
 <div class="block">A partial function that computes a value from three inputs.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">Like a <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util"><code>Function</code></a>, but returns a primitive boolean value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util">Predicate.Bivariate</a>&lt;T1,T2&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util"><code>function</code></a> that returns a boolean value.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util">Predicate.Trivariate</a>&lt;T1,T2,T3&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="../../../com/apriori/util/Function.Trivariate.html" title="interface in com.apriori.util"><code>function</code></a> that returns a boolean value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
+<td class="colLast">
+<div class="block">Represents a sequence of items produced by a <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util"><code>Generator</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -158,6 +170,12 @@
 <td class="colFirst"><a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util">Source</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">An interface that represents a source of data.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A sequence that does not throw checked exceptions from calls to <a href="../../../com/apriori/util/Sequence.html#next()"><code>Sequence.next()</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -194,49 +212,61 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
+<td class="colLast">
+<div class="block">An experimental class to provide generator functionality in Java.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></td>
 <td class="colLast">
 <div class="block">A utility for printing indented content.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/PartialFunctions.html" title="class in com.apriori.util">PartialFunctions</a></td>
 <td class="colLast">
 <div class="block">Numerous utility methods for using <a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util"><code>PartialFunction</code></a>s.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Predicates.html" title="class in com.apriori.util">Predicates</a></td>
 <td class="colLast">
 <div class="block">Numerous utility methods related to using <a href="../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util"><code>Predicate</code></a>s.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/util/PrimeGenerator.html" title="class in com.apriori.util">PrimeGenerator</a>&lt;T extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Number.html?is-external=true" title="class or interface in java.lang">Number</a> & <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;&gt;</td>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/util/PrimeIterator.html" title="class in com.apriori.util">PrimeIterator</a>&lt;T extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Number.html?is-external=true" title="class or interface in java.lang">Number</a> & <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;&gt;</td>
 <td class="colLast">
-<div class="block">Generates a sequence of prime numbers.</div>
+<div class="block">Iterates through prime numbers.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Sources.html" title="class in com.apriori.util">Sources</a></td>
 <td class="colLast">
 <div class="block">Utility methods for constructing and using <a href="../../../com/apriori/util/Source.html" title="interface in com.apriori.util"><code>Source</code></a>s.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></td>
 <td class="colLast">
 <div class="block">A utility for measuring elapsed time.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/util/Streams.html" title="class in com.apriori.util">Streams</a></td>
 <td class="colLast">
 <div class="block">Utility methods for working with streams.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util"><code>Generator</code></a> that does not throw checked exceptions during generation.</div>
 </td>
 </tr>
 </tbody>
@@ -269,6 +299,12 @@
 <td class="colFirst"><a href="../../../com/apriori/util/CloningException.html" title="class in com.apriori.util">CloningException</a></td>
 <td class="colLast">
 <div class="block">An exception that occurs during a cloning operation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">SequenceFinishedException</a></td>
+<td class="colLast">
+<div class="block">An exception thrown during <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">generation</a> of a sequence of elements.</div>
 </td>
 </tr>
 </tbody>

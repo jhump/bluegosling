@@ -108,6 +108,7 @@
 <br>
 <pre>protected class <span class="strong">AbstractNavigableMap.KeyIteratorImpl</span>
 extends <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a>&lt;K&gt;</pre>
+<div class="block">An iterator over the keys in this map.</div>
 </li>
 </ul>
 </div>
@@ -147,7 +148,9 @@ extends <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseItera
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.KeyIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.KeyIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</code>
+<div class="block">Computes the value fetched from this iterator based on the given map entry.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -202,10 +205,14 @@ extends <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseItera
 <li class="blockList">
 <h4>compute</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&nbsp;compute(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</pre>
+<div class="block">Computes the value fetched from this iterator based on the given map entry.
+ 
+ <p>This implementation extracts the key from the specified entry.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - the visisted map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the value to return from <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next()"><code>AbstractNavigableMap.BaseIteratorImpl.next()</code></a></dd></dl>
 </li>
 </ul>
 </li>

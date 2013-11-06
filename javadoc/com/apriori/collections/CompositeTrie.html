@@ -101,7 +101,8 @@
 <pre>public interface <span class="strong">CompositeTrie&lt;K,C,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</pre>
 <div class="block">A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
- are first broken down into a <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">sequence</a> of constituent components.</div>
+ are first broken down into a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">list</a> of constituent components.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections"><code>SequenceTrie</code></a></dd></dl>
 </li>
 </ul>
 </div>
@@ -149,13 +150,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.lang.Iterable)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.util.List)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.lang.Iterable, int)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix,
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.util.List, int)">prefixMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix,
          int&nbsp;numComponents)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
@@ -223,25 +224,25 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd></dl>
 </li>
 </ul>
-<a name="prefixMap(java.lang.Iterable)">
+<a name="prefixMap(java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMap</h4>
-<pre><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix)</pre>
+<pre><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix)</pre>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - a key prefix</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd></dl>
 </li>
 </ul>
-<a name="prefixMap(java.lang.Iterable, int)">
+<a name="prefixMap(java.util.List, int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMap</h4>
-<pre><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix,
+<pre><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">K</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>,<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/CompositeTrie.html" title="type parameter in CompositeTrie">C</a>&gt;&nbsp;prefix,
                              int&nbsp;numComponents)</pre>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. A maximum number of
  components of the specified prefix are considered. So the effective prefix is the specified
@@ -262,7 +263,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. The specified key
  is broken up into components, and the resulting sequence is used as a prefix.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - a key prefix</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.lang.Iterable)"><code>prefixMap(Iterable)</code></a></dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.util.List)"><code>prefixMap(List)</code></a></dd></dl>
 </li>
 </ul>
 <a name="prefixMapByKey(java.lang.Object,int)">
@@ -278,7 +279,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. The specified key
  is broken up into components, and the resulting sequence is used as a prefix.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - a key prefix</dd><dd><code>numComponents</code> - the maximum number of components of the prefix</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.lang.Iterable, int)"><code>prefixMap(Iterable, int)</code></a></dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>a view of this map that represents the subset of keys with the specified prefix</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap(java.util.List, int)"><code>prefixMap(List, int)</code></a></dd></dl>
 </li>
 </ul>
 </li>

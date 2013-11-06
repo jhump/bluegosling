@@ -103,9 +103,9 @@
    <li><strong>Synchronous</strong>: Mutation events are made immediately, in the current thread.
    When a synchronous mutation method has returned, the change has been made and watchers have
    been notified.</li>
-   <li><strong>Synchronous</strong>: Mutation events are queued immediately but may execute at
+   <li><strong>Asynchronous</strong>: Mutation events are queued immediately but may execute at
    some point in the future, in a different thread. Asynchronous mutations return futures that
-   are completed when the change has been made and watchers have been notified.</li>
+   are completed when the changes have been made and watchers have been notified.</li>
  </ul></div>
 <dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms"><code>SynchronousAtom</code></a>, 
 <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a></dd></dl>

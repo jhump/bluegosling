@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/Immutables.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ImmutableSet.html" target="_top">Frames</a></li>
@@ -83,43 +83,31 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of element in the set</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractImmutableSet.html" title="class in com.apriori.collections">AbstractImmutableSet</a>, <a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">ImmutableSet&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</pre>
+<div class="block">An immutable, read-only collection that does not contain duplicate elements. This is analogous
+ to the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a> interface except that it defines no mutation operations.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="interface in com.apriori.collections">ImmutableIterable.Bidi</a>&lt;<a href="../../../com/apriori/collections/ImmutableIterable.Bidi.html" title="type parameter in ImmutableIterable.Bidi">E</a>&gt;</code></li>
-</ul>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -134,11 +122,15 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableSet.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableSet.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Returns true if this set is equal to the specified object.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableSet.html#hashCode()">hashCode</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableSet.html#hashCode()">hashCode</a></strong>()</code>
+<div class="block">Returns the hash code value for this set.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -147,13 +139,6 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
 <code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#size()">size</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray(T[])">toArray</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.collections.ImmutableIterable">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableIterable.html" title="interface in com.apriori.collections">ImmutableIterable</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableIterable.html#immutableIterator()">immutableIterator</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Iterable">
@@ -183,10 +168,15 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 <li class="blockList">
 <h4>equals</h4>
 <pre>boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">Returns true if this set is equal to the specified object. The objects are equal if both of
+ them are <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections"><code>ImmutableSet</code></a>s and they contain the same elements. They contain the same
+ elements when this set <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll(java.lang.Iterable)">contains all</a> of the items in the
+ specified set and vice versa.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - an object</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the specified object is an immutable set with the same elements</dd></dl>
 </li>
 </ul>
 <a name="hashCode()">
@@ -196,10 +186,15 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 <li class="blockList">
 <h4>hashCode</h4>
 <pre>int&nbsp;hashCode()</pre>
+<div class="block">Returns the hash code value for this set. The hash code of a set is defined to be the sum of
+ the hash codes of the elements in the set, where the hash code of a <code>null</code> element is
+ defined to be zero. This ensures that <code>s1.equals(s2)</code> implies that
+ <code>s1.hashCode()==s2.hashCode()</code> for any two sets <code>s1</code> and <code>s2</code>, as required
+ by the general contract of <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang"><code>Object.hashCode()</code></a>.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>the hash code for this set</dd><dt><span class="strong">See Also:</span></dt><dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true#hashCode()" title="class or interface in java.util"><code>Set.hashCode()</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -228,7 +223,7 @@ extends <a href="../../../com/apriori/collections/ImmutableCollection.html" titl
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/Immutables.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ImmutableSet.html" target="_top">Frames</a></li>

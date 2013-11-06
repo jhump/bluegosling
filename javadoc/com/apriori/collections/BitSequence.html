@@ -87,10 +87,6 @@
 <dt>All Superinterfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</dd>
 </dl>
-<dl>
-<dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/AbstractBitSequence.html" title="class in com.apriori.collections">AbstractBitSequence</a></dd>
-</dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">BitSequence</span>
@@ -177,8 +173,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequence.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
-<div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents as this
- sequence.</div>
+<div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents and in
+ the same order as this sequence.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -384,9 +380,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
  </pre>
  The corresponding list of longs means a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> of <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang"><code>Long</code></a>s whose length
  is exactly enough to contain all of the bits in the sequence, whose first element represents
- the first 64 bits of the sequence, and whose last element represents the last 1 to 64 bits
- with any superfluous bits zeroed out (when the sequence length is not a multiple of 64). The
- second term in the hash code happens to be the same as calculated by
+ the first 64 bits of the sequence (least significant bit first), and whose last element
+ represents the last 1 to 64 bits (least significant bit first) with any superfluous (most
+ significant) bits zeroed out when the sequence length is not a multiple of 64.
+ 
+ <p>The second term in the hash code happens to be the same as calculated by
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Arrays.html?is-external=true#hashCode(long[])" title="class or interface in java.util"><code>Arrays.hashCode(long[])</code></a> with an array whose contents correspond to the bits 
  in the sequence (in the same manner described above).</div>
 <dl>
@@ -402,8 +400,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <li class="blockList">
 <h4>equals</h4>
 <pre>boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents as this
- sequence.</div>
+<div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents and in
+ the same order as this sequence.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
