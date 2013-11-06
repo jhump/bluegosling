@@ -102,8 +102,8 @@ public final class Sources {
                // don't bother synchronizing if we know the value's already been computed
                synchronized (this) {
                   if (!invoked) {
-                     invoked = true;
                      result = source.get();
+                     invoked = true;
                   }
                }
             }

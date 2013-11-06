@@ -7,10 +7,12 @@ import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 
 /**
- * Generates a sequence of prime numbers. The sequence enumerates all primes, starting with two.
- * The sequence is complete when the maximum possible range is exhausted. For example, a generator
- * of prime bytes stops after the largest prime that is less than or equal to 127 (which is the
- * maximum value that can be represented by a byte).
+ * Iterates through prime numbers. The sequence enumerates all primes, starting with two. The
+ * sequence is complete when the maximum possible range is exhausted. For example, an iterator of
+ * prime {@code byte} values stops after the largest prime that is less than or equal to 127 (which
+ * is the maximum value that can be represented by a byte). Since {@link BigInteger} has no maximum
+ * value, the {@link #hasNext()} method of an iterator of prime {@link BigInteger}s will never
+ * return false.
  * 
  * <p>This is implemented using a <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve
  * of Eratosthenese</a>. This implementation is an incremental sieve, so it has no fixed upper
@@ -18,22 +20,22 @@ import java.util.PriorityQueue;
  * <em>O(n)</em> memory, so a lot of memory is required for very large {@code n}.
  * 
  * <p>The phrase "current numeric type" in the documentation refers to the concrete type for type
- * argument {@code T}. For example, with a {@code PrimeGenerator<Long>}, the "current numeric type"
+ * argument {@code T}. For example, with a {@code PrimeIterator<Long>}, the "current numeric type"
  * would be {@code long}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <T> the type of numeric value generated
  */
-public abstract class PrimeGenerator<T extends Number & Comparable<T>> implements Iterator<T> {
+public abstract class PrimeIterator<T extends Number & Comparable<T>> implements Iterator<T> {
 
    /**
-    * Constructs a generator of {@code byte}s that are prime.
+    * Constructs an iterator of {@code byte}s that are prime.
     * 
-    * @return a generator of prime {@code byte}s
+    * @return an iterator of prime {@code byte}s
     */
-   public static PrimeGenerator<Byte> primeByteGenerator() {
-      return new PrimeGenerator<Byte>() {
+   public static PrimeIterator<Byte> primeByteIterator() {
+      return new PrimeIterator<Byte>() {
          @Override
          protected Byte two() {
             return 2;
@@ -55,12 +57,12 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    }
    
    /**
-    * Constructs a generator of {@code short}s that are prime.
+    * Constructs an iterator of {@code short}s that are prime.
     * 
-    * @return a generator of prime {@code short}s
+    * @return an iterator of prime {@code short}s
     */
-   public static PrimeGenerator<Short> primeShortGenerator() {
-      return new PrimeGenerator<Short>() {
+   public static PrimeIterator<Short> primeShortIterator() {
+      return new PrimeIterator<Short>() {
          @Override
          protected Short two() {
             return 2;
@@ -82,13 +84,13 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    }
 
    /**
-    * Constructs a generator of {@code int}s that are prime. There are enough primes in this range
+    * Constructs an iterator of {@code int}s that are prime. There are enough primes in this range
     * that the heap could be exhausted before enumerating all of them.
     * 
-    * @return a generator of prime {@code int}s
+    * @return an iterator of prime {@code int}s
     */
-   public static PrimeGenerator<Integer> primeIntegerGenerator() {
-      return new PrimeGenerator<Integer>() {
+   public static PrimeIterator<Integer> primeIntegerIterator() {
+      return new PrimeIterator<Integer>() {
          @Override
          protected Integer two() {
             return 2;
@@ -110,13 +112,13 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    }
    
    /**
-    * Constructs a generator of {@code long}s that are prime. There are enough primes in this range
+    * Constructs an iterator of {@code long}s that are prime. There are enough primes in this range
     * that the heap will likely be exhausted before enumerating all of them.
     * 
-    * @return a generator of prime {@code long}s
+    * @return an iterator of prime {@code long}s
     */
-   public static PrimeGenerator<Long> primeLongGenerator() {
-      return new PrimeGenerator<Long>() {
+   public static PrimeIterator<Long> primeLongIterator() {
+      return new PrimeIterator<Long>() {
          @Override
          protected Long two() {
             return 2L;
@@ -147,13 +149,13 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    static float MAX_FLOAT = 16777216f;
 
    /**
-    * Constructs a generator of {@code float}s that are prime. There are enough primes in this range
+    * Constructs an iterator of {@code float}s that are prime. There are enough primes in this range
     * that the heap could be exhausted before enumerating all of them.
     * 
-    * @return a generator of prime {@code float}s
+    * @return an iterator of prime {@code float}s
     */
-   public static PrimeGenerator<Float> primeFloatGenerator() {
-      return new PrimeGenerator<Float>() {
+   public static PrimeIterator<Float> primeFloatIterator() {
+      return new PrimeIterator<Float>() {
          @Override
          protected Float two() {
             return 2f;
@@ -184,13 +186,13 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    static double MAX_DOUBLE = 9007199254740992.0;
 
    /**
-    * Constructs a generator of {@code double}s that are prime. There are enough primes in this
+    * Constructs an iterator of {@code double}s that are prime. There are enough primes in this
     * range that the heap will likely be exhausted before enumerating all of them.
     * 
-    * @return a generator of prime {@code double}s
+    * @return an iterator of prime {@code double}s
     */
-   public static PrimeGenerator<Double> primeDoubleGenerator() {
-      return new PrimeGenerator<Double>() {
+   public static PrimeIterator<Double> primeDoubleIterator() {
+      return new PrimeIterator<Double>() {
          @Override
          protected Double two() {
             return 2.0;
@@ -217,14 +219,14 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
    
    /**
-    * Constructs a generator of {@link BigInteger}s that are prime. Since this class allows for
+    * Constructs an iterator of {@link BigInteger}s that are prime. Since this class allows for
     * arbitrary precision and word length, this will generate primes until the heap is exhausted.
     * In other words, {@link #hasNext()} will never return {@code false}.
     * 
-    * @return a generator of prime {@link BigInteger}s
+    * @return an iterator of prime {@link BigInteger}s
     */
-   public static PrimeGenerator<BigInteger> primeBigIntegerGenerator() {
-      return new PrimeGenerator<BigInteger>() {
+   public static PrimeIterator<BigInteger> primeBigIntegerGenerator() {
+      return new PrimeIterator<BigInteger>() {
          
          @Override
          protected BigInteger two() {
@@ -249,14 +251,14 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
    static final BigDecimal TWO_DECIMAL = new BigDecimal(TWO);
    
    /**
-    * Constructs a generator of {@link BigDecimal}s that are prime. Since this class allows for
+    * Constructs an iterator of {@link BigDecimal}s that are prime. Since this class allows for
     * arbitrary precision and word length, this will generate primes until the heap is exhausted.
     * In other words, {@link #hasNext()} will never return {@code false}.
     * 
-    * @return a generator of prime {@link BigDecimal}s
+    * @return an iterator of prime {@link BigDecimal}s
     */
-   public static PrimeGenerator<BigDecimal> primeBigDecimalGenerator() {
-      return new PrimeGenerator<BigDecimal>() {
+   public static PrimeIterator<BigDecimal> primeBigDecimalGenerator() {
+      return new PrimeIterator<BigDecimal>() {
          
          @Override
          protected BigDecimal two() {
@@ -313,7 +315,7 @@ public abstract class PrimeGenerator<T extends Number & Comparable<T>> implement
     */
    private T next;
    
-   PrimeGenerator() {
+   PrimeIterator() {
       queue = new PriorityQueue<PrimeFilter<T>>();
       next = two();
    }

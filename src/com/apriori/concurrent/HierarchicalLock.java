@@ -731,6 +731,9 @@ public class HierarchicalLock {
                   checkForDeadlock(i, true);
                   return false;
                }
+               
+               assert holders.get() == null && node == null;
+               
                long newState = stamp(state) + EXCLUSIVE_UNIT + STAMP_UNIT;
                if (compareAndSetState(state, newState)) {
                   break;
@@ -756,6 +759,9 @@ public class HierarchicalLock {
                   return false;
                }
                
+               assert holders.get() == node;
+               assert node.next == null;
+               
                long newState = stamp(state) + EXCLUSIVE_UNIT + STAMP_UNIT;
                if (compareAndSetState(state, newState)) {
                   break;
@@ -764,8 +770,6 @@ public class HierarchicalLock {
          }
          
          // got the exclusive lock!
-         assert holders.get() == null && node == null;
-         
          node = new HolderNode(true);
          holders.set(node);
          currentHolder.set(node);
@@ -824,6 +828,9 @@ public class HierarchicalLock {
                if (sharedCount(state) == MAX_SHARED_COUNT) {
                   throw new IllegalStateException("already locked maximum number of times");
                }
+               
+               assert node == null;
+               
                long newState = state + SHARED_UNIT + STAMP_UNIT;
                if (compareAndSetState(state, newState)) {
                   break;
@@ -850,7 +857,7 @@ public class HierarchicalLock {
          }
          
          // got a new shared lock!
-         assert node == null;
+         assert holders.get() == null || !holders.get().isExclusive;
          
          node = new HolderNode(false);
          addHolder(node);

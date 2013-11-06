@@ -1,7 +1,6 @@
 package com.apriori.concurrent.atoms;
 
 import com.apriori.collections.HamtPersistentSet;
-import com.apriori.collections.Immutables;
 import com.apriori.collections.PersistentSet;
 import com.apriori.util.Predicate;
 
@@ -22,7 +21,7 @@ public abstract class AbstractAtom<T> implements Atom<T> {
     */
    private final AtomicReference<PersistentSet<Watcher<? super T>>> watchers =
          new AtomicReference<PersistentSet<Watcher<? super T>>>(
-               new HamtPersistentSet<Watcher<? super T>>());
+               HamtPersistentSet.<Watcher<? super T>>create());
 
    /**
     * An optional validator (might be {@code null}).
@@ -76,7 +75,7 @@ public abstract class AbstractAtom<T> implements Atom<T> {
     * @param newValue the atom's new value
     */
    protected void notify(T oldValue, T newValue) {
-      for (Watcher<? super T> watcher : Immutables.asIfMutable(watchers.get())) {
+      for (Watcher<? super T> watcher : watchers.get()) {
          notify(watcher, oldValue, newValue);
       }
    }

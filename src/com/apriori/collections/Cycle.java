@@ -143,11 +143,11 @@ public interface Cycle<E> extends Collection<E> {
    
    /**
     * Returns an unending iterator that repeats through the sequence, cyclically. The first item
-    * returned by this iterator will be the "current" element.
+    * returned by {@link BidiIterator#next()} will be the "current" element.
     *
     * @return an unending iterator
     */
-   Iterator<E> cycle();
+   BidiIterator<E> cycle();
    
    /**
     * Returns a view of this sequence in reverse order. The current element remains unchanged, but

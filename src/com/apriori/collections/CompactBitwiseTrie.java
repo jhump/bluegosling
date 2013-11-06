@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -668,12 +669,12 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix) {
       return prefixMap(BitSequences.fromIterator(prefix.iterator()));
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix, int numComponents) {
       return prefixMap(BitSequences.fromIterator(prefix.iterator()), numComponents);
    }
    

@@ -70,7 +70,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *    itself schedules a successor when invoked), tasks specify a {@link ScheduleNextTaskPolicy}.
  *    Also, tasks specify a {@link Rescheduler}, which provides greater flexibility over the timing
  *    of subsequent tasks. {@link Rescheduler} implementations are provided for simple fixed-rate
- *    and fixed-delay scheduled.</li>
+ *    and fixed-delay schedules.</li>
  *    <li>Notification of individual invocations. For repeated tasks, instead of only being able to
  *    wait for all invocations to finish (which generally only happens after an invocation fails)
  *    or cancel all subsequent invocations, this API provides granularity at individual task level.

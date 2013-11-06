@@ -3,6 +3,7 @@ package com.apriori.collections;
 import com.apriori.util.Function;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.RandomAccess;
 import java.util.Set;
 
 // TODO: javadoc
@@ -18,32 +20,14 @@ public final class Immutables {
    private Immutables() {
    }
    
-   public static <E> Iterator<E> asIfMutable(final ImmutableIterator<? extends E> iterator) {
-      // extract to named class so conversion of this back to immutable can be a no-op
-      return new Iterator<E>() {
-         @Override
-         public boolean hasNext() {
-            return iterator.hasNext();
-         }
-
-         @Override
-         public E next() {
-            return iterator.next();
-         }
-
-         @Override
-         public void remove() {
-            throw new UnsupportedOperationException();
-         }
-      };
-   }
-
    public static <E> Collection<E> asIfMutable(ImmutableCollection<? extends E> collection) {
       return new CollectionFromImmutable<E>(collection);
    }
 
    public static <E> List<E> asIfMutable(ImmutableList<? extends E> list) {
-      return new ListFromImmutable<E>(list);
+      return list instanceof RandomAccess
+            ? new RandomAccessListFromImmutable<E>(list)
+            : new ListFromImmutable<E>(list);
    }
 
    public static <E> Set<E> asIfMutable(ImmutableSet<? extends E> set) {
@@ -168,60 +152,6 @@ public final class Immutables {
       };
    }
 
-   public static <E> ImmutableIterator<E> asIfImmutable(final Iterator<? extends E> iterator) {
-      // extract to named class so conversion of this back to mutable can be a no-op
-      return new ImmutableIterator<E>() {
-         @Override
-         public boolean hasNext() {
-            return iterator.hasNext();
-         }
-
-         @Override
-         public E next() {
-            return iterator.next();
-         }
-      };
-   }
-
-   public static <E> ImmutableIterator.Bidi<E> asIfImmutable(
-         final ListIterator<? extends E> iterator) {
-      // extract to named class so conversion of this back to mutable can be a no-op
-      return new ImmutableIterator.Bidi<E>() {
-         @Override
-         public boolean hasNext() {
-            return iterator.hasNext();
-         }
-
-         @Override
-         public E next() {
-            return iterator.next();
-         }
-
-         @Override
-         public ImmutableIterator.Bidi<E> reverse() {
-            return asIfImmutable(CollectionUtils.reverseIterator(iterator));
-         }
-
-         @Override
-         public boolean hasPrevious() {
-            return iterator.hasPrevious();
-         }
-
-         @Override
-         public E previous() {
-            return iterator.previous();
-         }
-      };
-   }
-
-   public static <E> ImmutableIterable<E> toImmutableIterable(E... elements) {
-      return toImmutableList(elements);
-   }
-   
-   public static <E> ImmutableIterable<E> toImmutableIterable(Iterable<? extends E> iterable) {
-      return toImmutableList(iterable);
-   }
-
    public static <E> ImmutableCollection<E> toImmutableCollection(E... elements) {
       return toImmutableList(elements);
    }
@@ -231,8 +161,7 @@ public final class Immutables {
    }
 
    public static <E> ImmutableList<E> toImmutableList(E... elements) {
-      // TODO
-      return null;
+      return toImmutableList(Arrays.asList(elements));
    }
 
    public static <E> ImmutableList<E> toImmutableList(Iterable<? extends E> iterable) {
@@ -241,8 +170,7 @@ public final class Immutables {
    }
 
    public static <E> ImmutableSet<E> toImmutableSet(E... elements) {
-      // TODO
-      return null;
+      return toImmutableSet(Arrays.asList(elements));
    }
 
    public static <E> ImmutableSet<E> toImmutableSet(Iterable<? extends E> iterable) {
@@ -251,26 +179,24 @@ public final class Immutables {
       return null;
    }
 
-   public static <E extends Comparable<E>> ImmutableSet<E> toImmutableSortedSet(E... elements) {
-      // TODO
-      return null;
+   public static <E extends Comparable<E>> ImmutableSortedSet<E> toImmutableSortedSet(
+         E... elements) {
+      return toImmutableSortedSet(Arrays.asList(elements));
    }
 
-   public static <E extends Comparable<E>> ImmutableSet<E> toImmutableSortedSet(
+   public static <E extends Comparable<E>> ImmutableSortedSet<E> toImmutableSortedSet(
          Iterable<? extends E> iterable) {
-      
       // TODO
       return null;
    }
 
-   public static <E> ImmutableSet<E> toImmutableSortedSet(Comparator<E> comparator, E... elements) {
-      // TODO
-      return null;
+   public static <E> ImmutableSortedSet<E> toImmutableSortedSet(Comparator<E> comparator,
+         E... elements) {
+      return toImmutableSortedSet(comparator, Arrays.asList(elements));
    }
 
-   public static <E> ImmutableSet<E> toImmutableSortedSet(Comparator<E> comparator,
+   public static <E> ImmutableSortedSet<E> toImmutableSortedSet(Comparator<E> comparator,
          Iterable<? extends E> iterable) {
-      
       // TODO
       return null;
    }
@@ -316,40 +242,42 @@ public final class Immutables {
       return null;
    }
 
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap() {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap() {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(K key, V value) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(K key, V value) {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(K key1, V value1, K key2, V value2) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(K key1, V value1,
+         K key2, V value2) {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(K key1, V value1, K key2, V value2,
-         K key3, V value3) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(K key1, V value1,
+         K key2, V value2, K key3, V value3) {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(K key1, V value1, K key2, V value2,
-         K key3, V value3, K key4, V value4) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(K key1, V value1,
+         K key2, V value2, K key3, V value3, K key4, V value4) {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(K key1, V value1, K key2, V value2,
-         K key3, V value3, K key4, V value4, K key5, V value5) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(K key1, V value1,
+         K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5) {
       // TODO
       return null;
    }
    
-   public static <K, V> ImmutableMap<K, V> toImmutableSortedMap(Map<? extends K, ? extends V> map) {
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
+         Map<? extends K, ? extends V> map) {
       // TODO
       return null;
    }
@@ -484,12 +412,12 @@ public final class Immutables {
 
       @Override
       public ListIterator<E> listIterator() {
-         ImmutableIterator<? extends E> iterator = collection.immutableIterator();
-         if (iterator instanceof ImmutableIterator.Bidi) {
-            return new ListIteratorFromImmutableBidi<E>(
-                  (ImmutableIterator.Bidi<? extends E>) iterator);
+         Iterator<? extends E> iterator = collection.iterator();
+         if (iterator instanceof BidiIterator) {
+            return new ListIteratorFromBidiIterator<E>(
+                  (BidiIterator<? extends E>) iterator);
          } else {
-            return new ListIteratorFromImmutable<E>(iterator);
+            return new ListIteratorFromIterator<E>(iterator);
          }
       }
 
@@ -498,12 +426,12 @@ public final class Immutables {
          if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("" + index);
          }
-         ImmutableIterator<? extends E> iterator = collection.immutableIterator();
-         if (iterator instanceof ImmutableIterator.Bidi) {
-            return new ListIteratorFromImmutableBidi<E>(
-                  (ImmutableIterator.Bidi<? extends E>) iterator, index);
+         Iterator<? extends E> iterator = collection.iterator();
+         if (iterator instanceof BidiIterator) {
+            return new ListIteratorFromBidiIterator<E>(
+                  (BidiIterator<? extends E>) iterator, index);
          } else {
-            return new ListIteratorFromImmutable<E>(iterator, index);
+            return new ListIteratorFromIterator<E>(iterator, index);
          }
       }
 
@@ -521,16 +449,16 @@ public final class Immutables {
       }
    }
    
-   private static class ListIteratorFromImmutable<E> implements ListIterator<E> {
-      private final ImmutableIterator<? extends E> iterator;
+   private static class ListIteratorFromIterator<E> implements ListIterator<E> {
+      private final Iterator<? extends E> iterator;
       private final ArrayList<E> items = new ArrayList<E>();
       private int index;
       
-      ListIteratorFromImmutable(ImmutableIterator<? extends E> iterator) {
+      ListIteratorFromIterator(Iterator<? extends E> iterator) {
          this.iterator = iterator;
       }
       
-      ListIteratorFromImmutable(ImmutableIterator<? extends E> iterator, int index) {
+      ListIteratorFromIterator(Iterator<? extends E> iterator, int index) {
          this.iterator = iterator;
          for (int i = 0; i < index; i++) {
             items.add(iterator.next());
@@ -593,15 +521,15 @@ public final class Immutables {
       }
    }
    
-   private static class ListIteratorFromImmutableBidi<E> implements ListIterator<E> {
-      private final ImmutableIterator.Bidi<? extends E> iterator;
+   private static class ListIteratorFromBidiIterator<E> implements ListIterator<E> {
+      private final BidiIterator<? extends E> iterator;
       private int index;
 
-      ListIteratorFromImmutableBidi(ImmutableIterator.Bidi<? extends E> iterator) {
+      ListIteratorFromBidiIterator(BidiIterator<? extends E> iterator) {
          this.iterator = iterator;
       }
       
-      ListIteratorFromImmutableBidi(ImmutableIterator.Bidi<? extends E> iterator, int index) {
+      ListIteratorFromBidiIterator(BidiIterator<? extends E> iterator, int index) {
          this.iterator = iterator;
          for (int i = 0; i < index; i++) {
             iterator.next();
@@ -658,7 +586,15 @@ public final class Immutables {
          throw new UnsupportedOperationException();
       }
    }
-   
+
+   private static class RandomAccessListFromImmutable<E> extends ListFromImmutable<E>
+         implements RandomAccess {
+      RandomAccessListFromImmutable(ImmutableList<? extends E> list) {
+         super(list);
+         assert list instanceof RandomAccess;
+      }
+   }
+
    private static class SetFromImmutable<E> extends CollectionFromImmutable<E> implements Set<E> {
       SetFromImmutable(ImmutableSet<? extends E> set) {
          super(set);

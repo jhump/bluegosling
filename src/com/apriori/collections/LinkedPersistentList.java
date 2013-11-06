@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,12 +10,15 @@ import java.util.NoSuchElementException;
 
 // TODO: javadoc
 // TODO: tests
-public class LinkedPersistentList<E> implements PersistentList<E> {
+// TODO: serialization
+public class LinkedPersistentList<E> implements PersistentList<E>, Serializable {
    /*
     * Since Java does not do tail-call optimization for recursive functions, these methods use
-    * iteration even though recursion would be more elegant for nearly all of them.
-    * C'est la vie :(
+    * iteration (to ensure we don't overflow the stack) even though recursion would be more elegant
+    * for nearly all of them. C'est la vie :(
     */
+
+   private static final long serialVersionUID = -4079904855716212892L;
 
    public static <E> LinkedPersistentList<E> create() {
       return EmptyList.instance();
@@ -25,12 +29,11 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
       
       if (iterable instanceof LinkedPersistentList) {
          @SuppressWarnings({ "unchecked", "rawtypes" }) // since it's immutable and we know
-                                                      // type bound, this cast will be safe
+                                                       // type bound, this cast will be safe
          LinkedPersistentList<E> list = (LinkedPersistentList) iterable;
          return list;
-      }
-      
-      if (iterable instanceof List) {
+         
+      } else if (iterable instanceof List) {
          List<? extends E> list = (List<? extends E>) iterable;
          ListIterator<? extends E> iterator = list.listIterator(list.size());
          LinkedPersistentList<E> node = null;
@@ -76,18 +79,29 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
       this.next = next;
       this.size = next == null ? 1 : next.size + 1;
    }
+   
+   protected void rangeCheck(int index) {
+      if (index < 0 || index >= size) {
+         throw new IndexOutOfBoundsException("" + index);
+      }
+   }
+   
+   protected void rangeCheckWide(int index) {
+      if (index < 0 || index > size) {
+         throw new IndexOutOfBoundsException("" + index);
+      }
+   }
       
    @Override
    public E get(int i) {
-      if (i < 0) {
-         throw new IndexOutOfBoundsException("" + i);
-      }
+      rangeCheck(i);
       for (LinkedPersistentList<E> current = this; current != null; current = current.next, i--) {
          if (i == 0) {
             return value;
          }
       }
-      throw new IndexOutOfBoundsException("" + i);
+      // since we range-checked the index, we should never get here
+      throw new AssertionError("not possible");
    }
 
    @Override
@@ -187,13 +201,8 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
    }
 
    @Override
-   public Iterator<E> iterator() {
-      return Immutables.asIfMutable(immutableIterator());
-   }
-   
-   @Override
-   public ImmutableIterator<E> immutableIterator() {
-      return new ImmutableIterator<E>() {
+   public ReadOnlyIterator<E> iterator() {
+      return new ReadOnlyIterator<E>() {
          private LinkedPersistentList<E> node = LinkedPersistentList.this;
                
          @Override public boolean hasNext() {
@@ -210,26 +219,109 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
             node = node.next;
             return ret;
          }
-         
       };
    }
 
    @Override
    public PersistentList<E> subList(int from, int to) {
-      // TODO: implement me
-      return null;
+      rangeCheckWide(from);
+      rangeCheckWide(to);
+      if (from > to) {
+         throw new IndexOutOfBoundsException(from + " > " + to);
+      }
+      if (from == size) {
+         return EmptyList.instance();
+      }
+      if (to == size) {
+         // no need to copy -- just go find the from node
+         LinkedPersistentList<E> ret = this;
+         while (from > 0) {
+            ret = ret.next;
+            from--;
+         }
+         return ret;
+      } else {
+         // must copy the sub-list :(
+         ArrayDeque<E> nodes = new ArrayDeque<E>(to - from);
+         for (LinkedPersistentList<E> current = this; to > 0;
+               current = current.next, to--, from--) {
+            if (from >= 0) {
+               nodes.push(current.value);
+            }
+         }
+         LinkedPersistentList<E> ret = null;
+         while (!nodes.isEmpty()) {
+            ret = new LinkedPersistentList<E>(nodes.pop(), ret);
+         }
+         return ret;
+      }
    }
 
    @Override
    public PersistentList<E> add(int i, E e) {
-      // TODO: implement me
-      return null;
+      rangeCheckWide(i);
+      ArrayDeque<E> nodes = new ArrayDeque<E>(i);
+      LinkedPersistentList<E> current = this;
+      while (i-- > 0) {
+         nodes.push(current.value);
+         current = current.next;
+      }
+      LinkedPersistentList<E> ret = new LinkedPersistentList<E>(e, current);
+      while (!nodes.isEmpty()) {
+         ret = new LinkedPersistentList<E>(nodes.pop(), ret);
+      }
+      return ret;
    }
 
    @Override
    public PersistentList<E> addAll(int i, Iterable<? extends E> items) {
-      // TODO: implement me
-      return null;
+      rangeCheckWide(i);
+      
+      if (items instanceof List) {
+         List<? extends E> list = (List<? extends E>) items;
+         if (list.isEmpty()) {
+            return this;
+         }
+         ArrayDeque<E> prefix = new ArrayDeque<E>(i);
+         LinkedPersistentList<E> current = this;
+         while (i-- > 0) {
+            prefix.push(current.value);
+            current = current.next;
+         }
+         ListIterator<? extends E> iterator = list.listIterator(list.size());
+         while (iterator.hasPrevious()) {
+            current = new LinkedPersistentList<E>(iterator.previous(), current);
+         }
+         while (!prefix.isEmpty()) {
+            current = new LinkedPersistentList<E>(prefix.pop(), current);
+         }
+         return current;
+      } else {
+         Iterator<? extends E> iterator = items.iterator();
+         if (!iterator.hasNext()) {
+            return this;
+         }
+         ArrayDeque<E> stack; 
+         if (items instanceof Collection) {
+            stack = new ArrayDeque<E>(((Collection<? extends E>) items).size() + i);
+         } else if (items instanceof ImmutableCollection) {
+            stack = new ArrayDeque<E>(((ImmutableCollection<? extends E>) items).size() + i);
+         } else {
+            stack = new ArrayDeque<E>(i + 16);
+         }
+         LinkedPersistentList<E> current = this;
+         while (i-- > 0) {
+            stack.push(current.value);
+            current = current.next;
+         }
+         while (iterator.hasNext()) {
+            stack.push(iterator.next());
+         }
+         while (!stack.isEmpty()) {
+            current = new LinkedPersistentList<E>(stack.pop(), current);
+         }
+         return current;
+      }
    }
 
    @Override
@@ -239,25 +331,49 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
 
    @Override
    public PersistentList<E> addLast(E e) {
-      // TODO: implement me
-      return null;
+      return add(size, e);
    }
 
    @Override
    public PersistentList<E> set(int i, E e) {
-      // TODO: implement me
-      return null;
+      rangeCheck(i);
+      ArrayDeque<E> nodes = new ArrayDeque<E>(i);
+      LinkedPersistentList<E> current = this;
+      while (i-- > 0) {
+         nodes.push(current.value);
+         current = current.next;
+      }
+      // replace value of current node with specified value
+      current = new LinkedPersistentList<E>(e, current.next);
+      while (!nodes.isEmpty()) {
+         current = new LinkedPersistentList<E>(nodes.pop(), current);
+      }
+      return current;
    }
 
    @Override
    public PersistentList<E> remove(int i) {
-      // TODO: implement me
-      return null;
+      rangeCheck(i);
+      if (size == 1) {
+         return EmptyList.instance();
+      }
+      ArrayDeque<E> nodes = new ArrayDeque<E>(i);
+      LinkedPersistentList<E> current = this;
+      while (i-- > 0) {
+         nodes.push(current.value);
+         current = current.next;
+      }
+      // skip over removed element
+      current = current.next;
+      while (!nodes.isEmpty()) {
+         current = new LinkedPersistentList<E>(nodes.pop(), current);
+      }
+      return current;
    }
 
    @Override
    public PersistentList<E> rest() {
-      return next;
+      return next == null ? EmptyList.<E>instance() : next;
    }
 
    @Override
@@ -267,38 +383,163 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
 
    @Override
    public PersistentList<E> remove(Object o) {
-      // TODO: implement me
-      return null;
+      ArrayDeque<E> nodes = new ArrayDeque<E>();
+      LinkedPersistentList<E> current = this;
+      while (current != null) {
+         if (o == null ? current.value == null : o.equals(current.value)) {
+            break;
+         }
+         nodes.push(current.value);
+         current = current.next;
+      }
+      if (current == null) {
+         // didn't find it
+         return this;
+      }
+      // skip over removed element
+      current = current.next;
+      while (!nodes.isEmpty()) {
+         current = new LinkedPersistentList<E>(nodes.pop(), current);
+      }
+      return current == null ? EmptyList.<E>instance() : current;
    }
 
    @Override
    public PersistentList<E> removeAll(Object o) {
-      // TODO: implement me
-      return null;
+      ArrayDeque<E> nodes = new ArrayDeque<E>(size);
+      LinkedPersistentList<E> current = this;
+      boolean found = false;
+      while (current != null) {
+         if (!(o == null ? current.value == null : o.equals(current.value))) {
+            // only add if value doesn't match object to remove
+            found = true;
+            nodes.push(current.value);
+         }
+         current = current.next;
+      }
+      if (!found) {
+         // didn't find it
+         return this;
+      }
+      while (!nodes.isEmpty()) {
+         current = new LinkedPersistentList<E>(nodes.pop(), current);
+      }
+      return current == null ? EmptyList.<E>instance() : current;
    }
 
+   private ArrayDeque<E> toDeque() {
+      ArrayDeque<E> elements = new ArrayDeque<E>(size);
+      for (LinkedPersistentList<E> current = this; current != null; current = current.next) {
+         elements.push(current.value);
+      }
+      return elements;
+   }
+   
+   private PersistentList<E> filter(Iterable<?> items, boolean remove) {
+      // this stinks, but it's the best way to get adequate performance by using
+      // the collection's contains method (which, worst case, will be the same as
+      // the fallback using just Iterable, but best case [like if the collection is
+      // a set with sub-linear contains()] much faster)
+      if (items instanceof Collection) {
+         Collection<?> coll = (Collection<?>) items;
+         if (coll.isEmpty()) {
+            return this;
+         }
+         ArrayDeque<E> nodes = toDeque();
+         LinkedPersistentList<E> ret = null;
+         while (!nodes.isEmpty()) {
+            E e = nodes.pop();
+            if (coll.contains(e) != remove) {
+               ret = new LinkedPersistentList<E>(e, ret);
+            }
+         }
+         return ret == null ? EmptyList.<E>instance() : ret;
+         
+      } else if (items instanceof ImmutableCollection) {
+         ImmutableCollection<?> coll = (ImmutableCollection<?>) items;
+         if (coll.isEmpty()) {
+            return this;
+         }
+         ArrayDeque<E> nodes = toDeque();
+         LinkedPersistentList<E> ret = null;
+         while (!nodes.isEmpty()) {
+            E e = nodes.pop();
+            if (coll.contains(e) != remove) {
+               ret = new LinkedPersistentList<E>(e, ret);
+            }
+         }
+         return ret == null ? EmptyList.<E>instance() : ret;
+         
+      } else {
+         if (!items.iterator().hasNext()) {
+            return this;
+         }
+         ArrayDeque<E> nodes = toDeque();
+         LinkedPersistentList<E> ret = null;
+         while (!nodes.isEmpty()) {
+            E e = nodes.pop();
+            if (CollectionUtils.contains(items.iterator(), e) != remove) {
+               ret = new LinkedPersistentList<E>(e, ret);
+            }
+         }
+         return ret == null ? EmptyList.<E>instance() : ret;
+      }
+   }
+   
    @Override
    public PersistentList<E> removeAll(Iterable<?> items) {
-      // TODO: implement me
-      return null;
+      return filter(items, true);
    }
 
    @Override
    public PersistentList<E> retainAll(Iterable<?> items) {
-      // TODO: implement me
-      return null;
+      return filter(items, false);
    }
 
    @Override
    public PersistentList<E> addAll(Iterable<? extends E> items) {
-      // TODO: implement me
-      return null;
+      if (items instanceof List) {
+         List<? extends E> list = (List<? extends E>) items;
+         if (list.isEmpty()) {
+            return this;
+         }
+         ListIterator<? extends E> iterator = list.listIterator(list.size());
+         LinkedPersistentList<E> node = this;
+         while (iterator.hasPrevious()) {
+            node = new LinkedPersistentList<E>(iterator.previous(), node);
+         }
+         return node;
+      } else {
+         Iterator<? extends E> iterator = items.iterator();
+         if (!iterator.hasNext()) {
+            return this;
+         }
+         ArrayDeque<E> stack; 
+         if (items instanceof Collection) {
+            stack = new ArrayDeque<E>(((Collection<? extends E>) items).size());
+         } else if (items instanceof ImmutableCollection) {
+            stack = new ArrayDeque<E>(((ImmutableCollection<? extends E>) items).size());
+         } else {
+            stack = new ArrayDeque<E>();
+         }
+         while (iterator.hasNext()) {
+            stack.push(iterator.next());
+         }
+         LinkedPersistentList<E> node = this;
+         while (!stack.isEmpty()) {
+            node = new LinkedPersistentList<E>(stack.pop(), node);
+         }
+         return node;
+      }
    }
 
    private static class EmptyList<E> extends LinkedPersistentList<E> {
+
+      private static final long serialVersionUID = 1487151881149064099L;
+      
       private static final Object[] EMPTY_ARRAY = new Object[0];
-      private static final ImmutableIterator<Object> EMPTY_ITERATOR =
-            new ImmutableIterator<Object>() {
+      private static final ReadOnlyIterator<Object> EMPTY_ITERATOR =
+            new ReadOnlyIterator<Object>() {
                @Override public boolean hasNext() {
                   return false;
                }
@@ -309,7 +550,6 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
             };
       
       static final EmptyList<Object> INSTANCE = new EmptyList<Object>();
-      
       
       @SuppressWarnings("unchecked") // immutability makes it safe
       static <E> EmptyList<E> instance() {
@@ -379,15 +619,10 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
          return false;
       }
 
-      @Override
-      public Iterator<E> iterator() {
-         return Immutables.asIfMutable(immutableIterator());
-      }
-      
       @SuppressWarnings("unchecked") // immutability makes this safe
       @Override
-      public ImmutableIterator<E> immutableIterator() {
-         return (ImmutableIterator<E>) EMPTY_ITERATOR;
+      public ReadOnlyIterator<E> iterator() {
+         return (ReadOnlyIterator<E>) EMPTY_ITERATOR;
       }
 
       @Override
@@ -439,7 +674,7 @@ public class LinkedPersistentList<E> implements PersistentList<E> {
 
       @Override
       public PersistentList<E> rest() {
-         return null;
+         return this;
       }
 
       @SuppressWarnings("synthetic-access")

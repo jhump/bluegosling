@@ -1,6 +1,7 @@
 package com.apriori.collections;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.NavigableMap;
 
 //TODO: javadoc
@@ -15,9 +16,9 @@ public interface NavigableCompositeTrie<K, C, V>
    
    @Override NavigableCompositeTrie<K, C, V> prefixMap(C prefix);
    
-   @Override NavigableCompositeTrie<K, C, V> prefixMap(Iterable<C> prefix);
+   @Override NavigableCompositeTrie<K, C, V> prefixMap(List<C> prefix);
    
-   @Override NavigableCompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents);
+   @Override NavigableCompositeTrie<K, C, V> prefixMap(List<C> prefix, int numComponents);
 
    @Override NavigableCompositeTrie<K, C, V> descendingMap();
 

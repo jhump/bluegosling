@@ -1,11 +1,39 @@
 package com.apriori.collections;
 
-import java.util.Iterator;
-
 // TODO: javadoc
 // TODO: tests
-public class HamtPersistentList<E> implements PersistentList<E> {
+public class HamtPersistentList<E> implements PersistentList<E>, BidiIterable<E> {
 
+   private interface TrieNode<E> {
+      // TODO
+   }
+   
+   private static class IntermediateTrieNode<E> implements TrieNode<E> {
+      final TrieNode<E> children[];
+      
+      IntermediateTrieNode(TrieNode<E> children[]) {
+         this.children = children;
+      }
+   }
+
+   private static class LeafTrieNode<E> implements TrieNode<E> {
+      final E elements[];
+
+      LeafTrieNode(E elements[]) {
+         this.elements = elements;
+      }
+   }
+   
+   private final int depth;
+   private final int size;
+   private final TrieNode<E> root;
+   
+   private HamtPersistentList(int depth, int size, TrieNode<E> root) {
+      this.depth = depth;
+      this.size = size;
+      this.root = root;
+   }
+   
    @Override
    public E get(int i) {
       // TODO: implement me
@@ -73,13 +101,7 @@ public class HamtPersistentList<E> implements PersistentList<E> {
    }
 
    @Override
-   public Iterator<E> iterator() {
-      // TODO: implement me
-      return null;
-   }
-
-   @Override
-   public ImmutableIterator<E> immutableIterator() {
+   public BidiListIterator<E> iterator() {
       // TODO: implement me
       return null;
    }

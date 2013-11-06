@@ -9,7 +9,7 @@ package com.apriori.util;
  */
 public interface Sink<T> {
    /**
-    * Sends an object to be consumed.
+    * Consumes the specified object.
     * 
     * @param t an object
     */

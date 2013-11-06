@@ -144,8 +144,9 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
 
    private int sortThreshold() {
       // TODO: compute threshold for number of items added to map, above which we should append
-      // items to buffer and re-sort the whole thing ( O(n log n) ) and below which we should insert
-      // the items one at a time ( O(n^2) )
+      // items to buffer and re-sort the whole thing ( O(m + n log n) where m is number of items to
+      // add and n is number of items already in the map) and below which we can insert the items
+      // one at a time ( O(m * n) )
       return Math.max(2, size >> 2);
    }
    
@@ -277,7 +278,7 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
    }
    
    /**
-    * Customizes de-serialization to read set of mappings same way as written by
+    * Customizes de-serialization to read the set of mappings the same way as written by
     * {@link #writeObject(ObjectOutputStream)}.
     * 
     * @param in the stream from which the map is read
@@ -289,6 +290,8 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
    private void readObject(ObjectInputStream in) throws IOException,
          ClassNotFoundException {
       in.defaultReadObject();
+      // TODO: check that keys are in ascending order as they are read and, if not, sort the array
+      // at the end
       data = new EntryImpl[Math.max(size, 1)];
       for (int i = 0; i < size; i++) {
          K key = (K) in.readObject();

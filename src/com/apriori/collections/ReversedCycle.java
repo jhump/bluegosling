@@ -1,9 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.Source;
-
 import java.util.Collection;
-import java.util.Iterator;
 
 // TODO: javadoc
 // TODO: tests?
@@ -61,7 +58,8 @@ abstract class ReversedCycle<E> implements Cycle<E> {
 
    @Override
    public boolean addAll(Collection<? extends E> c) {
-      // TODO: more efficient?
+      // with O(n) more memory, we might be able to do this more efficiently (e.g. reverse the
+      // collection and then use underlying addAll()), but that doesn't feel like a good trade-off
       for (E e : c) {
          addLast(e);
       }
@@ -149,13 +147,8 @@ abstract class ReversedCycle<E> implements Cycle<E> {
    }
 
    @Override
-   public abstract Iterator<E> iterator();
-
-   abstract Source<Iterator<E>> pinnedIteratorSource();
-   
-   @Override
-   public Iterator<E> cycle() {
-      return Cycles.cycleIterator(pinnedIteratorSource());
+   public BidiIterator<E> cycle() {
+      return delegate.cycle().reverse();
    }
 
    @Override

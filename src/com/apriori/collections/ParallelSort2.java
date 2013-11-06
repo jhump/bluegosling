@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
-
 /**
  * A utility for sorting large lists using multiple CPUs/cores. This is a bit more sophisticated
  * than {@link ParallelSort} in that it performs merge operations concurrently, not just the sorting

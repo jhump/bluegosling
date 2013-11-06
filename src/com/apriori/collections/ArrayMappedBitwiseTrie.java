@@ -6,6 +6,7 @@ import com.apriori.collections.SimpleBitwiseTrie.WrappedComparator;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -244,13 +245,13 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix, int numComponents) {
       // TODO Auto-generated method stub
       return null;
    }

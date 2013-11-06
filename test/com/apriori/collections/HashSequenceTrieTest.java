@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import java.util.Map;
-
 import junit.framework.TestSuite;
 
 public class HashSequenceTrieTest extends AbstractTestSequenceTrie {
@@ -15,7 +13,13 @@ public class HashSequenceTrieTest extends AbstractTestSequenceTrie {
    }
 
    @Override
-   public Map<Iterable<Object>, Object> makeEmptyMap() {
+   public SequenceTrie<Object, Object> makeEmptyMap() {
       return new HashSequenceTrie<Object, Object>();
+   }
+   
+   @Override
+   public boolean isAllowNullKey() {
+      // elements in the key list can be null, but the key itself cannot be
+      return false;
    }
 }

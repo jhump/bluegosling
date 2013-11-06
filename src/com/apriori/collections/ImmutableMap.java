@@ -1,7 +1,7 @@
 package com.apriori.collections;
 
 // TODO: javadoc
-public interface ImmutableMap<K, V> extends ImmutableIterable<ImmutableMap.Entry<K, V>> {
+public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
    interface Entry<K, V> {
       K key();
       V value();

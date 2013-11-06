@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,8 +11,10 @@ import java.util.Map;
  *
  * @param <K> the component type of keys in the map (a key will be a sequence of these components)  
  * @param <V> the type of values in the map
+ * 
+ * @see CompositeTrie
  */
-public interface SequenceTrie<K, V> extends Map<Iterable<K>, V> {
+public interface SequenceTrie<K, V> extends Map<List<K>, V> {
    /**
     * Generates a view of all mappings whose keys start with the specified value. The returned map's
     * keys will just be the tail sequences: the specified initial value, which prefixes all of its
@@ -37,7 +40,7 @@ public interface SequenceTrie<K, V> extends Map<Iterable<K>, V> {
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     */
-   SequenceTrie<K, V> prefixMap(Iterable<K> prefix);
+   SequenceTrie<K, V> prefixMap(List<K> prefix);
 
    /**
     * Generates a view of all mappings whose keys have the specified prefix. A maximum number of
@@ -48,5 +51,5 @@ public interface SequenceTrie<K, V> extends Map<Iterable<K>, V> {
     * @param numComponents the maximum number of components of the prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     */
-   SequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents);
+   SequenceTrie<K, V> prefixMap(List<K> prefix, int numComponents);
 }

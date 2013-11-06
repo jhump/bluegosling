@@ -159,6 +159,58 @@ public class CircularBuffer<E> {
    }
    
    /**
+    * Shifts the specified number of elements from the front of this buffer to the end.
+    * Conceptually, this is the same as the following, but this method implements it in a more
+    * efficient manner:<pre>
+    * for (int i = 0; i < numElements; i++) {
+    *   buffer.addLast(buffer.removeFirst());
+    * }
+    * </pre>
+    * 
+    * @param numElements the number of elements to shift
+    */
+   private void shiftFromFrontToEnd(int numElements) {
+      assert numElements <= (count >> 1);
+      if (count == 0) {
+         // nothing to do -- removing all from front and adding to end winds up back in same state
+         return;
+      }
+      int newOffset = offset + numElements;
+      int capacity = capacity();
+      if (newOffset >= capacity) {
+         newOffset -= capacity;
+      }
+      if (count != capacity) {
+         // TODO: System.arraycopy to move data in chunks instead of one at a time
+         // need to shift things around a little more
+         int head = offset;
+         int tail = offset + count;
+         if (tail >= capacity) {
+            tail -= capacity;
+         }
+         while (head != newOffset) {
+            elements[tail] = elements[head];
+            head++;
+            if (head >= capacity) {
+               head -= capacity;
+            }
+            tail++;
+            if (tail >= capacity) {
+               tail -= capacity;
+            }
+         }
+         // now clear unused
+         if (tail < head) {
+            Arrays.fill(elements, tail, head, null);
+         } else {
+            Arrays.fill(elements, 0, head, null);
+            Arrays.fill(elements, tail, capacity, null);
+         }
+      }
+      offset = newOffset;
+   }
+   
+   /**
     * Shifts the specified number of elements from the end of this buffer to the front.
     * Conceptually, this is the same as the following, but this method implements it in a more
     * efficient manner:<pre>
@@ -170,7 +222,44 @@ public class CircularBuffer<E> {
     * @param numElements the number of elements to shift
     */
    private void shiftFromEndToFront(int numElements) {
-      // TODO
+      assert numElements <= (count >> 1);
+      if (count == 0) {
+         // nothing to do -- removing all from end and adding to front winds up back in same state
+         return;
+      }
+      int newOffset = offset - numElements;
+      int capacity = capacity();
+      if (newOffset < 0) {
+         newOffset += capacity;
+      }
+      if (count != capacity) {
+         // TODO: System.arraycopy to move data in chunks instead of one at a time
+         // need to shift things around a little more
+         int head = offset;
+         int tail = offset + count;
+         if (tail >= capacity) {
+            tail -= capacity;
+         }
+         while (head != newOffset) {
+            head--;
+            if (head < 0) {
+               head += capacity;
+            }
+            tail--;
+            if (tail < 0) {
+               tail += capacity;
+            }
+            elements[head] = elements[tail];
+         }
+         // now clear unused
+         if (tail < head) {
+            Arrays.fill(elements, tail, head, null);
+         } else {
+            Arrays.fill(elements, 0, head, null);
+            Arrays.fill(elements, tail, capacity, null);
+         }
+      }
+      offset = newOffset;   
    }
    
    /**
@@ -213,6 +302,9 @@ public class CircularBuffer<E> {
          throw new IllegalArgumentException(
                "specified number of items must not be negative: " + numElements);
       }
+      if (numElements == 0) {
+         return; // nothing to do
+      }
       int capacity = capacity();
       if (numElements > source.count) {
          throw new IllegalArgumentException("insufficient items in source");
@@ -220,7 +312,11 @@ public class CircularBuffer<E> {
       
       // if source and dest are both this buffer, we need to handle it differently
       if (source == this) {
-         shiftFromEndToFront(numElements);
+         if (numElements > (count >> 1)) {
+            shiftFromEndToFront(count - numElements);
+         } else {
+            shiftFromFrontToEnd(numElements);
+         }
          return;
       }
       
@@ -264,21 +360,6 @@ public class CircularBuffer<E> {
    }
 
    /**
-    * Shifts the specified number of elements from the front of this buffer to the end.
-    * Conceptually, this is the same as the following, but this method implements it in a more
-    * efficient manner:<pre>
-    * for (int i = 0; i < numElements; i++) {
-    *   buffer.addLast(buffer.removeFirst());
-    * }
-    * </pre>
-    * 
-    * @param numElements the number of elements to shift
-    */
-   private void shiftFromFrontToEnd(int numElements) {
-      // TODO
-   }
-   
-   /**
     * Pulls elements from the end of the specified buffer and adds them to the front of this buffer.
     * This can be visualized as a left-to-right shift between two adjacent buffers. For example, let
     * there be two buffers, each with a capacity of eight items. The first has 5 items in the
@@ -318,6 +399,9 @@ public class CircularBuffer<E> {
          throw new IllegalArgumentException(
                "specified number of items must not be negative: " + numElements);
       }
+      if (numElements == 0) {
+         return; // nothing to do
+      }
       int capacity = capacity();
       if (numElements > source.count) {
          throw new IllegalArgumentException("insufficient items in source");
@@ -325,7 +409,11 @@ public class CircularBuffer<E> {
       
       // if source and dest are both this buffer, we need to handle it differently
       if (source == this) {
-         shiftFromFrontToEnd(numElements);
+         if (numElements > (count >> 1)) {
+            shiftFromFrontToEnd(count - numElements);
+         } else {
+            shiftFromEndToFront(numElements);
+         }
          return;
       }
 

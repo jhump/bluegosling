@@ -14,33 +14,57 @@ public final class Cycles {
    private Cycles() {
    }
    
-   static <E> Iterator<E> cycleIterator(final Source<Iterator<E>> source) {
-      return new Iterator<E>() {
-         Iterator<E> iter = source.get();
+   static <E> BidiIterator<E> cycleIterator(final BidiIterator<E> initial,
+         final Source<BidiIterator<E>> sourceFromBeginning,
+         final Source<BidiIterator<E>> sourceFromEnd) {
+      return new BidiIterator<E>() {
+         BidiIterator<E> iter = initial;
 
-         private void checkAndReset() {
+         private void checkNextAndReset() {
             if (!iter.hasNext()) {
-               iter = source.get();
+               iter = sourceFromBeginning.get();
+            }
+         }
+         
+         private void checkPreviousAndReset() {
+            if (!iter.hasPrevious()) {
+               iter = sourceFromEnd.get();
             }
          }
          
          @Override
          public boolean hasNext() {
-            checkAndReset();
+            checkNextAndReset();
             return iter.hasNext();
          }
 
          @Override
          public E next() {
-            checkAndReset();
+            checkNextAndReset();
             return iter.next();
          }
 
          @Override
-         public void remove() {
-            // TODO: implement me
+         public boolean hasPrevious() {
+            checkPreviousAndReset();
+            return iter.hasPrevious();
          }
-         
+
+         @Override
+         public E previous() {
+            checkPreviousAndReset();
+            return iter.previous();
+         }
+
+         @Override
+         public void remove() {
+            iter.remove();
+         }
+
+         @Override
+         public BidiIterator<E> reverse() {
+            return new ReversedBidiIterator<E>(this);
+         }
       };
    }
    
@@ -185,7 +209,7 @@ public final class Cycles {
          }
 
          @Override
-         public Iterator<E> cycle() {
+         public BidiIterator<E> cycle() {
             // TODO: implement me
             return null;
          }
@@ -288,8 +312,9 @@ public final class Cycles {
 
          @Override
          public void addLast(E e) {
-            // TODO: should add to end of list
-            current.add(e);
+            int index = current.nextIndex();
+            list.add(e);
+            current = list.listIterator(index);
          }
 
          @Override
@@ -352,17 +377,19 @@ public final class Cycles {
          }
 
          @Override
-         public Iterator<E> cycle() {
-            return cycleIterator(new Source<Iterator<E>>() {
-               int pos = current.nextIndex();
-               
-               @Override
-               public Iterator<E> get() {
-                  // TODO: bounds check pos and adjust in case subsequent
-                  // pass through sequence is after removals
-                  return iterator(pos);
-               }
-            });
+         public BidiIterator<E> cycle() {
+            return cycleIterator(
+                  BidiIterators.fromListIterator(list.listIterator(current.nextIndex())),
+                  new Source<BidiIterator<E>>() {
+                     @Override public BidiIterator<E> get() {
+                        return BidiIterators.fromListIterator(list.listIterator());
+                     }
+                  },
+                  new Source<BidiIterator<E>>() {
+                     @Override public BidiIterator<E> get() {
+                        return BidiIterators.fromListIterator(list.listIterator(list.size()));
+                     }
+                  });
          }
 
          @Override
@@ -372,25 +399,12 @@ public final class Cycles {
                   // TODO: should be a descending iterator and must wrap from beginning to end
                   return list.listIterator(current.nextIndex());
                }
-               
-               @Override Source<Iterator<E>> pinnedIteratorSource() {
-                  final int pos = current.nextIndex();
-                  return new Source<Iterator<E>>() {
-                     @Override public Iterator<E> get() {
-                        // TODO: bounds check pos and adjust in case subsequent
-                        // pass through sequence is after removals
-                        // TODO: should be a descending iterator and must wrap from beginning to end
-                        return list.listIterator(pos);
-                     }
-                  };
-               }
             };
          }
 
          @Override
          public boolean isCyclicOrder(E b, E c) {
-            // TODO: implement me
-            return false;
+            return isCyclicOrder(current(), b, c);
          }
 
          @Override

@@ -42,6 +42,7 @@ public class UnrolledLinkedList<E> extends AbstractSequentialList<E> implements 
     *
     * @param <E> the type of element stored in the node
     */
+   // TODO: extend CircularBuffer so moving elements around is both simpler and faster
    private static class Node<E> {
       final E elements[];
       int count;

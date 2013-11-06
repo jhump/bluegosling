@@ -478,7 +478,8 @@ public final class Functions {
    }
    
    public static <T> Function<T, T> yCombinator(
-         final Function<Function<? super T, ? extends T>, Function<? super T, ? extends T>> funcGen) {
+         final Function<Function<? super T, ? extends T>,
+         Function<? super T, ? extends T>> funcGen) {
       return new Function<T, T>() {
          @Override public T apply(T input) {
             return funcGen.apply(this).apply(input);

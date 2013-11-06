@@ -9,8 +9,24 @@ import java.util.NoSuchElementException;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO tests
-public abstract class AbstractBitSequence implements BitSequence {
-   private volatile int hashCode;
+abstract class AbstractBitSequence implements BitSequence {
+   private int hashCode;
+   
+   void rangeCheck(int index) {
+      if (index < 0) {
+         throw new IndexOutOfBoundsException(index + " < 0");
+      } else if (index > length()) {
+         throw new IndexOutOfBoundsException(index + " > " + length());
+      }
+   }
+   
+   void checkTupleLength(int i) {
+      if (i < 1) {
+         throw new IllegalArgumentException(i + " < 1");
+      } else if (i > 64) {
+         throw new IllegalArgumentException(i + " > 64");
+      }
+   }
    
    @Override public BooleanIterator iterator() {
       return iterator(0);
@@ -51,12 +67,9 @@ public abstract class AbstractBitSequence implements BitSequence {
    
    @Override public LongIterator bitTupleIterator(final int tupleSize, int startIndex,
          final BitOrder order) {
+      checkTupleLength(tupleSize);
       final Stream stream = stream(startIndex);
-      if (tupleSize < 1) {
-         throw new IllegalArgumentException("tuple size < 1");
-      } else if (tupleSize > 64) {
-         throw new IllegalArgumentException("tupleSize (" + tupleSize + ") must be <= 64");
-      } else if (tupleSize == 1) {
+      if (tupleSize == 1) {
          return new LongIterator() {
             @Override public boolean hasNext() {
                return stream.remaining() > 0;
@@ -113,19 +126,14 @@ public abstract class AbstractBitSequence implements BitSequence {
    
    @Override public int hashCode() {
       if (hashCode == 0) {
-         synchronized(this) {
-            // don't recalc if we lost a race to get in this block
-            if (hashCode == 0) {
-               int result = 1;
-               LongIterator iter = bitTupleIterator(64);
-               while (iter.hasNext()) {
-                  long element = iter.nextLong();
-                  int elementHash = (int)(element ^ (element >>> 32));
-                  result = 31 * result + elementHash;
-               }
-               hashCode = result ^ length();
-            }
+         int result = 1;
+         LongIterator iter = bitTupleIterator(64);
+         while (iter.hasNext()) {
+            long element = iter.nextLong();
+            int elementHash = (int)(element ^ (element >>> 32));
+            result = 31 * result + elementHash;
          }
+         hashCode = result ^ length();
       }
       return hashCode;
    }
@@ -146,5 +154,43 @@ public abstract class AbstractBitSequence implements BitSequence {
          return true;
       }
       return false;
+   }
+   
+   // TODO: javadoc
+   abstract class AbstractStream implements Stream {
+
+      void checkSequenceLength(int i) {
+         if (i < 0) {
+            throw new IllegalArgumentException(i + " < 0");
+         } else if (i > remaining()) {
+            throw new NoSuchElementException();
+         }
+      }
+
+      void checkTupleLength(int i) {
+         AbstractBitSequence.this.checkTupleLength(i);
+         if (i > remaining()) {
+            throw new NoSuchElementException();
+         }
+      }
+
+      @Override
+      public long next(int numberOfBits, BitOrder order) {
+         long val = next(numberOfBits);
+         if (order == BitOrder.MSB) {
+            val = Long.reverse(val);
+            if (numberOfBits < 64) {
+               val >>= 64 - numberOfBits;
+            }
+         }
+         return val;
+      }
+      
+      @Override public BitSequence nextAsSequence(int sequenceLength) {
+         checkSequenceLength(sequenceLength);
+         return sequenceLength == 0
+               ? BitSequences.empty()
+               : BitSequences.nextAsSequence(this, sequenceLength);
+      }
    }
 }

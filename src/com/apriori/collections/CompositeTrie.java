@@ -1,16 +1,19 @@
 package com.apriori.collections;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
- * are first broken down into a {@linkplain Iterable sequence} of constituent components.
+ * are first broken down into a {@linkplain List list} of constituent components.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <K> the type of keys in the map
  * @param <C> the component type of keys in the map (a key represents a sequence of these components)  
  * @param <V> the type of values in the map
+ * 
+ * @see SequenceTrie
  */
 public interface CompositeTrie<K, C, V> extends Map<K, V> {
 
@@ -38,7 +41,7 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     */
-   CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix);
+   CompositeTrie<K, C, V> prefixMap(List<C> prefix);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. A maximum number of
@@ -49,7 +52,7 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @param numComponents the maximum number of components of the prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     */
-   CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents);
+   CompositeTrie<K, C, V> prefixMap(List<C> prefix, int numComponents);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. The specified key

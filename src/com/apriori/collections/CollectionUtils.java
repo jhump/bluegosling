@@ -53,7 +53,7 @@ final class CollectionUtils {
     * @param coll the collection
     * @return a string representation of {@code coll}
     */
-   public static String toString(Collection<?> coll) {
+   public static String toString(Iterable<?> coll) {
       StringBuilder sb = new StringBuilder();
       sb.append("[");
       boolean first = true;
@@ -109,6 +109,34 @@ final class CollectionUtils {
       return true;
    }
 
+   // TODO: javadoc
+   public static boolean equals(ImmutableList<?> list, Object o) {
+      if (!(o instanceof ImmutableList)) {
+         return false;
+      }
+      if (list == o) {
+         return true;
+      }
+      ImmutableList<?> l = (ImmutableList<?>) o;
+      if (l.size() != list.size()) {
+         return false;
+      }
+      Iterator<?> iter1 = l.iterator();
+      Iterator<?> iter2 = list.iterator();
+      while (iter1.hasNext()) {
+         Object e1 = iter1.next();
+         Object e2 = iter2.next();
+         if ((e1 == list || e2 == list) && e1 != e2) {
+            // handle case where list contains itself - don't overflow stack
+            return false;
+         }
+         if (e1 == null ? e2 != null : !e1.equals(e2)) {
+            return false;
+         }
+      }
+      return true;
+   }
+   
    /**
     * Computes the hash code for a list per the contract defined by {@link List#hashCode()}.
     * 
@@ -116,6 +144,18 @@ final class CollectionUtils {
     * @return the hash code for {@code list}
     */
    public static int hashCode(List<?> list) {
+      int ret = 1;
+      for (Object e : list) {
+         // don't overflow stack if list contains itself -- substitute default hashcode
+         int elementHash = e == list ? System.identityHashCode(list)
+               : (e == null ? 0 : e.hashCode());
+         ret = 31 * ret + elementHash;
+      }
+      return ret;
+   }
+
+   // TODO: javadoc
+   public static int hashCode(ImmutableList<?> list) {
       int ret = 1;
       for (Object e : list) {
          // don't overflow stack if list contains itself -- substitute default hashcode
@@ -140,9 +180,70 @@ final class CollectionUtils {
       if (set == o) {
          return true;
       }
-      // TODO: seems like it's possible for this to stack-overflow if set contains itself...
       Set<?> other = (Set<?>) o;
-      return other.size() == set.size() && set.containsAll(other);
+      if (set.size() != other.size()) {
+         return false;
+      }
+      // The spec for interface Set says a set should never contain itself, but most implementations
+      // do not explicitly block this. So the paranoid code below handles this case.
+      boolean containsItself = false;
+      for (Object element : set) {
+         if (element == set || element == other) {
+            // don't test using contains(...) since that could cause infinite recursion
+            containsItself = true;
+         } else {
+            if (!other.contains(element)) {
+               return false;
+            }
+         }
+      }
+      if (containsItself) {
+         // safely check that other also contains itself
+         for (Object element : other) {
+            if (element == set || element == other) {
+               return true;
+            }
+         }
+         return false;
+      }
+      return true;
+   }
+   
+   // TODO: javadoc
+   public static boolean equals(ImmutableSet<?> set, Object o) {
+      if (!(o instanceof ImmutableSet)) {
+         return false;
+      }
+      if (set == o) {
+         return true;
+      }
+      ImmutableSet<?> other = (ImmutableSet<?>) o;
+      if (set.size() != other.size()) {
+         return false;
+      }
+      // The spec for interface Set says a set should never contain itself, but most implementations
+      // do not explicitly block this. So the paranoid code below handles this case.
+      boolean containsItself = false;
+      for (Object element : set) {
+         if (element == set || element == other) {
+            // don't test using contains(...) since that could cause infinite recursion
+            containsItself = true;
+         } else {
+            if (!other.contains(element)) {
+               return false;
+            }
+         }
+      }
+      if (containsItself) {
+         // safely check that other also contains itself
+         for (Object element : other) {
+            if (element == set || element == other) {
+               return true;
+            }
+         }
+         return false;
+      }
+      return true;
    }
 
    /**
@@ -152,6 +253,18 @@ final class CollectionUtils {
     * @return the hash code for {@code list}
     */
    public static int hashCode(Set<?> set) {
+      int hashCode = 0;
+      for (Object item : set) {
+         if (item != null) {
+            // don't overflow stack if set contains itself -- substitute default hashcode
+            hashCode += item == set ? System.identityHashCode(set) : item.hashCode();
+         }
+      }
+      return hashCode;
+   }
+
+   // TODO: javadoc
+   public static int hashCode(ImmutableSet<?> set) {
       int hashCode = 0;
       for (Object item : set) {
          if (item != null) {
@@ -380,8 +493,17 @@ final class CollectionUtils {
     * @return an array with the same elements as the specified collection
     */
    public static Object[] toArray(Collection<?> coll) {
-      Object ret[] = new Object[coll.size()];
-      copyToArray(coll, ret);
+      return toArray(coll, coll.size());
+   }
+   
+   // TODO: javadoc
+   public static Object[] toArray(ImmutableCollection<?> coll) {
+      return toArray(coll, coll.size());
+   }
+   
+   private static Object[] toArray(Iterable<?> iterable, int size) {
+      Object ret[] = new Object[size];
+      copyToArray(iterable, ret);
       return ret;
    }
 
@@ -395,9 +517,17 @@ final class CollectionUtils {
     * @return an array with the same elements as the specified collection
     */
    public static <T> T[] toArray(Collection<?> coll, T[] array) {
-      int size = coll.size();
+      return toArray(coll, coll.size(), array);
+   }
+   
+   //TODO: javadoc
+   public static <T> T[] toArray(ImmutableCollection<?> coll, T[] array) {
+      return toArray(coll, coll.size(), array);
+   }
+   
+   private static <T> T[] toArray(Iterable<?> iterable, int size, T[] array) {
       array = ArrayUtils.ensureCapacity(array, size);
-      copyToArray(coll, array);
+      copyToArray(iterable, array);
       if (array.length > size) {
          array[size] = null;
       }

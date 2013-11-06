@@ -77,6 +77,8 @@ public interface BitSequence extends Iterable<Boolean> {
        * @param numberOfBits the number of bits to fetch
        * @param order the order of bits in the returned value
        * @return the next chunk of bits
+       * @throws IllegalArgumentException if the requested number of bits is less than one or
+       *       greater than sixty-four
        * @throws NoSuchElementException if the requested number of bits is greater than the number
        *       of bits remaining in the stream
        */
@@ -88,6 +90,8 @@ public interface BitSequence extends Iterable<Boolean> {
        * 
        * @param numberOfBits the number of bits to fetch
        * @return the next chunk of bits
+       * @throws IllegalArgumentException if the requested number of bits is less than one or
+       *       greater than sixty-four
        * @throws NoSuchElementException if the requested number of bits is greater than the number
        *       of bits remaining in the stream
        */
@@ -99,6 +103,7 @@ public interface BitSequence extends Iterable<Boolean> {
        * 
        * @param numberOfBits the number of bits to fetch
        * @return the next chunk of bits, as a {@link BitSequence}
+       * @throws IllegalArgumentException if the requested number of bits is negative
        * @throws NoSuchElementException if the requested number of bits is greater than the number
        *       of bits remaining in the stream
        */
@@ -142,7 +147,7 @@ public interface BitSequence extends Iterable<Boolean> {
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see Stream#next(int, BitSequence.BitOrder)
+    * @see Stream#next(int, BitOrder)
     */
    LongIterator bitTupleIterator(int tupleSize, BitOrder order);
    
@@ -206,9 +211,11 @@ public interface BitSequence extends Iterable<Boolean> {
     * </pre>
     * The corresponding list of longs means a {@link java.util.List} of {@link Long}s whose length
     * is exactly enough to contain all of the bits in the sequence, whose first element represents
-    * the first 64 bits of the sequence, and whose last element represents the last 1 to 64 bits
-    * with any superfluous bits zeroed out (when the sequence length is not a multiple of 64). The
-    * second term in the hash code happens to be the same as calculated by
+    * the first 64 bits of the sequence (least significant bit first), and whose last element
+    * represents the last 1 to 64 bits (least significant bit first) with any superfluous (most
+    * significant) bits zeroed out when the sequence length is not a multiple of 64.
+    * 
+    * <p>The second term in the hash code happens to be the same as calculated by
     * {@link java.util.Arrays#hashCode(long[])} with an array whose contents correspond to the bits 
     * in the sequence (in the same manner described above).
     * 
@@ -217,8 +224,8 @@ public interface BitSequence extends Iterable<Boolean> {
    @Override int hashCode();
    
    /**
-    * Returns true if the specified object is a {@link BitSequence} with the same contents as this
-    * sequence.
+    * Returns true if the specified object is a {@link BitSequence} with the same contents and in
+    * the same order as this sequence.
     * 
     * @param o an object
     * @return true if the object represents the same sequence of bits; false otherwise

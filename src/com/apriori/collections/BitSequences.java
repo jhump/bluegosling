@@ -10,9 +10,11 @@ import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 import java.nio.charset.Charset;
+import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -35,7 +37,6 @@ import java.util.NoSuchElementException;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: finish javadoc
-//TODO: optimization -- new implementation of BitSequence that stores bits MSB instead of LSB
 //TODO: bit sequence implementations should be serializable
 public final class BitSequences {
    
@@ -330,6 +331,111 @@ public final class BitSequences {
       return fromArray(words, numBits);
    }
    
+   public static List<Boolean> asList(final BitSequence bits) {
+      return new AbstractList<Boolean>() {
+         @Override
+         public Boolean get(int index) {
+            return bits.stream(index).next();
+         }
+
+         @Override
+         public int size() {
+            return bits.length();
+         }
+      };
+   }
+
+   public static List<Byte> asListOfBytes(BitSequence bits) {
+      return asListOfBytes(bits, BitOrder.LSB);
+   }
+
+   public static List<Byte> asListOfBytes(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractList<Byte>() {
+         @Override
+         public Byte get(int index) {
+            return (byte) bits.bitTupleIterator(8, index << 3, bitOrder).nextLong();
+         }
+
+         @Override
+         public int size() {
+            return (bits.length() + 7) >> 3;
+         }
+      };
+   }
+
+   public static List<Short> asListOfShorts(BitSequence bits) {
+      return asListOfShorts(bits, BitOrder.LSB);
+   }
+
+   public static List<Short> asListOfShorts(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractList<Short>() {
+         @Override
+         public Short get(int index) {
+            return (short) bits.bitTupleIterator(16, index << 4, bitOrder).nextLong();
+         }
+
+         @Override
+         public int size() {
+            return (bits.length() + 15) >> 4;
+         }
+      };
+   }
+
+   public static List<Integer> asListOfInts(BitSequence bits) {
+      return asListOfInts(bits, BitOrder.LSB);
+   }
+
+   public static List<Integer> asListOfInts(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractList<Integer>() {
+         @Override
+         public Integer get(int index) {
+            return (int) bits.bitTupleIterator(32, index << 5, bitOrder).nextLong();
+         }
+
+         @Override
+         public int size() {
+            return (bits.length() + 31) >> 5;
+         }
+      };
+   }
+
+   public static List<Long> asListOfLongs(BitSequence bits) {
+      return asListOfLongs(bits, BitOrder.LSB);
+   }
+
+   public static List<Long> asListOfLongs(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractList<Long>() {
+         @Override
+         public Long get(int index) {
+            return bits.bitTupleIterator(64, index << 6, bitOrder).nextLong();
+         }
+
+         @Override
+         public int size() {
+            return (bits.length() + 63) >> 6;
+         }
+      };
+   }
+
+   public static List<Long> asListOfBitTuples(BitSequence bits, int tupleSize) {
+      return asListOfBitTuples(bits, tupleSize, BitOrder.LSB);
+   }
+   
+   public static List<Long> asListOfBitTuples(final BitSequence bits, final int tupleSize,
+         final BitOrder bitOrder) {
+      return new AbstractList<Long>() {
+         @Override
+         public Long get(int index) {
+            return bits.bitTupleIterator(tupleSize, index * tupleSize, bitOrder).nextLong();
+         }
+
+         @Override
+         public int size() {
+            return (bits.length() + tupleSize - 1) / tupleSize;
+         }
+      };
+   }
+
    public static boolean[] toBits(BitSequence bits) {
       int len = bits.length();
       boolean ret[] = new boolean[len];
@@ -550,6 +656,20 @@ public final class BitSequences {
       return longs;
    }
    
+   public static long[] toBitTuples(BitSequence bits, int tupleSize) {
+      return toBitTuples(bits, tupleSize, BitOrder.LSB);
+   }
+
+   public static long[] toBitTuples(BitSequence bits, int tupleSize, BitOrder order) {
+      int len = (bits.length() + tupleSize - 1) / tupleSize;
+      long longs[] = new long[len];
+      Iterator<Long> iter = bits.bitTupleIterator(tupleSize, order);
+      for (int i = 0; i < len; i++) {
+         longs[i] = iter.next();
+      }
+      return longs;
+   }
+
    public static BitSequence fromBits(boolean bits[]) {
       int len = bits.length;
       long words[] = new long[(len + 63) >> 6];
@@ -845,28 +965,6 @@ public final class BitSequences {
       return fromArray(longs, longs.length << 3);
    }
    
-   static LongIterator tupleOfOneIterator(final BooleanIterator iter) {
-      return new LongIterator() {
-
-         @Override public boolean hasNext() {
-            return iter.hasNext();
-         }
-
-         @Override public Long next() {
-            return iter.nextBoolean() ? 1L : 0L;
-         }
-
-         @Override public long nextLong() {
-            return iter.nextBoolean() ? 1L : 0L;
-         }
-
-         @Override public void remove() {
-            throw new UnsupportedOperationException();
-         }
-         
-      };
-   }
-   
    private static BitSequence fromArray(final long words[], final int numberOfBits) {
       assert numberOfBits <= (words.length << 6) && numberOfBits > ((words.length - 1) << 6);
       if (numberOfBits <= 64) {
@@ -938,8 +1036,9 @@ public final class BitSequences {
       }
 
       @Override public Stream stream(int startIndex) {
-         return new Stream() {
-            
+         rangeCheck(startIndex);
+         
+         return new AbstractStream() {
             @Override public int remaining() {
                return 0;
             }
@@ -949,11 +1048,7 @@ public final class BitSequences {
             }
 
             @Override public void jumpTo(int index) {
-               if (index < 0) {
-                  throw new IllegalArgumentException("index < 0");
-               } else if (index > 0) {
-                  throw new IllegalArgumentException("index > 1");
-               };
+               rangeCheck(index);
             }
 
             @Override public boolean next() {
@@ -965,20 +1060,14 @@ public final class BitSequences {
             }
 
             @Override public long next(int numberOfBits) {
-               if (numberOfBits > 0) {
-                  throw new NoSuchElementException();
-               } else {
-                  throw new IllegalArgumentException(numberOfBits + " <= 0");
-               }
+               checkTupleLength(numberOfBits);
+               throw new NoSuchElementException();
             }
 
             @Override
             public BitSequence nextAsSequence(int numberOfBits) {
-               if (numberOfBits > 0) {
-                  throw new NoSuchElementException();
-               } else {
-                  throw new IllegalArgumentException(numberOfBits + " <= 0");
-               }
+               checkSequenceLength(numberOfBits);
+               return INSTANCE;
             }
          };
       }
@@ -1005,7 +1094,9 @@ public final class BitSequences {
       }
 
       @Override public Stream stream(int startIndex) {
-         return new Stream() {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
             boolean used;
             
             @Override public int remaining() {
@@ -1017,11 +1108,7 @@ public final class BitSequences {
             }
 
             @Override public void jumpTo(int index) {
-               if (index < 0) {
-                  throw new IllegalArgumentException("index < 0");
-               } else if (index > 1) {
-                  throw new IllegalArgumentException("index > 1");
-               }
+               rangeCheck(index);
                used = index == 1;
             }
 
@@ -1037,22 +1124,14 @@ public final class BitSequences {
             }
 
             @Override public long next(int numberOfBits) {
-               if (used || numberOfBits > 1) {
-                  throw new NoSuchElementException();
-               } else if (numberOfBits <= 0) {
-                  throw new IllegalArgumentException(numberOfBits + " <= 0");
-               }
+               checkTupleLength(numberOfBits);
                return val ? 1 : 0;
             }
 
             @Override
             public BitSequence nextAsSequence(int numberOfBits) {
-               if ((used && numberOfBits > 0) || (!used && numberOfBits > 1)) {
-                  throw new NoSuchElementException();
-               } else if (numberOfBits <= 0) {
-                  throw new IllegalArgumentException(numberOfBits + " <= 0");
-               }
-               return SingletonBitSequence.this;
+               checkSequenceLength(numberOfBits);
+               return numberOfBits == 0 ? EmptyBitSequence.INSTANCE : SingletonBitSequence.this;
             }
          };
       }
@@ -1081,12 +1160,9 @@ public final class BitSequences {
       }
       
       @Override public Stream stream(final int startIndex) {
-         if (startIndex < 0) {
-            throw new IllegalArgumentException("start index < 0");
-         } else if (startIndex > length) {
-            throw new IllegalArgumentException("start index > " + length);
-         }
-         return new Stream() {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
             {
                findPointInStream(startIndex);
             }
@@ -1098,7 +1174,7 @@ public final class BitSequences {
             private void findPointInStream(int index) {
                remaining = length - index;
                int i = Arrays.binarySearch(cumulativeCounts, index);
-               currentComponent = i < 0 ? (-i - 1) : i+1;
+               currentComponent = i < 0 ? (-i - 1) : i + 1;
                componentStream = components[currentComponent].stream();
             }
             
@@ -1118,11 +1194,7 @@ public final class BitSequences {
             }
             
             @Override public void jumpTo(int newIndex) {
-               if (newIndex < 0) {
-                  throw new IllegalArgumentException("index < 0");
-               } else if (newIndex > length) {
-                  throw new IllegalArgumentException("index > " + length);
-               }
+               rangeCheck(newIndex);
                findPointInStream(newIndex);
             }
             
@@ -1133,23 +1205,8 @@ public final class BitSequences {
                return getComponentStream().next();
             }
 
-            @Override public long next(int tupleSize, BitOrder order) {
-               long val = next(tupleSize);
-               if (order == BitOrder.MSB) {
-                  val = Long.reverse(val);
-                  if (tupleSize < 64) {
-                     val >>= 64 - tupleSize;
-                  }
-               }
-               return val;
-            }
-            
             @Override public long next(int tupleSize) {
-               if (remaining < tupleSize) {
-                  throw new NoSuchElementException();
-               } else if (tupleSize <= 0) {
-                  throw new IllegalArgumentException(tupleSize + " <= 0");
-               }
+               checkTupleLength(tupleSize);
                
                long val = 0;
                int bitsLeft = tupleSize;
@@ -1163,15 +1220,6 @@ public final class BitSequences {
                   }
                }
                return val;
-            }
-
-            @Override public BitSequence nextAsSequence(int sequenceLength) {
-               if (remaining < sequenceLength) {
-                  throw new NoSuchElementException();
-               } else if (sequenceLength <= 0) {
-                  throw new IllegalArgumentException(sequenceLength + " <= 0");
-               }
-               return BitSequences.nextAsSequence(this, sequenceLength);
             }
          };
       } 
@@ -1191,19 +1239,14 @@ public final class BitSequences {
          this.numberOfBits = numberOfBits;
       }
       
-      // TODO: optimized iterator when index mod 64 == 0 and tupleSize == 64
-      
       @Override public int length() {
          return numberOfBits;
       }
 
       @Override public Stream stream(final int startIndex) {
-         if (startIndex < 0) {
-            throw new IllegalArgumentException("start index < 0");
-         } else if (startIndex > numberOfBits) {
-            throw new IllegalArgumentException("start index > " + numberOfBits);
-         }
-         return new Stream() {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
             private int remaining = numberOfBits - startIndex;
             private int arrayIndex = startIndex >> 6;
             private int bitIndex = startIndex & 0x3f;
@@ -1217,11 +1260,7 @@ public final class BitSequences {
             }
             
             @Override public void jumpTo(int newIndex) {
-               if (newIndex < 0) {
-                  throw new IllegalArgumentException("index < 0");
-               } else if (newIndex > numberOfBits) {
-                  throw new IllegalArgumentException("index > " + numberOfBits);
-               }
+               rangeCheck(newIndex);
                
                remaining = numberOfBits - newIndex;
                arrayIndex = newIndex >> 6;
@@ -1244,23 +1283,8 @@ public final class BitSequences {
                return ret; 
             }
 
-            @Override public long next(int tupleSize, BitOrder order) {
-               long val = next(tupleSize);
-               if (order == BitOrder.MSB) {
-                  val = Long.reverse(val);
-                  if (tupleSize < 64) {
-                     val >>= 64 - tupleSize;
-                  }
-               }
-               return val;
-            }
-            
             @Override public long next(int tupleSize) {
-               if (remaining < tupleSize) {
-                  throw new NoSuchElementException();
-               } else if (tupleSize <= 0) {
-                  throw new IllegalArgumentException(tupleSize + " <= 0");
-               }
+               checkTupleLength(tupleSize);
                
                long val;
                if (bitIndex == 0) {
@@ -1292,15 +1316,6 @@ public final class BitSequences {
                remaining -= tupleSize;
                return val;
             }
-
-            @Override public BitSequence nextAsSequence(int sequenceLength) {
-               if (remaining < sequenceLength) {
-                  throw new NoSuchElementException();
-               } else if (sequenceLength <= 0) {
-                  throw new IllegalArgumentException(sequenceLength + " <= 0");
-               }
-               return BitSequences.nextAsSequence(this, sequenceLength);
-            }
          };
       } 
    }
@@ -1320,19 +1335,14 @@ public final class BitSequences {
          this.numberOfBits = numberOfBits;
       }
       
-      // TODO: super-simple optimized iterator when index == 0
-      
       @Override public int length() {
          return numberOfBits;
       }
 
       @Override public Stream stream(final int startIndex) {
-         if (startIndex < 0) {
-            throw new IndexOutOfBoundsException("start index < 0");
-         } else if (startIndex > numberOfBits) {
-            throw new IndexOutOfBoundsException("start index > " + numberOfBits);
-         }
-         return new Stream() {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
             private int remaining = numberOfBits - startIndex;
             private int index = startIndex;
 
@@ -1345,11 +1355,7 @@ public final class BitSequences {
             }
             
             @Override public void jumpTo(int newIndex) {
-               if (newIndex < 0) {
-                  throw new IllegalArgumentException("index < 0");
-               } else if (newIndex > numberOfBits) {
-                  throw new IllegalArgumentException("index > " + numberOfBits);
-               }
+               rangeCheck(newIndex);
                remaining = numberOfBits - newIndex;
                index = newIndex;
             }
@@ -1363,17 +1369,8 @@ public final class BitSequences {
                return ret; 
             }
             
-            @Override public long next(int tupleSize, BitOrder order) {
-               long val = next(tupleSize);
-               return order == BitOrder.MSB ? Long.reverse(val) : val;
-            }
-            
             @Override public long next(int tupleSize) {
-               if (remaining < tupleSize) {
-                  throw new NoSuchElementException();
-               } else if (tupleSize <= 0) {
-                  throw new IllegalArgumentException(tupleSize + " <= 0");
-               }
+               checkTupleLength(tupleSize);
                
                long val;
                if (index == 0) {
@@ -1387,15 +1384,6 @@ public final class BitSequences {
                index += tupleSize;
                remaining -= tupleSize;
                return val;
-            }
-            
-            @Override public BitSequence nextAsSequence(int sequenceLength) {
-               if (remaining < sequenceLength) {
-                  throw new NoSuchElementException();
-               } else if (sequenceLength <= 0) {
-                  throw new IllegalArgumentException(sequenceLength + " <= 0");
-               }
-               return BitSequences.nextAsSequence(this, sequenceLength);
             }
          };
       }
@@ -1419,12 +1407,9 @@ public final class BitSequences {
       }
       
       @Override public Stream stream(final int startIndex) {
-         if (startIndex < 0) {
-            throw new IllegalArgumentException("start index < 0");
-         } else if (startIndex > bits.length()) {
-            throw new IllegalArgumentException("start index > " + bits.length());
-         }
-         return new Stream() {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
             private int remaining = bits.length() - startIndex;
             private int index = startIndex;
             
@@ -1437,11 +1422,7 @@ public final class BitSequences {
             }
             
             @Override public void jumpTo(int newIndex) {
-               if (newIndex < 0) {
-                  throw new IndexOutOfBoundsException("index < 0");
-               } else if (newIndex > bits.length()) {
-                  throw new IndexOutOfBoundsException("index > " + bits.length());
-               }
+               rangeCheck(newIndex);
                remaining = bits.length() - newIndex;
                index = newIndex;
             }
@@ -1454,17 +1435,9 @@ public final class BitSequences {
                return bits.get(index++);
             }
 
-            @Override public long next(int tupleSize, BitOrder order) {
-               long val = next(tupleSize);
-               return order == BitOrder.MSB ? Long.reverse(val) : val;
-            }
-            
             @Override public long next(int tupleSize) {
-               if (remaining < tupleSize) {
-                  throw new NoSuchElementException();
-               } else if (tupleSize <= 0) {
-                  throw new IllegalArgumentException(tupleSize + " <= 0");
-               }
+               checkTupleLength(tupleSize);
+
                long val = 0;
                int len = bits.length();
                int limit = index + tupleSize;
@@ -1478,15 +1451,6 @@ public final class BitSequences {
                }
                remaining -= tupleSize;
                return val;
-            }
-            
-            @Override public BitSequence nextAsSequence(int sequenceLength) {
-               if (remaining < sequenceLength) {
-                  throw new NoSuchElementException();
-               } else if (sequenceLength <= 0) {
-                  throw new IllegalArgumentException(sequenceLength + " <= 0");
-               }
-               return BitSequences.nextAsSequence(this, sequenceLength);
             }
          };
       }

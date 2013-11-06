@@ -9,12 +9,61 @@ final class MapUtils {
    }
 
    public static boolean equals(Map<?, ?> map, Object o) {
-      // TODO: tighten this up so it won't overflow stack if map contains itself
-      if (o instanceof Map) {
-         Map<?, ?> other = (Map<?, ?>) o;
-         return map.entrySet().equals(other.entrySet());
+      if (!(o instanceof Map)) {
+         return false;
       }
-      return false;
+      if (map == o) {
+         return true;
+      }
+      Map<?, ?> other = (Map<?, ?>) o;
+      if (map.size() != other.size()) {
+         return false;
+      }
+      boolean containsItselfAsKey = false;
+      Object selfValue = null;
+      for (Map.Entry<?, ?> entry : map.entrySet()) {
+         Object key = entry.getKey();
+         Object value = entry.getValue();
+         if (key == map || key == other) {
+            containsItselfAsKey = true;
+            selfValue = value;
+         } else {
+            Object otherValue = other.get(key);
+            if (value == null && otherValue == null) {
+               // annoying to have to do a double look-up, but...
+               if (!other.containsKey(key)) {
+                  return false;
+               }
+            } else if (value == null || otherValue == null) {
+               return false;
+            } else if (value == map || value == other) {
+               if (otherValue != map && otherValue != other) {
+                  return false;
+               }
+            } else if (!value.equals(otherValue)) {
+               return false;
+            }
+         }
+      }
+      if (containsItselfAsKey) {
+         // verify other map also contains itself (or this map) and has proper associated value
+         for (Map.Entry<?, ?> entry : other.entrySet()) {
+            Object key = entry.getKey();
+            Object value = entry.getValue();
+            if (key == map || key == other) {
+               // check that mapped value matches
+               if (value == null || selfValue == null) {
+                  return value == selfValue;
+               } else if (value == map || value == other) {
+                  return selfValue == map || selfValue == other;
+               } else {
+                  return value.equals(selfValue);
+               }
+            }
+         }
+         return false;
+      }
+      return true;
    }
 
    public static int hashCode(Map<?, ?> map) {
@@ -68,6 +117,18 @@ final class MapUtils {
                   ? other.getValue() == null : entry.getValue().equals(other.getValue()));
    }
 
+   public static int hashCode(Map.Entry<?, ?> entry) {
+      return safeHashCode(entry.getKey(), entry) ^ safeHashCode(entry.getValue(), entry);
+   }
+
+   public static String toString(Map.Entry<?, ?> entry) {
+      StringBuilder sb = new StringBuilder();
+      safeToString(sb, entry.getKey(), entry, "( this entry )");
+      sb.append(" => ");
+      safeToString(sb, entry.getValue(), entry, "( this entry )");
+      return sb.toString();
+   }
+   
    private static int safeHashCode(Object o, Object current1, Object current2) {
       return (o == current1 || o == current2) ? System.identityHashCode(o)
             : (o == null ? 0 : o.hashCode());
@@ -76,10 +137,6 @@ final class MapUtils {
    private static int safeHashCode(Object o, Object current) {
       return o == current ? System.identityHashCode(current)
             : (o == null ? 0 : o.hashCode());
-   }
-
-   public static int hashCode(Map.Entry<?, ?> entry) {
-      return safeHashCode(entry.getKey(), entry) ^ safeHashCode(entry.getValue(), entry);
    }
 
    private static void safeToString(StringBuilder sb, Object o, Object current1, String substitute1,
@@ -99,13 +156,5 @@ final class MapUtils {
       } else {
          sb.append(o);
       }
-   }
-   
-   public static String toString(Map.Entry<?, ?> entry) {
-      StringBuilder sb = new StringBuilder();
-      safeToString(sb, entry.getKey(), entry, "( this entry )");
-      sb.append(" => ");
-      safeToString(sb, entry.getValue(), entry, "( this entry )");
-      return sb.toString();
    }
 }

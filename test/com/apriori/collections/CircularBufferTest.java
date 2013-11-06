@@ -510,8 +510,33 @@ public class CircularBufferTest {
    }
    
    private void shiftingEndToFront(CircularBuffer<Object> buffer, Sink<Integer> shift) {
-      // TODO
-      fail("not implemented");
+      Random rand = new Random(1);
+      Deque<Object> deque = new ArrayDeque<Object>();
+      for (int i = 0; i < 100; i++) {
+         if (buffer.count() == 0 || rand.nextInt(10) == 0) {
+            // first pass, and ~10% of the time, we re-build the buffer
+            buffer.clear();
+            deque.clear();
+            int numItems = rand.nextInt(buffer.capacity()) + 1;
+            while (numItems > 0) {
+               Integer v = numItems;
+               buffer.addFirst(v);
+               deque.addFirst(v);
+               checkSameContents(buffer, deque);
+               numItems--;
+            }
+         }
+         int numToShift = rand.nextInt(buffer.count()) + 1;
+         shift.accept(numToShift);
+         // and do the same in the deques
+         while (numToShift > 0) {
+            // can shift one element at a time
+            deque.addFirst(deque.removeLast());
+            numToShift--;
+         }
+         // and make sure we come up with same results
+         checkSameContents(buffer, deque);
+      }
    }
    
    @Test public void pullLast_toFromSelf() {
@@ -533,10 +558,35 @@ public class CircularBufferTest {
          }
       });
    }
-   
+
    private void shiftingFrontToEnd(CircularBuffer<Object> buffer, Sink<Integer> shift) {
-      // TODO
-      fail("not implemented");
+      Random rand = new Random(1);
+      Deque<Object> deque = new ArrayDeque<Object>();
+      for (int i = 0; i < 100; i++) {
+         if (buffer.count() == 0 || rand.nextInt(10) == 0) {
+            // first pass, and ~10% of the time, we re-build the buffer
+            buffer.clear();
+            deque.clear();
+            int numItems = rand.nextInt(buffer.capacity()) + 1;
+            while (numItems > 0) {
+               Integer v = numItems;
+               buffer.addFirst(v);
+               deque.addFirst(v);
+               checkSameContents(buffer, deque);
+               numItems--;
+            }
+         }
+         int numToShift = rand.nextInt(buffer.count()) + 1;
+         shift.accept(numToShift);
+         // and do the same in the deques
+         while (numToShift > 0) {
+            // can shift one element at a time
+            deque.addLast(deque.removeFirst());
+            numToShift--;
+         }
+         // and make sure we come up with same results
+         checkSameContents(buffer, deque);
+      }
    }
    
    @Test public void pullFirst_toFromSelf() {

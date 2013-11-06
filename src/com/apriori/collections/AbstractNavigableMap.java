@@ -35,7 +35,6 @@ import java.util.Set;
  * @param <K> the type of keys in the map
  * @param <V> the type of values in the map
  */
-// TODO: javadoc
 // TODO: tests!
 // TODO: test serialization support
 public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
@@ -73,6 +72,12 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       }
    }
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This implementation returns the comparator specified during construction or {@code null} if
+    * elements are sorted according to their natural ordering.
+    */
    @Override
    public Comparator<? super K> comparator() {
       return comparator == CollectionUtils.NATURAL_ORDERING ? null : comparator;
@@ -924,8 +929,9 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
        * properly fail-fast.
        * 
        * <p>Since a {@link SubMap} <em>extends</em> {@link AbstractNavigableMap}, it also inherits
-       * a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is used to detect
-       * when the sub-map's memo-ized size is stale and elements need to be counted.
+       * a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is compared to the
+       * main maps' value to detect when the sub-map's memo-ized size is stale and elements need to
+       * be counted.
        * 
        * @return {@inheritDoc}
        */
@@ -934,25 +940,59 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       }
    }
    
+   /**
+    * An iterator over the mappings in this map. This is the base class used for iterators over the
+    * map's keys, its entries, and its values.
+    * 
+    * <p>This iterator implements fail-fast behavior.
+    *
+    * @param <T> the type of element fetched from the iterator
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected abstract class BaseIteratorImpl<T> implements Iterator<T> {
       private Entry<K, V> next;
       private boolean canRemove;
       private K lastFetched;
       private int myModCount;
       
+      /**
+       * Constructs a new iterator.
+       */
       protected BaseIteratorImpl() {
          next = start();
          resetModCount();
       }
       
+      /**
+       * Returns the first entry that will be visited during iteration. The default is the map's
+       * {@linkplain NavigableMap#firstEntry() first entry}.
+       *
+       * @return the entry returned by the very first call to {@link #next()} or {@code null} if
+       *       the map is empty
+       */
       protected Entry<K, V> start() {
          return firstEntry();
       }
 
+      /**
+       * Advances the iterator and returns the next entry to be visited during iteration. The
+       * default, for ascending iteration, returns the lowest key that is greater than the specified
+       * previous key (using {@link NavigableMap#higherEntry(Object)}).
+       *
+       * @param previousKey the previous key visited during iteration
+       * @return the next entry to be visited
+       */
       protected Entry<K, V> advance(K previousKey) {
          return higherEntry(previousKey);
       }
       
+      /**
+       * Computes the value fetched from this iterator based on the given map entry.
+       *
+       * @param entry the visisted map entry
+       * @return the value to return from {@link #next()}
+       */
       protected abstract T compute(Entry<K, V> entry);
 
       private void checkModCount() {
@@ -996,31 +1036,75 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       }
    }
    
+   /**
+    * An iterator over the map entries in this map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected class EntryIteratorImpl extends BaseIteratorImpl<Entry<K, V>> {
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>This implementation just returns the specified entry.
+       */
       @Override
       protected Entry<K, V> compute(Entry<K, V> entry) {
          return entry;
       }
    }
 
+   /**
+    * An iterator over the keys in this map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected class KeyIteratorImpl extends BaseIteratorImpl<K> {
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>This implementation extracts the key from the specified entry.
+       */
       @Override
       protected K compute(Entry<K, V> entry) {
          return entry.getKey();
       }
    }
 
+   /**
+    * An iterator over the keys in this map that goes from highest to lowest key.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected class DescendingKeyIteratorImpl extends BaseIteratorImpl<K> {
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>This implementation extracts the key from the specified entry.
+       */
       @Override
       protected K compute(Entry<K, V> entry) {
          return entry.getKey();
       }
       
+      /**
+       * Returns the first entry that will be visited during iteration. This implementation returns
+       * the map's {@linkplain NavigableMap#lastEntry() last entry}
+       * 
+       * @return {@inheritDoc}
+       */
       @Override
       protected Entry<K, V> start() {
          return lastEntry();
       }
       
+      /**
+       * Advances the iterator and returns the next entry to be visited during iteration. This
+       * implementation returns the largest key that is less than the specified previous key (using
+       * {@link NavigableMap#lowerEntry(Object)}).
+       *
+       * @param previousKey {@inheritDoc}
+       * @return {@inheritDoc}
+       */
       @Override
       protected Entry<K, V> advance(K previousKey) {
          return lowerEntry(previousKey);
