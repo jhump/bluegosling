@@ -396,7 +396,7 @@ public class ListenableExecutors {
 
       private void addReschedulingListener(final ListenableRepeatingFutureTask<?> future) {
          future.addListenerForEachInstance(new FutureListener<Object>() {
-            @SuppressWarnings("synthetic-access") // invokes private delayedExecute
+            @SuppressWarnings("synthetic-access") // wrappers member is private
             @Override
             public void onCompletion(ListenableFuture<? extends Object> completedFuture) {
                if (!future.isDone()) {
@@ -419,22 +419,23 @@ public class ListenableExecutors {
       @Override
       public ListenableRepeatingFuture<Void> scheduleAtFixedRate(Runnable command,
             long initialDelay, long period, TimeUnit unit) {
-         long scheduledNanoTime = System.nanoTime() + unit.toNanos(initialDelay);
-         ListenableRepeatingFutureTask<Void> future =
-               new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
-                     Reschedulers.atFixedRate(period, unit));
-         addReschedulingListener(future);
-         wrappers.put(delegate().schedule(future, initialDelay, unit), future);
-         return future;
+         return schedulePeriodic(command, initialDelay, unit,
+               Reschedulers.atFixedRate(period, unit));
       }
 
       @Override
       public ListenableRepeatingFuture<Void> scheduleWithFixedDelay(Runnable command,
             long initialDelay, long delay, TimeUnit unit) {
+         return schedulePeriodic(command, initialDelay, unit,
+               Reschedulers.withFixedDelay(delay, unit));
+      }
+      
+      private ListenableRepeatingFuture<Void> schedulePeriodic(Runnable command,
+            long initialDelay, TimeUnit unit, Rescheduler<? super Void> rescheduler) {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(initialDelay);
          ListenableRepeatingFutureTask<Void> future =
                new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
-                     Reschedulers.withFixedDelay(delay, unit));
+                     rescheduler);
          addReschedulingListener(future);
          wrappers.put(delegate().schedule(future, initialDelay, unit), future);
          return future;
@@ -475,12 +476,12 @@ public class ListenableExecutors {
       private final AtomicReference<Thread> scheduler = new AtomicReference<Thread>();
       private final DelayQueue<AbstractStampedTask> scheduleQueue =
             new DelayQueue<AbstractStampedTask>();
-      private volatile boolean isShutdown;
       private final Runnable shutdownTask = new Runnable() {
          @Override public void run() {
             delegate().shutdown();
          }
       };
+      private boolean isShutdown;
       
       ListenableScheduledExecutorServiceSchedulingWrapper(ExecutorService delegate,
             boolean waitForScheduledTasksOnShutdown) {
@@ -520,6 +521,7 @@ public class ListenableExecutors {
          if (isShutdown()) {
             reject();
          } else {
+            // TODO: handle case where task is instance of Delayed
             doExecute(task);
          }
       }
@@ -532,7 +534,7 @@ public class ListenableExecutors {
       public ListenableScheduledFuture<Void> schedule(Runnable command, long delay, TimeUnit unit) {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(delay);
          ListenableScheduledFutureTask<Void> future =
-               new ListenableScheduledFutureTask<Void>(command,  null, scheduledNanoTime);
+               new ListenableScheduledFutureTask<Void>(command, null, scheduledNanoTime);
          delayedExecute(future);
          return future;
       }
@@ -649,7 +651,7 @@ public class ListenableExecutors {
       
       @Override
       public void shutdown() {
-         if (!setShutdown()) {
+         if (setShutdown()) {
             if (waitForScheduledTasksOnShutdown) {
                // schedules shutdown of delegate after existing scheduled tasks run
                stopSchedulerThread();

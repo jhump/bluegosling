@@ -51,6 +51,7 @@ public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAt
     */
    public ThreadLocalAtom(T rootValue, Predicate<? super T> validator) {
       super(validator);
+      validate(rootValue);
       this.rootValue = new AtomicReference<T>(rootValue);
    }
 

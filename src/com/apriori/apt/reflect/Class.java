@@ -30,7 +30,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
 
 /**
- * A class (or interface, enum, or annotation type. This is analogous to {@link java.lang.Class
+ * A class (or interface, enum, or annotation type). This is analogous to {@link java.lang.Class
  * java.lang.Class} except that it represents a type in source form vs. in compiled form at runtime.
  *
  * <p>Sadly, since the types here may not be available as actual {@code java.lang.Class} tokens,

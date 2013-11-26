@@ -37,10 +37,19 @@ import java.util.Set;
  * @param <K> the type of keys in the map
  * @param <V> the type of value in the map
  */
+// TODO: add InnerLeafTrieNode to short circuit search when a path has only one node
+// TODO: add freeLists for more efficiently re-using/allocating node arrays
 public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cloneable {
    
    private static final long serialVersionUID = -9064441005458513893L;
 
+   /**
+    * Sentinel value returned from {@link TrieNode#findOrAddNode(int, int, Object, Object)} to
+    * indicate that an inner-leaf node must be replaced with an intermediate node.
+    */
+   private static final ListNode<Object, Object> INNER_NODE_NEEDS_EXPANSION =
+         new ListNode<Object, Object>(null, null);
+         
    /**
     * A node in a linked list that stores key-value pairs for a given hash code.
     *
@@ -86,6 +95,9 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private interface TrieNode<K, V> {
+      // APIs need to be in terms of hash and offset instead of hash remaining and bits remaining
+      // so the InnerLeafTrieNode can be properly implemented
+      
       /**
        * Determines if this node or any of its descendants contain the specified value.
        *
@@ -336,7 +348,10 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       @Override
       public ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object searchKey) {
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
-         
+         return doFindNode(searchKey);
+      }
+      
+      protected ListNode<K, V> doFindNode(Object searchKey) {
          ListNode<K, V> current = this;
          while (current != null) {
             if (searchKey == null ? current.key == null : searchKey.equals(current.key)) {
@@ -351,7 +366,10 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K newKey,
             V newValue) {
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
-         
+         return doFindOrAddNode(newKey, newValue);
+      }
+      
+      protected ListNode<K, V> doFindOrAddNode(K newKey, V newValue) {
          ListNode<K, V> current = this;
          while (current != null) {
             if (newKey == null ? current.key == null : newKey.equals(current.key)) {
@@ -370,7 +388,10 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining,
             Object keyToRemove) {
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
-         
+         return doRemoveNode(keyToRemove);
+      }
+      
+      protected ListNode<K, V> doRemoveNode(Object keyToRemove) {
          if (keyToRemove == null ? this.key == null : keyToRemove.equals(this.key)) {
             if (next == null) {
                // no other list nodes, so just remove this whole thing
@@ -407,6 +428,16 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       @Override
       public boolean isEmpty() {
          return false;
+      }
+   }
+   
+   // TODO: javadoc
+   private static class InnerLeafTrieNode<K, V> extends LeafTrieNode<K, V> {
+      private final int hashCode;
+      
+      InnerLeafTrieNode(int hashCode, K key, V value) {
+         super(key, value);
+         this.hashCode = hashCode;
       }
    }
    

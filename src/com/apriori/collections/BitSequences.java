@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -49,7 +50,7 @@ public final class BitSequences {
    /**
     * Method for converting a {@link BitSet} to an array of longs. This method exists in Java 7 but
     * not in Java 6. To maintain compatibility with Java 6, we only use this method if its
-    * available (and it's invoked reflectively).
+    * available, so it's invoked reflectively.
     */
    private static final Method bitSetToLongArray;
    
@@ -111,10 +112,14 @@ public final class BitSequences {
     * 
     * @param sequences the input sequences
     * @return a concatenation of the input sequences
+    * @throws NullPointerException if the specified array or any element therein is null
     */
    public static BitSequence concat(BitSequence... sequences) {
       int len = 0;
       for (BitSequence bs : sequences) {
+         if (bs == null) {
+            throw new NullPointerException();
+         }
          len += (bs instanceof AggregateBitSequence)
                ? ((AggregateBitSequence) bs).components.length : 1;
       }
@@ -162,40 +167,16 @@ public final class BitSequences {
     * @throws IndexOutOfBoundsException if the specified start index is negative or is greater than
     *       or equal to the length of the sequence or if the specified end index is less than the
     *       start index or greater than the length of the sequence
+    * @throws NullPointerException if the specified sequence is null
     */
    public static BitSequence subSequence(BitSequence bits, int start, int end) {
-      BitSequence.Stream stream = bits.stream(start);
-      if (end < start || end > bits.length()) {
+      if (bits == null) {
+         throw new NullPointerException();
+      }
+      if (start < 0 || end < start || end > bits.length()) {
          throw new IndexOutOfBoundsException();
       }
-      return nextAsSequence(stream, end - start);
-   }
-   
-   /**
-    * Gets the next chunk of bits as a {@link BitSequence}. This only uses
-    * {@link BitSequence.Stream#next(int)} so it can safely be used to implement
-    * {@link BitSequence.Stream#nextAsSequence(int)}
-    * 
-    * @param stream the stream from which the bits are fetched
-    * @param numberOfBits the number of bits to fetch to build the sequence
-    * @return a new sequence
-    */
-   static BitSequence nextAsSequence(BitSequence.Stream stream, int numberOfBits) {
-      if (numberOfBits == 0) {
-         return EmptyBitSequence.INSTANCE;
-      }
-      
-      int len = (numberOfBits + 63) >> 6;
-      long words[] = new long[len];
-      int trailingBits = numberOfBits & 0x3f;
-      int limit = trailingBits == 0 ? len : len - 1;
-      for (int i = 0; i < limit; i++) {
-         words[i] = stream.next(64);
-      }
-      if (trailingBits != 0) {
-         words[len - 1] = stream.next(trailingBits);
-      }
-      return fromArray(words, numberOfBits);
+      return new SubBitSequence(bits, start, end - start);
    }
    
    /**
@@ -205,6 +186,7 @@ public final class BitSequences {
     * @return a bit sequence with bits in the reverse order of the specified sequence
     */
    public static BitSequence reverse(BitSequence bits) {
+      // TODO: reversed view instead of a copy?
       int numBits = bits.length();
       int len = (numBits + 63) >> 6;
       long words[] = new long[len];
@@ -329,6 +311,16 @@ public final class BitSequences {
          words[i] = l1 ^ l2;
       }
       return fromArray(words, numBits);
+   }
+   
+   public static BitSequence allZeros(int length) {
+      // TODO
+      return null;
+   }
+   
+   public static BitSequence allOnes(int length) {
+      // TODO
+      return null;
    }
    
    public static List<Boolean> asList(final BitSequence bits) {
@@ -661,6 +653,9 @@ public final class BitSequences {
    }
 
    public static long[] toBitTuples(BitSequence bits, int tupleSize, BitOrder order) {
+      if (tupleSize < 0 || tupleSize > 64) {
+         throw new IllegalArgumentException();
+      }
       int len = (bits.length() + tupleSize - 1) / tupleSize;
       long longs[] = new long[len];
       Iterator<Long> iter = bits.bitTupleIterator(tupleSize, order);
@@ -670,6 +665,32 @@ public final class BitSequences {
       return longs;
    }
 
+   public static BitSequence fromBits(Boolean bits[]) {
+      return fromBits(Arrays.asList(bits));
+   }
+   
+   public static BitSequence fromBits(Iterable<Boolean> bits) {
+      if (bits instanceof Collection) {
+         int len = ((Collection<Boolean>) bits).size();
+         long words[] = new long[(len + 63) >> 6];
+         int j = 0;
+         long m = 1;
+         for (Boolean bit : bits) {
+            if (bit) {
+               words[j] |= m;
+            }
+            m <<= 1;
+            if (m == 0) {
+               m = 1;
+               j++;
+            }
+         }
+         return fromArray(words, len);
+      } else {
+         return fromIterator(bits.iterator());
+      }
+   }
+   
    public static BitSequence fromBits(boolean bits[]) {
       int len = bits.length;
       long words[] = new long[(len + 63) >> 6];
@@ -904,6 +925,23 @@ public final class BitSequences {
       return fromArray(copy, copy.length << 6);
    }
 
+   public static BitSequence fromBitTuple(long tuple, int tupleSize) {
+      return fromBitTuple(tuple, tupleSize, BitOrder.LSB);
+   }
+   
+   public static BitSequence fromBitTuple(long tuple, int tupleSize, BitOrder order) {
+      if (tupleSize < 0 || tupleSize > 64) {
+         throw new IllegalArgumentException();
+      }
+      if (order == BitOrder.MSB) {
+         tuple = Long.reverse(tuple);
+         if (tupleSize < 64) {
+            tuple >>>= 64 - tupleSize;
+         }
+      }
+      return new LongBitSequence(tuple, tupleSize);
+   }
+   
    public static BitSequence fromByteBuffer(ByteBuffer buffer) {
       return fromByteBuffer(buffer, BitOrder.LSB);
    }
@@ -963,6 +1001,33 @@ public final class BitSequences {
          }
       }
       return fromArray(longs, longs.length << 3);
+   }
+   
+   /**
+    * Gets the next chunk of bits as a {@link BitSequence}. This does not invoke
+    * {@link BitSequence.Stream#next(int)} so it can safely be used to implement
+    * {@link BitSequence.Stream#nextAsSequence(int)}
+    * 
+    * @param stream the stream from which the bits are fetched
+    * @param numberOfBits the number of bits to fetch to build the sequence
+    * @return a new sequence
+    */
+   static BitSequence nextAsSequence(BitSequence.Stream stream, int numberOfBits) {
+      if (numberOfBits == 0) {
+         return EmptyBitSequence.INSTANCE;
+      }
+      
+      int len = (numberOfBits + 63) >> 6;
+      long words[] = new long[len];
+      int trailingBits = numberOfBits & 0x3f;
+      int limit = trailingBits == 0 ? len : len - 1;
+      for (int i = 0; i < limit; i++) {
+         words[i] = stream.next(64);
+      }
+      if (trailingBits != 0) {
+         words[len - 1] = stream.next(trailingBits);
+      }
+      return fromArray(words, numberOfBits);
    }
    
    private static BitSequence fromArray(final long words[], final int numberOfBits) {
@@ -1224,7 +1289,64 @@ public final class BitSequences {
          };
       } 
    }
-   
+
+   /**
+    * A sequence that represents a concatenation of multiple other bit sequences.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class SubBitSequence extends AbstractBitSequence {
+      final BitSequence source;
+      final int start;
+      final int length;
+      
+      SubBitSequence(BitSequence source, int start, int length) {
+         this.source = source;
+         this.start = start;
+         this.length = length;
+      }
+      
+      @Override public int length() {
+         return length;
+      }
+      
+      @Override public Stream stream(final int startIndex) {
+         rangeCheck(startIndex);
+
+         return new AbstractStream() {
+            final Stream sourceStream = source.stream(start);
+            int index = 0;
+            
+            @Override public int remaining() {
+               return length - index;
+            }
+            
+            @Override public int currentIndex() {
+               return index;
+            }
+            
+            @Override public void jumpTo(int newIndex) {
+               rangeCheck(newIndex);
+               index = newIndex;
+            }
+            
+            @Override public boolean next() {
+               if (index == length) {
+                  throw new NoSuchElementException();
+               }
+               index++;
+               return sourceStream.next();
+            }
+
+            @Override public long next(int tupleSize) {
+               checkTupleLength(tupleSize);
+               index += tupleSize;
+               return sourceStream.next(tupleSize);
+            }
+         };
+      }
+   }
+
    /**
     * A bit sequence represented by a single 64-bit long. The sequence can have up to 64 bits.
     *

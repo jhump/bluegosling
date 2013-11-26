@@ -576,11 +576,13 @@ public final class ListenableFutures {
                shouldInterrupt.set(mayInterrupt);
                // If there's a race here and the input future completes before we can cancel it,
                // then the listener below will execute. If we get here first, then the null value
-               // signal the listener to cancel the future's value. If we get here second, then
+               // signals the listener to cancel the future's value. If we get here second, then
                // outstanding has already been set to the future's value. That way, we've made
                // certain that the cancellation correctly propagates.
                ListenableFuture<?> toCancel = outstanding.getAndSet(null);
-               toCancel.cancel(mayInterrupt);
+               if (toCancel != null) {
+                  toCancel.cancel(mayInterrupt);
+               }
                return true;
             }
             return false;
@@ -591,7 +593,13 @@ public final class ListenableFutures {
          public void successful(ListenableFuture<T> value) {
             if (outstanding.getAndSet(value) == null) {
                // result already cancelled, so also cancel this value
-               value.cancel(shouldInterrupt.get());
+               if (value != null) {
+                  value.cancel(shouldInterrupt.get());
+               }
+               return;
+            }
+            if (value == null) {
+               result.setFailure(new NullPointerException());
                return;
             }
             value.addListener(forVisitor(new FutureVisitor<T>() {

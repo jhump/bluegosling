@@ -1,8 +1,15 @@
 package com.apriori.collections;
 
+/**
+ * A fully persistent list backed by an array-mapped trie.
+ * TODO: document me!
+ *
+ * @param <E>
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: javadoc
 // TODO: tests
-public class HamtPersistentList<E> implements PersistentList<E>, BidiIterable<E> {
+public class AmtPersistentList<E> implements PersistentList<E>, BidiIterable<E> {
 
    private interface TrieNode<E> {
       // TODO
@@ -28,7 +35,7 @@ public class HamtPersistentList<E> implements PersistentList<E>, BidiIterable<E>
    private final int size;
    private final TrieNode<E> root;
    
-   private HamtPersistentList(int depth, int size, TrieNode<E> root) {
+   private AmtPersistentList(int depth, int size, TrieNode<E> root) {
       this.depth = depth;
       this.size = size;
       this.root = root;

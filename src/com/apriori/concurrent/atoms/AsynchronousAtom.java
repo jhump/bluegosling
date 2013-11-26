@@ -5,11 +5,14 @@ import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
 import com.apriori.concurrent.PipeliningExecutorService;
 import com.apriori.util.Function;
+import com.apriori.util.Functions;
 import com.apriori.util.Predicate;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * An atom that is mutated asynchronously using a thread pool. For a given atom, all mutations are
@@ -30,7 +33,8 @@ import java.util.concurrent.Executors;
  * 
  * <p>If a {@link Transaction} is in progress, then a mutation is not actually submitted to the
  * thread pool until the transaction is committed. So, like {@link TransactionalAtom}s but unlike
- * other types of atoms, mutations to asynchronous atoms can be rolled back.
+ * other types of atoms, mutations to asynchronous atoms can be rolled back. When a transaction is
+ * rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled. 
  * 
  * @param <T> the type of the atom's value
  * 
@@ -142,6 +146,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     */
    public AsynchronousAtom(T value, Predicate<? super T> validator) {
       super(validator);
+      validate(value);
       this.value = value;
    }
    
@@ -197,6 +202,47 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       });
    }
    
+   // TODO: javadoc
+   public void restart(final T restartValue, final boolean cancelPending) {
+      validate(restartValue);
+      final AtomicBoolean success = new AtomicBoolean();
+      final CountDownLatch latch = new CountDownLatch(1);
+      threadPool.submit(this, new Runnable() {
+         @SuppressWarnings("synthetic-access")
+         @Override
+         public void run() {
+            success.set(blocked);
+            latch.countDown();
+            if (blocked) {
+               blocked = false;
+               value = restartValue;
+               if (cancelPending) {
+                  queued.clear();
+               } else {
+                  while (!queued.isEmpty() && !blocked) {
+                     runSingleTask(queued.remove());
+                  }
+               }
+            }
+         }
+      });
+      boolean interrupted = false;
+      while (true) {
+         try {
+            latch.await();
+            break;
+         } catch (InterruptedException e) {
+            interrupted = true;
+         }
+      }
+      if (interrupted) {
+         Thread.currentThread().interrupt();
+      }
+      if (!success.get()) {
+         throw new IllegalStateException("AsynchronousAtom is not blocked so cannot be restarted");
+      }
+   }
+   
    /**
     * Returns the number of queued mutation operations. Operations are queued only when an error
     * causes the atom to become blocked. {@linkplain #resume() Resuming} the atom will drain the
@@ -211,6 +257,11 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    @Override
    public T get() {
       return value;
+   }
+   
+   // TODO: javadoc
+   public ListenableFuture<T> getPending() {
+      return apply(Functions.<T>identityFunction());
    }
    
    /**

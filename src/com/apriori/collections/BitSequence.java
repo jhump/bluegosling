@@ -113,7 +113,7 @@ public interface BitSequence extends Iterable<Boolean> {
    /**
     * Gets the length of the sequence.
     * 
-    * @return the number of bits in this sequnce
+    * @return the number of bits in this sequence
     */
    int length();
    

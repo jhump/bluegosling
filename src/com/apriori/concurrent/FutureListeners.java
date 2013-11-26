@@ -65,8 +65,8 @@ public final class FutureListeners {
     * Assembles a listener using all of the specified callbacks. Each callback is invoked depending
     * on the disposition of the completed futures.
     * 
-    * <p>This method uses only functional interfaces, so will make it easier to assemble listeners
-    * in Java 8.
+    * <p>This method uses only functional interfaces, which will make it easier to assemble
+    * listeners in Java 8.
     * 
     * @param onSuccess invoked when the completed future is successful; the future's result is
     *       passed to the sink

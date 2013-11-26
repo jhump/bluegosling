@@ -20,9 +20,19 @@ public class HamtPersistentSet<E> implements PersistentSet<E> {
       }
    }
    
-   private interface TrieNode<E> {
-      // TODO
+   private static class PutResult<E> {
+      PutResult() {
+      }
+      
+      TrieNode<E> node;
+      boolean added;
    }
+   
+   private interface TrieNode<E> {/*
+      ListNode<E> findNode(int hash, int currentOffset, Object o);
+      TrieNode<E> remove(int hash, int currentOffset, Object o);
+      void put(int hash, int currentOffset, E element, PutResult<E> result);
+   */}
    
    private static class IntermediateTrieNode<E> implements TrieNode<E> {
       final long present;

@@ -1,10 +1,26 @@
 package com.apriori.concurrent.atoms;
 
 import com.apriori.concurrent.HierarchicalLock;
+import com.apriori.concurrent.HierarchicalLock.ExclusiveLock;
+import com.apriori.concurrent.HierarchicalLock.SharedLock;
 import com.apriori.concurrent.ListenableFuture;
+import com.apriori.concurrent.ListenableFutures;
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
 
+import java.util.concurrent.atomic.AtomicReference;
+
+/**
+ * An atom whose updates are coordinated in a {@link Transaction}. Transactions allow updates to
+ * multiple atoms to be done atomically.
+ * 
+ * <p>When a transaction is committed, {@link Watcher}s are only notified of the new final value.
+ * If the transaction modified a single atom multiple times, watchers will not see the intermediate
+ * values.
+ * 
+ * <p>When a transaction is rolled back, all futures corresponding to rolled back commute operations
+ * are cancelled.
+ */
 // TODO: javadoc
 // TODO: tests
 public class TransactionalAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
@@ -22,6 +38,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    }
    
    private final HierarchicalLock lock;
+   private AtomicReference<Transaction> committer;
    private volatile Version<T> latest;
    
    public TransactionalAtom() {
@@ -37,18 +54,18 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    }
    
    private TransactionalAtom(HierarchicalLock lock) {
-      this.lock = lock;
-      // TODO: implement me
+      this(null, lock);
    }
    
    private TransactionalAtom(T value, HierarchicalLock lock) {
-      this.lock = lock;
-      // TODO: implement me
+      this(value, null, lock);
    }
 
    private TransactionalAtom(T value, Predicate<? super T> validator, HierarchicalLock lock) {
+      super(validator);
+      validate(value);
       this.lock = lock;
-      // TODO: implement me
+      latest = new Version<T>(value, Transaction.currentVersion(), null);
    }
    
    public <U> TransactionalAtom<U> newComponent() {
@@ -69,12 +86,41 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
       return current == null ? getLatestValue() : current.getAtom(this);
    }
    
+   ExclusiveLock exclusiveLock() {
+      return lock.exclusiveLock();
+   }
+   
+   void markForCommit(Transaction transaction) {
+      Transaction previous = committer.getAndSet(transaction);
+      assert previous == null;
+   }
+   
+   void unmark() {
+      // tolerate multiple unmarks, since transaction both unmarks eagerly when it can
+      // but also has fail-safe code that may try to unmark again on failure
+      committer.set(null);
+   }
+
+   SharedLock sharedLock() {
+      return lock.sharedLock();
+   }
+
    T getLatestValue() {
       return latest.value;
    }
    
+   long getLatestVersion() {
+      return latest.version;
+   }
+   
    T getValue(long version) {
-      for (Version<T> node = latest; node != null; node = node.predecessor) {
+      Version<T> node = latest;
+      Transaction transaction = committer.get();
+      if (transaction != null && version > latest.version) {
+         transaction.awaitCommit(version);
+         node = latest; // re-read latest now that commit is complete
+      }
+      for (; node != null; node = node.predecessor) {
          if (node.version <= version) {
             return node.value;
          }
@@ -94,8 +140,17 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    public T apply(final Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
-         // TODO: write lock and then set value directly
-         return null;
+         ExclusiveLock exclusive = lock.exclusiveLock();
+         try {
+            T newValue = function.apply(latest.value);
+            validate(newValue);
+            long version = Transaction.pinNewVersion();
+            addValue(newValue, version, Transaction.oldestVersion());
+            Transaction.unpinVersion(version);
+            return newValue;
+         } finally {
+            exclusive.unlock();
+         }
       } else {
          T newValue = function.apply(current.getAtom(this));
          validate(newValue);
@@ -107,8 +162,17 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    public ListenableFuture<T> commute(Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
-         // TODO: write lock and then set value directly
-         return null;
+         ExclusiveLock exclusive = lock.exclusiveLock();
+         try {
+            T newValue = function.apply(latest.value);
+            validate(newValue);
+            long version = Transaction.pinNewVersion();
+            addValue(newValue, version, Transaction.oldestVersion());
+            Transaction.unpinVersion(version);
+            return ListenableFutures.completedFuture(newValue);
+         } finally {
+            exclusive.unlock();
+         }
       } else {
          return current.enqueueCommute(this, function);
       }
@@ -119,18 +183,26 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
       validate(newValue);
       Transaction current = Transaction.current();
       if (current == null) {
-         // TODO: write lock and then set value directly
-         return null;
+         ExclusiveLock exclusive = lock.exclusiveLock();
+         try {
+            T oldValue = latest.value;
+            long version = Transaction.pinNewVersion();
+            addValue(newValue, version, Transaction.oldestVersion());
+            Transaction.unpinVersion(version);
+            return oldValue;
+         } finally {
+            exclusive.unlock();
+         }
       } else {
-         current.setAtom(this, newValue);
-         return newValue;
+         return current.setAtom(this, newValue);
       } 
    }
-   
+
    // must hold write lock when calling this method
-   void addValue(T newValue, long version, long oldestVersion) {
-      Version<T> node = new Version<T>(newValue, version, latest);
-      latest = node;
+   T addValue(T newValue, long version, long oldestVersion) {
+      Version<T> node = latest;
+      T ret = latest.value;
+      node = new Version<T>(newValue, version, node);
       while (node != null) {
          if (node.version < oldestVersion) {
             // remove values that are old and will never be referenced again
@@ -139,5 +211,6 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
          }
          node = node.predecessor;
       }
+      return ret;
    }
 }

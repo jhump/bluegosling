@@ -67,6 +67,13 @@ public class HierarchicalLock {
     */
    static ConcurrentHashMap<Thread, HierarchicalLock> blockedForShared =
          new ConcurrentHashMap<Thread, HierarchicalLock>(16, 0.75F, 100);
+   
+   // TODO: javadoc
+   public static interface AcquiredLock {
+      void unlock();
+      AcquiredLock demoteToChild(HierarchicalLock child);
+      AcquiredLock promoteToParent();
+   }
 
    /**
     * Constructs a new lock that is unfair.
@@ -1012,7 +1019,7 @@ public class HierarchicalLock {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public class SharedLock {
+   public class SharedLock implements AcquiredLock {
       private Thread owner;
       
       SharedLock() {
@@ -1025,7 +1032,7 @@ public class HierarchicalLock {
          }
       }
       
-      public void unlock() {
+      @Override public void unlock() {
          checkLock();
          boolean released = sync.releaseShared(1);
          assert released;
@@ -1121,7 +1128,7 @@ public class HierarchicalLock {
          }
       }
       
-      public SharedLock demoteToChild(HierarchicalLock child) {
+      @Override public SharedLock demoteToChild(HierarchicalLock child) {
          checkLock();
          checkRelationship(child);
          SharedLock childLock = child.sharedLock();
@@ -1159,7 +1166,7 @@ public class HierarchicalLock {
          return childLock;
       }
       
-      public SharedLock promoteToParent() {
+      @Override public SharedLock promoteToParent() {
          throw new IllegalStateException("this lock has no parent");
       }
    }
@@ -1175,7 +1182,7 @@ public class HierarchicalLock {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public class ExclusiveLock {
+   public class ExclusiveLock implements AcquiredLock {
       private Thread owner;
       
       ExclusiveLock() {
@@ -1188,7 +1195,7 @@ public class HierarchicalLock {
          }
       }
       
-      public void unlock() {
+      @Override public void unlock() {
          checkLock();
          boolean released = sync.release(1);
          assert released;
@@ -1207,7 +1214,7 @@ public class HierarchicalLock {
          return newSharedLock(parentLock);
       }
       
-      public ExclusiveLock demoteToChild(HierarchicalLock child) {
+      @Override public ExclusiveLock demoteToChild(HierarchicalLock child) {
          checkLock();
          checkRelationship(child);
          ChildLock childLock = (ChildLock) child;
@@ -1217,7 +1224,7 @@ public class HierarchicalLock {
          return childLock.newExclusiveLock(parentLock);
       }
       
-      public ExclusiveLock promoteToParent() {
+      @Override public ExclusiveLock promoteToParent() {
          throw new IllegalStateException("this lock has no parent");
       }
       

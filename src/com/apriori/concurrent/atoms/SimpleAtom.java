@@ -46,6 +46,7 @@ public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T>
     */
    public SimpleAtom(T value, Predicate<? super T> validator) {
       super(validator);
+      validate(value);
       this.value = value;
    }
 

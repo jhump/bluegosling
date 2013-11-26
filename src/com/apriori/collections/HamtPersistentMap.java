@@ -1,15 +1,16 @@
 package com.apriori.collections;
 
-import com.apriori.tuples.Pair;
-
+import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 // TODO: javadoc
 // TODO: tests
-public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
+public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
+      implements PersistentMap<K, V> {
 
-   private static class ListNode<K, V> {
+   private static class ListNode<K, V> implements Entry<K, V> {
       final K key;
       final V value;
       final ListNode<K, V> next;
@@ -23,13 +24,46 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
          this.value = value;
          this.next = next;
       }
+
+      @Override
+      public K key() {
+         return key;
+      }
+
+      @Override
+      public V value() {
+         return value;
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         return MapUtils.equals(this, o);
+      }
+
+      @Override
+      public int hashCode() {
+         return MapUtils.hashCode(this);
+      }
+      
+      @Override
+      public String toString() {
+         return MapUtils.toString(this);
+      }
+   }
+   
+   private static class PutResult<K, V> {
+      PutResult() {
+      }
+      
+      TrieNode<K, V> node;
+      boolean added;
    }
    
    private interface TrieNode<K, V> {
       boolean containsValue(Object value);
       ListNode<K, V> findNode(int hash, int currentOffset, Object key);
       TrieNode<K, V> remove(int hash, int currentOffset, Object key);
-      Pair<TrieNode<K, V>, Boolean> put(int hash, int currentOffset, K key, V value);
+      void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result);
    }
    
    private static class IntermediateTrieNode<K, V> implements TrieNode<K, V> {
@@ -48,7 +82,7 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
       }
       
       @SuppressWarnings("unchecked")
-      private static <K, V> TrieNode<K, V>[] createChildren(int size) {
+      static <K, V> TrieNode<K, V>[] createChildren(int size) {
          return new TrieNode[size];
       }
 
@@ -112,24 +146,47 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
       }
 
       @Override
-      public Pair<TrieNode<K, V>, Boolean> put(int hash, int currentOffset, K key, V value) {
+      public void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result) {
          int significantBits = (hash >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          if ((present & mask) == 0) {
-            // TODO: create path and return Pair of <new node, true>
-            return null;
+            // add new child node for this new entry
+            long newPresent = present | mask;
+            int index = Long.bitCount((mask - 1) & newPresent);
+            int length = children.length;
+            TrieNode<K, V> newChildren[] = createChildren(length + 1);
+            if (index > 0) {
+               System.arraycopy(children, 0, newChildren, 0, index);
+            }
+            if (index < length) {
+               System.arraycopy(children, index + 1, newChildren, 0, length - index);
+            }
+            if (currentOffset + 6 >= 32) {
+               newChildren[index] = new LeafTrieNode<K, V>(key, value);
+            } else {
+               newChildren[index] = new InnerLeafTrieNode<K, V>(key, value, hash);
+            }
+            result.node = new IntermediateTrieNode<K, V>(newPresent, newChildren);
+            result.added = true;
+            return;
          }
+         
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> oldChild = children[index];
-         Pair<TrieNode<K, V>, Boolean> addition = oldChild.put(hash, currentOffset + 6, key, value);
-         TrieNode<K, V> newChild = addition.getFirst();
+         oldChild.put(hash, currentOffset + 6, key, value, result);
+         TrieNode<K, V> newChild = result.node;
          if (newChild == oldChild) {
             // no change
-            assert !addition.getSecond();
-            return Pair.<TrieNode<K, V>, Boolean>create(this, false);
+            assert !result.added;
+            result.node = this;
+            result.added = false;
+            return;
          }
-         // TODO: create replace node and return Pair of <replacement, addition.getSecond()>
-         return null;
+         int length = children.length;
+         TrieNode<K, V> newChildren[] = createChildren(length);
+         System.arraycopy(children, 0, newChildren, 0, length);
+         newChildren[index] = newChild;
+         result.node = new IntermediateTrieNode<K, V>(present, newChildren); 
       }
    }
 
@@ -144,7 +201,11 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
 
       @Override
       public boolean containsValue(Object searchValue) {
-         // TODO: implement me
+         for (ListNode<K, V> current = this; current != null; current = current.next) {
+            if (searchValue == null ? current.value == null : searchValue.equals(current.value)) {
+               return true;
+            }
+         }
          return false;
       }
 
@@ -155,7 +216,11 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
       }
       
       ListNode<K, V> doFind(Object searchKey) {
-         // TODO
+         for (ListNode<K, V> current = this; current != null; current = current.next) {
+            if (searchKey == null ? current.key == null : searchKey.equals(current.key)) {
+               return current;
+            }
+         }
          return null;
       }
 
@@ -165,20 +230,68 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
          return doRemove(keyToRemove);
       }
       
+      TrieNode<K, V> create(K k, V v, ListNode<K, V> n) {
+         return new LeafTrieNode<K, V>(k, v, n);
+      }
+      
       TrieNode<K, V> doRemove(Object keyToRemove) {
-         // TODO
+         ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
+         for (ListNode<K, V> current = this; current != null; current = current.next) {
+            if (keyToRemove == null ? current.key == null : keyToRemove.equals(current.key)) {
+               if (stack.isEmpty()) {
+                  // removing the initial leaf node -- just create a new head ListNode that is
+                  // also a TrieNode and keep the rest
+                  return create(next.key, next.value, next.next);
+               }
+               // rebuild path from leaf node to here and keep the rest of the list
+               while (stack.isEmpty()) {
+                  ListNode<K, V> node = stack.pop();
+                  if (stack.isEmpty()) {
+                     return create(node.key, node.value, current.next);
+                  }
+                  current = new ListNode<K, V>(node.key, node.value, current.next); 
+               }
+            }
+            stack.push(current);
+         }
          return null;
       }
 
       @Override
-      public Pair<TrieNode<K, V>, Boolean> put(int hash, int currentOffset, K newKey, V newValue) {
+      public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
          assert currentOffset >= 32;
-         return doPut(newKey, newValue);
+         doPut(newKey, newValue, result);
+         return;
       }
       
-      Pair<TrieNode<K, V>, Boolean> doPut(K newKey, V newValue) {
-         // TODO
-         return null;
+      void doPut(K newKey, V newValue, PutResult<K, V> result) {
+         ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
+         for (ListNode<K, V> current = this; current != null; current = current.next) {
+            if (newKey == null ? current.key == null : newKey.equals(current.key)) {
+               if (stack.isEmpty()) {
+                  // changing the initial leaf node -- just create a new head ListNode with new
+                  // value and keep the rest
+                  result.node = create(newKey, newValue, next);
+                  result.added = false;
+                  return;
+               }
+               // rebuild path from leaf node to here and keep the rest of the list
+               current = new ListNode<K, V>(newKey, newValue, current.next); 
+               while (stack.isEmpty()) {
+                  ListNode<K, V> node = stack.pop();
+                  if (stack.isEmpty()) {
+                     result.node = create(node.key, node.value, current);
+                     result.added = false;
+                     return;
+                  }
+                  current = new ListNode<K, V>(node.key, node.value, current);
+               }
+            }
+            stack.push(current);
+         }
+         // adding new value - push to head of list
+         result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next));
+         result.added = true;
       }
    }
 
@@ -206,16 +319,39 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
       }
 
       @Override
-      public Pair<TrieNode<K, V>, Boolean> put(int hash, int currentOffset, K newKey, V newValue) {
+      public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
          if (hash == hashCode) {
-            return doPut(newKey, newValue);
+            doPut(newKey, newValue, result);
+         } else {
+            result.node = create(hash, currentOffset, newKey, newValue);
+            result.added = true;
          }
-         // TODO: this one's tricky -- may need to split inner node into a path of
-         // intermediate nodes capped by leaf or inner-leaf node
-         return null;
+      }
+      
+      private TrieNode<K, V> create(int hash, int currentOffset, K newKey, V newValue) {
+         int significantBits1 = (hashCode >> currentOffset) & 0x3f;
+         int significantBits2 = (hash >> currentOffset) & 0x3f;
+
+         if (significantBits1 == significantBits2) {
+            return new IntermediateTrieNode<K, V>(1L << significantBits1,
+                  create(hash, currentOffset + 6, newKey, newValue));
+         }
+         
+         long mask = (1L << significantBits1) | (1L << significantBits2);
+         TrieNode<K, V> current = new InnerLeafTrieNode<K, V>(key, value, next, hashCode);
+         TrieNode<K, V> addition = new InnerLeafTrieNode<K, V>(newKey, newValue, hash);
+         TrieNode<K, V> children[] = IntermediateTrieNode.createChildren(2);
+         if (significantBits1 < significantBits2) {
+            children[0] = current;
+            children[1] = addition;
+         } else {
+            children[0] = addition;
+            children[1] = current;
+         }
+         return new IntermediateTrieNode<K, V>(mask, children);
       }
    }
-
+   
    /**
     * Computes the hash code for an object. No alternative hashing is used since collisions are
     * unlikely due to the full 32 bits of the hash code being used to store a mapping. This returns
@@ -237,14 +373,18 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
    }
    
    public static <K, V> HamtPersistentMap<K, V> create(Map<? extends K, ? extends V> map) {
-      // TODO
-      return null;
+      return HamtPersistentMap.<K, V>create().merge(map);
    }
 
+   @SuppressWarnings("unchecked") // due to immutability, cast is safe
    public static <K, V> HamtPersistentMap<K, V> create(ImmutableMap<? extends K, ? extends V> map) {
-      // TODO
-      return null;
+      if (map instanceof HamtPersistentMap) {
+         return (HamtPersistentMap<K, V>) map;
+      }
+      return HamtPersistentMap.<K, V>create().merge(map);
    }
+   
+   
 
    private final int size;
    private final TrieNode<K, V> root;
@@ -256,8 +396,7 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
    
    @Override
    public Iterator<Entry<K, V>> iterator() {
-      // TODO: implement me
-      return null;
+      return new Iter();
    }
    
    @Override
@@ -267,15 +406,8 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
    }
 
    @Override
-   public boolean containsAllKeys(Iterable<?> keys) {
-      // TODO: implement me
-      return false;
-   }
-
-   @Override
-   public boolean containsAnyKey(Iterable<?> keys) {
-      // TODO: implement me
-      return false;
+   public boolean containsValue(Object o) {
+      return root == null ? false : root.containsValue(o);
    }
 
    @Override
@@ -285,34 +417,20 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
    }
 
    @Override
-   public ImmutableSet<K> keySet() {
-      // TODO: implement me
-      return null;
-   }
-
-   @Override
-   public ImmutableCollection<V> values() {
-      // TODO: implement me
-      return null;
-   }
-
-   @Override
-   public ImmutableSet<Entry<K, V>> entrySet() {
-      // TODO: implement me
-      return null;
-   }
-
-   @Override
    public PersistentMap<K, V> put(K key, V value) {
+      return add(key, value);
+   }
+
+   private HamtPersistentMap<K, V> add(K key, V value) {
       if (root == null) {
          return new HamtPersistentMap<K, V>(1, new InnerLeafTrieNode<K, V>(key, value, hash(key)));
       }
-      Pair<TrieNode<K, V>, Boolean> addition = root.put(hash(key), 0, key, value);
-      TrieNode<K, V> newRoot = addition.getFirst();
-      return newRoot == root ? this
-            : new HamtPersistentMap<K, V>(addition.getSecond() ? size + 1 : size, newRoot);
+      PutResult<K, V> result = new PutResult<K, V>();
+      root.put(hash(key), 0, key, value, result);
+      return result.node == root ? this
+            : new HamtPersistentMap<K, V>(result.added ? size + 1 : size, result.node);
    }
-
+   
    @Override
    public PersistentMap<K, V> remove(Object o) {
       if (root == null) {
@@ -323,36 +441,134 @@ public class HamtPersistentMap<K, V> implements PersistentMap<K, V> {
    }
 
    @Override
-   public PersistentMap<K, V> removeAll(Iterable<?> items) {
-      // TODO: implement me
-      return null;
+   public PersistentMap<K, V> removeAll(Iterable<?> keys) {
+      if (isEmpty()) {
+         return this;
+      }
+      // TODO: bulk remove? maybe create array sorted by hash code and then use bulk operations
+      // to remove chunks from TrieNodes?
+      PersistentMap<K, V> ret = this;
+      for (Object key : keys) {
+         ret = ret.remove(key);
+      }
+      return ret;
    }
 
    @Override
-   public PersistentMap<K, V> retainAll(Iterable<?> items) {
-      // TODO: implement me
-      return null;
+   public PersistentMap<K, V> retainAll(Iterable<?> keys) {
+      if (isEmpty()) {
+         return this;
+      }
+      // TODO: bulk remove? maybe create array sorted by hash code and then use bulk operations
+      // to remove chunks from TrieNodes?
+      PersistentMap<K, V> ret = create();
+      for (Object key : keys) {
+         ListNode<K, V> node = root == null ? null : root.findNode(hash(key), 0, key);
+         if (node != null) {
+            ret = ret.put(node.key, node.value);
+         }
+      }
+      return ret;
    }
 
    @Override
    public PersistentMap<K, V> putAll(Map<? extends K, ? extends V> items) {
-      // TODO: implement me
-      return null;
+      return merge(items);
+   }
+   
+   private HamtPersistentMap<K, V> merge(Map<? extends K, ? extends V> items) {
+      // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
+      // operations to insert chunks into TrieNodes?
+      HamtPersistentMap<K, V> ret = this;
+      for (Map.Entry<? extends K, ? extends V> entry : items.entrySet()) {
+         ret = ret.add(entry.getKey(), entry.getValue());
+      }
+      return ret;
    }
 
    @Override
    public PersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items) {
-      // TODO: implement me
-      return null;
+      return merge(items);
+   }
+
+   private HamtPersistentMap<K, V> merge(ImmutableMap<? extends K, ? extends V> items) {
+      // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
+      // operations to insert chunks into TrieNodes?
+      HamtPersistentMap<K, V> ret = this;
+      for (Entry<? extends K, ? extends V> entry : items) {
+         ret = ret.add(entry.key(), entry.value());
+      }
+      return ret;
    }
 
    @Override
    public int size() {
       return size;
    }
+   
+   private static class StackFrame<K, V> {
+      final IntermediateTrieNode<K, V> node;
+      int childIndex;
+      
+      StackFrame(IntermediateTrieNode<K, V> node) {
+         this.node = node;
+         childIndex = 0;
+      }
+   }
+   
+   private class Iter extends ReadOnlyIterator<Entry<K, V>> {
+      private final ArrayDeque<StackFrame<K, V>> stack = new ArrayDeque<StackFrame<K, V>>();
+      private ListNode<K, V> current;
+      
+      @SuppressWarnings({ "unchecked", "synthetic-access" })
+      Iter() {
+         if (root == null) {
+            current = null;
+         } else {
+            TrieNode<K, V> node = root;
+            while (node instanceof IntermediateTrieNode) {
+               IntermediateTrieNode<K, V> inode = (IntermediateTrieNode<K, V>) node;
+               stack.push(new StackFrame<K, V>(inode));
+               node = inode.children[0];
+            }
+            current = (ListNode<K, V>) node;
+         }
+      }
+      
+      @Override
+      public boolean hasNext() {
+         return current != null;
+      }
 
-   @Override
-   public boolean isEmpty() {
-      return size == 0;
+      @SuppressWarnings("unchecked")
+      @Override
+      public Entry<K, V> next() {
+         if (current == null) {
+            throw new NoSuchElementException();
+         }
+         Entry<K, V> ret = current;
+         if (current.next != null) {
+            current = current.next;
+         } else {
+            while (!stack.isEmpty()) {
+               StackFrame<K, V> frame = stack.pop();
+               if (++frame.childIndex < frame.node.children.length) {
+                  stack.push(frame);
+                  TrieNode<K, V> node = frame.node.children[frame.childIndex];
+                  while (node instanceof IntermediateTrieNode) {
+                     IntermediateTrieNode<K, V> inode = (IntermediateTrieNode<K, V>) node;
+                     stack.push(new StackFrame<K, V>(inode));
+                     node = inode.children[0];
+                  }
+                  current = (ListNode<K, V>) node;
+               }
+            }
+            if (stack.isEmpty()) {
+               // at the end
+               current = null;
+            }
+         }
+         return ret;
+      }
    }
 }

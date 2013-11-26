@@ -14,6 +14,9 @@ public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
    boolean containsKey(Object o);
    boolean containsAllKeys(Iterable<?> keys);
    boolean containsAnyKey(Iterable<?> keys);
+   boolean containsValue(Object o);
+   boolean containsAllValues(Iterable<?> values);
+   boolean containsAnyValue(Iterable<?> values);
    V get(Object key);
    ImmutableSet<K> keySet();
    ImmutableCollection<V> values();

@@ -1,10 +1,6 @@
 /** 
  * New implementations and utilities to complement the Java Collections Framework.
  * 
- * <p>These new collections do <em>not</em> extend the abstract base classes provided
- * in {@code java.util}, primarily as an experiment in implementing the collection
- * interfaces from scratch.
- * 
  * <p>In addition to new implementations for standard collection interfaces, this package also
  * contains some new collection interfaces:
  * <ul>
@@ -59,21 +55,23 @@
  *    removed/collapsed. This type of trie is generally better for retrieval but slower for updates
  *    as edges must be merged or split to preserve the compact property.</li>
  *    <li><strong>Array-Mapped</strong>: An array-mapped trie is a special form of compact trie that
- *    requires its keys be sequences of bits. Each node represents 6 bits in the sequence and stores
- *    a long (64-bit) bitmask and a growable array of up to 64 children. To traverse the trie, an
- *    index is computed from the next 6 bits in the sequence (an integer between 0 and 63). The
- *    corresponding bit in the bitmask at that index is queried. If it is set, the trie contains
- *    those bits and traversal continues to a child node. If the bit is unset, the requested key is
- *    not in the map. The array of children only has as many elements as there are bits set in the
- *    bitmask. To determine the index of a child in that array, just count the number of set bits in
- *    the bitmask that are less significant than the one of interest. (Also see
- *    {@link com.apriori.collections.HamtMap}.)</li>
+ *    looks more like a sparse vector. Its keys must be sequences of bits, which can also be
+ *    interpreted as numeric array indices (hence the name). Each node represents 6 bits in the
+ *    key/index sequence and stores a long (64-bit) bitmask and a growable array of up to 64
+ *    children. To traverse the trie, an index is computed from the next 6 bits in the sequence (an
+ *    integer between 0 and 63). The corresponding bit in the bitmask at that index is queried. If
+ *    it is set, the trie contains those bits and traversal continues to a child node. If the bit is
+ *    unset, the requested key is not in the map. The array of children only has as many elements as
+ *    there are bits set in the bitmask. To determine the index of a child in that array, just count
+ *    the number of set bits in the bitmask that are less significant than the one of interest.
+ *    (Also see {@link com.apriori.collections.AmtPersistentList}, {@link
+ *    com.apriori.collections.HamtMap}, {@link com.apriori.collections.HamtPersistentMap}, and
+ *    {@link com.apriori.collections.HamtPersistentSet}.)</li>
  * </ol>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: kill most of *Utils and just extend java.util.Abstract*. It was a fun experiment, but it's
-// probably time to move this code into the mainstream
+// TODO: extend java.util.Abstract* where possible.
 // TODO: fix nested sublist/subset/submap (most impls here will mistakenly throw
 // ConcurrentModificationException from a sub-* view if the collection is modified from a sub-view
 // of that sub-view). Probably should add tests for this, too...

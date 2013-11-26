@@ -6,8 +6,8 @@ import java.util.Map;
 public interface PersistentMap<K, V> extends ImmutableMap<K, V> {
    PersistentMap<K, V> put(K key, V value);
    PersistentMap<K, V> remove(Object o);
-   PersistentMap<K, V> removeAll(Iterable<?> items);
-   PersistentMap<K, V> retainAll(Iterable<?> items);
+   PersistentMap<K, V> removeAll(Iterable<?> keys);
+   PersistentMap<K, V> retainAll(Iterable<?> keys);
    PersistentMap<K, V> putAll(Map<? extends K, ? extends V> items);
    PersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items);
 }

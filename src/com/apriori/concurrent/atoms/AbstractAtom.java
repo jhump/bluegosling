@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public abstract class AbstractAtom<T> implements Atom<T> {
+abstract class AbstractAtom<T> implements Atom<T> {
 
    /**
     * A thread-safe set of watchers.
