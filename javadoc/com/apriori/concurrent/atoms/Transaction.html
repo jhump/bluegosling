@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.html" target="_top">Frames</a></li>
@@ -59,13 +59,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -98,8 +98,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="block">A transaction in which changes to <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><code>TransactionalAtom</code></a>s can be made. Transactions use
  multi-version concurrency control to provide a level of isolation between concurrently executing
  transactions. The isolation level is configurable at the time of creating a new transaction.
- Once a transaction has begun, it can be checkpointed, rolled back, and committed, just as if it
- were an RDBMS transaction.</div>
+ 
+ <p>Once a transaction has begun, it can be check-pointed or rolled back, just like transactions
+ in an RDBMS. If a given block that is executed in a transaction completes successfully, then the
+ changes made in the transaction are committed. Otherwise, all changes are rolled back and the
+ exception that was thrown from the block is propagated.
+ 
+ <p><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a>s also participate in transactions. Changes that are queued for an
+ <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a> are only submitted for execution when the transaction commits. Any
+ pending operations that are effected by a rollback will be cancelled.</div>
 </li>
 </ul>
 </div>
@@ -120,8 +127,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="type parameter in Transaction.Action">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</strong></code>
-<div class="block">An action to execute in a transaction.</div>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="type parameter in Transaction.Computation">T</a>,<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="type parameter in Transaction.Computation">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</strong></code>
+<div class="block">A computation that produces a value and executes in (or with) a transaction.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -131,55 +138,34 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a></strong></code>
-<div class="block">Represents a checkpoint in a transaction.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">T</a>,<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</strong></code>
-<div class="block">A task that produces a value and executes in a transaction.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms">Transaction.TransactionRunner</a></strong></code>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms">Transaction.Runner</a></strong></code>
 <div class="block">An object that can initiate execution of code in a transaction.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedAction</a></strong></code>
-<div class="block">An action to execute in a transaction that does not throw any checked exceptions.</div>
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a></strong></code>
+<div class="block">Represents a checkpoint in the transaction.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="type parameter in Transaction.UncheckedTask">T</a>&gt;</strong></code>
-<div class="block">A task that produces a value and executes in a transaction and does not throw any checked
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</strong></code>
+<div class="block">A task that executes in (or with) a transaction.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedComputation</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="type parameter in Transaction.UncheckedComputation">T</a>&gt;</strong></code>
+<div class="block">A computation that produces a value, executes in a transaction, and does not throw any checked
  exceptions.</div>
 </td>
 </tr>
-</table>
-</li>
-</ul>
-<!-- =========== FIELD SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field_summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#DEFAULT_ISOLATION_LEVEL">DEFAULT_ISOLATION_LEVEL</a></strong></code>
-<div class="block">The default isolation level for a transaction.</div>
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a></strong></code>
+<div class="block">A task to execute in a transaction that does not throw any checked exceptions.</div>
 </td>
 </tr>
 </table>
@@ -198,44 +184,52 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#commit()">commit</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>static &lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>T</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#compute(com.apriori.concurrent.atoms.Transaction.Computation)">compute</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X&gt;&nbsp;computation)</code>
+<div class="block">Runs the specified computation in a transaction and returns the result.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>T</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#computeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Computation)">computeNonIdempotent</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X&gt;&nbsp;computation)</code>
+<div class="block">Runs the specified computation in a transaction and returns the result.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#execute(com.apriori.concurrent.atoms.Transaction.Task)">execute</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X&gt;&nbsp;task)</code>
+<div class="block">Runs the specified task in a transaction.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#execute(com.apriori.concurrent.atoms.Transaction.Action)">execute</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;X&gt;&nbsp;action)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#executeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Task)">executeNonIdempotent</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X&gt;&nbsp;task)</code>
+<div class="block">Runs the specified task in a transaction.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static &lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>T</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#execute(com.apriori.concurrent.atoms.Transaction.Task)">execute</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,X&gt;&nbsp;task)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static &lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#executeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Action)">executeNonIdempotent</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;X&gt;&nbsp;action)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static &lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<br>T</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#executeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Task)">executeNonIdempotent</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,X&gt;&nbsp;task)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#isInTransaction()">isInTransaction</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollback()">rollback</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#isInTransaction()">isInTransaction</a></strong>()</code>
+<div class="block">Determines whether a transaction is in progress on the current thread.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollbackTo(com.apriori.concurrent.atoms.Transaction.Savepoint)">rollbackTo</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;point)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollback()">rollback</a></strong>()</code>
+<div class="block">Rolls back the current transaction.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#savepoint()">savepoint</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollbackTo(com.apriori.concurrent.atoms.Transaction.Savepoint)">rollbackTo</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;point)</code>
+<div class="block">Performs a partial roll back.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms">Transaction.TransactionRunner</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#withIsolation(com.apriori.concurrent.atoms.Transaction.IsolationLevel)">withIsolation</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a>&nbsp;isolationLevel)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#savepoint()">savepoint</a></strong>()</code>
+<div class="block">Creates a checkpoint in the transaction.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -253,37 +247,34 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field_detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a name="DEFAULT_ISOLATION_LEVEL">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>DEFAULT_ISOLATION_LEVEL</h4>
-<pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a> DEFAULT_ISOLATION_LEVEL</pre>
-<div class="block">The default isolation level for a transaction.</div>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="withIsolation(com.apriori.concurrent.atoms.Transaction.IsolationLevel)">
+<a name="compute(com.apriori.concurrent.atoms.Transaction.Computation)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>withIsolation</h4>
-<pre>public static&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms">Transaction.TransactionRunner</a>&nbsp;withIsolation(<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a>&nbsp;isolationLevel)</pre>
+<h4>compute</h4>
+<pre>public static&nbsp;&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;T&nbsp;compute(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X&gt;&nbsp;computation)
+                 throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block">Runs the specified computation in a transaction and returns the result. This uses default
+ settings for the transaction and is equivalent to the following:<pre>
+ new Transaction.Runner().compute(computation);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>computation</code> - the computation to perform in a transaction</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the result of the computation</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if a transaction is already in progress on the current thread</dd>
+<dd><code>X</code> - a type of exception thrown by the computation</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if there is too much contention over the atoms such that
+       the computation cannot be performed with the proper isolation level</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if this computation generated deadlock exceptions when accessing and
+       modifying atoms</dd>
+<dd><code>X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
 </li>
 </ul>
 <a name="execute(com.apriori.concurrent.atoms.Transaction.Task)">
@@ -292,21 +283,44 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>execute</h4>
-<pre>public static&nbsp;&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;T&nbsp;execute(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,X&gt;&nbsp;task)
-                 throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
+<pre>public static&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;void&nbsp;execute(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X&gt;&nbsp;task)
+                    throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block">Runs the specified task in a transaction. This uses default settings for the transaction and
+ is equivalent to the following:<pre>
+ new Transaction.Runner().execute(task);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>task</code> - the task to perform in a transaction</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if a transaction is already in progress on the current thread</dd>
+<dd><code>X</code> - a type of exception thrown by the task</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if there is too much contention over the atoms such that
+       the task cannot be performed with the proper isolation level</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if this task generated deadlock exceptions when accessing and
+       modifying atoms</dd>
 <dd><code>X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
 </li>
 </ul>
-<a name="execute(com.apriori.concurrent.atoms.Transaction.Action)">
+<a name="computeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Computation)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>execute</h4>
-<pre>public static&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;void&nbsp;execute(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;X&gt;&nbsp;action)
-                    throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
+<h4>computeNonIdempotent</h4>
+<pre>public static&nbsp;&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;T&nbsp;computeNonIdempotent(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X&gt;&nbsp;computation)
+                              throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block">Runs the specified computation in a transaction and returns the result. This uses default
+ settings for the transaction and is equivalent to the following:<pre>
+ new Transaction.Runner().computeNonIdempotent(computation);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>computation</code> - the computation to perform in a transaction</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the result of the computation</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if a transaction is already in progress on the current thread</dd>
+<dd><code>X</code> - a type of exception thrown by the computation</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if there is contention over the atoms that prevent the
+       computation from running with the proper isolation level</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if this computation generated a deadlock exception when accessing
+       and modifying atoms</dd>
 <dd><code>X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
 </li>
 </ul>
@@ -316,21 +330,20 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>executeNonIdempotent</h4>
-<pre>public static&nbsp;&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;T&nbsp;executeNonIdempotent(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,X&gt;&nbsp;task)
-                              throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code>X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
-</li>
-</ul>
-<a name="executeNonIdempotent(com.apriori.concurrent.atoms.Transaction.Action)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>executeNonIdempotent</h4>
-<pre>public static&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;void&nbsp;executeNonIdempotent(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;X&gt;&nbsp;action)
+<pre>public static&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;void&nbsp;executeNonIdempotent(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X&gt;&nbsp;task)
                                  throws X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
+<div class="block">Runs the specified task in a transaction. This uses default settings for the transaction and
+ is equivalent to the following:<pre>
+ new Transaction.Runner().executeNonIdempotent(task);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>task</code> - the task to perform in a transaction</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if a transaction is already in progress on the current thread</dd>
+<dd><code>X</code> - a type of exception thrown by the task</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if there is contention over the atoms that prevent the
+       task from running with the proper isolation level</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if this task generated a deadlock exception when accessing and
+       modifying atoms</dd>
 <dd><code>X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
 </li>
 </ul>
@@ -341,15 +354,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>isInTransaction</h4>
 <pre>public static&nbsp;boolean&nbsp;isInTransaction()</pre>
-</li>
-</ul>
-<a name="commit()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>commit</h4>
-<pre>public&nbsp;void&nbsp;commit()</pre>
+<div class="block">Determines whether a transaction is in progress on the current thread.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if a transaction is in progress on the current thread</dd></dl>
 </li>
 </ul>
 <a name="rollback()">
@@ -359,6 +365,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>rollback</h4>
 <pre>public&nbsp;void&nbsp;rollback()</pre>
+<div class="block">Rolls back the current transaction. This resets all mutations made. All futures associated
+ with <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a> operations and <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">asynchronous actions</a> that have been performed in this transaction are
+ cancelled.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this transaction is not running on the current thread</dd></dl>
 </li>
 </ul>
 <a name="savepoint()">
@@ -367,7 +378,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>savepoint</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;savepoint()</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;savepoint()</pre>
+<div class="block">Creates a checkpoint in the transaction. After such a checkpoint is established, the
+ transaction can be partially rolled back such that changes made <em>after</em> the savepoint
+ are rolled back, but changes made prior to the savepoint are retained.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the new savepoint</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this transaction is not running on the current thread</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollbackTo(com.apriori.concurrent.atoms.Transaction.Savepoint)"><code>rollbackTo(Savepoint)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rollbackTo(com.apriori.concurrent.atoms.Transaction.Savepoint)">
@@ -376,7 +393,17 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>rollbackTo</h4>
-<pre>public&nbsp;void&nbsp;rollbackTo(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;point)</pre>
+<pre>public&nbsp;void&nbsp;rollbackTo(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;point)</pre>
+<div class="block">Performs a partial roll back. All mutations made since the specified savepoint was established
+ are reset. Similarly, all futures for <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a>
+ operations and <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">asynchronous actions</a> are cancelled. Changes made
+ prior to the savepoint being established are retained.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>point</code> - the savepoint up to which point the transaction is reversed</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this transaction is not running on the current thread</dd>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified savepoint is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified savepoint is not valid, due to either being
+       created by a different transaction or already having been rolled back</dd></dl>
 </li>
 </ul>
 </li>
@@ -405,7 +432,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.html" target="_top">Frames</a></li>
@@ -430,13 +457,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>

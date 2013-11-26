@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>BitConverter</title>
+<title>HierarchicalLock.AcquiredLock</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BitConverter";
+        parent.document.title="HierarchicalLock.AcquiredLock";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/BitConverters.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/BitConverter.html" target="_top">Frames</a></li>
-<li><a href="BitConverter.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" target="_top">Frames</a></li>
+<li><a href="HierarchicalLock.AcquiredLock.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>
@@ -76,23 +76,24 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">com.apriori.collections</div>
-<h2 title="Interface BitConverter" class="title">Interface BitConverter&lt;T&gt;</h2>
+<div class="subTitle">com.apriori.concurrent</div>
+<h2 title="Interface HierarchicalLock.AcquiredLock" class="title">Interface HierarchicalLock.AcquiredLock</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of the composite object</dd></dl>
 <dl>
-<dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</dd>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>, <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></dd>
+</dl>
+<dl>
+<dt>Enclosing class:</dt>
+<dd><a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">BitConverter&lt;T&gt;</span>
-extends <a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</pre>
-<div class="block">Decomposes objects into a sequence of bits.</div>
+<pre>public static interface <span class="strong">HierarchicalLock.AcquiredLock</span></pre>
 </li>
 </ul>
 </div>
@@ -112,10 +113,16 @@ extends <a href="../../../com/apriori/collections/Componentizer.html" title="int
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitConverter.html#getComponents(T)">getComponents</a></strong>(<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>&nbsp;t)</code>
-<div class="block">Breaks the specified object into a sequence of components.</div>
-</td>
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#demoteToChild(com.apriori.concurrent.HierarchicalLock)">demoteToChild</a></strong>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#promoteToParent()">promoteToParent</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#unlock()">unlock</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -132,24 +139,31 @@ extends <a href="../../../com/apriori/collections/Componentizer.html" title="int
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getComponents(java.lang.Object)">
+<a name="unlock()">
 <!--   -->
-</a><a name="getComponents(T)">
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unlock</h4>
+<pre>void&nbsp;unlock()</pre>
+</li>
+</ul>
+<a name="demoteToChild(com.apriori.concurrent.HierarchicalLock)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>demoteToChild</h4>
+<pre><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>&nbsp;demoteToChild(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</pre>
+</li>
+</ul>
+<a name="promoteToParent()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getComponents</h4>
-<pre><a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;getComponents(<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>&nbsp;t)</pre>
-<div class="block">Breaks the specified object into a sequence of components.
- 
- <p>This returns a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a>, which is an <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a> but also provides methods
- for navigating the bits as a stream.</div>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../com/apriori/collections/Componentizer.html#getComponents(T)">getComponents</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="../../../com/apriori/collections/BitConverter.html" title="type parameter in BitConverter">T</a>,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the composite object</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the object's sequence of components</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/BitSequences.html" title="class in com.apriori.collections"><code>BitSequences</code></a></dd></dl>
+<h4>promoteToParent</h4>
+<pre><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>&nbsp;promoteToParent()</pre>
 </li>
 </ul>
 </li>
@@ -177,12 +191,12 @@ extends <a href="../../../com/apriori/collections/Componentizer.html" title="int
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/BitConverters.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/collections/BitConverter.html" target="_top">Frames</a></li>
-<li><a href="BitConverter.html" target="_top">No Frames</a></li>
+<li><a href="../../../index.html?com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" target="_top">Frames</a></li>
+<li><a href="HierarchicalLock.AcquiredLock.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../allclasses-noframe.html">All Classes</a></li>

@@ -33,8 +33,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" target="_top">Frames</a></li>
@@ -221,9 +221,9 @@ the order they are declared.</div>
 <h4>REPEATABLE_READ</h4>
 <pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a> REPEATABLE_READ</pre>
 <div class="block">Repeatable read isolation; aka snapshot isolation. This is close to serializable, but can
- provide better performance since read locks aren't necessarily acquired for every read.
- The main artifact that can occur is called "write skew". But this can be mitigated in
- updates to a transactional atom by using its <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)"><code>commute(Function)</code></a> method.
+ provide better performance since locks aren't required for every read. The main artifact
+ that can occur is called "write skew". But this can be mitigated in updates to a
+ transactional atom by using its <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)"><code>commute(Function)</code></a> method.
  
  <p>This is the default isolation level for a transaction when not otherwise configured.</div>
 </li>
@@ -239,7 +239,8 @@ the order they are declared.</div>
  really isolate query operations. In a transaction, subsequent reads of the same atom may
  return different results. This can provide the best performance, since a particular version
  of an atom does not have to be found on reads, but is likely to only be marginal
- improvement over <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#REPEATABLE_READ"><code>REPEATABLE_READ</code></a>.</div>
+ improvement over <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#REPEATABLE_READ"><code>REPEATABLE_READ</code></a>. Repeatable reads are still possible for any
+ single atom via pinning it.</div>
 </li>
 </ul>
 </li>
@@ -312,8 +313,8 @@ with the specified name</dd>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" target="_top">Frames</a></li>

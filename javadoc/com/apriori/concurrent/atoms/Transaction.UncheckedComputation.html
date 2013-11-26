@@ -2,13 +2,13 @@
 <!-- NewPage -->
 <html lang="en">
 <head>
-<title>Transaction.UncheckedAction</title>
+<title>Transaction.UncheckedComputation</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Transaction.UncheckedAction";
+        parent.document.title="Transaction.UncheckedComputation";
     }
 //-->
 </script>
@@ -33,12 +33,12 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" target="_top">Frames</a></li>
-<li><a href="Transaction.UncheckedAction.html" target="_top">No Frames</a></li>
+<li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" target="_top">Frames</a></li>
+<li><a href="Transaction.UncheckedComputation.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
 <li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
@@ -77,15 +77,16 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent.atoms</div>
-<h2 title="Interface Transaction.UncheckedAction" class="title">Interface Transaction.UncheckedAction</h2>
+<h2 title="Interface Transaction.UncheckedComputation" class="title">Interface Transaction.UncheckedComputation&lt;T&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of value produced</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</dd>
+<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -93,9 +94,10 @@
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">Transaction.UncheckedAction</span>
-extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
-<div class="block">An action to execute in a transaction that does not throw any checked exceptions.</div>
+<pre>public static interface <span class="strong">Transaction.UncheckedComputation&lt;T&gt;</span>
+extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
+<div class="block">A computation that produces a value, executes in a transaction, and does not throw any checked
+ exceptions.</div>
 </li>
 </ul>
 </div>
@@ -109,11 +111,11 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.htm
 </a>
 <h3>Method Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.atoms.Transaction.Action">
+<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.atoms.Transaction.Computation">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a></h3>
-<code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html#run(com.apriori.concurrent.atoms.Transaction)">run</a></code></li>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a></h3>
+<code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html#compute(com.apriori.concurrent.atoms.Transaction)">compute</a></code></li>
 </ul>
 </li>
 </ul>
@@ -140,12 +142,12 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.htm
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" target="_top">Frames</a></li>
-<li><a href="Transaction.UncheckedAction.html" target="_top">No Frames</a></li>
+<li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" target="_top">Frames</a></li>
+<li><a href="Transaction.UncheckedComputation.html" target="_top">No Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
 <li><a href="../../../../allclasses-noframe.html">All Classes</a></li>

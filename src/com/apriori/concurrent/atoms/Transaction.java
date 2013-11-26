@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * exception that was thrown from the block is propagated.
  * 
  * <p>{@link AsynchronousAtom}s also participate in transactions. Changes that are queued for an
- * {@link AsynchronousAtoms} are only submitted for execution when the transaction commits. Any
+ * {@link AsynchronousAtom} are only submitted for execution when the transaction commits. Any
  * pending operations that are effected by a rollback will be cancelled.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

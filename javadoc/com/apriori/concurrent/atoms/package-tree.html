@@ -71,16 +71,26 @@
 <ul>
 <li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><span class="strong">Object</span></a>
 <ul>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">AbstractAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;T&gt;)
-<ul>
 <li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">AsynchronousAtom</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">SimpleAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">ThreadLocalAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">TransactionalAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
+<li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><span class="strong">Throwable</span></a> (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)
+<ul>
+<li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><span class="strong">Exception</span></a>
+<ul>
+<li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><span class="strong">RuntimeException</span></a>
+<ul>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms"><span class="strong">TransactionIsolationException</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Transaction</span></a></li>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Transaction.TransactionRunner</span></a></li>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Transaction.Runner</span></a></li>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Transaction.Savepoint</span></a></li>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">TransactionalAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
 </ul>
 </li>
 </ul>
@@ -93,15 +103,14 @@
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Atom.Watcher</span></a>&lt;T&gt;</li>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.Action</span></a>&lt;X&gt;
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.Computation</span></a>&lt;T,X&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.UncheckedAction</span></a></li>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.UncheckedComputation</span></a>&lt;T&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.Savepoint</span></a></li>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.Task</span></a>&lt;T,X&gt;
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.Task</span></a>&lt;X&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.UncheckedTask</span></a>&lt;T&gt;</li>
+<li type="circle">com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.UncheckedTask</span></a></li>
 </ul>
 </li>
 </ul>

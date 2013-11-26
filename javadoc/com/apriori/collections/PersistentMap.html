@@ -33,8 +33,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/PersistentMap.html" target="_top">Frames</a></li>
@@ -147,11 +147,11 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/PersistentMap.html#removeAll(java.lang.Iterable)">removeAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/PersistentMap.html#removeAll(java.lang.Iterable)">removeAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/PersistentMap.html#retainAll(java.lang.Iterable)">retainAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/PersistentMap.html#retainAll(java.lang.Iterable)">retainAll</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -159,7 +159,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys(java.lang.Iterable)">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey(java.lang.Iterable)">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey(java.lang.Object)">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet()">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals(java.lang.Object)">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get(java.lang.Object)">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode()">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet()">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#size()">size</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values()">values</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys(java.lang.Iterable)">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues(java.lang.Iterable)">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey(java.lang.Iterable)">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue(java.lang.Iterable)">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey(java.lang.Object)">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsValue(java.lang.Object)">containsValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet()">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals(java.lang.Object)">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get(java.lang.Object)">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode()">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet()">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#size()">size</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values()">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Iterable">
@@ -209,7 +209,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
 </li>
 </ul>
 <a name="retainAll(java.lang.Iterable)">
@@ -218,7 +218,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
 </li>
 </ul>
 <a name="putAll(java.util.Map)">
@@ -264,8 +264,8 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/PersistentMap.html" target="_top">Frames</a></li>

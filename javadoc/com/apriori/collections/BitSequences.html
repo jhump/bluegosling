@@ -130,6 +130,14 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#allOnes(int)">allOnes</a></strong>(int&nbsp;length)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#allZeros(int)">allZeros</a></strong>(int&nbsp;length)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#and(com.apriori.collections.BitSequence, com.apriori.collections.BitSequence)">and</a></strong>(<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;lbits,
    <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;rbits)</code>
 <div class="block">Computes the bitwise AND for two bit sequences.</div>
@@ -204,7 +212,26 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#fromBits(java.lang.Boolean[])">fromBits</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>[]&nbsp;bits)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#fromBits(java.lang.Iterable)">fromBits</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;bits)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#fromBitSet(java.util.BitSet)">fromBitSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/BitSet.html?is-external=true" title="class or interface in java.util">BitSet</a>&nbsp;bits)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#fromBitTuple(long, int)">fromBitTuple</a></strong>(long&nbsp;tuple,
+            int&nbsp;tupleSize)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BitSequences.html#fromBitTuple(long, int, com.apriori.collections.BitSequence.BitOrder)">fromBitTuple</a></strong>(long&nbsp;tuple,
+            int&nbsp;tupleSize,
+            <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
@@ -535,7 +562,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  of lengths of all supplied sequences. If the supplied array is empty or only contains empty
  sequences then the resulting sequence will be empty.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>sequences</code> - the input sequences</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a concatenation of the input sequences</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>a concatenation of the input sequences</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified array or any element therein is null</dd></dl>
 </li>
 </ul>
 <a name="subSequence(com.apriori.collections.BitSequence, int, int)">
@@ -553,7 +582,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified start index is negative or is greater than
        or equal to the length of the sequence or if the specified end index is less than the
-       start index or greater than the length of the sequence</dd></dl>
+       start index or greater than the length of the sequence</dd>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified sequence is null</dd></dl>
 </li>
 </ul>
 <a name="reverse(com.apriori.collections.BitSequence)">
@@ -620,6 +650,24 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  the shorter sequence will have zeroes padded to the end so the lengths match.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>lbits</code> - a sequence of bits</dd><dd><code>rbits</code> - a sequence of bits</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the bitwise XOR result of the two sequences</dd></dl>
+</li>
+</ul>
+<a name="allZeros(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allZeros</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;allZeros(int&nbsp;length)</pre>
+</li>
+</ul>
+<a name="allOnes(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allOnes</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;allOnes(int&nbsp;length)</pre>
 </li>
 </ul>
 <a name="asList(com.apriori.collections.BitSequence)">
@@ -962,6 +1010,24 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                  <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
 </li>
 </ul>
+<a name="fromBits(java.lang.Boolean[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromBits</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;fromBits(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>[]&nbsp;bits)</pre>
+</li>
+</ul>
+<a name="fromBits(java.lang.Iterable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromBits</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;fromBits(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;bits)</pre>
+</li>
+</ul>
 <a name="fromBits(boolean[])">
 <!--   -->
 </a>
@@ -1134,6 +1200,27 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>fromLongs</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;fromLongs(long[]&nbsp;longs,
                     <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
+</li>
+</ul>
+<a name="fromBitTuple(long, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromBitTuple</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;fromBitTuple(long&nbsp;tuple,
+                       int&nbsp;tupleSize)</pre>
+</li>
+</ul>
+<a name="fromBitTuple(long, int, com.apriori.collections.BitSequence.BitOrder)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromBitTuple</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;fromBitTuple(long&nbsp;tuple,
+                       int&nbsp;tupleSize,
+                       <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
 </li>
 </ul>
 <a name="fromByteBuffer(java.nio.ByteBuffer)">

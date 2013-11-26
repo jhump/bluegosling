@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -61,7 +61,7 @@
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#methods_inherited_from_class_java.lang.Object">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
@@ -77,9 +77,17 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent.atoms</div>
-<h2 title="Interface Transaction.Savepoint" class="title">Interface Transaction.Savepoint</h2>
+<h2 title="Class Transaction.Savepoint" class="title">Class Transaction.Savepoint</h2>
 </div>
 <div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>com.apriori.concurrent.atoms.Transaction.Savepoint</li>
+</ul>
+</li>
+</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
@@ -89,11 +97,31 @@
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">Transaction.Savepoint</span></pre>
-<div class="block">Represents a checkpoint in a transaction. This is a marker interface and is intentionally
- opaque.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#savepoint()"><code>Transaction.savepoint()</code></a>, 
-<a href="../../../../com/apriori/concurrent/atoms/Transaction.html#rollbackTo(com.apriori.concurrent.atoms.Transaction.Savepoint)"><code>Transaction.rollbackTo(Savepoint)</code></a></dd></dl>
+<pre>public static class <span class="strong">Transaction.Savepoint</span>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Represents a checkpoint in the transaction. Updates can be rolled back completely or just to
+ a specified savepoint.</div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -117,7 +145,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -145,7 +173,7 @@
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#methods_inherited_from_class_java.lang.Object">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>

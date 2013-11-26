@@ -101,34 +101,28 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Action.html" title="interface in com.apriori.concurrent.atoms">Transaction.Action</a>&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
 <td class="colLast">
-<div class="block">An action to execute in a transaction.</div>
+<div class="block">A computation that produces a value and executes in (or with) a transaction.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms">Transaction.Savepoint</a></td>
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
 <td class="colLast">
-<div class="block">Represents a checkpoint in a transaction.</div>
+<div class="block">A task that executes in (or with) a transaction.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedComputation</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A task that produces a value and executes in a transaction.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedAction</a></td>
-<td class="colLast">
-<div class="block">An action to execute in a transaction that does not throw any checked exceptions.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a>&lt;T&gt;</td>
-<td class="colLast">
-<div class="block">A task that produces a value and executes in a transaction and does not throw any checked
+<div class="block">A computation that produces a value, executes in a transaction, and does not throw any checked
  exceptions.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a></td>
+<td class="colLast">
+<div class="block">A task to execute in a transaction that does not throw any checked exceptions.</div>
 </td>
 </tr>
 </tbody>
@@ -143,44 +137,46 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms">AbstractAtom</a>&lt;T&gt;</td>
-<td class="colLast">
-<div class="block">An abstract base class for <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><code>Atom</code></a> implementations.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">An atom that is mutated asynchronously using a thread pool.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="class in com.apriori.concurrent.atoms">SimpleAtom</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">An atom with a volatile value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms">ThreadLocalAtom</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">An atom whose values are in thread-local storage.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a></td>
 <td class="colLast">
 <div class="block">A transaction in which changes to <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><code>TransactionalAtom</code></a>s can be made.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms">Transaction.TransactionRunner</a></td>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms">Transaction.Runner</a></td>
 <td class="colLast">
 <div class="block">An object that can initiate execution of code in a transaction.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a></td>
+<td class="colLast">
+<div class="block">Represents a checkpoint in the transaction.</div>
+</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;T&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An atom whose updates are coordinated in a <a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms"><code>Transaction</code></a>.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -203,6 +199,24 @@
 <td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a></td>
 <td class="colLast">
 <div class="block">The isolation level of a transaction.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Exception</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></td>
+<td class="colLast">
+<div class="block">An unchecked exception thrown from non-idempotent transactions that encounter serialization
+ errors due to concurrent access.</div>
 </td>
 </tr>
 </tbody>

@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * An atom whose updates are coordinated in a {@link Transaction}. Transactions allow updates to
  * multiple atoms to be done atomically.
  * 
- * <p>When a transaction is committed, {@link Watcher}s are only notified of the new final value.
- * If the transaction modified a single atom multiple times, watchers will not see the intermediate
- * values.
+ * <p>When a transaction is committed, {@linkplain Atom.Watcher watchers} are only notified of the
+ * new final value. If the transaction modified a single atom multiple times, watchers will not see
+ * the intermediate values.
  * 
  * <p>When a transaction is rolled back, all futures corresponding to rolled back commute operations
  * are cancelled.

@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -77,16 +77,15 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent.atoms</div>
-<h2 title="Interface Transaction.UncheckedTask" class="title">Interface Transaction.UncheckedTask&lt;T&gt;</h2>
+<h2 title="Interface Transaction.UncheckedTask" class="title">Interface Transaction.UncheckedTask</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of value produced</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</dd>
+<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -94,10 +93,9 @@
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">Transaction.UncheckedTask&lt;T&gt;</span>
-extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;T,<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
-<div class="block">A task that produces a value and executes in a transaction and does not throw any checked
- exceptions.</div>
+<pre>public static interface <span class="strong">Transaction.UncheckedTask</span>
+extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
+<div class="block">A task to execute in a transaction that does not throw any checked exceptions.</div>
 </li>
 </ul>
 </div>
@@ -115,7 +113,7 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html"
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a></h3>
-<code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html#run(com.apriori.concurrent.atoms.Transaction)">run</a></code></li>
+<code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html#execute(com.apriori.concurrent.atoms.Transaction)">execute</a></code></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +140,7 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html"
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedAction.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

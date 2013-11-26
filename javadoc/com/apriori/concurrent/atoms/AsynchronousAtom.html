@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html" title="enum in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -84,12 +84,7 @@
 <li><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms">com.apriori.concurrent.atoms.AbstractAtom</a>&lt;T&gt;</li>
-<li>
-<ul class="inheritance">
 <li>com.apriori.concurrent.atoms.AsynchronousAtom&lt;T&gt;</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -104,7 +99,7 @@
 <hr>
 <br>
 <pre>public class <span class="strong">AsynchronousAtom&lt;T&gt;</span>
-extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms">AbstractAtom</a>&lt;T&gt;</pre>
+extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">An atom that is mutated asynchronously using a thread pool. For a given atom, all mutations are
  applied sequentially. Multiple threads in a pool are used to process mutations on multiple such
  atoms. Since the actual update is applied asynchronously, mutation methods return future values,
@@ -123,7 +118,8 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
  
  <p>If a <a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms"><code>Transaction</code></a> is in progress, then a mutation is not actually submitted to the
  thread pool until the transaction is committed. So, like <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><code>TransactionalAtom</code></a>s but unlike
- other types of atoms, mutations to asynchronous atoms can be rolled back.</div>
+ other types of atoms, mutations to asynchronous atoms can be rolled back. When a transaction is
+ rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled.</div>
 </li>
 </ul>
 </div>
@@ -207,23 +203,33 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#addWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">addWatcher</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms">Atom.Watcher</a>&lt;? super T&gt;&nbsp;watcher)</code>
+<div class="block">Registers a watcher, which will receive notifications when the atom's value changes.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#apply(com.apriori.util.Function)">apply</a></strong>(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Submits a mutation that will apply the specified function and set the atom's value to its
  result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#get()">get</a></strong>()</code>
 <div class="block">Retrieves the current value for this atom.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorHandler.html" title="interface in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorHandler</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler()">getErrorHandler</a></strong>()</code>
 <div class="block">Returns the atom's error handler.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending()">getPending</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -232,10 +238,34 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getValidator()">getValidator</a></strong>()</code>
+<div class="block">Return the atom's validator, or <code>null</code> if there is no validator.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#isBlocked()">isBlocked</a></strong>()</code>
 <div class="block">Returns true if the atom is blocked due to an earlier failure.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#notify(T, T)">notify</a></strong>(T&nbsp;oldValue,
+      T&nbsp;newValue)</code>
+<div class="block">Notifies the atom's watchers that the value has changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#removeWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">removeWatcher</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms">Atom.Watcher</a>&lt;? super T&gt;&nbsp;watcher)</code>
+<div class="block">Unregisters a watcher.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)">restart</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
+       boolean&nbsp;cancelPending)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -255,14 +285,13 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 <div class="block">Sets the atom's error handler.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#validate(T)">validate</a></strong>(T&nbsp;value)</code>
+<div class="block">Validates the specified value.</div>
+</td>
+</tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_com.apriori.concurrent.atoms.AbstractAtom">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms">AbstractAtom</a></h3>
-<code><a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html#addWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">addWatcher</a>, <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html#getValidator()">getValidator</a>, <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html#notify(T, T)">notify</a>, <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html#removeWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">removeWatcher</a>, <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html#validate(T)">validate</a></code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
@@ -374,6 +403,18 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
  that they were submitted.</div>
 </li>
 </ul>
+<a name="restart(java.lang.Object,boolean)">
+<!--   -->
+</a><a name="restart(T, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>restart</h4>
+<pre>public&nbsp;void&nbsp;restart(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
+           boolean&nbsp;cancelPending)</pre>
+</li>
+</ul>
 <a name="getQueueLength()">
 <!--   -->
 </a>
@@ -399,6 +440,15 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 <dl><dt><span class="strong">Returns:</span></dt><dd>the current value for the atom</dd></dl>
 </li>
 </ul>
+<a name="getPending()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPending</h4>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getPending()</pre>
+</li>
+</ul>
 <a name="set(java.lang.Object)">
 <!--   -->
 </a><a name="set(T)">
@@ -420,7 +470,7 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 <a name="apply(com.apriori.util.Function)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;apply(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
@@ -431,6 +481,82 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply; the atom's new value will be the result of applying
        this function to the atom's previous value</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a future result that will be the atom's new value after the function is applied</dd></dl>
+</li>
+</ul>
+<a name="validate(java.lang.Object)">
+<!--   -->
+</a><a name="validate(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validate</h4>
+<pre>protected&nbsp;void&nbsp;validate(T&nbsp;value)</pre>
+<div class="block">Validates the specified value. If this atom has a validator, it will be invoked and an
+ exception is thrown if the value is not valid (e.g. the validator predicate returns false).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - the value to validate</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified value is invalid</dd></dl>
+</li>
+</ul>
+<a name="getValidator()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getValidator</h4>
+<pre>public&nbsp;<a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super T&gt;&nbsp;getValidator()</pre>
+<div class="block">Return the atom's validator, or <code>null</code> if there is no validator. The validator is a
+ predicate that returns true when invoked on valid values for the item and false otherwise.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the atom's validator</dd></dl>
+</li>
+</ul>
+<a name="notify(java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="notify(T, T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>notify</h4>
+<pre>protected&nbsp;void&nbsp;notify(T&nbsp;oldValue,
+          T&nbsp;newValue)</pre>
+<div class="block">Notifies the atom's watchers that the value has changed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>oldValue</code> - the atom's old value</dd><dd><code>newValue</code> - the atom's new value</dd></dl>
+</li>
+</ul>
+<a name="addWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addWatcher</h4>
+<pre>public&nbsp;boolean&nbsp;addWatcher(<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms">Atom.Watcher</a>&lt;? super T&gt;&nbsp;watcher)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#addWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">Atom</a></code></strong></div>
+<div class="block">Registers a watcher, which will receive notifications when the atom's value changes.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#addWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">addWatcher</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;T&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>watcher</code> - the watcher</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the watcher was registered; false if no change occurred because the watcher
+       was already registered</dd></dl>
+</li>
+</ul>
+<a name="removeWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>removeWatcher</h4>
+<pre>public&nbsp;boolean&nbsp;removeWatcher(<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms">Atom.Watcher</a>&lt;? super T&gt;&nbsp;watcher)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#removeWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">Atom</a></code></strong></div>
+<div class="block">Unregisters a watcher.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#removeWatcher(com.apriori.concurrent.atoms.Atom.Watcher)">removeWatcher</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;T&gt;</code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>watcher</code> - the watcher</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the watcher was unregistered; false if no change occurred because the watcher
+       was never registered to begin with</dd></dl>
 </li>
 </ul>
 </li>
@@ -458,7 +584,7 @@ extends <a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" tit
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/AbstractAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html" title="enum in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

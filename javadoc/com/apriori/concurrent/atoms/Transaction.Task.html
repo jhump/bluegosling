@@ -33,8 +33,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.Task.html" target="_top">Frames</a></li>
@@ -77,16 +77,16 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.concurrent.atoms</div>
-<h2 title="Interface Transaction.Task" class="title">Interface Transaction.Task&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</h2>
+<h2 title="Interface Transaction.Task" class="title">Interface Transaction.Task&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of value produced</dd><dd><code>X</code> - the type of exception that the action may throw</dd></dl>
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>X</code> - a type of exception that the task may throw</dd></dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a>&lt;T&gt;</dd>
+<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms">Transaction.UncheckedTask</a></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -94,8 +94,8 @@
 </dl>
 <hr>
 <br>
-<pre>public static interface <span class="strong">Transaction.Task&lt;T,X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</span></pre>
-<div class="block">A task that produces a value and executes in a transaction.</div>
+<pre>public static interface <span class="strong">Transaction.Task&lt;X extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</span></pre>
+<div class="block">A task that executes in (or with) a transaction.</div>
 </li>
 </ul>
 </div>
@@ -115,9 +115,9 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html#run(com.apriori.concurrent.atoms.Transaction)">run</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a>&nbsp;t)</code>
-<div class="block">Executes the task in the specified transaction.</div>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html#execute(com.apriori.concurrent.atoms.Transaction)">execute</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a>&nbsp;t)</code>
+<div class="block">Executes the task with the specified transaction.</div>
 </td>
 </tr>
 </table>
@@ -135,17 +135,16 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="run(com.apriori.concurrent.atoms.Transaction)">
+<a name="execute(com.apriori.concurrent.atoms.Transaction)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>run</h4>
-<pre><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">T</a>&nbsp;run(<a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a>&nbsp;t)
-      throws <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<div class="block">Executes the task in the specified transaction.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the current transaction, in which the action runs</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the task's result</dd>
+<h4>execute</h4>
+<pre>void&nbsp;execute(<a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a>&nbsp;t)
+             throws <a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block">Executes the task with the specified transaction.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>t</code> - the current transaction, in which the task is run</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code>X</code></dd>
 <dd><code><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="type parameter in Transaction.Task">X</a> extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
@@ -176,8 +175,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.TransactionRunner.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/apriori/concurrent/atoms/Transaction.Task.html" target="_top">Frames</a></li>
