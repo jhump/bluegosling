@@ -91,6 +91,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of object fetched from the iterator</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;</dd>
@@ -100,6 +101,9 @@
 <pre>public abstract class <span class="strong">ReadOnlyIterator&lt;E&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;</pre>
+<div class="block">A simple base class for iterators that are read-only. Sub-classes must still implement the
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#hasNext()" title="class or interface in java.util"><code>Iterator.hasNext()</code></a> and <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#next()" title="class or interface in java.util"><code>Iterator.next()</code></a> methods. But <a href="../../../com/apriori/collections/ReadOnlyIterator.html#remove()"><code>remove()</code></a> need not be implemented,
+ and in fact cannot be overridden. It always throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -137,7 +141,9 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ReadOnlyIterator.html#remove()">remove</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ReadOnlyIterator.html#remove()">remove</a></strong>()</code>
+<div class="block">Throws an exception since removals are not allowed.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -192,10 +198,12 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <li class="blockList">
 <h4>remove</h4>
 <pre>public final&nbsp;void&nbsp;remove()</pre>
+<div class="block">Throws an exception since removals are not allowed.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#remove()" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ReadOnlyIterator.html" title="type parameter in ReadOnlyIterator">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - always</dd></dl>
 </li>
 </ul>
 </li>

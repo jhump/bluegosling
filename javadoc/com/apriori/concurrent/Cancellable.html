@@ -94,6 +94,8 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">Cancellable</span></pre>
+<div class="block">Represents an activity that can be cancelled. The activity may be in the future or may be a
+ concurrently executing activity.</div>
 </li>
 </ul>
 </div>
@@ -114,7 +116,9 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterrupt)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterrupt)</code>
+<div class="block">Cancels the activity.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -138,6 +142,11 @@
 <li class="blockList">
 <h4>cancel</h4>
 <pre>boolean&nbsp;cancel(boolean&nbsp;mayInterrupt)</pre>
+<div class="block">Cancels the activity.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>mayInterrupt</code> - if true and the activity is executing concurrently, the thread executing
+       the activity will be interrupted</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the activity was cancelled; false if it could not be cancelled because the
+       activity has already completed</dd></dl>
 </li>
 </ul>
 </li>

@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.ValueIteratorImpl.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -96,6 +96,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>E</code> - the type of element in the list</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></dd>
@@ -109,6 +110,9 @@
 <pre>public abstract class <span class="strong">AbstractRandomAccessImmutableList&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>&lt;E&gt;
 implements <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></pre>
+<div class="block">An abstract base class for <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> implementations that also support fast random
+ access. This class also implements the <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util"><code>RandomAccess</code></a> marker interface. Sub-classes need
+ only implement <a href="../../../com/apriori/collections/ImmutableCollection.html#size()"><code>ImmutableCollection.size()</code></a> and <a href="../../../com/apriori/collections/ImmutableList.html#get(int)"><code>ImmutableList.get(int)</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -129,7 +133,9 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="type parameter in AbstractRandomAccessImmutableList.SubList">E</a>&gt;</strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="type parameter in AbstractRandomAccessImmutableList.SubList">E</a>&gt;</strong></code>
+<div class="block">A sub-list view of an <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> that supports fast random access operations.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -165,19 +171,28 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Returns true if this list is equal to the specified object.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#first()">first</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#first()">first</a></strong>()</code>
+<div class="block">Returns the first element in this list.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#hashCode()">hashCode</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#hashCode()">hashCode</a></strong>()</code>
+<div class="block">Returns the hash code value for this list.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#indexOf(java.lang.Object)">indexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#indexOf(java.lang.Object)">indexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Finds the first occurrence of the specified element in the list and returns the corresponding
+ index.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></td>
@@ -185,28 +200,37 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Finds the last occurrence of the specified element in the list and returns the corresponding
+ index.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheck(int)">rangeCheck</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheck(int)">rangeCheck</a></strong>(int&nbsp;index)</code>
+<div class="block">Checks that the specified index is greater than or equal to zero and less than this list's
+ <a href="../../../com/apriori/collections/ImmutableCollection.html#size()"><code>ImmutableCollection.size()</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheckWide(int)">rangeCheckWide</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheckWide(int)">rangeCheckWide</a></strong>(int&nbsp;index)</code>
+<div class="block">Checks that the specified index is greater than or equal to zero and less than or equal to
+ this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size()"><code>ImmutableCollection.size()</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rest()">rest</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rest()">rest</a></strong>()</code>
+<div class="block">Returns a sublist that contains the same items as this list except for the first item.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#subList(int, int)">subList</a></strong>(int&nbsp;from,
-       int&nbsp;to)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#toString()">toString</a></strong>()</code>&nbsp;</td>
+       int&nbsp;to)</code>
+<div class="block">Returns a portion of this list as another immutable list.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -214,7 +238,7 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/AbstractImmutableCollection.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray(T[])">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/AbstractImmutableCollection.html#contains(java.lang.Object)">contains</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAll(java.lang.Iterable)">containsAll</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAny(java.lang.Iterable)">containsAny</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#isEmpty()">isEmpty</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray()">toArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray(T[])">toArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
@@ -275,6 +299,9 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>rangeCheck</h4>
 <pre>protected&nbsp;void&nbsp;rangeCheck(int&nbsp;index)</pre>
+<div class="block">Checks that the specified index is greater than or equal to zero and less than this list's
+ <a href="../../../com/apriori/collections/ImmutableCollection.html#size()"><code>ImmutableCollection.size()</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - an index to check</dd></dl>
 </li>
 </ul>
 <a name="rangeCheckWide(int)">
@@ -284,6 +311,10 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>rangeCheckWide</h4>
 <pre>protected&nbsp;void&nbsp;rangeCheckWide(int&nbsp;index)</pre>
+<div class="block">Checks that the specified index is greater than or equal to zero and less than or equal to
+ this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size()"><code>ImmutableCollection.size()</code></a>. This is for certain operations where an index equal to the size
+ (<em>after</em> the last valid index in the list) is allowed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - an index to check</dd></dl>
 </li>
 </ul>
 <a name="iterator()">
@@ -306,10 +337,18 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>indexOf</h4>
 <pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#indexOf(java.lang.Object)">ImmutableList</a></code></strong></div>
+<div class="block">Finds the first occurrence of the specified element in the list and returns the corresponding
+ index. The search starts at the beginning of the list, and the index of the first matching
+ element is returned. If no match is found then -1 is returned. A matching item is one that is
+ equal to the specified item. If the specified item is <code>null</code> then a <code>null</code> in the
+ list is a match. Otherwise, an item in the list that <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>
+ the specified object is a match.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#indexOf(java.lang.Object)">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - the element to find</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the index of the first occurrence of the specified item or -1 if it is not found.</dd></dl>
 </li>
 </ul>
 <a name="lastIndexOf(java.lang.Object)">
@@ -319,10 +358,15 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>lastIndexOf</h4>
 <pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#lastIndexOf(java.lang.Object)">ImmutableList</a></code></strong></div>
+<div class="block">Finds the last occurrence of the specified element in the list and returns the corresponding
+ index. The search starts at the end of the list, and the index of the first matching element
+ found is returned. If no match is found then -1 is returned.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - the element to find</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the index of the last occurrence of the specified item or -1 if it is not found.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/collections/ImmutableList.html#indexOf(java.lang.Object)"><code>ImmutableList.indexOf(Object)</code></a></dd></dl>
 </li>
 </ul>
 <a name="subList(int, int)">
@@ -333,10 +377,15 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <h4>subList</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;&nbsp;subList(int&nbsp;from,
                        int&nbsp;to)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#subList(int, int)">ImmutableList</a></code></strong></div>
+<div class="block">Returns a portion of this list as another immutable list. The returned list may be just a view
+ into this list or may represent a separate list with the same elements as the specified
+ sub-list.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#subList(int, int)">subList</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>from</code> - the starting index, inclusive, of the sub-list</dd><dd><code>to</code> - the end index, exclusive, of the sub-list</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an immutable list whose elements are the same as those between the specified indices</dd></dl>
 </li>
 </ul>
 <a name="first()">
@@ -346,10 +395,12 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>first</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&nbsp;first()</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#first()">ImmutableList</a></code></strong></div>
+<div class="block">Returns the first element in this list.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#first()">first</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>the first element in this list</dd></dl>
 </li>
 </ul>
 <a name="rest()">
@@ -359,10 +410,14 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>rest</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;&nbsp;rest()</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#rest()">ImmutableList</a></code></strong></div>
+<div class="block">Returns a sublist that contains the same items as this list except for the first item. The
+ returned list may be just a view into this list or may represent list with the same elements.
+ If this list is empty, an empty list is also returned.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#rest()">rest</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>a sublist that contains the same items as this list except for the first one</dd></dl>
 </li>
 </ul>
 <a name="equals(java.lang.Object)">
@@ -372,40 +427,43 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 <li class="blockList">
 <h4>equals</h4>
 <pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#equals(java.lang.Object)">ImmutableList</a></code></strong></div>
+<div class="block">Returns true if this list is equal to the specified object. The objects are equal if both of
+ them are <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a>s and they contain the same elements in the same order. So they
+ are equal if both lists are the same size and if, for every index <code>i</code>, the item at
+ index <code>i</code> in this list is equal to the item at index <code>i</code> in the given list.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#equals(java.lang.Object)">equals</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>o</code> - an object</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the specified object is an immutable list with the same elements in the same
+       order</dd></dl>
 </li>
 </ul>
 <a name="hashCode()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>hashCode</h4>
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#hashCode()">ImmutableList</a></code></strong></div>
+<div class="block">Returns the hash code value for this list. The hash code of a list is defined to be the result
+ of the following calculation:
+ <pre>
+ int hashCode = 1;
+ for (E e : list) {
+    hashCode = 31 * hashCode + (e==null ? 0 : e.hashCode());
+ }
+ </pre></div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#hashCode()">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="type parameter in AbstractRandomAccessImmutableList">E</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="toString()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
-<dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>the hash code for this list</dd><dt><span class="strong">See Also:</span></dt><dd><a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true#hashCode()" title="class or interface in java.util"><code>List.hashCode()</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -433,7 +491,7 @@ implements <a href="../../../com/apriori/collections/ImmutableList.html" title="
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/collections/AbstractNavigableMap.ValueIteratorImpl.html" title="class in com.apriori.collections"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

@@ -362,7 +362,7 @@ public class Duration implements Comparable<Duration> {
    * be a more coarse unit. If the product is larger than {@link Long#MAX_VALUE} days or less than
    * {@link Long#MIN_VALUE} days, it will be clipped.
    *
-   * @param times the multiplicand
+   * @param multiplicand the multiplicand
    * @return the product of this duration times the specified multiplicand
    */
   public Duration times(int multiplicand) {
@@ -419,7 +419,7 @@ public class Duration implements Comparable<Duration> {
    * @param divisor the divisor
    * @return the quotient of this duration divided by the specified divisor
    * 
-   * @throw ArithmeticException if the specified divisor is zero
+   * @throws ArithmeticException if the specified divisor is zero
    */
   public Duration dividedBy(int divisor) {
      if (divisor == 0) {
@@ -483,8 +483,7 @@ public class Duration implements Comparable<Duration> {
   }
 
   /**
-   * Returns true if the specified object is a {@link TimeUnitDuration} with the same length and
-   * unit.
+   * Returns true if the specified object is a {@link Duration} with the same length and unit.
    */
   @Override public boolean equals(Object o) {
     if (!(o instanceof Duration)) {

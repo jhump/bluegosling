@@ -14,7 +14,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> add(E e);
@@ -22,7 +22,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> remove(Object o);
@@ -30,7 +30,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> removeAll(Object o);
@@ -38,7 +38,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> removeAll(Iterable<?> items);
@@ -46,7 +46,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> retainAll(Iterable<?> items);
@@ -54,7 +54,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
    /**
     * {@inheritDoc}
     * 
-    * <p>This method is overridden to covariantly return a {@link PersistenSet} instead of a
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> addAll(Iterable<? extends E> items);

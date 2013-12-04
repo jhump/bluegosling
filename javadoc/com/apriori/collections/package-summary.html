@@ -62,7 +62,7 @@
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;com.apriori.collections</h1>
 <div class="docSummary">
-<div class="block">New implementations and utilities to complement the Java Collections Framework.</div>
+<div class="block">New implementations and utilities to complement the Java Collections Framework (JCF).</div>
 </div>
 <p>See:&nbsp;<a href="#package_description">Description</a></p>
 </div>
@@ -139,7 +139,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;E&gt;</td>
 <td class="colLast">
-<div class="block">A cyclically ordered set.</div>
+<div class="block">A cyclically ordered collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -150,7 +150,9 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An immutable, read-only, ordered collection.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</td>
@@ -158,7 +160,9 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A key-value-pair entry in an immutable map.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</td>
@@ -183,30 +187,46 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/MergeablePriorityOrderedQueue.html" title="interface in com.apriori.collections">MergeablePriorityOrderedQueue</a>&lt;E,Q extends <a href="../../../com/apriori/collections/MergeablePriorityOrderedQueue.html" title="interface in com.apriori.collections">MergeablePriorityOrderedQueue</a>&lt;? extends E,?&gt;&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="../../../com/apriori/collections/PriorityOrderedQueue.html" title="interface in com.apriori.collections"><code>PriorityOrderedQueue</code></a> that can be merged with another efficiently.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A fully persistent collection.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;</td>
+<td class="colLast">
+<div class="block">A fully persistent list.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A fully persistent set.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/PriorityOrderedQueue.html" title="interface in com.apriori.collections">PriorityOrderedQueue</a>&lt;E&gt;</td>
+<td class="colLast">
+<div class="block">A queue that retrieves items in priority order instead of in LIFO order.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;</td>
@@ -270,7 +290,9 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract base class for implementing <a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><code>ImmutableCollection</code></a> and its sub-interfaces.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;K,V&gt;</td>
@@ -278,15 +300,22 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractImmutableSet.html" title="class in com.apriori.collections">AbstractImmutableSet</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract base class for implementing an <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections"><code>ImmutableSet</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractLinkedImmutableList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract base class for <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> implementations that use linked data structures
+ so that access is sequential.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A sub-list view of an <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> that is sequential/linked in nature.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;K,V&gt;</td>
@@ -296,107 +325,122 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract base class for <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> implementations that also support fast random
+ access.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A sub-list view of an <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a> that supports fast random access operations.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A fully persistent list backed by an array-mapped trie.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections">ArrayBackedLinkedList</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A list implementation that attempts to achieve some of the benefits of a linked list without
  sacrificing the overwhelming performance advantages and memory efficiency of arrays.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections">ArrayMappedStringTrie</a>&lt;V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AssociativeArrayList.html" title="class in com.apriori.collections">AssociativeArrayList</a>&lt;E,K&gt;</td>
 <td class="colLast">
 <div class="block">An <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> that is also an <a href="../../../com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections"><code>AssociativeList</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/BidiIterators.html" title="class in com.apriori.collections">BidiIterators</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/BidiIterators.html" title="class in com.apriori.collections">BidiIterators</a></td>
+<td class="colLast">
+<div class="block">Utility methods related to bi-directional iterators.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections">BigIntRadixTrieMap</a>&lt;V&gt;</td>
 <td class="colLast">
 <div class="block">Like a <a href="../../../com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections"><code>RadixTrieMap</code></a>, but with <a href="http://docs.oracle.com/javase/6/docs/api/java/math/BigInteger.html?is-external=true" title="class or interface in java.math"><code>BigInteger</code></a> keys.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/BitConverters.html" title="class in com.apriori.collections">BitConverters</a></td>
 <td class="colLast">
 <div class="block">Factory methods for useful <a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections"><code>BitConverter</code></a> implementations.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/BitSequences.html" title="class in com.apriori.collections">BitSequences</a></td>
 <td class="colLast">
 <div class="block">Utility methods for working with <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a>s.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/CircularBuffer.html" title="class in com.apriori.collections">CircularBuffer</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A simple fixed-capacity buffer of object references.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/CompactBitwiseTrie.html" title="class in com.apriori.collections">CompactBitwiseTrie</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/CompactStringTrie.html" title="class in com.apriori.collections">CompactStringTrie</a>&lt;V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ConcurrentSets.html" title="class in com.apriori.collections">ConcurrentSets</a></td>
 <td class="colLast">
 <div class="block">This utility class provides concurrent set implementations that wrap
  normal (non-concurrent) sets to provide thread-safe access.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ConcurrentSets.Builder.html" title="class in com.apriori.collections">ConcurrentSets.Builder</a>&lt;E,T extends <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;&gt;</td>
 <td class="colLast">
 <div class="block">Creates concurrent set objects using the builder pattern.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections">ConcurrentSortedArraySet</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a> that allows concurrent access.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ConcurrentSortedArraySet.Builder.html" title="class in com.apriori.collections">ConcurrentSortedArraySet.Builder</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A builder class for constructing instances of <code>ConcurrentSortedArraySet</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/Cycles.html" title="class in com.apriori.collections">Cycles</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Utility methods for creating instances of <a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections"><code>Cycle</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/FibonacciHeapQueue.html" title="class in com.apriori.collections">FibonacciHeapQueue</a>&lt;E&gt;</td>
+<td class="colLast">
+<div class="block">A priority queue that supports merging of two queues and is backed by a Fibonacci heap.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a>&lt;E&gt;</td>
@@ -469,260 +513,258 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/MergeablePriorityQueue.html" title="class in com.apriori.collections">MergeablePriorityQueue</a>&lt;E&gt;</td>
-<td class="colLast">
-<div class="block">A priority queue that supports merging of two queues and is backed by a Fibonacci heap.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ParallelSort.html" title="class in com.apriori.collections">ParallelSort</a></td>
 <td class="colLast">
 <div class="block">A utility for sorting large lists using multiple CPUs/cores.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ParallelSort2.html" title="class in com.apriori.collections">ParallelSort2</a></td>
 <td class="colLast">
 <div class="block">A utility for sorting large lists using multiple CPUs/cores.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections">PersistentListBackedConcurrentList</a>&lt;E&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections">RadixTrieMap</a>&lt;V&gt;</td>
 <td class="colLast">
 <div class="block">A structure that can be used to perform radix sort and can be used to efficiently represent very
  sparse arrays.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a> implementation based on a <a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections"><code>RandomAccessArrayDeque</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A double-ended queue that is backed by an array and, in addition to standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util"><code>Deque</code></a>
  operations, also exposes random access operations on its contents.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections">RandomizedQueue</a>&lt;E&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/ReadOnlyIterator.html" title="class in com.apriori.collections">ReadOnlyIterator</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/ReadOnlyIterator.html" title="class in com.apriori.collections">ReadOnlyIterator</a>&lt;E&gt;</td>
+<td class="colLast">
+<div class="block">A simple base class for iterators that are read-only.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.html" title="class in com.apriori.collections">SharedCapacityDequeFactory</a></td>
 <td class="colLast">
 <div class="block">A producer of queues and deques that all share a single bound.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SimpleBitwiseTrie.html" title="class in com.apriori.collections">SimpleBitwiseTrie</a>&lt;K,V&gt;</td>
 <td class="colLast">
 <div class="block">A trie structure that most closely resembles a binary tree.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections">SimpleStringTrie</a>&lt;V&gt;</td>
 <td class="colLast">
 <div class="block">A trie that has <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a> keys.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SlowParallelSort.html" title="class in com.apriori.collections">SlowParallelSort</a></td>
 <td class="colLast">
 <div class="block">A thought experiment into sorting large lists using multiple CPUs/cores.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SmoothSort.html" title="class in com.apriori.collections">SmoothSort</a></td>
 <td class="colLast">
 <div class="block">Sorts arrays and collections using the <a href="http://en.wikipedia.org/wiki/Smoothsort">
  Smoothsort</a> algorithm.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SortedArrayCompositeTrie.html" title="class in com.apriori.collections">SortedArrayCompositeTrie</a>&lt;K,C,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SortedArrayMap.html" title="class in com.apriori.collections">SortedArrayMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SortedArraySequenceTrie.html" title="class in com.apriori.collections">SortedArraySequenceTrie</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">An implementation of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a> that is optimized for memory efficiency at the cost of
  slower mutations.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections">TransformingCollection</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A collection whose elements are the results of applying a function to another collection.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming collection that can transform values in both directions.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingCollection.ReadOnly.html" title="class in com.apriori.collections">TransformingCollection.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming collection.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingIterable.html" title="class in com.apriori.collections">TransformingIterable</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An iterable whose elements are the results of applying a function to another iterable.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingIterable.ReadOnly.html" title="class in com.apriori.collections">TransformingIterable.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming iterable.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingIterator.html" title="class in com.apriori.collections">TransformingIterator</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An iterator whose elements are the results of applying a function to results from another
  iterator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingIterator.ReadOnly.html" title="class in com.apriori.collections">TransformingIterator.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming iterator.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.html" title="class in com.apriori.collections">TransformingList</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A list whose elements are the results of applying a function to another list.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.Bidi.html" title="class in com.apriori.collections">TransformingList.Bidi</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming list that can transform values in both directions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.Bidi.RandomAccess.html" title="class in com.apriori.collections">TransformingList.Bidi.RandomAccess</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A bidirectional transforming list that also has the <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util"><code>RandomAccess</code></a> marker
  interface.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.RandomAccess.html" title="class in com.apriori.collections">TransformingList.RandomAccess</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming list that supports random access to its elements.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.ReadOnly.html" title="class in com.apriori.collections">TransformingList.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming list.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingList.ReadOnly.RandomAccess.html" title="class in com.apriori.collections">TransformingList.ReadOnly.RandomAccess</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A read-only transforming list that also has the <a href="http://docs.oracle.com/javase/6/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util"><code>RandomAccess</code></a> marker
  interface.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingListIterator.html" title="class in com.apriori.collections">TransformingListIterator</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A list iterator whose elements are the results of applying a function to results from another
  iterator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingListIterator.Bidi.html" title="class in com.apriori.collections">TransformingListIterator.Bidi</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming list iterator that can transform values in both directions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingListIterator.ReadOnly.html" title="class in com.apriori.collections">TransformingListIterator.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming list iterator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingRandomAccessSet.html" title="class in com.apriori.collections">TransformingRandomAccessSet</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A set whose elements are the results of applying a function to another collection.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingRandomAccessSet.Bidi.html" title="class in com.apriori.collections">TransformingRandomAccessSet.Bidi</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming random access set that can transform values in both directions.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingRandomAccessSet.ReadOnly.html" title="class in com.apriori.collections">TransformingRandomAccessSet.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming random access set.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingSet.html" title="class in com.apriori.collections">TransformingSet</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A set whose elements are the results of applying a function to another collection.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingSet.Bidi.html" title="class in com.apriori.collections">TransformingSet.Bidi</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">A transforming set that can transform values in both directions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TransformingSet.ReadOnly.html" title="class in com.apriori.collections">TransformingSet.ReadOnly</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">An unmodifiable transforming set.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/TreeList.html" title="class in com.apriori.collections">TreeList</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A list structure that is stored as a binary tree.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">UnrolledLinkedList</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A list implementation that is a hybrid between a linked list and an array.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a>&lt;K,V&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A binary search tree that always maintains perfect balance.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -755,7 +797,7 @@
 <!--   -->
 </a>
 <h2 title="Package com.apriori.collections Description">Package com.apriori.collections Description</h2>
-<div class="block">New implementations and utilities to complement the Java Collections Framework.
+<div class="block">New implementations and utilities to complement the Java Collections Framework (JCF).
  
  <p>In addition to new implementations for standard collection interfaces, this package also
  contains some new collection interfaces:
@@ -780,8 +822,20 @@
  more convenient API for things like <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang"><code>String</code></a>s, whose components are a sequence of
  <code>char</code>s. The <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface is in terms of the composite type, instead of
  being in terms of <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterable.html?is-external=true" title="class or interface in java.util"><code>Iterable</code></a>s.</li>
+ <li><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><code>ImmutableCollection</code></a>: This interface is the root of a
+ hierarchy of immutable collections, parallel to the normal mutable interfaces in the JCF.</li>
+ <li><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>: The root interface of a hierarchy of
+ fully persistent collections. They also happen to extend their immutable counter-parts since a
+ persistent data structure is also immutable.</li>
+ <li><a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections"><code>Cycle</code></a>: A collection that represents a finite cycle.</li>
  </ul>
  
+ <h3>Concurrent Collections</h3>
+ 
+ <h3>Immutable and Persistent Collections</h3>
+ 
+ <h3>Transforming and Filtering Collections</h3>
+  
  <a name="trie"/><h3>Tries</h3>
  Tries are similar to tree structures, except that nodes don't generally contain keys and values.
  Instead, keys are sequences, and the nodes each contain a component of a key. The nodes are

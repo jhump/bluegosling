@@ -153,16 +153,22 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#await()">await</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#await()">await</a></strong>()</code>
+<div class="block">Awaits the future event, blocking the current thread until the event occurs.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#await(long, java.util.concurrent.TimeUnit)">await</a></strong>(long&nbsp;limit,
-     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Awaits the future event, blocking up to the specified amount of time until the event occurs.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterruptIfRunning)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#cancel(boolean)">cancel</a></strong>(boolean&nbsp;mayInterruptIfRunning)</code>
+<div class="block">Cancels the activity.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a></code></td>
@@ -197,7 +203,9 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isDone()">isDone</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html#isDone()">isDone</a></strong>()</code>
+<div class="block">Returns true if the event has occurred.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -296,12 +304,17 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <li class="blockList">
 <h4>cancel</h4>
 <pre>public&nbsp;boolean&nbsp;cancel(boolean&nbsp;mayInterruptIfRunning)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">Cancellable</a></code></strong></div>
+<div class="block">Cancels the activity.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/Cancellable.html#cancel(boolean)">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true#cancel(boolean)" title="class or interface in java.util.concurrent">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Parameters:</span></dt><dd><code>mayInterruptIfRunning</code> - if true and the activity is executing concurrently, the thread executing
+       the activity will be interrupted</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the activity was cancelled; false if it could not be cancelled because the
+       activity has already completed</dd></dl>
 </li>
 </ul>
 <a name="setCancelled()">
@@ -366,12 +379,14 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <li class="blockList">
 <h4>isDone</h4>
 <pre>public&nbsp;boolean&nbsp;isDone()</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html#isDone()">Awaitable</a></code></strong></div>
+<div class="block">Returns true if the event has occurred.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/Awaitable.html#isDone()">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></dd>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true#isDone()" title="class or interface in java.util.concurrent">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="type parameter in SimpleListenableFuture">T</a>&gt;</code></dd>
-</dl>
+<dt><span class="strong">Returns:</span></dt><dd>true if the event has occurred; false otherwise</dd></dl>
 </li>
 </ul>
 <a name="get()">
@@ -516,11 +531,13 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <h4>await</h4>
 <pre>public&nbsp;void&nbsp;await()
            throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html#await()">Awaitable</a></code></strong></div>
+<div class="block">Awaits the future event, blocking the current thread until the event occurs.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/Awaitable.html#await()">await</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the event</dd></dl>
 </li>
 </ul>
 <a name="await(long, java.util.concurrent.TimeUnit)">
@@ -532,11 +549,15 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <pre>public&nbsp;boolean&nbsp;await(long&nbsp;limit,
             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
               throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html#await(long, java.util.concurrent.TimeUnit)">Awaitable</a></code></strong></div>
+<div class="block">Awaits the future event, blocking up to the specified amount of time until the event occurs.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/concurrent/Awaitable.html#await(long, java.util.concurrent.TimeUnit)">await</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>limit</code> - the maximum amount of time to wait</dd><dd><code>unit</code> - the unit of <code>limit</code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the event occurred or false if the time limit was encountered first</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the event</dd></dl>
 </li>
 </ul>
 </li>

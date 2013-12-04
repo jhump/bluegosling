@@ -395,8 +395,11 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>add</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;add(<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&nbsp;e)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#add(E)">PersistentCollection</a></code></strong></div>
-<div class="block">Adds an element to the collection.</div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#add(E)">PersistentSet</a></code></strong></div>
+<div class="block">Adds an element to the collection.
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#add(E)">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>
@@ -413,8 +416,11 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>remove</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;remove(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#remove(java.lang.Object)">PersistentCollection</a></code></strong></div>
-<div class="block">Removes an element from the collection.</div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#remove(java.lang.Object)">PersistentSet</a></code></strong></div>
+<div class="block">Removes an element from the collection.
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#remove(java.lang.Object)">remove</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>
@@ -432,9 +438,12 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>removeAll</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#removeAll(java.lang.Object)">PersistentCollection</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#removeAll(java.lang.Object)">PersistentSet</a></code></strong></div>
 <div class="block">Removes all occurrences of an object from the collection.
-]   *</div>
+]   *
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#removeAll(java.lang.Object)">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>
@@ -452,8 +461,11 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>removeAll</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#removeAll(java.lang.Iterable)">PersistentCollection</a></code></strong></div>
-<div class="block">Removes multiple items from the collection.</div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#removeAll(java.lang.Iterable)">PersistentSet</a></code></strong></div>
+<div class="block">Removes multiple items from the collection.
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#removeAll(java.lang.Iterable)">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>
@@ -470,8 +482,11 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>retainAll</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#retainAll(java.lang.Iterable)">PersistentCollection</a></code></strong></div>
-<div class="block">Retains only the specified items in the collection.</div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#retainAll(java.lang.Iterable)">PersistentSet</a></code></strong></div>
+<div class="block">Retains only the specified items in the collection.
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#retainAll(java.lang.Iterable)">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>
@@ -488,8 +503,11 @@ implements <a href="../../../com/apriori/collections/PersistentSet.html" title="
 <li class="blockList">
 <h4>addAll</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;addAll(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;&nbsp;items)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html#addAll(java.lang.Iterable)">PersistentCollection</a></code></strong></div>
-<div class="block">Adds multiple elements to the collection.</div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentSet.html#addAll(java.lang.Iterable)">PersistentSet</a></code></strong></div>
+<div class="block">Adds multiple elements to the collection.
+ 
+ <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><code>PersistentSet</code></a> instead of a
+ <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections"><code>PersistentCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#addAll(java.lang.Iterable)">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentSet.html" title="type parameter in HamtPersistentSet">E</a>&gt;</code></dd>

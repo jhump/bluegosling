@@ -106,17 +106,29 @@
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;</pre>
 <div class="block">An abstract base class for <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a> implementations. Concrete classes only need to
- implement methods that perform search operations. This abstract class then implements everything
- else, including <a href="../../../com/apriori/collections/AbstractNavigableMap.html#keySet()"><code>keySet()</code></a> and <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>entrySet()</code></a>, in terms of those operations. Mutable
- maps must also implement store and remove operations.
+ implement methods that perform search operations:
+ <ul>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#firstEntry()" title="class or interface in java.util"><code>NavigableMap.firstEntry()</code></a></li>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#lastEntry()" title="class or interface in java.util"><code>NavigableMap.lastEntry()</code></a></li>
+    <li><a href="../../../com/apriori/collections/AbstractNavigableMap.html#getEntry(java.lang.Object)"><code>getEntry(K)</code></a></li>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#lowerEntry(K)" title="class or interface in java.util"><code>lowerEntry(K)</code></a></li>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#higherEntry(K)" title="class or interface in java.util"><code>higherEntry(K)</code></a></li>
+ </ul>
+ This abstract class then implements everything else, including <a href="../../../com/apriori/collections/AbstractNavigableMap.html#keySet()"><code>keySet()</code></a> and
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>entrySet()</code></a>, in terms of those operations. Mutable maps must also implement
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util">store</a> and <a href="../../../com/apriori/collections/AbstractNavigableMap.html#removeEntry(java.lang.Object)">remove</a> operations.
  
  <p>This class is not thread-safe. So most of the method implementations herein cannot be used to
  correctly implement a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ConcurrentNavigableMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentNavigableMap</code></a>.
  
  <p>Because the <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a> interface is so much broader (and thus different) than the
- plain <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface, this class and its usage bear little resemblance to the JRE's
- <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><code>AbstractMap</code></a> base class. As such, this class does <em>not</em>
- extend <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><code>AbstractMap</code></a>.</div>
+ plain <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface, this class (and its usage by sub-classes) bear little resemblance to
+ the JRE's <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><code>AbstractMap</code></a> base class. As such, this class does
+ <em>not</em> extend <a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><code>AbstractMap</code></a>.
+ 
+ <p>Although this base class does not implement <a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io"><code>Serializable</code></a>, it does provide basic
+ support for serialization to sub-classes. Mainly: sub-classes do not need to worry about
+ serializing and deserializing the map's <a href="../../../com/apriori/collections/AbstractNavigableMap.html#comparator()">comparator</a>.</div>
 </li>
 </ul>
 </div>
@@ -181,6 +193,18 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <td class="colFirst"><code>protected class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections">AbstractNavigableMap.SubMap</a></strong></code>
 <div class="block">A sub-map view, with bounds on the range of included keys.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.ValueCollection.html" title="class in com.apriori.collections">AbstractNavigableMap.ValueCollection</a></strong></code>
+<div class="block">A view of the map's values as a collection.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.ValueIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.ValueIteratorImpl</a></strong></code>
+<div class="block">An iterator over the values in this map.</div>
 </td>
 </tr>
 </table>
@@ -460,7 +484,8 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <h4>comparator</h4>
 <pre>protected transient&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>&gt; comparator</pre>
 <div class="block">The map's current comparator. This will never be null. If no comparator is specified during
- construction then this is set to <code>CollectionUtils.NATURAL_ORDERING</code>.</div>
+ construction then this is set to a default implementation that compares objects using their
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.</div>
 </li>
 </ul>
 <a name="modCount">
@@ -590,8 +615,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;values()</pre>
 <div class="block">
  
- <p>This default implementation uses a <a href="../../../com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections"><code>TransformingCollection</code></a> and the maps'
- <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>entrySet()</code></a>. The transformation function used simply extracts the value from an entry.</div>
+ <p>This default implementation returns a <a href="../../../com/apriori/collections/AbstractNavigableMap.ValueCollection.html" title="class in com.apriori.collections"><code>AbstractNavigableMap.ValueCollection</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#values()" title="class or interface in java.util">values</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></dd>

@@ -80,7 +80,7 @@ public interface Possible<T> {
    /**
     * Gets the contained value or gets an exception from the specified source and throws it
     * 
-    * @param throwable a source of the exception to throw if a value is not present
+    * @param throwableSource a source of the exception to throw if a value is not present
     * @return the contained value
     * @throws X if a value is not present
     */

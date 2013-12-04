@@ -95,6 +95,7 @@
 <br>
 <pre>public final class <span class="strong">BidiIterators</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Utility methods related to bi-directional iterators.</div>
 </li>
 </ul>
 </div>
@@ -115,11 +116,15 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BidiIterators.html#fromList(java.util.List)">fromList</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;&nbsp;list)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BidiIterators.html#fromList(java.util.List)">fromList</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;&nbsp;list)</code>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> to the <a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections"><code>BidiIterable</code></a> interface.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/BidiListIterator.html" title="interface in com.apriori.collections">BidiListIterator</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BidiIterators.html#fromListIterator(java.util.ListIterator)">fromListIterator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;&nbsp;listIterator)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/BidiIterators.html#fromListIterator(java.util.ListIterator)">fromListIterator</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;&nbsp;listIterator)</code>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util"><code>ListIterator</code></a> to the <a href="../../../com/apriori/collections/BidiIterator.html" title="interface in com.apriori.collections"><code>BidiIterator</code></a> interface.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -150,6 +155,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>fromListIterator</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/BidiListIterator.html" title="interface in com.apriori.collections">BidiListIterator</a>&lt;E&gt;&nbsp;fromListIterator(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;&nbsp;listIterator)</pre>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util"><code>ListIterator</code></a> to the <a href="../../../com/apriori/collections/BidiIterator.html" title="interface in com.apriori.collections"><code>BidiIterator</code></a> interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>listIterator</code> - a list iterator</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a bidirectional iterator that delegates to the specified list iterator</dd></dl>
 </li>
 </ul>
 <a name="fromList(java.util.List)">
@@ -159,6 +167,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>fromList</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;&nbsp;fromList(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;&nbsp;list)</pre>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> to the <a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections"><code>BidiIterable</code></a> interface.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>list</code> - a list</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a bidirectional iterable that delegates to the specified list</dd></dl>
 </li>
 </ul>
 </li>

@@ -229,7 +229,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending()">getPending</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending()">getPending</a></strong>()</code>
+<div class="block">Returns a future that completes with the atom's value once all currently pending operations
+ complete.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -265,7 +268,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)">restart</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
-       boolean&nbsp;cancelPending)</code>&nbsp;</td>
+       boolean&nbsp;cancelPending)</code>
+<div class="block">Restarts mutation operations in a blocked atom.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -413,6 +418,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>restart</h4>
 <pre>public&nbsp;void&nbsp;restart(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
            boolean&nbsp;cancelPending)</pre>
+<div class="block">Restarts mutation operations in a blocked atom. If the atom is not blocked, an exception will
+ be thrown. The caller can indicate whether the restart operation should discard all pending
+ mutations or if they should be retained and applied to the new restarted value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>restartValue</code> - the new value with which to seed the restarted atom</dd><dd><code>cancelPending</code> - if true, any queued mutations will be discarded; otherwise, queued
+       mutations will be applied to the new seeded value</dd></dl>
 </li>
 </ul>
 <a name="getQueueLength()">
@@ -435,8 +445,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>get</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;get()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get()">Atom</a></code></strong></div>
-<div class="block">Retrieves the current value for this atom.</div>
+<div class="block">Retrieves the current value for this atom.
+ 
+ <p>This is a volatile read of the atom's value. There may be pending and/or concurrently
+ executing operations that will change and/or are changing this value. To get the value of
+ this atom after all such pending operations are complete, use <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending()"><code>getPending()</code></a> instead.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the current value for the atom</dd></dl>
 </li>
 </ul>
@@ -447,6 +460,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>getPending</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getPending()</pre>
+<div class="block">Returns a future that completes with the atom's value once all currently pending operations
+ complete. If this atom is blocked or becomes blocked while processing currently pending
+ operations, the returned future will not complete until the atom is unblocked. If the atom is
+ unblocked via a <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)"><code>restart(T, boolean)</code></a> that cancels pending operations, then this future will be
+ cancelled.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a future that completes with the atom's value once all currently pending operations
+       complete</dd></dl>
 </li>
 </ul>
 <a name="set(java.lang.Object)">

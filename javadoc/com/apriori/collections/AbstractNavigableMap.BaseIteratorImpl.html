@@ -59,13 +59,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -98,7 +98,7 @@
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../com/apriori/collections/AbstractNavigableMap.DescendingKeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.DescendingKeyIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.EntryIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.EntryIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.KeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.KeyIteratorImpl</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractNavigableMap.DescendingKeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.DescendingKeyIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.EntryIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.EntryIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.KeyIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.KeyIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractNavigableMap.ValueIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.ValueIteratorImpl</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.BaseListIteratorImpl.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.BaseListIteratorImpl</a></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -119,6 +119,33 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#lastFetched">lastFetched</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#myModCount">myModCount</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next">next</a></strong></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_summary">
@@ -159,22 +186,36 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#checkModCount()">checkModCount</a></strong>()</code>
+<div class="block">Checks for concurrent modification by examining the underlying map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>modCount</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="type parameter in AbstractNavigableMap.BaseIteratorImpl">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#compute(java.util.Map.Entry)">compute</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;&nbsp;entry)</code>
 <div class="block">Computes the value fetched from this iterator based on the given map entry.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#hasNext()">hasNext</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="type parameter in AbstractNavigableMap.BaseIteratorImpl">T</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next()">next</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#remove()">remove</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#resetModCount()">resetModCount</a></strong>()</code>
+<div class="block">Resets the iterator to be in sync with the map's latest
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>modCount</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt;</code></td>
@@ -198,6 +239,41 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="next">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>next</h4>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt; next</pre>
+</li>
+</ul>
+<a name="lastFetched">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastFetched</h4>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">K</a>,<a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="type parameter in AbstractNavigableMap">V</a>&gt; lastFetched</pre>
+</li>
+</ul>
+<a name="myModCount">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>myModCount</h4>
+<pre>protected&nbsp;int myModCount</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_detail">
@@ -261,6 +337,31 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <div class="block">Computes the value fetched from this iterator based on the given map entry.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - the visisted map entry</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the value to return from <a href="../../../com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next()"><code>next()</code></a></dd></dl>
+</li>
+</ul>
+<a name="checkModCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>checkModCount</h4>
+<pre>protected&nbsp;void&nbsp;checkModCount()</pre>
+<div class="block">Checks for concurrent modification by examining the underlying map's
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>modCount</code></a>. Throws an exception if concurrent
+ modification is detected.</div>
+</li>
+</ul>
+<a name="resetModCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resetModCount</h4>
+<pre>protected&nbsp;void&nbsp;resetModCount()</pre>
+<div class="block">Resets the iterator to be in sync with the map's latest
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#modCount"><code>modCount</code></a>. This is used if this iterator makes a call
+ to modify the underlying map, so that subsequent operations don't mistake the change for
+ a concurrent modification.</div>
 </li>
 </ul>
 <a name="hasNext()">
@@ -353,13 +454,13 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>

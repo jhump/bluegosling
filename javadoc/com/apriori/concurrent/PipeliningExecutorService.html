@@ -91,10 +91,17 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>P</code> - the type of objects that identify pipelines</dd></dl>
 <hr>
 <br>
 <pre>public class <span class="strong">PipeliningExecutorService&lt;P&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">An executor that runs multiple sequential pipelines. When tasks are submitted, they are enqueued
+ in a pipeline that runs its tasks sequentially instead of concurrently. However, submitting tasks
+ for multiple pipelines achieves concurrency since pipelines are independent of one another. This
+ is useful for concurrently executing callbacks where order of delivery to a single listener
+ matters. Using the listener as the pipeline key, this executor assures that callbacks are invoked
+ sequentially.</div>
 </li>
 </ul>
 </div>
@@ -113,7 +120,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#PipeliningExecutorService(com.apriori.concurrent.ListenableExecutorService)">PipeliningExecutorService</a></strong>(<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>&nbsp;executor)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#PipeliningExecutorService(java.util.concurrent.Executor)">PipeliningExecutorService</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -131,20 +141,40 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#awaitQuiescance()">awaitQuiescance</a></strong>()</code>
+<div class="block">Waits for this executor to reach a point where no tasks are running or queued.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#awaitQuiescance(long, java.util.concurrent.TimeUnit)">awaitQuiescance</a></strong>(long&nbsp;limit,
+               <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Waits up to the specified amount of time for this executor to reach a point where no tasks are
+ running or queued.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.util.concurrent.Callable)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
-      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>&nbsp;</td>
+      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>
+<div class="block">Submits a task for the specified pipeline.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.lang.Runnable)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
-      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Submits a task for the specified pipeline.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.lang.Runnable, T)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-      T&nbsp;result)</code>&nbsp;</td>
+      T&nbsp;result)</code>
+<div class="block">Submits a task for the specified pipeline.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -168,13 +198,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="PipeliningExecutorService(com.apriori.concurrent.ListenableExecutorService)">
+<a name="PipeliningExecutorService(java.util.concurrent.Executor)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PipeliningExecutorService</h4>
-<pre>public&nbsp;PipeliningExecutorService(<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>&nbsp;executor)</pre>
+<pre>public&nbsp;PipeliningExecutorService(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>executor</code> - the executor that will run individual tasks across all pipelines</dd></dl>
 </li>
 </ul>
 </li>
@@ -195,6 +228,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>submit</h4>
 <pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
                              <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</pre>
+<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
+ submitted for different pipelines. It will not execute until all previously submitted tasks
+ for the same pipeline have completed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>pipeline</code> - the pipeline in which to run the task</dd><dd><code>task</code> - a task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that represents the completion of the given task</dd></dl>
 </li>
 </ul>
 <a name="submit(java.lang.Object,java.lang.Runnable,java.lang.Object)">
@@ -208,6 +246,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
                              <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                              T&nbsp;result)</pre>
+<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
+ submitted for different pipelines. It will not execute until all previously submitted tasks
+ for the same pipeline have completed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>pipeline</code> - the pipeline in which to run the task</dd><dd><code>task</code> - a task</dd><dd><code>result</code> - the result of the task when it completes</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that represents the completion of the given task</dd></dl>
 </li>
 </ul>
 <a name="submit(java.lang.Object,java.lang.Runnable)">
@@ -215,11 +258,55 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </a><a name="submit(P, java.lang.Runnable)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>submit</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
                             <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
+ submitted for different pipelines. It will not execute until all previously submitted tasks
+ for the same pipeline have completed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>pipeline</code> - the pipeline in which to run the task</dd><dd><code>task</code> - a task</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that represents the completion of the given task</dd></dl>
+</li>
+</ul>
+<a name="awaitQuiescance()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>awaitQuiescance</h4>
+<pre>public&nbsp;void&nbsp;awaitQuiescance()
+                     throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Waits for this executor to reach a point where no tasks are running or queued. Note that this
+ implies nothing about the state of the underlying executor as other sources could still be
+ submitting and running tasks with that executor.
+ 
+ <p>Note that the state of quiescance may be transient and will end as soon as another task is
+ submitted to this executor. This method is usually used after a source of callbacks
+ is stopped. At that point, no other tasks should be submitted. Once this executor has
+ quiesced, it will then be safe to shutdown the underlying executor. If the underlying executor
+ is shutdown too soon, submissions to this pipelining executor could be rejected with a
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/RejectedExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>RejectedExecutionException</code></a>.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the current thread is interrupted while waiting</dd></dl>
+</li>
+</ul>
+<a name="awaitQuiescance(long, java.util.concurrent.TimeUnit)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>awaitQuiescance</h4>
+<pre>public&nbsp;boolean&nbsp;awaitQuiescance(long&nbsp;limit,
+                      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
+                        throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Waits up to the specified amount of time for this executor to reach a point where no tasks are
+ running or queued.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>limit</code> - the limit of how much time to wait</dd><dd><code>unit</code> - the unit for the time limit</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if quiescance was reached or false if the time limit elapsed first</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the current thread is interrupted while waiting</dd></dl>
 </li>
 </ul>
 </li>

@@ -142,14 +142,20 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom()">TransactionalAtom</a></strong>()</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom()">TransactionalAtom</a></strong>()</code>
+<div class="block">Constructs a new atom with a <code>null</code> value and no validator.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom(T)">TransactionalAtom</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom(T)">TransactionalAtom</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value)</code>
+<div class="block">Constructs a new atom with the specified value and no validator.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom(T, com.apriori.util.Predicate)">TransactionalAtom</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value,
-                 <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</code>&nbsp;</td>
+                 <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</code>
+<div class="block">Constructs a new atom with the specified value and the specified validator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -180,7 +186,9 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a></strong>(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a></strong>(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Enqueues a commutative transform operation.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
@@ -196,16 +204,22 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent()">newComponent</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent()">newComponent</a></strong>()</code>
+<div class="block">Creates a new component atom with a <code>null</code> initial value and no validator.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent(U)">newComponent</a></strong>(U&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent(U)">newComponent</a></strong>(U&nbsp;value)</code>
+<div class="block">Creates a new atom with the specified initial value and no validator.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent(U, com.apriori.util.Predicate)">newComponent</a></strong>(U&nbsp;value,
-            <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super U&gt;&nbsp;validator)</code>&nbsp;</td>
+            <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super U&gt;&nbsp;validator)</code>
+<div class="block">Creates a new atom with the specified initial value and the specified validator.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
@@ -216,7 +230,9 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#pin()">pin</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#pin()">pin</a></strong>()</code>
+<div class="block">Pins an atom so that no concurrent transaction can modify it.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -272,6 +288,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>TransactionalAtom</h4>
 <pre>public&nbsp;TransactionalAtom()</pre>
+<div class="block">Constructs a new atom with a <code>null</code> value and no validator.</div>
 </li>
 </ul>
 <a name="TransactionalAtom(java.lang.Object)">
@@ -283,6 +300,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>TransactionalAtom</h4>
 <pre>public&nbsp;TransactionalAtom(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value)</pre>
+<div class="block">Constructs a new atom with the specified value and no validator.</div>
 </li>
 </ul>
 <a name="TransactionalAtom(java.lang.Object,com.apriori.util.Predicate)">
@@ -295,6 +313,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <h4>TransactionalAtom</h4>
 <pre>public&nbsp;TransactionalAtom(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value,
                  <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</pre>
+<div class="block">Constructs a new atom with the specified value and the specified validator.</div>
 </li>
 </ul>
 </li>
@@ -312,6 +331,14 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>newComponent</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;&nbsp;newComponent()</pre>
+<div class="block">Creates a new component atom with a <code>null</code> initial value and no validator. Accessing the
+ component requires shared access to this atom. For example, a transaction cannot modify this
+ atom (which requires acquiring an exclusive lock) while transactions are outstanding that
+ affect any of this atom's components (or their components, i.e. descendants).
+ 
+ <p>More precisely, the component is protected by a lock that is a child of this atom's lock
+ (see <a href="../../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>).</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new atom that is a component of this atom</dd></dl>
 </li>
 </ul>
 <a name="newComponent(java.lang.Object)">
@@ -323,6 +350,8 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>newComponent</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;&nbsp;newComponent(U&nbsp;value)</pre>
+<div class="block">Creates a new atom with the specified initial value and no validator.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new atom that is a component of this atom</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent()"><code>newComponent()</code></a></dd></dl>
 </li>
 </ul>
 <a name="newComponent(java.lang.Object,com.apriori.util.Predicate)">
@@ -335,6 +364,8 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <h4>newComponent</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;&nbsp;newComponent(U&nbsp;value,
                                     <a href="../../../../com/apriori/util/Predicate.html" title="interface in com.apriori.util">Predicate</a>&lt;? super U&gt;&nbsp;validator)</pre>
+<div class="block">Creates a new atom with the specified initial value and the specified validator.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a new atom that is a component of this atom</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent()"><code>newComponent()</code></a></dd></dl>
 </li>
 </ul>
 <a name="get()">
@@ -344,8 +375,13 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>get</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;get()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get()">Atom</a></code></strong></div>
-<div class="block">Retrieves the current value for this atom.</div>
+<div class="block">Retrieves the current value for this atom.
+ 
+ <p>When called outside of a transaction, this returns the most recently committed value for
+ the atom. When called inside of a transaction, this may reflect updates to the atom that have
+ not yet been committed. Unless the transaction is using a "read committed" isolation level,
+ getting the atom's value in the transaction is repeatable, regardless of concurrent
+ modifications being made by other transactions.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get()">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
@@ -359,6 +395,15 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>pin</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;pin()</pre>
+<div class="block">Pins an atom so that no concurrent transaction can modify it. This can be used in
+ non-serializable isolation levels to prevent write skew that could otherwise occur. Pinning
+ is achieved by acquiring a shared lock on the atom.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the value of the atom in the current transaction</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no transaction is in progress on the current thread</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a concurrent transaction has already updated the atom
+       since the current transaction's version was established</dd></dl>
 </li>
 </ul>
 <a name="apply(com.apriori.util.Function)">
@@ -368,15 +413,27 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;apply(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply(com.apriori.util.Function)">SynchronousAtom</a></code></strong></div>
 <div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
  specified function to the atom's current value. Watchers are notified when the value is
- changed.</div>
+ changed.
+ 
+ <p>If no transaction is in progress on the current thread, this will effectively create one
+ that does nothing but transform this atom. If one is in progress, the transaction will acquire
+ an exclusive lock on the atom to prevent concurrent writers and will hold the lock until it is
+ rolled back or committed.
+ 
+ <p>Watchers are only notified when this operation is committed. If there are other operations
+ on this same atom, watchers will only be notified once with the value of this atom before the
+ transaction began and its final value upon the transaction being committed.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply(com.apriori.util.Function)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the atom's new value</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>the atom's new value</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a transaction is in progress, and a concurrent
+       transaction has updated the atom since the current transaction's version was established</dd></dl>
 </li>
 </ul>
 <a name="commute(com.apriori.util.Function)">
@@ -386,6 +443,35 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>commute</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;commute(<a href="../../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Enqueues a commutative transform operation. This differs from <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply(com.apriori.util.Function)"><code>apply(Function)</code></a> in that
+ commutes do not eagerly acquire an exclusive lock on the atom. This allows for concurrent
+ transactions to also be modifying the same atom. But since the function must be commutative,
+ the order of applying functions does not matter. Using this method can lead to greater
+ throughput than using <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply(com.apriori.util.Function)"><code>apply(Function)</code></a> but is more restrictive since the applied
+ operation must be commutative.
+ 
+ <p>Note that if other operations are performed on this atom (like <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#set(T)"><code>set(T)</code></a> or
+ <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply(com.apriori.util.Function)"><code>apply(com.apriori.util.Function&lt;? super T, ? extends T&gt;)</code></a>), commutes are always applied <strong>last</strong>, regardless of whether the
+ commute was enqueued after the other operations were performed or not.
+ 
+ <p>If no transaction is in progress on the current thread, this will effectively create one
+ that does nothing but transform this atom. If a serializable transaction is in progress, then
+ an exclusive lock is acquired. So, with serializable isolation level, the only difference
+ between this operation and <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply(com.apriori.util.Function)"><code>apply(Function)</code></a> is that the commutes functions won't
+ actually be evaluated until the transaction is committed.
+ 
+ <p>Watchers are only notified when this operation is committed. If there are other operations
+ on this same atom, watchers will only be notified once with the value of this atom before the
+ transaction began and its final value upon the transaction being committed.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - a commutative function to apply to transform the atom's value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a future that will complete with the result of the commute operation when the
+       transaction is committed or will be cancelled if this operation is rolled back</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom
+       (only when a transaction is in progress with serializable isolation)</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a transaction is in progress, and a concurrent
+       transaction has updated the atom since the current transaction's version was established
+       (only when a transaction is in progress with serializable isolation)</dd></dl>
 </li>
 </ul>
 <a name="set(java.lang.Object)">
@@ -397,14 +483,26 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>set</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;set(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;newValue)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set(T)">SynchronousAtom</a></code></strong></div>
 <div class="block">Updates the atom's value to the one specified. Upon changing the value, watchers will be
- notified.</div>
+ notified.
+ 
+ <p>If no transaction is in progress on the current thread, this will effectively create one
+ that does nothing but set this atom's value. If one is in progress, the transaction will
+ acquire an exclusive lock on the atom to prevent concurrent writers and will hold the lock
+ until it is rolled back or committed.
+ 
+ <p>Watchers are only notified when this operation is committed. If there are other operations
+ on this same atom, watchers will only be notified once with the value of this atom before the
+ transaction began and its final value upon the transaction being committed.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set(T)">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>newValue</code> - the atom's new value</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the atom's previous value</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>the atom's previous value</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a transaction is in progress, and a concurrent
+       transaction has updated the atom since the current transaction's version was established</dd></dl>
 </li>
 </ul>
 <a name="validate(java.lang.Object)">
