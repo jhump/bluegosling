@@ -568,7 +568,7 @@ class ConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       acquireReadLocks();
       try {
          int sz = sizeNoLocks();
-         a = ArrayUtils.ensureCapacity(a, sz);
+         a = ArrayUtils.newArrayIfTooSmall(a, sz);
          copyToArray(shards, a);
          if (a.length > sz) {
             a[sz] = null;

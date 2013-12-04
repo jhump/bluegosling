@@ -202,7 +202,15 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       });
    }
    
-   // TODO: javadoc
+   /**
+    * Restarts mutation operations in a blocked atom. If the atom is not blocked, an exception will
+    * be thrown. The caller can indicate whether the restart operation should discard all pending
+    * mutations or if they should be retained and applied to the new restarted value.
+    *
+    * @param restartValue the new value with which to seed the restarted atom
+    * @param cancelPending if true, any queued mutations will be discarded; otherwise, queued
+    *       mutations will be applied to the new seeded value
+    */
    public void restart(final T restartValue, final boolean cancelPending) {
       validate(restartValue);
       final AtomicBoolean success = new AtomicBoolean();
@@ -217,6 +225,10 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
                blocked = false;
                value = restartValue;
                if (cancelPending) {
+                  while (!queued.isEmpty()) {
+                     ListenableFutureTask<T> op = queued.remove();
+                     op.cancel(false);
+                  }
                   queued.clear();
                } else {
                   while (!queued.isEmpty() && !blocked) {
@@ -254,12 +266,28 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       return queued.size();
    }
    
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This is a volatile read of the atom's value. There may be pending and/or concurrently
+    * executing operations that will change and/or are changing this value. To get the value of
+    * this atom after all such pending operations are complete, use {@link #getPending()} instead.
+    */
    @Override
    public T get() {
       return value;
    }
    
-   // TODO: javadoc
+   /**
+    * Returns a future that completes with the atom's value once all currently pending operations
+    * complete. If this atom is blocked or becomes blocked while processing currently pending
+    * operations, the returned future will not complete until the atom is unblocked. If the atom is
+    * unblocked via a {@link #restart} that cancels pending operations, then this future will be
+    * cancelled.
+    *
+    * @return a future that completes with the atom's value once all currently pending operations
+    *       complete
+    */
    public ListenableFuture<T> getPending() {
       return apply(Functions.<T>identityFunction());
    }
@@ -312,7 +340,16 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
          }
       });
    }
-   
+
+   /**
+    * Submits the specified operation for asynchronous execution. If a transaction is in progress,
+    * the operation is queued up in the transaction and will be submitted to a thread pool only
+    * when the transaction commits. If no transaction is in progress, the operation is immediately
+    * submitted to a thread pool for execution.
+    *
+    * @param task the operation to execute asynchronously
+    * @return a future that completes when the specified operation completes
+    */
    private ListenableFuture<T> submit(Callable<T> task) {
       final ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
       Transaction transaction = Transaction.current();
@@ -326,6 +363,13 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       return future;
    }
    
+   /**
+    * Submits the specified operation to a thread pool. The operation is queued behind any other
+    * operations for the same specified atom.
+    *
+    * @param atom the atom which this operation affects
+    * @param future a future task that will perform an operation on the specified atom when executed
+    */
    static <T> void submitFuture(final AsynchronousAtom<T> atom,
          final ListenableFutureTask<T> future) {
       threadPool.submit(atom, new Runnable() {
@@ -337,6 +381,15 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       });
    }
    
+   /**
+    * Runs a single operation for an atom. This should only be executed in a thread pool and must
+    * execute sequentially with respect to other tasks for this same atom. If the current atom is
+    * blocked due to a prior failure, this task is queued for later execution (when the atom is
+    * resumed or restarted). Otherwise, it executes the task immediately and may cause the current
+    * atom to become blocked if the task fails.
+    *
+    * @param task a future task that will perform an operation on this atom when executed
+    */
    private void runSingleTask(ListenableFutureTask<T> task) {
       if (blocked) {
          queued.add(task);

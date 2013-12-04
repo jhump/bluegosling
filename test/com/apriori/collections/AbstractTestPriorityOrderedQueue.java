@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+public abstract class AbstractTestPriorityOrderedQueue extends AbstractTestQueue {
 
-public abstract class AbstractTestPriorityQueue extends AbstractTestQueue {
-
-   protected AbstractTestPriorityQueue(String testName) {
+   protected AbstractTestPriorityOrderedQueue(String testName) {
       super(testName);
    }
    
@@ -41,6 +40,19 @@ public abstract class AbstractTestPriorityQueue extends AbstractTestQueue {
    
    protected Comparator<Object> getComparator() {
       return TEST_COMPARATOR;
+   }
+
+   @Override
+   public PriorityOrderedQueue<Object> getCollection() {
+      return (PriorityOrderedQueue<Object>) super.getCollection();
+   }
+   
+   @Override
+   public abstract PriorityOrderedQueue<?> makeCollection();
+   
+   @Override
+   public PriorityOrderedQueue<?> makeFullCollection() {
+      return (PriorityOrderedQueue<?>) super.makeFullCollection();
    }
 
    @Override

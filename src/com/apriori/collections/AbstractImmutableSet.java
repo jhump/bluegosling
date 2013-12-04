@@ -1,6 +1,16 @@
 package com.apriori.collections;
 
-// TODO: javadoc
+/**
+ * An abstract base class for implementing an {@link ImmutableSet}. This provides implementations
+ * for all methods except {@link #size()} and {@link #iterator()}.
+ *
+ * <p>Nothing in this base class enforces set invariants. The only difference between this class
+ * and its super-class, {@link AbstractImmutableCollection}, is that this one implements
+ * {@link ImmutableSet#equals(Object)} and {@link ImmutableSet#hashCode()}.
+ * 
+ * @param <E> the type of element in the collection
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public abstract class AbstractImmutableSet<E> extends AbstractImmutableCollection<E>
       implements ImmutableSet<E> {
@@ -13,10 +23,5 @@ public abstract class AbstractImmutableSet<E> extends AbstractImmutableCollectio
    @Override
    public int hashCode() {
       return CollectionUtils.hashCode(this);
-   }
-   
-   @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
    }
 }

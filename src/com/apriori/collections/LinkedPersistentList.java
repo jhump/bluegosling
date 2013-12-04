@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 // TODO: javadoc
 // TODO: tests
 // TODO: serialization
+// TODO: extend AbstractLinkedImmutableList
 public class LinkedPersistentList<E> implements PersistentList<E>, Serializable {
    /*
     * Since Java does not do tail-call optimization for recursive functions, these methods use
@@ -159,7 +160,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    @SuppressWarnings("unchecked")
    @Override
    public <T> T[] toArray(T[] array) {
-      Object a[] = ArrayUtils.ensureCapacity(array, size);
+      Object a[] = ArrayUtils.newArrayIfTooSmall(array, size);
       int i = 0;
       for (LinkedPersistentList<E> current = this; current != null; current = current.next) {
          a[i++] = current.value;

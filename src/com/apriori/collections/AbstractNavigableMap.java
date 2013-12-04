@@ -1,10 +1,9 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Comparator;
@@ -18,17 +17,29 @@ import java.util.Set;
 
 /**
  * An abstract base class for {@link NavigableMap} implementations. Concrete classes only need to
- * implement methods that perform search operations. This abstract class then implements everything
- * else, including {@link #keySet()} and {@link #entrySet()}, in terms of those operations. Mutable
- * maps must also implement store and remove operations.
+ * implement methods that perform search operations:
+ * <ul>
+ *    <li>{@link #firstEntry()}</li>
+ *    <li>{@link #lastEntry()}</li>
+ *    <li>{@link #getEntry(Object) getEntry(K)}</li>
+ *    <li>{@link #lowerEntry(Object) lowerEntry(K)}</li>
+ *    <li>{@link #higherEntry(Object) higherEntry(K)}</li>
+ * </ul>
+ * This abstract class then implements everything else, including {@link #keySet()} and
+ * {@link #entrySet()}, in terms of those operations. Mutable maps must also implement
+ * {@linkplain #put(Object, Object) store} and {@linkplain #removeEntry(Object) remove} operations.
  * 
  * <p>This class is not thread-safe. So most of the method implementations herein cannot be used to
  * correctly implement a {@link java.util.concurrent.ConcurrentNavigableMap ConcurrentNavigableMap}.
  * 
  * <p>Because the {@link NavigableMap} interface is so much broader (and thus different) than the
- * plain {@link Map} interface, this class and its usage bear little resemblance to the JRE's
- * {@link java.util.AbstractMap AbstractMap} base class. As such, this class does <em>not</em>
- * extend {@link java.util.AbstractMap AbstractMap}.
+ * plain {@link Map} interface, this class (and its usage by sub-classes) bear little resemblance to
+ * the JRE's {@link java.util.AbstractMap AbstractMap} base class. As such, this class does
+ * <em>not</em> extend {@link java.util.AbstractMap AbstractMap}.
+ * 
+ * <p>Although this base class does not implement {@link Serializable}, it does provide basic
+ * support for serialization to sub-classes. Mainly: sub-classes do not need to worry about
+ * serializing and deserializing the map's {@linkplain #comparator() comparator}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
@@ -41,7 +52,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    
    /**
     * The map's current comparator. This will never be null. If no comparator is specified during
-    * construction then this is set to {@link CollectionUtils#NATURAL_ORDERING}.
+    * construction then this is set to a default implementation that compares objects using their
+    * {@linkplain Comparable natural ordering}.
     */
    protected transient Comparator<? super K> comparator;
    
@@ -122,18 +134,11 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    /**
     * {@inheritDoc}
     * 
-    * <p>This default implementation uses a {@link TransformingCollection} and the maps'
-    * {@link #entrySet()}. The transformation function used simply extracts the value from an entry.
+    * <p>This default implementation returns a {@link ValueCollection}.
     */
    @Override
    public Collection<V> values() {
-      return new TransformingCollection<Entry<K, V>, V>(entrySet(),
-            new Function<Entry<K, V>, V>() {
-               @Override
-               public V apply(Entry<K, V> input) {
-                  return input.getValue();
-               }
-            });
+      return new ValueCollection(); 
    }
 
    /**
@@ -951,10 +956,9 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    protected abstract class BaseIteratorImpl<T> implements Iterator<T> {
-      private Entry<K, V> next;
-      private boolean canRemove;
-      private K lastFetched;
-      private int myModCount;
+      protected Entry<K, V> next;
+      protected Entry<K, V> lastFetched;
+      protected int myModCount;
       
       /**
        * Constructs a new iterator.
@@ -995,13 +999,24 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
        */
       protected abstract T compute(Entry<K, V> entry);
 
-      private void checkModCount() {
+      /**
+       * Checks for concurrent modification by examining the underlying map's
+       * {@link AbstractNavigableMap#modCount modCount}. Throws an exception if concurrent
+       * modification is detected.
+       */
+      protected void checkModCount() {
          if (myModCount != getModCount()) {
             throw new ConcurrentModificationException();
          }
       }
       
-      private void resetModCount() {
+      /**
+       * Resets the iterator to be in sync with the map's latest
+       * {@link AbstractNavigableMap#modCount modCount}. This is used if this iterator makes a call
+       * to modify the underlying map, so that subsequent operations don't mistake the change for
+       * a concurrent modification.
+       */
+      protected void resetModCount() {
          myModCount = getModCount();
       }
       
@@ -1017,22 +1032,21 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
          if (next == null) {
             throw new NoSuchElementException();
          }
-         lastFetched = next.getKey();
-         canRemove = true;
+         lastFetched = next;
          Entry<K, V> ret = next;
-         next = advance(lastFetched);
+         next = advance(lastFetched.getKey());
          return compute(ret);
       }
 
       @Override
       public void remove() {
          checkModCount();
-         if (!canRemove) {
+         if (lastFetched == null) {
             throw new IllegalStateException();
          }
          removeEntry(lastFetched);
          resetModCount();
-         canRemove = false;
+         lastFetched = null;
       }
    }
    
@@ -1067,6 +1081,23 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       @Override
       protected K compute(Entry<K, V> entry) {
          return entry.getKey();
+      }
+   }
+
+   /**
+    * An iterator over the values in this map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   protected class ValueIteratorImpl extends BaseIteratorImpl<V> {
+      /**
+       * {@inheritDoc}
+       * 
+       * <p>This implementation extracts the key from the specified entry.
+       */
+      @Override
+      protected V compute(Entry<K, V> entry) {
+         return entry.getValue();
       }
    }
 
@@ -1254,4 +1285,21 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
          return tailSet(fromElement, true);
       }
    }
+   
+   /**
+    * A view of the map's values as a collection.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   protected class ValueCollection extends AbstractCollection<V> {
+      @Override
+      public Iterator<V> iterator() {
+         return new ValueIteratorImpl();
+      }
+
+      @Override
+      public int size() {
+         return AbstractNavigableMap.this.size();
+      }
+   };
 }

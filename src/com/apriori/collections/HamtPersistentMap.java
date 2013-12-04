@@ -128,6 +128,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                return null;
             }
             // create a replacement node without this child entry
+            // TODO: use InnerLeafTrieNode if only one child and it's a LeafTrieNode
             TrieNode<K, V> newChildren[] = createChildren(numChildren);
             if (index > 0) {
                System.arraycopy(children, 0, newChildren, 0, index);

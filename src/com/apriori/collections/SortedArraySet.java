@@ -31,8 +31,8 @@ import java.util.SortedSet;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * @param <E> the type of element in the set
  */
-// TODO: add maybeGrow() and maybeGrowBy() to be more efficient about array resizing
 // TODO: implement RandomAccessNavigableSet<E>
+// TODO: extend AbstractSet? create AbstractNavigableSet and AbstractRandomAccessNavigableSet?
 public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializable {
 
    /**
@@ -818,10 +818,13 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          modCount++;
       }
    }
+   
+   // TODO: add ensureCapacity(int)
 
    /** {@inheritDoc} */
    @Override
    public boolean add(E element) {
+      maybeGrowBy(1);
       int idx = findIndex(element);
       if (idx >= 0) {
          return false;
@@ -840,11 +843,10 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       boolean ret = false;
       
       // Since adding an item is O(n) due to need to shift items around in internal array, the
-      // simple approach degenerates into quadratic performance: O(m *n), where m is size of
-      // specified collection and n is size of this set. So we instead defer the O(n) operation to
-      // the end and do it only once. This is done by just appending elements into an array
-      // (constant time for adding a single item) and then sort and remove duplicates in one final
-      // pass at the end. That makes the whole algorithm O(m * log n).
+      // simple approach degenerates into quadratic performance: O(n ^ 2), where n is size of
+      // specified collection plus the size of this set. So we instead just append elements into the
+      // array (constant time for adding a single item) and then sort and remove duplicates in one
+      // final pass at the end. That makes the whole algorithm O(n log n).
       
       if (size < THRESHOLD_FOR_BULK_OP && otherSize < THRESHOLD_FOR_BULK_OP) {
          // simple approach is fine for small collections since linear ops use very fast
@@ -857,15 +859,20 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
          return ret;
       }
       
-      Object newData[] = new Object[size + otherSize];
-      newData = elements.toArray(newData);
-      System.arraycopy(data, 0, newData, otherSize, size);
+      maybeGrowBy(otherSize);
+      Object others[] = elements.toArray();
+      System.arraycopy(others, 0, data, size, otherSize);
       int oldSize = size;
+      size += otherSize;
       sort();
       removeDups();
       return size > oldSize;
    }
-
+   
+   private void maybeGrowBy(int extraSpaceNeeded) {
+      data = ArrayUtils.maybeGrowBy(data, size, extraSpaceNeeded);
+   }
+   
    /** {@inheritDoc} */
    @Override
    public void clear() {
@@ -1004,7 +1011,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    /** {@inheritDoc} */
    @Override
    public <T> T[] toArray(T[] a) {
-      a = ArrayUtils.ensureCapacity(a, size);
+      a = ArrayUtils.newArrayIfTooSmall(a, size);
       System.arraycopy(data, 0, a, 0, size);
       if (a.length > size) {
          a[size] = null;
@@ -1151,8 +1158,12 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       if (size == 0) {
          return null;
       }
+      size--;
       @SuppressWarnings("unchecked")
       E ret = (E) data[0];
+      System.arraycopy(data, 1, data, 0, size);
+      data[size] = null;
+      modCount++;
       return ret;
    }
 
@@ -1162,8 +1173,11 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       if (size == 0) {
          return null;
       }
+      size--;
       @SuppressWarnings("unchecked")
-      E ret = (E) data[size - 1];
+      E ret = (E) data[size];
+      data[size] = null;
+      modCount++;
       return ret;
    }
 
@@ -1207,7 +1221,6 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
    @Override
    public SortedArraySet<E> clone() {
       if (this.getClass() == SortedArraySet.class) {
-         // don't bother cloning internal state - just create a new optimized list
          return new SortedArraySet<E>(this);
       }
       try {

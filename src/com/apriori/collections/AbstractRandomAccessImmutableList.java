@@ -4,11 +4,24 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
-//TODO: javadoc
+/**
+ * An abstract base class for {@link ImmutableList} implementations that also support fast random
+ * access. This class also implements the {@link RandomAccess} marker interface. Sub-classes need
+ * only implement {@link #size()} and {@link #get(int)}.
+ *
+ * @param <E> the type of element in the list
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: tests
 public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmutableCollection<E>
       implements ImmutableList<E>, RandomAccess {
 
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than this list's
+    * {@link #size}.
+    *
+    * @param index an index to check
+    */
    protected void rangeCheck(int index) {
       if (index < 0) {
          throw new IndexOutOfBoundsException(index + " < 0");
@@ -17,6 +30,13 @@ public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmut
       }
    }
 
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than or equal to
+    * this list's {@link #size}. This is for certain operations where an index equal to the size
+    * (<em>after</em> the last valid index in the list) is allowed.
+    *
+    * @param index an index to check
+    */
    protected void rangeCheckWide(int index) {
       if (index < 0) {
          throw new IndexOutOfBoundsException(index + " < 0");
@@ -101,11 +121,12 @@ public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmut
       return CollectionUtils.hashCode(this);
    }
    
-   @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
-   }
-   
+   /**
+    * A sub-list view of an {@link ImmutableList} that supports fast random access operations.
+    *
+    * @param <E> the type of element in the list
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected static class SubList<E> extends AbstractRandomAccessImmutableList<E> {
       private final ImmutableList<E> main;
       private final int offset;

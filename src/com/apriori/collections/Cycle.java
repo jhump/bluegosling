@@ -5,10 +5,16 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * A cyclically ordered set. An ordered sequence of objects, similar to a list, but it does not
- * necessarily have a fixed start or fixed end. The sequence is cyclical and thus infinite. At any
- * given time, there is a "current" element which can be thought of as the start of the sequence.
- * To navigate the sequence, though, you can advance or retreat the current element.
+ * A cyclically ordered collection. A cycle represents an ordered sequence of objects, similar to a
+ * list, but it does not necessarily have a fixed start or fixed end. The sequence is cyclical and
+ * thus infinite. At any given time, there is a "current" element which can be thought of as the
+ * start of the sequence. To navigate the sequence, though, you can advance or retreat the current
+ * element.
+ * 
+ * <p>The sequence does maintain a notion of "first" item, and the sequence can be reset so that the
+ * current element is that first item. The first item is the first element added to an empty cycle.
+ * When new elements are added to the front of the sequence while the current element is set to the
+ * first element, the first element is adjusted and becomes the newly added item.
  * 
  * <p>The size of the collection is the number of items added to it. This is the number of elements
  * one can traverse before the sequence starts over.
@@ -18,7 +24,7 @@ import java.util.NoSuchElementException;
  * unending (unless the sequence is empty) and repeats the sequence, following the cycle from end
  * back to beginning.
  *
- * @param <E>
+ * @param <E> the type of the elements in the sequence
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public interface Cycle<E> extends Collection<E> {

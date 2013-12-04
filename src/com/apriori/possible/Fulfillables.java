@@ -2,6 +2,7 @@ package com.apriori.possible;
 
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.util.AbstractSet;
 import java.util.Collections;
@@ -65,6 +66,11 @@ public final class Fulfillables {
          
          @Override
          public <X extends Throwable> T getOrThrow(X throwable) throws X {
+            return value;
+         }
+
+         @Override
+         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
             return value;
          }
 
@@ -143,6 +149,14 @@ public final class Fulfillables {
       public <X extends Throwable> T getOrThrow(X throwable) throws X {
          if (value == null) {
             throw throwable;
+         }
+         return value.get();
+      }
+
+      @Override
+      public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         if (value == null) {
+            throw throwable.get();
          }
          return value.get();
       }

@@ -38,7 +38,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 // TODO: tests that exercise all code paths in iterator.remove() and can verify integrity of
 // structure after removing items that way
-public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Cloneable {
+public class FibonacciHeapQueue<E>
+      implements MergeablePriorityOrderedQueue<E, FibonacciHeapQueue<? extends E>>,
+            Serializable, Cloneable {
    
    private static final long serialVersionUID = -7500815513249839345L;
    
@@ -92,7 +94,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     * Constructs a new empty queue. Elements will be compared using their {@linkplain Comparable
     * natural ordering}.
     */
-   public MergeablePriorityQueue() {
+   public FibonacciHeapQueue() {
       this(CollectionUtils.NATURAL_ORDERING);
    }
    
@@ -101,7 +103,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     * 
     * @param comp a comparator
     */
-   public MergeablePriorityQueue(Comparator<? super E> comp) {
+   public FibonacciHeapQueue(Comparator<? super E> comp) {
       if (comp == null) {
          this.comp = CollectionUtils.NATURAL_ORDERING;
       } else {
@@ -115,11 +117,11 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     * 
     * @param coll a collection of elements that will be in the constructed queue
     */
-   public MergeablePriorityQueue(Collection<? extends E> coll) {
+   public FibonacciHeapQueue(Collection<? extends E> coll) {
       this(coll, CollectionUtils.NATURAL_ORDERING);
    }
 
-   public MergeablePriorityQueue(Collection<? extends E> coll, Comparator<? super E> comp) {
+   public FibonacciHeapQueue(Collection<? extends E> coll, Comparator<? super E> comp) {
       this(comp);
       addAll(coll);
    }
@@ -132,7 +134,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(MergeablePriorityQueue<? extends E> queue) {
+   public FibonacciHeapQueue(FibonacciHeapQueue<? extends E> queue) {
       this(queue, (Comparator<? super E>) queue.comparator());
    }
 
@@ -144,7 +146,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(PriorityQueue<? extends E> queue) {
+   public FibonacciHeapQueue(PriorityQueue<? extends E> queue) {
       this(queue, (Comparator<? super E>) queue.comparator());
    }
 
@@ -156,7 +158,7 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
     */
    @SuppressWarnings("unchecked") // this could be unsafe if specified collection has incompatible
                                  // comparator. we'll trust user to specify a valid source
-   public MergeablePriorityQueue(SortedSet<? extends E> set) {
+   public FibonacciHeapQueue(SortedSet<? extends E> set) {
       this(set, (Comparator<? super E>) set.comparator());
    }
    
@@ -364,24 +366,8 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
       return min == null ? null : min.element;
    }
    
-   /**
-    * Merges the specified queue into this queue. The other queue will be empty when this operation
-    * completes and this queue will have the union of its own prior contents and those of the
-    * specified queue.
-    * 
-    * <p>This is effectively the same as the following:<pre>
-    * MergeablePriorityQueue&lt;MyType&gt; queue1, queue2;
-    * // merge queue2 into queue1
-    * queue1.addAll(queue2); queue2.clear(); 
-    * </pre>
-    * The main difference is that this specialized method can perform the merge in amortized
-    * constant time (vs. linear time).
-    * 
-    * @param other the queue whose contents are merged into this queue
-    * @return true if this queue was modified as a result (e.g. false if the specified queue was
-    *       empty)
-    */
-   public boolean mergeFrom(MergeablePriorityQueue<? extends E> other) {
+   @Override
+   public boolean mergeFrom(FibonacciHeapQueue<? extends E> other) {
       if (other.minRoot == null) {
          return false; // other queue is empty, nothing to do
       }
@@ -627,13 +613,13 @@ public class MergeablePriorityQueue<E> implements Queue<E>, Serializable, Clonea
    }
 
    @Override
-   public MergeablePriorityQueue<E> clone() {
-      if (this.getClass() == MergeablePriorityQueue.class) {
-         return new MergeablePriorityQueue<E>(this);
+   public FibonacciHeapQueue<E> clone() {
+      if (this.getClass() == FibonacciHeapQueue.class) {
+         return new FibonacciHeapQueue<E>(this);
       } else {
          try {
             @SuppressWarnings("unchecked")
-            MergeablePriorityQueue<E> clone = (MergeablePriorityQueue<E>) super.clone();
+            FibonacciHeapQueue<E> clone = (FibonacciHeapQueue<E>) super.clone();
             clone.minRoot = null;
             clone.modCount = 0;
             // clone shouldn't share any nodes, so we need to re-create the other heap

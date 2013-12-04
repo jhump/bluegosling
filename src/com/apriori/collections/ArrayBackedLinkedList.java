@@ -1427,27 +1427,18 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
       int prevLen = data.length;
       if (prevLen > size)
          return;
-      int len = prevLen << 1;
-      // avoid overflow
-      if (len <= prevLen) {
-         len = Integer.MAX_VALUE - 8;
-      }
+      int len = prevLen + (prevLen << 1);
+      len = Math.max(prevLen + 1, len);
       growTo(len);
    }
 
    private void maybeGrowBy(int moreElements) {
       int prevLen = data.length;
-      int newLen = prevLen + moreElements;
+      int newLen = size + moreElements;
       if (prevLen >= newLen)
          return;
-      int len = prevLen << 1;
-      while (len < newLen && prevLen < len) {
-         len <<= 1;
-      }
-      // avoid overflow
-      if (len <= prevLen) {
-         len = Integer.MAX_VALUE - 8;
-      }
+      int len = prevLen + (prevLen << 1);
+      len = Math.max(newLen, len);
       growTo(len);
    }
 
@@ -1787,7 +1778,7 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
    /** {@inheritDoc} */
    @Override
    public <T> T[] toArray(T[] array) {
-      array = ArrayUtils.ensureCapacity(array, size);
+      array = ArrayUtils.newArrayIfTooSmall(array, size);
       if (isOptimized) {
          System.arraycopy(data, 0, array, 0, size);
       }
@@ -1815,6 +1806,8 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
          prev = Arrays.copyOf(prev, highWater);
       }
    }
+
+   // TODO: add ensureCapacity(int)
 
    /**
     * Creates an iterator that provides maximum performance iteration. The iteration, however, may

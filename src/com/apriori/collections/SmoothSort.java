@@ -55,7 +55,7 @@ public final class SmoothSort {
     * Describes the structure of the in-place heap in the list. Since a leonardo heap is a
     * set of trees, this structure tracks what order trees are in the heap and where.
     * 
-    * @author jh
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class HeapStructure {
       /**
@@ -75,16 +75,17 @@ public final class SmoothSort {
       }
    }
    
-   private static <T extends Comparable<T>> void siftDown(List<T> list, int root, int treeOrder) {
+   private static <T> void siftDown(List<T> list, Comparator<? super T> comp, int root,
+         int treeOrder) {
       // TODO
    }
    
-   private static <T extends Comparable<T>> void rectifyRoots(List<T> list, int start, int end,
-         HeapStructure structure) {
+   private static <T> void rectifyRoots(List<T> list, Comparator<? super T> comp, int start,
+         int end, HeapStructure structure) {
       // TODO
    }
    
-   private static <T extends Comparable<T>> void addToHeap(List<T> list, int start, int end,
+   private static <T> void addToHeap(List<T> list, Comparator<? super T> comp, int start, int end,
          int listLength, HeapStructure structure) {
       if ((structure.trees & 1) != 0) {
          // Due to we encode this bitset, if first bit is zero, heap is empty.
@@ -115,7 +116,7 @@ public final class SmoothSort {
          case 0:
             // if the last heap has order 0, we only rectify if it's the very last element in list
             if (end == listLength - 1) {
-               rectifyRoots(list, start, end, structure);
+               rectifyRoots(list, comp, start, end, structure);
                return;
             }
             break;
@@ -124,7 +125,7 @@ public final class SmoothSort {
             // if the last heap has order 1, we can rectify if it's the last element in the list or
             // if it's the next-to-last element in list and won't be merged when we add last element
             if (end == listLength - 1 || (end == listLength - 2 && (structure.trees & 2) == 0)) {
-               rectifyRoots(list, start, end, structure);
+               rectifyRoots(list, comp, start, end, structure);
                return;
             }
             break;
@@ -135,41 +136,45 @@ public final class SmoothSort {
             int elementsRemaining = listLength - 1 - end;
             int elementsNeededForNextOrderTree = LEONARDO_NUMBERS[structure.offset - 1] + 1;
             if (elementsRemaining < elementsNeededForNextOrderTree) {
-               rectifyRoots(list, start, end, structure);
+               rectifyRoots(list, comp, start, end, structure);
                return;
             }
             break;
       }
       
-      siftDown(list, end, structure.offset);
+      siftDown(list, comp, end, structure.offset);
    }
    
-   private static <T extends Comparable<T>> HeapStructure heapify(List<T> list) {
+   private static <T> HeapStructure heapify(List<T> list, Comparator<? super T> comp) {
       HeapStructure structure = new HeapStructure();
       for (int i = 0, len = list.size(); i < len; i++) {
-         addToHeap(list, 0, i, len, structure);
+         addToHeap(list, comp, 0, i, len, structure);
       }
       return structure;
    }
    
-   private static <T extends Comparable<T>> void rebalance(List<T> list, HeapStructure structure,
-         int length) {
+   private static <T> void rebalance(List<T> list, Comparator<? super T> comp,
+         HeapStructure structure, int length) {
       // TODO
    }
    
-   private static <T extends Comparable<T>> void sortInPlace(List<T> list) {
-      HeapStructure structure = heapify(list);
+   private static <T> void sortInPlace(List<T> list, Comparator<? super T> comp) {
+      HeapStructure structure = heapify(list, comp);
       for (int i = list.size() - 1; i > 0; i--) {
-         rebalance(list, structure, i);
+         rebalance(list, comp, structure, i);
       }
    }
    
-   public static <T extends Comparable<T>> void sort(List<T> list) {
+   public static <T> void sort(List<T> list) {
+      sort(list, CollectionUtils.NATURAL_ORDERING);
+   }
+   
+   public static <T> void sort(List<T> list, Comparator<? super T> comp) {
       if (list instanceof RandomAccess) {
-         sortInPlace(list);
+         sortInPlace(list, comp);
       } else {
          ArrayList<T> l = new ArrayList<T>(list);
-         sortInPlace(list);
+         sortInPlace(list, comp);
          for (ListIterator<T> srcIter = l.listIterator(), destIter = list.listIterator();
                srcIter.hasNext();) {
             destIter.next();
@@ -178,17 +183,12 @@ public final class SmoothSort {
       }
    }
    
-   public static <T extends Comparable<T>> void sort(List<T> list, Comparator<? super T> comp) {
-      // TODO
-   }
-   
-   public static <T extends Comparable<T>> void sort(T[] array) {
-      List<T> list = Arrays.asList(array);
-      sort(list);
+   public static <T> void sort(T[] array) {
+      sort(Arrays.asList(array));
    }
 
-   public static <T extends Comparable<T>> void sort(T[] array, Comparator<? super T> comp) {
-      // TODO
+   public static <T> void sort(T[] array, Comparator<? super T> comp) {
+      sort(Arrays.asList(array), comp);
    }
 
    public static void sort(int[] array) {

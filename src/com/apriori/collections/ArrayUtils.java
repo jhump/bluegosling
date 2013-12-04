@@ -2,6 +2,7 @@
 package com.apriori.collections;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * Utility methods for working with arrays that back collection implementations.
@@ -40,15 +41,8 @@ final class ArrayUtils {
          data[index] = element;
          return data;
       } else {
-         int len = prevLen << 1;
-         // arbitrary lower bound on size of new arrays
-         if (len < MIN_GROWN_SIZE) {
-            len = MIN_GROWN_SIZE;
-         }
-         // avoid overflow
-         if (len <= prevLen) {
-            len = Integer.MAX_VALUE - 8;
-         }
+         int len = prevLen + (prevLen << 1);
+         len = Math.max(MIN_GROWN_SIZE, Math.max(len, size + 1));
          @SuppressWarnings("unchecked")
          T newData[] = (T[]) Array.newInstance(data.getClass().getComponentType(), len);
          // copy items prior to index
@@ -94,20 +88,54 @@ final class ArrayUtils {
    }
 
    /**
-    * Ensure that the specified array has sufficient capacity and creates a new, larger array if
-    * it is not.
+    * Returns the specified array if it has sufficient capacity or a new larger array otherwise.
     * 
     * @param array the array
-    * @param capacity the required capacity
+    * @param requiredCapacity the required capacity
     * @return an array with the same component type as the one specified that is large enough to
     *       hold the specified capacity (may be same instance as specified array if it is already
     *       large enough)
     */
    @SuppressWarnings("unchecked")
-   public static <T> T[] ensureCapacity(T[] array, int capacity) {
-      if (array.length < capacity) {
-         return (T[]) Array.newInstance(array.getClass().getComponentType(), capacity);
+   public static <T> T[] newArrayIfTooSmall(T[] array, int requiredCapacity) {
+      if (array.length < requiredCapacity) {
+         return (T[]) Array.newInstance(array.getClass().getComponentType(), requiredCapacity);
       }
       return array;
+   }
+   
+   /**
+    * Grows the array if necessary to accommodate additional items.
+    * 
+    * @param array the array
+    * @param actualSize the used size of the array, which may be less than its actual length
+    * @param extraCapacityNeeded the number of additional items for which room in the array is
+    *       needed, above and beyond its used size
+    * @return the specified array if it already has sufficient capacity or a new, larger array
+    *       that is initialized with the same elements (from index 0 to index {@code actualSize - 1})
+    */
+   public static <T> T[] maybeGrowBy(T[] array, int actualSize, int extraCapacityNeeded) {
+      int totalCapacity = array.length;
+      if (actualSize < 0) {
+         throw new IllegalArgumentException("actualSize, " + actualSize + ", cannot be negative");
+      }
+      if (actualSize > totalCapacity) {
+         throw new IllegalArgumentException("actualSize, " + actualSize + ", cannot be greater" +
+         		" than current array length " + totalCapacity);
+      }
+      if (extraCapacityNeeded < 0) {
+         throw new IllegalArgumentException("extraCapacityNeeded, " + extraCapacityNeeded
+               + ", cannot be negative");
+      }
+      int requiredCapacity = actualSize + extraCapacityNeeded;
+      if (totalCapacity >= requiredCapacity) {
+         return array;
+      }
+      // grow by 50%
+      totalCapacity += totalCapacity >> 1;
+      // if 50% not enough, grow by more
+      totalCapacity = Math.min(MIN_GROWN_SIZE, Math.max(totalCapacity, requiredCapacity));
+
+      return Arrays.copyOf(array, requiredCapacity);
    }
 }

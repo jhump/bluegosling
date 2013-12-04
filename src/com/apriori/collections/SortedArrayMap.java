@@ -114,21 +114,7 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
    }
    
    private void maybeGrowBy(int spaceNeeded) {
-      int requiredCapacity = size + spaceNeeded;
-      if (data.length >= requiredCapacity) {
-         return;
-      }
-      
-      int totalCapacity = data.length;
-      // grow by 50%
-      totalCapacity += totalCapacity >> 1;
-      // if 50% not enough, grow by more
-      totalCapacity = Math.max(totalCapacity, requiredCapacity);
-
-      EntryImpl<K, V> d[] = ArrayUtils.ensureCapacity(data, totalCapacity);
-      System.arraycopy(data, 0, d, 0, size);
-      data = d;
-      modCount++;
+      data = ArrayUtils.maybeGrowBy(data, size, spaceNeeded);
    }
    
    /**

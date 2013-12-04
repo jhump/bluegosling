@@ -1,6 +1,12 @@
 package com.apriori.collections;
 
-// TODO: javadoc
+/**
+ * An abstract base class for implementing {@link ImmutableCollection} and its sub-interfaces. This
+ * provides implementations for all methods except {@link #size()} and {@link #iterator()}.
+ *
+ * @param <E> the type of element in the collection
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public abstract class AbstractImmutableCollection<E> implements ImmutableCollection<E> {
    @Override
@@ -41,5 +47,10 @@ public abstract class AbstractImmutableCollection<E> implements ImmutableCollect
          }
       }
       return false;
+   }
+   
+   @Override
+   public String toString() {
+      return CollectionUtils.toString(this);
    }
 }

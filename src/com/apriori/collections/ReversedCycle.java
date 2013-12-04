@@ -60,6 +60,7 @@ abstract class ReversedCycle<E> implements Cycle<E> {
    public boolean addAll(Collection<? extends E> c) {
       // with O(n) more memory, we might be able to do this more efficiently (e.g. reverse the
       // collection and then use underlying addAll()), but that doesn't feel like a good trade-off
+      // TODO: I think this actually needs to be reversed in order to be correct.
       for (E e : c) {
          addLast(e);
       }

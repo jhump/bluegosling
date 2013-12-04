@@ -1,5 +1,5 @@
 /** 
- * New implementations and utilities to complement the Java Collections Framework.
+ * New implementations and utilities to complement the Java Collections Framework (JCF).
  * 
  * <p>In addition to new implementations for standard collection interfaces, this package also
  * contains some new collection interfaces:
@@ -24,8 +24,20 @@
  * more convenient API for things like {@link java.lang.String}s, whose components are a sequence of
  * {@code char}s. The {@link java.util.Map} interface is in terms of the composite type, instead of
  * being in terms of {@link java.util.Iterable}s.</li>
+ * <li>{@link com.apriori.collections.ImmutableCollection}: This interface is the root of a
+ * hierarchy of immutable collections, parallel to the normal mutable interfaces in the JCF.</li>
+ * <li>{@link com.apriori.collections.PersistentCollection}: The root interface of a hierarchy of
+ * fully persistent collections. They also happen to extend their immutable counter-parts since a
+ * persistent data structure is also immutable.</li>
+ * <li>{@link com.apriori.collections.Cycle}: A collection that represents a finite cycle.</li>
  * </ul>
  * 
+ * <h3>Concurrent Collections</h3>
+ * 
+ * <h3>Immutable and Persistent Collections</h3>
+ * 
+ * <h3>Transforming and Filtering Collections</h3>
+ *  
  * <a name="trie"/><h3>Tries</h3>
  * Tries are similar to tree structures, except that nodes don't generally contain keys and values.
  * Instead, keys are sequences, and the nodes each contain a component of a key. The nodes are

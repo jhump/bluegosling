@@ -43,7 +43,6 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: javadoc
 // TODO: tests
 public class Transaction {
    

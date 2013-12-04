@@ -2,6 +2,7 @@ package com.apriori.possible;
 
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.util.Set;
 
@@ -75,6 +76,15 @@ public interface Possible<T> {
     * @throws X if a value is not present
     */
    <X extends Throwable> T getOrThrow(X throwable) throws X;
+   
+   /**
+    * Gets the contained value or gets an exception from the specified source and throws it
+    * 
+    * @param throwable a source of the exception to throw if a value is not present
+    * @return the contained value
+    * @throws X if a value is not present
+    */
+   <X extends Throwable> T getOrThrow(Source<X> throwableSource) throws X;
    
    /**
     * Returns a view of this possible value as a set. If a value is present, a singleton set with

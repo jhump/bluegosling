@@ -18,6 +18,89 @@ import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * A binary search tree that always maintains perfect balance. This is an experimental data
+ * structure. In practice, the overhead to maintain balance during mutations isn't really worth the
+ * minimal performance benefit for queries when compared to a height-balanced tree.
+ * 
+ * <p>The time to rebalance with the current algorithm is <em>O( (log n) <sup>3</sup> )</em>. Even
+ * though this is still sub-linear, it is ends up being significantly worse in large trees than the
+ * rebalancing operation used by height-balanced trees (which is just <em>O(log n)</em>). Note that
+ * it is certainly possible that the algorithm herein could be improved upon such that it has only
+ * logarithmic runtime complexity.
+ * 
+ * <p>One interesting artifact is that the state needed to maintain fully weight-balanced trees and
+ * sub-trees also makes it possible to randomly access keys by their ordinal position.
+ * 
+ * <h3>Weight Balance</h3>
+ * A tree is weight-balanced when all of the following criteria are met:
+ * <ol>
+ * <li>The difference in the number of elements between the left and right sub-trees is less than or
+ * equal to one.</li>
+ * <li>Both left and right sub-trees are also weight-balanced.</li>
+ * </ol> 
+ * 
+ * <a name="add-entry"></a><h3>Adding an Entry</h3>
+ * To maintain weight balance when adding nodes to the tree, the following procedure is used:
+ * <ol>
+ * <li>Perform a standard insertion into a binary tree. This will end up adding a new leaf node to
+ * the tree.</li>
+ * <li>Check each ancestor of the new node for balance, starting with its parent and ending with the
+ * root node (e.g. check each node as you pop up the stack from a recursive insertion). If the node
+ * is still in balance, the operation is complete.</li>
+ * <li>To restore balance to a node, when the right sub-tree is larger, we <a href="#shift-entry">
+ * shift</a> one descendant from right to left, and vice versa: left to right when the left sub-tree
+ * is larger.</li>
+ * </ol>
+ * 
+ * <a name="remove-entry"></a><h3>Removing an Entry</h3>
+ * To maintain weight balance when removes nodes from the tree, the following procedure is used:
+ * <ol>
+ * <li>Perform a standard removal from a binary tree.</li>
+ * <li>If the node to remove, {@code toBeRemoved}, is an inner node with two children:
+ *   <ol type="a">
+ *   <li>Find the node from the left sub-tree that has the largest key. We'll call this
+ *   node {@code predecessor}.</li>
+ *   <li>Swap places -- e.g. swap keys and values between {@code toBeRemoved} and
+ *   {@code predecessor}.</li>
+ *   <li>Continue with the remove operation, but now removing {@code predecessor} (after the swap,
+ *   it now has the key we were originally intending to remove).</li>
+ *   </ol>
+ * <li>Check each ancestor of the removed node for balance, starting with its parent and ending with
+ * the root node (e.g. check each node as you pop up the stack from a recursive removal). If the
+ * node is still in balance, the operation is complete.</li>
+ * <li>To restore balance to a node, when the right sub-tree is larger, we <a href="#shift-entry">
+ * shift</a> one descendant from right to left, and vice versa: left to right when the left sub-tree
+ * is larger.</li>
+ * </ol>
+ * 
+ * <a name="shift-entry"></a><h3>Shifting Entries</h3>
+ * For a given node, {@code current}, to shift an item from left to right:
+ * <ol>
+ * <li><a href="#remove-entry">Remove</a> the node from the left sub-tree that has the largest
+ * key. We'll call this node {@code predecessor}.</li>
+ * <li>Swap places (e.g. swap keys and values) between {@code current} node and the
+ * {@code predecessor}.</li>
+ * <li><a href="#add-entry">Add</a> the displaced node (which now has the key and value that
+ * {@code current} originally had) into the right sub-tree.</li>
+ * <li>Note that adding, removing, and shifting entries are all indirectly recursive operations.</li>
+ * </ol>
+ * 
+ * <p>Shifting from right to left is the mirror image of the above steps: 
+ * <ol>
+ * <li><a href="#remove-entry">Remove</a> the node from the right sub-tree that has the smallest
+ * key. We'll call this node {@code successor}.</li>
+ * <li>Swap places (e.g. swap keys and values) between {@code current} node and the
+ * {@code successor}.</li>
+ * <li><a href="#add-entry">Add</a> the displaced node (which now has the key and value that
+ * {@code current} originally had) into the left sub-tree.</li>
+ * </ol>
+ *
+ * @param <K> the type of keys in the map
+ * @param <V> the type of values in the map
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: implement me! (don't forget serialization and cloning)
 //TODO: javadoc
 //TODO: tests
@@ -27,6 +110,15 @@ public class WeightBalancedTreeMap<K, V>
    
    private static final long serialVersionUID = -3252472174080097845L;
 
+   /**
+    * A node in the tree. The only extra state required for balancing the tree is the total size of
+    * the sub-tree rooted at this node.
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class Node<K, V> {
       K key;
       V value;

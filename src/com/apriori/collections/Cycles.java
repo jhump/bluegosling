@@ -8,12 +8,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-// TODO: javadoc
+/**
+ * Utility methods for creating instances of {@link Cycle}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+// TODO: javadoc?
 // TODO: tests
 public final class Cycles {
    private Cycles() {
    }
-   
+
+   /**
+    * Creates a cycle iterator from the specified initial iterator and sources for iterators from
+    * the beginning of the sequence and from the end of the sequence. The sources are used to
+    * provide entries in the cycle when iteration wraps from end back to beginning and vice versa.
+    * TODO: document me!
+    *
+    * @param initial initial iterator
+    * @param sourceFromBeginning source for an iterator when wrapping from end back to beginning
+    * @param sourceFromEnd source for an iterator when wrapping from beginning to end
+    * @return a iterator that endlessly cycles through the sequenes of elements in the specified
+    *       iterators and iterator sources
+    */
    static <E> BidiIterator<E> cycleIterator(final BidiIterator<E> initial,
          final Source<BidiIterator<E>> sourceFromBeginning,
          final Source<BidiIterator<E>> sourceFromEnd) {
@@ -68,6 +85,15 @@ public final class Cycles {
       };
    }
    
+   /**
+    * Returns a view of the specified double-ended queue as a cycle. Modifications to the cycle end
+    * up also modifying the deque. Navigating through the cycle modifies the underlying deque by
+    * shifting elements from the begining to end and vice versa. That way, the cycle's "current"
+    * element is always the first in the deque.
+    *
+    * @param deque a deque
+    * @return a view of the specified deque as a cycle
+    */
    public static <E> Cycle<E> fromDeque(final Deque<E> deque) {
       return new Cycle<E>() {
          @Override
@@ -234,6 +260,14 @@ public final class Cycles {
       };
    }
    
+   /**
+    * Returns a view of the specified list as a cycle. Modifications to the cycle end up also
+    * modifying the deque. Navigating through the cycle simply navigates using a {@link ListIterator}
+    * and does not modify the underlying list.
+    *
+    * @param list a list
+    * @return a view of the specified list as a cycle
+    */
    public static <E> Cycle<E> fromList(final List<E> list) {
       return new Cycle<E>() {
          ListIterator<E> current = list.listIterator();

@@ -3,6 +3,7 @@ package com.apriori.possible;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,6 +78,14 @@ public final class Possibles {
             public <X extends Throwable> T getOrThrow(X throwable) throws X {
                if (!f.isSuccessful()) {
                   throw throwable;
+               }
+               return f.getResult();
+            }
+
+            @Override
+            public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+               if (!f.isSuccessful()) {
+                  throw throwable.get();
                }
                return f.getResult();
             }
@@ -162,6 +171,14 @@ public final class Possibles {
          public <X extends Throwable> T getOrThrow(X throwable) throws X {
             if (!isPresent()) {
                throw throwable;
+            }
+            return value;
+         }
+
+         @Override
+         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+            if (!isPresent()) {
+               throw throwable.get();
             }
             return value;
          }

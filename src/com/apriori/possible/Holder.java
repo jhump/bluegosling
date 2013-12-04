@@ -2,6 +2,7 @@ package com.apriori.possible;
 
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.io.Serializable;
 import java.util.AbstractSet;
@@ -164,6 +165,14 @@ public class Holder<T> implements Possible<T>, Serializable {
    public <X extends Throwable> T getOrThrow(X throwable) throws X {
       if (!isPresent) {
          throw throwable;
+      }
+      return value;
+   }
+
+   @Override
+   public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+      if (!isPresent) {
+         throw throwable.get();
       }
       return value;
    }

@@ -526,7 +526,7 @@ final class CollectionUtils {
    }
    
    private static <T> T[] toArray(Iterable<?> iterable, int size, T[] array) {
-      array = ArrayUtils.ensureCapacity(array, size);
+      array = ArrayUtils.newArrayIfTooSmall(array, size);
       copyToArray(iterable, array);
       if (array.length > size) {
          array[size] = null;

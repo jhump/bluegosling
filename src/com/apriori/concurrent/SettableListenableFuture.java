@@ -5,6 +5,7 @@ import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.util.AbstractSet;
 import java.util.Collections;
@@ -72,6 +73,14 @@ public class SettableListenableFuture<T> extends SimpleListenableFuture<T> {
                return getResult();
             }
             throw throwable;
+         }
+
+         @Override
+         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+            if (isPresent()) {
+               return getResult();
+            }
+            throw throwable.get();
          }
 
          @Override

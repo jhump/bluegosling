@@ -95,8 +95,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private interface TrieNode<K, V> {
-      // APIs need to be in terms of hash and offset instead of hash remaining and bits remaining
-      // so the InnerLeafTrieNode can be properly implemented
+      // TODO: APIs need to be in terms of hash and offset instead of hash remaining and bits
+      // remaining so the InnerLeafTrieNode can be properly implemented
       
       /**
        * Determines if this node or any of its descendants contain the specified value.
@@ -110,47 +110,48 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        * Finds a node for the specified key. Each level of the tree represents six (out of 32) bits
        * from the key's hash code. 
        *
-       * @param hashCodeRemaining the remaining hash code for the key, shifted so that prior bits
-       *       (for higher levels in the trie) are absent so that the number of bits remaining are
-       *       the least significant bits and more significant bits are all zero
-       * @param bitsRemaining the number of bits remaining in the hash code, 32 at the root node
-       *       but only two at the deepest level
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
        * @param key the key to find
        * @return the list node containing the key or {@code null} if the key is not found
        */
-      ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object key);
+      ListNode<K, V> findNode(int hashCode, int currentOffset, Object key);
       
       /**
        * Finds or creates a node for the specified key and value. This is nearly the same as
        * {@link #findNode(int, int, Object)} except that a node is added to the trie with the
-       * specified value if not found. In the event that a node is not found (so one is added) this
-       * method still returns {@code null}, indicating that it didn't previously exist.
+       * specified value if not found.
+       * 
+       * <p>A non-null return value indicates that the specified key is already present in the map.
+       * So if an existing entry is found, it is returned. Otherwise, an entry is created using the
+       * specified value and {@code null} is returned.
+       * 
+       * <p>If the node is not found but <em>cannot</em> be added, then
+       * {@link HamtMap#INNER_NODE_NEEDS_EXPANSION} is returned. This only happens when an
+       * {@link InnerLeafTrieNode} needs to be expanded into an {@link IntermediateTrieNode} in
+       * order to accommodate the new entry.
        *
-       * @param hashCodeRemaining the remaining hash code for the key, shifted so that prior bits
-       *       (for higher levels in the trie) are absent so that the number of bits remaining are
-       *       the least significant bits and more significant bits are all zero
-       * @param bitsRemaining the number of bits remaining in the hash code, 32 at the root node
-       *       but only two at the deepest level
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
        * @param key the key to find
        * @param value the value to associate with this key if not found and a new mapping is created
-       * @return the list node containing the key or {@code null} if the key was not found and a
-       *       new node was added
+       * @return the list node containing the key, {@code null} if the key was not found (and a
+       *       new node was added), or {@link HamtMap#INNER_NODE_NEEDS_EXPANSION} if the key was not
+       *       found and could not be added
        */
-      ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K key, V value);
+      ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K key, V value);
       
       /**
        * Removes a node from the trie.
        *
-       * @param hashCodeRemaining the remaining hash code for the key, shifted so that prior bits
-       *       (for higher levels in the trie) are absent so that the number of bits remaining are
-       *       the least significant bits and more significant bits are all zero
-       * @param bitsRemaining the number of bits remaining in the hash code, 32 at the root node
-       *       but only two at the deepest level
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
        * @param key the key to remove
        * @return the list node that was removed from the trie or {@code null} if the key was not
        *       found
        */
-      ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining, Object key);
+      // TODO: support collapsing of intermediate nodes into inner leaf nodes on removal
+      ListNode<K, V> removeNode(int hashCode, int currentOffset, Object key);
       
       /**
        * Determines if this node has any mappings.
@@ -223,6 +224,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       
       @Override
       public ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object key) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert bitsRemaining > 0;
          
          int significantBits = hashCodeRemaining & 0x3f;
@@ -238,6 +240,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       @Override
       public ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K key,
             V value) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert bitsRemaining > 0;
 
          int significantBits = hashCodeRemaining & 0x3f;
@@ -246,6 +249,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          hashCodeRemaining >>= 6;
          bitsRemaining -= 6;
          if ((present & mask) != 0) {
+            // TODO: handle return value of INNER_NODE_NEEDS_EXPANSION
             return children[index].findOrAddNode(hashCodeRemaining, bitsRemaining, key, value);
          }
          
@@ -269,6 +273,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       
       @Override
       public ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining, Object key) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert bitsRemaining > 0;
          
          int significantBits = hashCodeRemaining & 0x3f;
@@ -347,6 +352,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       
       @Override
       public ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object searchKey) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
          return doFindNode(searchKey);
       }
@@ -365,6 +371,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       @Override
       public ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K newKey,
             V newValue) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
          return doFindOrAddNode(newKey, newValue);
       }
@@ -387,6 +394,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       @Override
       public ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining,
             Object keyToRemove) {
+         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
          assert hashCodeRemaining == 0 && bitsRemaining == -4;
          return doRemoveNode(keyToRemove);
       }
@@ -439,6 +447,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          super(key, value);
          this.hashCode = hashCode;
       }
+      
+      // TODO: implement me!
    }
    
    /**
@@ -458,11 +468,13 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     */
    static <K, V> TrieNode<K, V> createNode(int hashCodeRemaining, int bitsRemaining,
          K key, V value) {
+      // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
       if (bitsRemaining > 0) {
          int significantBits = hashCodeRemaining & 0x3f;
          long mask = 1L << significantBits;
          hashCodeRemaining >>= 6;
          bitsRemaining -= 6;
+         // TODO: create InnerLeafTrieNode
          return new IntermediateTrieNode<K, V>(mask, createNode(hashCodeRemaining, bitsRemaining,
                key, value));
       } else {

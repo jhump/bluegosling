@@ -366,7 +366,7 @@ class ConcurrentSortedSet<E> extends ConcurrentSet<E>
          acquireReadLocks();
          try {
             int sz = sizeNoLocks();
-            a = ArrayUtils.ensureCapacity(a, sz);
+            a = ArrayUtils.newArrayIfTooSmall(a, sz);
             int len = shards.length;
             @SuppressWarnings("unchecked")
             SortedSet<E> shardSubSets[] = new SortedSet[len];

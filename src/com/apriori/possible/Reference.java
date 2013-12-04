@@ -2,6 +2,7 @@ package com.apriori.possible;
 
 import com.apriori.util.Function;
 import com.apriori.util.Predicate;
+import com.apriori.util.Source;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -169,6 +170,11 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
+      public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         return t;
+      }
+
+      @Override
       public Reference<T> or(Possible<T> alternate) {
          return this;
       }
@@ -262,6 +268,11 @@ public abstract class Reference<T> implements Possible<T> {
       @Override
       public <X extends Throwable> T getOrThrow(X throwable) throws X {
          throw throwable;
+      }
+
+      @Override
+      public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         throw throwable.get();
       }
 
       @Override

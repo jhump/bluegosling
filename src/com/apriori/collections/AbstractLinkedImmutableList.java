@@ -3,11 +3,24 @@ package com.apriori.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-//TODO: javadoc
+/**
+ * An abstract base class for {@link ImmutableList} implementations that use linked data structures
+ * so that access is sequential. Random access operations in this sort of list are linear.
+ * Sub-classes need only implement {@link #size()}, {@link #first()}, and {@link #rest()}.
+ *
+ * @param <E> the type of element in the list
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: tests
 public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCollection<E>
       implements ImmutableList<E> {
 
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than this list's
+    * {@link #size}.
+    *
+    * @param index an index to check
+    */
    protected void rangeCheck(int index) {
       if (index < 0) {
          throw new IndexOutOfBoundsException(index + " < 0");
@@ -16,6 +29,13 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
       }
    }
 
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than or equal to
+    * this list's {@link #size}. This is for certain operations where an index equal to the size
+    * (<em>after</em> the last valid index in the list) is allowed.
+    *
+    * @param index an index to check
+    */
    protected void rangeCheckWide(int index) {
       if (index < 0) {
          throw new IndexOutOfBoundsException(index + " < 0");
@@ -105,11 +125,12 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
       return CollectionUtils.hashCode(this);
    }
    
-   @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
-   }
-   
+   /**
+    * A sub-list view of an {@link ImmutableList} that is sequential/linked in nature.
+    *
+    * @param <E> the type of element in the list
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    protected static class LinkedSubList<E> extends AbstractLinkedImmutableList<E> {
       private final ImmutableList<E> tail;
       private final int length;
