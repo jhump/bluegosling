@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SmoothSortTest {
    
-   private static final Random RANDOM = new Random(SmoothSortTest.class.hashCode());
+   private static final Random RANDOM = new Random(1);
    
    @Test public void sort_list() {
       for (int i = 0; i < 100; i++) {
@@ -60,7 +60,7 @@ public class SmoothSortTest {
       }
    }
    
-   @Test public void sort_list_performance() {
+   public void sort_list_performance() {
       // warm up
       int maxLen = 10;
       int count = 1000;
@@ -112,14 +112,18 @@ public class SmoothSortTest {
             
             assertEquals(list1, list2);
          }
+         
+         System.out.println("Benchmark:");
+         printResults(sw1);
+         System.out.println("Smoothsort:");
+         printResults(sw2);
+
+         sw1.reset();
+         sw2.reset();
+         
          count /= 10;
          maxLen *= 10;
       }
-      
-      System.out.println("Benchmark:");
-      printResults(sw1);
-      System.out.println("Smoothsort:");
-      printResults(sw2);
    }
    
    private void printResults(Stopwatch sw) {

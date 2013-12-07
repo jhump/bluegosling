@@ -2,28 +2,26 @@ package com.apriori.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.RandomAccess;
 
 /**
  * Sorts arrays and collections using the <a href="http://en.wikipedia.org/wiki/Smoothsort">
  * Smoothsort</a> algorithm. This algorithm is very similar to heap sort, but it uses a Leonardo
  * heap instead of a binary heap. The way the Leonardo heap is represented in-place in the array
- * or list enables sorting operations to take advantage of partially sorted data (data where there
+ * (or list) enables sorting operations to take advantage of partially sorted data (data where there
  * are runs of sorted elements). This gives the algorithm a linear best case.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: implement sorting of arrays -- will necessitate ugly copy+paste to handle primitives :(
-// TODO: javadoc
 public final class SmoothSort {
 
    /** Prevents instantiation. */
    private SmoothSort() {
    }
-   
+
    private static final int LEONARDO_NUMBERS_LEN;
    private static final int[] LEONARDO_NUMBERS;
    
@@ -73,23 +71,23 @@ public final class SmoothSort {
    }
    
    /**
-    * Restores the max-heap property to a given leonardo tree in the list by sifting elements down
+    * Restores the max-heap property to a given leonardo tree in the array by sifting elements down
     * if necessary.
     *
-    * @param list the list
+    * @param array the array
     * @param comp the comparator for comparing two elements
     * @param rootPos the root of the tree that is being repaired
     * @param treeOrder the order of the tree that is being repaired
     */
-   private static <T> void siftDown(List<T> list, Comparator<? super T> comp, int rootPos, T root,
+   private static <T> void siftDown(T[] array, Comparator<? super T> comp, int rootPos, T root,
          int treeOrder) {
       // sift downward until we hit a sub-tree with no children (e.g. order 0 or 1)
       while (treeOrder > 1) {
          int rightChildPos = rootPos - 1;
-         T rightChild = list.get(rightChildPos);
+         T rightChild = array[rightChildPos];
          // right child's order is root's order - 2 (left child is root's order - 1)
          int leftChildPos = rootPos - 1 - LEONARDO_NUMBERS[treeOrder - 2];
-         T leftChild = list.get(leftChildPos);
+         T leftChild = array[leftChildPos];
          T child;
          int childPos, childOrder;
          if (comp.compare(leftChild,  rightChild) > 0) {
@@ -106,8 +104,8 @@ public final class SmoothSort {
             return;
          }
          // sift root down to child and then examine that sub-tree
-         list.set(childPos, root);
-         list.set(rootPos, child);
+         array[childPos] = root;
+         array[rootPos] = child;
          rootPos = childPos;
          treeOrder = childOrder;
       }
@@ -118,17 +116,17 @@ public final class SmoothSort {
     * largest value at its root. Its predecessor (tree to its left) has a root that is less than or
     * equal to it, and so.
     *
-    * @param list the list
+    * @param array the array
     * @param comp the comparator for comparing two elements
     * @param last the last list index in the heap
     * @param structureTrees a bitmask that represents the orders of the trees in the heap
     * @param structureOffset the order of the smallest tree, corresponding to the least significant
     *       bit in {@code structureTrees}
     */
-   private static <T> void rectifyRoots(List<T> list, Comparator<? super T> comp,
+   private static <T> void rectifyRoots(T[] array, Comparator<? super T> comp,
          int last, long structureTrees, int structureOffset) {
       int rootPos = last;
-      T currentRoot = list.get(rootPos);
+      T currentRoot = array[rootPos];
       while (rootPos >= LEONARDO_NUMBERS[structureOffset]) {
          T largest;
          int largestPos;
@@ -137,10 +135,10 @@ public final class SmoothSort {
             // this root is not order 0 or 1, so it has two children - make sure we're
             // comparing against the largest out of the root or its two immediate children
             int rightPos = rootPos - 1;
-            T rightChild = list.get(rightPos);
+            T rightChild = array[rightPos];
             // right child's order is root's order - 2 (left child is root's order - 1)
             int leftPos = rightPos - LEONARDO_NUMBERS[structureOffset - 2]; 
-            T leftChild = list.get(leftPos);
+            T leftChild = array[leftPos];
             if (comp.compare(leftChild,  rightChild) > 0) {
                if (comp.compare(leftChild, currentRoot) > 0) {
                   largest = leftChild;
@@ -167,20 +165,20 @@ public final class SmoothSort {
          }
          
          int previousRootPos = rootPos - LEONARDO_NUMBERS[structureOffset];
-         T previousRoot = list.get(previousRootPos);
+         T previousRoot = array[previousRootPos];
          if (comp.compare(largest, previousRoot) >= 0) {
             // previous root is not bigger, so we're done
             if (largest != currentRoot) {
                // if the root is not right, swap and then sift-down
-               list.set(rootPos, largest);
-               list.set(largestPos, currentRoot);
-               siftDown(list, comp, largestPos, currentRoot, largestOrder);
+               array[rootPos] = largest;
+               array[largestPos] = currentRoot;
+               siftDown(array, comp, largestPos, currentRoot, largestOrder);
             }
             return;
          }
          // swap roots
-         list.set(rootPos, previousRoot);
-         list.set(previousRootPos, currentRoot);
+         array[rootPos] = previousRoot;
+         array[previousRootPos] = currentRoot;
          
          // find previous tree
          rootPos = previousRootPos;
@@ -191,20 +189,20 @@ public final class SmoothSort {
       }
 
       // shuffle the root down if necessary to maintain heap invariant for this tree
-      siftDown(list, comp, rootPos, currentRoot, structureOffset);
+      siftDown(array, comp, rootPos, currentRoot, structureOffset);
    }
    
    /**
-    * Adds an element to the heap structure. We heapify the list by starting with the left-most
+    * Adds an element to the heap structure. We heapify the array by starting with the left-most
     * element (a heap with just one item) and expanding towards the right, rectifying the heap
     * structure as we go.
     *
-    * @param list the list
+    * @param array the array
     * @param comp the comparator for comparing two elements
-    * @param last the last list index in the heap which contains the newly added element
+    * @param last the last array index in the heap which contains the newly added element
     * @param structure the structure of the heap, describing the order of its constituent trees
     */
-   private static <T> void addToHeap(List<T> list, Comparator<? super T> comp, int last,
+   private static <T> void addToHeap(T[] array, Comparator<? super T> comp, int last,
          HeapStructure structure) {
       if ((structure.trees & 1) == 0) {
          // Due to we encode this bitset, if first bit is zero, heap is empty.
@@ -231,12 +229,12 @@ public final class SmoothSort {
       }
       // If we know this tree is at its final size, then we can rectify the the tree root with the
       // roots of the prior trees in the heap. Otherwise, we just do a sift-down.
-      int len = list.size();
+      int len = array.length;
       switch (structure.offset) {
          case 0:
             // if the last heap has order 0, we only rectify if it's the very last element in list
             if (last == len - 1) {
-               rectifyRoots(list, comp, last, structure.trees, structure.offset);
+               rectifyRoots(array, comp, last, structure.trees, structure.offset);
             }
             return;
             
@@ -244,7 +242,7 @@ public final class SmoothSort {
             // if the last heap has order 1, we can rectify if it's the last element in the list or
             // if it's the next-to-last element in list and won't be merged when we add last element
             if (last == len - 1 || (last == len - 2 && (structure.trees & 2) == 0)) {
-               rectifyRoots(list, comp, last, structure.trees, structure.offset);
+               rectifyRoots(array, comp, last, structure.trees, structure.offset);
             }
             return;
             
@@ -254,42 +252,42 @@ public final class SmoothSort {
             int elementsRemaining = len - 1 - last;
             int elementsNeededForNextOrderTree = LEONARDO_NUMBERS[structure.offset - 1] + 1;
             if (elementsRemaining < elementsNeededForNextOrderTree) {
-               rectifyRoots(list, comp, last, structure.trees, structure.offset);
+               rectifyRoots(array, comp, last, structure.trees, structure.offset);
             } else {
-               siftDown(list, comp, last, list.get(last), structure.offset);
+               siftDown(array, comp, last, array[last], structure.offset);
             }
             return;
       }
    }
    
    /**
-    * Arranges elements in the list so that they represent a leonardo heap, consisting of multiple
-    * leonardo trees, each having max-heap property.
+    * Arranges elements in the array so that they represent a leonardo heap, consisting of one or
+    * more leonardo trees.
     *
-    * @param list the list
+    * @param array the array
     * @param comp the comparator for comparing two elements
     * @return an object that describes the structure of the leonardo heap -- the order of the
     *       various constituent trees
     */
-   private static <T> HeapStructure heapify(List<T> list, Comparator<? super T> comp) {
+   private static <T> HeapStructure heapify(T[] array, Comparator<? super T> comp) {
       HeapStructure structure = new HeapStructure();
-      for (int i = 0, len = list.size(); i < len; i++) {
-         addToHeap(list, comp, i, structure);
+      for (int i = 0, len = array.length; i < len; i++) {
+         addToHeap(array, comp, i, structure);
       }
       return structure;
    }
    
    /**
     * Removes the largest element, the root of the smallest tree, from the heap structure. Once the
-    * list is heapified, sorting involves contracting the heap, removing the largest elements as we
+    * array is heapified, sorting involves contracting the heap, removing the largest elements as we
     * go. Each remove operation involves rectifying the heap structure to maintain heap invariants.
     *
-    * @param list the list
+    * @param array the array
     * @param comp the comparator for comparing two elements
-    * @param last the last list index in the heap which contains the newly added element
+    * @param last the last array index in the heap which contains the newly added element
     * @param structure the structure of the heap, describing the order of its constituent trees
     */
-   private static <T> void removeSmallestRoot(List<T> list, Comparator<? super T> comp, int last,
+   private static <T> void removeSmallestRoot(T[] array, Comparator<? super T> comp, int last,
          HeapStructure structure) {
       // smallest heap is order 0 or 1, can just drop it
       if (structure.offset <= 1) {
@@ -316,104 +314,69 @@ public final class SmoothSort {
       // we've already subtracted 2 from root's order
       int leftRoot = rightRoot - LEONARDO_NUMBERS[structure.offset];
       // repair roots up to the left child
-      rectifyRoots(list, comp, leftRoot, structure.trees >> 1, structure.offset + 1);
+      rectifyRoots(array, comp, leftRoot, structure.trees >> 1, structure.offset + 1);
       // and then including the right child
-      rectifyRoots(list, comp, rightRoot, structure.trees, structure.offset);
+      rectifyRoots(array, comp, rightRoot, structure.trees, structure.offset);
    }
    
    /**
-    * Sorts the specified list in place using the smooth sort algorithm. The process first heapifies
-    * the list and then pops the largest element from the heap until it's empty.
+    * Sorts the given list according to the elements' {@linkplain Comparable natural ordering}.
+    * This is equivalent to using {@link Collections#sort(List)}, except it will utilize the
+    * smoothsort algorithm instead of Java's default implementation (mergesort in versions 6 and
+    * earlier, timsort in versions 7 and up).
     *
-    * @param list the list
-    * @param comp the comparator for comparing two elements
+    * @param list the list which will be sorted in place
     */
-   private static <T> void sortInPlace(List<T> list, Comparator<? super T> comp) {
-      HeapStructure structure = heapify(list, comp);
-      for (int i = list.size() - 1; i > 0; i--) {
-         removeSmallestRoot(list, comp, i, structure);
-      }
-   }
-   
    public static <T> void sort(List<T> list) {
       sort(list, CollectionUtils.NATURAL_ORDERING);
    }
    
+   /**
+    * Sorts the given list according to the specified comparator. This is equivalent to using
+    * {@link Collections#sort(List, Comparator)}, except it will utilize the smoothsort algorithm
+    * instead of Java's default implementation (mergesort in versions 6 and earlier, timsort in
+    * versions 7 and up).
+    *
+    * @param list the list which will be sorted in place
+    */
+   @SuppressWarnings("unchecked")
    public static <T> void sort(List<T> list, Comparator<? super T> comp) {
-      if (list instanceof RandomAccess) {
-         sortInPlace(list, comp);
-      } else {
-         ArrayList<T> l = new ArrayList<T>(list);
-         sortInPlace(list, comp);
-         for (ListIterator<T> srcIter = l.listIterator(), destIter = list.listIterator();
-               srcIter.hasNext();) {
-            destIter.next();
-            destIter.set(srcIter.next());
-         }
+      // NB: We could do this without copying the list, if it implements RandomAccess, and get
+      // lower memory overhead. However, this has empirically been observed to perform worse.
+      // Maybe because of the range checking done on every list access?
+      Object[] array = list.toArray();
+      sort(array, (Comparator<Object>) comp);
+      ListIterator<T> iter = list.listIterator();
+      for (int i = 0, len = array.length; i < len; i++) {
+         iter.next();
+         iter.set((T) array[i]);
       }
    }
    
+   /**
+    * Sorts the given array according to the elements' {@linkplain Comparable natural ordering}.
+    * This is equivalent to using {@link Arrays#sort(Object[])}, except it will utilize the
+    * smoothsort algorithm instead of Java's default implementation (mergesort in versions 6 and
+    * earlier, timsort in versions 7 and up).
+    *
+    * @param array the array which will be sorted in place
+    */
    public static <T> void sort(T[] array) {
-      sort(Arrays.asList(array));
+      sort(array, CollectionUtils.NATURAL_ORDERING);
    }
 
+   /**
+    * Sorts the given array according to the specified comparator. This is equivalent to using
+    * {@link Arrays#sort(Object[], Comparator)}, except it will utilize the smoothsort algorithm
+    * instead of Java's default implementation (mergesort in versions 6 and earlier, timsort in
+    * versions 7 and up).
+    *
+    * @param array the array which will be sorted in place
+    */
    public static <T> void sort(T[] array, Comparator<? super T> comp) {
-      sort(Arrays.asList(array), comp);
-   }
-
-   public static void sort(int[] array) {
-      // TODO
-   }
-
-   public static void sort(int[] array, Comparator<? super Integer> comp) {
-      // TODO
-   }
-
-   public static void sort(byte[] array) {
-      // TODO
-   }
-   
-   public static void sort(byte[] array, Comparator<? super Byte> comp) {
-      // TODO
-   }
-   
-   public static void sort(short[] array) {
-      // TODO
-   }
-   
-   public static void sort(short[] array, Comparator<? super Short> comp) {
-      // TODO
-   }
-   
-   public static void sort(char[] array) {
-      // TODO
-   }
-   
-   public static void sort(char[] array, Comparator<? super Character> comp) {
-      // TODO
-   }
-   
-   public static void sort(long[] array) {
-      // TODO
-   }
-   
-   public static void sort(long[] array, Comparator<? super Long> comp) {
-      // TODO
-   }
-   
-   public static void sort(float[] array) {
-      // TODO
-   }
-   
-   public static void sort(float[] array, Comparator<? super Float> comp) {
-      // TODO
-   }
-   
-   public static void sort(double[] array) {
-      // TODO
-   }
-
-   public static void sort(double[] array, Comparator<? super Double> comp) {
-      // TODO
+      HeapStructure structure = heapify(array, comp);
+      for (int i = array.length - 1; i > 0; i--) {
+         removeSmallestRoot(array, comp, i, structure);
+      }
    }
 }
