@@ -155,20 +155,27 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#execute(P, java.lang.Runnable)">execute</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
+       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Executes the given task in sequence with other tasks submitted for the given pipeline.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.util.concurrent.Callable)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
       <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>
 <div class="block">Submits a task for the specified pipeline.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.lang.Runnable)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
 <div class="block">Submits a task for the specified pipeline.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html#submit(P, java.lang.Runnable, T)">submit</a></strong>(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
@@ -268,6 +275,20 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  for the same pipeline have completed.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>pipeline</code> - the pipeline in which to run the task</dd><dd><code>task</code> - a task</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a future that represents the completion of the given task</dd></dl>
+</li>
+</ul>
+<a name="execute(java.lang.Object,java.lang.Runnable)">
+<!--   -->
+</a><a name="execute(P, java.lang.Runnable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>execute</h4>
+<pre>public&nbsp;void&nbsp;execute(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">P</a>&nbsp;pipeline,
+           <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Executes the given task in sequence with other tasks submitted for the given pipeline.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>pipeline</code> - the pipeline in which to run the task</dd><dd><code>task</code> - a task</dd></dl>
 </li>
 </ul>
 <a name="awaitQuiescance()">

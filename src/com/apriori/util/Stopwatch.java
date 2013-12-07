@@ -51,7 +51,6 @@ public class Stopwatch {
       guard.writeLock().lock();
       try {
          if (!running) {
-            lapNanos.clear();
             currentBase = clock.nanoTime();
             running = true;
          }

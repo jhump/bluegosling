@@ -56,7 +56,7 @@ public class PipeliningExecutorService<P> {
     */
    public <T> ListenableFuture<T> submit(P pipeline, Callable<T> task) {
       ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
-      enqueue(pipeline, future);
+      execute(pipeline, future);
       return future;
    }
 
@@ -72,7 +72,7 @@ public class PipeliningExecutorService<P> {
     */
    public <T> ListenableFuture<T> submit(P pipeline, Runnable task, T result) {
       ListenableFutureTask<T> future = new ListenableFutureTask<T>(task, result);
-      enqueue(pipeline, future);
+      execute(pipeline, future);
       return future;
    }
 
@@ -87,17 +87,19 @@ public class PipeliningExecutorService<P> {
     */
    public ListenableFuture<Void> submit(P pipeline, Runnable task) {
       ListenableFutureTask<Void> future = new ListenableFutureTask<Void>(task, null);
-      enqueue(pipeline, future);
+      execute(pipeline, future);
       return future;
    }
-   
+
    /**
-    * Enqueues the given task with the specified pipeline.
+    * Executes a task in sequence with others submitted for the same pipeline. The task can run
+    * concurrently with other tasks submitted for different pipelines.
     *
-    * @param pipeline the key that identifies the pipeline in which the task is enqueued
-    * @param task the task
+    * @param pipeline the pipeline in which to run the task
+    * @param task a task
     */
-   private void enqueue(P pipeline, Runnable task) {
+   public void execute(P pipeline, Runnable task) {
+      // CAS loop to atomically create the pipeline if necessary and enqueue this task therein
       while (true) {
          Pipeline p = pipelines.get(pipeline);
          if (p == null) {

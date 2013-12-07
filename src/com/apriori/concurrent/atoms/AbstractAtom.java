@@ -1,10 +1,9 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.collections.HamtPersistentSet;
-import com.apriori.collections.PersistentSet;
 import com.apriori.util.Predicate;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * An abstract base class for {@link Atom} implementations. Sub-classes must implement the
@@ -19,9 +18,7 @@ abstract class AbstractAtom<T> implements Atom<T> {
    /**
     * A thread-safe set of watchers.
     */
-   private final AtomicReference<PersistentSet<Watcher<? super T>>> watchers =
-         new AtomicReference<PersistentSet<Watcher<? super T>>>(
-               HamtPersistentSet.<Watcher<? super T>>create());
+   private final Set<Watcher<? super T>> watchers = new CopyOnWriteArraySet<Watcher<? super T>>();
 
    /**
     * An optional validator (might be {@code null}).
@@ -75,7 +72,7 @@ abstract class AbstractAtom<T> implements Atom<T> {
     * @param newValue the atom's new value
     */
    protected void notify(T oldValue, T newValue) {
-      for (Watcher<? super T> watcher : watchers.get()) {
+      for (Watcher<? super T> watcher : watchers) {
          notify(watcher, oldValue, newValue);
       }
    }
@@ -97,29 +94,11 @@ abstract class AbstractAtom<T> implements Atom<T> {
    
    @Override
    public boolean addWatcher(Watcher<? super T> watcher) {
-      while (true) {
-         PersistentSet<Watcher<? super T>> oldSet = watchers.get();
-         if (oldSet.contains(watcher)) {
-            return false;
-         }
-         PersistentSet<Watcher<? super T>> newSet = oldSet.add(watcher);
-         if (watchers.compareAndSet(oldSet, newSet)) {
-            return true;
-         }
-      }
+      return watchers.add(watcher);
    }
 
    @Override
    public boolean removeWatcher(Watcher<? super T> watcher) {
-      while (true) {
-         PersistentSet<Watcher<? super T>> oldSet = watchers.get();
-         if (!oldSet.contains(watcher)) {
-            return false;
-         }
-         PersistentSet<Watcher<? super T>> newSet = oldSet.remove(watcher);
-         if (watchers.compareAndSet(oldSet, newSet)) {
-            return true;
-         }
-      }
+      return watchers.remove(watcher);
    }
 }

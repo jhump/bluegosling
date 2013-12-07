@@ -411,10 +411,11 @@ public class Duration implements Comparable<Duration> {
   }
   
   /**
-   * Returns this duration multiplied by the specified number of times. The unit of the returned
-   * duration will be either the same as this duration or a more precise unit. A finer unit may be
-   * used if the length of this duration is not evenly divisible by the specified divisor. If using
-   * the more precise unit would result in overflow/underflow then the more coarse unit is kept.
+   * Returns this duration divided by the specified number. The unit of the returned duration will
+   * be either the same as this duration or a more precise unit. A finer unit may be used if the
+   * length of this duration is not evenly divisible by the specified divisor. If using the more
+   * precise unit would result in overflow/underflow then the more coarse unit is kept and any
+   * remainder is discarded.
    *
    * @param divisor the divisor
    * @return the quotient of this duration divided by the specified divisor

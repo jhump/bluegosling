@@ -188,7 +188,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * that they were submitted.
     */
    public void resume() {
-      threadPool.submit(this, new Runnable() {
+      threadPool.execute(this, new Runnable() {
          @SuppressWarnings("synthetic-access")
          @Override
          public void run() {
@@ -215,7 +215,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       validate(restartValue);
       final AtomicBoolean success = new AtomicBoolean();
       final CountDownLatch latch = new CountDownLatch(1);
-      threadPool.submit(this, new Runnable() {
+      threadPool.execute(this, new Runnable() {
          @SuppressWarnings("synthetic-access")
          @Override
          public void run() {
@@ -372,7 +372,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     */
    static <T> void submitFuture(final AsynchronousAtom<T> atom,
          final ListenableFutureTask<T> future) {
-      threadPool.submit(atom, new Runnable() {
+      threadPool.execute(atom, new Runnable() {
          @SuppressWarnings("synthetic-access")
          @Override 
          public void run() {

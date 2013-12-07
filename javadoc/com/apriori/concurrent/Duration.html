@@ -147,7 +147,7 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparabl
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/Duration.html#dividedBy(int)">dividedBy</a></strong>(int&nbsp;divisor)</code>
-<div class="block">Returns this duration multiplied by the specified number of times.</div>
+<div class="block">Returns this duration divided by the specified number.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -615,10 +615,11 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>dividedBy</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;dividedBy(int&nbsp;divisor)</pre>
-<div class="block">Returns this duration multiplied by the specified number of times. The unit of the returned
- duration will be either the same as this duration or a more precise unit. A finer unit may be
- used if the length of this duration is not evenly divisible by the specified divisor. If using
- the more precise unit would result in overflow/underflow then the more coarse unit is kept.</div>
+<div class="block">Returns this duration divided by the specified number. The unit of the returned duration will
+ be either the same as this duration or a more precise unit. A finer unit may be used if the
+ length of this duration is not evenly divisible by the specified divisor. If using the more
+ precise unit would result in overflow/underflow then the more coarse unit is kept and any
+ remainder is discarded.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>divisor</code> - the divisor</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the quotient of this duration divided by the specified divisor</dd>
 <dt><span class="strong">Throws:</span></dt>
