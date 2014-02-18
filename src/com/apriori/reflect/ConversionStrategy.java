@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A conversion strategy, which indicates how dispatch will convert one type to another if need
- * be.
+ * A conversion strategy, which indicates how dispatch of interface methods from a {@link Caster}
+ * will convert one type to another if need be.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 

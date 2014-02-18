@@ -1,41 +1,51 @@
 package com.apriori.apt;
 
-import com.apriori.apt.reflect.Class;
-
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.TypeElement;
+import javax.annotation.processing.SupportedAnnotationTypes;
 
-//TODO: javadoc!
+/**
+ * An abstract annotation processor that makes for a better base class than the standard. This
+ * class provides the following two new features:
+ * <ul>
+ * <li>This processor sets up thread-local state about the current processing environment. This
+ * makes it easier for APIs to work with elements and type mirrors without requiring that callers
+ * supply the environment. See {@link ProcessingEnvironments} for more information.</li>
+ * <li>The set of supported annotation types can be defined by referencing actual annotation
+ * class tokens using a {@literal @}{@link SupportedAnnotationClasses} annotation on the processor.
+ * Note that this does not provide any wildcard facilities, but can be used in conjunction with the
+ * standard {@literal @}{@link SupportedAnnotationTypes} annotation, which doess.</li>
+ * </ul>
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public abstract class AbstractProcessor extends javax.annotation.processing.AbstractProcessor {
-   
-   protected RoundEnvironment roundEnv;
-   
+
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>In addition to setting a protected field for access by the processor, this also sets up
+    * thread-local state with the current environment.
+    *
+    * @see ProcessingEnvironments
+    */
    @Override
    public final void init(ProcessingEnvironment env) {
       super.init(env);
       ProcessingEnvironments.setup(env);
    }
    
-   @Override
-   public final boolean process(Set<? extends TypeElement> annotations,
-         javax.annotation.processing.RoundEnvironment env) {
-      roundEnv = new RoundEnvironment(env);
-      try {
-         Set<Class> classes = new HashSet<Class>();
-         for (TypeElement annotation : annotations) {
-            classes.add(Class.forElement(annotation));
-         }
-         return process(classes);
-      } finally {
-         roundEnv = null;
-      }
-   }
-   
-   protected abstract boolean process(Set<Class> annotationTypes);
-   
+   /**
+    * Returns the set of annotations supported by this processor. If the processor class is
+    * annotated with {@link SupportedAnnotationTypes} or {@link SupportedAnnotationClasses} then
+    * the union of all such referenced annotation types is returned. If the class has no such
+    * annotations, an empty set is returned.
+    *
+    * @see SupportedAnnotationClasses
+    */
    @Override
    public Set<String> getSupportedAnnotationTypes() {
       Set<String> ret = new HashSet<String>(super.getSupportedAnnotationTypes());
@@ -45,6 +55,6 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
             ret.add(annClass.getName());
          }
       }
-      return ret;
+      return Collections.unmodifiableSet(ret);
    }
 }

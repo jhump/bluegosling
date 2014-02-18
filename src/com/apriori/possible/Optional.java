@@ -17,6 +17,7 @@ import java.util.Set;
  * @param <T> the type of the optional value
  */
 //TODO: tests for cast, upcast
+//TODO: serializability?
 public abstract class Optional<T> implements Possible<T> {
 
    private Optional() {
@@ -219,7 +220,7 @@ public abstract class Optional<T> implements Possible<T> {
       }
 
       @Override
-      public <R> R visit(Possible.Visitor<T, R> visitor) {
+      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
          return visitor.present(t);
       }
       
@@ -230,7 +231,7 @@ public abstract class Optional<T> implements Possible<T> {
       
       @Override
       public int hashCode() {
-         return Some.class.hashCode() ^ (t == null ? 0 : t.hashCode());
+         return Some.class.hashCode() ^ t.hashCode();
       }
       
       @Override
@@ -297,7 +298,7 @@ public abstract class Optional<T> implements Possible<T> {
       }
 
       @Override
-      public <R> R visit(Possible.Visitor<T, R> visitor) {
+      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
          return visitor.absent();
       }
 

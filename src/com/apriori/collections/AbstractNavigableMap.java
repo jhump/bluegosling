@@ -18,17 +18,19 @@ import java.util.Set;
 
 /**
  * An abstract base class for {@link NavigableMap} implementations. Concrete classes only need to
- * implement methods that perform search operations:
+ * implement the following methods, most of which perform search operations:
  * <ul>
+ *    <li>{@link #size()}</li>
  *    <li>{@link #firstEntry()}</li>
  *    <li>{@link #lastEntry()}</li>
  *    <li>{@link #getEntry(Object) getEntry(K)}</li>
  *    <li>{@link #lowerEntry(Object) lowerEntry(K)}</li>
  *    <li>{@link #higherEntry(Object) higherEntry(K)}</li>
+ *    <li>{@link #put(Object, Object) put(K, V)}</li>
+ *    <li>{@link #removeEntry(Object)}</li>
  * </ul>
  * This abstract class then implements everything else, including {@link #keySet()} and
- * {@link #entrySet()}, in terms of those operations. Mutable maps must also implement
- * {@linkplain #put(Object, Object) store} and {@linkplain #removeEntry(Object) remove} operations.
+ * {@link #entrySet()}, in terms of those operations.
  * 
  * <p>This class is not thread-safe. So most of the method implementations herein cannot be used to
  * correctly implement a {@link java.util.concurrent.ConcurrentNavigableMap ConcurrentNavigableMap}.
@@ -42,10 +44,10 @@ import java.util.Set;
  * support for serialization to sub-classes. Mainly: sub-classes do not need to worry about
  * serializing and deserializing the map's {@linkplain #comparator() comparator}.
  *
- * @author Joshua Humphries (jhumphries131@gmail.com)
- *
  * @param <K> the type of keys in the map
  * @param <V> the type of values in the map
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests!
 // TODO: test serialization support
@@ -168,6 +170,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     * 
     * @param key the key
     * @return the entry in the map for the specified key or {@code null} if one does not exist
+    * @throws ClassCastException if the given key must be cast to compare to existing keys and
+    *       is not of a valid type
     */
    protected abstract Entry<K, V> getEntry(Object key);
 
@@ -177,6 +181,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     * 
     * @param key the key
     * @return the entry in the map that was removed or {@code null} if no such entry exists
+    * @throws ClassCastException if the given key must be cast to compare to existing keys and
+    *       is not of a valid type
     */
    protected abstract Entry<K, V> removeEntry(Object key);
 
@@ -348,7 +354,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       if (entry == null) {
          return null;
       }
-      remove(entry.getKey());
+      removeEntry(entry.getKey());
       return entry;
    }
 
@@ -394,6 +400,9 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     */
    @Override
    public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive) {
+      if (comparator.compare(fromKey, toKey) > 0) {
+         throw new IllegalArgumentException("fromKey (" + fromKey + ") > toKey (" + toKey + ")");
+      }
       return new SubMap(fromKey, fromInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
             toKey, toInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
    }
@@ -707,6 +716,9 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
          }
          if (!isInRange(fromKey)) {
             throw new IllegalArgumentException("from key " + fromKey + " is outside sub-map range");
+         }
+         if (comparator.compare(fromKey, toKey) > 0) {
+            throw new IllegalArgumentException("fromKey (" + fromKey + ") > toKey (" + toKey + ")");
          }
          return AbstractNavigableMap.this.subMap(fromKey, fromInclusive, toKey, toInclusive);
       }

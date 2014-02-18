@@ -17,7 +17,7 @@ package com.apriori.concurrent.atoms;
  * @param <T> the type of the atom's value
  * 
  * @see SynchronousAtom
- * @see AsynchronousAtom
+ * @see AsynchronousAtomTest
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

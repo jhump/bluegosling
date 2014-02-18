@@ -101,7 +101,7 @@ public interface Possible<T> {
     * @param visitor a visitor
     * @return the value returned by the visitor
     */
-   <R> R visit(Visitor<T, R> visitor);
+   <R> R visit(Visitor<? super T, R> visitor);
    
    /**
     * A visitor of possible values. When visited, one of the methods will be invoked, depending on

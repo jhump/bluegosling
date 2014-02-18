@@ -18,6 +18,7 @@ import java.util.Set;
  * @param <T> the type of the possible value
  */
 //TODO: tests for cast, upcast
+//TODO: serializability?
 public abstract class Reference<T> implements Possible<T> {
 
    private Reference() {
@@ -200,7 +201,7 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
-      public <R> R visit(Possible.Visitor<T, R> visitor) {
+      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
          return visitor.present(t);
       }
       
@@ -281,7 +282,7 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
-      public <R> R visit(Possible.Visitor<T, R> visitor) {
+      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
          return visitor.absent();
       }
 

@@ -55,7 +55,7 @@ public class Empty extends AbstractTuple implements Serializable {
    }
 
    @Override
-   public <T> Empty transformAll(Function<Object, T> function) {
+   public <T> Empty transformAll(Function<Object, ? extends T> function) {
       return this;
    }
 

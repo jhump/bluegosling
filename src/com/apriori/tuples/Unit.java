@@ -6,6 +6,7 @@ import com.apriori.util.Predicate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
       for (Unit<T> unit : units) {
          extracted.add(unit.getFirst());
       }
-      return extracted;
+      return Collections.unmodifiableList(extracted);
    }
 
    /**
@@ -50,7 +51,7 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
       for (T t : coll) {
          enclosed.add(create(t));
       }
-      return enclosed;
+      return Collections.unmodifiableList(enclosed);
    }
 
    private final A a;
@@ -132,7 +133,7 @@ public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializabl
    }
 
    @Override
-   public <T> Unit<T> transformAll(Function<Object, T> function) {
+   public <T> Unit<T> transformAll(Function<Object, ? extends T> function) {
       return transformFirst(function);
    }
 

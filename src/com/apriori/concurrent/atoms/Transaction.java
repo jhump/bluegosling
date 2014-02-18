@@ -37,8 +37,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * changes made in the transaction are committed. Otherwise, all changes are rolled back and the
  * exception that was thrown from the block is propagated.
  * 
- * <p>{@link AsynchronousAtom}s also participate in transactions. Changes that are queued for an
- * {@link AsynchronousAtom} are only submitted for execution when the transaction commits. Any
+ * <p>{@link AsynchronousAtomTest}s also participate in transactions. Changes that are queued for an
+ * {@link AsynchronousAtomTest} are only submitted for execution when the transaction commits. Any
  * pending operations that are effected by a rollback will be cancelled.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -686,7 +686,7 @@ public class Transaction {
       }
       
       /**
-       * Sets a new value for the atom and returns the previous atom.
+       * Sets a new value for the atom and returns the previous one.
        *
        * @param value the atom's new value
        * @return the atom's previous value
@@ -989,7 +989,7 @@ public class Transaction {
    }
    
    /**
-    * Executes commute operations for the specified savepoint. This will first excecute commutes for
+    * Executes commute operations for the specified savepoint. This will first execute commutes for
     * the savepoint's predecessor. Even though commute operations should be commutative, and thus
     * not dependent on ordering, we execute them in the order they were enqueued. On completion, the
     * specified list will include data for all commute operations for this savepoint.
@@ -1140,7 +1140,7 @@ public class Transaction {
    /**
     * Rolls back the current transaction. This resets all mutations made. All futures associated
     * with {@linkplain TransactionalAtom#commute(Function) commute} operations and {@linkplain
-    * AsynchronousAtom asynchronous actions} that have been performed in this transaction are
+    * AsynchronousAtomTest asynchronous actions} that have been performed in this transaction are
     * cancelled.
     * 
     * @throws IllegalStateException if this transaction is not running on the current thread
@@ -1170,7 +1170,7 @@ public class Transaction {
    /**
     * Performs a partial roll back. All mutations made since the specified savepoint was established
     * are reset. Similarly, all futures for {@linkplain TransactionalAtom#commute(Function) commute}
-    * operations and {@linkplain AsynchronousAtom asynchronous actions} are cancelled. Changes made
+    * operations and {@linkplain AsynchronousAtomTest asynchronous actions} are cancelled. Changes made
     * prior to the savepoint being established are retained.
     *
     * @param point the savepoint up to which point the transaction is reversed

@@ -47,7 +47,9 @@ public final class Possibles {
             public Possible<T> or(Possible<T> alternate) {
                return f.isSuccessful() ? this : alternate;
             }
-
+            
+            // TODO: transform and filter should return views, not snapshots
+            
             @Override
             public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
                return f.isSuccessful()
@@ -97,7 +99,7 @@ public final class Possibles {
             }
 
             @Override
-            public <R> R visit(Possible.Visitor<T, R> visitor) {
+            public <R> R visit(Possible.Visitor<? super T, R> visitor) {
                return f.isSuccessful() ? visitor.present(f.getResult()) : visitor.absent();
             }
          };
@@ -189,7 +191,7 @@ public final class Possibles {
          }
 
          @Override
-         public <R> R visit(Possible.Visitor<T, R> visitor) {
+         public <R> R visit(Possible.Visitor<? super T, R> visitor) {
             return isPresent() ? visitor.present(value) : visitor.absent();
          }
       };

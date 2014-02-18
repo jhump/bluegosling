@@ -6,6 +6,7 @@ import com.apriori.util.Predicate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
          t.add(pair.getFirst());
          u.add(pair.getSecond());
       }
-      return create(t, u);
+      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u));
    }
 
    /**
@@ -94,7 +95,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
          // size changed since check above such that two collections differ
          throw new IllegalArgumentException();
       }
-      return list;
+      return Collections.unmodifiableList(list);
    }
    
    private final A a;
@@ -188,7 +189,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
    }
 
    @Override
-   public <T> Pair<T, T> transformAll(Function<Object, T> function) {
+   public <T> Pair<T, T> transformAll(Function<Object, ? extends T> function) {
       return Pair.<T, T>create(function.apply(a), function.apply(b));
    }
 

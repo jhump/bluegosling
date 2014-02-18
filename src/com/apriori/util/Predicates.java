@@ -174,7 +174,11 @@ public final class Predicates {
          }
       };
    }
+   
+   // TODO: Predicate.Bivariate: areSameObject, areEqual
 
+   // TODO: boolean arithmetic combinations accept var-args?
+   
    /**
     * Returns a predicate that combines the results from two predicates using an AND operation. The
     * operation is short-circuited so that the second predicate will not be invoked if the first
@@ -244,7 +248,9 @@ public final class Predicates {
          }
       };
    }
-   
+
+   // TODO: Predicate.[Bi,Tri]variate versions of above boolean arithmetic combinations
+
    static boolean toPrimitive(Boolean b) {
       return b != null && b;
    }

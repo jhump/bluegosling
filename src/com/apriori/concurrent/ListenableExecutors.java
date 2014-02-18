@@ -29,10 +29,19 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Factory classes for creating instances of {@link ListenableExecutorService}. Most of the methods
+ * here decorate normal {@link ExecutorService} implementations.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: javadoc
 // TODO: tests
 public class ListenableExecutors {
 
+   /**
+    * A simple executor that runs each task synchronously in the same thread that submits it.
+    */
    private static final Executor SAME_THREAD_EXECUTOR = new Executor() {
       @Override
       public void execute(Runnable command) {
@@ -42,15 +51,32 @@ public class ListenableExecutors {
             if (t instanceof InterruptedException) {
                Thread.currentThread().interrupt();
             }
-            // log? propagate Errors?
+            
+            try {
+               Thread.currentThread().getUncaughtExceptionHandler()
+                     .uncaughtException(Thread.currentThread(), t);
+            } catch (Exception e) {
+               // TODO: log?
+            }
          }
       }
    };
    
+   /**
+    * Returns an executor that runs each task synchronously in the same thread that submits it.
+    *
+    * @return an executor that runs tasks immediately in the current thread
+    */
    public static Executor sameThreadExecutor() {
       return SAME_THREAD_EXECUTOR;
    }
    
+   /**
+    * Returns a new executor service that runs each task synchronously in the same thread that
+    * submits it. Submissions that return futures will always return completed futures.
+    *
+    * @return a new executor service that runs tasks immediately in the current thread
+    */
    @SuppressWarnings("synthetic-access")
    public static ListenableExecutorService sameThreadExecutorService() {
       return new SameThreadExecutorService();
@@ -58,8 +84,7 @@ public class ListenableExecutors {
    
    /**
     * Converts the specified service into a {@link ListenableExecutorService}. If the specified
-    * service <em>is</em> a {@link ListenableExecutorService}, it is returned without any
-    * conversion.
+    * service <em>is</em> already listenable, it is returned without any conversion.
     * 
     * @param executor the executor service
     * @return a listenable version of the specified service
@@ -71,6 +96,13 @@ public class ListenableExecutors {
       return new ListenableExecutorServiceWrapper(executor);
    }
 
+   /**
+    * Converts the specified service into a {@link ListenableScheduledExecutorService}. If the
+    * specified service <em>is</em> already listenable, it is returned without any conversion.
+    * 
+    * @param executor the scheduled executor service
+    * @return a listenable version of the specified service
+    */
    public static ListenableScheduledExecutorService makeListenable(
          ScheduledExecutorService executor) {
       if (executor instanceof ListenableScheduledExecutorService) {
@@ -79,6 +111,28 @@ public class ListenableExecutors {
       return new ListenableScheduledExecutorServiceWrapper(executor);
    }
    
+   /**
+    * Converts the specified service into a {@link ListenableScheduledExecutorService}, adding
+    * scheduling capability if needed. If the specified service <em>is</em> already listenable, it
+    * is returned without any conversion.
+    * 
+    * <p>If the specified service does not already support scheduling, this will return a new
+    * service that adds that capability at the expense of adding one "scheduler" thread. (The thread
+    * won't actually be started until the first scheduled task is submitted. Other tasks, submitted
+    * for immediate execution, do not cause the thread to be created.) When
+    * 
+    * <p>The specified service should not be used other than through the returned wrapper. If it is,
+    * it is possible for tasks to be accepted when the executor should be shutdown and vice versa,
+    * for tasks to be rejected when the executor should still be active.
+    * 
+    * @param executor the executor service
+    * @param waitForScheduledTasksOnShutdown if adding scheduling capability and this flag is true,
+    *       the returned service will not terminate until after shutdown until all scheduled tasks
+    *       have completed; if adding scheduling capability and this flag is false, the service will
+    *       cancel pending scheduled tasks on shutdown; if not adding scheduling capability, this
+    *       flag is ignored
+    * @return a listenable version of the specified service that also provides scheduling functions
+    */
    public static ListenableScheduledExecutorService makeListenableScheduled(
          ExecutorService executor, boolean waitForScheduledTasksOnShutdown) {
       if (executor instanceof ListenableScheduledExecutorService) {
@@ -90,11 +144,28 @@ public class ListenableExecutors {
             waitForScheduledTasksOnShutdown);
    }
    
+   /**
+    * Converts the specified service into a {@link ListenableScheduledExecutorService}, adding
+    * scheduling capability if needed. If the specified service <em>is</em> already listenable, it
+    * is returned without any conversion.
+    * 
+    * <p>If scheduling functionality is added, any scheduled tasks that are pending when the
+    * executor is shutdown will be canceled.
+    * 
+    * @param executor the executor service
+    * @return a listenable version of the specified service that also provides scheduling functions
+    * 
+    * @see #makeListenableScheduled(ExecutorService, boolean)
+    */
    public static ListenableScheduledExecutorService makeListenableScheduled(
          ExecutorService executor) {
       return makeListenableScheduled(executor, false);
    }
    
+   /**
+    * A {@link ListenableExecutorService} that executes submitted tasks sychronously on the same
+    * thread as the one that submits them.
+    */
    private static class SameThreadExecutorService implements ListenableExecutorService {
       private volatile boolean shutdown;
       
@@ -495,8 +566,20 @@ public class ListenableExecutors {
 
       private void startSchedulerThread() {
          Thread newScheduler = new Thread() {
+            @SuppressWarnings("synthetic-access") // accesses private members of enclosing class
             @Override public void run() {
-               // TODO
+               while (true) {
+                  try {
+                     AbstractStampedTask task = scheduleQueue.take();
+                     doExecute(task);
+                     if (task == shutdownTask) {
+                        return;
+                     }
+                  }
+                  catch (InterruptedException e) {
+                     // ignore
+                  }
+               }
             }
          };
          // we don't bother starting thread if we lost race to set the scheduler
@@ -505,23 +588,34 @@ public class ListenableExecutors {
          }
       }
       
-      private synchronized void delayedExecute(ListenableScheduledFutureTask<?> task) {
+      private synchronized void delayedExecute(AbstractStampedTask task) {
          if (isShutdown()) {
             reject();
          } else {
             if (scheduler.get() == null) {
                startSchedulerThread();
             }
-            scheduleQueue.add(new FutureStampedTask(task));
+            scheduleQueue.add(task);
          }
       }
       
       @Override
       public synchronized void execute(Runnable task) {
+         if (task instanceof Delayed) {
+            if (task instanceof Scheduled) {
+               delayedExecute(
+                     new ScheduledStampedTask(((Scheduled) task).getScheduledNanoTime(), task));
+            } else {
+               delayedExecute(
+                     new ScheduledStampedTask(((Delayed) task).getDelay(TimeUnit.NANOSECONDS)
+                           + System.nanoTime(), task));
+            }
+            return;
+         }
+         
          if (isShutdown()) {
             reject();
          } else {
-            // TODO: handle case where task is instance of Delayed
             doExecute(task);
          }
       }
@@ -535,7 +629,7 @@ public class ListenableExecutors {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(delay);
          ListenableScheduledFutureTask<Void> future =
                new ListenableScheduledFutureTask<Void>(command, null, scheduledNanoTime);
-         delayedExecute(future);
+         delayedExecute(new FutureStampedTask(future));
          return future;
       }
 
@@ -545,7 +639,7 @@ public class ListenableExecutors {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(delay);
          ListenableScheduledFutureTask<V> future =
                new ListenableScheduledFutureTask<V>(callable, scheduledNanoTime);
-         delayedExecute(future);
+         delayedExecute(new FutureStampedTask(future));
          return future;
       }
       
@@ -559,7 +653,7 @@ public class ListenableExecutors {
                      if (isShutdown()) {
                         future.cancel(false);
                      } else {
-                        delayedExecute(future);
+                        delayedExecute(new FutureStampedTask(future));
                      }
                   }
                }
@@ -575,7 +669,7 @@ public class ListenableExecutors {
                new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
                      Reschedulers.atFixedRate(period, unit));
          addReschedulingListener(future);
-         delayedExecute(future);
+         delayedExecute(new FutureStampedTask(future));
          return future;
       }
 
@@ -587,7 +681,7 @@ public class ListenableExecutors {
                new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
                      Reschedulers.withFixedDelay(delay, unit));
          addReschedulingListener(future);
-         delayedExecute(future);
+         delayedExecute(new FutureStampedTask(future));
          return future;
       }
       

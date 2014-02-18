@@ -57,7 +57,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * When a commit operation that affects this atom is in progress, this reference is set to the
     * transaction that is committing.
     */
-   private AtomicReference<Transaction> committer;
+   private final AtomicReference<Transaction> committer = new AtomicReference<Transaction>();
    
    /**
     * The head of the versions list, which contains the atom's current/latest value.
@@ -276,17 +276,20 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    public T apply(final Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
+         T oldValue, newValue;
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
-            T newValue = function.apply(latest.value);
+            oldValue = latest.value;
+            newValue = function.apply(latest.value);
             validate(newValue);
             long version = Transaction.pinNewVersion();
             addValue(newValue, version, Transaction.oldestVersion());
             Transaction.unpinVersion(version);
-            return newValue;
          } finally {
             exclusive.unlock();
          }
+         notify(oldValue, newValue);
+         return newValue;
       } else {
          T newValue = function.apply(current.getAtom(this));
          validate(newValue);
@@ -329,17 +332,20 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
    public ListenableFuture<T> commute(Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
+         T oldValue, newValue;
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
-            T newValue = function.apply(latest.value);
+            oldValue = latest.value;
+            newValue = function.apply(latest.value);
             validate(newValue);
             long version = Transaction.pinNewVersion();
             addValue(newValue, version, Transaction.oldestVersion());
             Transaction.unpinVersion(version);
-            return ListenableFutures.completedFuture(newValue);
          } finally {
             exclusive.unlock();
          }
+         notify(oldValue, newValue);
+         return ListenableFutures.completedFuture(newValue);
       } else {
          return current.enqueueCommute(this, function);
       }
@@ -366,16 +372,18 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
       validate(newValue);
       Transaction current = Transaction.current();
       if (current == null) {
+         T oldValue;
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
-            T oldValue = latest.value;
+            oldValue = latest.value;
             long version = Transaction.pinNewVersion();
             addValue(newValue, version, Transaction.oldestVersion());
             Transaction.unpinVersion(version);
-            return oldValue;
          } finally {
             exclusive.unlock();
          }
+         notify(oldValue, newValue);
+         return oldValue;
       } else {
          return current.setAtom(this, newValue);
       } 
@@ -392,13 +400,13 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     */
    T addValue(T newValue, long version, long oldestVersion) {
       // must hold exclusive lock on this atom when calling this method!
-      assert oldestVersion < version;
+      assert oldestVersion <= version;
       Version<T> node = latest;
       assert version > node.version;
       T ret = node.value;
-      node = new Version<T>(newValue, version, node);
+      node = latest = new Version<T>(newValue, version, node);
       while (node != null) {
-         if (node.version < oldestVersion) {
+         if (node.version <= oldestVersion) {
             // remove values that are old and will never be referenced again
             node.predecessor = null;
             break;

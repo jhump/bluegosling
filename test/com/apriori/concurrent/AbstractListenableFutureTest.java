@@ -397,27 +397,31 @@ public abstract class AbstractListenableFutureTest {
    
    @Test(timeout = 500) public void asyncCompletion_get() throws Exception {
       completeAsynchronously("done", 200);
+      assertFalse(future.isDone());
       assertEquals("done", future.get());
       assertTrue(future.isDone());
    }
 
    @Test public void asyncCompletion_timedGet() throws Exception {
       completeAsynchronously("done", 200);
+      assertFalse(future.isDone());
       assertEquals("done", future.get(500, TimeUnit.MILLISECONDS));
       assertTrue(future.isDone());
    }
    
    @Test(timeout = 500) public void asyncCompletion_await() throws Exception {
       completeAsynchronously("done", 200);
+      assertFalse(future.isDone());
       future.await();
-      assertEquals("done", future.getResult());
       assertTrue(future.isDone());
+      assertEquals("done", future.getResult());
    }
 
    @Test public void asyncCompletion_timedAwait() throws Exception {
       completeAsynchronously("done", 200);
+      assertFalse(future.isDone());
       assertTrue(future.await(500, TimeUnit.MILLISECONDS));
-      assertEquals("done", future.getResult());
       assertTrue(future.isDone());
+      assertEquals("done", future.getResult());
    }
 }

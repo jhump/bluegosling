@@ -30,10 +30,10 @@ public class BlasterException extends RuntimeException {
    
    BlasterException(Collection<BlasterExceptionCause> causes) {
       super("Operation failed for some target(s)");
-      this.causes = causes;
+      this.causes = Collections.unmodifiableCollection(causes);
    }
    
    public Collection<BlasterExceptionCause> getCauses() {
-      return Collections.unmodifiableCollection(causes);
+      return causes;
    }
 }

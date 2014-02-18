@@ -7,8 +7,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A future task that implements the {@link ListenableFuture} interface. This builds on the
@@ -16,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * additional API.
  * 
  * <p>Another implementation of the {@link ListenableFuture} interface that doesn't necessarily
- * represent a runnable task is {@link SimpleListenableFuture}. That other class also implements
+ * represent a runnable task is {@link AbstractListenableFuture}. That other class also implements
  * some of the new API more efficiently since it doesn't operate within constraints inherited from
  * {@link FutureTask} (which was designed to provide a more simplistic API).
  *
@@ -24,12 +22,11 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @param <T> the type of result produced by the future task
  * 
- * @see SimpleListenableFuture
+ * @see AbstractListenableFuture
  */
 public class ListenableFutureTask<T> extends FutureTask<T> implements ListenableFuture<T> {
 
-   protected final Lock completionLock = new ReentrantLock();
-   private boolean complete;
+   protected final Object listenerLock = new Object();
    private Throwable failure;
    private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
    
@@ -56,14 +53,11 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
 
    @Override
    public void addListener(FutureListener<? super T> listener, Executor executor) {
-      completionLock.lock();
-      try {
-         if (!complete) {
+      synchronized (listenerLock) {
+         if (listeners != null) {
             listeners.addListener(listener, executor);
             return;
          }
-      } finally {
-         completionLock.unlock();
       }
       // if we get here, future is complete so run listener immediately
       FutureListenerSet.runListener(this, listener, executor);
@@ -72,35 +66,35 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
    @Override
    protected void done() {
       FutureListenerSet<T> toExecute;
-      completionLock.lock();
-      try {
+      synchronized (listenerLock) {
          toExecute = listeners;
-         complete = true;
-         if (!isCancelled()) {
-            checkForFailure();
-         }
          listeners = null;
-      } finally {
-         completionLock.unlock();
+      }
+      if (!isCancelled()) {
+         checkForFailure();
       }
       toExecute.runListeners();
    }
    
    private void checkForFailure() {
+      assert isDone() && !isCancelled();
       boolean interrupted = false;
-      while (true) {
-         try {
-            get();
-            break;
-         } catch (ExecutionException e) {
-            failure = e.getCause();
-            break;
-         } catch (InterruptedException e) {
-            interrupted = true;
+      try {
+         while (true) {
+            try {
+               get();
+               return;
+            } catch (ExecutionException e) {
+               failure = e.getCause();
+               return;
+            } catch (InterruptedException e) {
+               interrupted = true;
+            }
          }
-      }
-      if (interrupted) {
-         Thread.currentThread().interrupt();
+      } finally {
+         if (interrupted) {
+            Thread.currentThread().interrupt();
+         }
       }
    }
 
@@ -114,11 +108,21 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
       if (!isSuccessful()) {
          throw new IllegalStateException();
       }
+      boolean interrupted = false;
       try {
-         return get();
-      } catch (Throwable wtf) {
-         // future is complete and successful, so this should never happen
-         throw new AssertionError();
+         while (true) {
+            try {
+               return get();
+            } catch (ExecutionException e) {
+               throw new AssertionError();
+            } catch (InterruptedException e) {
+               interrupted = true;
+            }
+         }
+      } finally {
+         if (interrupted) {
+            Thread.currentThread().interrupt();
+         }
       }
    }
 

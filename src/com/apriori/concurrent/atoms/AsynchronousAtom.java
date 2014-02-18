@@ -61,7 +61,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
        */
       BLOCK;
       
-      private ErrorHandler<Object> errorHandler = new ErrorHandler<Object>() {
+      private final ErrorHandler<Object> errorHandler = new ErrorHandler<Object>() {
          @Override
          public ErrorAction onError(AsynchronousAtom<? extends Object> atom, Throwable failure) {
             return ErrorAction.this;

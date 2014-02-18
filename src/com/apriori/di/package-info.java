@@ -34,8 +34,8 @@
  * able to generate code that results in far faster start-up times than dynamic systems
  * (like Guice) which require executing the code that configures the modules and then
  * performing runtime reflection to verify dependencies and bindings, all at runtime.
- * Furthermore, bound instance creation uses constructor reflection, so that is another
- * runtime performance penalty for dynamic systems.
+ * Furthermore, this approach generates code that directly instantiates objects, where as
+ * dynamic systems must use constructor reflection, another runtime performance penalty.
  * 
  * <p><strong>NOTE:</strong> This package is still under construction. Nothing is really
  * implemented yet. This is just a stab at public API and some positing on how it might

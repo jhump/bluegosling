@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
-// TODO: tests
 public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureTask<T>
       implements ListenableRepeatingFuture<T> {
 
@@ -54,16 +53,13 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
 
    @Override
    public void addListenerForEachInstance(FutureListener<? super T> listener, Executor executor) {
-      completionLock.lock();
-      try {
+      synchronized (listenerLock) {
          if (occurrenceListeners != null) {
             // listener set gets set to null during done() so this
             // means future isn't yet complete
             occurrenceListeners.addListener(listener, executor);
             return;
          }
-      } finally {
-         completionLock.unlock();
       }
       // if we get here, future is complete so run listener immediately
       FutureListenerSet.runListener(this, listener, executor);
@@ -74,13 +70,10 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
       if (runAndReset()) {
          executionCount.incrementAndGet();
          FutureListenerSet<T> toExecute;
-         completionLock.lock();
-         try {
+         synchronized (listenerLock) {
             // snapshot, so we can run listeners w/out
             // interference from concurrent attempts to add listeners;
             toExecute = occurrenceListeners == null ? null : occurrenceListeners.clone();
-         } finally {
-            completionLock.unlock();
          }
          // We need to check for null because concurrent call to runAndReset() could be interleaved
          // such that it executes, fails, and clears the listeners during done() before we get here.
@@ -101,12 +94,9 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
       super.done();
       // notify for-each-instance listeners of this final instance
       FutureListenerSet<T> toExecute;
-      completionLock.lock();
-      try {
+      synchronized (listenerLock) {
          toExecute = occurrenceListeners;
          occurrenceListeners = null;
-      } finally {
-         completionLock.unlock();
       }
       toExecute.runListeners();
    }
@@ -122,5 +112,10 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
          throw new IllegalStateException();
       }
       return latestResult.get();
+   }
+
+   @Override
+   public boolean isPeriodic() {
+      return true;
    }
 }

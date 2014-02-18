@@ -2,12 +2,12 @@ package com.apriori.concurrent;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Delayed;
+import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 // TODO: javadoc
-// TODO: tests
 public class ListenableScheduledFutureTask<T> extends ListenableFutureTask<T>
-      implements ListenableScheduledFuture<T>, Scheduled {
+      implements ListenableScheduledFuture<T>, Scheduled, RunnableScheduledFuture<T> {
 
    private volatile long scheduledNanoTime;
    
@@ -43,5 +43,10 @@ public class ListenableScheduledFutureTask<T> extends ListenableFutureTask<T>
    
    protected void setScheduledNanoTime(long newStartTimeNanos) {
       this.scheduledNanoTime = newStartTimeNanos;
+   }
+
+   @Override
+   public boolean isPeriodic() {
+      return false;
    }
 }

@@ -157,10 +157,7 @@ public class PipeliningExecutorService<P> {
       quietLock.lock();
       try {
          while (true) {
-            // possible, although unlikely, to be negative if task is submitted and finishes so
-            // fast that there's a race between the task decrementing on completion and the original
-            // enqueue operation incrementing
-            if (pipelineCount.get() <= 0) {
+            if (pipelineCount.get() == 0) {
                return;
             }
             isQuiet.await();
@@ -184,10 +181,7 @@ public class PipeliningExecutorService<P> {
       quietLock.lock();
       try {
          while (true) {
-            // possible, although unlikely, to be negative if task is submitted and finishes so
-            // fast that there's a race between the task decrementing on completion and the original
-            // enqueue operation incrementing
-            if (pipelineCount.get() <= 0) {
+            if (pipelineCount.get() == 0) {
                return true;
             }
             long elapsedNanos = System.nanoTime() - startNanos;
@@ -210,7 +204,7 @@ public class PipeliningExecutorService<P> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class Pipeline {
-      private P pipelineKey;
+      private final P pipelineKey;
       private Runnable current;
       private final Queue<Runnable> queue = new ArrayDeque<Runnable>();
       
@@ -243,7 +237,7 @@ public class PipeliningExecutorService<P> {
       /**
        * Runs the head of the queue using the underlying executor.
        */
-      synchronized void run() {
+      void run() {
          executor.execute(new Runnable() {
             @SuppressWarnings("synthetic-access") // current member is private
             @Override public void run() {

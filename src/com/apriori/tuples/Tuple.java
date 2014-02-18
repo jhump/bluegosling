@@ -113,7 +113,9 @@ public interface Tuple extends Iterable<Object> {
     * @return a new tuple that is the result of applying the specified function to all elements of
     *       this tuple
     */
-   <T> Tuple transformAll(Function<Object, T> function);
+   <T> Tuple transformAll(Function<Object, ? extends T> function);
+   
+   // TODO: shift and reverse methods?
    
    /**
     * Compares this tuple with the specified object. If the specified object is also a {@link Tuple}
@@ -182,7 +184,7 @@ public interface Tuple extends Iterable<Object> {
        */
       <T> Ops2<A, T> insertSecond(T t);
       
-      @Override <T> Ops1<T> transformAll(Function<Object, T> function);
+      @Override <T> Ops1<T> transformAll(Function<Object, ? extends T> function);
       
       /**
        * Transforms the first item in the tuple using the specified function. Other items in the
@@ -249,7 +251,7 @@ public interface Tuple extends Iterable<Object> {
        */
       <T> Ops3<A, B, T> insertThird(T t);
       
-      @Override <T> Ops2<T, T> transformAll(Function<Object, T> function);
+      @Override <T> Ops2<T, T> transformAll(Function<Object, ? extends T> function);
       
       @Override <T> Ops2<T, B> transformFirst(Function<? super A, ? extends T> function);
       
@@ -323,7 +325,7 @@ public interface Tuple extends Iterable<Object> {
        */
       <T> Ops4<A, B, C, T> insertFourth(T t);
       
-      @Override <T> Ops3<T, T, T> transformAll(Function<Object, T> function);
+      @Override <T> Ops3<T, T, T> transformAll(Function<Object, ? extends T> function);
       
       @Override <T> Ops3<T, B, C> transformFirst(Function<? super A, ? extends T> function);
       
@@ -406,7 +408,7 @@ public interface Tuple extends Iterable<Object> {
        */
       <T> Ops5<A, B, C, D, T> insertFifth(T t);
       
-      @Override <T> Ops4<T, T, T, T> transformAll(Function<Object, T> function);
+      @Override <T> Ops4<T, T, T, T> transformAll(Function<Object, ? extends T> function);
       
       @Override <T> Ops4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
       
@@ -473,7 +475,7 @@ public interface Tuple extends Iterable<Object> {
       
       // no additional add/insert functions -- five's the limit
       
-      @Override <T> Ops5<T, T, T, T, T> transformAll(Function<Object, T> function);
+      @Override <T> Ops5<T, T, T, T, T> transformAll(Function<Object, ? extends T> function);
       
       @Override <T> Ops5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
       

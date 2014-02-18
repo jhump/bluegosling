@@ -206,10 +206,18 @@ final class MapUtils {
          return true;
       }
       Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
-      return (entry.getKey() == null
-                  ? other.getKey() == null : entry.getKey().equals(other.getKey()))
-            && (entry.getValue() == null
-                  ? other.getValue() == null : entry.getValue().equals(other.getValue()));
+      Object key = entry.getKey();
+      Object otherKey = other.getKey();
+      if ((key == entry || key == other) && otherKey != entry && otherKey != other) {
+         return false;
+      }
+      Object value = entry.getValue();
+      Object otherValue = other.getValue();
+      if ((value == entry || value == other) && otherValue != entry && otherValue != other) {
+         return false;
+      }
+      return (key == null ? otherKey == null : key.equals(otherKey))
+            && (value == null ? otherValue == null : value.equals(otherValue));
    }
 
    public static int hashCode(Map.Entry<?, ?> entry) {
@@ -232,10 +240,18 @@ final class MapUtils {
          return true;
       }
       ImmutableMap.Entry<?, ?> other = (ImmutableMap.Entry<?, ?>) o;
-      return (entry.key() == null
-                  ? other.key() == null : entry.key().equals(other.key()))
-            && (entry.value() == null
-                  ? other.value() == null : entry.value().equals(other.value()));
+      Object key = entry.key();
+      Object otherKey = other.key();
+      if ((key == entry || key == other) && otherKey != entry && otherKey != other) {
+         return false;
+      }
+      Object value = entry.value();
+      Object otherValue = other.value();
+      if ((value == entry || value == other) && otherValue != entry && otherValue != other) {
+         return false;
+      }
+      return (key == null ? otherKey == null : key.equals(otherKey))
+            && (value == null ? otherValue == null : value.equals(otherValue));
    }
 
    public static int hashCode(ImmutableMap.Entry<?, ?> entry) {

@@ -13,6 +13,7 @@ import java.util.NavigableSet;
 // TODO: javadoc
 public interface ImmutableSortedSet<E> extends ImmutableSet<E> {
    E first();
+   ImmutableSortedSet<E> rest();
    E last();
    E floor(E e);
    E higher(E e);

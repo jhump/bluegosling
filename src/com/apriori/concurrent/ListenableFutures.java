@@ -18,6 +18,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -97,14 +98,14 @@ public final class ListenableFutures {
    }
    
    /**
-    * Updates a {@link SimpleListenableFuture} to have the same disposition (be it successful,
+    * Updates a {@link AbstractListenableFuture} to have the same disposition (be it successful,
     * failed, or cancelled) as the specified future. This blocks, uninterruptibly, for the specified
     * source future to complete.
     * 
     * @param future the source future
     * @param copy updated so as to be a copy of the other
     */
-   static <T> void copyFutureInto(Future<T> future, SimpleListenableFuture<T> copy) {
+   static <T> void copyFutureInto(Future<T> future, AbstractListenableFuture<T> copy) {
       boolean interrupted = false;
       try {
          while (true) {
@@ -210,7 +211,7 @@ public final class ListenableFutures {
    public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, final Callable<T> task,
          Executor executor) {
       final Holder<Thread> taskThread = Holder.create();
-      final SimpleListenableFuture<T> result = new SimpleListenableFuture<T>() {
+      final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
          @Override protected void interrupt() {
             // must use synchronization to make sure the interrupt can't happen
             // after the task is no longer running on that thread
@@ -272,14 +273,9 @@ public final class ListenableFutures {
     * @return a future that will complete with the specified result when the specified task
     *       completes
     */
-   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, final Runnable task,
-         final T result, Executor executor) {
-      return chain(future, new Function<Object, T>() {
-         @Override public T apply(Object unused) {
-            task.run();
-            return result;
-         }
-      }, executor);
+   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, Runnable task, T result,
+         Executor executor) {
+      return chain(future, Executors.callable(task, result), executor);
    }
 
    /**
@@ -345,7 +341,7 @@ public final class ListenableFutures {
     */
    public static <T, U> ListenableFuture<U> transform(final ListenableFuture<T> future,
          final Function<? super T, ? extends U> function) {
-      final SimpleListenableFuture<U> result = new SimpleListenableFuture<U>() {
+      final AbstractListenableFuture<U> result = new AbstractListenableFuture<U>() {
          @Override public boolean cancel(boolean mayInterrupt) {
             if (super.setCancelled()) {
                future.cancel(mayInterrupt);
@@ -440,17 +436,13 @@ public final class ListenableFutures {
    public static <T> ListenableFuture<List<T>> join(
          final Iterable<ListenableFuture<? extends T>> futures) {
       List<ListenableFuture<? extends T>> futureList;
-      if (futures instanceof List) {
-         futureList = (List<ListenableFuture<? extends T>>) futures;
+      if (futures instanceof Collection) {
+         futureList = new ArrayList<ListenableFuture<? extends T>>(
+               (Collection<ListenableFuture<? extends T>>) futures);
       } else {
-         if (futures instanceof Collection) {
-            futureList = new ArrayList<ListenableFuture<? extends T>>(
-                  (Collection<ListenableFuture<? extends T>>) futures);
-         } else {
-            futureList = new ArrayList<ListenableFuture<? extends T>>();
-            for (ListenableFuture<? extends T> future : futures) {
-               futureList.add(future);
-            }
+         futureList = new ArrayList<ListenableFuture<? extends T>>();
+         for (ListenableFuture<? extends T> future : futures) {
+            futureList.add(future);
          }
       }
       if (futureList.isEmpty()) {
@@ -490,7 +482,7 @@ public final class ListenableFutures {
    /**
     * Combines two futures into one by applying a function. The value of the returned future is the
     * result of applying the specified function to the values of the two futures. The returned
-    * future will complete successfully both input futures complete successfully. The returned
+    * future will complete successfully when both input futures complete successfully. The returned
     * future will fail if either of the input futures fails. 
     *
     * <p>The returned future's cancellation status will be kept in sync with the two input futures.
@@ -570,7 +562,7 @@ public final class ListenableFutures {
       final AtomicReference<ListenableFuture<?>> outstanding =
             new AtomicReference<ListenableFuture<?>>(future);
       final AtomicBoolean shouldInterrupt = new AtomicBoolean();
-      final SimpleListenableFuture<T> result = new SimpleListenableFuture<T>() {
+      final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
          @Override public boolean cancel(boolean mayInterrupt) {
             if (super.setCancelled()) {
                shouldInterrupt.set(mayInterrupt);
@@ -643,7 +635,7 @@ public final class ListenableFutures {
     *
     * @param <T> the type of the combined result
     */
-   static abstract class CombiningFuture<T> extends SimpleListenableFuture<T> {
+   static abstract class CombiningFuture<T> extends AbstractListenableFuture<T> {
       private final Collection<ListenableFuture<?>> components;
       private final AtomicInteger remaining;
 
@@ -749,7 +741,7 @@ public final class ListenableFutures {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class ListenableFutureWrapper<T> extends SimpleListenableFuture<T> {
+   private static class ListenableFutureWrapper<T> extends AbstractListenableFuture<T> {
       final Future<T> future;
       
       ListenableFutureWrapper(Future<T> future) {
@@ -757,7 +749,7 @@ public final class ListenableFutures {
          // use a new thread that just blocks for the future and then completes the result
          new Thread() {
             @Override public void run() {
-               copyFutureInto(ListenableFutureWrapper.this.future,  ListenableFutureWrapper.this);
+               copyFutureInto(ListenableFutureWrapper.this.future, ListenableFutureWrapper.this);
             }
          }.start();
       }

@@ -107,9 +107,9 @@ import java.util.RandomAccess;
  * multiple access to the list but are instead present only for detecting bugs in multi-threaded
  * code.
  * 
- * @author Joshua Humphries (jhumphries131@gmail.com)
- * 
  * @param <E> The type of element in the array
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class ArrayBackedLinkedList<E> extends AbstractList<E>
       implements Deque<E>, Cloneable, Serializable {

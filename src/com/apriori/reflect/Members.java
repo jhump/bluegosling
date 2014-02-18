@@ -39,10 +39,8 @@ public final class Members {
          public Method visit(Class<?> aClass, Void v) {
             try {
                Method m = aClass.getDeclaredMethod(name, argTypes);
-               if (Modifier.isStatic(m.getModifiers())) {
-                  return null; // only want instance methods
-               }
-               return m;
+               // only want instance methods
+               return Modifier.isStatic(m.getModifiers()) ? null : m;
             } catch (NoSuchMethodException e) {
                return null;
             }
@@ -51,8 +49,9 @@ public final class Members {
    }
    
    /**
-    * Finds a method on the specified class with the specified signature. This is a convenience
-    * method that allows the parameter types to be specified as a list instead of an array.
+    * Finds an instance method on the specified class with the specified signature. This is a
+    * convenience method that allows the parameter types to be specified as a list instead of an
+    * array.
     * 
     * @param clazz the class whose method to find
     * @param name the name of the method to find
@@ -81,8 +80,8 @@ public final class Members {
     */
    public static Collection<Method> findMethods(Class<?> clazz, final String name) {
       Map<MethodSignature, Method> methods = new HashMap<MethodSignature, Method>();
-      ClassHierarchyCrawler.<Void, Map<MethodSignature, Method>> builder()
-            .forEachClass(new ClassVisitor<Void, Map<MethodSignature, Method>>() {
+      ClassHierarchyCrawler.crawlWith(clazz, methods,
+            new ClassVisitor<Void, Map<MethodSignature, Method>>() {
                @Override
                public Void visit(Class<?> aClass, Map<MethodSignature, Method> methodMap) {
                   for (Method m : aClass.getDeclaredMethods()) {
@@ -96,7 +95,7 @@ public final class Members {
                   }
                   return null;
                }
-            }).build().visit(clazz, methods);
+            });
       return methods.values();
    }
    

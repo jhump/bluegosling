@@ -6,6 +6,7 @@ import com.apriori.util.Predicate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
          u.add(trio.getSecond());
          v.add(trio.getThird());
       }
-      return create(t, u, v);
+      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+            Collections.unmodifiableList(v));
    }
 
    /**
@@ -101,7 +103,7 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
          // size changed since check above such that collections differ
          throw new IllegalArgumentException();
       }
-      return list;
+      return Collections.unmodifiableList(list);
    }
    
    private final A a;
@@ -219,7 +221,7 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
    }
 
    @Override
-   public <T> Trio<T, T, T> transformAll(Function<Object, T> function) {
+   public <T> Trio<T, T, T> transformAll(Function<Object, ? extends T> function) {
       return Trio.<T, T, T>create(function.apply(a), function.apply(b), function.apply(c));
    }
 

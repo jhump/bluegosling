@@ -2,22 +2,34 @@ package com.apriori.reflect;
 
 import java.lang.reflect.Modifier;
 
+/**
+ * Settings related to dispatch of interface methods when using a {@link Caster}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see Caster
+ */
 // TODO: doc!
 public class DispatchSettings {
    
+   /**
+    * A level of method visibility, for example {@code public}, {@code private}, etc.
+    */
    public enum Visibility {
-      PUBLIC() {
+      /**
+       * A method that is marked with the keyword {@code private}.
+       */
+      PRIVATE() {
          @Override
          public boolean isVisible(int modifiers) {
-            return Modifier.isPublic(modifiers);
+            // everything is private or higher
+            return true;
          }
       },
-      PROTECTED() {
-         @Override
-         public boolean isVisible(int modifiers) {
-            return (modifiers & PROTECTED_OR_HIGHER) != 0;
-         }
-      },
+      
+      /**
+       * A method with no visibility keyword, aka default visibility or "package protected".
+       */
       PACKAGE_PRIVATE() {
          @Override
          public boolean isVisible(int modifiers) {
@@ -25,17 +37,35 @@ public class DispatchSettings {
                   || (modifiers & NOT_PACKAGE_PRIVATE) == 0;
          }
       },
-      PRIVATE() {
+      
+      /**
+       * A method that is marked with the keyword {@code protected}.
+       */
+      PROTECTED() {
          @Override
          public boolean isVisible(int modifiers) {
-            // everything is private or higher
-            return true;
+            return (modifiers & PROTECTED_OR_HIGHER) != 0;
+         }
+      },
+      
+      /**
+       * A method that is marked with the keyword {@code public}.
+       */
+      PUBLIC() {
+         @Override
+         public boolean isVisible(int modifiers) {
+            return Modifier.isPublic(modifiers);
          }
       };
       
       private static final int PROTECTED_OR_HIGHER = Modifier.PUBLIC | Modifier.PROTECTED;
       private static final int NOT_PACKAGE_PRIVATE = PROTECTED_OR_HIGHER | Modifier.PRIVATE;
       
+      /**
+       * Returns true if the given modifiers indicate a method that has this level of visibility
+       * or higher. Private is the lowest level of visibility, so every method has that level of
+       * visibility or higher. Public is the highest level.
+       */
       public abstract boolean isVisible(int modifiers);
    }
    
@@ -54,21 +84,17 @@ public class DispatchSettings {
       this.visibility = visibility;
    }
 
-   
    public boolean isCastingReturnTypes() {
       return castReturnTypes;
    }
 
-   
    public boolean isCastingArguments() {
       return castArguments;
    }
-
    
    public boolean isExpandingVarArgs() {
       return expandVarArgs;
    }
-
    
    public boolean isIgnoringAmbiguities() {
       return ignoreAmbiguities;

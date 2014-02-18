@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: javadoc
 public interface ListenableScheduledExecutorService
       extends ListenableExecutorService, ScheduledExecutorService {
    /**

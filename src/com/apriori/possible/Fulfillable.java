@@ -1,7 +1,7 @@
 package com.apriori.possible;
 
 /**
- * A possible value that can be set exactly once. Setting a value when not already is present is
+ * A possible value that can be set exactly once. Setting a value when not already present is
  * called "fulfilling" the value.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

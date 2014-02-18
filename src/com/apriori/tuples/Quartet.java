@@ -5,6 +5,7 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class Quartet<A, B, C, D> extends AbstractTuple
          v.add(quartet.getThird());
          w.add(quartet.getFourth());
       }
-      return create(t, u, v, w);
+      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+            Collections.unmodifiableList(v), Collections.unmodifiableList(w));
    }
 
    /**
@@ -108,7 +110,7 @@ public class Quartet<A, B, C, D> extends AbstractTuple
          // size changed since check above such that collections differ
          throw new IllegalArgumentException();
       }
-      return list;
+      return Collections.unmodifiableList(list);
    }
 
    private final A a;
@@ -250,7 +252,7 @@ public class Quartet<A, B, C, D> extends AbstractTuple
    }
 
    @Override
-   public <T> Quartet<T, T, T, T> transformAll(Function<Object, T> function) {
+   public <T> Quartet<T, T, T, T> transformAll(Function<Object, ? extends T> function) {
       return Quartet.<T, T, T, T>create(function.apply(a), function.apply(b), function.apply(c),
             function.apply(d));
    }

@@ -5,6 +5,7 @@ package com.apriori.collections;
  * provides implementations for all methods except {@link #size()} and {@link #iterator()}.
  *
  * @param <E> the type of element in the collection
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests

@@ -15,14 +15,14 @@ import java.util.Set;
 
 /**
  * A future whose result is set programmatically. This exposes protected API in
- * {@link SimpleListenableFuture} as public API. It also provides a view of the future as an
+ * {@link AbstractListenableFuture} as public API. It also provides a view of the future as an
  * instance of {@link Fulfillable}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <T> the type of future result
  */
-public class SettableListenableFuture<T> extends SimpleListenableFuture<T> {
+public class SettableListenableFuture<T> extends AbstractListenableFuture<T> {
 
    @Override
    public boolean setValue(T result) {
@@ -88,6 +88,8 @@ public class SettableListenableFuture<T> extends SimpleListenableFuture<T> {
             return isPresent() ? this : alternate;
          }
 
+         // TODO: transform and filter should return views, not snapshots
+         
          @Override
          public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
             return isPresent() ? Reference.<U>setTo(function.apply(getResult()))
@@ -146,7 +148,7 @@ public class SettableListenableFuture<T> extends SimpleListenableFuture<T> {
          }
 
          @Override
-         public <R> R visit(Possible.Visitor<T, R> visitor) {
+         public <R> R visit(Possible.Visitor<? super T, R> visitor) {
             return isPresent() ? visitor.present(getResult()) : visitor.absent();
          }
       };

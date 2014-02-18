@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @param <T> the type of the held value
  */
+//TODO: serializability?
 public class Holder<T> implements Possible<T>, Serializable {
    
    private static final long serialVersionUID = -1290017626307767440L;
@@ -93,6 +94,8 @@ public class Holder<T> implements Possible<T>, Serializable {
    public Possible<T> or(Possible<T> alternate) {
       return isPresent ? this : alternate;
    }
+
+   // TODO: transform and filter return views instead of snapshots?
 
    /**
     * {@inheritDoc}
@@ -264,7 +267,7 @@ public class Holder<T> implements Possible<T>, Serializable {
    }
 
    @Override
-   public <R> R visit(Possible.Visitor<T, R> visitor) {
+   public <R> R visit(Possible.Visitor<? super T, R> visitor) {
       return isPresent ? visitor.present(value) : visitor.absent();
    }
    

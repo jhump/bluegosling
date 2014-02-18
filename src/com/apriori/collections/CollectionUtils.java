@@ -9,13 +9,10 @@ import java.util.ListIterator;
 import java.util.Set;
 
 /**
- * Utility functions for implementing standard collection interfaces without the use of
- * {@link java.util.AbstractCollection} and its abstract sub-classes.
- * 
- * <p>The collections in this package, as a programming exercise, were written from scratch
- * instead of relying on the abstract base classes provided in the Java Collections Framework.
- * For common functionality that might have otherwise been inherited from one of these classes,
- * static methods in this class are used.
+ * Utility functions for implementing standard collection interfaces. Some of the functionality
+ * in this class overlaps with implementations in {@link java.util.AbstractCollection} and its
+ * abstract sub-classes. These methods are useful for situations where extending one of those
+ * classes is not suitable.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

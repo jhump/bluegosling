@@ -549,4 +549,7 @@ public class HierarchicalLockTest {
       sharedLockNotValid(share);
       lockNotHeld();
    }
+   
+   // TODO: more demote-to-shared/promote-to-exclusive test cases for concurrency and deadlock
+   // TODO: add tests for child locks and demote-to-child/promote-to-parent
 }

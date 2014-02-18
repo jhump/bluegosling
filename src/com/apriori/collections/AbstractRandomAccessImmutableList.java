@@ -5,11 +5,12 @@ import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
 /**
- * An abstract base class for {@link ImmutableList} implementations that also support fast random
+ * An abstract base class for {@link ImmutableList} implementations that provide fast random
  * access. This class also implements the {@link RandomAccess} marker interface. Sub-classes need
  * only implement {@link #size()} and {@link #get(int)}.
  *
  * @param <E> the type of element in the list
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: tests

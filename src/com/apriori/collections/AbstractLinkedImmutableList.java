@@ -5,10 +5,12 @@ import java.util.NoSuchElementException;
 
 /**
  * An abstract base class for {@link ImmutableList} implementations that use linked data structures
- * so that access is sequential. Random access operations in this sort of list are linear.
- * Sub-classes need only implement {@link #size()}, {@link #first()}, and {@link #rest()}.
+ * so that access is sequential. Random access operations in this sort of list have linear runtime
+ * complexity. Sub-classes need only implement {@link #size()}, {@link #first()}, and
+ * {@link #rest()}.
  *
  * @param <E> the type of element in the list
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: tests

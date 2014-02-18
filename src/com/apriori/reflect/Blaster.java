@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Forwards method calls to multiple instances. Effectively, this demultiplexes methods invoked on a
+ * Forwards method calls to multiple instances. Effectively, this broadcasts methods invoked on a
  * "Blaster" (proxy) out to multiple objects that implement the same interface. In other words, it
  * "blasts" method calls out to multiple objects.
  * 
@@ -30,7 +30,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @param <T>
+ * @param <T> the interface type whose methods are "blasted"
  */
 //TODO: tests
 //TODO: finish javadoc; describe how failures are propagated
@@ -49,18 +49,22 @@ public class Blaster<T> {
       private final T result;
       private final Throwable failure;
       
-      Result(T result) {
+      private Result(T result) {
          this.result = result;
          this.failure = null;
       }
       
-      Result(Throwable failure) {
+      private Result(Throwable failure) {
          this.result = null;
          this.failure = failure;
       }
       
       static <T> Result<T> create(T t) {
          return new Result<T>(t);
+      }
+      
+      static <T> Result<T> failed(Throwable failure) {
+         return new Result<T>(failure);
       }
       
       /**
@@ -126,8 +130,8 @@ public class Blaster<T> {
    /**
     * Holds the results of the latest blaster invocation on this thread.
     */
-   static final ThreadLocal<List<Result<Object>>> latestBlasted =
-         new ThreadLocal<List<Result<Object>>>();
+   static final ThreadLocal<List<Result<?>>> latestBlasted =
+         new ThreadLocal<List<Result<?>>>();
    
    /**
     * Constructs a blaster that implements the specified interface.
@@ -182,7 +186,7 @@ public class Blaster<T> {
     * <p>If no invocation has occurred on this thread or the last such invocation was aborted then
     * this will throw an exception.
     * 
-    * @param t a dummy argument, for readability
+    * @param t a dummy argument, for readability using the idiom described above
     * @return the list of values returned from the last blasted method invocation
     * @throws IllegalStateException if no invocation has occurred on this thread or the last such
     *       invocation was aborted
@@ -223,8 +227,9 @@ public class Blaster<T> {
     *       
     * @see #blastedResults()         
     */
+   @SuppressWarnings({"unchecked", "rawtypes"}) // could be unsafe, but ok if caller is using this idiom properly
    public static <T> List<Result<T>> blastedResults(@SuppressWarnings("unused") T t) {
-      return blastedResults();
+      return (List) blastedResults();
    }
    
    /**
@@ -239,10 +244,8 @@ public class Blaster<T> {
     * @see #abortOnNullTarget()
     * @see #abortOnAnyException()
     */
-   @SuppressWarnings("unchecked") // could be unsafe, trust user is using this correctly
-   public static <T> List<Result<T>> blastedResults() {
-      @SuppressWarnings("rawtypes")
-      List results = latestBlasted.get();
+   public static List<Result<?>> blastedResults() {
+      List<Result<?>> results = latestBlasted.get();
       if (results == null) {
          throw new IllegalStateException();
       }
@@ -346,13 +349,13 @@ public class Blaster<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class BlasterInvocationHandler implements InvocationHandler {
-      private final List<Result<Object>> targets;
+      private final List<Result<?>> targets;
       private final Action onNullAction;
       private final Action onExceptionAction;
       
       BlasterInvocationHandler(Collection<?> targets, Action onNullAction,
             Action onExceptionAction) {
-         ArrayList<Result<Object>> asResults = new ArrayList<Result<Object>>();
+         ArrayList<Result<?>> asResults = new ArrayList<Result<?>>();
          for (Object t : targets) {
             asResults.add(Result.create(t));
          }
@@ -362,7 +365,7 @@ public class Blaster<T> {
          this.onExceptionAction = onExceptionAction;
       }
 
-      BlasterInvocationHandler(List<Result<Object>> targets, Action onNullAction,
+      BlasterInvocationHandler(List<Result<?>> targets, Action onNullAction,
             Action onExceptionAction) {
          this.targets = targets;
          this.onNullAction = onNullAction;
@@ -374,49 +377,60 @@ public class Blaster<T> {
          // clear last results
          latestBlasted.set(null);
          // blast the method call out to all targets
-         List<Result<Object>> blastedResults = new ArrayList<Result<Object>>(targets.size());
-         Result<Object> last = null;
+         List<Result<?>> blastedResults = new ArrayList<Result<?>>(targets.size());
+         List<Result<?>> nextBlastTargets = new ArrayList<Result<?>>(targets.size());
+         Result<?> last = null;
          List<BlasterExceptionCause> causes = null;
-         for (Result<Object> target : targets) {
-            if (target == null) {
+         for (Result<?> target : targets) {
+            if (target.get() == null) {
+               NullPointerException npe = new NullPointerException();
                switch (onNullAction) {
                   case THROW:
                      if (causes == null) {
                         causes = new ArrayList<BlasterExceptionCause>();
                      }
-                     causes.add(new BlasterExceptionCause(new NullPointerException(), null));
+                     causes.add(new BlasterExceptionCause(npe, null));
+                     // intentional fall-through:
+                  case PROPAGATE:
+                     blastedResults.add(Result.failed(npe));
+                     nextBlastTargets.add(Result.create(null));
                      break;
                   case ABORT:
-                     throw new NullPointerException();
-                  case PROPAGATE:
-                     blastedResults.add(null);
-                     break;
+                     throw npe;
                }
             } else if (target.failed()) {
                // propagate prior failures to next set of results
                blastedResults.add(target);
+               nextBlastTargets.add(target);
             } else {
                try {
-                  Result<Object> result = Result.create(method.invoke(target.get(), args));
+                  Result<?> result = Result.create(method.invoke(target.get(), args));
                   blastedResults.add(result);
+                  nextBlastTargets.add(result);
                   // for non-interface return types, we return the last successful result
                   last = result;
                } catch (Throwable t) {
-                  if (t instanceof InvocationTargetException) {
-                     t = t.getCause();
-                  }
+                  Throwable unwrapped = t instanceof InvocationTargetException ? t.getCause() : t;
                   switch (onExceptionAction) {
                      case THROW:
                         if (causes == null) {
                            causes = new ArrayList<BlasterExceptionCause>();
                         }
-                        causes.add(new BlasterExceptionCause(t, target));
+                        causes.add(new BlasterExceptionCause(unwrapped, target));
+                        // intentional fall-through:
+                     case PROPAGATE:
+                        Result<?> result = Result.failed(unwrapped);
+                        blastedResults.add(result);
+                        nextBlastTargets.add(result);
                         break;
                      case ABORT:
-                        throwUnchecked(t);
-                     case PROPAGATE:
-                        blastedResults.add(new Result<Object>(t));
-                        break;
+                        if (t instanceof InvocationTargetException) {
+                           // should be able to safely throw this type
+                           throw unwrapped;
+                        } else {
+                           // if it's some other reflection failure, maybe wrap as unchecked
+                           throwUnchecked(t);
+                        }
                   }
                }
             }
@@ -431,7 +445,7 @@ public class Blaster<T> {
          Class<?> returnType = method.getReturnType();
          if (returnType.isInterface()) {
             return ProxyUtils.newProxyInstance(returnType,
-                  new BlasterInvocationHandler(blastedResults, onNullAction, onExceptionAction));
+                  new BlasterInvocationHandler(nextBlastTargets, onNullAction, onExceptionAction));
          } else {
             return last == null ? ProxyUtils.getNullReturnValue(returnType) : last.get();
          }

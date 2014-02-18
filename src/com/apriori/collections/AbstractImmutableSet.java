@@ -8,7 +8,12 @@ package com.apriori.collections;
  * and its super-class, {@link AbstractImmutableCollection}, is that this one implements
  * {@link ImmutableSet#equals(Object)} and {@link ImmutableSet#hashCode()}.
  * 
+ * <p>Sub-classes will likely override {@link #contains(Object)} to provide better performance. The
+ * default implementation (inherited from {@link AbstractImmutableCollection}) performs a linear
+ * scan through all elements in the set.
+ * 
  * @param <E> the type of element in the collection
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests

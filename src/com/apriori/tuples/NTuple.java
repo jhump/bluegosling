@@ -23,7 +23,6 @@ import java.io.Serializable;
  * @param <D> the type of the fourth item
  * @param <E> the type of the fifth item
  */
-//TODO: tests!
 public class NTuple<A, B, C, D, E> extends AbstractTuple
       implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
@@ -67,7 +66,8 @@ public class NTuple<A, B, C, D, E> extends AbstractTuple
    }
    
    /**
-    * Creates a new tuple. The tuple must have at least 6 items.
+    * Creates a new tuple. The tuple must have at least 6 items (otherwise, it would be a
+    * {@link Quintet}).
     * 
     * @param a the first item
     * @param b the second item
@@ -300,7 +300,7 @@ public class NTuple<A, B, C, D, E> extends AbstractTuple
    }
 
    @Override
-   public <T> NTuple<T, T, T, T, T> transformAll(Function<Object, T> function) {
+   public <T> NTuple<T, T, T, T, T> transformAll(Function<Object, ? extends T> function) {
       Object ret[] = new Object[array.length];
       for (int i = 0, len = ret.length; i < len; i++) {
          ret[i] = function.apply(array[i]);
@@ -331,6 +331,115 @@ public class NTuple<A, B, C, D, E> extends AbstractTuple
    @Override
    public <T> NTuple<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
       return this.<T>setFifth(function.apply(e));
+   }
+
+   private void rangeCheck(int index) {
+      if (index < 0) {
+         throw new IndexOutOfBoundsException(index + " < 0");
+      } else if (index >= array.length) {
+         throw new IndexOutOfBoundsException(index + " >= " + array.length);
+      }
+   }
+   
+   private void rangeCheckWide(int index) {
+      if (index < 0) {
+         throw new IndexOutOfBoundsException(index + " < 0");
+      } else if (index > array.length) {
+         throw new IndexOutOfBoundsException(index + " > " + array.length);
+      }
+   }
+   
+   /**
+    * Retrieves an item from the tuple using its index. This is required to access items in the
+    * tuple beyond the fifth. Indices are zero-based, so a value of zero would be the same as
+    * calling {@link #getFirst()}.
+    *
+    * @param index the zero-based index of the item to retrieve
+    * @return the item at the given index
+    * @throws IndexOutOfBoundsException if the given index is less than zero or is greater than or
+    *       equal to the tuple's {@link #size()}
+    */
+   public Object get(int index) {
+      rangeCheck(index);
+      return array[index];
+   }
+   
+   /**
+    * Sets the item at the given index to the specified value. Since tuples are immutable, this
+    * returns a new tuple with the specified element changed. Indices are zero-based, so a value of
+    * zero would be the same as calling {@link #setFirst(Object)}.
+    *
+    * @param index the zero-based index of the item to change
+    * @param o the item to set at the specified index
+    * @return a new tuple that is identical to this tuple except that the item at the given index
+    *       is the given value
+    * @throws IndexOutOfBoundsException if the given index is less than zero or is greater than or
+    *       equal to the tuple's {@link #size()}
+    */
+   public NTuple<?, ?, ?, ?, ?> set(int index, Object o) {
+      rangeCheck(index);
+      return new NTuple<Object, Object, Object, Object, Object>(setItem(array, index, o));
+   }
+
+   /**
+    * Inserts the specified value at the given index. Since tuples are immutable, this returns a new
+    * tuple with the added element. Any items at or after the given index will be pushed out so that
+    * they appear after the newly added element in the resulting tuple. Indices are zero-based, so a
+    * value of zero would be the same as calling {@link #insertFirst(Object)}. 
+    *
+    * @param index the zero-based index where the new item should be inserted
+    * @param o the item to insert
+    * @return a new tuple that is identical to this tuple except that the given item has been
+    *       inserted at the given index
+    * @throws IndexOutOfBoundsException if the given index is less than zero or is greater than the
+    *       tuple's {@link #size()}
+    */
+   public NTuple<?, ?, ?, ?, ?> insert(int index, Object o) {
+      rangeCheckWide(index);
+      return new NTuple<Object, Object, Object, Object, Object>(addItem(array, index, o));
+   }
+
+   /**
+    * Removes the value at the given index. Since tuples are immutable, this returns a new tuple
+    * with the element removed. Indices are zero-based, so a value of zero would be the same as
+    * calling {@link #removeFirst()}.
+    * 
+    * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
+    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * returned tuple will also be an {@link NTuple}.
+    *
+    * @param index the zero-based index of the item to remove
+    * @return a new tuple that is identical to this tuple except it has one fewer item due to the
+    *       item at the given index being removed
+    * @throws IndexOutOfBoundsException if the given index is less than zero or is greater than or
+    *       equal to the tuple's {@link #size()}
+    */
+   public Ops5<?, ?, ?, ?, ?> remove(int index) {
+      rangeCheck(index);
+      Object newArray[] = removeItem(array, index);
+      if (array.length == 6) {
+         assert newArray.length == 5;
+         return Quintet.create(newArray[0], newArray[1], newArray[2], newArray[3], newArray[4]);
+      } else {
+         return new NTuple<B, C, D, E, Object>(newArray);
+      }
+   }
+   
+   /**
+    * Transforms the value at the given index using the given function. Since tuples are immutable,
+    * this will return a new tuple with the transformed value. Indices are zero-based, so a value of
+    * zero would be the same as calling {@link #transformFirst(Function)}.
+    *
+    * @param index the zero-based index of the item to change
+    * @param function the function that is applied to the element to produce its new transformed
+    *       value
+    * @return a new tuple that is identical to this tuple except that the element at the given index
+    *       will be the result of applying the given function to this tuple's value at that index
+    */
+   public NTuple<?, ?, ?, ?, ?> transform(int index, Function<Object, ?> function) {
+      rangeCheck(index);
+      return new NTuple<Object, Object, Object, Object, Object>(
+            setItem(array, index, function.apply(array[index])));
    }
 
    /**

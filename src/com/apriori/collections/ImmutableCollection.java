@@ -43,7 +43,7 @@ public interface ImmutableCollection<E> extends Iterable<E> {
     * Returns an array with the same elements as this collection and the same component type as the
     * specified array. If the elements will fit in the specified array, they are copied there and
     * a {@code null} terminator is stored after the elements if the array can hold more. Otherwise,
-    * a new array with the same element type is allocated and the elements are copied into it.
+    * a new array with the same element type is allocated, and the elements are copied into it.
     *
     * @param array an array 
     * @return an array with the same elements as this collection and the same component type as

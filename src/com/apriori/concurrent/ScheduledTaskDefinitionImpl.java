@@ -59,7 +59,8 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
       this.executor = executor;
    }
    
-   private void scheduleTask(long nanoTime) {
+   // visible only for testing! do not call
+   ScheduledTaskImpl scheduleTask(long nanoTime) {
       final AtomicLong taskStart = new AtomicLong();
       final AtomicLong taskEnd = new AtomicLong();
       final AtomicReference<ScheduledTaskImpl> task = new AtomicReference<ScheduledTaskImpl>();
@@ -85,7 +86,13 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
             }
          }
       };
-      task.set(current = new ScheduledTaskImpl(trackingCallable, taskStart, taskEnd, nanoTime));
+      task.set(current = createTask(trackingCallable, taskStart, taskEnd, nanoTime));
+      return current;
+   }
+   
+   ScheduledTaskImpl createTask(Callable<V> callable, AtomicLong taskStart, AtomicLong taskEnd,
+         long startNanoTime) {
+      return new ScheduledTaskImpl(callable, taskStart, taskEnd, startNanoTime);
    }
    
    ScheduledTask<V> scheduleFirst() {

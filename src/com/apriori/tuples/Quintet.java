@@ -5,6 +5,7 @@ import com.apriori.util.Function;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,7 +62,9 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
          w.add(quintet.getFourth());
          x.add(quintet.getFifth());
       }
-      return create(t, u, v, w, x);
+      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+            Collections.unmodifiableList(v), Collections.unmodifiableList(w),
+            Collections.unmodifiableList(x));
    }
 
    /**
@@ -82,7 +85,7 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
    }
    
    /**
-    * Combines five collections into a collection of quintet. The returned list will have the
+    * Combines five collections into a collection of quintets. The returned list will have the
     * same size as the specified collections and items will be in the same order as returned by
     * iteration over the specified collections (e.g. the first quintet in the returned list is a
     * quintet with the first value from each collection).
@@ -116,7 +119,7 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
          // size changed since check above such that collections differ
          throw new IllegalArgumentException();
       }
-      return list;
+      return Collections.unmodifiableList(list);
    }
 
    private final A a;
@@ -277,7 +280,7 @@ public class Quintet<A, B, C, D, E> extends AbstractTuple
    }
 
    @Override
-   public <T> Quintet<T, T, T, T, T> transformAll(Function<Object, T> function) {
+   public <T> Quintet<T, T, T, T, T> transformAll(Function<Object, ? extends T> function) {
       return Quintet.<T, T, T, T, T>create(function.apply(a), function.apply(b), function.apply(c),
             function.apply(d), function.apply(e));
    }

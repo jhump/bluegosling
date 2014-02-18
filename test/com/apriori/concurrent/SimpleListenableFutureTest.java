@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.concurrent.Callable;
 
 /**
- * Test cases for {@link SimpleListenableFuture}.
+ * Test cases for {@link AbstractListenableFuture}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -17,7 +17,7 @@ public class SimpleListenableFutureTest extends AbstractListenableFutureTest {
    
    @Override
    protected ListenableFuture<String> makeFuture() {
-      return new SimpleListenableFuture<String>() {
+      return new AbstractListenableFuture<String>() {
          @Override protected void interrupt() {
             // let test know that we got the interrupt
             SimpleListenableFutureTest.this.interrupted();
@@ -25,8 +25,8 @@ public class SimpleListenableFutureTest extends AbstractListenableFutureTest {
       };
    }
 
-   protected SimpleListenableFuture<String> future() {
-      return (SimpleListenableFuture<String>) future;
+   protected AbstractListenableFuture<String> future() {
+      return (AbstractListenableFuture<String>) future;
    }
    
    @Override

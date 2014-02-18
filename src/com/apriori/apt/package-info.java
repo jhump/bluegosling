@@ -1,13 +1,14 @@
 /**
  * APIs to simplify implementation of annotation processors and annotation processing tools.
- *
- * <p>Chief among the APIs is a reflection API that wraps the {@code javax.lang.model.element} and
- * {@code java.lang.model.type} APIs in a way that looks more like those in {@code java.lang.reflect}.
- * This is intended to make programming annotation processors simpler.
  * 
- * <p>Another major component here is a JUnit4 test runner that allows for unit testing of annotation
- * processors by running test cases in an actual annotation processing environment (by invoking the
- * Java compiler).
+ * <p>This package contains an {@link com.apriori.apt.AbstractProcessor} that feathers some more
+ * convenience functionality on top of the standard
+ * {@link javax.annotation.processing.AbstractProcessor}.
+ * 
+ * <p>Also included are two sub-packages, one with a reflection API that wraps
+ * {@code javax.lang.model.element} and {@code java.lang.model.type} APIs and the other a JUnit4
+ * test runner that allows for unit testing annotation processors from within an actual processing
+ * environment.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

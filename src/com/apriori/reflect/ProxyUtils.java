@@ -65,7 +65,7 @@ public final class ProxyUtils {
    /**
     * Creates a new proxy instance. This is the same as using
     * {@link Proxy#newProxyInstance(ClassLoader, Class[], InvocationHandler)} except that it
-    * has generic type parameters to eliminate the need for casting the returned proxy.
+    * has a generic type parameter to eliminate the need for casting the returned proxy.
     * 
     * @param iface the interface that the new proxy will implement
     * @param handler the invocation handler for the proxy

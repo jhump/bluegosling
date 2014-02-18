@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.apriori.util.Function;
 
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class NTupleTest {
 
-   private final NTuple<String, Integer, Double, String, Long> n =
+   final NTuple<String, Integer, Double, String, Long> n =
          NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ");
 
    // Collection-like operations
@@ -151,6 +152,12 @@ public class NTupleTest {
       assertEquals((Double) 42.0, n.getThird());
       assertEquals("foobar", n.getFourth());
       assertEquals((Long) 0x1234L, n.getFifth());
+      // random access
+      assertEquals("a", n.get(0));
+      assertEquals("baz", n.get(5));
+      assertEquals(4, n.get(7));
+      assertEquals(16, n.get(9));
+      assertEquals("XYZ", n.get(11));
    }
    
    @Test public void addAndInsert() {
@@ -172,6 +179,16 @@ public class NTupleTest {
       assertEquals(
             NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ", "boo"),
             n.add("boo"));
+      // random access
+      assertEquals(
+            NTuple.create("boo", "a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ"),
+            n.insert(0, "boo"));
+      assertEquals(
+            NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", "boo", 2, 4, 8, 16, "ABC", "XYZ"),
+            n.insert(6, "boo"));
+      assertEquals(
+            NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ", "boo"),
+            n.insert(12, "boo"));
    }
    
    @Test public void remove_sixItems() {
@@ -188,6 +205,13 @@ public class NTupleTest {
       assertSame(Quintet.class, n6.removeThird().getClass());
       assertSame(Quintet.class, n6.removeFourth().getClass());
       assertSame(Quintet.class, n6.removeFifth().getClass());
+      //random access
+      assertEquals(Quintet.create(1, 42.0, "foobar", 0x1234L, "baz"), n6.remove(0));
+      assertEquals(Quintet.create("a", 1, "foobar", 0x1234L, "baz"), n6.remove(2));
+      assertEquals(Quintet.create("a", 1, 42.0, "foobar", 0x1234L), n6.remove(5));
+      assertSame(Quintet.class, n6.remove(0).getClass());
+      assertSame(Quintet.class, n6.remove(2).getClass());
+      assertSame(Quintet.class, n6.remove(5).getClass());
    }
    
    @Test public void remove_moreThanSixItems() {
@@ -207,8 +231,21 @@ public class NTupleTest {
       assertSame(NTuple.class, n.removeThird().getClass());
       assertSame(NTuple.class, n.removeFourth().getClass());
       assertSame(NTuple.class, n.removeFifth().getClass());
+      // random access
+      assertEquals(NTuple.create(1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ"),
+            n.remove(0));
+      assertEquals(NTuple.create("a", 1, 42.0, "foobar", "baz", 2, 4, 8, 16, "ABC", "XYZ"),
+            n.remove(4));
+      assertEquals(NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 8, 16, "ABC", "XYZ"),
+            n.remove(7));
+      assertEquals(NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC"),
+            n.remove(11));
+      assertSame(NTuple.class, n.remove(0).getClass());
+      assertSame(NTuple.class, n.remove(4).getClass());
+      assertSame(NTuple.class, n.remove(7).getClass());
+      assertSame(NTuple.class, n.remove(11).getClass());
    }
-   
+
    @Test public void transform() {
       Function<Object, String> f = new Function<Object, String>() {
          @Override public String apply(Object o) {
@@ -235,6 +272,92 @@ public class NTupleTest {
       assertEquals(
             NTuple.create("a", 1, 42.0, "foobar", "abcdefg", "baz", 2, 4, 8, 16, "ABC", "XYZ"), 
             n.transformFifth(f));
+      
+      // random access
+      assertEquals(
+            NTuple.create("abcdefg", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ"),
+            n.transform(0, f));
+      assertEquals(
+            NTuple.create("a", 1, 42.0, "foobar", "abcdefg", "baz", 2, 4, 8, 16, "ABC", "XYZ"), 
+            n.transform(4, f));
+      assertEquals(
+            NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, "abcdefg", 8, 16, "ABC", "XYZ"), 
+            n.transform(7, f));
+      assertEquals(
+            NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "abcdefg"), 
+            n.transform(11, f));
+   }
+   
+   private void expectOutOfRange(String message, Runnable r) {
+      try {
+         r.run();
+         fail("Expecting IndexOutOfBoundsException but nothing caught");
+      } catch (IndexOutOfBoundsException expected) {
+         assertEquals(message, expected.getMessage());
+      }
+   }
+   
+   @Test public void indexOutOfRange() {
+      // get
+      expectOutOfRange("-1 < 0", new Runnable() {
+         @Override public void run() {
+            n.get(-1);
+         }
+      });
+      expectOutOfRange("12 >= 12", new Runnable() {
+         @Override public void run() {
+            n.get(n.size());
+         }
+      });
+      // set
+      expectOutOfRange("-1 < 0", new Runnable() {
+         @Override public void run() {
+            n.set(-1, "abc");
+         }
+      });
+      expectOutOfRange("12 >= 12", new Runnable() {
+         @Override public void run() {
+            n.set(n.size(), "abc");
+         }
+      });
+      // insert
+      expectOutOfRange("-1 < 0", new Runnable() {
+         @Override public void run() {
+            n.insert(-1, "abc");
+         }
+      });
+      expectOutOfRange("13 > 12", new Runnable() {
+         @Override public void run() {
+            n.insert(n.size() + 1, "abc");
+         }
+      });
+      // remove
+      expectOutOfRange("-1 < 0", new Runnable() {
+         @Override public void run() {
+            n.remove(-1);
+         }
+      });
+      expectOutOfRange("12 >= 12", new Runnable() {
+         @Override public void run() {
+            n.remove(n.size());
+         }
+      });
+      // transform
+      final Function<Object, String> fn = new Function<Object, String>() {
+         @Override public String apply(Object o) {
+            return "eek!";
+         }
+      };
+      expectOutOfRange("-1 < 0", new Runnable() {
+         @Override public void run() {
+            n.transform(-1, fn);
+         }
+      });
+      expectOutOfRange("12 >= 12", new Runnable() {
+         @Override public void run() {
+            n.transform(n.size(), fn);
+         }
+      });
    }
    
    // serialization

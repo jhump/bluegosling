@@ -3,8 +3,9 @@ package com.apriori.concurrent;
 
 /**
  * Represents a repeating task. Canceling a repeating task will cancel all future occurrences of
- * the task. This future will not complete until the last execution of the task completes, usually
- * when an execution fails and causes future occurrences to be aborted.
+ * the task. This future will not complete until canceled or the last invocation of the task
+ * completes. The latter usually occurs when an invocation fails and causes future occurrences to be
+ * aborted.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *

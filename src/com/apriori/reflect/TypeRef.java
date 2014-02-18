@@ -128,8 +128,8 @@ public abstract class TypeRef<T> {
 
    /**
     * A generic type variable for a generic class. This includes a reference to the actual
-    * {@code java.lang.reflect.TypeVariable} as well as a reference to the {@code TypeRef} for the
-    * type variable if the variable can be resolved.
+    * {@code java.lang.reflect.TypeVariable} as well as an optional reference to the {@code TypeRef}
+    * for the type variable if it can be resolved.
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -326,7 +326,7 @@ public abstract class TypeRef<T> {
    private final GenericClass genericClass;
 
    /**
-    * The generic type variables for this type, as a map of variable names to objects that are
+    * The generic type variables for this type, as a map of variable names to  objects that are
     * either {@code TypeRef}s (for variables that can be resolved) or {@code TypeVariable}s (for
     * those that cannot be resolved).
     */
@@ -455,7 +455,7 @@ public abstract class TypeRef<T> {
    private Type findTypeForTypeVariable(TypeVariable<?> typeVar) {
       GenericDeclaration gd = typeVar.getGenericDeclaration();
       if (!(gd instanceof Class)) {
-         // if type variable belongs to a constructor or class, we won't
+         // if type variable belongs to a constructor or method, we won't
          // be able to resolve it
          return null;
       }

@@ -21,6 +21,8 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
     *
     * @param <R> result type of invoking the crawler
     * @param <P> parameter type for invoking the crawler (or {@code Void} if there is no parameter)
+    * 
+    * @see ClassHierarchyCrawler#builder()
     */
    public static class Builder<R, P> {
       private ClassVisitor<R, P> visitor;
@@ -126,7 +128,7 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
    
    /**
     * Creates a new builder. The default settings include pre-order traversal, stopping the crawl on
-    * the first non-null result, and will include interfaces in the crawl.
+    * the first non-null result, and including interfaces in the crawl.
     * 
     * @return a new builder
     */

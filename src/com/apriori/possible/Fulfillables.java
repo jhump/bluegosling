@@ -80,7 +80,7 @@ public final class Fulfillables {
          }
 
          @Override
-         public <R> R visit(Possible.Visitor<T, R> visitor) {
+         public <R> R visit(Possible.Visitor<? super T, R> visitor) {
             return visitor.present(value);
          }
       };
@@ -119,6 +119,8 @@ public final class Fulfillables {
       public Possible<T> or(Possible<T> alternate) {
          return value != null ? this : alternate;
       }
+
+      // TODO: transform and filter should return views, not snapshots
 
       @Override
       public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
@@ -208,7 +210,7 @@ public final class Fulfillables {
       }
 
       @Override
-      public <R> R visit(Possible.Visitor<T, R> visitor) {
+      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
          return value != null ? visitor.present(value.get()) : visitor.absent();
       }
    }

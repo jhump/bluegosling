@@ -187,7 +187,7 @@ public abstract class Generator<T, X extends Throwable> {
    /**
     * Creates a new generator whose generation logic is performed by a {@link Sink} that accepts
     * the generator's output. This will prove useful API in Java 8 since {@link Sink} is a
-    * functional interface. The new generated uses the specified executor to run logic for each
+    * functional interface. The new generator uses the specified executor to run logic for each
     * execution.
     *
     * @param sink the sink that accepts the generator's output and uses it to yield generated values
@@ -400,7 +400,7 @@ public abstract class Generator<T, X extends Throwable> {
       
       /**
        * Interrupts the generator thread when the sequence is garbage collected. This is done by
-       * cancelling the future that represents the generation logic.
+       * canceling the future that represents the generation logic.
        */
       @Override protected void finalize() throws Throwable {
          if (future != null) {
