@@ -1,6 +1,7 @@
 com.apriori.apt
 com.apriori.apt.reflect
 com.apriori.apt.testing
+com.apriori.choice
 com.apriori.collections
 com.apriori.concurrent
 com.apriori.concurrent.atoms

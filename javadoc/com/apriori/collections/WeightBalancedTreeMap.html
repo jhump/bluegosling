@@ -106,10 +106,11 @@ implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.ht
  minimal performance benefit for queries when compared to a height-balanced tree.
  
  <p>The time to rebalance with the current algorithm is <em>O( (log n) <sup>3</sup> )</em>. Even
- though this is still sub-linear, it is ends up being significantly worse in large trees than the
+ though this is still sub-linear, it ends up being significantly worse in large trees than the
  rebalancing operation used by height-balanced trees (which is just <em>O(log n)</em>). Note that
- it is certainly possible that the algorithm herein could be improved upon such that it has only
- logarithmic runtime complexity.
+ minimal time was spent developing the rebalance algorithm and no time has been spent on
+ optimizing its implementation. So it is entirely possible that a logarithmic solution exists to
+ maintain weight balance in the tree.
  
  <p>One interesting artifact is that the state needed to maintain fully weight-balanced trees and
  sub-trees also makes it possible to randomly access keys by their ordinal position.
@@ -136,7 +137,7 @@ implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.ht
  </ol>
  
  <a name="remove-entry"></a><h3>Removing an Entry</h3>
- To maintain weight balance when removes nodes from the tree, the following procedure is used:
+ To maintain weight balance when removing nodes from the tree, the following procedure is used:
  <ol>
  <li>Perform a standard removal from a binary tree.</li>
  <li>If the node to remove, <code>toBeRemoved</code>, is an inner node with two children:

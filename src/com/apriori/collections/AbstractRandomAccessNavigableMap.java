@@ -983,21 +983,6 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   /**
-    * A sub-map view, with bounds on the range of included keys. This implementation defines its
-    * operations in terms of operations on the main map. Sub-classes rarely need to extend this
-    * class, but may do so if (for example) they can provide more efficient implementations for some
-    * operations.
-    * 
-    * <p>For example, overriding the {@link Iterator} implementation for a map's {@link
-    * #navigableKeySet()} can often be done more efficiently (depending on the exact data structures
-    * used). If it is overridden in the main map implementation (likely by extending {@link KeySet}
-    * and overriding the map's {@link #navigableKeySet()} method) then it is also prudent to extend
-    * this class and override in the same way so that sub-map views can also take advantage of the
-    * faster implementation.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
    protected class RandomAccessSubMap extends AbstractRandomAccessNavigableMap<K, V> {
       
       private final K lowerBound;
@@ -1011,10 +996,10 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
        * Constructs a new sub-map view with the given bounds.
        * 
        * @param lowerBound the lower bound, ignored when
-       *       {@code lowerBoundType == }{@link BoundType#NO_BOUND}
+       *       {@code lowerBoundType == }{@link AbstractNavigableMap.BoundType#NO_BOUND NO_BOUND}
        * @param lowerBoundType the lower bound type
        * @param upperBound the upper bound, ignored when
-       *       {@code upperBoundType == }{@link BoundType#NO_BOUND}
+       *       {@code upperBoundType == }{@link AbstractNavigableMap.BoundType#NO_BOUND NO_BOUND}
        * @param upperBoundType the upper bound type
        */
       protected RandomAccessSubMap(K lowerBound, BoundType lowerBoundType, K upperBound,
@@ -1402,10 +1387,10 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
        * Returns the main map's modification count. This allows iterators over sub-map views to
        * properly fail-fast.
        * 
-       * <p>Since a {@link SubMap} <em>extends</em> {@link AbstractNavigableMap}, it also inherits
-       * a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is compared to the
-       * main maps' value to detect when the sub-map's memo-ized size is stale and elements need to
-       * be counted.
+       * <p>Since a {@link RandomAccessSubMap} <em>extends</em> {@link AbstractRandomAccessNavigableMap},
+       * it also inherits a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is
+       * compared to the main maps' value to detect when the sub-map's memo-ized size and index
+       * bounds are stale and elements need to be counted.
        * 
        * @return {@inheritDoc}
        */

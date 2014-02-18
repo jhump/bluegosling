@@ -108,6 +108,7 @@
 <br>
 <pre>public static enum <span class="strong">DispatchSettings.Visibility</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a>&gt;</pre>
+<div class="block">A level of method visibility, for example <code>public</code>, <code>private</code>, etc.</div>
 </li>
 </ul>
 </div>
@@ -126,16 +127,24 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is
 <th class="colOne" scope="col">Enum Constant and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PACKAGE_PRIVATE">PACKAGE_PRIVATE</a></strong></code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PACKAGE_PRIVATE">PACKAGE_PRIVATE</a></strong></code>
+<div class="block">A method with no visibility keyword, aka default visibility or "package protected".</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PRIVATE">PRIVATE</a></strong></code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PRIVATE">PRIVATE</a></strong></code>
+<div class="block">A method that is marked with the keyword <code>private</code>.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PROTECTED">PROTECTED</a></strong></code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PROTECTED">PROTECTED</a></strong></code>
+<div class="block">A method that is marked with the keyword <code>protected</code>.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PUBLIC">PUBLIC</a></strong></code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#PUBLIC">PUBLIC</a></strong></code>
+<div class="block">A method that is marked with the keyword <code>public</code>.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -154,7 +163,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#isVisible(int)">isVisible</a></strong>(int&nbsp;modifiers)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html#isVisible(int)">isVisible</a></strong>(int&nbsp;modifiers)</code>
+<div class="block">Returns true if the given modifiers indicate a method that has this level of visibility
+ or higher.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a></code></td>
@@ -198,22 +210,14 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a name="PUBLIC">
+<a name="PRIVATE">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>PUBLIC</h4>
-<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PUBLIC</pre>
-</li>
-</ul>
-<a name="PROTECTED">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROTECTED</h4>
-<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PROTECTED</pre>
+<h4>PRIVATE</h4>
+<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PRIVATE</pre>
+<div class="block">A method that is marked with the keyword <code>private</code>.</div>
 </li>
 </ul>
 <a name="PACKAGE_PRIVATE">
@@ -223,15 +227,27 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PACKAGE_PRIVATE</h4>
 <pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PACKAGE_PRIVATE</pre>
+<div class="block">A method with no visibility keyword, aka default visibility or "package protected".</div>
 </li>
 </ul>
-<a name="PRIVATE">
+<a name="PROTECTED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PROTECTED</h4>
+<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PROTECTED</pre>
+<div class="block">A method that is marked with the keyword <code>protected</code>.</div>
+</li>
+</ul>
+<a name="PUBLIC">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>PRIVATE</h4>
-<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PRIVATE</pre>
+<h4>PUBLIC</h4>
+<pre>public static final&nbsp;<a href="../../../com/apriori/reflect/DispatchSettings.Visibility.html" title="enum in com.apriori.reflect">DispatchSettings.Visibility</a> PUBLIC</pre>
+<div class="block">A method that is marked with the keyword <code>public</code>.</div>
 </li>
 </ul>
 </li>
@@ -286,6 +302,9 @@ with the specified name</dd>
 <li class="blockList">
 <h4>isVisible</h4>
 <pre>public abstract&nbsp;boolean&nbsp;isVisible(int&nbsp;modifiers)</pre>
+<div class="block">Returns true if the given modifiers indicate a method that has this level of visibility
+ or higher. Private is the lowest level of visibility, so every method has that level of
+ visibility or higher. Public is the highest level.</div>
 </li>
 </ul>
 </li>

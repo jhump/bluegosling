@@ -504,7 +504,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                                   <a href="../../../com/apriori/util/Function.Bivariate.html" title="interface in com.apriori.util">Function.Bivariate</a>&lt;? super T,? super U,? extends V&gt;&nbsp;function)</pre>
 <div class="block">Combines two futures into one by applying a function. The value of the returned future is the
  result of applying the specified function to the values of the two futures. The returned
- future will complete successfully both input futures complete successfully. The returned
+ future will complete successfully when both input futures complete successfully. The returned
  future will fail if either of the input futures fails. 
 
  <p>The returned future's cancellation status will be kept in sync with the two input futures.

@@ -104,8 +104,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  changes made in the transaction are committed. Otherwise, all changes are rolled back and the
  exception that was thrown from the block is propagated.
  
- <p><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a>s also participate in transactions. Changes that are queued for an
- <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a> are only submitted for execution when the transaction commits. Any
+ <p><code>AsynchronousAtomTest</code>s also participate in transactions. Changes that are queued for an
+ <code>AsynchronousAtomTest</code> are only submitted for execution when the transaction commits. Any
  pending operations that are effected by a rollback will be cancelled.</div>
 </li>
 </ul>
@@ -366,7 +366,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>rollback</h4>
 <pre>public&nbsp;void&nbsp;rollback()</pre>
 <div class="block">Rolls back the current transaction. This resets all mutations made. All futures associated
- with <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a> operations and <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">asynchronous actions</a> that have been performed in this transaction are
+ with <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a> operations and asynchronous actions that have been performed in this transaction are
  cancelled.</div>
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this transaction is not running on the current thread</dd></dl>
@@ -396,7 +396,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public&nbsp;void&nbsp;rollbackTo(<a href="../../../../com/apriori/concurrent/atoms/Transaction.Savepoint.html" title="class in com.apriori.concurrent.atoms">Transaction.Savepoint</a>&nbsp;point)</pre>
 <div class="block">Performs a partial roll back. All mutations made since the specified savepoint was established
  are reset. Similarly, all futures for <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute(com.apriori.util.Function)">commute</a>
- operations and <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">asynchronous actions</a> are cancelled. Changes made
+ operations and asynchronous actions are cancelled. Changes made
  prior to the savepoint being established are retained.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>point</code> - the savepoint up to which point the transaction is reversed</dd>
 <dt><span class="strong">Throws:</span></dt>

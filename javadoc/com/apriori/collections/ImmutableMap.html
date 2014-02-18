@@ -83,6 +83,7 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>K</code> - the type of keys in the map</dd><dd><code>V</code> - the type of values in the map</dd></dl>
 <dl>
 <dt>All Superinterfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
@@ -99,6 +100,13 @@
 <br>
 <pre>public interface <span class="strong">ImmutableMap&lt;K,V&gt;</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</pre>
+<div class="block">An immutable, read-only set of key+value mappings. This interface is similar to the standard
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface except that it defines no mutation operations.
+ 
+ <p>The <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true#remove()" title="class or interface in java.util"><code>remove()</code></a> operation of an immutable map's
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true#iterator()" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> always throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>. Similarly the
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true#iterator()" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> for any of the collection views of the map will also always throw
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -180,7 +188,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableMap.html#isEmpty()">isEmpty</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableMap.html#isEmpty()">isEmpty</a></strong>()</code>
+<div class="block">Determines whether this map is empty or not.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>&gt;</code></td>
@@ -188,7 +198,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableMap.html#size()">size</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/ImmutableMap.html#size()">size</a></strong>()</code>
+<div class="block">Determines the number of entries in this map.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;</code></td>
@@ -223,6 +235,8 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <li class="blockList">
 <h4>size</h4>
 <pre>int&nbsp;size()</pre>
+<div class="block">Determines the number of entries in this map.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the number of entries in this map</dd></dl>
 </li>
 </ul>
 <a name="isEmpty()">
@@ -232,6 +246,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.htm
 <li class="blockList">
 <h4>isEmpty</h4>
 <pre>boolean&nbsp;isEmpty()</pre>
+<div class="block">Determines whether this map is empty or not. The map is empty if and only if it contains zero
+ entries.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if this map is entry, false otherwise</dd></dl>
 </li>
 </ul>
 <a name="containsKey(java.lang.Object)">

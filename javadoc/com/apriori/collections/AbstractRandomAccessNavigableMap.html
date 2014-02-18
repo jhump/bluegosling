@@ -96,15 +96,29 @@
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>K</code> - the type of keys in the map</dd><dd><code>V</code> - the type of values in the map</dd></dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;K,V&gt;</dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessSubMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.RandomAccessSubMap</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndices.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.SubMapByIndices</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public abstract class <span class="strong">AbstractRandomAccessNavigableMap&lt;K,V&gt;</span>
 extends <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a>&lt;K,V&gt;
 implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;</pre>
+<div class="block">An abstract base class for <a href="../../../com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections"><code>RandomAccessNavigableMap</code></a> implementations. Sub-classes must
+ implement most of the methods needed to implement a normal <a href="../../../com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections"><code>AbstractNavigableMap</code></a>. The
+ main differences follow:
+ <ul>
+    <li>Methods <code>firstEntry()</code> and <code>lastEntry()</code> do not need to be implemented. This
+    abstract map implements them in terms of random access, e.g. <code>getEntry(0)</code></li>
+    <li>New random access methods, <a href="../../../com/apriori/collections/RandomAccessNavigableMap.html#getEntry(int)"><code>RandomAccessNavigableMap.getEntry(int)</code></a> and <a href="../../../com/apriori/collections/RandomAccessNavigableMap.html#removeEntry(int)"><code>RandomAccessNavigableMap.removeEntry(int)</code></a>, must be
+    implemented.</li>
+ </ul></div>
 </li>
 </ul>
 </div>
@@ -145,9 +159,27 @@ implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.ht
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.ValueList.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.ValueList</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessSubMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.RandomAccessSubMap</a></strong></code>
+<div class="block">A sub-map view, with key value bounds, not indices.</div>
+</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndices.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.SubMapByIndices</a></strong></code>
+<div class="block">A sub-map view, defined by a range of indices.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndicesAndByValueBounds.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.SubMapByIndicesAndByValueBounds</a></strong></code>
+<div class="block">A sub-map view for a <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndices.html" title="class in com.apriori.collections"><code>AbstractRandomAccessNavigableMap.SubMapByIndices</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.ValueList.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.ValueList</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.ValueListIteratorImpl.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.ValueListIteratorImpl</a></strong></code>&nbsp;</td>
 </tr>
@@ -192,10 +224,21 @@ implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.ht
 <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html#AbstractRandomAccessNavigableMap()">AbstractRandomAccessNavigableMap</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html#AbstractRandomAccessNavigableMap()">AbstractRandomAccessNavigableMap</a></strong>()</code>
+<div class="block">Constructs a new, empty map that orders keys according to their <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural
+ ordering</a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html#AbstractRandomAccessNavigableMap(java.util.Comparator)">AbstractRandomAccessNavigableMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="type parameter in AbstractRandomAccessNavigableMap">K</a>&gt;&nbsp;comparator)</code>
+<div class="block">Constructs a new, empty map that orders keys using the specified comparator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -365,10 +408,23 @@ implements <a href="../../../com/apriori/collections/RandomAccessNavigableMap.ht
 <a name="AbstractRandomAccessNavigableMap()">
 <!--   -->
 </a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AbstractRandomAccessNavigableMap</h4>
+<pre>protected&nbsp;AbstractRandomAccessNavigableMap()</pre>
+<div class="block">Constructs a new, empty map that orders keys according to their <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural
+ ordering</a>.</div>
+</li>
+</ul>
+<a name="AbstractRandomAccessNavigableMap(java.util.Comparator)">
+<!--   -->
+</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractRandomAccessNavigableMap</h4>
-<pre>public&nbsp;AbstractRandomAccessNavigableMap()</pre>
+<pre>protected&nbsp;AbstractRandomAccessNavigableMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="type parameter in AbstractRandomAccessNavigableMap">K</a>&gt;&nbsp;comparator)</pre>
+<div class="block">Constructs a new, empty map that orders keys using the specified comparator.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>comparator</code> - determines ordering of keys in the map</dd></dl>
 </li>
 </ul>
 </li>

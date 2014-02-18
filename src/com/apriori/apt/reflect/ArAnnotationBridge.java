@@ -48,15 +48,15 @@ import java.util.Map;
  * </pre>
  * 
  * <p>So use {@link #createBridge(ArAnnotation)} to create an instance of an annotation interface
- * based on a {@link ArAnnotation}. And then use {@link #bridge(ArClass)} or {@link #bridge(ArClass[])}
+ * based on a {@link ArAnnotation}. And then use {@link #bridge(Class)} or {@link #bridge(Class[])}
  * to access class tokens returned from that interface. You can optionally use
  * {@link #bridge(Object)} to access other fields returned from the interface but it's not
  * necessary.
  * 
- * <p>Since the annotation method actually returns {@code null}, the {@link #bridge(ArClass)} method
- * doesn't actually look at the incoming argument. It accepts an argument for syntactic sugar. In
- * reality, the call to this method sets thread-local state to the bridged value which is then
- * accessed via the call to {@link #bridge(ArClass)}.
+ * <p>Since the annotation method actually returns {@code null}, the {@link #bridge(Class)} method
+ * doesn't actually "convert" the incoming argument. In reality, the call to the annotation method
+ * sets thread-local state to the bridged value which is then accessed via the call to
+ * {@link #bridge(Class)}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -90,9 +90,8 @@ public final class ArAnnotationBridge {
     * the contract specified by {@link java.lang.annotation.Annotation}. Bridged annotations can
     * safely be compared to one another but not to actual (non-bridge) annotation objects.</li>
     * <li>Methods that return {@code java.lang.Class} or {@code java.lang.Class[]} values will
-    * always return {@code null}. Callers must use {@link #bridge(ArClass)} or {@link #bridge(ArClass[])}
-    * to get to these values, but as {@link ArClass} objects instead of as {@link java.lang.Class
-    * java.lang.Class} tokens.</li>
+    * always return {@code null}. Callers must use {@link #bridge(Class)} or {@link #bridge(Class[])}
+    * to get to these values, but as {@link ArClass} objects instead of as {@link Class} tokens.</li>
     * </ul>
     * 
     * @param annotation the annotation to be bridged
@@ -133,7 +132,7 @@ public final class ArAnnotationBridge {
     *       the class has no such annotation
     * @throws NullPointerException if either argument is {@code null}
     * 
-    * @see #createBridge(ArAnnotation, ArClass)
+    * @see #createBridge(ArAnnotation, Class)
     */
    public static <T extends java.lang.annotation.Annotation> T createBridge(ArClass annotatedClass,
          java.lang.Class<T> annotationType) {
@@ -156,7 +155,7 @@ public final class ArAnnotationBridge {
     *       the type of the specified annotation
     * @throws NullPointerException if the argument is {@code null}
     *       
-    * @see #createBridge(ArAnnotation, ArClass)
+    * @see #createBridge(ArAnnotation, Class)
     */
    public static java.lang.annotation.Annotation createBridge(ArAnnotation annotation)
          throws ClassNotFoundException {
@@ -181,7 +180,7 @@ public final class ArAnnotationBridge {
     *       the type of the specified annotation
     * @throws NullPointerException if either argument is {@code null}
     *       
-    * @see #createBridge(ArAnnotation, ArClass)
+    * @see #createBridge(ArAnnotation, Class)
     */
    public static java.lang.annotation.Annotation createBridge(ArAnnotation annotation,
          ClassLoader classLoader) throws ClassNotFoundException {

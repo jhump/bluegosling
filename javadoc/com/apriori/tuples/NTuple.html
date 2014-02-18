@@ -178,39 +178,52 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#get(int)">get</a></strong>(int&nbsp;index)</code>
+<div class="block">Retrieves an item from the tuple using its index.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#getFifth()">getFifth</a></strong>()</code>
 <div class="block">Retrieves the fifth item in the tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#getFirst()">getFirst</a></strong>()</code>
 <div class="block">Retrieves the first item in the tuple.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#getFourth()">getFourth</a></strong>()</code>
 <div class="block">Retrieves the fourth item in the tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#getSecond()">getSecond</a></strong>()</code>
 <div class="block">Retrieves the second item in the tuple.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a></code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#getThird()">getThird</a></strong>()</code>
 <div class="block">Retrieves the third item in the tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">Returns the hash code value for this tuple.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#insert(int, java.lang.Object)">insert</a></strong>(int&nbsp;index,
+      <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Inserts the specified value at the given index.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -254,33 +267,46 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#iterator()">iterator</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;?,?,?,?,?&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#remove(int)">remove</a></strong>(int&nbsp;index)</code>
+<div class="block">Removes the value at the given index.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#removeFifth()">removeFifth</a></strong>()</code>
 <div class="block">Removes the fifth item from the tuple.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#removeFirst()">removeFirst</a></strong>()</code>
 <div class="block">Removes the first item from the tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#removeFourth()">removeFourth</a></strong>()</code>
 <div class="block">Removes the fourth item from the tuple.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#removeSecond()">removeSecond</a></strong>()</code>
 <div class="block">Removes the second item from the tuple.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>,?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#removeThird()">removeThird</a></strong>()</code>
 <div class="block">Removes the third item from the tuple.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#set(int, java.lang.Object)">set</a></strong>(int&nbsp;index,
+   <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">Sets the item at the given index to the specified value.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -336,36 +362,43 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#toString()">toString</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;T,T,T,T,T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</code>
-<div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
+<td class="colFirst"><code><a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transform(int, com.apriori.util.Function)">transform</a></strong>(int&nbsp;index,
+         <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,?&gt;&nbsp;function)</code>
+<div class="block">Transforms the value at the given index using the given function.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;T,T,T,T,T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</code>
+<div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformFifth(com.apriori.util.Function)">transformFifth</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the fifth item in the tuple using the specified function.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;T,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformFirst(com.apriori.util.Function)">transformFirst</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the first item in the tuple using the specified function.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,T,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformFourth(com.apriori.util.Function)">transformFourth</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the fourth item in the tuple using the specified function.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,T,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformSecond(com.apriori.util.Function)">transformSecond</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the second item in the tuple using the specified function.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">A</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">B</a>,T,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">D</a>,<a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/NTuple.html#transformThird(com.apriori.util.Function)">transformThird</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;? super <a href="../../../com/apriori/tuples/NTuple.html" title="type parameter in NTuple">C</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the third item in the tuple using the specified function.</div>
@@ -422,7 +455,8 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
                                    E&nbsp;e,
                                    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;f,
                                    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;others)</pre>
-<div class="block">Creates a new tuple. The tuple must have at least 6 items.</div>
+<div class="block">Creates a new tuple. The tuple must have at least 6 items (otherwise, it would be a
+ <a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples"><code>Quintet</code></a>).</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>a</code> - the first item</dd><dd><code>b</code> - the second item</dd><dd><code>c</code> - the third item</dd><dd><code>d</code> - the fourth item</dd><dd><code>e</code> - the fifth item</dd><dd><code>f</code> - the sixth item</dd><dd><code>others</code> - any items beyond the sixth</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a tuple with the specified items</dd></dl>
 </li>
@@ -965,7 +999,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transformAll</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;T,T,T,T,T&gt;&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;T,T,T,T,T&gt;&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#transformAll(com.apriori.util.Function)">Tuple</a></code></strong></div>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one. Since
  tuples are immutable, a new tuple is returned. The returned tuple will have the same number of
@@ -1096,6 +1130,101 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interfac
 <dt><span class="strong">Parameters:</span></dt><dd><code>function</code> - the function to apply</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a new tuple with the fifth item set to the result of applying the specified
     function to the fifth item in this tuple</dd></dl>
+</li>
+</ul>
+<a name="get(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;get(int&nbsp;index)</pre>
+<div class="block">Retrieves an item from the tuple using its index. This is required to access items in the
+ tuple beyond the fifth. Indices are zero-based, so a value of zero would be the same as
+ calling <a href="../../../com/apriori/tuples/NTuple.html#getFirst()"><code>getFirst()</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the zero-based index of the item to retrieve</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the item at the given index</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the given index is less than zero or is greater than or
+       equal to the tuple's <a href="../../../com/apriori/tuples/NTuple.html#size()"><code>size()</code></a></dd></dl>
+</li>
+</ul>
+<a name="set(int, java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;&nbsp;set(int&nbsp;index,
+                    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">Sets the item at the given index to the specified value. Since tuples are immutable, this
+ returns a new tuple with the specified element changed. Indices are zero-based, so a value of
+ zero would be the same as calling <a href="../../../com/apriori/tuples/NTuple.html#setFirst(T)"><code>setFirst(Object)</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the zero-based index of the item to change</dd><dd><code>o</code> - the item to set at the specified index</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is identical to this tuple except that the item at the given index
+       is the given value</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the given index is less than zero or is greater than or
+       equal to the tuple's <a href="../../../com/apriori/tuples/NTuple.html#size()"><code>size()</code></a></dd></dl>
+</li>
+</ul>
+<a name="insert(int, java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>insert</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;&nbsp;insert(int&nbsp;index,
+                       <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">Inserts the specified value at the given index. Since tuples are immutable, this returns a new
+ tuple with the added element. Any items at or after the given index will be pushed out so that
+ they appear after the newly added element in the resulting tuple. Indices are zero-based, so a
+ value of zero would be the same as calling <a href="../../../com/apriori/tuples/NTuple.html#insertFirst(T)"><code>insertFirst(Object)</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the zero-based index where the new item should be inserted</dd><dd><code>o</code> - the item to insert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is identical to this tuple except that the given item has been
+       inserted at the given index</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the given index is less than zero or is greater than the
+       tuple's <a href="../../../com/apriori/tuples/NTuple.html#size()"><code>size()</code></a></dd></dl>
+</li>
+</ul>
+<a name="remove(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;?,?,?,?,?&gt;&nbsp;remove(int&nbsp;index)</pre>
+<div class="block">Removes the value at the given index. Since tuples are immutable, this returns a new tuple
+ with the element removed. Indices are zero-based, so a value of zero would be the same as
+ calling <a href="../../../com/apriori/tuples/NTuple.html#removeFirst()"><code>removeFirst()</code></a>.
+ 
+ <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
+ thus be an instance of <a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples"><code>Quintet</code></a>. If this tuple has more than six elements, then the
+ returned tuple will also be an <a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples"><code>NTuple</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the zero-based index of the item to remove</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is identical to this tuple except it has one fewer item due to the
+       item at the given index being removed</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the given index is less than zero or is greater than or
+       equal to the tuple's <a href="../../../com/apriori/tuples/NTuple.html#size()"><code>size()</code></a></dd></dl>
+</li>
+</ul>
+<a name="transform(int, com.apriori.util.Function)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>transform</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;?,?,?,?,?&gt;&nbsp;transform(int&nbsp;index,
+                          <a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,?&gt;&nbsp;function)</pre>
+<div class="block">Transforms the value at the given index using the given function. Since tuples are immutable,
+ this will return a new tuple with the transformed value. Indices are zero-based, so a value of
+ zero would be the same as calling <a href="../../../com/apriori/tuples/NTuple.html#transformFirst(com.apriori.util.Function)"><code>transformFirst(Function)</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the zero-based index of the item to change</dd><dd><code>function</code> - the function that is applied to the element to produce its new transformed
+       value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a new tuple that is identical to this tuple except that the element at the given index
+       will be the result of applying the given function to this tuple's value at that index</dd></dl>
 </li>
 </ul>
 <a name="iterator()">

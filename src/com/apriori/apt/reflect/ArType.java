@@ -71,35 +71,35 @@ public interface ArType {
        * kind is also used to represent primitive types and array types that do not refer to
        * parameterized types or type variables.
        * 
-       * @see Class
+       * @see ArClass
        */
       CLASS,
 
       /**
        * An array type whose component type refers to a parameterized type or type variable.
        * 
-       * @see GenericArrayType
+       * @see ArGenericArrayType
        */
       GENERIC_ARRAY_TYPE,
       
       /**
        * A parameterized type.
        * 
-       * @see ParameterizedType
+       * @see ArParameterizedType
        */
       PARAMETERIZED_TYPE,
       
       /**
        * A type variable.
        * 
-       * @see TypeVariable
+       * @see ArTypeVariable
        */
       TYPE_VARIABLE,
       
       /**
        * A wildcard type, which is any use of "?" in a type parameter.
        * 
-       * @see WildcardType
+       * @see ArWildcardType
        */
       WILDCARD_TYPE
    }

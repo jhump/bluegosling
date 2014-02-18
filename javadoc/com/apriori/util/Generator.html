@@ -349,7 +349,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                                <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><code>Sink</code></a> that accepts
  the generator's output. This will prove useful API in Java 8 since <a href="../../../com/apriori/util/Sink.html" title="interface in com.apriori.util"><code>Sink</code></a> is a
- functional interface. The new generated uses the specified executor to run logic for each
+ functional interface. The new generator uses the specified executor to run logic for each
  execution.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>sink</code> - the sink that accepts the generator's output and uses it to yield generated values</dd><dd><code>executor</code> - an executor</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a new generator that uses the given executor to run generation logic</dd></dl>

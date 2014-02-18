@@ -115,10 +115,10 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
  additional API.
  
  <p>Another implementation of the <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a> interface that doesn't necessarily
- represent a runnable task is <a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><code>SimpleListenableFuture</code></a>. That other class also implements
+ represent a runnable task is <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent"><code>AbstractListenableFuture</code></a>. That other class also implements
  some of the new API more efficiently since it doesn't operate within constraints inherited from
  <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/FutureTask.html?is-external=true" title="class or interface in java.util.concurrent"><code>FutureTask</code></a> (which was designed to provide a more simplistic API).</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><code>SimpleListenableFuture</code></a></dd></dl>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent"><code>AbstractListenableFuture</code></a></dd></dl>
 </li>
 </ul>
 </div>
@@ -138,8 +138,8 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutureTask.html#completionLock">completionLock</a></strong></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/concurrent/ListenableFutureTask.html#listenerLock">listenerLock</a></strong></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -286,13 +286,13 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="completionLock">
+<a name="listenerLock">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>completionLock</h4>
-<pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a> completionLock</pre>
+<h4>listenerLock</h4>
+<pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> listenerLock</pre>
 </li>
 </ul>
 </li>

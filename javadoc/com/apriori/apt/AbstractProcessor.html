@@ -59,13 +59,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_javax.annotation.processing.AbstractProcessor">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -100,10 +100,25 @@
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></dd>
 </dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../com/apriori/apt/reflect/ArProcessor.html" title="class in com.apriori.apt.reflect">ArProcessor</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public abstract class <span class="strong">AbstractProcessor</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></pre>
+<div class="block">An abstract annotation processor that makes for a better base class than the standard. This
+ class provides the following two new features:
+ <ul>
+ <li>This processor sets up thread-local state about the current processing environment. This
+ makes it easier for APIs to work with elements and type mirrors without requiring that callers
+ supply the environment. See <a href="../../../com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><code>ProcessingEnvironments</code></a> for more information.</li>
+ <li>The set of supported annotation types can be defined by referencing actual annotation
+ class tokens using a @<a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt"><code>SupportedAnnotationClasses</code></a> annotation on the processor.
+ Note that this does not provide any wildcard facilities, but can be used in conjunction with the
+ standard @<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a> annotation, which doess.</li>
+ </ul></div>
 </li>
 </ul>
 </div>
@@ -116,17 +131,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt">RoundEnvironment</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#roundEnv">roundEnv</a></strong></code>&nbsp;</td>
-</tr>
-</table>
 <ul class="blockList">
 <li class="blockList"><a name="fields_inherited_from_class_javax.annotation.processing.AbstractProcessor">
 <!--   -->
@@ -167,20 +171,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#getSupportedAnnotationTypes()">getSupportedAnnotationTypes</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#getSupportedAnnotationTypes()">getSupportedAnnotationTypes</a></strong>()</code>
+<div class="block">Returns the set of annotations supported by this processor.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#init(javax.annotation.processing.ProcessingEnvironment)">init</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#process(java.util.Set, javax.annotation.processing.RoundEnvironment)">process</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotations,
-       <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;env)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected abstract boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#process(java.util.Set)">process</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&gt;&nbsp;annotationTypes)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/AbstractProcessor.html#init(javax.annotation.processing.ProcessingEnvironment)">init</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code></td>
 </tr>
 </table>
 <ul class="blockList">
@@ -188,7 +185,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;javax.annotation.processing.<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></h3>
-<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getCompletions(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, javax.lang.model.element.ExecutableElement, java.lang.String)" title="class or interface in javax.annotation.processing">getCompletions</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedOptions()" title="class or interface in javax.annotation.processing">getSupportedOptions</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedSourceVersion()" title="class or interface in javax.annotation.processing">getSupportedSourceVersion</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#isInitialized()" title="class or interface in javax.annotation.processing">isInitialized</a></code></li>
+<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getCompletions(javax.lang.model.element.Element, javax.lang.model.element.AnnotationMirror, javax.lang.model.element.ExecutableElement, java.lang.String)" title="class or interface in javax.annotation.processing">getCompletions</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedOptions()" title="class or interface in javax.annotation.processing">getSupportedOptions</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedSourceVersion()" title="class or interface in javax.annotation.processing">getSupportedSourceVersion</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#isInitialized()" title="class or interface in javax.annotation.processing">isInitialized</a>, <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#process(java.util.Set, javax.annotation.processing.RoundEnvironment)" title="class or interface in javax.annotation.processing">process</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
@@ -205,23 +202,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field_detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a name="roundEnv">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>roundEnv</h4>
-<pre>protected&nbsp;<a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt">RoundEnvironment</a> roundEnv</pre>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_detail">
@@ -252,37 +232,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <li class="blockList">
 <h4>init</h4>
 <pre>public final&nbsp;void&nbsp;init(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</pre>
+<div class="block">
+ 
+ <p>In addition to setting a protected field for access by the processor, this also sets up
+ thread-local state with the current environment.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true#init(javax.annotation.processing.ProcessingEnvironment)" title="class or interface in javax.annotation.processing">init</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#init(javax.annotation.processing.ProcessingEnvironment)" title="class or interface in javax.annotation.processing">init</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="process(java.util.Set, javax.annotation.processing.RoundEnvironment)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>process</h4>
-<pre>public final&nbsp;boolean&nbsp;process(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotations,
-              <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;env)</pre>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true#process(java.util.Set, javax.annotation.processing.RoundEnvironment)" title="class or interface in javax.annotation.processing">process</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#process(java.util.Set, javax.annotation.processing.RoundEnvironment)" title="class or interface in javax.annotation.processing">process</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="process(java.util.Set)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>process</h4>
-<pre>protected abstract&nbsp;boolean&nbsp;process(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect">Class</a>&gt;&nbsp;annotationTypes)</pre>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><code>ProcessingEnvironments</code></a></dd></dl>
 </li>
 </ul>
 <a name="getSupportedAnnotationTypes()">
@@ -292,12 +251,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <li class="blockList">
 <h4>getSupportedAnnotationTypes</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getSupportedAnnotationTypes()</pre>
+<div class="block">Returns the set of annotations supported by this processor. If the processor class is
+ annotated with <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a> or <a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt"><code>SupportedAnnotationClasses</code></a> then
+ the union of all such referenced annotation types is returned. If the class has no such
+ annotations, an empty set is returned.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true#getSupportedAnnotationTypes()" title="class or interface in javax.annotation.processing">getSupportedAnnotationTypes</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#getSupportedAnnotationTypes()" title="class or interface in javax.annotation.processing">getSupportedAnnotationTypes</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing">AbstractProcessor</a></code></dd>
-</dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt"><code>SupportedAnnotationClasses</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -351,13 +314,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/proce
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_javax.annotation.processing.AbstractProcessor">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>

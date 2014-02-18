@@ -111,7 +111,11 @@ implements <a href="../../../com/apriori/collections/ImmutableSet.html" title="i
 
  <p>Nothing in this base class enforces set invariants. The only difference between this class
  and its super-class, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections"><code>AbstractImmutableCollection</code></a>, is that this one implements
- <a href="../../../com/apriori/collections/ImmutableSet.html#equals(java.lang.Object)"><code>ImmutableSet.equals(Object)</code></a> and <a href="../../../com/apriori/collections/ImmutableSet.html#hashCode()"><code>ImmutableSet.hashCode()</code></a>.</div>
+ <a href="../../../com/apriori/collections/ImmutableSet.html#equals(java.lang.Object)"><code>ImmutableSet.equals(Object)</code></a> and <a href="../../../com/apriori/collections/ImmutableSet.html#hashCode()"><code>ImmutableSet.hashCode()</code></a>.
+ 
+ <p>Sub-classes will likely override <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#contains(java.lang.Object)"><code>AbstractImmutableCollection.contains(Object)</code></a> to provide better performance. The
+ default implementation (inherited from <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections"><code>AbstractImmutableCollection</code></a>) performs a linear
+ scan through all elements in the set.</div>
 </li>
 </ul>
 </div>

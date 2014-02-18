@@ -20,8 +20,8 @@ import java.util.concurrent.Future;
 //TODO: tests
 public class Choices {
    /**
-    * A visitor for a choice with two options. When passed to {@link Choices2#visit(Visitor2)}, one
-    * of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with two options. When passed to {@link Choices2#visit(Choices.Visitor2)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -48,7 +48,7 @@ public class Choices {
    }
    
    /**
-    * A visitor for a choice with three options. When passed to {@link Choices3#visit(Visitor3)},
+    * A visitor for a choice with three options. When passed to {@link Choices3#visit(Choices.Visitor3)},
     * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
@@ -69,8 +69,8 @@ public class Choices {
    }
 
    /**
-    * A visitor for a choice with four options. When passed to {@link Choices4#visit(Visitor4)}, one
-    * of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with four options. When passed to {@link Choices4#visit(Choices.Visitor4)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -91,8 +91,8 @@ public class Choices {
    }
 
    /**
-    * A visitor for a choice with five options. When passed to {@link Choices5#visit(Visitor5)}, one
-    * of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with five options. When passed to {@link Choices5#visit(Choices.Visitor5)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -107,7 +107,7 @@ public class Choices {
       /**
        * Called when visiting a choice where the fifth option is present.
        *
-       * @param a the value of the fifth option that was present
+       * @param e the value of the fifth option that was present
        * @return the result of visiting the option
        */
       R visitFifth(E e);
@@ -289,7 +289,7 @@ public class Choices {
    }
    
    /**
-    * Returns a view of the given future as a {@link Variant}. Completed futures are inherently a
+    * Returns a view of the given future as a {@link Variant2}. Completed futures are inherently a
     * choice between a successful value and cause of failure. This allows conversion of the future
     * into an actual {@link Choice} object.
     *

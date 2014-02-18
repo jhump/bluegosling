@@ -106,17 +106,19 @@
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;</pre>
 <div class="block">An abstract base class for <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a> implementations. Concrete classes only need to
- implement methods that perform search operations:
+ implement the following methods, most of which perform search operations:
  <ul>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#size()" title="class or interface in java.util"><code>Map.size()</code></a></li>
     <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#firstEntry()" title="class or interface in java.util"><code>NavigableMap.firstEntry()</code></a></li>
     <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#lastEntry()" title="class or interface in java.util"><code>NavigableMap.lastEntry()</code></a></li>
     <li><a href="../../../com/apriori/collections/AbstractNavigableMap.html#getEntry(java.lang.Object)"><code>getEntry(K)</code></a></li>
     <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#lowerEntry(K)" title="class or interface in java.util"><code>lowerEntry(K)</code></a></li>
     <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true#higherEntry(K)" title="class or interface in java.util"><code>higherEntry(K)</code></a></li>
+    <li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util"><code>put(K, V)</code></a></li>
+    <li><a href="../../../com/apriori/collections/AbstractNavigableMap.html#removeEntry(java.lang.Object)"><code>removeEntry(Object)</code></a></li>
  </ul>
  This abstract class then implements everything else, including <a href="../../../com/apriori/collections/AbstractNavigableMap.html#keySet()"><code>keySet()</code></a> and
- <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>entrySet()</code></a>, in terms of those operations. Mutable maps must also implement
- <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true#put(K, V)" title="class or interface in java.util">store</a> and <a href="../../../com/apriori/collections/AbstractNavigableMap.html#removeEntry(java.lang.Object)">remove</a> operations.
+ <a href="../../../com/apriori/collections/AbstractNavigableMap.html#entrySet()"><code>entrySet()</code></a>, in terms of those operations.
  
  <p>This class is not thread-safe. So most of the method implementations herein cannot be used to
  correctly implement a <a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ConcurrentNavigableMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentNavigableMap</code></a>.
@@ -668,7 +670,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <div class="block">Finds an entry for a specified key. If the key does not exist in the map then <code>null</code>
  is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - the key</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the entry in the map for the specified key or <code>null</code> if one does not exist</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>the entry in the map for the specified key or <code>null</code> if one does not exist</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang">ClassCastException</a></code> - if the given key must be cast to compare to existing keys and
+       is not of a valid type</dd></dl>
 </li>
 </ul>
 <a name="removeEntry(java.lang.Object)">
@@ -681,7 +686,10 @@ implements <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Navigable
 <div class="block">Removes a mapping for the specified key and returns the removed entry. If the key does not
  exist in the map then <code>null</code> is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>key</code> - the key</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the entry in the map that was removed or <code>null</code> if no such entry exists</dd></dl>
+<dt><span class="strong">Returns:</span></dt><dd>the entry in the map that was removed or <code>null</code> if no such entry exists</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang">ClassCastException</a></code> - if the given key must be cast to compare to existing keys and
+       is not of a valid type</dd></dl>
 </li>
 </ul>
 <a name="containsKey(java.lang.Object)">

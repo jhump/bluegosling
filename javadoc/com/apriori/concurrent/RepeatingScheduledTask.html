@@ -93,8 +93,9 @@
 <pre>public interface <span class="strong">RepeatingScheduledTask&lt;V&gt;</span>
 extends <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;V&gt;</pre>
 <div class="block">Represents a repeating task. Canceling a repeating task will cancel all future occurrences of
- the task. This future will not complete until the last execution of the task completes, usually
- when an execution fails and causes future occurrences to be aborted.</div>
+ the task. This future will not complete until canceled or the last invocation of the task
+ completes. The latter usually occurs when an invocation fails and causes future occurrences to be
+ aborted.</div>
 </li>
 </ul>
 </div>

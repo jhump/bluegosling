@@ -33,7 +33,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
 <li>Next Class</li>
 </ul>
 <ul class="navList">
@@ -85,6 +85,10 @@
 <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Target.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE" title="class or interface in java.lang.annotation">TYPE</a>)
 <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Retention.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
 public @interface <span class="strong">SupportedAnnotationClasses</span></pre>
+<div class="block">An annotation used to indicate what annotation types an annotation processor supports. This
+ annotation can be used, along with the similar <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a> annotation,
+ to declaratively define the annotation types.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/apt/AbstractProcessor.html#getSupportedAnnotationTypes()"><code>AbstractProcessor.getSupportedAnnotationTypes()</code></a></dd></dl>
 </li>
 </ul>
 </div>
@@ -105,7 +109,9 @@ public @interface <span class="strong">SupportedAnnotationClasses</span></pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html#value()">value</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html#value()">value</a></strong></code>
+<div class="block">The set of supported annotation types, indicated via their class tokens.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -129,6 +135,7 @@ public @interface <span class="strong">SupportedAnnotationClasses</span></pre>
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;[]&nbsp;value</pre>
+<div class="block">The set of supported annotation types, indicated via their class tokens.</div>
 </li>
 </ul>
 </li>
@@ -156,7 +163,7 @@ public @interface <span class="strong">SupportedAnnotationClasses</span></pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
 <li>Next Class</li>
 </ul>
 <ul class="navList">

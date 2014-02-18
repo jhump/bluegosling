@@ -345,30 +345,69 @@ public final class Functions {
       };
    }
    
-   // TODO: javadoc
    /**
     * Performs a fold-right operation over the specified values and returns the result. This
     * operation is recursive and is defined as follows:<pre>
     *  foldr(list, fun, seed) => list.empty?
-    *                              then seed
-    *                              else fun(list.first, foldr(list.rest, fun, seed)
-    * </pre> 
+    *                            then seed
+    *                            else fun(list.first, foldr(list.rest, fun, seed))
+    * </pre>
+    * This results in the following diagram of how elements are composed via the folding function:<pre>
+    *       fun
+    *       / \
+    * list[0]  fun
+    *          / \
+    *    list[1]  fun
+    *             / \
+    *       list[2]  fun
+    *                / \
+    *          list[n]  seed
+    * </pre>
+    * That the shape of this tree descends to the right is why this function its named "fold right".
     *
-    * @param values
-    * @param function
-    * @param seed
-    * @return
+    * @param values the values to fold
+    * @param function the reducing function used at each pair-wise fold
+    * @param seed the root value; the result represents this root value, folded into the last
+    *       element, the result of which is then folded into the next-to-the-last element, etc.
+    * @return the result of folding all elements via the given function
     */
    public static <I, O> O foldRight(Iterable<I> values,
          Function.Bivariate<? super I, ? super O, ? extends O> function, O seed) {
       return foldRight(values.iterator(), function, seed);
    }
 
+   /**
+    * Performs a fold-left operation over the specified values and returns the result. This
+    * operation is recursive and is defined as follows:<pre>
+    *  foldl(list, fun, seed) => list.empty?
+    *                            then seed
+    *                            else foldl(list.rest, fun, fun(seed, list.first))
+    * </pre> 
+    * This results in the following diagram of how elements are composed via the folding function:<pre>
+    *            fun
+    *            / \
+    *          fun  list[n]
+    *          / \
+    *        fun  list[2]
+    *        / \
+    *     fun  list[1]
+    *     / \
+    * seed  list[0]
+    * </pre>
+    * That the shape of this tree descends to the left is why this function its named "fold left".
+    *
+    * @param values the values to fold
+    * @param function the reducing function used at each pair-wise fold
+    * @param seed the root value; the result represents this root value, folded into the first
+    *       element, the result of which is then folded into the next element, etc.
+    * @return the result of folding all elements via the given function
+    */
    public static <I, O> O foldLeft(Iterable<I> values,
          Function.Bivariate<? super O, ? super I, ? extends O> function, O seed) {
       return foldLeft(values.iterator(), function, seed);
    }
 
+   // TODO: javadoc
    public static <I, O> O foldRight(Iterator<I> values,
          Function.Bivariate<? super I, ? super O, ? extends O> function, O seed) {
       return values.hasNext() ? function.apply(values.next(), foldRight(values, function, seed))
@@ -478,11 +517,10 @@ public final class Functions {
    }
    
    public static <T> Function<T, T> yCombinator(
-         final Function<Function<? super T, ? extends T>,
-         Function<? super T, ? extends T>> funcGen) {
+         final Function<Function<? super T, ? extends T>, Function<? super T, ? extends T>> fn) {
       return new Function<T, T>() {
          @Override public T apply(T input) {
-            return funcGen.apply(this).apply(input);
+            return fn.apply(this).apply(input);
          }
       };
    }

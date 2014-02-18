@@ -98,7 +98,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="block">Sorts arrays and collections using the <a href="http://en.wikipedia.org/wiki/Smoothsort">
  Smoothsort</a> algorithm. This algorithm is very similar to heap sort, but it uses a Leonardo
  heap instead of a binary heap. The way the Leonardo heap is represented in-place in the array
- or list enables sorting operations to take advantage of partially sorted data (data where there
+ (or list) enables sorting operations to take advantage of partially sorted data (data where there
  are runs of sorted elements). This gives the algorithm a linear best case.</div>
 </li>
 </ul>
@@ -119,85 +119,30 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(byte[])">sort</a></strong>(byte[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(byte[], java.util.Comparator)">sort</a></strong>(byte[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(char[])">sort</a></strong>(char[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(char[], java.util.Comparator)">sort</a></strong>(char[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(double[])">sort</a></strong>(double[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(double[], java.util.Comparator)">sort</a></strong>(double[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(float[])">sort</a></strong>(float[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(float[], java.util.Comparator)">sort</a></strong>(float[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(int[])">sort</a></strong>(int[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(int[], java.util.Comparator)">sort</a></strong>(int[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(java.util.List)">sort</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;list)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(java.util.List)">sort</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;list)</code>
+<div class="block">Sorts the given list according to the elements' <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(java.util.List, java.util.Comparator)">sort</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;list,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(long[])">sort</a></strong>(long[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(long[], java.util.Comparator)">sort</a></strong>(long[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;comp)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(short[])">sort</a></strong>(short[]&nbsp;array)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(short[], java.util.Comparator)">sort</a></strong>(short[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>&gt;&nbsp;comp)</code>&nbsp;</td>
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</code>
+<div class="block">Sorts the given list according to the specified comparator.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(T[])">sort</a></strong>(T[]&nbsp;array)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(T[])">sort</a></strong>(T[]&nbsp;array)</code>
+<div class="block">Sorts the given array according to the elements' <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;void</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/SmoothSort.html#sort(T[], java.util.Comparator)">sort</a></strong>(T[]&nbsp;array,
-    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</code>&nbsp;</td>
+    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</code>
+<div class="block">Sorts the given array according to the specified comparator.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -228,6 +173,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>sort</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;void&nbsp;sort(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;list)</pre>
+<div class="block">Sorts the given list according to the elements' <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.
+ This is equivalent to using <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collections.html?is-external=true#sort(java.util.List)" title="class or interface in java.util"><code>Collections.sort(List)</code></a>, except it will utilize the
+ smoothsort algorithm instead of Java's default implementation (mergesort in versions 6 and
+ earlier, timsort in versions 7 and up).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>list</code> - the list which will be sorted in place</dd></dl>
 </li>
 </ul>
 <a name="sort(java.util.List, java.util.Comparator)">
@@ -238,6 +188,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <h4>sort</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;void&nbsp;sort(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;list,
             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</pre>
+<div class="block">Sorts the given list according to the specified comparator. This is equivalent to using
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collections.html?is-external=true#sort(java.util.List, java.util.Comparator)" title="class or interface in java.util"><code>Collections.sort(List, Comparator)</code></a>, except it will utilize the smoothsort algorithm
+ instead of Java's default implementation (mergesort in versions 6 and earlier, timsort in
+ versions 7 and up).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>list</code> - the list which will be sorted in place</dd></dl>
 </li>
 </ul>
 <a name="sort(java.lang.Object[])">
@@ -249,6 +204,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>sort</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;void&nbsp;sort(T[]&nbsp;array)</pre>
+<div class="block">Sorts the given array according to the elements' <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.
+ This is equivalent to using <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Arrays.html?is-external=true#sort(java.lang.Object[])" title="class or interface in java.util"><code>Arrays.sort(Object[])</code></a>, except it will utilize the
+ smoothsort algorithm instead of Java's default implementation (mergesort in versions 6 and
+ earlier, timsort in versions 7 and up).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>array</code> - the array which will be sorted in place</dd></dl>
 </li>
 </ul>
 <a name="sort(java.lang.Object[],java.util.Comparator)">
@@ -256,144 +216,16 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </a><a name="sort(T[], java.util.Comparator)">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>sort</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;void&nbsp;sort(T[]&nbsp;array,
             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super T&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(int[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(int[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(int[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(int[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(byte[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(byte[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(byte[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(short[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(short[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(short[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(short[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(char[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(char[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(char[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(char[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(long[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(long[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(long[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(long[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(float[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(float[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(float[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(float[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a>&gt;&nbsp;comp)</pre>
-</li>
-</ul>
-<a name="sort(double[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(double[]&nbsp;array)</pre>
-</li>
-</ul>
-<a name="sort(double[], java.util.Comparator)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>sort</h4>
-<pre>public static&nbsp;void&nbsp;sort(double[]&nbsp;array,
-        <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a>&gt;&nbsp;comp)</pre>
+<div class="block">Sorts the given array according to the specified comparator. This is equivalent to using
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Arrays.html?is-external=true#sort(T[], java.util.Comparator)" title="class or interface in java.util"><code>Arrays.sort(Object[], Comparator)</code></a>, except it will utilize the smoothsort algorithm
+ instead of Java's default implementation (mergesort in versions 6 and earlier, timsort in
+ versions 7 and up).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>array</code> - the array which will be sorted in place</dd></dl>
 </li>
 </ul>
 </li>

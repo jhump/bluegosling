@@ -246,7 +246,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#visit(com.apriori.possible.Possible.Visitor)">visit</a></strong>(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/possible/Holder.html#visit(com.apriori.possible.Possible.Visitor)">visit</a></strong>(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</code>
 <div class="block">Invokes the appropriate method on the specified visitor.</div>
 </td>
 </tr>
@@ -527,7 +527,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>visit</h4>
-<pre>public&nbsp;&lt;R&gt;&nbsp;R&nbsp;visit(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</pre>
+<pre>public&nbsp;&lt;R&gt;&nbsp;R&nbsp;visit(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#visit(com.apriori.possible.Possible.Visitor)">Possible</a></code></strong></div>
 <div class="block">Invokes the appropriate method on the specified visitor. Returns the value that the visitor
  produces.</div>

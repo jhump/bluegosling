@@ -34,7 +34,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/apt/ProcessingEnvironments.html" target="_top">Frames</a></li>
@@ -95,6 +95,12 @@
 <br>
 <pre>public final class <span class="strong">ProcessingEnvironments</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Static helper methods related to the current processing environment.
+ 
+ <p>The current environment must be <a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup(javax.annotation.processing.ProcessingEnvironment)">setup</a> for the
+ current thread. After that, processing code running on that same thread can conveniently
+ access the environment and the <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Elements</code></a> and <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Types</code></a> utility interfaces using static
+ methods on this class.</div>
 </li>
 </ul>
 </div>
@@ -115,23 +121,33 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#elements()">elements</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#elements()">elements</a></strong>()</code>
+<div class="block">Gets the current implementation of utility methods relating to elements.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#get()">get</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#get()">get</a></strong>()</code>
+<div class="block">Gets the environment for the current thread.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#reset()">reset</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#reset()">reset</a></strong>()</code>
+<div class="block">Resets the current thread, clearing thread-local state related to the current environment.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup(javax.annotation.processing.ProcessingEnvironment)">setup</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup(javax.annotation.processing.ProcessingEnvironment)">setup</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>
+<div class="block">Sets up the environment for the current thread.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util">Types</a></code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#types()">types</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/apt/ProcessingEnvironments.html#types()">types</a></strong>()</code>
+<div class="block">Gets the current implementation of utility methods relating to types.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -162,6 +178,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>reset</h4>
 <pre>public static&nbsp;void&nbsp;reset()</pre>
+<div class="block">Resets the current thread, clearing thread-local state related to the current environment.
+ This can only be called after the state has been <a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup(javax.annotation.processing.ProcessingEnvironment)"><code>setup(javax.annotation.processing.ProcessingEnvironment)</code></a> on this thread.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd></dl>
 </li>
 </ul>
 <a name="setup(javax.annotation.processing.ProcessingEnvironment)">
@@ -171,6 +191,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>setup</h4>
 <pre>public static&nbsp;void&nbsp;setup(<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</pre>
+<div class="block">Sets up the environment for the current thread. This initializes thread-local state so that
+ the environment can be conveniently accessed from other static methods.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>env</code> - the current processing environment</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has already been setup on this thread</dd></dl>
 </li>
 </ul>
 <a name="get()">
@@ -180,6 +205,10 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>get</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;get()</pre>
+<div class="block">Gets the environment for the current thread.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the processing environment for the current thread</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd></dl>
 </li>
 </ul>
 <a name="elements()">
@@ -189,6 +218,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>elements</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a>&nbsp;elements()</pre>
+<div class="block">Gets the current implementation of utility methods relating to elements. This convenience
+ method is short for <code>ProcessingEnvironments.get().getElementUtils()</code>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the implementation of element utility methods for the current thread</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd></dl>
 </li>
 </ul>
 <a name="types()">
@@ -198,6 +232,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>types</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util">Types</a>&nbsp;types()</pre>
+<div class="block">Gets the current implementation of utility methods relating to types. This convenience
+ method is short for <code>ProcessingEnvironments.get().getTypeUtils()</code>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the implementation of type utility methods for the current thread</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd></dl>
 </li>
 </ul>
 </li>
@@ -226,7 +265,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/apt/ProcessingEnvironments.html" target="_top">Frames</a></li>

@@ -55,7 +55,7 @@ public interface ArAnnotatedElement {
     *       there is no such annotation
     *       
     * @see #getAnnotation(Class)
-    * @see ArAnnotationBridge#createBridge(ArAnnotation, ArClass)
+    * @see ArAnnotationBridge#createBridge(ArAnnotation, Class)
     */
    <T extends Annotation> T getAnnotationBridge(
          Class<T> annotationClass);

@@ -66,6 +66,7 @@
 <li><a href="com/apriori/apt/package-tree.html">com.apriori.apt</a>, </li>
 <li><a href="com/apriori/apt/reflect/package-tree.html">com.apriori.apt.reflect</a>, </li>
 <li><a href="com/apriori/apt/testing/package-tree.html">com.apriori.apt.testing</a>, </li>
+<li><a href="com/apriori/choice/package-tree.html">com.apriori.choice</a>, </li>
 <li><a href="com/apriori/collections/package-tree.html">com.apriori.collections</a>, </li>
 <li><a href="com/apriori/concurrent/package-tree.html">com.apriori.concurrent</a>, </li>
 <li><a href="com/apriori/concurrent/atoms/package-tree.html">com.apriori.concurrent.atoms</a>, </li>
@@ -124,8 +125,10 @@
 </li>
 </ul>
 </li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections"><span class="strong">FibonacciHeapOrderedQueue</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections"><span class="strong">LinkedCycle</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;T&gt;, com.apriori.collections.<a href="com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections"><span class="strong">RandomizedQueue</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;)</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections"><span class="strong">SkewHeapOrderedQueue</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;)</li>
 </ul>
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections"><span class="strong">AbstractImmutableCollection</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;)
@@ -148,6 +151,11 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections"><span class="strong">HamtPersistentMap</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;K,V&gt;)</li>
 </ul>
 </li>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">AbstractListenableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">SettableListenableFuture</span></a>&lt;T&gt;</li>
+</ul>
+</li>
 <li type="circle">java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><span class="strong">AbstractMap</span></a>&lt;K,V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;)
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><span class="strong">HamtMap</span></a>&lt;K,V&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
@@ -158,7 +166,16 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections"><span class="strong">AbstractNavigableMap</span></a>&lt;K,V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;)
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.SubMap.html" title="class in com.apriori.collections"><span class="strong">AbstractNavigableMap.SubMap</span></a></li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections"><span class="strong">AbstractRandomAccessNavigableMap</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;)</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections"><span class="strong">AbstractRandomAccessNavigableMap</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;)
+<ul>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessSubMap.html" title="class in com.apriori.collections"><span class="strong">AbstractRandomAccessNavigableMap.RandomAccessSubMap</span></a></li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndices.html" title="class in com.apriori.collections"><span class="strong">AbstractRandomAccessNavigableMap.SubMapByIndices</span></a>
+<ul>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndicesAndByValueBounds.html" title="class in com.apriori.collections"><span class="strong">AbstractRandomAccessNavigableMap.SubMapByIndicesAndByValueBounds</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SortedArrayMap.html" title="class in com.apriori.collections"><span class="strong">SortedArrayMap</span></a>&lt;K,V&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 </ul>
 </li>
@@ -179,7 +196,11 @@
 </li>
 <li type="circle">javax.annotation.processing.<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing"><span class="strong">AbstractProcessor</span></a> (implements javax.annotation.processing.<a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a>)
 <ul>
-<li type="circle">com.apriori.apt.<a href="com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt"><span class="strong">AbstractProcessor</span></a></li>
+<li type="circle">com.apriori.apt.<a href="com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt"><span class="strong">AbstractProcessor</span></a>
+<ul>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArProcessor.html" title="class in com.apriori.apt.reflect"><span class="strong">ArProcessor</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/AbstractScoper.html" title="class in com.apriori.di"><span class="strong">AbstractScoper</span></a> (implements com.apriori.di.<a href="com/apriori/di/Scoper.html" title="interface in com.apriori.di">Scoper</a>)
@@ -192,15 +213,31 @@
 </ul>
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections"><span class="strong">AmtPersistentList</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;T&gt;, com.apriori.collections.<a href="com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;)</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Annotation.html" title="class in com.apriori.apt.reflect"><span class="strong">Annotation</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/AnnotationBridge.html" title="class in com.apriori.apt.reflect"><span class="strong">AnnotationBridge</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect"><span class="strong">Annotations</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/AnnotationSpec.html" title="class in com.apriori.di"><span class="strong">AnnotationSpec</span></a>&lt;T&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/AnyOfFive.html" title="class in com.apriori.choice"><span class="strong">AnyOfFive</span></a>&lt;A,B,C,D,E&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice">Choices.Choices5</a>&lt;A,B,C,D,E&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/AnyOfFour.html" title="class in com.apriori.choice"><span class="strong">AnyOfFour</span></a>&lt;A,B,C,D&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice">Choices.Choices4</a>&lt;A,B,C,D&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/AnyOfThree.html" title="class in com.apriori.choice"><span class="strong">AnyOfThree</span></a>&lt;A,B,C&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices3.html" title="interface in com.apriori.choice">Choices.Choices3</a>&lt;A,B,C&gt;)</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotation.html" title="class in com.apriori.apt.reflect"><span class="strong">ArAnnotation</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotationBridge.html" title="class in com.apriori.apt.reflect"><span class="strong">ArAnnotationBridge</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><span class="strong">ArClass</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotatedElement.html" title="interface in com.apriori.apt.reflect">ArAnnotatedElement</a>, com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArGenericDeclaration.html" title="interface in com.apriori.apt.reflect">ArGenericDeclaration</a>, com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect">ArType</a>)</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArConstructor.html" title="class in com.apriori.apt.reflect"><span class="strong">ArConstructor</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArField.html" title="class in com.apriori.apt.reflect"><span class="strong">ArField</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect"><span class="strong">ArGenericArrayType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect">ArType</a>)</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArMethod.html" title="class in com.apriori.apt.reflect"><span class="strong">ArMethod</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArMethodSignature.html" title="class in com.apriori.apt.reflect"><span class="strong">ArMethodSignature</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArPackage.html" title="class in com.apriori.apt.reflect"><span class="strong">ArPackage</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArParameter.html" title="class in com.apriori.apt.reflect"><span class="strong">ArParameter</span></a>&lt;M&gt;</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect"><span class="strong">ArParameterizedType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect">ArType</a>)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">ArrayMappedBitwiseTrie</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;)
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections"><span class="strong">ArrayMappedStringTrie</span></a>&lt;V&gt;</li>
 </ul>
 </li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArRoundEnvironment.html" title="class in com.apriori.apt.reflect"><span class="strong">ArRoundEnvironment</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect"><span class="strong">ArTypes</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect"><span class="strong">ArTypeVariable</span></a>&lt;D&gt; (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect">ArType</a>)</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect"><span class="strong">ArWildcardType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect">ArType</a>)</li>
 <li type="circle">junit.framework.Assert
 <ul>
 <li type="circle">com.apriori.testing.<a href="com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing"><span class="strong">ObjectVerifiers</span></a></li>
@@ -210,6 +247,7 @@
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitables.html" title="class in com.apriori.concurrent"><span class="strong">Awaitables</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BidiIterators.html" title="class in com.apriori.collections"><span class="strong">BidiIterators</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">BigIntRadixTrieMap</span></a>&lt;V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;)</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/BinomialHeapQueue.html" title="class in com.apriori.collections"><span class="strong">BinomialHeapQueue</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BitConverters.html" title="class in com.apriori.collections"><span class="strong">BitConverters</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BitSequences.html" title="class in com.apriori.collections"><span class="strong">BitSequences</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Blaster.html" title="class in com.apriori.reflect"><span class="strong">Blaster</span></a>&lt;T&gt;</li>
@@ -219,28 +257,24 @@
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Caster.html" title="class in com.apriori.reflect"><span class="strong">Caster</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Caster.Builder.html" title="class in com.apriori.reflect"><span class="strong">Caster.Builder</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.apt.testing.<a href="com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing"><span class="strong">CategorizingDiagnosticCollector</span></a></li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.html" title="class in com.apriori.choice"><span class="strong">Choices</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/CircularBuffer.html" title="class in com.apriori.collections"><span class="strong">CircularBuffer</span></a>&lt;E&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Class.html" title="class in com.apriori.apt.reflect"><span class="strong">Class</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect">AnnotatedElement</a>, com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/GenericDeclaration.html" title="interface in com.apriori.apt.reflect">GenericDeclaration</a>, com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect">Type</a>)</li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect"><span class="strong">ClassHierarchyCrawler</span></a>&lt;R,P&gt; (implements com.apriori.reflect.<a href="com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect">ClassVisitor</a>&lt;R,P&gt;)</li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect"><span class="strong">ClassHierarchyCrawler.Builder</span></a>&lt;R,P&gt;</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Cloners.html" title="class in com.apriori.util"><span class="strong">Cloners</span></a></li>
 <li type="circle">com.apriori.di.collections.<a href="com/apriori/di/collections/CollectionBinding.html" title="class in com.apriori.di.collections"><span class="strong">CollectionBinding</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/CompactBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">CompactBitwiseTrie</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/CompactStringTrie.html" title="class in com.apriori.collections"><span class="strong">CompactStringTrie</span></a>&lt;V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;)</li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ConcurrentSets.html" title="class in com.apriori.collections"><span class="strong">ConcurrentSets</span></a></li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ConcurrentSets.Builder.html" title="class in com.apriori.collections"><span class="strong">ConcurrentSets.Builder</span></a>&lt;E,T&gt;</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections"><span class="strong">ConcurrentSortedArraySet</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ConcurrentSortedArraySet.Builder.html" title="class in com.apriori.collections"><span class="strong">ConcurrentSortedArraySet.Builder</span></a>&lt;E&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Constructor.html" title="class in com.apriori.apt.reflect"><span class="strong">Constructor</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Converters.html" title="class in com.apriori.reflect"><span class="strong">Converters</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/Cycles.html" title="class in com.apriori.collections"><span class="strong">Cycles</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Derivations.html" title="class in com.apriori.util"><span class="strong">Derivations</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/DispatchSettings.html" title="class in com.apriori.reflect"><span class="strong">DispatchSettings</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent"><span class="strong">Duration</span></a> (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Either.html" title="class in com.apriori.choice"><span class="strong">Either</span></a>&lt;A,B&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices2.html" title="interface in com.apriori.choice">Choices.Choices2</a>&lt;A,B&gt;)</li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Empty.html" title="class in com.apriori.tuples"><span class="strong">Empty</span></a> (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/FakeClock.html" title="class in com.apriori.util"><span class="strong">FakeClock</span></a> (implements com.apriori.util.<a href="com/apriori/util/Clock.html" title="interface in com.apriori.util">Clock</a>)</li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/FibonacciHeapQueue.html" title="class in com.apriori.collections"><span class="strong">FibonacciHeapQueue</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, com.apriori.collections.<a href="com/apriori/collections/MergeablePriorityOrderedQueue.html" title="interface in com.apriori.collections">MergeablePriorityOrderedQueue</a>&lt;E,Q&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Field.html" title="class in com.apriori.apt.reflect"><span class="strong">Field</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/FilteringIterable.html" title="class in com.apriori.collections"><span class="strong">FilteringIterable</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;)
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections"><span class="strong">FilteringCollection</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;)
@@ -260,7 +294,7 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableFutureTask</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableScheduledFutureTask</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, com.apriori.concurrent.<a href="com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a>)
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableScheduledFutureTask</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, java.util.concurrent.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/RunnableScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableScheduledFuture</a>&lt;V&gt;, com.apriori.concurrent.<a href="com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a>)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent"><span class="strong">ListenableRepeatingFutureTask</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;)</li>
 </ul>
@@ -275,7 +309,6 @@
 <li type="circle">com.apriori.util.<a href="com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util"><span class="strong">UncheckedGenerator</span></a>&lt;T&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/GenericArrayType.html" title="class in com.apriori.apt.reflect"><span class="strong">GenericArrayType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect">Type</a>)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections"><span class="strong">HamtPersistentSet</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections">PersistentSet</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="strong">HashCompositeTrie</span></a>&lt;K,C,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;K,C,V&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><span class="strong">HierarchicalLock</span></a></li>
@@ -285,40 +318,37 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/Immutables.html" title="class in com.apriori.collections"><span class="strong">Immutables</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util"><span class="strong">IndentingPrinter</span></a></li>
 <li type="circle">com.apriori.testing.<a href="com/apriori/testing/InterfaceVerifier.html" title="class in com.apriori.testing"><span class="strong">InterfaceVerifier</span></a>&lt;T&gt;</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/Iterators.html" title="class in com.apriori.collections"><span class="strong">Iterators</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Key.html" title="class in com.apriori.di"><span class="strong">Key</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections"><span class="strong">LinkedPersistentList</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent"><span class="strong">ListenableExecutors</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutures.html" title="class in com.apriori.concurrent"><span class="strong">ListenableFutures</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/Members.html" title="class in com.apriori.reflect"><span class="strong">Members</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Method.html" title="class in com.apriori.apt.reflect"><span class="strong">Method</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/MethodCapturer.html" title="class in com.apriori.reflect"><span class="strong">MethodCapturer</span></a>&lt;E&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/MethodSignature.html" title="class in com.apriori.apt.reflect"><span class="strong">MethodSignature</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect"><span class="strong">MethodSignature</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Names.html" title="class in com.apriori.di"><span class="strong">Names</span></a></li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples"><span class="strong">NTuple</span></a>&lt;A,B,C,D,E&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;A,B,C,D,E&gt;)</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util"><span class="strong">Operators</span></a></li>
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Optional.html" title="class in com.apriori.possible"><span class="strong">Optional</span></a>&lt;T&gt; (implements com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;)</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Package.html" title="class in com.apriori.apt.reflect"><span class="strong">Package</span></a></li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Pair.html" title="class in com.apriori.tuples"><span class="strong">Pair</span></a>&lt;A,B&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;A,B&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ParallelSort.html" title="class in com.apriori.collections"><span class="strong">ParallelSort</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ParallelSort2.html" title="class in com.apriori.collections"><span class="strong">ParallelSort2</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Parameter.html" title="class in com.apriori.apt.reflect"><span class="strong">Parameter</span></a>&lt;M&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ParameterizedType.html" title="class in com.apriori.apt.reflect"><span class="strong">ParameterizedType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect">Type</a>)</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/PartialFunctions.html" title="class in com.apriori.util"><span class="strong">PartialFunctions</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections"><span class="strong">PersistentListBackedConcurrentList</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><span class="strong">PipeliningExecutorService</span></a>&lt;P&gt;</li>
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Possibles.html" title="class in com.apriori.possible"><span class="strong">Possibles</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Predicates.html" title="class in com.apriori.util"><span class="strong">Predicates</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/PrimeIterator.html" title="class in com.apriori.util"><span class="strong">PrimeIterator</span></a>&lt;T&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueues.html" title="class in com.apriori.collections"><span class="strong">PriorityQueues</span></a></li>
 <li type="circle">com.apriori.apt.<a href="com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><span class="strong">ProcessingEnvironments</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/ProxyUtils.html" title="class in com.apriori.reflect"><span class="strong">ProxyUtils</span></a></li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples"><span class="strong">Quartet</span></a>&lt;A,B,C,D&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops4.html" title="interface in com.apriori.tuples">Tuple.Ops4</a>&lt;A,B,C,D&gt;)</li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples"><span class="strong">Quintet</span></a>&lt;A,B,C,D,E&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;A,B,C,D,E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections"><span class="strong">RadixTrieMap</span></a>&lt;V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;)</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/RandomizedMeldableQueue.html" title="class in com.apriori.collections"><span class="strong">RandomizedMeldableQueue</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ReadOnlyIterator.html" title="class in com.apriori.collections"><span class="strong">ReadOnlyIterator</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Reference.html" title="class in com.apriori.possible"><span class="strong">Reference</span></a>&lt;T&gt; (implements com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Reschedulers.html" title="class in com.apriori.concurrent"><span class="strong">Reschedulers</span></a></li>
-<li type="circle">com.apriori.apt.<a href="com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt"><span class="strong">RoundEnvironment</span></a></li>
 <li type="circle">org.junit.runner.Runner (implements org.junit.runner.Describable)
 <ul>
 <li type="circle">org.junit.runners.ParentRunner&lt;T&gt; (implements org.junit.runner.manipulation.Filterable, org.junit.runner.manipulation.Sortable)
@@ -334,6 +364,8 @@
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><span class="strong">ScheduledTaskManager</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/ScopeSpec.html" title="class in com.apriori.di"><span class="strong">ScopeSpec</span></a></li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ShardedConcurrentSets.html" title="class in com.apriori.collections"><span class="strong">ShardedConcurrentSets</span></a></li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections"><span class="strong">ShardedConcurrentSets.Builder</span></a>&lt;E,T&gt;</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SharedCapacityDequeFactory.html" title="class in com.apriori.collections"><span class="strong">SharedCapacityDequeFactory</span></a></li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/SimpleAtom.html" title="class in com.apriori.concurrent.atoms"><span class="strong">SimpleAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SimpleBitwiseTrie.html" title="class in com.apriori.collections"><span class="strong">SimpleBitwiseTrie</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;)</li>
@@ -342,11 +374,6 @@
 <li type="circle">javax.tools.<a href="http://docs.oracle.com/javase/6/docs/api/javax/tools/SimpleJavaFileObject.html?is-external=true" title="class or interface in javax.tools"><span class="strong">SimpleJavaFileObject</span></a> (implements javax.tools.<a href="http://docs.oracle.com/javase/6/docs/api/javax/tools/JavaFileObject.html?is-external=true" title="class or interface in javax.tools">JavaFileObject</a>)
 <ul>
 <li type="circle">com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing"><span class="strong">TestJavaFileObject</span></a></li>
-</ul>
-</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SimpleListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">SimpleListenableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)
-<ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="strong">SettableListenableFuture</span></a>&lt;T&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SimpleStringTrie.html" title="class in com.apriori.collections"><span class="strong">SimpleStringTrie</span></a>&lt;V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,C,V&gt;)</li>
@@ -448,11 +475,12 @@
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Trio.html" title="class in com.apriori.tuples"><span class="strong">Trio</span></a>&lt;A,B,C&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops3.html" title="interface in com.apriori.tuples">Tuple.Ops3</a>&lt;A,B,C&gt;)</li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Tuples.html" title="class in com.apriori.tuples"><span class="strong">Tuples</span></a></li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><span class="strong">TypeRef</span></a>&lt;T&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Types.html" title="class in com.apriori.apt.reflect"><span class="strong">Types</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/TypeVariable.html" title="class in com.apriori.apt.reflect"><span class="strong">TypeVariable</span></a>&lt;D&gt; (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect">Type</a>)</li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Unit.html" title="class in com.apriori.tuples"><span class="strong">Unit</span></a>&lt;A&gt; (implements java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;A&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Variant2.html" title="class in com.apriori.choice"><span class="strong">Variant2</span></a>&lt;A,B&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices2.html" title="interface in com.apriori.choice">Choices.Choices2</a>&lt;A,B&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Variant3.html" title="class in com.apriori.choice"><span class="strong">Variant3</span></a>&lt;A,B,C&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices3.html" title="interface in com.apriori.choice">Choices.Choices3</a>&lt;A,B,C&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Variant4.html" title="class in com.apriori.choice"><span class="strong">Variant4</span></a>&lt;A,B,C,D&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice">Choices.Choices4</a>&lt;A,B,C,D&gt;)</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Variant5.html" title="class in com.apriori.choice"><span class="strong">Variant5</span></a>&lt;A,B,C,D,E&gt; (implements com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice">Choices.Choices5</a>&lt;A,B,C,D,E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections"><span class="strong">WeightBalancedTreeMap</span></a>&lt;K,V&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, com.apriori.collections.<a href="com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a>&lt;K,V&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/WildcardType.html" title="class in com.apriori.apt.reflect"><span class="strong">WildcardType</span></a> (implements com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect">Type</a>)</li>
 </ul>
 </li>
 </ul>
@@ -463,7 +491,15 @@
 <li type="circle">com.apriori.di.<a href="com/apriori/di/AbstractBinding.BindBuilder.html" title="interface in com.apriori.di"><span class="strong">AbstractBinding.BindBuilder</span></a>&lt;T&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/AnnotatedElement.html" title="interface in com.apriori.apt.reflect"><span class="strong">AnnotatedElement</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotatedElement.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArAnnotatedElement</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArGenericDeclaration.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArGenericDeclaration</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArMember.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArMember</span></a>
+<ul>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArExecutableMember.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArExecutableMember</span></a></li>
+</ul>
+</li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArType</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.Visitor.html" title="interface in com.apriori.apt.reflect"><span class="strong">ArType.Visitor</span></a>&lt;R,P&gt;</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.ErrorHandler.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">AsynchronousAtom.ErrorHandler</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Atom</span></a>&lt;T&gt;
 <ul>
@@ -578,6 +614,73 @@
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTask</span></a>&lt;V&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskDefinition</span></a>&lt;V&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V&gt;)</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.html" title="interface in com.apriori.choice"><span class="strong">Choice</span></a>&lt;A,B&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops3.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops3</span></a>&lt;A,B,C&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops4.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops4</span></a>&lt;A,B,C,D&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops5.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops5</span></a>&lt;A,B,C,D,E&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices4</span></a>&lt;A,B,C,D&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops5.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops5</span></a>&lt;A,B,C,D,E&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices3.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices3</span></a>&lt;A,B,C&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices4</span></a>&lt;A,B,C,D&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops4.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops4</span></a>&lt;A,B,C,D&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops5.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops5</span></a>&lt;A,B,C,D,E&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices4</span></a>&lt;A,B,C,D&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.Ops5.html" title="interface in com.apriori.choice"><span class="strong">Choice.Ops5</span></a>&lt;A,B,C,D,E&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices2.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices2</span></a>&lt;A,B&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices3.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices3</span></a>&lt;A,B,C&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices4</span></a>&lt;A,B,C,D&gt;</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Choices5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Choices5</span></a>&lt;A,B,C,D,E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor2.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor2</span></a>&lt;A,B,R&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor3.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor3</span></a>&lt;A,B,C,R&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor4</span></a>&lt;A,B,C,D,R&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor5</span></a>&lt;A,B,C,D,E,R&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor5</span></a>&lt;A,B,C,D,E,R&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor4.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor4</span></a>&lt;A,B,C,D,R&gt;
+<ul>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor5</span></a>&lt;A,B,C,D,E,R&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choices.Visitor5.html" title="interface in com.apriori.choice"><span class="strong">Choices.Visitor5</span></a>&lt;A,B,C,D,E,R&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.reflect.<a href="com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect"><span class="strong">ClassVisitor</span></a>&lt;R,P&gt;</li>
@@ -695,7 +798,6 @@
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><span class="strong">FutureListener</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent"><span class="strong">FutureVisitor</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Generator.Output.html" title="interface in com.apriori.util"><span class="strong">Generator.Output</span></a>&lt;T&gt;</li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/GenericDeclaration.html" title="interface in com.apriori.apt.reflect"><span class="strong">GenericDeclaration</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><span class="strong">HierarchicalLock.AcquiredLock</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections"><span class="strong">ImmutableMap.Entry</span></a>&lt;K,V&gt;</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di"><span class="strong">Injector</span></a></li>
@@ -714,6 +816,7 @@
 <li type="circle">java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><span class="strong">List</span></a>&lt;E&gt;
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections"><span class="strong">AssociativeList</span></a>&lt;E,K&gt;</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections"><span class="strong">ConcurrentList</span></a>&lt;E&gt;</li>
 </ul>
 </li>
 <li type="circle">java.util.<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><span class="strong">Queue</span></a>&lt;E&gt;
@@ -742,9 +845,14 @@
 </li>
 </ul>
 </li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityOrderedQueue.html" title="interface in com.apriori.collections"><span class="strong">PriorityOrderedQueue</span></a>&lt;E&gt;
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections"><span class="strong">OrderedQueue</span></a>&lt;E&gt;
 <ul>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/MergeablePriorityOrderedQueue.html" title="interface in com.apriori.collections"><span class="strong">MergeablePriorityOrderedQueue</span></a>&lt;E,Q&gt;</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections"><span class="strong">MeldableOrderedQueue</span></a>&lt;E,Q&gt;
+<ul>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueues.MeldableQueue.html" title="interface in com.apriori.collections"><span class="strong">PriorityQueues.MeldableQueue</span></a>&lt;E&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueues.MeldableQueue.html" title="interface in com.apriori.collections"><span class="strong">PriorityQueues.MeldableQueue</span></a>&lt;E&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections"><span class="strong">SharedCapacityDequeFactory.CloseableQueue</span></a>&lt;T&gt;
@@ -808,6 +916,11 @@
 <ul>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections"><span class="strong">ImmutableSortedMap</span></a>&lt;K,V&gt;</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections"><span class="strong">PersistentMap</span></a>&lt;K,V&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><span class="strong">PriorityQueue</span></a>&lt;E,P&gt;
+<ul>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/MeldablePriorityQueue.html" title="interface in com.apriori.collections"><span class="strong">MeldablePriorityQueue</span></a>&lt;E,P,Q&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples"><span class="strong">Tuple</span></a>
@@ -933,11 +1046,6 @@
 </li>
 </ul>
 </li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Member.html" title="interface in com.apriori.apt.reflect"><span class="strong">Member</span></a>
-<ul>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ExecutableMember.html" title="interface in com.apriori.apt.reflect"><span class="strong">ExecutableMember</span></a></li>
-</ul>
-</li>
 <li type="circle">com.apriori.testing.<a href="com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing"><span class="strong">ObjectVerifier</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible"><span class="strong">Possible</span></a>&lt;T&gt;
 <ul>
@@ -948,6 +1056,7 @@
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Predicate.html" title="interface in com.apriori.util"><span class="strong">Predicate</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Predicate.Bivariate.html" title="interface in com.apriori.util"><span class="strong">Predicate.Bivariate</span></a>&lt;T1,T2&gt;</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Predicate.Trivariate.html" title="interface in com.apriori.util"><span class="strong">Predicate.Trivariate</span></a>&lt;T1,T2,T3&gt;</li>
+<li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections"><span class="strong">PriorityQueue.Entry</span></a>&lt;E,P&gt;</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Provision.html" title="interface in com.apriori.di"><span class="strong">Provision</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent"><span class="strong">Rescheduler</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent"><span class="strong">ScheduledTaskListener</span></a>&lt;V&gt;</li>
@@ -978,8 +1087,6 @@
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.UncheckedTask.html" title="interface in com.apriori.concurrent.atoms"><span class="strong">Transaction.UncheckedTask</span></a></li>
 </ul>
 </li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.html" title="interface in com.apriori.apt.reflect"><span class="strong">Type</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.Visitor.html" title="interface in com.apriori.apt.reflect"><span class="strong">Type.Visitor</span></a>&lt;R,P&gt;</li>
 </ul>
 <h2 title="Annotation Type Hierarchy">Annotation Type Hierarchy</h2>
 <ul>
@@ -1018,9 +1125,9 @@
 <ul>
 <li type="circle">java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang"><span class="strong">Enum</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;, java.io.<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)
 <ul>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Type.Kind.html" title="enum in com.apriori.apt.reflect"><span class="strong">Type.Kind</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Modifier.html" title="enum in com.apriori.apt.reflect"><span class="strong">Modifier</span></a></li>
-<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/Class.Kind.html" title="enum in com.apriori.apt.reflect"><span class="strong">Class.Kind</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArType.Kind.html" title="enum in com.apriori.apt.reflect"><span class="strong">ArType.Kind</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArModifier.html" title="enum in com.apriori.apt.reflect"><span class="strong">ArModifier</span></a></li>
+<li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.Kind.html" title="enum in com.apriori.apt.reflect"><span class="strong">ArClass.Kind</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections"><span class="strong">BitSequence.BitOrder</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections"><span class="strong">AbstractNavigableMap.BoundType</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent"><span class="strong">ScheduleNextTaskPolicies</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;V&gt;)</li>

@@ -141,7 +141,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colLast"><code><strong><a href="../../../com/apriori/reflect/Members.html#findMethod(java.lang.Class, java.lang.String, java.util.List)">findMethod</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
           <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
           <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;argTypes)</code>
-<div class="block">Finds a method on the specified class with the specified signature.</div>
+<div class="block">Finds an instance method on the specified class with the specified signature.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -204,8 +204,9 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;findMethod(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
                 <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
                 <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;argTypes)</pre>
-<div class="block">Finds a method on the specified class with the specified signature. This is a convenience
- method that allows the parameter types to be specified as a list instead of an array.</div>
+<div class="block">Finds an instance method on the specified class with the specified signature. This is a
+ convenience method that allows the parameter types to be specified as a list instead of an
+ array.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>clazz</code> - the class whose method to find</dd><dd><code>name</code> - the name of the method to find</dd><dd><code>argTypes</code> - the parameter types of the method to find</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the method with the specified signature or <code>null</code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../com/apriori/reflect/Members.html#findMethod(java.lang.Class, java.lang.String, java.lang.Class...)"><code>findMethod(Class, String, Class...)</code></a></dd></dl>
 </li>

@@ -78,15 +78,15 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt">AbstractProcessor</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract annotation processor that makes for a better base class than the standard.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt">ProcessingEnvironments</a></td>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/apt/RoundEnvironment.html" title="class in com.apriori.apt">RoundEnvironment</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Static helper methods related to the current processing environment.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -101,7 +101,9 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/apt/SupportedAnnotationClasses.html" title="annotation in com.apriori.apt">SupportedAnnotationClasses</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An annotation used to indicate what annotation types an annotation processor supports.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -112,14 +114,15 @@
 </a>
 <h2 title="Package com.apriori.apt Description">Package com.apriori.apt Description</h2>
 <div class="block">APIs to simplify implementation of annotation processors and annotation processing tools.
-
- <p>Chief among the APIs is a reflection API that wraps the <code>javax.lang.model.element</code> and
- <code>java.lang.model.type</code> APIs in a way that looks more like those in <code>java.lang.reflect</code>.
- This is intended to make programming annotation processors simpler.
  
- <p>Another major component here is a JUnit4 test runner that allows for unit testing of annotation
- processors by running test cases in an actual annotation processing environment (by invoking the
- Java compiler).</div>
+ <p>This package contains an <a href="../../../com/apriori/apt/AbstractProcessor.html" title="class in com.apriori.apt"><code>AbstractProcessor</code></a> that feathers some more
+ convenience functionality on top of the standard
+ <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>AbstractProcessor</code></a>.
+ 
+ <p>Also included are two sub-packages, one with a reflection API that wraps
+ <code>javax.lang.model.element</code> and <code>java.lang.model.type</code> APIs and the other a JUnit4
+ test runner that allows for unit testing annotation processors from within an actual processing
+ environment.</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar_bottom">

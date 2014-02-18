@@ -260,7 +260,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interfac
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Unit.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</code>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Unit.html#transformAll(com.apriori.util.Function)">transformAll</a></strong>(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
 </td>
 </tr>
@@ -555,7 +555,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transformAll</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,T&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Unit.html" title="class in com.apriori.tuples">Unit</a>&lt;T&gt;&nbsp;transformAll(<a href="../../../com/apriori/util/Function.html" title="interface in com.apriori.util">Function</a>&lt;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#transformAll(com.apriori.util.Function)">Tuple</a></code></strong></div>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one. Since
  tuples are immutable, a new tuple is returned. The returned tuple will have the same number of
