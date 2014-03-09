@@ -114,12 +114,19 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
     is explicitly <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#resume()">resumed</a>. While blocked, mutations are held in a queue
     instead of executed. Once the atom is resumed, the queue is processed using a thread pool
     thread, just as if they were submitted while the atom was processing normally.</li>
+    <li><strong>Restart:</strong> The atom is restored to its most recent seeded value (set
+    during construction or from a prior <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)"><code>restart(Object, boolean)</code></a>) and then immediately
+    resumed. This is similar to ignoring the error, except that the value is re-seeded.
  </ol>
  
  <p>If a <a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms"><code>Transaction</code></a> is in progress, then a mutation is not actually submitted to the
  thread pool until the transaction is committed. So, like <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><code>TransactionalAtom</code></a>s but unlike
  other types of atoms, mutations to asynchronous atoms can be rolled back. When a transaction is
- rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled.</div>
+ rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled.
+ 
+ <p>Ordering of operations cannot be guaranteed as asynchronous operations could be submitted and
+ interleaved with those submitted from a given thread. Thus this form of atom is most useful when
+ only commutative functions are applied to it.</div>
 </li>
 </ul>
 </div>
@@ -266,31 +273,37 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)">restart</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
-       boolean&nbsp;cancelPending)</code>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart()">restart</a></strong>()</code>
 <div class="block">Restarts mutation operations in a blocked atom.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)">restart</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newSeed,
+       boolean&nbsp;cancelPending)</code>
+<div class="block">Restarts mutation operations in a blocked atom with the given new seed value.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#resume()">resume</a></strong>()</code>
 <div class="block">Resumes mutation operations in a blocked atom.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#set(T)">set</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newValue)</code>
 <div class="block">Submits a mutation that will set the atom to the specified value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#setErrorHandler(com.apriori.concurrent.atoms.AsynchronousAtom.ErrorHandler)">setErrorHandler</a></strong>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorHandler.html" title="interface in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorHandler</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;errorHandler)</code>
 <div class="block">Sets the atom's error handler.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#validate(T)">validate</a></strong>(T&nbsp;value)</code>
 <div class="block">Validates the specified value.</div>
@@ -408,6 +421,21 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  that they were submitted.</div>
 </li>
 </ul>
+<a name="restart()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>restart</h4>
+<pre>public&nbsp;boolean&nbsp;restart()</pre>
+<div class="block">Restarts mutation operations in a blocked atom. Any queued operations will be applied after
+ the atom is restarted. The atom will be reset to its seed value, which is the value used
+ during construction of the atom or the seed value specified by the most recent successful
+ <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)"><code>restart(Object, boolean)</code></a> operation.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the atom was restarted or false if it was not because the atom wasn't
+       actually blocked</dd></dl>
+</li>
+</ul>
 <a name="restart(java.lang.Object,boolean)">
 <!--   -->
 </a><a name="restart(T, boolean)">
@@ -416,13 +444,18 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>restart</h4>
-<pre>public&nbsp;void&nbsp;restart(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;restartValue,
-           boolean&nbsp;cancelPending)</pre>
-<div class="block">Restarts mutation operations in a blocked atom. If the atom is not blocked, an exception will
- be thrown. The caller can indicate whether the restart operation should discard all pending
- mutations or if they should be retained and applied to the new restarted value.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>restartValue</code> - the new value with which to seed the restarted atom</dd><dd><code>cancelPending</code> - if true, any queued mutations will be discarded; otherwise, queued
-       mutations will be applied to the new seeded value</dd></dl>
+<pre>public&nbsp;boolean&nbsp;restart(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newSeed,
+              boolean&nbsp;cancelPending)</pre>
+<div class="block">Restarts mutation operations in a blocked atom with the given new seed value. The caller can
+ indicate whether the restart operation should discard all pending mutations or if they should
+ be retained and applied to the new restarted value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>newSeed</code> - the new value with which to seed the restarted atom</dd><dd><code>cancelPending</code> - if true, any queued mutations will be discarded; otherwise, queued
+       mutations will be applied to the new seeded value</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the atom was restarted or false if it was not because the atom wasn't
+       actually blocked</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given restart value is invalid according to the atom's
+       current validator</dd></dl>
 </li>
 </ul>
 <a name="getQueueLength()">
@@ -463,7 +496,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <div class="block">Returns a future that completes with the atom's value once all currently pending operations
  complete. If this atom is blocked or becomes blocked while processing currently pending
  operations, the returned future will not complete until the atom is unblocked. If the atom is
- unblocked via a <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)"><code>restart(T, boolean)</code></a> that cancels pending operations, then this future will be
+ unblocked via a <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart()"><code>restart()</code></a> that cancels pending operations, then this future will be
  cancelled.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a future that completes with the atom's value once all currently pending operations
        complete</dd></dl>

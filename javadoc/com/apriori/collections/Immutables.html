@@ -95,6 +95,10 @@
 <br>
 <pre>public final class <span class="strong">Immutables</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Utility methods for creating immutable collections and maps and for viewing immutable collections
+ and maps using the standard JCF collection and map interfaces. Standard collection and map views
+ of immutable collections and maps throw <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> from all mutation
+ methods.</div>
 </li>
 </ul>
 </div>
@@ -115,59 +119,133 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableCollection)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;collection)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableCollection)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;collection)</code>
+<div class="block">Returns a view of the given immutable collection as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableList)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableList)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</code>
+<div class="block">Returns a view of the given immutable list as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableMap.Entry)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableMap.Entry)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>
+<div class="block">Returns a view of the given immutable map entry as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util"><code>Map.Entry</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableMap)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableMap)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Returns a view of the given immutable map as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableSet)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableSet)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</code>
+<div class="block">Returns a view of the given immutable set as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableSortedMap)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Returns a view of the given immutable map as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#asIfMutable(com.apriori.collections.ImmutableSortedSet)">asIfMutable</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;? extends E&gt;&nbsp;set)</code>
+<div class="block">Returns a view of the given immutable set as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableCollection)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;coll)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableCollection)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;coll)</code>
+<div class="block">Safely upcasts the element type of an immutable collection.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableList)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableList)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</code>
+<div class="block">Safely upcasts the element type of an immutable list.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableMap.Entry)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableMap.Entry)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>
+<div class="block">Safely upcasts the key and/or value types of an immutable map entry.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableMap)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableMap)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Safely upcasts the key and/or value types of an immutable map.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableSet)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableSet)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</code>
+<div class="block">Safely upcasts the element type of an immutable set.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableSortedMap)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableSortedMap)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Safely upcasts the key and/or value types of an immutable sorted map.</div>
+</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#cast(com.apriori.collections.ImmutableSortedSet)">cast</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;? extends E&gt;&nbsp;set)</code>
+<div class="block">Safely upcasts the element type of an immutable sorted set.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#descendingIterator(com.apriori.collections.ImmutableSortedMap)">descendingIterator</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>
+<div class="block">Returns an iterator over the given immutable sorted map that visits entries in reverse order,
+ starting with the last (highest) key and ending with the first (lowest).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#descendingIterator(com.apriori.collections.ImmutableSortedSet)">descendingIterator</a></strong>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;set)</code>
+<div class="block">Returns an iterator over the given immutable sorted set that visits elements in reverse order,
+ starting with the last (highest) element and ending with the first (lowest).</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableCollection()">emptyImmutableCollection</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableList()">emptyImmutableList</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableMap()">emptyImmutableMap</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableSet()">emptyImmutableSet</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableSortedMap()">emptyImmutableSortedMap</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableSortedMap(java.util.Comparator)">emptyImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableSortedSet()">emptyImmutableSortedSet</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#emptyImmutableSortedSet(java.util.Comparator)">emptyImmutableSortedSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</code></td>
@@ -178,28 +256,49 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableList(E)">singletonImmutableList</a></strong>(E&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableMap(K, V)">singletonImmutableMap</a></strong>(K&nbsp;key,
+                     V&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableSet(E)">singletonImmutableSet</a></strong>(E&nbsp;element)</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableSortedMap(java.util.Comparator, K, V)">singletonImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                           K&nbsp;key,
+                           V&nbsp;value)</code>&nbsp;</td>
+</tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableSortedMap(K, V)">singletonImmutableSortedMap</a></strong>(K&nbsp;key,
+                           V&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableSortedSet(java.util.Comparator, E)">singletonImmutableSortedSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp,
+                           E&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#singletonImmutableSortedSet(E)">singletonImmutableSortedSet</a></strong>(E&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableCollection(E...)">toImmutableCollection</a></strong>(E...&nbsp;elements)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableCollection(java.lang.Iterable)">toImmutableCollection</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableList(E...)">toImmutableList</a></strong>(E...&nbsp;elements)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableList(java.lang.Iterable)">toImmutableList</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMap()">toImmutableMap</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;E,E&gt;</code></td>
@@ -207,8 +306,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMap(K, V)">toImmutableMap</a></strong>(K&nbsp;key,
-              V&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMap(java.lang.Iterable)">toImmutableMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
@@ -255,25 +353,35 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMap(java.util.Map)">toImmutableMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMap(com.apriori.tuples.Pair...)">toImmutableMap</a></strong>(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMapEntry(K, V)">toImmutableMapEntry</a></strong>(K&nbsp;key,
                    V&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableMapEntry(java.util.Map.Entry)">toImmutableMapEntry</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSet(E...)">toImmutableSet</a></strong>(E...&nbsp;elements)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSet(java.lang.Iterable)">toImmutableSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;E,E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.util.Comparator, E...)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp,
+                    E...&nbsp;keysAndValues)</code>&nbsp;</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap()">toImmutableSortedMap</a></strong>()</code>&nbsp;</td>
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.util.Comparator, java.lang.Iterable)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                    <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
@@ -325,9 +433,17 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                     <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.util.Comparator, com.apriori.tuples.Pair...)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                    <a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static &lt;E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;E,E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(E...)">toImmutableSortedMap</a></strong>(E...&nbsp;keysAndValues)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(K, V)">toImmutableSortedMap</a></strong>(K&nbsp;key,
-                    V&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.lang.Iterable)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
@@ -375,17 +491,26 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.util.SortedMap)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(com.apriori.tuples.Pair...)">toImmutableSortedMap</a></strong>(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static &lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedMap(java.util.SortedMap)">toImmutableSortedMap</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedSet(java.util.Comparator, E...)">toImmutableSortedSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comparator,
                     E...&nbsp;elements)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedSet(java.util.Comparator, java.lang.Iterable)">toImmutableSortedSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comparator,
                     <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/collections/Immutables.html#toImmutableSortedSet(java.util.Comparator, java.util.SortedSet)">toImmutableSortedSet</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comparator,
+                    <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;? extends E&gt;&nbsp;set)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<br><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;</code></td>
@@ -424,6 +549,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>asIfMutable</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;collection)</pre>
+<div class="block">Returns a view of the given immutable collection as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a>. The
+ returned collection is a view, not a copy, so it is inexpensive to create. But since the
+ input collection is immutable, the returned collection is indistinguishable from a snapshot.
+ The returned collection throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that
+ would otherwise mutate the collection.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>collection</code> - an immutable collection</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given collection via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a> interface</dd></dl>
 </li>
 </ul>
 <a name="asIfMutable(com.apriori.collections.ImmutableList)">
@@ -433,6 +565,13 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>asIfMutable</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</pre>
+<div class="block">Returns a view of the given immutable list as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a>. The returned list is a
+ view, not a copy, so it is inexpensive to create. But since the input list is immutable, the
+ returned list is indistinguishable from a snapshot. The returned list throws
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that would otherwise mutate the
+ list.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>list</code> - an immutable list</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given list via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> interface</dd></dl>
 </li>
 </ul>
 <a name="asIfMutable(com.apriori.collections.ImmutableSet)">
@@ -442,6 +581,42 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>asIfMutable</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</pre>
+<div class="block">Returns a view of the given immutable set as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a>. The returned set is a
+ view, not a copy, so it is inexpensive to create. But since the input set is immutable, the
+ returned set is indistinguishable from a snapshot. The returned set throws
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that would otherwise mutate the
+ set.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - an immutable set</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given set via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a> interface</dd></dl>
+</li>
+</ul>
+<a name="asIfMutable(com.apriori.collections.ImmutableSortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>asIfMutable</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;? extends E&gt;&nbsp;set)</pre>
+<div class="block">Returns a view of the given immutable set as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a>. The returned set
+ is a view, not a copy, so it is inexpensive to create. But since the input set is immutable,
+ the returned set is indistinguishable from a snapshot. The returned set throws
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that would otherwise mutate the
+ set.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - an immutable sorted set</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given set via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a> interface</dd></dl>
+</li>
+</ul>
+<a name="descendingIterator(com.apriori.collections.ImmutableSortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingIterator</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;&nbsp;descendingIterator(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;set)</pre>
+<div class="block">Returns an iterator over the given immutable sorted set that visits elements in reverse order,
+ starting with the last (highest) element and ending with the first (lowest).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - an immutable sorted set</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an iterator that visits elements in descending order</dd></dl>
 </li>
 </ul>
 <a name="asIfMutable(com.apriori.collections.ImmutableMap)">
@@ -451,6 +626,42 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>asIfMutable</h4>
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Returns a view of the given immutable map as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a>. The returned map is a
+ view, not a copy, so it is inexpensive to create. But since the input map is immutable, the
+ returned map is indistinguishable from a snapshot. The returned map throws
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that would otherwise mutate the
+ map.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - an immutable map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given map via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface</dd></dl>
+</li>
+</ul>
+<a name="asIfMutable(com.apriori.collections.ImmutableSortedMap)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>asIfMutable</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Returns a view of the given immutable map as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a>. The returned map
+ is a view, not a copy, so it is inexpensive to create. But since the input map is immutable,
+ the returned map is indistinguishable from a snapshot. The returned map throws
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> for every operation that would otherwise mutate the
+ map.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - an immutable sorted map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given map via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util"><code>NavigableMap</code></a> interface</dd></dl>
+</li>
+</ul>
+<a name="descendingIterator(com.apriori.collections.ImmutableSortedMap)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingIterator</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;&nbsp;descendingIterator(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Returns an iterator over the given immutable sorted map that visits entries in reverse order,
+ starting with the last (highest) key and ending with the first (lowest).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - an immutable sorted map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an iterator that visits entries in descending order</dd></dl>
 </li>
 </ul>
 <a name="asIfMutable(com.apriori.collections.ImmutableMap.Entry)">
@@ -460,6 +671,12 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>asIfMutable</h4>
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;K,V&gt;&nbsp;asIfMutable(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</pre>
+<div class="block">Returns a view of the given immutable map entry as a standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util"><code>Map.Entry</code></a>.
+ Since the input entry is immutable, the returned entry is indistinguishable from a snapshot.
+ The returned entry throws <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> if
+ <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true#setValue(V)" title="class or interface in java.util"><code>Map.Entry.setValue(Object)</code></a> is used.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - an immutable map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a view of the given map entry via the standard <a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util"><code>Map.Entry</code></a> interface</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableCollection)">
@@ -469,6 +686,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;? extends E&gt;&nbsp;coll)</pre>
+<div class="block">Safely upcasts the element type of an immutable collection. This operation is safe thanks to
+ the input being immutable. This can help adapt instances of immutable collection to otherwise
+ invariant collection types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>coll</code> - an immutable collection</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input collection, but with its element type re-cast</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableList)">
@@ -478,6 +700,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;? extends E&gt;&nbsp;list)</pre>
+<div class="block">Safely upcasts the element type of an immutable list. This operation is safe thanks to
+ the input being immutable. This can help adapt instances of immutable list to otherwise
+ invariant list types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>list</code> - an immutable list</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input list, but with its element type re-cast</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableSet)">
@@ -487,6 +714,25 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;? extends E&gt;&nbsp;set)</pre>
+<div class="block">Safely upcasts the element type of an immutable set. This operation is safe thanks to
+ the input being immutable. This can help adapt instances of immutable set to otherwise
+ invariant set types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - an immutable set</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input set, but with its element type re-cast</dd></dl>
+</li>
+</ul>
+<a name="cast(com.apriori.collections.ImmutableSortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cast</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;? extends E&gt;&nbsp;set)</pre>
+<div class="block">Safely upcasts the element type of an immutable sorted set. This operation is safe thanks to
+ the input being immutable. This can help adapt instances of immutable set to otherwise
+ invariant set types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>set</code> - an immutable sorted set</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input set, but with its element type re-cast</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableMap)">
@@ -496,6 +742,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Safely upcasts the key and/or value types of an immutable map. This operation is safe thanks
+ to the input being immutable. This can help adapt instances of immutable map to otherwise
+ invariant map types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - an immutable map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input map, but with its key or value type (or both) re-cast</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableSortedMap)">
@@ -505,6 +756,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<div class="block">Safely upcasts the key and/or value types of an immutable sorted map. This operation is safe
+ thanks to the input being immutable. This can help adapt instances of immutable map to
+ otherwise invariant map types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>map</code> - an immutable sorted map</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input map, but with its key or value type (or both) re-cast</dd></dl>
 </li>
 </ul>
 <a name="cast(com.apriori.collections.ImmutableMap.Entry)">
@@ -514,6 +770,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&nbsp;cast(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</pre>
+<div class="block">Safely upcasts the key and/or value types of an immutable map entry. This operation is safe
+ thanks to the input being immutable. This can help adapt instances of immutable map entry to
+ otherwise invariant entry types, without the need for unchecked casts.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - an immutable map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the input entry, but with its key or value type (or both) re-cast</dd></dl>
 </li>
 </ul>
 <a name="emptyImmutableCollection()">
@@ -605,17 +866,6 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;&nbsp;emptyImmutableSet()</pre>
 </li>
 </ul>
-<a name="toImmutableSet(java.lang.Object[])">
-<!--   -->
-</a><a name="toImmutableSet(E...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toImmutableSet</h4>
-<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;&nbsp;toImmutableSet(E...&nbsp;elements)</pre>
-</li>
-</ul>
 <a name="singletonImmutableSet(java.lang.Object)">
 <!--   -->
 </a><a name="singletonImmutableSet(E)">
@@ -634,6 +884,58 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>toImmutableSet</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;&nbsp;toImmutableSet(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</pre>
+</li>
+</ul>
+<a name="toImmutableSet(java.lang.Object[])">
+<!--   -->
+</a><a name="toImmutableSet(E...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;&nbsp;toImmutableSet(E...&nbsp;elements)</pre>
+</li>
+</ul>
+<a name="emptyImmutableSortedSet()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>emptyImmutableSortedSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;emptyImmutableSortedSet()</pre>
+</li>
+</ul>
+<a name="emptyImmutableSortedSet(java.util.Comparator)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>emptyImmutableSortedSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;emptyImmutableSortedSet(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp)</pre>
+</li>
+</ul>
+<a name="singletonImmutableSortedSet(java.lang.Object)">
+<!--   -->
+</a><a name="singletonImmutableSortedSet(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>singletonImmutableSortedSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;singletonImmutableSortedSet(E&nbsp;e)</pre>
+</li>
+</ul>
+<a name="singletonImmutableSortedSet(java.util.Comparator,java.lang.Object)">
+<!--   -->
+</a><a name="singletonImmutableSortedSet(java.util.Comparator, E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>singletonImmutableSortedSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;singletonImmutableSortedSet(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp,
+                                                    E&nbsp;e)</pre>
 </li>
 </ul>
 <a name="toImmutableSortedSet(java.lang.Comparable[])">
@@ -678,25 +980,35 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                                              <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends E&gt;&nbsp;iterable)</pre>
 </li>
 </ul>
-<a name="toImmutableMap()">
+<a name="toImmutableSortedSet(java.util.Comparator, java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toImmutableMap</h4>
-<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;toImmutableMap()</pre>
+<h4>toImmutableSortedSet</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;E&gt;&nbsp;toImmutableSortedSet(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comparator,
+                                             <a href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;? extends E&gt;&nbsp;set)</pre>
 </li>
 </ul>
-<a name="toImmutableMap(java.lang.Object,java.lang.Object)">
-<!--   -->
-</a><a name="toImmutableMap(K, V)">
+<a name="emptyImmutableMap()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toImmutableMap</h4>
-<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;toImmutableMap(K&nbsp;key,
-                                     V&nbsp;value)</pre>
+<h4>emptyImmutableMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;emptyImmutableMap()</pre>
+</li>
+</ul>
+<a name="singletonImmutableMap(java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="singletonImmutableMap(K, V)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>singletonImmutableMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;singletonImmutableMap(K&nbsp;key,
+                                            V&nbsp;value)</pre>
 </li>
 </ul>
 <a name="toImmutableMap(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)">
@@ -778,6 +1090,24 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;E,E&gt;&nbsp;toImmutableMap(E...&nbsp;keysAndValues)</pre>
 </li>
 </ul>
+<a name="toImmutableMap(com.apriori.tuples.Pair...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;toImmutableMap(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableMap(java.lang.Iterable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;toImmutableMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</pre>
+</li>
+</ul>
 <a name="toImmutableMap(java.util.Map)">
 <!--   -->
 </a>
@@ -787,25 +1117,47 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;&nbsp;toImmutableMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
 </li>
 </ul>
-<a name="toImmutableSortedMap()">
+<a name="emptyImmutableSortedMap()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toImmutableSortedMap</h4>
-<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap()</pre>
+<h4>emptyImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;emptyImmutableSortedMap()</pre>
 </li>
 </ul>
-<a name="toImmutableSortedMap(java.lang.Comparable,java.lang.Object)">
-<!--   -->
-</a><a name="toImmutableSortedMap(K, V)">
+<a name="emptyImmutableSortedMap(java.util.Comparator)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toImmutableSortedMap</h4>
-<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap(K&nbsp;key,
-                                                                       V&nbsp;value)</pre>
+<h4>emptyImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;emptyImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp)</pre>
+</li>
+</ul>
+<a name="singletonImmutableSortedMap(java.lang.Comparable,java.lang.Object)">
+<!--   -->
+</a><a name="singletonImmutableSortedMap(K, V)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>singletonImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;singletonImmutableSortedMap(K&nbsp;key,
+                                                                              V&nbsp;value)</pre>
+</li>
+</ul>
+<a name="singletonImmutableSortedMap(java.util.Comparator,java.lang.Object,java.lang.Object)">
+<!--   -->
+</a><a name="singletonImmutableSortedMap(java.util.Comparator, K, V)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>singletonImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;singletonImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                                                        K&nbsp;key,
+                                                        V&nbsp;value)</pre>
 </li>
 </ul>
 <a name="toImmutableSortedMap(java.lang.Comparable,java.lang.Object,java.lang.Comparable,java.lang.Object)">
@@ -946,6 +1298,67 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
                                                                        V&nbsp;value4,
                                                                        K&nbsp;key5,
                                                                        V&nbsp;value5)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(java.lang.Comparable[])">
+<!--   -->
+</a><a name="toImmutableSortedMap(E...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;E,E&gt;&nbsp;toImmutableSortedMap(E...&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(java.util.Comparator,java.lang.Object[])">
+<!--   -->
+</a><a name="toImmutableSortedMap(java.util.Comparator, E...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;E,E&gt;&nbsp;toImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super E&gt;&nbsp;comp,
+                                               E...&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(com.apriori.tuples.Pair...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(java.lang.Iterable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(java.util.Comparator, com.apriori.tuples.Pair...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                                                 <a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;...&nbsp;keysAndValues)</pre>
+</li>
+</ul>
+<a name="toImmutableSortedMap(java.util.Comparator, java.lang.Iterable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toImmutableSortedMap</h4>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;K,V&gt;&nbsp;toImmutableSortedMap(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comp,
+                                                 <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&gt;&nbsp;keysAndValues)</pre>
 </li>
 </ul>
 <a name="toImmutableSortedMap(java.util.Map)">

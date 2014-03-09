@@ -138,6 +138,11 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Enum.html?is
  failure never occurred.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html#RESTART">RESTART</a></strong></code>
+<div class="block">Indicates that a failure should restart the atom.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -215,12 +220,25 @@ the order they are declared.</div>
 <a name="BLOCK">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>BLOCK</h4>
 <pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html" title="enum in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorAction</a> BLOCK</pre>
 <div class="block">Indicates that a failure blocks subsequent operations, which will be queued until the
  atom is resumed.</div>
+</li>
+</ul>
+<a name="RESTART">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>RESTART</h4>
+<pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html" title="enum in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorAction</a> RESTART</pre>
+<div class="block">Indicates that a failure should restart the atom. This is similar to <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html#IGNORE"><code>IGNORE</code></a> except
+ that the atom is first reset to its seed value. The seed value is the one specified during
+ construction or the most recent successful <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart(T, boolean)"><code>AsynchronousAtom.restart(Object, boolean)</code></a>
+ operation.</div>
 </li>
 </ul>
 </li>

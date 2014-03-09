@@ -95,7 +95,7 @@
 <br>
 <pre>public final class <span class="strong">Tuples</span>
 extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">Utility methods for creating <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples"><code>Tuple</code></a> instances.</div>
+<div class="block">Utility methods for creating and using <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples"><code>Tuple</code></a> instances.</div>
 </li>
 </ul>
 </div>
@@ -125,6 +125,48 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromCollection(java.util.Collection)">fromCollection</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll)</code>
 <div class="block">Creates a new tuple with the same items as the specified collection.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromEntry(com.apriori.collections.ImmutableMap.Entry)">fromEntry</a></strong>(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>
+<div class="block">Converts an immutable map entry into a pair of key and value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromEntry(java.util.Map.Entry)">fromEntry</a></strong>(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</code>
+<div class="block">Converts a map entry into a pair of key and value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;E,P&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;E,P&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#fromEntry(com.apriori.collections.PriorityQueue.Entry)">fromEntry</a></strong>(<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;? extends E,? extends P&gt;&nbsp;entry)</code>
+<div class="block">Converts a priority queue entry into a pair of element and priority.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;,E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<br><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;A,B,C,D,E&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#nTupleNaturalOrdering()">nTupleNaturalOrdering</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;&gt;&nbsp;<br><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;A,B&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#pairNaturalOrdering()">pairNaturalOrdering</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;&gt;&nbsp;<br><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples">Quartet</a>&lt;A,B,C,D&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#quartetNaturalOrdering()">quartetNaturalOrdering</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;,E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<br><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples">Quintet</a>&lt;A,B,C,D,E&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#quintetNaturalOrdering()">quintetNaturalOrdering</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;&gt;&nbsp;<br><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>&lt;A,B,C&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#trioNaturalOrdering()">trioNaturalOrdering</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../com/apriori/tuples/Tuples.html#tupleNaturalOrdering()">tupleNaturalOrdering</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -164,7 +206,7 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
 <a name="fromArray(java.lang.Object...)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>fromArray</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&nbsp;fromArray(<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;array)</pre>
@@ -177,6 +219,102 @@ extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html?
  array has more than five elements than an <a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples"><code>NTuple</code></a> is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>array</code> - the array</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a tuple with the same items as the array</dd></dl>
+</li>
+</ul>
+<a name="fromEntry(java.util.Map.Entry)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromEntry</h4>
+<pre>public&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&nbsp;fromEntry(<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</pre>
+<div class="block">Converts a map entry into a pair of key and value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - a map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a pair of the entry's key and its value</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the given entry is <code>null</code></dd></dl>
+</li>
+</ul>
+<a name="fromEntry(com.apriori.collections.ImmutableMap.Entry)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromEntry</h4>
+<pre>public&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;K,V&gt;&nbsp;fromEntry(<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;? extends K,? extends V&gt;&nbsp;entry)</pre>
+<div class="block">Converts an immutable map entry into a pair of key and value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - an immutable map entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a pair of the entry's key and its value</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the given entry is <code>null</code></dd></dl>
+</li>
+</ul>
+<a name="fromEntry(com.apriori.collections.PriorityQueue.Entry)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromEntry</h4>
+<pre>public&nbsp;&lt;E,P&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;E,P&gt;&nbsp;fromEntry(<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;? extends E,? extends P&gt;&nbsp;entry)</pre>
+<div class="block">Converts a priority queue entry into a pair of element and priority.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>entry</code> - a priority queue entry</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a pair of the entry's element and priority</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the given entry is <code>null</code></dd></dl>
+</li>
+</ul>
+<a name="tupleNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tupleNaturalOrdering</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>&gt;&nbsp;tupleNaturalOrdering()</pre>
+</li>
+</ul>
+<a name="pairNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pairNaturalOrdering</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;A,B&gt;&gt;&nbsp;pairNaturalOrdering()</pre>
+</li>
+</ul>
+<a name="trioNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>trioNaturalOrdering</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Trio.html" title="class in com.apriori.tuples">Trio</a>&lt;A,B,C&gt;&gt;&nbsp;trioNaturalOrdering()</pre>
+</li>
+</ul>
+<a name="quartetNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>quartetNaturalOrdering</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Quartet.html" title="class in com.apriori.tuples">Quartet</a>&lt;A,B,C,D&gt;&gt;&nbsp;quartetNaturalOrdering()</pre>
+</li>
+</ul>
+<a name="quintetNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>quintetNaturalOrdering</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;,E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples">Quintet</a>&lt;A,B,C,D,E&gt;&gt;&nbsp;quintetNaturalOrdering()</pre>
+</li>
+</ul>
+<a name="nTupleNaturalOrdering()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>nTupleNaturalOrdering</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;A&gt;,B extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;B&gt;,C extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;C&gt;,D extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;D&gt;,E extends <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;E&gt;&gt;&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a>&lt;A,B,C,D,E&gt;&gt;&nbsp;nTupleNaturalOrdering()</pre>
 </li>
 </ul>
 </li>

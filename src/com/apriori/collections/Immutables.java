@@ -170,7 +170,7 @@ public final class Immutables {
     * Returns an iterator over the given immutable sorted map that visits entries in reverse order,
     * starting with the last (highest) key and ending with the first (lowest).
     *
-    * @param set an immutable sorted map
+    * @param map an immutable sorted map
     * @return an iterator that visits entries in descending order
     */
    public static <K, V> Iterator<ImmutableMap.Entry<K, V>> descendingIterator(
@@ -213,13 +213,13 @@ public final class Immutables {
    }
 
    /**
-    * Returns a view of the given immutable map entry as a standard {@link Map.Entry}. Since the
-    * input entry is immutable, the returned entry is indistinguishable from a snapshot. The
-    * returned entry throws {@link UnsupportedOperationException} if
-    * {@link Map.Entry#setValue(Object)} is used.
+    * Returns a view of the given immutable map entry as a standard {@link java.util.Map.Entry}.
+    * Since the input entry is immutable, the returned entry is indistinguishable from a snapshot.
+    * The returned entry throws {@link UnsupportedOperationException} if
+    * {@link java.util.Map.Entry#setValue(Object)} is used.
     *
-    * @param map an immutable map entry
-    * @return a view of the given map entry via the standard {@link Map.Entry} interface
+    * @param entry an immutable map entry
+    * @return a view of the given map entry via the standard {@link java.util.Map.Entry} interface
     */
    public static <K, V> Map.Entry<K, V> asIfMutable(
          final ImmutableMap.Entry<? extends K, ? extends V> entry) {
@@ -343,7 +343,7 @@ public final class Immutables {
     * thanks to the input being immutable. This can help adapt instances of immutable map entry to
     * otherwise invariant entry types, without the need for unchecked casts.
     *
-    * @param map an immutable map entry
+    * @param entry an immutable map entry
     * @return the input entry, but with its key or value type (or both) re-cast
     */
    public static <K, V> ImmutableMap.Entry<K, V> cast(
