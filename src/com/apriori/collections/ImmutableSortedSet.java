@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.util.Comparator;
 import java.util.NavigableSet;
 
 /**
@@ -12,6 +13,7 @@ import java.util.NavigableSet;
  */
 // TODO: javadoc
 public interface ImmutableSortedSet<E> extends ImmutableSet<E> {
+   Comparator<? super E> comparator();
    E first();
    ImmutableSortedSet<E> rest();
    E last();

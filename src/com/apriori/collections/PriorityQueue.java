@@ -290,7 +290,7 @@ public interface PriorityQueue<E, P> extends Iterable<PriorityQueue.Entry<E, P>>
 
    /**
     * Removes all entries from this queue whose elements do not match the given objects. This
-    * mutates this queue into the intersection of its current contents and the
+    * mutates this queue into the intersection of its current contents and the specified objects.
     *
     * @param objects elements to find
     * @return true if any of the specified objects were found and removed; otherwise false

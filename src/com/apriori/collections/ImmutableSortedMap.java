@@ -1,7 +1,10 @@
 package com.apriori.collections;
 
+import java.util.Comparator;
+
 // TODO: javadoc
 public interface ImmutableSortedMap<K, V> extends ImmutableMap<K, V> {
+   Comparator<? super K> comparator();
    Entry<K, V> firstEntry();
    Entry<K, V> lastEntry();
    Entry<K, V> floorEntry(K k);

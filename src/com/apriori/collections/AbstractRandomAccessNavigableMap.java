@@ -27,6 +27,10 @@ import java.util.NoSuchElementException;
  */
 // TODO: javadoc
 // TODO: tests
+// TODO: sub-maps by indices should always be "enclosed" by the main/outer-most map (so sub-maps of
+//       sub-maps shouldn't be enclosed by a sub-map)
+// TODO: simplify sub-map implementations as much as possible -- we may be able to remove methods
+//       and just let them inherit more impls from AbstractRandomAccessNavigableMap
 public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNavigableMap<K, V>
       implements RandomAccessNavigableMap<K, V> {
 
@@ -109,7 +113,12 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
       if (startIndex > endIndex) {
          throw new IndexOutOfBoundsException();
       }
-      return new SubMapByIndices(startIndex, endIndex);
+      return createSubMapByIndices(startIndex, endIndex, null);
+   }
+   
+   RandomAccessNavigableMap<K, V> createSubMapByIndices(int startIndex, int endIndex,
+         SubMapByIndices parent) {
+      return new SubMapByIndices(startIndex, endIndex, parent);
    }
 
    @Override public RandomAccessSet<K> keySet() {
@@ -138,18 +147,18 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
 
    @Override public RandomAccessNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
          boolean toInclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new RandomAccessSubMap(fromKey, fromInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+            toKey, toInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
    }
 
    @Override public RandomAccessNavigableMap<K, V> headMap(K toKey, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new RandomAccessSubMap(null, BoundType.NO_BOUND, toKey,
+            inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
    }
 
    @Override public RandomAccessNavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
-      // TODO Auto-generated method stub
-      return null;
+      return new RandomAccessSubMap(fromKey, inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+            null, BoundType.NO_BOUND);
    }
 
    @Override public RandomAccessNavigableMap<K, V> subMap(K fromKey, K toKey) {
@@ -421,10 +430,6 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
       private Entry<K, V> startNode;
       private Entry<K, V> endNode;
       
-      SubMapByIndices(int startIndex, int endIndex) {
-         this(startIndex, endIndex, null);
-      }
-      
       SubMapByIndices(int startIndex, int endIndex,
             AbstractRandomAccessNavigableMap<K, V>.SubMapByIndices parent) {
          super(AbstractRandomAccessNavigableMap.this.comparator);
@@ -439,7 +444,7 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
       }
       
       void checkModCount() {
-         if (this.modCount != AbstractRandomAccessNavigableMap.this.modCount) {
+         if (this.modCount != getModCount()) {
             throw new ConcurrentModificationException();
          }
       }
@@ -788,7 +793,11 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
          checkModCount();
          rangeCheckWide(fromIndex);
          rangeCheckWide(toIndex);
-         return new SubMapByIndices(adjustIndex(fromIndex), adjustIndex(toIndex), this);
+         // We want the sub-map's enclosing instance to be the main (outer-most) map. So we have to
+         // let the enclosing map create it. (Since this class extends AbstractRandomAccessNavigableMap
+         // we would otherwise create a sub-map whose enclosing instance is this sub-map. But that's
+         // not what we want.)
+         return outer().createSubMapByIndices(adjustIndex(fromIndex), adjustIndex(toIndex), this);
       }
 
       @Override
@@ -823,6 +832,21 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
                inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE, null, BoundType.NO_BOUND,
                this);
       }
+      
+      /**
+       * Returns the main map's modification count. This allows failing fast when the underlying map
+       * is modified, since such operations might invalidate index bounds.
+       * 
+       * <p>Since a {@link RandomAccessSubMap} <em>extends</em> {@link AbstractRandomAccessNavigableMap},
+       * it also inherits a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is
+       * compared to the main maps' value to detect when the sub-map's memo-ized size and index
+       * bounds are stale and elements need to be counted.
+       * 
+       * @return {@inheritDoc}
+       */
+      @Override protected int getModCount() {
+         return outer().getModCount();
+      }
    }
    
    /**
@@ -834,23 +858,27 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
     * @param <K> the type of key in the map
     * @param <V> the type of element in the map
     */
-   private static class SubMapByIndicesIterator<K, V> implements ListIterator<Entry<K, V>> {
+   protected static class SubMapByIndicesIterator<K, V> implements ListIterator<Entry<K, V>> {
       private final ListIterator<Entry<K, V>> iterator;
       private final AbstractRandomAccessNavigableMap<K, V>.SubMapByIndices submap;
+      private int myModCount;
       
       SubMapByIndicesIterator(ListIterator<Entry<K, V>> iterator,
             AbstractRandomAccessNavigableMap<K, V>.SubMapByIndices subset) {
          this.iterator = iterator;
          this.submap = subset;
+         resetModCount();
       }
 
       @Override
       public boolean hasNext() {
+         checkModCount();
          return submap.isInSubRange(iterator.nextIndex());
       }
 
       @Override
       public Entry<K, V> next() {
+         checkModCount();
          if (submap.isInSubRange(iterator.nextIndex())) {
             return iterator.next();
          }
@@ -859,11 +887,13 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
 
       @Override
       public boolean hasPrevious() {
+         checkModCount();
          return submap.isInSubRange(iterator.previousIndex());
       }
 
       @Override
       public Entry<K, V> previous() {
+         checkModCount();
          if (submap.isInSubRange(iterator.previousIndex())) {
             return iterator.previous();
          }
@@ -872,16 +902,19 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
 
       @Override
       public int nextIndex() {
+         checkModCount();
          return submap.adjustIndex(iterator.nextIndex());
       }
 
       @Override
       public int previousIndex() {
+         checkModCount();
          return submap.adjustIndex(iterator.previousIndex());
       }
 
       @Override
       public void remove() {
+         checkModCount();
          iterator.remove();
          submap.contractAfterRemove();
       }
@@ -894,6 +927,27 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
       @Override
       public void add(Entry<K, V> e) {
          throw new UnsupportedOperationException("add");
+      }
+      
+      /**
+       * Checks for concurrent modification by examining the underlying map's
+       * {@link AbstractNavigableMap#modCount modCount}. Throws an exception if concurrent
+       * modification is detected.
+       */
+      protected void checkModCount() {
+         if (myModCount != submap.getModCount()) {
+            throw new ConcurrentModificationException();
+         }
+      }
+      
+      /**
+       * Resets the iterator to be in sync with the map's latest
+       * {@link AbstractNavigableMap#modCount modCount}. This is used if this iterator makes a call
+       * to modify the underlying map, so that subsequent operations don't mistake the change for
+       * a concurrent modification.
+       */
+      protected void resetModCount() {
+         myModCount = submap.getModCount();
       }
    }
    

@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import com.apriori.tuples.Pair;
 import com.apriori.util.Function;
 
 import java.util.ArrayList;
@@ -10,118 +11,216 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
+/**
+ * Utility methods for creating immutable collections and maps and for viewing immutable collections
+ * and maps using the standard JCF collection and map interfaces. Standard collection and map views
+ * of immutable collections and maps throw {@link UnsupportedOperationException} from all mutation
+ * methods.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: javadoc
 // TODO: tests
 public final class Immutables {
    private Immutables() {
    }
    
-   private static final Object EMPTY[] = new Object[0];
+   static final Object EMPTY[] = new Object[0];
    
+   /**
+    * Returns a view of the given immutable collection as a standard {@link Collection}. The
+    * returned collection is a view, not a copy, so it is inexpensive to create. But since the
+    * input collection is immutable, the returned collection is indistinguishable from a snapshot.
+    * The returned collection throws {@link UnsupportedOperationException} for every operation that
+    * would otherwise mutate the collection.
+    *
+    * @param collection an immutable collection
+    * @return a view of the given collection via the standard {@link Collection} interface
+    */
    public static <E> Collection<E> asIfMutable(ImmutableCollection<? extends E> collection) {
       return new CollectionFromImmutable<E>(collection);
    }
 
+   /**
+    * Returns a view of the given immutable list as a standard {@link List}. The returned list is a
+    * view, not a copy, so it is inexpensive to create. But since the input list is immutable, the
+    * returned list is indistinguishable from a snapshot. The returned list throws
+    * {@link UnsupportedOperationException} for every operation that would otherwise mutate the
+    * list.
+    *
+    * @param list an immutable list
+    * @return a view of the given list via the standard {@link List} interface
+    */
    public static <E> List<E> asIfMutable(ImmutableList<? extends E> list) {
       return list instanceof RandomAccess
             ? new RandomAccessListFromImmutable<E>(list)
             : new ListFromImmutable<E>(list);
    }
 
+   /**
+    * Returns a view of the given immutable set as a standard {@link Set}. The returned set is a
+    * view, not a copy, so it is inexpensive to create. But since the input set is immutable, the
+    * returned set is indistinguishable from a snapshot. The returned set throws
+    * {@link UnsupportedOperationException} for every operation that would otherwise mutate the
+    * set.
+    *
+    * @param set an immutable set
+    * @return a view of the given set via the standard {@link Set} interface
+    */
    public static <E> Set<E> asIfMutable(ImmutableSet<? extends E> set) {
       return new SetFromImmutable<E>(set);
    }
 
-   public static <K, V> Map<K, V> asIfMutable(final ImmutableMap<? extends K, ? extends V> map) {
-      return new Map<K, V>() {
+   /**
+    * Returns a view of the given immutable set as a standard {@link NavigableSet}. The returned set
+    * is a view, not a copy, so it is inexpensive to create. But since the input set is immutable,
+    * the returned set is indistinguishable from a snapshot. The returned set throws
+    * {@link UnsupportedOperationException} for every operation that would otherwise mutate the
+    * set.
+    *
+    * @param set an immutable sorted set
+    * @return a view of the given set via the standard {@link NavigableSet} interface
+    */
+   public static <E> NavigableSet<E> asIfMutable(ImmutableSortedSet<? extends E> set) {
+      return new NavigableSetFromImmutable<E>(set);
+   }
+   
+   /**
+    * Returns an iterator over the given immutable sorted set that visits elements in reverse order,
+    * starting with the last (highest) element and ending with the first (lowest).
+    *
+    * @param set an immutable sorted set
+    * @return an iterator that visits elements in descending order
+    */
+   public static <E> Iterator<E> descendingIterator(final ImmutableSortedSet<E> set) {
+      return new ReadOnlyIterator<E>() {
+         boolean hasNext = !set.isEmpty();
+         E next = hasNext ? set.last() : null; 
+         
          @Override
-         public int size() {
-            return map.size();
+         public boolean hasNext() {
+            return hasNext;
          }
 
          @Override
-         public boolean isEmpty() {
-            return map.isEmpty();
-         }
-
-         @Override
-         public boolean containsKey(Object key) {
-            return map.containsKey(key);
-         }
-
-         @Override
-         public boolean containsValue(Object value) {
-            return map.values().contains(value);
-         }
-
-         @Override
-         public V get(Object key) {
-            return map.get(key);
-         }
-
-         @Override
-         public V put(K key, V value) {
-            throw new UnsupportedOperationException();
-         }
-
-         @Override
-         public V remove(Object key) {
-            throw new UnsupportedOperationException();
-         }
-
-         @Override
-         public void putAll(Map<? extends K, ? extends V> m) {
-            throw new UnsupportedOperationException();
-         }
-
-         @Override
-         public void clear() {
-            throw new UnsupportedOperationException();
-         }
-
-         @Override
-         public Set<K> keySet() {
-            return asIfMutable(map.keySet());
-         }
-
-         @Override
-         public Collection<V> values() {
-            return asIfMutable(map.values());
-         }
-
-         @Override
-         public Set<Map.Entry<K, V>> entrySet() {
-            ImmutableMap<K, V> castMap = cast(map);
-            
-            return new TransformingSet<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>(
-                  asIfMutable(castMap.entrySet()),
-                  new Function<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>() {
-                     @Override
-                     public Map.Entry<K, V> apply(ImmutableMap.Entry<K, V> input) {
-                        return asIfMutable(input);
-                     }
-                  });
+         public E next() {
+            if (!hasNext) {
+               throw new NoSuchElementException();
+            }
+            E ret = next;
+            if (isFirst(ret)) {
+               hasNext = false;
+               next = null;
+            } else {
+               hasNext = true;
+               next = set.lower(next);
+            }
+            return ret;
          }
          
-         @Override public boolean equals(Object o) {
-            return MapUtils.equals(this, o);
-         }
-         
-         @Override public int hashCode() {
-            return MapUtils.hashCode(this);
-         }
-         
-         @Override public String toString() {
-            return MapUtils.toString(this);
+         private boolean isFirst(E element) {
+            E first = set.first();
+            Comparator<? super E> comp = set.comparator();
+            if (comp == null) {
+               comp = CollectionUtils.NATURAL_ORDERING;
+            }
+            return comp.compare(element,  first) == 0;
          }
       };
    }
 
+   /**
+    * Returns a view of the given immutable map as a standard {@link Map}. The returned map is a
+    * view, not a copy, so it is inexpensive to create. But since the input map is immutable, the
+    * returned map is indistinguishable from a snapshot. The returned map throws
+    * {@link UnsupportedOperationException} for every operation that would otherwise mutate the
+    * map.
+    *
+    * @param map an immutable map
+    * @return a view of the given map via the standard {@link Map} interface
+    */
+   public static <K, V> Map<K, V> asIfMutable(final ImmutableMap<? extends K, ? extends V> map) {
+      return new MapFromImmutable<K, V>(map);
+   }
+   
+   /**
+    * Returns a view of the given immutable map as a standard {@link NavigableMap}. The returned map
+    * is a view, not a copy, so it is inexpensive to create. But since the input map is immutable,
+    * the returned map is indistinguishable from a snapshot. The returned map throws
+    * {@link UnsupportedOperationException} for every operation that would otherwise mutate the
+    * map.
+    *
+    * @param map an immutable sorted map
+    * @return a view of the given map via the standard {@link NavigableMap} interface
+    */
+   public static <K, V> NavigableMap<K, V> asIfMutable(
+         ImmutableSortedMap<? extends K, ? extends V> map) {
+      return new NavigableMapFromImmutable<K, V>(map);
+   }
+
+   /**
+    * Returns an iterator over the given immutable sorted map that visits entries in reverse order,
+    * starting with the last (highest) key and ending with the first (lowest).
+    *
+    * @param set an immutable sorted map
+    * @return an iterator that visits entries in descending order
+    */
+   public static <K, V> Iterator<ImmutableMap.Entry<K, V>> descendingIterator(
+         ImmutableSortedMap<? extends K, ? extends V> map) {
+      final ImmutableSortedMap<K, V> castMap = cast(map);
+      return new ReadOnlyIterator<ImmutableMap.Entry<K, V>>() {
+         boolean hasNext = !castMap.isEmpty();
+         ImmutableMap.Entry<K, V> next = hasNext ? castMap.lastEntry() : null; 
+         
+         @Override
+         public boolean hasNext() {
+            return hasNext;
+         }
+
+         @Override
+         public ImmutableMap.Entry<K, V> next() {
+            if (!hasNext) {
+               throw new NoSuchElementException();
+            }
+            ImmutableMap.Entry<K, V> ret = next;
+            if (isFirst(ret)) {
+               hasNext = false;
+               next = null;
+            } else {
+               hasNext = true;
+               next = castMap.lowerEntry(next.key());
+            }
+            return ret;
+         }
+         
+         private boolean isFirst(ImmutableMap.Entry<K, V> element) {
+            ImmutableMap.Entry<K, V> first = castMap.firstEntry();
+            Comparator<? super K> comp = castMap.comparator();
+            if (comp == null) {
+               comp = CollectionUtils.NATURAL_ORDERING;
+            }
+            return comp.compare(element.key(),  first.key()) == 0;
+         }
+      };
+   }
+
+   /**
+    * Returns a view of the given immutable map entry as a standard {@link Map.Entry}. Since the
+    * input entry is immutable, the returned entry is indistinguishable from a snapshot. The
+    * returned entry throws {@link UnsupportedOperationException} if
+    * {@link Map.Entry#setValue(Object)} is used.
+    *
+    * @param map an immutable map entry
+    * @return a view of the given map entry via the standard {@link Map.Entry} interface
+    */
    public static <K, V> Map.Entry<K, V> asIfMutable(
          final ImmutableMap.Entry<? extends K, ? extends V> entry) {
       return new Map.Entry<K, V>() {
@@ -154,30 +253,84 @@ public final class Immutables {
       };
    }
    
+   /**
+    * Safely upcasts the element type of an immutable collection. This operation is safe thanks to
+    * the input being immutable. This can help adapt instances of immutable collection to otherwise
+    * invariant collection types, without the need for unchecked casts.
+    *
+    * @param coll an immutable collection
+    * @return the input collection, but with its element type re-cast
+    */
    public static <E> ImmutableCollection<E> cast(ImmutableCollection<? extends E> coll) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
       ImmutableCollection<E> cast = (ImmutableCollection<E>) coll;
       return cast;
    }
 
+   /**
+    * Safely upcasts the element type of an immutable list. This operation is safe thanks to
+    * the input being immutable. This can help adapt instances of immutable list to otherwise
+    * invariant list types, without the need for unchecked casts.
+    *
+    * @param list an immutable list
+    * @return the input list, but with its element type re-cast
+    */
    public static <E> ImmutableList<E> cast(ImmutableList<? extends E> list) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
       ImmutableList<E> cast = (ImmutableList<E>) list;
       return cast;
    }
 
+   /**
+    * Safely upcasts the element type of an immutable set. This operation is safe thanks to
+    * the input being immutable. This can help adapt instances of immutable set to otherwise
+    * invariant set types, without the need for unchecked casts.
+    *
+    * @param set an immutable set
+    * @return the input set, but with its element type re-cast
+    */
    public static <E> ImmutableSet<E> cast(ImmutableSet<? extends E> set) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
       ImmutableSet<E> cast = (ImmutableSet<E>) set;
       return cast;
    }
 
+   /**
+    * Safely upcasts the element type of an immutable sorted set. This operation is safe thanks to
+    * the input being immutable. This can help adapt instances of immutable set to otherwise
+    * invariant set types, without the need for unchecked casts.
+    *
+    * @param set an immutable sorted set
+    * @return the input set, but with its element type re-cast
+    */
+   public static <E> ImmutableSortedSet<E> cast(ImmutableSortedSet<? extends E> set) {
+      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
+      ImmutableSortedSet<E> cast = (ImmutableSortedSet<E>) set;
+      return cast;
+   }
+
+   /**
+    * Safely upcasts the key and/or value types of an immutable map. This operation is safe thanks
+    * to the input being immutable. This can help adapt instances of immutable map to otherwise
+    * invariant map types, without the need for unchecked casts.
+    *
+    * @param map an immutable map
+    * @return the input map, but with its key or value type (or both) re-cast
+    */
    public static <K, V> ImmutableMap<K, V> cast(ImmutableMap<? extends K, ? extends V> map) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
       ImmutableMap<K, V> cast = (ImmutableMap<K, V>) map;
       return cast;
    }
 
+   /**
+    * Safely upcasts the key and/or value types of an immutable sorted map. This operation is safe
+    * thanks to the input being immutable. This can help adapt instances of immutable map to
+    * otherwise invariant map types, without the need for unchecked casts.
+    *
+    * @param map an immutable sorted map
+    * @return the input map, but with its key or value type (or both) re-cast
+    */
    public static <K, V> ImmutableSortedMap<K, V> cast(
          ImmutableSortedMap<? extends K, ? extends V> map) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
@@ -185,6 +338,14 @@ public final class Immutables {
       return cast;
    }
 
+   /**
+    * Safely upcasts the key and/or value types of an immutable map entry. This operation is safe
+    * thanks to the input being immutable. This can help adapt instances of immutable map entry to
+    * otherwise invariant entry types, without the need for unchecked casts.
+    *
+    * @param map an immutable map entry
+    * @return the input entry, but with its key or value type (or both) re-cast
+    */
    public static <K, V> ImmutableMap.Entry<K, V> cast(
          ImmutableMap.Entry<? extends K, ? extends V> entry) {
       @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
@@ -220,6 +381,21 @@ public final class Immutables {
       return new SingletonList<E>(element);
    }
    
+   /**
+    * Creates a snapshot of the given iterable. For performance, the most compact representation is
+    * an array. {@link Collection} and {@link ImmutableCollection} already have {@code toArray}
+    * methods that can be used.
+    * 
+    * <p>Iterables that implement neither of these interfaces must resort to a custom mechanism.
+    * Instead of using a growable array, where we have to copy contents on each resize, we use a
+    * structure of linked nodes, where each node has an array whose length is the same as all nodes
+    * before it (so adding a new node effectively doubles the capacity, just like in standard
+    * growable array approaches). The last step is to consolidate the nodes into a single array once
+    * the iterable's contents have been exhausted.
+    *
+    * @param iterable an iterable
+    * @return a snapshot of the iterable's contents in an array
+    */
    private static Object[] toArray(Iterable<?> iterable) {
       Iterator<?> iter = iterable.iterator();
       if (!iter.hasNext()) {
@@ -242,21 +418,29 @@ public final class Immutables {
          Chunk current = head;
          int currentIndex = 0;
          for (Object o : iterable) {
-            size++;
             current.contents[currentIndex++] = o;
             if (currentIndex == chunkLimit) {
                chunkLimit = size;
+               size += currentIndex;
                current.next = new Chunk(chunkLimit);
                current = current.next;
                currentIndex = 0;
             }
          }
+         size += currentIndex;
+         int lastChunkSize = currentIndex;
          Object elements[] = new Object[size];
          currentIndex = 0;
          for (current = head; current != null; current = current.next) {
-            for (int i = 0, len = current.contents.length; i < len && size > 0; i++) {
-               elements[currentIndex++] = current.contents[i];
-               size--;
+            if (current.next == null) {
+               // last chunk
+               if (lastChunkSize > 0) {
+                  System.arraycopy(current.contents, 0, elements, currentIndex, lastChunkSize);
+               }
+            } else {
+               int chunkLength = current.contents.length;
+               System.arraycopy(current.contents, 0, elements, currentIndex, chunkLength);
+               currentIndex += chunkLength;
             }
          }
          return elements;
@@ -292,18 +476,52 @@ public final class Immutables {
       return ret;
    }
    
-   public static <E> ImmutableSet<E> toImmutableSet(E... elements) {
-      return toImmutableSet(Arrays.asList(elements));
-   }
-
    public static <E> ImmutableSet<E> singletonImmutableSet(E element) {
       return new SingletonSet<E>(element);
+   }
+   
+   @SuppressWarnings("unchecked")
+   private static <E> ImmutableSet<E> makeImmutableSet(final Object elements[]) {
+      switch (elements.length) {
+         case 0:
+            return emptyImmutableSet();
+         case 1:
+            return singletonImmutableSet((E) elements[0]);
+         default:
+            return new ImmutableSetImpl<E>(elements);
+      }
    }
    
    public static <E> ImmutableSet<E> toImmutableSet(Iterable<? extends E> iterable) {
       if (iterable instanceof ImmutableSet) {
          return cast((ImmutableSet<? extends E>) iterable);
       }
+      return makeImmutableSet(toArray(iterable));
+   }
+
+   public static <E> ImmutableSet<E> toImmutableSet(E... elements) {
+      return makeImmutableSet(elements.clone());
+   }
+
+   public static <E> ImmutableSortedSet<E> emptyImmutableSortedSet() {
+      @SuppressWarnings("unchecked")
+      ImmutableSortedSet<E> ret = (ImmutableSortedSet<E>) EmptySortedSet.INSTANCE;
+      return ret;
+   }
+
+   public static <E> ImmutableSortedSet<E> emptyImmutableSortedSet(Comparator<? super E> comp) {
+      @SuppressWarnings("unchecked")
+      ImmutableSortedSet<E> ret = (ImmutableSortedSet<E>) new EmptySortedSet(comp);
+      return ret;
+   }
+   
+   public static <E> ImmutableSortedSet<E>singletonImmutableSortedSet(E e) {
+      // TODO
+      return null;
+   }
+
+   public static <E> ImmutableSortedSet<E>singletonImmutableSortedSet(Comparator<? super E> comp,
+         E e) {
       // TODO
       return null;
    }
@@ -329,109 +547,229 @@ public final class Immutables {
       return null;
    }
 
-   // can't use var-args and get type safety for alternating K-then-V types, so we "simulate"
-   // using numerous overrides and support up to 5 key-value pairs
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap() {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key, V value) {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2) {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
-         K key3, V value3) {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
-         K key3, V value3, K key4, V value4) {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
-         K key3, V value3, K key4, V value4, K key5, V value5) {
-      // TODO
-      return null;
-   }
-   
-   public static <E> ImmutableMap<E, E> toImmutableMap(E... keysAndValues) {
-      // TODO
-      return null;
-   }
-   
-   public static <K, V> ImmutableMap<K, V> toImmutableMap(Map<? extends K, ? extends V> map) {
+   public static <E> ImmutableSortedSet<E> toImmutableSortedSet(Comparator<? super E> comparator,
+         SortedSet<? extends E> set) {
       // TODO
       return null;
    }
 
-   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap() {
+   public static <K, V> ImmutableMap<K, V> emptyImmutableMap() {
       // TODO
       return null;
    }
    
-   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
+   public static <K, V> ImmutableMap<K, V> singletonImmutableMap(K key, V value) {
+      // TODO
+      return null;
+   }
+   
+   // Can't use var-args and get type safety for alternating K-then-V types, so we "simulate"
+   // using numerous overrides and support up to 5 key-value pairs.
+   // (There are also overloads to accept Pair<K,V>s)
+   
+   @SuppressWarnings("unchecked")
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2) {
+      return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2)));
+   }
+   
+   @SuppressWarnings("unchecked")
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
+         K key3, V value3) {
+      return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
+            Pair.create(key3, value3)));
+   }
+   
+   @SuppressWarnings("unchecked")
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
+         K key3, V value3, K key4, V value4) {
+      return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
+            Pair.create(key3, value3), Pair.create(key4, value4)));
+   }
+   
+   @SuppressWarnings("unchecked")
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
+         K key3, V value3, K key4, V value4, K key5, V value5) {
+      return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
+            Pair.create(key3, value3), Pair.create(key4, value4), Pair.create(key5, value5)));
+   }
+   
+   private static <K, V> ImmutableMap<K, V> makeImmutableMap(Object keyValuePairs[]) {
+      switch (keyValuePairs.length) {
+         case 0:
+            return emptyImmutableMap();
+         case 1:
+            @SuppressWarnings("unchecked")
+            Pair<K, V> pair = (Pair<K, V>) keyValuePairs[0];
+            return singletonImmutableMap(pair.getFirst(), pair.getSecond());
+         default:
+            return new ImmutableMapImpl<K, V>(keyValuePairs, true);
+      }
+   }
+   
+   public static <E> ImmutableMap<E, E> toImmutableMap(E... keysAndValues) {
+      int len = keysAndValues.length;
+      if ((len & 1) != 0) {
+         throw new IllegalArgumentException("Must specify even number of keys/values");
+      }
+      @SuppressWarnings("unchecked")
+      Pair<E, E> pairs[] = (Pair<E, E>[]) new Pair<?, ?>[len >> 1];
+      for (int i = 0; i < len; i += 2) {
+         pairs[i] = Pair.create(keysAndValues[i], keysAndValues[i+1]);
+      }
+      return makeImmutableMap(pairs);
+   }
+
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(Pair<K, V>... keysAndValues) {
+      return makeImmutableMap(keysAndValues.clone());
+   }
+
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(Iterable<Pair<K, V>> keysAndValues) {
+      return makeImmutableMap(toArray(keysAndValues));
+   }
+
+   public static <K, V> ImmutableMap<K, V> toImmutableMap(Map<? extends K, ? extends V> map) {
+      Object entries[] = map.entrySet().toArray();
+      switch (entries.length) {
+         case 0:
+            return emptyImmutableMap();
+         case 1:
+            @SuppressWarnings("unchecked")
+            Map.Entry<K, V> entry = (Map.Entry<K, V>) entries[0];
+            return singletonImmutableMap(entry.getKey(), entry.getValue());
+         default:
+            return new ImmutableMapImpl<K, V>(entries, false);
+      }
+   }
+
+   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> emptyImmutableSortedMap() {
+      // TODO
+      return null;
+   }
+   
+   public static <K, V> ImmutableSortedMap<K, V> emptyImmutableSortedMap(
+         Comparator<? super K> comp) {
+      // TODO
+      return null;
+   }
+   
+   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> singletonImmutableSortedMap(
          K key, V value) {
       // TODO
       return null;
    }
 
+   public static <K, V> ImmutableSortedMap<K, V> singletonImmutableSortedMap(
+         Comparator<? super K> comp, K key, V value) {
+      // TODO
+      return null;
+   }
+
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4),
+            Pair.create(key5, value5)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3)));
    }
    
+   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3,
          K key4, V value4) {
+      return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4)));
+   }
+   
+   @SuppressWarnings("unchecked")
+   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
+         Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3,
+         K key4, V value4, K key5, V value5) {
+      return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
+            Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4),
+            Pair.create(key5, value5)));
+   }
+   
+   public static <E extends Comparable<E>> ImmutableSortedMap<E, E> toImmutableSortedMap(
+         E... keysAndValues) {
+      int len = keysAndValues.length;
+      if ((len & 1) != 0) {
+         throw new IllegalArgumentException("Must specify even number of keys/values");
+      }
+      ArrayList<Pair<E, E>> pairs = new ArrayList<Pair<E, E>>(len >> 1);
+      for (int i = 0; i < len; i += 2) {
+         pairs.add(Pair.create(keysAndValues[i], keysAndValues[i+1]));
+      }
       // TODO
       return null;
    }
    
+   public static <E> ImmutableSortedMap<E, E> toImmutableSortedMap(Comparator<? super E> comp,
+         E... keysAndValues) {
+      int len = keysAndValues.length;
+      if ((len & 1) != 0) {
+         throw new IllegalArgumentException("Must specify even number of keys/values");
+      }
+      ArrayList<Pair<E, E>> pairs = new ArrayList<Pair<E, E>>(len >> 1);
+      for (int i = 0; i < len; i += 2) {
+         pairs.add(Pair.create(keysAndValues[i], keysAndValues[i+1]));
+      }
+      // TODO
+      return null;
+   }
+
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
-         Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3,
-         K key4, V value4, K key5, V value5) {
+         Pair<K, V>... keysAndValues) {
+      return toImmutableSortedMap(Arrays.asList(keysAndValues));
+   }
+
+   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
+         Iterable<Pair<K, V>> keysAndValues) {
+      // TODO
+      return null;
+   }
+   
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(Comparator<? super K> comp,
+         Pair<K, V>... keysAndValues) {
+      return toImmutableSortedMap(comp, Arrays.asList(keysAndValues));
+   }
+
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(Comparator<? super K> comp,
+         Iterable<Pair<K, V>> keysAndValues) {
       // TODO
       return null;
    }
@@ -450,6 +788,13 @@ public final class Immutables {
 
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, Map<? extends K, ? extends V> map) {
+      if (map instanceof SortedMap) {
+         SortedMap<? extends K, ? extends V> sortedMap = (SortedMap<? extends K, ? extends V>) map;
+         if (comparator == null ? sortedMap.comparator() == null
+               : comparator.equals(sortedMap.comparator())) {
+            return toImmutableSortedMap((SortedMap<? extends K, ? extends V>) map);
+         }
+      }
       // TODO
       return null;
    }
@@ -460,8 +805,7 @@ public final class Immutables {
    }
 
    public static <K, V> ImmutableMap.Entry<K, V> toImmutableMapEntry(K key, V value) {
-      // TODO
-      return null;
+      return new AbstractImmutableMap.SimpleEntry<K, V>(key, value);
    }
 
    private static class CollectionFromImmutable<E> implements Collection<E> {
@@ -784,7 +1128,337 @@ public final class Immutables {
          return CollectionUtils.hashCode(this);
       }
    }
+
+   private static class NavigableSetFromImmutable<E> extends SetFromImmutable<E>
+         implements NavigableSet<E> {
+      NavigableSetFromImmutable(ImmutableSortedSet<? extends E> set) {
+         super(set);
+      }
+      
+      private ImmutableSortedSet<E> getSet() {
+         return (ImmutableSortedSet<E>) cast(collection);
+      }
+
+      @Override
+      public Comparator<? super E> comparator() {
+         return getSet().comparator();
+      }
+
+      @Override
+      public E first() {
+         return getSet().first();
+      }
+
+      @Override
+      public E last() {
+         return getSet().last();
+      }
+
+      @Override
+      public E lower(E e) {
+         return getSet().lower(e);
+      }
+
+      @Override
+      public E floor(E e) {
+         return getSet().floor(e);
+      }
+
+      @Override
+      public E ceiling(E e) {
+         return getSet().ceil(e);
+      }
+
+      @Override
+      public E higher(E e) {
+         return getSet().higher(e);
+      }
+
+      @Override
+      public E pollFirst() {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public E pollLast() {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public NavigableSet<E> descendingSet() {
+         return new DescendingSet<E>(this);
+      }
+
+      @Override
+      public Iterator<E> descendingIterator() {
+         return Immutables.descendingIterator(getSet());
+      }
+
+      @Override
+      public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
+            boolean toInclusive) {
+         return new NavigableSetFromImmutable<E>(getSet().subSet(fromElement,  fromInclusive,
+               toElement, toInclusive));
+      }
+
+      @Override
+      public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+         return new NavigableSetFromImmutable<E>(getSet().headSet(toElement, inclusive));
+      }
+
+      @Override
+      public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+         return new NavigableSetFromImmutable<E>(getSet().tailSet(fromElement, inclusive));
+      }
+
+      @Override
+      public SortedSet<E> subSet(E fromElement, E toElement) {
+         return new NavigableSetFromImmutable<E>(getSet().subSet(fromElement, toElement));
+      }
+
+      @Override
+      public SortedSet<E> headSet(E toElement) {
+         return new NavigableSetFromImmutable<E>(getSet().headSet(toElement));
+      }
+
+      @Override
+      public SortedSet<E> tailSet(E fromElement) {
+         return new NavigableSetFromImmutable<E>(getSet().tailSet(fromElement));
+      }
+   }
+
+   private static class MapFromImmutable<K, V> implements Map<K, V> {
+
+      final ImmutableMap<? extends K, ? extends V> map;
+
+      MapFromImmutable(ImmutableMap<? extends K, ? extends V> map) {
+         this.map = map;
+      }
+
+      @Override
+      public int size() {
+         return map.size();
+      }
+
+      @Override
+      public boolean isEmpty() {
+         return map.isEmpty();
+      }
+
+      @Override
+      public boolean containsKey(Object key) {
+         return map.containsKey(key);
+      }
+
+      @Override
+      public boolean containsValue(Object value) {
+         return map.values().contains(value);
+      }
+
+      @Override
+      public V get(Object key) {
+         return map.get(key);
+      }
+
+      @Override
+      public V put(K key, V value) {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public V remove(Object key) {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void putAll(Map<? extends K, ? extends V> m) {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void clear() {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public Set<K> keySet() {
+         return asIfMutable(map.keySet());
+      }
+
+      @Override
+      public Collection<V> values() {
+         return asIfMutable(map.values());
+      }
+
+      @Override
+      public Set<Map.Entry<K, V>> entrySet() {
+         ImmutableMap<K, V> castMap = cast(map);
+         
+         return new TransformingSet<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>(
+               asIfMutable(castMap.entrySet()),
+               new Function<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>() {
+                  @Override
+                  public Map.Entry<K, V> apply(ImmutableMap.Entry<K, V> input) {
+                     return asIfMutable(input);
+                  }
+               });
+      }
+
+      @Override public boolean equals(Object o) {
+         return MapUtils.equals(this, o);
+      }
+
+      @Override public int hashCode() {
+         return MapUtils.hashCode(this);
+      }
+
+      @Override public String toString() {
+         return MapUtils.toString(this);
+      }
+   }
    
+   private static class NavigableMapFromImmutable<K, V> extends MapFromImmutable<K, V>
+         implements NavigableMap<K, V> {
+
+      NavigableMapFromImmutable(ImmutableSortedMap<? extends K, ? extends V> map) {
+         super(map);
+      }
+      
+      private ImmutableSortedMap<K, V> getMap() {
+         return (ImmutableSortedMap<K, V>) cast(map);
+      }
+
+      @Override
+      public Comparator<? super K> comparator() {
+         return getMap().comparator();
+      }
+
+      private K key(ImmutableMap.Entry<K, V> entry) {
+         return entry == null ? null : entry.key();
+      }
+      
+      private Entry<K, V> entry(ImmutableMap.Entry<K, V> entry) {
+         return entry == null ? null : asIfMutable(entry);
+      }
+      
+      @Override
+      public K firstKey() {
+         return key(getMap().firstEntry());
+      }
+
+      @Override
+      public K lastKey() {
+         return key(getMap().lastEntry());
+      }
+
+      @Override
+      public Map.Entry<K, V> lowerEntry(K key) {
+         return entry(getMap().lowerEntry(key));
+      }
+
+      @Override
+      public K lowerKey(K key) {
+         return key(getMap().lowerEntry(key));
+      }
+
+      @Override
+      public Entry<K, V> floorEntry(K key) {
+         return entry(getMap().floorEntry(key));
+      }
+
+      @Override
+      public K floorKey(K key) {
+         return key(getMap().floorEntry(key));
+      }
+
+      @Override
+      public Entry<K, V> ceilingEntry(K key) {
+         return entry(getMap().ceilEntry(key));
+      }
+
+      @Override
+      public K ceilingKey(K key) {
+         return key(getMap().ceilEntry(key));
+      }
+
+      @Override
+      public Entry<K, V> higherEntry(K key) {
+         return entry(getMap().higherEntry(key));
+      }
+
+      @Override
+      public K higherKey(K key) {
+         return key(getMap().higherEntry(key));
+      }
+
+      @Override
+      public Entry<K, V> firstEntry() {
+         return entry(getMap().firstEntry());
+      }
+
+      @Override
+      public Entry<K, V> lastEntry() {
+         return entry(getMap().lastEntry());
+      }
+
+      @Override
+      public Entry<K, V> pollFirstEntry() {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public Entry<K, V> pollLastEntry() {
+         throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public NavigableMap<K, V> descendingMap() {
+         return new DescendingMap<K, V>(this);
+      }
+
+      @Override
+      public NavigableSet<K> navigableKeySet() {
+         return asIfMutable(getMap().keySet());
+      }
+
+      @Override
+      public NavigableSet<K> descendingKeySet() {
+         return descendingMap().navigableKeySet();
+      }
+
+      @Override
+      public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
+            boolean toInclusive) {
+         return new NavigableMapFromImmutable<K, V>(getMap().subMap(fromKey, fromInclusive, toKey,
+               toInclusive));
+      }
+
+      @Override
+      public NavigableMap<K, V> headMap(K toKey, boolean inclusive) {
+         return new NavigableMapFromImmutable<K, V>(getMap().headMap(toKey, inclusive));
+      }
+
+      @Override
+      public NavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
+         return new NavigableMapFromImmutable<K, V>(getMap().tailMap(fromKey, inclusive));
+      }
+
+      @Override
+      public SortedMap<K, V> subMap(K fromKey, K toKey) {
+         return new NavigableMapFromImmutable<K, V>(getMap().subMap(fromKey, toKey));
+      }
+
+      @Override
+      public SortedMap<K, V> headMap(K toKey) {
+         return new NavigableMapFromImmutable<K, V>(getMap().headMap(toKey));
+      }
+
+      @Override
+      public SortedMap<K, V> tailMap(K fromKey) {
+         return new NavigableMapFromImmutable<K, V>(getMap().tailMap(fromKey));
+      }
+   }
+
    private static class EmptyCollection extends AbstractImmutableCollection<Object> {
       static final EmptyCollection INSTANCE = new EmptyCollection();
       
@@ -833,8 +1507,13 @@ public final class Immutables {
    }
 
    private static class EmptyList extends EmptyCollection implements ImmutableList<Object> {
+      @SuppressWarnings("hiding")
       static final EmptyList INSTANCE = new EmptyList();
 
+      @SuppressWarnings("synthetic-access")
+      private EmptyList() {
+      }
+      
       @Override
       public Object get(int i) {
          throw new IndexOutOfBoundsException(String.valueOf(i));
@@ -877,7 +1556,12 @@ public final class Immutables {
    }
    
    private static class EmptySet extends EmptyCollection implements ImmutableSet<Object> {
+      @SuppressWarnings("hiding")
       static final EmptySet INSTANCE = new EmptySet();
+      
+      @SuppressWarnings("synthetic-access")
+      private EmptySet() {
+      }
       
       @Override
       public boolean equals(Object o) {
@@ -891,7 +1575,20 @@ public final class Immutables {
    }
 
    private static class EmptySortedSet extends EmptySet implements ImmutableSortedSet<Object> {
-      static final EmptySortedSet INSTANCE = new EmptySortedSet();
+      @SuppressWarnings("hiding")
+      static final EmptySortedSet INSTANCE = new EmptySortedSet(null);
+      
+      private final Comparator<Object> comp;
+      
+      @SuppressWarnings({"synthetic-access", "unchecked"})
+      EmptySortedSet(Comparator<?> comp) {
+         this.comp = (Comparator<Object>) comp;
+      }
+      
+      @Override
+      public Comparator<? super Object> comparator() {
+         return comp;
+      }
       
       @Override
       public Object first() {
@@ -901,7 +1598,7 @@ public final class Immutables {
 
       @Override
       public ImmutableSortedSet<Object> rest() {
-         return INSTANCE;
+         return this;
       }
       
       @Override
@@ -931,33 +1628,33 @@ public final class Immutables {
       
       @Override
       public ImmutableSortedSet<Object> subSet(Object from, Object to) {
-         return INSTANCE;
+         return this;
       }
 
       @Override
       public ImmutableSortedSet<Object> subSet(Object from, boolean fromInclusive, Object to,
             boolean toInclusive) {
-         return INSTANCE;
+         return this;
       }
 
       @Override
       public ImmutableSortedSet<Object> headSet(Object to) {
-         return INSTANCE;
+         return this;
       }
 
       @Override
       public ImmutableSortedSet<Object> headSet(Object to, boolean inclusive) {
-         return INSTANCE;
+         return this;
       }
 
       @Override
       public ImmutableSortedSet<Object> tailSet(Object from) {
-         return INSTANCE;
+         return this;
       }
 
       @Override
       public ImmutableSortedSet<Object> tailSet(Object from, boolean inclusive) {
-         return INSTANCE;
+         return this;
       }
    }
    
@@ -983,6 +1680,7 @@ public final class Immutables {
          return new Object[] { element };
       }
 
+      @SuppressWarnings("unchecked")
       @Override
       public <T> T[] toArray(T[] array) {
          array = ArrayUtils.newArrayIfTooSmall(array, 1);
@@ -1040,6 +1738,7 @@ public final class Immutables {
          if (from > to) {
             throw new IndexOutOfBoundsException(String.valueOf(from) + " > " + String.valueOf(to));
          }
+         @SuppressWarnings("unchecked")
          ImmutableList<E> ret = from == to ? (ImmutableList<E>) EmptyList.INSTANCE : this;
          return ret;
       }
@@ -1051,7 +1750,7 @@ public final class Immutables {
 
       @Override
       public ImmutableList<E> rest() {
-         return (ImmutableList<E>) EmptyList.INSTANCE;
+         return this;
       }
       
       @Override
@@ -1119,11 +1818,30 @@ public final class Immutables {
          if (i < 0 || i >= elements.length) {
             throw new IndexOutOfBoundsException(String.valueOf(i));
          }
-         return (E) elements[i];
+         @SuppressWarnings("unchecked")
+         E ret = (E) elements[i];
+         return ret;
       }
+   }
+   
+   static int hash(Object e) {
+      int h = e == null ? 0 : e.hashCode();
+      // Spread bits to regularize both segment and index locations,
+      // using variant of single-word Wang/Jenkins hash.
+      h += (h <<  15) ^ 0xffffcd7d;
+      h ^= (h >>> 10);
+      h += (h <<   3);
+      h ^= (h >>>  6);
+      h += (h <<   2) + (h << 14);
+      return h ^ (h >>> 16);
    }
 
    private static class ImmutableSetImpl<E> extends AbstractImmutableSet<E> {
+      // TODO: benchmark using arbitrary table sizes (e.g. 1.5 * num entries) and mod is too slow
+      // compared to using power-of-2 table sizes and bitwise and. The former would be nice since
+      // it means less memory bloat as the latter could yield a table with a low load factor because
+      // the number of entries was just beyond the comfort level for the next smallest power of 2...
+      
       private final Object table[];
       private final int hashCodes[];
       private final int size;
@@ -1168,18 +1886,6 @@ public final class Immutables {
          }
       }
       
-      private int hash(Object e) {
-         int h = e == null ? 0 : e.hashCode();
-         // Spread bits to regularize both segment and index locations,
-         // using variant of single-word Wang/Jenkins hash.
-         h += (h <<  15) ^ 0xffffcd7d;
-         h ^= (h >>> 10);
-         h += (h <<   3);
-         h ^= (h >>>  6);
-         h += (h <<   2) + (h << 14);
-         return h ^ (h >>> 16);
-      }
-
       @Override
       public int size() {
          return size;
@@ -1213,6 +1919,7 @@ public final class Immutables {
             private boolean needNext = true;
             private int next;
 
+            @SuppressWarnings("synthetic-access")
             private void findNext() {
                if (needNext) {
                   needNext = false;
@@ -1231,6 +1938,7 @@ public final class Immutables {
                return next != -1;
             }
 
+            @SuppressWarnings("synthetic-access")
             @Override
             public E next() {
                findNext();
@@ -1238,7 +1946,163 @@ public final class Immutables {
                   throw new NoSuchElementException();
                }
                needNext = true;
-               return (E) table[next++];
+               @SuppressWarnings("unchecked")
+               E ret = (E) table[next++];
+               return ret;
+            }
+         };
+      }
+   }
+
+   private static class ImmutableMapImpl<K, V> extends AbstractImmutableMap<K, V> {
+      private final Object keyTable[];
+      private final Object valueTable[];
+      private final int hashCodes[];
+      private final int size;
+
+      ImmutableMapImpl(Object entries[], boolean pairs) {
+         assert entries.length > 0;
+         this.size = entries.length;
+         // compute desired size based on a load factor of 0.75
+         int tableSize = (this.size << 2) / 3;
+         // use smallest power of 2 that is >= desired size
+         int bit = Integer.highestOneBit(tableSize);
+         if (bit != tableSize) {
+            tableSize = bit << 1;
+         }
+         if (this.size > tableSize) {
+            // could happen on overflow, for super-huge set
+            tableSize = Integer.MAX_VALUE;
+         }
+         int mask = tableSize - 1;
+         keyTable = new Object[tableSize];
+         valueTable = new Object[tableSize];
+         hashCodes = new int[tableSize];
+         for (Object o : entries) {
+            K k; V v;
+            if (pairs) {
+               @SuppressWarnings("unchecked")
+               Pair<K, V> pair = (Pair<K, V>) o;
+               k = pair.getFirst();
+               v = pair.getSecond();
+            } else {
+               @SuppressWarnings("unchecked")
+               Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
+               k = entry.getKey();
+               v = entry.getValue();
+            }
+            int h = hash(k);
+            int idx = h;
+            while (true) {
+               idx = h & mask;
+               int hash = hashCodes[idx];
+               Object key = keyTable[idx];
+               if (hash == 0 && key == null) {
+                  // found an empty slot
+                  hashCodes[idx] = h;
+                  keyTable[idx] = k;
+                  valueTable[idx] = v;
+                  break;
+               } else
+               if (hash == h && (key == k || (key != null && key.equals(k)))) {
+                  // item already exists in the table
+                  continue;
+               }
+               // re-probe
+               idx++;
+            }
+         }
+      }
+      
+      @Override
+      public int size() {
+         return size;
+      }
+
+      @Override
+      public boolean containsKey(Object o) {
+         int mask = keyTable.length - 1;
+         int h = hash(o);
+         int idx = h;
+         while (true) {
+            idx = h & mask;
+            int hash = hashCodes[idx];
+            Object key = keyTable[idx];
+            if (hash == 0 && key == null) {
+               // if we find empty slot, object is not in the table
+               return false;
+            } else
+            if (hash == h && (key == o || (key != null && key.equals(o)))) {
+               // found the item
+               return true;
+            }
+            // re-probe
+            idx++;
+         }
+      }
+      
+      @Override
+      public V get(Object o) {
+         int mask = keyTable.length - 1;
+         int h = hash(o);
+         int idx = h;
+         while (true) {
+            idx = h & mask;
+            int hash = hashCodes[idx];
+            Object key = keyTable[idx];
+            if (hash == 0 && key == null) {
+               // if we find empty slot, object is not in the table
+               return null;
+            } else
+            if (hash == h && (key == o || (key != null && key.equals(o)))) {
+               // found the item
+               @SuppressWarnings("unchecked")
+               V ret = (V) valueTable[idx];
+               return ret;
+            }
+            // re-probe
+            idx++;
+         }
+      }
+      
+      @Override
+      public Iterator<Entry<K, V>> iterator() {
+         return new ReadOnlyIterator<Entry<K, V>>() {
+            private boolean needNext = true;
+            private int next;
+
+            @SuppressWarnings("synthetic-access")
+            private void findNext() {
+               if (needNext) {
+                  needNext = false;
+                  for (int len = keyTable.length; next < len; next++) {
+                     if (hashCodes[next] != 0 || keyTable[next] != null) {
+                        return;
+                     }
+                  }
+                  next = -1;
+               }
+            }
+            
+            @Override
+            public boolean hasNext() {
+               findNext();
+               return next != -1;
+            }
+
+            @SuppressWarnings("synthetic-access")
+            @Override
+            public Entry<K, V> next() {
+               findNext();
+               if (next == -1) {
+                  throw new NoSuchElementException();
+               }
+               needNext = true;
+               @SuppressWarnings("unchecked")
+               K key = (K) keyTable[next];
+               @SuppressWarnings("unchecked")
+               V val = (V) valueTable[next++];
+               return new SimpleEntry<K, V>(key, val);
             }
          };
       }

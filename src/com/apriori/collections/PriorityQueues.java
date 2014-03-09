@@ -20,6 +20,91 @@ public final class PriorityQueues {
    }
    
    /**
+    * A type of value that automatically associates itself with a queue entry when added to a
+    * {@link PriorityQueue}. This only works when using the object's {@link
+    * #add(Object, PriorityQueue) method}.
+    *
+    * @param <P> the type of priority associated with this object
+    * @param <E> the type of this object
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public abstract class AutoEntry<P, E extends AutoEntry<P, E>> {
+      private Entry<E, P> entry;
+      
+      /**
+       * Gets the element's associated queue entry. This will be {@code null} if the object has
+       * never been {@linkplain #add(Object, PriorityQueue) added to a queue}.
+       *
+       * @return the element's associated queue entry
+       */
+      protected Entry<E, P> getEntry() {
+         return entry;
+      }
+      
+      /**
+       * Adds this element to the given queue with the given priority. The element can only be
+       * associated with one queue at any given time. If the object needs to be added to a different
+       * queue, it must first be {@linkplain #remove() removed}.
+       *
+       * @param priority the priority for this object
+       * @param queue the queue into which the object will be added
+       * @throws IllegalStateException if the object is already associated with a queue
+       */
+      public void add(P priority, PriorityQueue<E, P> queue) {
+         if (entry != null) {
+            throw new IllegalStateException("This entry is already associated with another queue");
+         }
+         @SuppressWarnings("unchecked") // if this class is sub-classes correctly, this is safe
+         E element = (E) this;
+         entry = queue.add(element, priority);
+      }
+      
+      /**
+       * Removes the object from the queue that contains it.
+       * 
+       * @throws IllegalStateException if this object has never been {@linkplain
+       *       #add(Object, PriorityQueue) added} to a queue or has already been removed
+       */
+      public void remove() {
+         if (entry == null) {
+            throw new IllegalStateException("This entry is not associated with a queue");
+         }
+         entry.remove();
+         entry = null;
+      }
+
+      /**
+       * Changes the priority associated with this object. The priority is initially assigned when
+       * the element is added to a queue.
+       * 
+       * @throws IllegalStateException if this object has never been {@linkplain
+       *       #add(Object, PriorityQueue) added} to a queue or has already been removed
+       */
+      public void setPriority(P priority) {
+         if (entry == null) {
+            throw new IllegalStateException("This entry is not associated with a queue");
+         }
+         entry.setPriority(priority);
+      }
+      
+      /**
+       * Gets the priority associated with this object. The priority is initially assigned when
+       * the element is added to a queue.
+       * 
+       * @return the priority associated with this object
+       * @throws IllegalStateException if this object has never been {@linkplain
+       *       #add(Object, PriorityQueue) added} to a queue or has already been removed
+       */
+      public P getPriority() {
+         if (entry == null) {
+            throw new IllegalStateException("This entry is not associated with a queue");
+         }
+         return entry.getPriority();
+      }
+   }
+   
+   /**
     * A simple meldable ordered queue. You can attempt to meld it with any other instance of
     * {@link MeldableQueue}. A runtime exception will be thrown if the two queues are not actually
     * of compatible types for melding.

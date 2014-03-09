@@ -29,9 +29,8 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       // recursion would be more elegant, but a large list would blow the stack
       
       if (iterable instanceof LinkedPersistentList) {
-         @SuppressWarnings({ "unchecked", "rawtypes" }) // since it's immutable and we know
-                                                       // type bound, this cast will be safe
-         LinkedPersistentList<E> list = (LinkedPersistentList) iterable;
+         @SuppressWarnings("unchecked") // safe since it's immutable and we know type bound
+         LinkedPersistentList<E> list = (LinkedPersistentList<E>) iterable;
          return list;
          
       } else if (iterable instanceof List) {
@@ -44,6 +43,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
          if (node != null) {
             return node;
          }
+         
       } else {
          Iterator<? extends E> iterator = iterable.iterator();
          if (iterator.hasNext()) {

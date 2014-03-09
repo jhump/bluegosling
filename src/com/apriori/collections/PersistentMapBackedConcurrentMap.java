@@ -172,6 +172,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
 
          @Override
          public V setValue(V value) {
+            // TODO: throw if replace fails?
             replace(entry.key(), value);
             V ret = this.value;
             this.value = value;

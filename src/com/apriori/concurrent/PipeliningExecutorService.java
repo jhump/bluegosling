@@ -86,9 +86,7 @@ public class PipeliningExecutorService<P> {
     * @return a future that represents the completion of the given task
     */
    public ListenableFuture<Void> submit(P pipeline, Runnable task) {
-      ListenableFutureTask<Void> future = new ListenableFutureTask<Void>(task, null);
-      execute(pipeline, future);
-      return future;
+      return submit(pipeline, task, null);
    }
 
    /**

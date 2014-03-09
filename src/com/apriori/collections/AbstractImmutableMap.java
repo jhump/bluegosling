@@ -218,4 +218,39 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
                });
       }
    }
+   
+   public static class SimpleEntry<K, V> implements Entry<K, V> {
+      private final K key;
+      private final V value;
+      
+      SimpleEntry(K key, V value) {
+         this.key = key;
+         this.value = value;
+      }
+
+      @Override
+      public K key() {
+         return key;
+      }
+
+      @Override
+      public V value() {
+         return value;
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         return MapUtils.equals(this, o);
+      }
+      
+      @Override
+      public int hashCode() {
+         return MapUtils.hashCode(this);
+      }
+      
+      @Override
+      public String toString() {
+         return MapUtils.toString(this);
+      }
+   }
 }

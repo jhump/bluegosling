@@ -62,8 +62,39 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     */
    PersistentList<E> addLast(E e);
    
+   /**
+    * Sets the element at the given index to the specified new value. The persistent list will copy
+    * as little as possible to construct the new version of the list with the updated value. Some
+    * implementations may benefit from setting elements closer to the front; others may do better
+    * setting elements near the end.
+    *
+    * @param i the index to the element to update
+    * @param e the new element's value
+    * @return a new list with the element at the specified position updated to the specified value
+    * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
+    *       or equal to this list's {@link #size()}
+    */
    PersistentList<E> set(int i, E e);
+   
+   /**
+    * Removes the element at the given index. The persistent list will copy as little as possible to
+    * construct the new version of the list with the element removed. Some implementations may
+    * benefit from removing elements closer to the front; others may do better removing elements
+    * near the end.
+    *
+    * @param i the index of the element to remove
+    * @return a new list with the element at the specified position removed
+    * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
+    *       or equal to this list's {@link #size()}
+    */
    PersistentList<E> remove(int i);
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This method is overridden to covariantly return a {@link PersistentList} instead of just
+    * an {@link ImmutableList}.
+    */
    @Override PersistentList<E> rest();
    
    /**
@@ -73,7 +104,8 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * guarantees as to what position the new element will occupy. It is typically either the front
     * of the list or the end of the list. 
     * 
-    * <p>Use this when order of elements is less important than speed of insertion. If order does
+    * <p>Use this when order of elements is less important than speed of insertion, like when using
+    * the list as an efficient "bag" (unordered collection that allows duplicates). If order does
     * matter, then use {@link #addFirst(Object)} or {@link #addLast(Object)} instead.
     * 
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a

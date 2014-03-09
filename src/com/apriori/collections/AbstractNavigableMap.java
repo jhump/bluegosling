@@ -51,6 +51,7 @@ import java.util.Set;
  */
 // TODO: tests!
 // TODO: test serialization support
+// TODO: sub-maps should always be "enclosed" by the main/outer-most map
 public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    
    /**
@@ -1172,6 +1173,37 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       }
 
       @Override
+      public boolean contains(Object o) {
+         if (o instanceof Entry) {
+            Entry<?, ?> other = (Entry<?, ?>) o;
+            Entry<K, V> entry = getEntry(other.getKey());
+            if (entry == null) {
+               return false;
+            }
+            V value = entry.getValue();
+            return value == null ? other.getValue() == null : value.equals(other.getValue());
+         }
+         return false;
+      }
+
+      @Override
+      public boolean remove(Object o) {
+         if (o instanceof Entry) {
+            Entry<?, ?> other = (Entry<?, ?>) o;
+            Entry<K, V> entry = getEntry(other.getKey());
+            if (entry == null) {
+               return false;
+            }
+            V value = entry.getValue();
+            if (value == null ? other.getValue() == null : value.equals(other.getValue())) {
+               AbstractNavigableMap.this.remove(other.getKey());
+               return true;
+            }
+         }
+         return false;
+      }
+
+      @Override
       public void clear() {
          AbstractNavigableMap.this.clear();
       }
@@ -1313,6 +1345,11 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       @Override
       public int size() {
          return AbstractNavigableMap.this.size();
+      }
+      
+      @Override
+      public void clear() {
+         AbstractNavigableMap.this.clear();
       }
    };
 }

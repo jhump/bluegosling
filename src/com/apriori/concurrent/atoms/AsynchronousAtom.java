@@ -1,9 +1,9 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
 import com.apriori.concurrent.PipeliningExecutorService;
+import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 import com.apriori.util.Functions;
 import com.apriori.util.Predicate;
@@ -12,7 +12,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * An atom that is mutated asynchronously using a thread pool. For a given atom, all mutations are
@@ -29,12 +31,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *    is explicitly {@linkplain #resume() resumed}. While blocked, mutations are held in a queue
  *    instead of executed. Once the atom is resumed, the queue is processed using a thread pool
  *    thread, just as if they were submitted while the atom was processing normally.</li>
+ *    <li><strong>Restart:</strong> The atom is restored to its most recent seeded value (set
+ *    during construction or from a prior {@link #restart(Object, boolean)}) and then immediately
+ *    resumed. This is similar to ignoring the error, except that the value is re-seeded.
  * </ol>
  * 
  * <p>If a {@link Transaction} is in progress, then a mutation is not actually submitted to the
  * thread pool until the transaction is committed. So, like {@link TransactionalAtom}s but unlike
  * other types of atoms, mutations to asynchronous atoms can be rolled back. When a transaction is
- * rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled. 
+ * rolled back, all futures that correspond to rolled back asynchronous mutations are cancelled.
+ * 
+ * <p>Ordering of operations cannot be guaranteed as asynchronous operations could be submitted and
+ * interleaved with those submitted from a given thread. Thus this form of atom is most useful when
+ * only commutative functions are applied to it.
  * 
  * @param <T> the type of the atom's value
  * 
@@ -59,7 +68,15 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
        * Indicates that a failure blocks subsequent operations, which will be queued until the
        * atom is resumed.
        */
-      BLOCK;
+      BLOCK,
+      
+      /**
+       * Indicates that a failure should restart the atom. This is similar to {@link #IGNORE} except
+       * that the atom is first reset to its seed value. The seed value is the one specified during
+       * construction or the most recent successful {@link AsynchronousAtom#restart(Object, boolean)}
+       * operation.
+       */
+      RESTART;
       
       private final ErrorHandler<Object> errorHandler = new ErrorHandler<Object>() {
          @Override
@@ -101,11 +118,18 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    /**
     * The thread pool used to execute mutation operations.
     */
-   // TODO: maybe a thread pool w/ limited number of threads
-   // TODO: use thread factory for named, daemon threads
    private static final PipeliningExecutorService<AsynchronousAtom<?>> threadPool =
-         new PipeliningExecutorService<AsynchronousAtom<?>>(
-               ListenableExecutors.makeListenable(Executors.newCachedThreadPool()));
+         new PipeliningExecutorService<AsynchronousAtom<?>>(Executors.newCachedThreadPool(
+               new ThreadFactory() {
+                  private final AtomicInteger id = new AtomicInteger();
+                  
+                  @Override public Thread newThread(Runnable r) {
+                     Thread ret = new Thread(r);
+                     ret.setDaemon(true);
+                     ret.setName("AsynchronousAtom " + String.valueOf(id.incrementAndGet()));
+                     return ret;
+                  }
+               }));
 
    /**
     * The atom's error handler.
@@ -129,6 +153,12 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    private volatile T value;
    
    /**
+    * The atom's seed value. This is the initial value set during construction. The seed value can
+    * be updated by {@link #restart(Object, boolean)} operations.
+    */
+   private volatile T seedValue;
+   
+   /**
     * Constructs a new asynchronous atom with a {@code null} value and no validator.
     */
    public AsynchronousAtom() {
@@ -138,7 +168,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * Constructs a new asynchronous atom with the specified value and no validator.
     */
    public AsynchronousAtom(T value) {
-      this.value = value;
+      this.seedValue = this.value = value;
    }
 
    /**
@@ -147,7 +177,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    public AsynchronousAtom(T value, Predicate<? super T> validator) {
       super(validator);
       validate(value);
-      this.value = value;
+      this.seedValue = this.value = value;
    }
    
    /**
@@ -201,18 +231,51 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
          }
       });
    }
+
+   /**
+    * Restarts mutation operations in a blocked atom. Any queued operations will be applied after
+    * the atom is restarted. The atom will be reset to its seed value, which is the value used
+    * during construction of the atom or the seed value specified by the most recent successful
+    * {@link #restart(Object, boolean)} operation.
+    *
+    * @return true if the atom was restarted or false if it was not because the atom wasn't
+    *       actually blocked
+    */
+   public boolean restart() {
+      return restart(Reference.<T>unset(), false);
+   }
    
    /**
-    * Restarts mutation operations in a blocked atom. If the atom is not blocked, an exception will
-    * be thrown. The caller can indicate whether the restart operation should discard all pending
-    * mutations or if they should be retained and applied to the new restarted value.
+    * Restarts mutation operations in a blocked atom with the given new seed value. The caller can
+    * indicate whether the restart operation should discard all pending mutations or if they should
+    * be retained and applied to the new restarted value.
     *
-    * @param restartValue the new value with which to seed the restarted atom
+    * @param newSeed the new value with which to seed the restarted atom
     * @param cancelPending if true, any queued mutations will be discarded; otherwise, queued
     *       mutations will be applied to the new seeded value
+    * @return true if the atom was restarted or false if it was not because the atom wasn't
+    *       actually blocked
+    * @throws IllegalArgumentException if the given restart value is invalid according to the atom's
+    *       current validator
     */
-   public void restart(final T restartValue, final boolean cancelPending) {
-      validate(restartValue);
+   public boolean restart(T newSeed, boolean cancelPending) {
+      return restart(Reference.setTo(newSeed), cancelPending);
+   }
+   
+   /**
+    * Restarts the atom.
+    *
+    * @param newSeed if present, the new value with which to seed the restarted the atom; if not
+    *       present, the most recent seed value is used
+    * @param cancelPending if true, any queued mutations will be discarded; otherwise, queued
+    *       mutations will be applied to the new seeded value
+    * @return true if the atom was restarted or false if it was not because the atom wasn't
+    *       actually blocked
+    */
+   private boolean restart(final Reference<T> newSeed, final boolean cancelPending) {
+      if (newSeed.isPresent()) {
+         validate(newSeed.get());
+      }
       final AtomicBoolean success = new AtomicBoolean();
       final CountDownLatch latch = new CountDownLatch(1);
       threadPool.execute(this, new Runnable() {
@@ -223,7 +286,11 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
             latch.countDown();
             if (blocked) {
                blocked = false;
-               value = restartValue;
+               if (newSeed.isPresent()) {
+                  seedValue = value = newSeed.get();
+               } else {
+                  value = seedValue;
+               }
                if (cancelPending) {
                   while (!queued.isEmpty()) {
                      ListenableFutureTask<T> op = queued.remove();
@@ -238,6 +305,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
             }
          }
       });
+      // wait for the task to start and see if the atom was actually blocked 
       boolean interrupted = false;
       while (true) {
          try {
@@ -250,9 +318,8 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       if (interrupted) {
          Thread.currentThread().interrupt();
       }
-      if (!success.get()) {
-         throw new IllegalStateException("AsynchronousAtom is not blocked so cannot be restarted");
-      }
+      
+      return success.get();
    }
    
    /**
@@ -396,8 +463,17 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       } else {
          task.run();
          if (task.isFailed()) {
-            blocked = errorHandler.onError(AsynchronousAtom.this, task.getFailure())
-                  == ErrorAction.BLOCK;
+            switch (errorHandler.onError(AsynchronousAtom.this, task.getFailure())) {
+               case BLOCK:
+                  blocked = true;
+                  break;
+               case RESTART:
+                  value = seedValue;
+                  break;
+               default:
+                  // IGNORE
+                  break;
+            }
          }
       }
    }
