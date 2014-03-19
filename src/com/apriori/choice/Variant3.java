@@ -1,7 +1,5 @@
 package com.apriori.choice;
 
-import com.apriori.choice.Choices.Choices3;
-import com.apriori.choice.Choices.Visitor3;
 import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 //TODO: javadoc
 //TODO: tests
-public abstract class Variant3<A, B, C> implements Choices3<A, B, C> {
+public abstract class Variant3<A, B, C> implements Choice.OfThree<A, B, C> {
    
    public static <A, B, C> Variant3<A, B, C> withFirst(A a) {
       return new First<A, B, C>(a);
@@ -78,7 +76,22 @@ public abstract class Variant3<A, B, C> implements Choices3<A, B, C> {
    public abstract <T> Variant3<A, B, T> transformThird(Function<? super C, ? extends T> function);
 
    @Override
-   public abstract <D> Variant4<A, B, C, D> expand();
+   public abstract <D> Variant4<D, A, B, C> expandFirst();
+   
+   @Override
+   public abstract <D> Variant4<A, D, B, C> expandSecond();
+   
+   @Override
+   public abstract <D> Variant4<A, B, D, C> expandThird();
+   
+   @Override
+   public abstract <D> Variant4<A, B, C, D> expandFourth();
+   
+   public abstract Variant2<B, C> contractFirst(Function<? super A, Variant2<B, C>> function);
+
+   public abstract Variant2<A, C> contractSecond(Function<? super B, Variant2<A, C>> function);
+
+   public abstract Variant2<A, B> contractThird(Function<? super C, Variant2<A, B>> function);
    
    private static class First<A, B, C> extends Variant3<A, B, C> implements Serializable {
       private static final long serialVersionUID = 4838795688805648189L;
@@ -159,13 +172,47 @@ public abstract class Variant3<A, B, C> implements Choices3<A, B, C> {
       }
 
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitFirst(a);
       }
 
       @Override
-      public <D> Variant4<A, B, C, D> expand() {
+      public <D> Variant4<D, A, B, C> expandFirst() {
+         return Variant4.withSecond(a);
+      }
+      
+      @Override
+      public <D> Variant4<A, D, B, C> expandSecond() {
          return Variant4.withFirst(a);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, D, C> expandThird() {
+         return Variant4.withFirst(a);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, C, D> expandFourth() {
+         return Variant4.withFirst(a);
+      }
+      
+      @Override
+      public Variant2<B, C> contractFirst(Function<? super A, Variant2<B, C>> function) {
+         Variant2<B, C> result = function.apply(a);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Variant2<A, C> contractSecond(Function<? super B, Variant2<A, C>> function) {
+         return Variant2.withFirst(a);
+      }
+
+      @Override
+      public Variant2<A, B> contractThird(Function<? super C, Variant2<A, B>> function) {
+         return Variant2.withFirst(a);
       }
       
       @Override
@@ -263,13 +310,47 @@ public abstract class Variant3<A, B, C> implements Choices3<A, B, C> {
       }
 
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitSecond(b);
       }
 
       @Override
-      public <D> Variant4<A, B, C, D> expand() {
+      public <D> Variant4<D, A, B, C> expandFirst() {
+         return Variant4.withThird(b);
+      }
+      
+      @Override
+      public <D> Variant4<A, D, B, C> expandSecond() {
+         return Variant4.withThird(b);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, D, C> expandThird() {
          return Variant4.withSecond(b);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, C, D> expandFourth() {
+         return Variant4.withSecond(b);
+      }
+      
+      @Override
+      public Variant2<B, C> contractFirst(Function<? super A, Variant2<B, C>> function) {
+         return Variant2.withFirst(b);
+      }
+
+      @Override
+      public Variant2<A, C> contractSecond(Function<? super B, Variant2<A, C>> function) {
+         Variant2<A, C> result = function.apply(b);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Variant2<A, B> contractThird(Function<? super C, Variant2<A, B>> function) {
+         return Variant2.withSecond(b);
       }
       
       @Override
@@ -367,13 +448,47 @@ public abstract class Variant3<A, B, C> implements Choices3<A, B, C> {
       }
 
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitThird(c);
       }
 
       @Override
-      public <D> Variant4<A, B, C, D> expand() {
+      public <D> Variant4<D, A, B, C> expandFirst() {
+         return Variant4.withFourth(c);
+      }
+      
+      @Override
+      public <D> Variant4<A, D, B, C> expandSecond() {
+         return Variant4.withFourth(c);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, D, C> expandThird() {
+         return Variant4.withFourth(c);
+      }
+      
+      @Override
+      public <D> Variant4<A, B, C, D> expandFourth() {
          return Variant4.withThird(c);
+      }
+      
+      @Override
+      public Variant2<B, C> contractFirst(Function<? super A, Variant2<B, C>> function) {
+         return Variant2.withSecond(c);
+      }
+
+      @Override
+      public Variant2<A, C> contractSecond(Function<? super B, Variant2<A, C>> function) {
+         return Variant2.withSecond(c);
+      }
+
+      @Override
+      public Variant2<A, B> contractThird(Function<? super C, Variant2<A, B>> function) {
+         Variant2<A, B> result = function.apply(c);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
       }
       
       @Override

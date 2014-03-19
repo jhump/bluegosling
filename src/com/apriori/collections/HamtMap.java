@@ -38,7 +38,14 @@ import java.util.Set;
  * @param <V> the type of value in the map
  */
 // TODO: add InnerLeafTrieNode to short circuit search when a path has only one node
-// TODO: add freeLists for more efficiently re-using/allocating node arrays
+// TODO: other performance improvements? Tried free lists, to track and re-use arrays instead
+// of always allocating new arrays, but that didn't speed it up at all. Perhaps change to
+// not rely on polymorphic dispatch to TrieNodes? Also to simply tolerate not-full arrays
+// at intermediate levels to reduce allocations and GC? Might also consider allocating larger
+// "blocks" instead of normal arrays and each sub-hash-table uses a contiguous run in a block.
+// This would mean fewer allocations and re-using structures for sub-hash-table. Clean-up involves
+// defragmenting the blocks and tracking them to ensure trie is never holding on too much junk in
+// the form of unused arrays/chunks.
 public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cloneable {
    
    private static final long serialVersionUID = -9064441005458513893L;
@@ -47,7 +54,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * Sentinel value returned from {@link TrieNode#findOrAddNode(int, int, Object, Object)} to
     * indicate that an inner-leaf node must be replaced with an intermediate node.
     */
-   private static final ListNode<Object, Object> INNER_NODE_NEEDS_EXPANSION =
+   static final ListNode<Object, Object> INNER_NODE_NEEDS_EXPANSION =
          new ListNode<Object, Object>(null, null);
          
    /**
@@ -95,9 +102,6 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private interface TrieNode<K, V> {
-      // TODO: APIs need to be in terms of hash and offset instead of hash remaining and bits
-      // remaining so the InnerLeafTrieNode can be properly implemented
-      
       /**
        * Determines if this node or any of its descendants contain the specified value.
        *
@@ -174,6 +178,9 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class IntermediateTrieNode<K, V> implements TrieNode<K, V> {
+      
+      private static final TrieNode<?, ?> EMPTY[] = new TrieNode<?, ?>[0];
+      
       /**
        * A bitmask for which children are present. Each child represents a different combination of
        * six bits, up to 64 possible children (so one bit in this mask for each possible child).
@@ -207,9 +214,14 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        * @param size the size of the array
        * @return an array
        */
-      @SuppressWarnings("unchecked") // can't create generic array, so unchecked cast from raw
+      @SuppressWarnings("unchecked")
       private static <K, V> TrieNode<K, V>[] createChildren(int size) {
-         return new TrieNode[size];
+         return (TrieNode<K, V>[]) new TrieNode<?, ?>[size];
+      }
+      
+      @SuppressWarnings("unchecked")
+      private static <K, V> TrieNode<K, V>[] emptyChildren() {
+         return (TrieNode<K, V>[]) EMPTY;
       }
       
       @Override
@@ -223,41 +235,43 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
       
       @Override
-      public ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object key) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert bitsRemaining > 0;
+      public ListNode<K, V> findNode(int hashCode, int currentOffset, Object key) {
+         assert currentOffset < 32;
          
-         int significantBits = hashCodeRemaining & 0x3f;
+         int significantBits = (hashCode >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          if ((present & mask) != 0) {
             int index = Long.bitCount((mask - 1) & present);
-            return children[index].findNode(hashCodeRemaining >> 6, bitsRemaining - 6, key);
+            return children[index].findNode(hashCode, currentOffset + 6, key);
          } else {
             return null;
          }
       }
       
       @Override
-      public ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K key,
-            V value) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert bitsRemaining > 0;
+      public ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K key, V value) {
+         assert currentOffset < 32;
 
-         int significantBits = hashCodeRemaining & 0x3f;
+         int significantBits = (hashCode >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          int index = Long.bitCount((mask - 1) & present);
-         hashCodeRemaining >>= 6;
-         bitsRemaining -= 6;
+         currentOffset += 6;
          if ((present & mask) != 0) {
-            // TODO: handle return value of INNER_NODE_NEEDS_EXPANSION
-            return children[index].findOrAddNode(hashCodeRemaining, bitsRemaining, key, value);
+            TrieNode<K, V> child = children[index];
+            ListNode<K, V> ret = child.findOrAddNode(hashCode, currentOffset, key, value);
+            if (ret == INNER_NODE_NEEDS_EXPANSION) {
+               child = ((InnerLeafTrieNode<K, V>) child).expand(hashCode, currentOffset);
+               children[index] = child;
+               ret = child.findOrAddNode(hashCode, currentOffset, key, value);
+               assert ret != INNER_NODE_NEEDS_EXPANSION;
+            }
+            return ret;
          }
          
          // not found, so we add it
-         TrieNode<K, V> child = createNode(hashCodeRemaining, bitsRemaining, key, value);
+         TrieNode<K, V> child = createNode(hashCode, currentOffset, key, value);
          int numChildrenBefore = children.length;
-         @SuppressWarnings("unchecked") // can't create generic array, so unchecked cast from raw
-         TrieNode<K, V> newChildren[] = new TrieNode[numChildrenBefore + 1];
+         TrieNode<K, V> newChildren[] = createChildren(numChildrenBefore + 1);
          if (index > 0) {
             System.arraycopy(children, 0, newChildren, 0, index);
          }
@@ -272,11 +286,10 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
       
       @Override
-      public ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining, Object key) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert bitsRemaining > 0;
+      public ListNode<K, V> removeNode(int hashCode, int currentOffset, Object key) {
+         assert currentOffset < 32;
          
-         int significantBits = hashCodeRemaining & 0x3f;
+         int significantBits = (hashCode >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          if ((present & mask) == 0) {
             return null;
@@ -284,21 +297,20 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> child = children[index];
-         ListNode<K, V> ret = child.removeNode(hashCodeRemaining >> 6, bitsRemaining - 6, key);
+         ListNode<K, V> ret = child.removeNode(hashCode, currentOffset + 6, key);
+         // TODO: handle collapsing child into InnerLeafTrieNode
          if (ret == null || (ret != child && !child.isEmpty())) {
             return ret;
          }
          present &= ~mask;
          if (present == 0) {
             assert index == 0;
-            // don't bother creating a zero-element array - just clear ref and exit
-            children[index] = null;
+            children = emptyChildren();
             return ret;
          }
          // shrink the array and remove this child from it
          int numChildrenBefore = children.length;
-         @SuppressWarnings("unchecked") // can't create generic array, so unchecked cast from raw
-         TrieNode<K, V> newChildren[] = new TrieNode[numChildrenBefore - 1];
+         TrieNode<K, V> newChildren[] = createChildren(numChildrenBefore - 1);
          if (index > 0) {
             System.arraycopy(children, 0, newChildren, 0, index);
          }
@@ -351,9 +363,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
       
       @Override
-      public ListNode<K, V> findNode(int hashCodeRemaining, int bitsRemaining, Object searchKey) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert hashCodeRemaining == 0 && bitsRemaining == -4;
+      public ListNode<K, V> findNode(int hashCode, int currentOffset, Object searchKey) {
+         assert currentOffset == 36;
          return doFindNode(searchKey);
       }
       
@@ -369,10 +380,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
 
       @Override
-      public ListNode<K, V> findOrAddNode(int hashCodeRemaining, int bitsRemaining, K newKey,
-            V newValue) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert hashCodeRemaining == 0 && bitsRemaining == -4;
+      public ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K newKey, V newValue) {
+         assert currentOffset == 36;
          return doFindOrAddNode(newKey, newValue);
       }
       
@@ -392,10 +401,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
 
       @Override
-      public ListNode<K, V> removeNode(int hashCodeRemaining, int bitsRemaining,
-            Object keyToRemove) {
-         // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-         assert hashCodeRemaining == 0 && bitsRemaining == -4;
+      public ListNode<K, V> removeNode(int hashCode, int currentOffset, Object keyToRemove) {
+         assert currentOffset == 36;
          return doRemoveNode(keyToRemove);
       }
       
@@ -448,7 +455,33 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          this.hashCode = hashCode;
       }
       
-      // TODO: implement me!
+      @Override
+      public ListNode<K, V> findNode(int hashCode, int currentOffset, Object searchKey) {
+         return hashCode == this.hashCode ? doFindNode(searchKey) : null;
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K newKey, V newValue) {
+         return hashCode == this.hashCode
+               ? doFindOrAddNode(newKey, newValue)
+               : (ListNode<K, V>) INNER_NODE_NEEDS_EXPANSION;
+      }
+
+      @Override
+      public ListNode<K, V> removeNode(int hashCode, int currentOffset, Object keyToRemove) {
+         return hashCode == this.hashCode ? doRemoveNode(keyToRemove) : null;
+      }
+      
+      TrieNode<K, V> expand(int newHashCode, int currentOffset) {
+         // TODO: get this to work -- should expand this node into long enough branch that
+         // it no longer collides with newHashCode and then replace with LeafTrieNode if the
+         // branch ends up going all the way down to leaf
+         int significantBits = (hashCode >> currentOffset) & 0x3f;
+         long mask = 1L << significantBits;
+         return new IntermediateTrieNode<K, V>(mask,
+               createNode(hashCode, currentOffset + 6, key, value));
+      }
    }
    
    /**
@@ -466,17 +499,13 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * @param value the value to associate with this key if not found and a new mapping is created
     * @return the newly created trie node (which may have a line of new descendants)
     */
-   static <K, V> TrieNode<K, V> createNode(int hashCodeRemaining, int bitsRemaining,
-         K key, V value) {
-      // TODO: fix handling of hashCodeRemaining,bitsRemaining -> hashCode,currentOffset
-      if (bitsRemaining > 0) {
-         int significantBits = hashCodeRemaining & 0x3f;
+   static <K, V> TrieNode<K, V> createNode(int hashCode, int currentOffset, K key, V value) {
+      if (currentOffset < 32) {
+         int significantBits = (hashCode >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
-         hashCodeRemaining >>= 6;
-         bitsRemaining -= 6;
          // TODO: create InnerLeafTrieNode
-         return new IntermediateTrieNode<K, V>(mask, createNode(hashCodeRemaining, bitsRemaining,
-               key, value));
+         return new IntermediateTrieNode<K, V>(mask,
+               createNode(hashCode, currentOffset + 6, key, value));
       } else {
          return new LeafTrieNode<K, V>(key, value);
       }
@@ -539,7 +568,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       if (root == null) {
          return false;
       }
-      ListNode<K, V> node = root.findNode(hash(key), 32, key);
+      ListNode<K, V> node = root.findNode(hash(key), 0, key);
       return node != null;
    }
 
@@ -555,19 +584,19 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       if (root == null) {
          return null;
       }
-      ListNode<K, V> node = root.findNode(hash(key), 32, key);
+      ListNode<K, V> node = root.findNode(hash(key), 0, key);
       return node == null ? null : node.value;
    }
 
    @Override
    public V put(K key, V value) {
       if (root == null) {
-         root = (IntermediateTrieNode<K, V>) createNode(hash(key), 32, key, value);
+         root = (IntermediateTrieNode<K, V>) createNode(hash(key), 0, key, value);
          modCount++;
          size++;
          return null;
       }
-      ListNode<K, V> existing = root.findOrAddNode(hash(key), 32, key, value);
+      ListNode<K, V> existing = root.findOrAddNode(hash(key), 0, key, value);
       if (existing != null) {
          V ret = existing.value;
          existing.value = value;
@@ -583,7 +612,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       if (root == null) {
          return null;
       }
-      ListNode<K, V> removed = root.removeNode(hash(key), 32, key);
+      ListNode<K, V> removed = root.removeNode(hash(key), 0, key);
       if (removed != null) {
          modCount++;
          if (--size == 0) {
@@ -616,7 +645,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
    Entry<K, V> entry(final ListNode<K, V> node) {
       return new Entry<K, V>() {
          private ListNode<K, V> listNode = node;
-         private int myModCount = modCount; 
+         private final int myModCount = modCount; 
          
          @Override
          public K getKey() {
@@ -635,7 +664,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
                if (root == null) {
                   throw new ConcurrentModificationException();
                }
-               listNode = root.findNode(hash(listNode.key), 32, listNode.key);
+               listNode = root.findNode(hash(listNode.key), 0, listNode.key);
                if (listNode == null) {
                   throw new ConcurrentModificationException();
                }
@@ -737,7 +766,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
             Entry<?, ?> entry = (Entry<?, ?>) o;
             Object key = entry.getKey();
             Object value = entry.getValue();
-            ListNode<K, V> node = root.findNode(hash(key), 32, key);
+            ListNode<K, V> node = root.findNode(hash(key), 0, key);
             return node != null && (value == null ? node.value == null : value.equals(node.value));
          }
          return false;
@@ -754,7 +783,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
             Entry<?, ?> entry = (Entry<?, ?>) o;
             Object key = entry.getKey();
             Object value = entry.getValue();
-            ListNode<K, V> node = root.findNode(hash(key), 32, key);
+            ListNode<K, V> node = root.findNode(hash(key), 0, key);
             if (node == null || !(value == null ? node.value == null : value.equals(node.value))) {
                // mapping not present or it has the wrong value
                return false;
@@ -926,18 +955,17 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          }
          // navigate from root to leaf to reset the stack (since removal could have shifted any or
          // all child indices already in the stack)
-         int hashCodeRemaining = hash(key);
-         int bitsRemaining = 32;
+         int hashCode = hash(key);
+         int currentOffset = 0;
          TrieNode<K, V> node = root;
-         while (bitsRemaining > 0) {
+         while (currentOffset < 32) {
             IntermediateTrieNode<K, V> iNode = (IntermediateTrieNode<K, V>) node; 
-            int significantBits = hashCodeRemaining & 0x3f;
+            int significantBits = (hashCode >> currentOffset) & 0x3f;
             long mask = 1L << significantBits;
             int index = Long.bitCount((mask - 1) & iNode.present);
             stack.push(new StackFrame<K, V>(iNode, index));
             node = iNode.children[index];
-            hashCodeRemaining >>= 6;
-            bitsRemaining -= 6;
+            currentOffset += 6;
          }
          next = (LeafTrieNode<K, V>) node;
          while (next != null) {

@@ -28,18 +28,18 @@ public final class Annotations {
    
    /**
     * Returns an annotation, possibly searching for the annotation on super-types if not declared
-    * on the specified type.
+    * on the specified type. This will find annotations on super-types even if they aren't
+    * {@linkplain Inherited inheritable}.
     * 
-    * <p>If the annotation is not declared on the specified type and is not {@linkplain Inherited
-    * inheritable} then the type's super-classes are searched for the annotation.
-    * 
-    * <p>If the annotation is still not found, then implemented interfaces are searched. Interfaces
-    * declared on the specified type are preferred over their super-interfaces. Furthermore,
-    * interfaces implemented directly by the specified type (both declared interfaces and their
-    * super-interfaces) are preferred over "inherited interfaces", which are those declared on
-    * super-types. Finally, interfaces earlier in the declaration order are preferred over those
-    * later in the {@code implements} declaration. Similarly, super-interfaces earlier in the
-    * declaration order are preferred over ones later in the {@code extends} declaration.
+    * <p>If the annotation is not found on the specified type then the type's super-classes are
+    * searched for the annotation. If the annotation is still not found, then implemented interfaces
+    * are searched. Interfaces declared on the specified type are preferred over their
+    * super-interfaces. Furthermore, interfaces implemented directly by the specified type (both
+    * declared interfaces and their super-interfaces) are preferred over "inherited interfaces",
+    * which are those declared on super-types. Finally, interfaces earlier in the declaration order
+    * are preferred over those later in the {@code implements} declaration. Similarly,
+    * super-interfaces earlier in the declaration order are preferred over ones later in the
+    * {@code extends} declaration.
     * 
     * @param clazz the type from which the annotation is queried
     * @param annotationType the annotaition type to find

@@ -1,7 +1,5 @@
 package com.apriori.choice;
 
-import com.apriori.choice.Choices.Choices4;
-import com.apriori.choice.Choices.Visitor4;
 import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 //TODO: javadoc
 //TODO: tests
-public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
+public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> {
    
    public static <A, B, C, D> Variant4<A, B, C, D> withFirst(A a) {
       return new First<A, B, C, D>(a);
@@ -95,7 +93,27 @@ public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
    public abstract <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
 
    @Override
-   public abstract <E> Variant5<A, B, C, D, E> expand();
+   public abstract <E> Variant5<E, A, B, C, D> expandFirst();
+   
+   @Override
+   public abstract <E> Variant5<A, E, B, C, D> expandSecond();
+   
+   @Override
+   public abstract <E> Variant5<A, B, E, C, D> expandThird();
+   
+   @Override
+   public abstract <E> Variant5<A, B, C, E, D> expandFourth();
+   
+   @Override
+   public abstract <E> Variant5<A, B, C, D, E> expandFifth();
+   
+   public abstract Variant3<B, C, D> contractFirst(Function<? super A, Variant3<B, C, D>> function);
+
+   public abstract Variant3<A, C, D> contractSecond(Function<? super B, Variant3<A, C, D>> function);
+
+   public abstract Variant3<A, B, D> contractThird(Function<? super C, Variant3<A, B, D>> function);
+
+   public abstract Variant3<A, B, C> contractFourth(Function<? super D, Variant3<A, B, C>> function);
    
    private static class First<A, B, C, D> extends Variant4<A, B, C, D> implements Serializable {
       private static final long serialVersionUID = 1278033061274741885L;
@@ -198,13 +216,57 @@ public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
       }
       
       @Override
-      public <R> R visit(Visitor4<? super A, ? super B, ? super C, ? super D, R> visitor) {
+      public <R> R visit(VisitorOfFour<? super A, ? super B, ? super C, ? super D, R> visitor) {
          return visitor.visitFirst(a);
       }
 
       @Override
-      public <E> Variant5<A, B, C, D, E> expand() {
+      public <E> Variant5<E, A, B, C, D> expandFirst() {
+         return Variant5.withSecond(a);
+      }
+      
+      @Override
+      public <E> Variant5<A, E, B, C, D> expandSecond() {
          return Variant5.withFirst(a);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, E, C, D> expandThird() {
+         return Variant5.withFirst(a);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, E, D> expandFourth() {
+         return Variant5.withFirst(a);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, D, E> expandFifth() {
+         return Variant5.withFirst(a);
+      }
+      
+      @Override
+      public Variant3<B, C, D> contractFirst(Function<? super A, Variant3<B, C, D>> function) {
+         Variant3<B, C, D> result = function.apply(a);
+        if (result == null) {
+           throw new NullPointerException();
+        }
+        return result;
+      }
+
+      @Override
+      public Variant3<A, C, D> contractSecond(Function<? super B, Variant3<A, C, D>> function) {
+         return Variant3.withFirst(a);
+      }
+
+      @Override
+      public Variant3<A, B, D> contractThird(Function<? super C, Variant3<A, B, D>> function) {
+         return Variant3.withFirst(a);
+      }
+
+      @Override
+      public Variant3<A, B, C> contractFourth(Function<? super D, Variant3<A, B, C>> function) {
+         return Variant3.withFirst(a);
       }
       
       @Override
@@ -324,13 +386,57 @@ public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
       }
       
       @Override
-      public <R> R visit(Visitor4<? super A, ? super B, ? super C, ? super D, R> visitor) {
+      public <R> R visit(VisitorOfFour<? super A, ? super B, ? super C, ? super D, R> visitor) {
          return visitor.visitSecond(b);
       }
 
       @Override
-      public <E> Variant5<A, B, C, D, E> expand() {
+      public <E> Variant5<E, A, B, C, D> expandFirst() {
+         return Variant5.withThird(b);
+      }
+      
+      @Override
+      public <E> Variant5<A, E, B, C, D> expandSecond() {
+         return Variant5.withThird(b);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, E, C, D> expandThird() {
          return Variant5.withSecond(b);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, E, D> expandFourth() {
+         return Variant5.withSecond(b);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, D, E> expandFifth() {
+         return Variant5.withSecond(b);
+      }
+      
+      @Override
+      public Variant3<B, C, D> contractFirst(Function<? super A, Variant3<B, C, D>> function) {
+         return Variant3.withFirst(b);
+      }
+
+      @Override
+      public Variant3<A, C, D> contractSecond(Function<? super B, Variant3<A, C, D>> function) {
+         Variant3<A, C, D> result = function.apply(b);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Variant3<A, B, D> contractThird(Function<? super C, Variant3<A, B, D>> function) {
+         return Variant3.withSecond(b);
+      }
+
+      @Override
+      public Variant3<A, B, C> contractFourth(Function<? super D, Variant3<A, B, C>> function) {
+         return Variant3.withSecond(b);
       }
       
       @Override
@@ -450,13 +556,57 @@ public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
       }
       
       @Override
-      public <R> R visit(Visitor4<? super A, ? super B, ? super C, ? super D, R> visitor) {
+      public <R> R visit(VisitorOfFour<? super A, ? super B, ? super C, ? super D, R> visitor) {
          return visitor.visitThird(c);
       }
 
       @Override
-      public <E> Variant5<A, B, C, D, E> expand() {
+      public <E> Variant5<E, A, B, C, D> expandFirst() {
+         return Variant5.withFourth(c);
+      }
+      
+      @Override
+      public <E> Variant5<A, E, B, C, D> expandSecond() {
+         return Variant5.withFourth(c);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, E, C, D> expandThird() {
+         return Variant5.withFourth(c);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, E, D> expandFourth() {
          return Variant5.withThird(c);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, D, E> expandFifth() {
+         return Variant5.withThird(c);
+      }
+      
+      @Override
+      public Variant3<B, C, D> contractFirst(Function<? super A, Variant3<B, C, D>> function) {
+         return Variant3.withSecond(c);
+      }
+
+      @Override
+      public Variant3<A, C, D> contractSecond(Function<? super B, Variant3<A, C, D>> function) {
+         return Variant3.withSecond(c);
+      }
+
+      @Override
+      public Variant3<A, B, D> contractThird(Function<? super C, Variant3<A, B, D>> function) {
+         Variant3<A, B, D> result = function.apply(c);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Variant3<A, B, C> contractFourth(Function<? super D, Variant3<A, B, C>> function) {
+         return Variant3.withThird(c);
       }
       
       @Override
@@ -576,13 +726,57 @@ public abstract class Variant4<A, B, C, D> implements Choices4<A, B, C, D> {
       }
       
       @Override
-      public <R> R visit(Visitor4<? super A, ? super B, ? super C, ? super D, R> visitor) {
+      public <R> R visit(VisitorOfFour<? super A, ? super B, ? super C, ? super D, R> visitor) {
          return visitor.visitFourth(d);
       }
 
       @Override
-      public <E> Variant5<A, B, C, D, E> expand() {
+      public <E> Variant5<E, A, B, C, D> expandFirst() {
+         return Variant5.withFifth(d);
+      }
+      
+      @Override
+      public <E> Variant5<A, E, B, C, D> expandSecond() {
+         return Variant5.withFifth(d);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, E, C, D> expandThird() {
+         return Variant5.withFifth(d);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, E, D> expandFourth() {
+         return Variant5.withFifth(d);
+      }
+      
+      @Override
+      public <E> Variant5<A, B, C, D, E> expandFifth() {
          return Variant5.withFourth(d);
+      }
+      
+      @Override
+      public Variant3<B, C, D> contractFirst(Function<? super A, Variant3<B, C, D>> function) {
+         return Variant3.withThird(d);
+      }
+
+      @Override
+      public Variant3<A, C, D> contractSecond(Function<? super B, Variant3<A, C, D>> function) {
+         return Variant3.withThird(d);
+      }
+
+      @Override
+      public Variant3<A, B, D> contractThird(Function<? super C, Variant3<A, B, D>> function) {
+         return Variant3.withThird(d);
+      }
+
+      @Override
+      public Variant3<A, B, C> contractFourth(Function<? super D, Variant3<A, B, C>> function) {
+         Variant3<A, B, C> result = function.apply(d);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
       }
       
       @Override

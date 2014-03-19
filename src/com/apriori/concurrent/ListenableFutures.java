@@ -375,8 +375,6 @@ public final class ListenableFutures {
       });
       return result;
    }
-   
-   // TOOD: javadoc
 
    /**
     * Transforms the specified future using the specified function. The given function is always
@@ -486,11 +484,11 @@ public final class ListenableFutures {
     *
     * @param future a future
     * @param function a function used to compute the transformed exception
-    * @return a future that, if it fails, will have an exception that is the result of applying the
-    *       given function
+    * @return a future whose result will be that of the given future, or if that future fails then
+    *       then the result of applying a function to its cause of failure
     */ 
    public static <T> ListenableFuture<T> recover(final ListenableFuture<T> future,
-         final Function<Throwable, T> function) {
+         final Function<Throwable, ? extends T> function) {
       return transformFuture(future, new Function<ListenableFuture<T>, T>() {
          @Override
          public T apply(ListenableFuture<T> completedFuture) {

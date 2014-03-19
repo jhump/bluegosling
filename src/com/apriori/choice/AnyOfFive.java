@@ -1,7 +1,5 @@
 package com.apriori.choice;
 
-import com.apriori.choice.Choices.Choices5;
-import com.apriori.choice.Choices.Visitor5;
 import com.apriori.possible.Optional;
 import com.apriori.util.Function;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 //TODO: javadoc
 //TODO: tests
-public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E> {
+public abstract class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E> {
    
    public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withFirst(A a) {
       if (a == null) {
@@ -127,6 +125,16 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
 
    @Override
    public abstract <T> AnyOfFive<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
+
+   public abstract AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function);
+
+   public abstract AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function);
+
+   public abstract AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function);
+
+   public abstract AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function);
+
+   public abstract AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function);
 
    private static class First<A, B, C, D, E> extends AnyOfFive<A, B, C, D, E> implements Serializable {
       private static final long serialVersionUID = -5452388106285417314L;
@@ -251,10 +259,39 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
       }
       
       @Override
-      public <R> R visit(Visitor5<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
+      public <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
          return visitor.visitFirst(a);
       }
       
+      @Override
+      public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+         AnyOfFour<B, C, D, E> result = function.apply(a);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+         return AnyOfFour.withFirst(a);
+      }
+
+      @Override
+      public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+         return AnyOfFour.withFirst(a);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+         return AnyOfFour.withFirst(a);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+         return AnyOfFour.withFirst(a);
+      }
+
       @Override
       public boolean equals(Object o) {
          return o instanceof First && a.equals(((First<?, ?, ?, ?, ?>) o).a);
@@ -394,8 +431,37 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
       }
       
       @Override
-      public <R> R visit(Visitor5<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
+      public <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
          return visitor.visitSecond(b);
+      }
+      
+      @Override
+      public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+         return AnyOfFour.withFirst(b);
+      }
+
+      @Override
+      public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+         AnyOfFour<A, C, D, E> result = function.apply(b);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+         return AnyOfFour.withSecond(b);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+         return AnyOfFour.withSecond(b);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+         return AnyOfFour.withSecond(b);
       }
       
       @Override
@@ -537,8 +603,37 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
       }
       
       @Override
-      public <R> R visit(Visitor5<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
+      public <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
          return visitor.visitThird(c);
+      }
+      
+      @Override
+      public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+         return AnyOfFour.withSecond(c);
+      }
+
+      @Override
+      public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+         return AnyOfFour.withSecond(c);
+      }
+
+      @Override
+      public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+         AnyOfFour<A, B, D, E> result = function.apply(c);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+         return AnyOfFour.withThird(c);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+         return AnyOfFour.withThird(c);
       }
       
       @Override
@@ -680,10 +775,39 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
       }
       
       @Override
-      public <R> R visit(Visitor5<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
+      public <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
          return visitor.visitFourth(d);
       }
 
+      @Override
+      public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+         return AnyOfFour.withThird(d);
+      }
+
+      @Override
+      public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+         return AnyOfFour.withThird(d);
+      }
+
+      @Override
+      public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+         return AnyOfFour.withThird(d);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+         AnyOfFour<A, B, C, E> result = function.apply(d);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+         return AnyOfFour.withFourth(d);
+      }
+      
       @Override
       public boolean equals(Object o) {
          return o instanceof Fourth && d.equals(((Fourth<?, ?, ?, ?, ?>) o).d);
@@ -823,10 +947,39 @@ public abstract class AnyOfFive<A, B, C, D, E> implements Choices5<A, B, C, D, E
       }
       
       @Override
-      public <R> R visit(Visitor5<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
+      public <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor) {
          return visitor.visitFifth(e);
       }
 
+      @Override
+      public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+         return AnyOfFour.withFourth(e);
+      }
+
+      @Override
+      public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+         return AnyOfFour.withFourth(e);
+      }
+
+      @Override
+      public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+         return AnyOfFour.withFourth(e);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+         return AnyOfFour.withFourth(e);
+      }
+
+      @Override
+      public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+         AnyOfFour<A, B, C, D> result = function.apply(e);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+      
       @Override
       public boolean equals(Object o) {
          return o instanceof Fifth && e.equals(((Fifth<?, ?, ?, ?, ?>) o).e);

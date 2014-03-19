@@ -19,11 +19,12 @@ import com.apriori.util.Function;
  * @param <A> the type of the first choice
  * @param <B> the type of the second choice
  * 
+ * @see Choice.OfTwo
  * @see Choices
- * @see Choices.Choices2
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// moar javadocs
 public interface Choice<A, B> {
    
    /**
@@ -114,7 +115,7 @@ public interface Choice<A, B> {
     * @param <B> the type of the second option
     * @param <C> the type of the third option
     * 
-    * @see Choices.Choices3
+    * @see Choice.OfThree
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -145,10 +146,10 @@ public interface Choice<A, B> {
        */
       Possible<C> tryThird();
       
-      // co-variantly constraint return type to an Ops3
+      // co-variantly constrains return type to an Ops3
       @Override <T> Ops3<T, B, C> transformFirst(Function<? super A, ? extends T> function);
 
-      // co-variantly constraint return type to an Ops3
+      // co-variantly constrains return type to an Ops3
       @Override <T> Ops3<A, T, C> transformSecond(Function<? super B, ? extends T> function);
       
       /**
@@ -171,7 +172,7 @@ public interface Choice<A, B> {
     * @param <C> the type of the third option
     * @param <D> the type of the fourth option
     * 
-    * @see Choices.Choices4
+    * @see Choice.OfFour
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -202,13 +203,13 @@ public interface Choice<A, B> {
        */
       Possible<D> tryFourth();
 
-      // co-variantly constraint return type to an Ops4
+      // co-variantly constrains return type to an Ops4
       @Override <T> Ops4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
 
-      // co-variantly constraint return type to an Ops4
+      // co-variantly constrains return type to an Ops4
       @Override <T> Ops4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
       
-      // co-variantly constraint return type to an Ops4
+      // co-variantly constrains return type to an Ops4
       @Override <T> Ops4<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
       
       /**
@@ -232,7 +233,7 @@ public interface Choice<A, B> {
     * @param <D> the type of the fourth option
     * @param <E> the type of the fifth option
     * 
-    * @see Choices.Choices5
+    * @see Choice.OfFive
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -263,16 +264,16 @@ public interface Choice<A, B> {
        */
       Possible<E> tryFifth();
       
-      // co-variantly constraint return type to an Ops5
+      // co-variantly constrains return type to an Ops5
       @Override <T> Ops5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
 
-      // co-variantly constraint return type to an Ops5
+      // co-variantly constrains return type to an Ops5
       @Override <T> Ops5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function);
 
-      // co-variantly constraint return type to an Ops5
+      // co-variantly constrains return type to an Ops5
       @Override <T> Ops5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function);
       
-      // co-variantly constraint return type to an Ops5
+      // co-variantly constrains return type to an Ops5
       @Override <T> Ops5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function);
 
       /**
@@ -285,5 +286,322 @@ public interface Choice<A, B> {
        *       function to it
        */
       <T> Ops5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
+   }
+   
+   /**
+    * A visitor for a choice with two options. When passed to {@link OfTwo#visit(Choices.VisitorOfTwo)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    *
+    * @param <A> the type of the choice's first option
+    * @param <B> the type of the choice's second option
+    * @param <R> the result type from visiting the choice
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface VisitorOfTwo<A, B, R> {
+      /**
+       * Called when visiting a choice where the first option is present.
+       *
+       * @param a the value of the first option that was present
+       * @return the result of visiting the option
+       */
+      R visitFirst(A a);
+
+      /**
+       * Called when visiting a choice where the second option is present.
+       *
+       * @param b the value of the second option that was present
+       * @return the result of visiting the option
+       */
+      R visitSecond(B b);
+   }
+   
+   /**
+    * A visitor for a choice with three options. When passed to {@link OfThree#visit(Choices.VisitorOfThree)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    *
+    * @param <A> the type of the choice's first option
+    * @param <B> the type of the choice's second option
+    * @param <C> the type of the choice's third option
+    * @param <R> the result type from visiting the choice
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface VisitorOfThree<A, B, C, R> extends VisitorOfTwo<A, B, R> {
+      /**
+       * Called when visiting a choice where the third option is present.
+       *
+       * @param c the value of the third option that was present
+       * @return the result of visiting the option
+       */
+      R visitThird(C c);
+   }
+
+   /**
+    * A visitor for a choice with four options. When passed to {@link OfFour#visit(Choices.VisitorOfFour)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    *
+    * @param <A> the type of the choice's first option
+    * @param <B> the type of the choice's second option
+    * @param <C> the type of the choice's third option
+    * @param <D> the type of the choice's fourth option
+    * @param <R> the result type from visiting the choice
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface VisitorOfFour<A, B, C, D, R> extends VisitorOfThree<A, B, C, R> {
+      /**
+       * Called when visiting a choice where the fourth option is present.
+       *
+       * @param d the value of the fourth option that was present
+       * @return the result of visiting the option
+       */
+      R visitFourth(D d);
+   }
+
+   /**
+    * A visitor for a choice with five options. When passed to {@link OfFive#visit(Choices.VisitorOfFive)},
+    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    *
+    * @param <A> the type of the choice's first option
+    * @param <B> the type of the choice's second option
+    * @param <C> the type of the choice's third option
+    * @param <D> the type of the choice's fourth option
+    * @param <E> the type of the choice's fifth option
+    * @param <R> the result type from visiting the choice
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface VisitorOfFive<A, B, C, D, E, R> extends VisitorOfFour<A, B, C, D, R> {
+      /**
+       * Called when visiting a choice where the fifth option is present.
+       *
+       * @param e the value of the fifth option that was present
+       * @return the result of visiting the option
+       */
+      R visitFifth(E e);
+   }
+   
+   /**
+    * Operations for a {@link Choice} that has exactly two options.
+    *
+    * @param <A> the type of the first option
+    * @param <B> the type of the second option
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface OfTwo<A, B> extends Choice<A, B> {
+      /**
+       * Invokes the appropriate visit method on the given visitor. For example, if this choice has
+       * the first option present, then {@link VisitorOfTwo#visitFirst(Object)} will be invoked.
+       *
+       * @param visitor the visitor
+       * @return the value returned by the given visitor
+       */
+      <R> R visit(VisitorOfTwo<? super A, ? super B, R> visitor);
+      
+      /**
+       * Expands this choice of two options into a choice of three options whose first option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of three options with the same value as this and whose first option is
+       *       never present
+       */
+      <C> OfThree<C, A, B> expandFirst();
+      
+      /**
+       * Expands this choice of two options into a choice of three options whose second option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of three options with the same value as this and whose second option is
+       *       never present
+       */
+      <C> OfThree<A, C, B> expandSecond();
+      
+      /**
+       * Expands this choice of two options into a choice of three options whose third option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will also be present in the new choice.
+       *
+       * @return a choice of three options with the same value as this and whose third option is
+       *       never present
+       */
+      <C> OfThree<A, B, C> expandThird();
+
+      // co-variantly constrains return type to a Choices2
+      @Override <T> OfTwo<T, B> transformFirst(Function<? super A, ? extends T> function);
+
+      // co-variantly constrains return type to a Choices2
+      @Override <T> OfTwo<A, T> transformSecond(Function<? super B, ? extends T> function);
+   }
+
+   public interface OfThree<A, B, C> extends Choice.Ops3<A, B, C> {
+      /**
+       * Invokes the appropriate visit method on the given visitor. For example, if this choice has
+       * the first option present, then {@link VisitorOfThree#visitFirst(Object)} will be invoked.
+       *
+       * @param visitor the visitor
+       * @return the value returned by the given visitor
+       */
+      <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor);
+      
+      /**
+       * Expands this choice of three options into a choice of four options whose first option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of four options with the same value as this and whose first option is
+       *       never present
+       */
+      <D> OfFour<D, A, B, C> expandFirst();
+      
+      /**
+       * Expands this choice of three options into a choice of four options whose second option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of three options with the same value as this and whose second option is
+       *       never present
+       */
+      <D> OfFour<A, D, B, C> expandSecond();
+      
+      /**
+       * Expands this choice of three options into a choice of four options whose third option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of four options with the same value as this and whose third option is
+       *       never present
+       */
+      <D> OfFour<A, B, D, C> expandThird();
+
+      /**
+       * Expands this choice of three options into a choice of four options whose fourth option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will also be present in the new choice.
+       *
+       * @return a choice of four options with the same value as this and whose fourth option is
+       *       never present
+       */
+      <D> OfFour<A, B, C, D> expandFourth();
+      
+      // co-variantly constrains return type to a Choices3
+      @Override <T> OfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function);
+
+      // co-variantly constrains return type to a Choices3
+      @Override <T> OfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices3
+      @Override <T> OfThree<A, B, T> transformThird(Function<? super C, ? extends T> function);
+   }
+
+   public interface OfFour<A, B, C, D> extends Choice.Ops4<A, B, C, D> {
+      /**
+       * Invokes the appropriate visit method on the given visitor. For example, if this choice has
+       * the first option present, then {@link VisitorOfFour#visitFirst(Object)} will be invoked.
+       *
+       * @param visitor the visitor
+       * @return the value returned by the given visitor
+       */
+      <R> R visit(VisitorOfFour<? super A, ? super B, ? super C, ? super D, R> visitor);
+
+      /**
+       * Expands this choice of four options into a choice of five options whose first option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of five options with the same value as this and whose first option is
+       *       never present
+       */
+      <E> OfFive<E, A, B, C, D> expandFirst();
+      
+      /**
+       * Expands this choice of four options into a choice of five options whose second option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of four options with the same value as this and whose second option is
+       *       never present
+       */
+      <E> OfFive<A, E, B, C, D> expandSecond();
+      
+      /**
+       * Expands this choice of four options into a choice of five options whose third option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of five options with the same value as this and whose third option is
+       *       never present
+       */
+      <E> OfFive<A, B, E, C, D> expandThird();
+
+      /**
+       * Expands this choice of four options into a choice of five options whose fourth option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will have its position shifted to the corresponding option of the
+       * new choice.
+       *
+       * @return a choice of five options with the same value as this and whose fourth option is
+       *       never present
+       */
+      <E> OfFive<A, B, C, E, D> expandFourth();
+
+      /**
+       * Expands this choice of four options into a choice of five options whose fifth option is
+       * never present. The new choice will have the same value as this choice. Whichever option is
+       * present in this choice will also be present in the new choice.
+       *
+       * @return a choice of five options with the same value as this and whose fifth option is
+       *       never present
+       */
+      <E> OfFive<A, B, C, D, E> expandFifth();
+
+      // co-variantly constrains return type to a Choices4
+      @Override <T> OfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices4
+      @Override <T> OfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices4
+      @Override <T> OfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices4
+      @Override <T> OfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
+   }
+
+   public interface OfFive<A, B, C, D, E> extends Choice.Ops5<A, B, C, D, E> {
+      /**
+       * Invokes the appropriate visit method on the given visitor. For example, if this choice has
+       * the first option present, then {@link VisitorOfFive#visitFirst(Object)} will be invoked.
+       *
+       * @param visitor the visitor
+       * @return the value returned by the given visitor
+       */
+      <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor);
+      
+      // co-variantly constrains return type to a Choices5
+      @Override <T> OfFive<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices5
+      @Override <T> OfFive<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices5
+      @Override <T> OfFive<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices5
+      @Override <T> OfFive<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function);
+      
+      // co-variantly constrains return type to a Choices5
+      @Override <T> OfFive<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
    }
 }

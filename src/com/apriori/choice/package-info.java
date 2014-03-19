@@ -6,11 +6,15 @@
  * implementations:
  * <ol>
  * <li><strong>Either / Any</strong>: These types require that exactly one component be present and
- *    non-null.</li>
+ *    non-null. These are most similar to union types found often in functional languages, like
+ *    Scala.</li>
  * <li><strong>Variant</strong>: These types require that exactly one component be present, but
  *    null components are allowed. They are more like traditional union or variant types in that
  *    they do not place constraints on the values that may be present.</li>
  * </ol>
- * All of the types herein extend from the main interface {@link com.apriori.choice.Choice}.
+ * The two families of implementations differ in much the same way that
+ * {@link com.apriori.possible.Optional} differs from {@link com.apriori.possible.Reference}.
+ * 
+ * <p>All of the types herein extend from the main interface {@link com.apriori.choice.Choice}.
  */
 package com.apriori.choice;

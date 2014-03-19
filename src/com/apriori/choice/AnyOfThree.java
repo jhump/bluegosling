@@ -1,7 +1,5 @@
 package com.apriori.choice;
 
-import com.apriori.choice.Choices.Choices3;
-import com.apriori.choice.Choices.Visitor3;
 import com.apriori.possible.Optional;
 import com.apriori.util.Function;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 //TODO: javadoc
 //TODO: tests
-public abstract class AnyOfThree<A, B, C> implements Choices3<A, B, C> {
+public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
    
    public static <A, B, C> AnyOfThree<A, B, C> withFirst(A a) {
       if (a == null) {
@@ -89,8 +87,23 @@ public abstract class AnyOfThree<A, B, C> implements Choices3<A, B, C> {
    public abstract <T> AnyOfThree<A, B, T> transformThird(Function<? super C, ? extends T> function);
 
    @Override
-   public abstract <D> AnyOfFour<A, B, C, D> expand();
+   public abstract <D> AnyOfFour<D, A, B, C> expandFirst();
+
+   @Override
+   public abstract <D> AnyOfFour<A, D, B, C> expandSecond();
+
+   @Override
+   public abstract <D> AnyOfFour<A, B, D, C> expandThird();
+
+   @Override
+   public abstract <D> AnyOfFour<A, B, C, D> expandFourth();
    
+   public abstract Either<B, C> contractFirst(Function<? super A, Either<B, C>> function);
+
+   public abstract Either<A, C> contractSecond(Function<? super B, Either<A, C>> function);
+
+   public abstract Either<A, B> contractThird(Function<? super C, Either<A, B>> function);
+
    private static class First<A, B, C> extends AnyOfThree<A, B, C> implements Serializable {
       private static final long serialVersionUID = 5913498780719060275L;
       
@@ -170,13 +183,47 @@ public abstract class AnyOfThree<A, B, C> implements Choices3<A, B, C> {
       }
       
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitFirst(a);
       }
 
       @Override
-      public <D> AnyOfFour<A, B, C, D> expand() {
+      public <D> AnyOfFour<D, A, B, C> expandFirst() {
+         return AnyOfFour.withSecond(a);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, D, B, C> expandSecond() {
          return AnyOfFour.withFirst(a);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, D, C> expandThird() {
+         return AnyOfFour.withFirst(a);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, C, D> expandFourth() {
+         return AnyOfFour.withFirst(a);
+      }
+      
+      @Override
+      public Either<B, C> contractFirst(Function<? super A, Either<B, C>> function) {
+         Either<B, C> result = function.apply(a);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Either<A, C> contractSecond(Function<? super B, Either<A, C>> function) {
+         return Either.withFirst(a);
+      }
+
+      @Override
+      public Either<A, B> contractThird(Function<? super C, Either<A, B>> function) {
+         return Either.withFirst(a);
       }
       
       @Override
@@ -274,13 +321,47 @@ public abstract class AnyOfThree<A, B, C> implements Choices3<A, B, C> {
       }
       
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitSecond(b);
       }
 
       @Override
-      public <D> AnyOfFour<A, B, C, D> expand() {
+      public <D> AnyOfFour<D, A, B, C> expandFirst() {
+         return AnyOfFour.withThird(b);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, D, B, C> expandSecond() {
+         return AnyOfFour.withThird(b);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, D, C> expandThird() {
          return AnyOfFour.withSecond(b);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, C, D> expandFourth() {
+         return AnyOfFour.withSecond(b);
+      }
+      
+      @Override
+      public Either<B, C> contractFirst(Function<? super A, Either<B, C>> function) {
+         return Either.withFirst(b);
+      }
+
+      @Override
+      public Either<A, C> contractSecond(Function<? super B, Either<A, C>> function) {
+         Either<A, C> result = function.apply(b);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
+      }
+
+      @Override
+      public Either<A, B> contractThird(Function<? super C, Either<A, B>> function) {
+         return Either.withSecond(b);
       }
       
       @Override
@@ -378,13 +459,47 @@ public abstract class AnyOfThree<A, B, C> implements Choices3<A, B, C> {
       }
       
       @Override
-      public <R> R visit(Visitor3<? super A, ? super B, ? super C, R> visitor) {
+      public <R> R visit(VisitorOfThree<? super A, ? super B, ? super C, R> visitor) {
          return visitor.visitThird(c);
       }
 
       @Override
-      public <D> AnyOfFour<A, B, C, D> expand() {
+      public <D> AnyOfFour<D, A, B, C> expandFirst() {
+         return AnyOfFour.withFourth(c);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, D, B, C> expandSecond() {
+         return AnyOfFour.withFourth(c);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, D, C> expandThird() {
+         return AnyOfFour.withFourth(c);
+      }
+      
+      @Override
+      public <D> AnyOfFour<A, B, C, D> expandFourth() {
          return AnyOfFour.withThird(c);
+      }
+      
+      @Override
+      public Either<B, C> contractFirst(Function<? super A, Either<B, C>> function) {
+         return Either.withSecond(c);
+      }
+
+      @Override
+      public Either<A, C> contractSecond(Function<? super B, Either<A, C>> function) {
+         return Either.withSecond(c);
+      }
+
+      @Override
+      public Either<A, B> contractThird(Function<? super C, Either<A, B>> function) {
+         Either<A, B> result = function.apply(c);
+         if (result == null) {
+            throw new NullPointerException();
+         }
+         return result;
       }
       
       @Override

@@ -1,7 +1,5 @@
 package com.apriori.choice;
 
-import com.apriori.choice.Choices.Choices2;
-import com.apriori.choice.Choices.Visitor2;
 import com.apriori.possible.Reference;
 import com.apriori.util.Function;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 //TODO: javadoc
 //TODO: tests
-public abstract class Variant2<A, B> implements Choices2<A, B> {
+public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
    
    public static <A, B> Variant2<A, B> withFirst(A a) {
       return new First<A, B>(a);
@@ -23,7 +21,7 @@ public abstract class Variant2<A, B> implements Choices2<A, B> {
       if (a != null && b != null) {
          throw new IllegalArgumentException("Only one argument can be non-null");
       }
-      if (a != null || (a == null && b == null)) {
+      if (a != null || b == null) {
          return new First<A, B>(a);
       } else {
          return new Second<A, B>(b);
@@ -54,7 +52,27 @@ public abstract class Variant2<A, B> implements Choices2<A, B> {
    public abstract <T> Variant2<A, T> transformSecond(Function<? super B, ? extends T> function);
    
    @Override
-   public abstract <C> Variant3<A, B, C> expand();
+   public abstract <C> Variant3<C, A, B> expandFirst();
+   
+   @Override
+   public abstract <C> Variant3<A, C, B> expandSecond();
+   
+   @Override
+   public abstract <C> Variant3<A, B, C> expandThird();
+   
+   public abstract B contractFirst(Function<? super A, ? extends B> function);
+   
+   public abstract A contractSecond(Function<? super B, ? extends A> function);
+
+   public abstract Variant2<B, A> swap();
+   
+   public abstract Variant2<A, B> exchangeFirst(Function<? super A, ? extends B> function);
+
+   public abstract Variant2<A, B> exchangeSecond(Function<? super B, ? extends A> function);
+   
+   public abstract Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function);
+
+   public abstract Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function);
    
    private static class First<A, B> extends Variant2<A, B> implements Serializable {
       private static final long serialVersionUID = 7357985018452714303L;
@@ -113,13 +131,58 @@ public abstract class Variant2<A, B> implements Choices2<A, B> {
       }
 
       @Override
-      public <R> R visit(Visitor2<? super A, ? super B, R> visitor) {
+      public <R> R visit(VisitorOfTwo<? super A, ? super B, R> visitor) {
          return visitor.visitFirst(a);
       }
 
       @Override
-      public <C> Variant3<A, B, C> expand() {
+      public <C> Variant3<C, A, B> expandFirst() {
+         return Variant3.withSecond(a);
+      }
+      
+      @Override
+      public <C> Variant3<A, C, B> expandSecond() {
          return Variant3.withFirst(a);
+      }
+      
+      @Override
+      public <C> Variant3<A, B, C> expandThird() {
+         return Variant3.withFirst(a);
+      }
+      
+      @Override
+      public Variant2<B, A> swap() {
+         return new Second<B, A>(a);
+      }
+      
+      @Override
+      public Variant2<A, B> exchangeFirst(Function<? super A, ? extends B> function) {
+         return new Second<A, B>(function.apply(a));
+      }
+
+      @Override
+      public Variant2<A, B> exchangeSecond(Function<? super B, ? extends A> function) {
+         return this;
+      }
+      
+      @Override
+      public B contractFirst(Function<? super A, ? extends B> function) {
+         return function.apply(a);
+      }
+      
+      @Override
+      public A contractSecond(Function<? super B, ? extends A> function) {
+         return a;
+      }
+
+      @Override
+      public Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function) {
+         return function.apply(a);
+      }
+
+      @Override
+      public Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function) {
+         return this;
       }
       
       @Override
@@ -195,13 +258,58 @@ public abstract class Variant2<A, B> implements Choices2<A, B> {
       }
 
       @Override
-      public <R> R visit(Visitor2<? super A, ? super B, R> visitor) {
+      public <R> R visit(VisitorOfTwo<? super A, ? super B, R> visitor) {
          return visitor.visitSecond(b);
       }
 
       @Override
-      public <C> Variant3<A, B, C> expand() {
+      public <C> Variant3<C, A, B> expandFirst() {
+         return Variant3.withThird(b);
+      }
+      
+      @Override
+      public <C> Variant3<A, C, B> expandSecond() {
+         return Variant3.withThird(b);
+      }
+      
+      @Override
+      public <C> Variant3<A, B, C> expandThird() {
          return Variant3.withSecond(b);
+      }
+      
+      @Override
+      public Variant2<B, A> swap() {
+         return new First<B, A>(b);
+      }
+      
+      @Override
+      public Variant2<A, B> exchangeFirst(Function<? super A, ? extends B> function) {
+         return this;
+      }
+
+      @Override
+      public Variant2<A, B> exchangeSecond(Function<? super B, ? extends A> function) {
+         return new First<A, B>(function.apply(b));
+      }
+      
+      @Override
+      public B contractFirst(Function<? super A, ? extends B> function) {
+         return b;
+      }
+      
+      @Override
+      public A contractSecond(Function<? super B, ? extends A> function) {
+         return function.apply(b);
+      }
+
+      @Override
+      public Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function) {
+         return this;
+      }
+
+      @Override
+      public Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function) {
+         return function.apply(b);
       }
       
       @Override
