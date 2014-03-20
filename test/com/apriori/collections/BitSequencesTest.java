@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 //TODO: tests!
 public class BitSequencesTest {
@@ -27,7 +28,7 @@ public class BitSequencesTest {
       List<Integer> expected = Arrays.asList(0x1, 0x0, 0xf, 0x4, 0x1, 0x7, 0xa, 0xa, 0x9, 0xb, 0x0,
             0x6, 0x3, 0x1, 0xc, 0xd, 0x1, 0xc);
       List<Integer> actual = new ArrayList<Integer>();
-      for (LongIterator iter = bits.bitTupleIterator(4); iter.hasNext(); ) {
+      for (PrimitiveIterator.OfLong iter = bits.bitTupleIterator(4); iter.hasNext(); ) {
          actual.add((int) iter.nextLong());
       }
       assertEquals(expected, actual);
@@ -35,7 +36,7 @@ public class BitSequencesTest {
       // and one that doesn't
       expected = Arrays.asList(0xf01, 0x714, 0x9aa, 0x60b, 0xc13, 0xc1d);
       actual.clear();
-      for (LongIterator iter = bits.bitTupleIterator(12); iter.hasNext(); ) {
+      for (PrimitiveIterator.OfLong iter = bits.bitTupleIterator(12); iter.hasNext(); ) {
          actual.add((int) iter.nextLong());
       }
       assertEquals(expected, actual);
@@ -64,7 +65,7 @@ public class BitSequencesTest {
       // try a tuple size that equals 0 mod 64
       List<Integer> expected = Arrays.asList(0x1, 0x0, 0xf, 0x4, 0x1, 0x7, 0xa, 0xa, 0x9, 0xb);
       List<Integer> actual = new ArrayList<Integer>();
-      for (LongIterator iter = bits.bitTupleIterator(4); iter.hasNext(); ) {
+      for (PrimitiveIterator.OfLong iter = bits.bitTupleIterator(4); iter.hasNext(); ) {
          actual.add((int) iter.nextLong());
       }
       assertEquals(expected, actual);
@@ -74,7 +75,7 @@ public class BitSequencesTest {
       // 1 0011 0101 -        1011 
       expected = Arrays.asList(0x101, 0x0a7, 0x09c, 0x135, 0x00b);
       actual.clear();
-      for (LongIterator iter = bits.bitTupleIterator(9); iter.hasNext(); ) {
+      for (PrimitiveIterator.OfLong iter = bits.bitTupleIterator(9); iter.hasNext(); ) {
          actual.add((int) iter.nextLong());
       }
       assertEquals(expected, actual);

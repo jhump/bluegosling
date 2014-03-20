@@ -9,7 +9,6 @@ import com.apriori.concurrent.ListenableFutureTask;
 import com.apriori.concurrent.SettableListenableFuture;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Trio;
-import com.apriori.util.Function;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 
 /**
  * A transaction in which changes to {@link TransactionalAtom}s can be made. Transactions use
@@ -91,6 +91,7 @@ public class Transaction {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    public interface Task<X extends Throwable> {
       /**
        * Executes the task with the specified transaction.
@@ -106,6 +107,7 @@ public class Transaction {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    public interface UncheckedTask extends Task<RuntimeException> {
    }
 
@@ -117,6 +119,7 @@ public class Transaction {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    public interface Computation<T, X extends Throwable> {
       /**
        * Executes the computation in the specified transaction.
@@ -136,6 +139,7 @@ public class Transaction {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    public interface UncheckedComputation<T> extends Computation<T, RuntimeException> {
    }
    
@@ -146,13 +150,7 @@ public class Transaction {
     * @return a computation that will execute the task and return {@code null}
     */
    static <X extends Throwable> Computation<Void, X> asComputation(final Task<X> task) {
-      return new Computation<Void, X>() {
-         @Override
-         public Void compute(Transaction t) throws X {
-            task.execute(t);
-            return null;
-         }
-      };
+      return (t) -> { task.execute(t); return null; };
    }
    
    /**

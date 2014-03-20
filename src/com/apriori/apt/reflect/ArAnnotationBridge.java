@@ -2,8 +2,8 @@ package com.apriori.apt.reflect;
 
 import com.apriori.collections.TransformingList;
 import com.apriori.reflect.ProxyUtils;
-import com.apriori.util.Function;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -13,9 +13,9 @@ import java.util.Map;
 
 /**
  * Bridges an annotation mirror into an actual annotation interface. The trick is that classes may
- * not be available as actual {@code java.lang.Class} tokens at runtime since they may refer to
- * classes that are not yet compiled. So the bridge provides a way to access these class references
- * as instances of {@link ArClass} instead.
+ * not be available as actual {@link Class} tokens at runtime since they may refer to classes that
+ * are not yet compiled. So the bridge provides a way to access these class references as instances
+ * of {@link ArClass} instead.
  * 
  * <p>For example, take the following definition:
  * <pre>
@@ -110,7 +110,7 @@ public final class ArAnnotationBridge {
          throw new IllegalArgumentException("specified type is not an annotation type");
       }
       try {
-         if (!annotation.annotationType().asJavaLangClass(clazz.getClassLoader()).equals(clazz)) {
+         if (!annotation.annotationType().asClass(clazz.getClassLoader()).equals(clazz)) {
             throw new IllegalArgumentException("specified annotation is not of specified type");
          }
       } catch (ClassNotFoundException e) {
@@ -163,9 +163,8 @@ public final class ArAnnotationBridge {
          throw new NullPointerException();
       }
       @SuppressWarnings("unchecked")
-      java.lang.Class<? extends java.lang.annotation.Annotation> clazz =
-            (java.lang.Class<? extends java.lang.annotation.Annotation>)
-               annotation.annotationType().asJavaLangClass();
+      Class<? extends Annotation> clazz =
+            (Class<? extends Annotation>) annotation.annotationType().asClass();
       return createProxy(annotation, clazz);
    }
    
@@ -188,14 +187,12 @@ public final class ArAnnotationBridge {
          throw new NullPointerException();
       }
       @SuppressWarnings("unchecked")
-      java.lang.Class<? extends java.lang.annotation.Annotation> clazz =
-            (java.lang.Class<? extends java.lang.annotation.Annotation>)
-               annotation.annotationType().asJavaLangClass(classLoader);
+      Class<? extends Annotation> clazz =
+            (Class<? extends Annotation>) annotation.annotationType().asClass(classLoader);
       return createProxy(annotation, clazz);
    }
    
-   private static <T extends java.lang.annotation.Annotation> T createProxy(ArAnnotation annotation,
-         final java.lang.Class<T> clazz) {
+   private static <T extends Annotation> T createProxy(ArAnnotation annotation, Class<T> clazz) {
       if (!clazz.isAnnotation()) {
          throw new IllegalStateException("annotation has improper type");
       }
@@ -213,7 +210,7 @@ public final class ArAnnotationBridge {
     * @return the {@link ArClass} object
     * @throws IllegalStateException if the method appears to be used incorrectly
     */
-   public static ArClass bridge(java.lang.Class<?> val) {
+   public static ArClass bridge(Class<?> val) {
       if (val != null) {
          throw new IllegalStateException("improper use of ArAnnotationBridge.bridge() detected");
       }
@@ -230,7 +227,7 @@ public final class ArAnnotationBridge {
     * @return the {@link ArClass} object
     * @throws IllegalStateException if the method appears to be used incorrectly
     */
-   public static ArClass[] bridge(java.lang.Class<?> val[]) {
+   public static ArClass[] bridge(Class<?> val[]) {
       if (val != null) {
          throw new IllegalStateException("improper use of ArAnnotationBridge.bridge() detected");
       }
@@ -263,18 +260,18 @@ public final class ArAnnotationBridge {
    /**
     * The invocation handler used to implement annotation bridges. This sets thread-local state
     * after each method call that can then be accessed, if necessary (like for methods that return
-    * {@code java.lang.Class} or {@code java.lang.Class[]}), via {@link ArAnnotationBridge#bridge(ArClass)}
-    * and the like. For most methods, the annotation bridge returns the actual value. For those
-    * that must be accessed via bridging, {@code null} is actually returned.
+    * {@code Class} or {@code Class[]}), via {@link ArAnnotationBridge#bridge(ArClass)} and the
+    * like. For most methods, the annotation bridge returns the actual value. For those that must be
+    * accessed via bridging, {@code null} is actually returned.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class AnnotationBridgeHandler implements InvocationHandler {
       private final ArAnnotation annotation;
       private final Map<String, ?> attributes;
-      private final java.lang.Class<?> clazz;
+      private final Class<?> clazz;
       
-      public AnnotationBridgeHandler(ArAnnotation annotation, java.lang.Class<?> clazz) {
+      public AnnotationBridgeHandler(ArAnnotation annotation, Class<?> clazz) {
          this.annotation = annotation;
          this.attributes = annotation.getAnnotationAttributes();
          this.clazz = clazz;
@@ -324,15 +321,15 @@ public final class ArAnnotationBridge {
          }
       }
       
-      private Object convertAnnotationValue(Object val, java.lang.Class<?> returnType,
+      private Object convertAnnotationValue(Object val, Class<?> returnType,
             final String methodName) {
          if (returnType.isInstance(val)
-               || (val instanceof ArClass && java.lang.Class.class.isAssignableFrom(returnType))) {
+               || (val instanceof ArClass && Class.class.isAssignableFrom(returnType))) {
             // no conversion
             return val;
          } else if (val instanceof ArField && Enum.class.isAssignableFrom(returnType)) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
-            java.lang.Class<? extends Enum> enumType = (java.lang.Class<? extends Enum>) returnType;
+            Class<? extends Enum> enumType = (Class<? extends Enum>) returnType;
             String name = ((ArField) val).getName();
             try {
                @SuppressWarnings("unchecked")
@@ -342,17 +339,13 @@ public final class ArAnnotationBridge {
                throw new EnumConstantNotPresentException(enumType, name);
             }
          } else if (val instanceof List && returnType.isArray()) {
-            final java.lang.Class<?> componentType = returnType.getComponentType();
+            final Class<?> componentType = returnType.getComponentType();
             @SuppressWarnings("unchecked")
-            List<?> vals = new TransformingList<Object, Object>((List<Object>) val, new Function<Object, Object>() {
-               @SuppressWarnings("synthetic-access")
-               @Override public Object apply(Object input) {
-                  return convertAnnotationValue(input, componentType, methodName);
-               }
-            });
+            List<?> vals = new TransformingList<Object, Object>((List<Object>) val,
+                  (o) -> convertAnnotationValue(o, componentType, methodName));
             // java.lang.Class is special since we actually return array of our Class instead
-            java.lang.Class<?> arrayElementType;
-            if (java.lang.Class.class.isAssignableFrom(componentType)) {
+            Class<?> arrayElementType;
+            if (Class.class.isAssignableFrom(componentType)) {
                arrayElementType = ArClass.class;
             } else {
                arrayElementType = componentType;
@@ -363,10 +356,9 @@ public final class ArAnnotationBridge {
                ret[i++] = o;
             }
             return ret;
-         } else if (val instanceof ArAnnotation && java.lang.annotation.Annotation.class.isAssignableFrom(returnType)) {
+         } else if (val instanceof ArAnnotation && Annotation.class.isAssignableFrom(returnType)) {
             @SuppressWarnings("unchecked") // we just checked in condition above
-            Object ret = createBridge((ArAnnotation) val,
-                  (java.lang.Class<? extends java.lang.annotation.Annotation>) returnType);
+            Object ret = createBridge((ArAnnotation) val, (Class<? extends Annotation>) returnType);
             return ret;
          } else {
             // WTF?

@@ -1,11 +1,10 @@
 package com.apriori.reflect;
 
-import com.apriori.util.Function;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.function.Function;
 
 /**
  * A single dispatch candidate. A dispatch candidate represents a single method on the cast

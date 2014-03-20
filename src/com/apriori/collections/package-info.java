@@ -23,7 +23,7 @@
  * must be "componentized" into a sequence of sub-objects for search and storage). This provides a
  * more convenient API for things like {@link java.lang.String}s, whose components are a sequence of
  * {@code char}s. The {@link java.util.Map} interface is in terms of the composite type, instead of
- * being in terms of {@link java.util.Iterable}s.</li>
+ * being in terms of {@link java.lang.Iterable}s.</li>
  * <li>{@link com.apriori.collections.ImmutableCollection}: This interface is the root of a
  * hierarchy of immutable collections, parallel to the normal mutable interfaces in the JCF.</li>
  * <li>{@link com.apriori.collections.PersistentCollection}: The root interface of a hierarchy of
@@ -38,7 +38,7 @@
  * 
  * <h3>Transforming and Filtering Collections</h3>
  *  
- * <a name="trie"/><h3>Tries</h3>
+ * <h3><a name="trie"></a>Tries</h3>
  * Tries are similar to tree structures, except that nodes don't generally contain keys and values.
  * Instead, keys are sequences, and the nodes each contain a component of a key. The nodes are
  * traversed based on the sequence of the requested key. For example, the first item in the key's

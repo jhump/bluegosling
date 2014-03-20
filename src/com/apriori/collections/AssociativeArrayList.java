@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -578,23 +576,15 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       public Collection<E> values() {
          return Collections.unmodifiableCollection(
                new TransformingCollection<Integer, E>(indexByKey.values(),
-                     new Function<Integer, E>() {
-                        @Override public E apply(Integer input) {
-                           return AssociativeArrayList.this.get(input);
-                        }
-                     }));
+                     (i) -> AssociativeArrayList.this.get(i)));
       }
 
       @Override
       public Set<Map.Entry<K, E>> entrySet() {
          return Collections.unmodifiableSet(
                new TransformingSet<Map.Entry<K, Integer>, Map.Entry<K, E>>(indexByKey.entrySet(),
-                     new Function<Map.Entry<K, Integer>, Map.Entry<K, E>>() {
-                        @Override public Map.Entry<K, E> apply(Map.Entry<K, Integer> input) {
-                           return mapEntry(input.getKey(),
-                                 AssociativeArrayList.this.get(input.getValue()));
-                        }
-                     }));
+                     (entry) -> mapEntry(entry.getKey(),
+                           AssociativeArrayList.this.get(entry.getValue()))));
       }
    }
    
@@ -668,34 +658,22 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       public Set<K> keySet() {
          return Collections.unmodifiableSet(
                new TransformingSet<Map.Entry<Integer, K>, K>(indicesAndKeys(),
-                     new Function<Map.Entry<Integer, K>, K>() {
-                        @Override public K apply(Map.Entry<Integer, K> input) {
-                           return input.getValue();
-                        }
-                     }));
+                     (entry) -> entry.getValue()));
       }
 
       @Override
       public Collection<E> values() {
          return Collections.unmodifiableCollection(
                new TransformingCollection<Map.Entry<Integer, K>, E>(indicesAndKeys(),
-                     new Function<Map.Entry<Integer, K>, E>() {
-                        @Override public E apply(Map.Entry<Integer, K> input) {
-                           return AssociativeArrayList.this.get(input.getKey());
-                        }
-                     }));
+                     (entry) -> AssociativeArrayList.this.get(entry.getKey())));
       }
       
       @Override
       public Set<Map.Entry<K, E>> entrySet() {
          return Collections.unmodifiableSet(
                new TransformingSet<Map.Entry<Integer, K>, Map.Entry<K, E>>(indicesAndKeys(),
-                     new Function<Map.Entry<Integer, K>, Map.Entry<K, E>>() {
-                        @Override public Map.Entry<K, E> apply(Map.Entry<Integer, K> input) {
-                           return mapEntry(input.getValue(),
-                                 AssociativeArrayList.this.get(input.getKey()));
-                        }
-                     }));
+                     (entry) -> mapEntry(entry.getValue(),
+                                 AssociativeArrayList.this.get(entry.getKey()))));
       }
       
       private Set<Map.Entry<Integer, K>> indicesAndKeys() {

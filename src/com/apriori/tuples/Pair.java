@@ -1,14 +1,14 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 /**
  * A tuple with two items.
@@ -209,7 +209,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
     * @param function the function
     * @return the result of applying the function to the two elements of this pair
     */
-   public <C> C combine(Function.Bivariate<? super A, ? super B, ? extends C> function) {
+   public <C> C combine(BiFunction<? super A, ? super B, ? extends C> function) {
       return function.apply(a, b);
    }
    
@@ -219,7 +219,7 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
     * @param predicate the predicate
     * @return true if the contained values match the predicate; false otherwise
     */
-   public boolean test(Predicate.Bivariate<? super A, ? super B> predicate) {
+   public boolean test(BiPredicate<? super A, ? super B> predicate) {
       return predicate.test(a, b);
    }
 }

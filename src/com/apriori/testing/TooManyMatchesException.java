@@ -16,7 +16,7 @@ public class TooManyMatchesException extends RuntimeException {
     * criteria, which resulted in the specified number of results (which will be greater than one).
     * 
     * @param criteria Search criteria used when exception was generated
-    * @param results The number of matching method signatures (> 1)
+    * @param results The number of matching method signatures (&gt; 1)
     */
    public TooManyMatchesException(String criteria, int results) {
       super("Found too many matches (" + results + ") for search: " + criteria);

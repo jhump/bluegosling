@@ -6,8 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link Trio}.
@@ -147,7 +146,6 @@ public class TrioTest {
             Trio.create(Collections.emptyList(), Collections.emptyList(), Collections.emptyList()),
             Trio.separate(Collections.<Trio<Integer, String, Double>>emptyList()));
 
-      @SuppressWarnings("unchecked") // dang generic var-args...
       List<Trio<Integer, String, Double>> trios = Arrays.asList(Trio.create(1, "a", 101.0),
             Trio.create(2, "b", 222.0), Trio.create(3, "c", 330.3));
       assertEquals(
@@ -162,7 +160,6 @@ public class TrioTest {
       assertEquals(expectedTrios, Trio.combine(Trio.create(a, b, c)));
    }
    
-   @SuppressWarnings("unchecked") // dang generic var-args...
    @Test public void combine() {
       assertCombinedEquals(Collections.<Trio<Integer, String, Double>>emptyList(),
             Collections.<Integer>emptyList(), Collections.<String>emptyList(),

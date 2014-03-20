@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 /**
@@ -34,12 +32,7 @@ public class OptionalTest extends AbstractPossibleTest {
       checkAbsentValue(valueAbsent().or(Reference.<String>setTo(null)));
 
       // and transform treats null results as absent
-      checkAbsentValue(valuePresent("abc").transform(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return null;
-         }
-      }));
+      checkAbsentValue(valuePresent("abc").transform((s) -> null));
    }
 
    @Test public void disallowSomeNull() {

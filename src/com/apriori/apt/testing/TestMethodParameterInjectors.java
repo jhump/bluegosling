@@ -2,7 +2,6 @@ package com.apriori.apt.testing;
 
 import com.apriori.collections.TransformingSet;
 import com.apriori.reflect.TypeRef;
-import com.apriori.util.Function;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -211,12 +210,7 @@ final class TestMethodParameterInjectors {
       
    static Set<TypeRef<?>> allowedBeforeTypes =
          new TransformingSet<Class<?>, TypeRef<?>>(allowedBeforeClasses,
-               new Function<Class<?>, TypeRef<?>>() {
-                  @Override
-                  public TypeRef<?> apply(Class<?> input) {
-                     return TypeRef.forClass(input);
-                  }
-               });
+               (clazz) -> TypeRef.forClass(clazz));
          
    /**
     * TODO: doc me!

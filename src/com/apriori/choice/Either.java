@@ -1,9 +1,9 @@
 package com.apriori.choice;
 
 import com.apriori.possible.Optional;
-import com.apriori.util.Function;
 
 import java.io.Serializable;
+import java.util.function.Function;
 
 /**
  * A choice between one of two options, neither of which can be null. Either the first or second
@@ -138,7 +138,7 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
     * @return a new object with its second option present, after exchanging the first option if
     *       necessary
     * @throws NullPointerException if the function is invoked and returns null
-    * @see #coerceSecond(Function)
+    * @see #exchangeSecond(Function)
     */
    public abstract Either<A, B> exchangeFirst(Function<? super A, ? extends B> function);
 

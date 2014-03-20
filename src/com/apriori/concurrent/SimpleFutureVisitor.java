@@ -1,8 +1,7 @@
 package com.apriori.concurrent;
 
-import com.apriori.util.Sink;
-
 import java.util.concurrent.CancellationException;
+import java.util.function.Consumer;
 
 /**
  * A simple visitor implementation that is suitable for sub-classing.
@@ -52,9 +51,8 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
    }
 
    /**
-    * A builder for constructing visitors from {@link Sink}s and {@link Runnable}s. This will be
-    * particularly handy using lambdas in Java 8 since lambdas only support interfaces with a single
-    * method (which means they can't be used to compactly define {@link FutureVisitor}s).
+    * A builder for constructing visitors from {@link Consumer}s and {@link Runnable}s. This allows
+    * constructing a visitor using lambdas since these are functional interfaces.
     * 
     * <p>If any action is not defined when building the visitor, the default implementation in
     * {@link SimpleFutureVisitor} is used.
@@ -66,8 +64,8 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
    @SuppressWarnings("hiding") // for convenience, using arg and param names same as fields
    public static class Builder<T> {
       private Runnable defaultAction;
-      private Sink<? super T> onSuccess;
-      private Sink<? super Throwable> onFailure;
+      private Consumer<? super T> onSuccess;
+      private Consumer<? super Throwable> onFailure;
       private Runnable onCancel;
       
       /**
@@ -84,11 +82,11 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
       /**
        * Defines the action for visiting successful futures.
        * 
-       * @param onSuccess a sink that accepts the future result and performs the action for
+       * @param onSuccess a consumer that accepts the future result and performs the action for
        *       successful futures
        * @return {@code this}, for method chaining
        */
-      public Builder<T> onSuccess(Sink<? super T> onSuccess) {
+      public Builder<T> onSuccess(Consumer<? super T> onSuccess) {
          this.onSuccess = onSuccess;
          return this;
       }
@@ -96,11 +94,11 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
       /**
        * Defines the action for visiting failed futures.
        * 
-       * @param onFailure a sink that accepts the cause of failure and performs the action for
+       * @param onFailure a consumer that accepts the cause of failure and performs the action for
        *       failed futures
        * @return {@code this}, for method chaining
        */
-      public Builder<T> onFailure(Sink<? super Throwable> onFailure) {
+      public Builder<T> onFailure(Consumer<? super Throwable> onFailure) {
          this.onFailure = onFailure;
          return this;
       }
@@ -124,8 +122,8 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
        */
       public FutureVisitor<T> build() {
          final Runnable defaultAction = this.defaultAction;
-         final Sink<? super T> onSuccess = this.onSuccess;
-         final Sink<? super Throwable> onFailure = this.onFailure;
+         final Consumer<? super T> onSuccess = this.onSuccess;
+         final Consumer<? super Throwable> onFailure = this.onFailure;
          final Runnable onCancel = this.onCancel;
          return new SimpleFutureVisitor<T>() {
             @Override

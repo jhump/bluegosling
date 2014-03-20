@@ -28,7 +28,7 @@ public class CompilationFailedException extends RuntimeException {
     */
    public CompilationFailedException(String message, Collection<Diagnostic<JavaFileObject>> diagnostics) {
       super(message);
-      this.diagnostics = new ArrayList<Diagnostic<JavaFileObject>>(diagnostics);
+      this.diagnostics = new ArrayList<>(diagnostics);
    }
    
    /**
@@ -41,7 +41,7 @@ public class CompilationFailedException extends RuntimeException {
     */
    public CompilationFailedException(String message, Throwable cause, Collection<Diagnostic<JavaFileObject>> diagnostics) {
       super(message, cause);
-      this.diagnostics = new ArrayList<Diagnostic<JavaFileObject>>(diagnostics);
+      this.diagnostics = new ArrayList<>(diagnostics);
    }
    
    /**
@@ -53,7 +53,7 @@ public class CompilationFailedException extends RuntimeException {
     */
    public CompilationFailedException(Throwable cause, Collection<Diagnostic<JavaFileObject>> diagnostics) {
       super(cause);
-      this.diagnostics = new ArrayList<Diagnostic<JavaFileObject>>(diagnostics);
+      this.diagnostics = new ArrayList<>(diagnostics);
    }
    
    /**

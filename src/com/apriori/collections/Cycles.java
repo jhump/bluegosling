@@ -1,12 +1,11 @@
 package com.apriori.collections;
 
-import com.apriori.util.Source;
-
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Supplier;
 
 /**
  * Utility methods for creating instances of {@link Cycle}.
@@ -32,8 +31,8 @@ public final class Cycles {
     *       iterators and iterator sources
     */
    static <E> BidiIterator<E> cycleIterator(final BidiIterator<E> initial,
-         final Source<BidiIterator<E>> sourceFromBeginning,
-         final Source<BidiIterator<E>> sourceFromEnd) {
+         final Supplier<BidiIterator<E>> sourceFromBeginning,
+         final Supplier<BidiIterator<E>> sourceFromEnd) {
       return new BidiIterator<E>() {
          BidiIterator<E> iter = initial;
 
@@ -414,16 +413,8 @@ public final class Cycles {
          public BidiIterator<E> cycle() {
             return cycleIterator(
                   BidiIterators.fromListIterator(list.listIterator(current.nextIndex())),
-                  new Source<BidiIterator<E>>() {
-                     @Override public BidiIterator<E> get() {
-                        return BidiIterators.fromListIterator(list.listIterator());
-                     }
-                  },
-                  new Source<BidiIterator<E>>() {
-                     @Override public BidiIterator<E> get() {
-                        return BidiIterators.fromListIterator(list.listIterator(list.size()));
-                     }
-                  });
+                  () -> BidiIterators.fromListIterator(list.listIterator()),
+                  () -> BidiIterators.fromListIterator(list.listIterator(list.size())));
          }
 
          @Override

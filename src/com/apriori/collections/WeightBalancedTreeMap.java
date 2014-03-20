@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -188,11 +186,7 @@ public class WeightBalancedTreeMap<K, V>
    public List<V> values() {
       return new TransformingList.RandomAccess<Entry<K, V>, V>(
             new RandomAccessSetList<Entry<K, V>>(entrySet()),
-            new Function<Entry<K, V>, V>() {
-               @Override public V apply(Entry<K, V> input) {
-                  return input.getValue();
-               }
-            });
+            (entry) -> entry.getValue());
    }
 
    @Override
@@ -690,11 +684,7 @@ public class WeightBalancedTreeMap<K, V>
    public ListIterator<Entry<K, V>> listIterator(int index) {
       checkWideRange(index);
       return new TransformingListIterator<Node<K, V>, Entry<K, V>>(new ListIteratorImpl(index),
-            new Function<Node<K, V>, Entry<K, V>>() {
-               @Override public Entry<K, V> apply(Node<K, V> input) {
-                  return mapEntry(input);
-               }
-            });
+            (entry) -> mapEntry(entry));
    }
    
    Node<K, V> getByIndex(int index) {
@@ -1458,11 +1448,7 @@ public class WeightBalancedTreeMap<K, V>
       public List<V> values() {
          return new TransformingList.RandomAccess<Entry<K, V>, V>(
                new RandomAccessSetList<Entry<K, V>>(entrySet()),
-               new Function<Entry<K, V>, V>() {
-                  @Override public V apply(Entry<K, V> input) {
-                     return input.getValue();
-                  }
-               });
+               (entry) -> entry.getValue());
       }
 
       @Override
@@ -1482,11 +1468,7 @@ public class WeightBalancedTreeMap<K, V>
          checkWideRange(index);
          return new TransformingListIterator<Node<K, V>, Entry<K, V>>(
                new SubMapByIndicesIterator<K, V>(new ListIteratorImpl(adjustIndex(index)), this),
-               new Function<Node<K, V>, Entry<K, V>>() {
-                  @Override public Entry<K, V> apply(Node<K, V> input) {
-                     return mapEntry(input);
-                  }
-               });
+               (entry) -> mapEntry(entry));
       }
 
       @Override
@@ -2022,11 +2004,7 @@ public class WeightBalancedTreeMap<K, V>
       public List<V> values() {
          return new TransformingList.RandomAccess<Entry<K, V>, V>(
                new RandomAccessSetList<Entry<K, V>>(entrySet()),
-               new Function<Entry<K, V>, V>() {
-                  @Override public V apply(Entry<K, V> input) {
-                     return input.getValue();
-                  }
-               });
+               (entry) -> entry.getValue());
       }
 
       @Override
@@ -2077,11 +2055,7 @@ public class WeightBalancedTreeMap<K, V>
          checkWideRange(index);
          return new TransformingListIterator<Node<K, V>, Entry<K, V>>(
                new SubMapIterator<K, V>(new ListIteratorImpl(index + offset), offset, this),
-               new Function<Node<K, V>, Entry<K, V>>() {
-                  @Override public Entry<K, V> apply(Node<K, V> input) {
-                     return mapEntry(input);
-                  }
-               });
+               (entry) -> mapEntry(entry));
       }
 
       @Override
@@ -2466,11 +2440,7 @@ public class WeightBalancedTreeMap<K, V>
       public Iterator<K> descendingIterator() {
          return new TransformingIterator<Entry<K, V>, K>(
                   CollectionUtils.reverseIterator(map.listIterator(map.size())),
-                  new Function<Entry<K, V>, K>() {
-                     @Override public K apply(Entry<K, V> node) {
-                        return node.getKey();
-                     }
-                  });
+                  (entry) -> entry.getKey());
       }
 
       @Override
@@ -2576,11 +2546,7 @@ public class WeightBalancedTreeMap<K, V>
       @Override
       public ListIterator<K> listIterator(int index) {
          return new TransformingListIterator<Entry<K, V>, K>(map.listIterator(index),
-               new Function<Entry<K, V>, K>() {
-                  @Override public K apply(Entry<K, V> input) {
-                     return input.getKey();
-                  }
-               });
+               (entry) -> entry.getKey());
       }
 
       @Override

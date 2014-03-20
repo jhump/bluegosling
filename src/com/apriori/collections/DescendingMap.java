@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -48,21 +46,12 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    public Collection<V> values() {
       // keySet() is in proper order thanks to NavigableMap.descendingKeySet()
       // so we create a collection that returns items in the correct order based on it
-      return new TransformingCollection<K, V>(keySet(), new Function<K, V>() {
-         @Override public V apply(K input) {
-            return get(input);
-         }
-      });
+      return new TransformingCollection<K, V>(keySet(), (k) -> get(k));
    }
 
    @Override
    public Set<Map.Entry<K, V>> entrySet() {
-      return new TransformingSet<K, Map.Entry<K, V>>(keySet(),
-            new Function<K, Map.Entry<K, V>>() {
-               @Override public Map.Entry<K, V> apply(K input) {
-                  return floorEntry(input);
-               }
-            });
+      return new TransformingSet<K, Map.Entry<K, V>>(keySet(), (k) -> floorEntry(k));
    }
 
    @Override

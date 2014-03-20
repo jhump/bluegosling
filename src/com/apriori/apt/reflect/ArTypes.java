@@ -24,6 +24,8 @@ public final class ArTypes {
       return ReflectionVisitors.TYPE_MIRROR_VISITOR.visit(mirror);
    }
 
+   // TODO: forType(java.lang.reflect.Type)
+   
    /**
     * Downcasts the specified type as a {@link ArClass}.
     * 

@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.apriori.tuples.Trio;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
 
 import org.junit.Test;
 
@@ -16,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Abstract test class with general test cases for all implementations of {@link SynchronousAtom}.
@@ -54,12 +54,7 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals("abc", atom.get());
       assertEquals("abc", atom.set("def"));
       assertEquals("def", atom.get());
-      assertEquals("DEF", atom.apply(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input.toUpperCase();
-         }
-      }));
+      assertEquals("DEF", atom.apply(String::toUpperCase));
       assertEquals("DEF", atom.get());
    }
    
@@ -91,12 +86,7 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals(Integer.valueOf(90), atom.get()); // unchanged
       assertFalse(notified.get());
       
-      Function<Integer, Integer> addNine = new Function<Integer, Integer>() {
-         @Override
-         public Integer apply(Integer input) {
-            return input + 9;
-         }
-      };
+      Function<Integer, Integer> addNine = (i) -> i + 9;
       atom.apply(addNine);
       assertEquals(Integer.valueOf(99), atom.get());
 
@@ -145,7 +135,6 @@ public abstract class AbstractSynchronousAtomTest {
       assertTrue(notices1.isEmpty());
    }
    
-   @SuppressWarnings("unchecked")
    protected void checkWatchers(SynchronousAtom<String> atom, List<?>... noticesArray) {
       atom.set("abc");
       for (List<?> notices : noticesArray) {

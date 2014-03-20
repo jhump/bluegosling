@@ -1,9 +1,8 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * A set whose elements are the results of applying a function to another collection. This set is
@@ -123,7 +122,7 @@ public class TransformingSet<I, O> extends TransformingCollection<I, O> implemen
 
    /**
     * A transforming set that can transform values in both directions. Since this set can transform
-    * values in the other direction (output type -> input type), all operations are supported,
+    * values in the other direction (output type -&gt; input type), all operations are supported,
     * including {@link #add(Object)} and {@link #addAll(Collection)}.
     * 
     * <p>Several methods are overridden to use the reverse function before delegating to the
@@ -148,8 +147,8 @@ public class TransformingSet<I, O> extends TransformingCollection<I, O> implemen
        * {@code function1.apply(function2.apply(o))}.
        * 
        * @param set the wrapped set
-       * @param function1 transforms elements; "input" -> "output"
-       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       * @param function1 transforms elements; "input" -&gt; "output"
+       * @param function2 the inverse of {@code function1}; "output" -&gt; "input"
        */
       public Bidi(Set<I> set, Function<? super I, ? extends O> function1,
             Function<? super O, ? extends I> function2) {

@@ -1,21 +1,17 @@
 package com.apriori.di;
 
 import com.apriori.reflect.Annotations;
-import com.apriori.util.Predicate;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.function.Predicate;
 
 //TODO: javadoc!
 public class AnnotationSpec<T extends Annotation> {
    
    private static final Predicate<Method> EXCLUDE_NONBINDING_ATTRIBUTES =
-         new Predicate<Method>() {
-            @Override public boolean test(Method input) {
-               return !input.isAnnotationPresent(NonBinding.class);
-            }
-         };
+         (o) -> !o.isAnnotationPresent(NonBinding.class);
          
    private final Class<T> annotationType;
    private final T annotation;

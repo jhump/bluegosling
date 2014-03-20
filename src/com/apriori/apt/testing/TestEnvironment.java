@@ -1,6 +1,6 @@
 package com.apriori.apt.testing;
 
-import com.apriori.util.Streams;
+import com.apriori.util.IoStreams;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -186,14 +186,14 @@ public class TestEnvironment {
       }
       try {
          if (binary) {
-            byte genBytes[] = Streams.toByteArray(in);
+            byte genBytes[] = IoStreams.toByteArray(in);
             byte goldenBytes[];
             if (file instanceof TestJavaFileObject) {
                goldenBytes = ((TestJavaFileObject) file).getByteContents();
             } else {
                InputStream goldenIn = file.openInputStream();
                try {
-                  goldenBytes = Streams.toByteArray(goldenIn);
+                  goldenBytes = IoStreams.toByteArray(goldenIn);
                } finally {
                   goldenIn.close();
                }
@@ -205,7 +205,7 @@ public class TestEnvironment {
          } else {
             org.junit.Assert.assertEquals(
                   "Output " + file.getName() + " does not match contents of resource " + resourcePath,
-                  Streams.toString(in, TestJavaFileObject.UTF8_CHARSET), 
+                  IoStreams.toString(in, TestJavaFileObject.UTF8_CHARSET), 
                   file.getCharContent(true));
          }
       } finally {

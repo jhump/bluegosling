@@ -171,7 +171,7 @@ class FileDefinition {
     */
    private static List<FileDefinition> getFilesFromAnnotations(Method testMethod, Class<?> testClass,
          Class<? extends Annotation> annotationType) {
-      List<FileDefinition> files = new ArrayList<FileDefinition>();
+      List<FileDefinition> files = new ArrayList<>();
       FileSets forMethod = ProxyUtils.castToInterface(testMethod.getAnnotation(annotationType),
             FileSets.class, true);
       boolean includeClass = true;

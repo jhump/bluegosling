@@ -2,6 +2,7 @@ package com.apriori.apt.reflect;
 
 import static com.apriori.apt.ProcessingEnvironments.types;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,12 @@ import javax.lang.model.type.TypeMirror;
  * has {@linkplain ArClass#getTypeVariables() type variables}, it represents a raw or erased type
  * and its type variables represent type variable declarations. A parameterized type represents
  * an actual instance -- or usage -- of a type with actual type parameter values. This class is
- * analogous to {@link java.lang.reflect.ParameterizedType java.lang.reflect.ParameterizedType},
- * except that it represents types in Java source (during annotation processing) vs. representing
- * runtime types.
+ * analogous to {@link ParameterizedType}, except that it represents types in Java source (during
+ * annotation processing) vs. representing runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see java.lang.reflect.ParameterizedType
+ * @see ParameterizedType
  */
 public class ArParameterizedType implements ArType {
    

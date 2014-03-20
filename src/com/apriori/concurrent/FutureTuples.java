@@ -14,27 +14,20 @@ import com.apriori.tuples.Trio;
 import com.apriori.tuples.Tuple;
 import com.apriori.tuples.Tuples;
 import com.apriori.tuples.Unit;
-import com.apriori.util.Function;
 
 import java.util.Arrays;
-import java.util.List;
 
 //TODO: javadoc
 //TODO: tests
 public class FutureTuples {
    public static <T> ListenableFuture<Unit<T>> asUnit(ListenableFuture<? extends T> future) {
-      return ListenableFutures.transform(future, new Function<T, Unit<T>>() {
-         @Override public Unit<T> apply(T t) {
-            return Unit.create(t);
-         }
-      });
+      return ListenableFutures.transform(future, (o) -> Unit.create(o));
    }
    
    public static <T, U> ListenableFuture<Pair<T, U>> asPair(ListenableFuture<? extends T> futureT,
          ListenableFuture<? extends U> futureU) {
       final Fulfillable<T> t = Fulfillables.create();
       final Fulfillable<U> u = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-arg is safe
       CombiningFuture<Pair<T, U>> futurePair =
             new CombiningFuture<Pair<T,U>>(Arrays.asList(futureT, futureU)) {
                @Override Pair<T, U> computeValue() {
@@ -52,7 +45,6 @@ public class FutureTuples {
       final Fulfillable<T> t = Fulfillables.create();
       final Fulfillable<U> u = Fulfillables.create();
       final Fulfillable<V> v = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-arg is safe
       CombiningFuture<Trio<T, U, V>> futureTrio =
             new CombiningFuture<Trio<T,U, V>>(Arrays.asList(futureT, futureU, futureV)) {
                @Override Trio<T, U, V> computeValue() {
@@ -72,7 +64,6 @@ public class FutureTuples {
       final Fulfillable<U> u = Fulfillables.create();
       final Fulfillable<V> v = Fulfillables.create();
       final Fulfillable<W> w = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-arg is safe
       CombiningFuture<Quartet<T, U, V, W>> futureQuartet =
             new CombiningFuture<Quartet<T,U, V, W>>(Arrays.asList(futureT, futureU, futureV, futureW)) {
                @Override Quartet<T, U, V, W> computeValue() {
@@ -95,7 +86,6 @@ public class FutureTuples {
       final Fulfillable<V> v = Fulfillables.create();
       final Fulfillable<W> w = Fulfillables.create();
       final Fulfillable<X> x = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-arg is safe
       CombiningFuture<Quintet<T, U, V, W, X>> futureQuintet =
             new CombiningFuture<Quintet<T,U, V, W, X>>(Arrays.asList(futureT, futureU, futureV,
                   futureW, futureX)) {
@@ -163,10 +153,6 @@ public class FutureTuples {
    
    public static ListenableFuture<Tuple> join(Iterable<ListenableFuture<?>> futures) {
       return ListenableFutures.transform(ListenableFutures.join(futures),
-            new Function<List<Object>, Tuple>() {
-               @Override public Tuple apply(List<Object> list){
-                  return Tuples.fromCollection(list);
-               }
-            });
+            (list) -> Tuples.fromCollection(list));
    }
 }

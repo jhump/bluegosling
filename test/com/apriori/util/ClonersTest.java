@@ -1466,7 +1466,7 @@ public class ClonersTest {
       }
 
       // and 2-D array
-      Cloner<String[][]> array2dCloner = Cloners.forArray(arrayCloner);
+      Cloner<String[][]> array2dCloner = Cloners.<String[]>forArray(arrayCloner);
       String obj2d[][] = new String[][] { { "abc", "def", "ghi" }, null, { "jkl", "mno" },
             { "pqr", null } };
       String clone2d[][] = array2dCloner.clone(obj2d);
@@ -1538,7 +1538,7 @@ public class ClonersTest {
       // and 2-D array
       String obj2d[][] = new String[][] { { "abc", "def", "ghi" }, null, { "jkl", "mno" },
             { "pqr", null } };
-      Cloner<String[][]> array2dCloner = Cloners.forNestedArray(String[][].class, cloner);
+      Cloner<String[][]> array2dCloner = Cloners.<String[]>forNestedArray(String[][].class, cloner);
       String clone2d[][] = array2dCloner.clone(obj2d);
 
       assertEquals(obj2d.length, clone2d.length);
@@ -1744,7 +1744,7 @@ public class ClonersTest {
       Cloner<?> srlzblClonerCanon = Cloners.forSerializable();
       Cloner<?> consClonerCanon = Cloners.withCopyConstructor(MyClass_Class3.class);
       Cloner<?> arrayClonerCanon = Cloners.forArray(Cloners.forCloneable());
-      Cloner<?> array2dClonerCanon = Cloners.forNestedArray(SimpleCloneable[][].class,
+      Cloner<?> array2dClonerCanon = Cloners.<SimpleCloneable[]>forNestedArray(SimpleCloneable[][].class,
             Cloners.forCloneable());
       // make sure they use different implementation classes. this way, if implementation
       // changes in a way that would require tests below to be re-written, we can hopefully

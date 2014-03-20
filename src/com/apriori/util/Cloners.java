@@ -408,36 +408,23 @@ public final class Cloners {
     * 
     * <p>
     * The following example demonstrates how the level of specificity is determined. Given the
-    * following (contrived) interfaces and classes
-    * 
+    * following (contrived) interfaces and classes:
     * <pre>
     * interface Interface1A1 {}
-    * 
     * interface Interface1A extends Interface1A1 {}
-    * 
     * interface Interface1B {}
-    * 
     * interface Interface1 extends Interface1A, Interface1B {}
-    * 
     * interface Interface2A {}
-    * 
     * interface Interface2B {}
-    * 
     * interface Interface2 extends Interface2A, Interface2B {}
-    * 
     * interface Interface3 {}
-    * 
     * class Class1 {} // implicitly extends Object
-    * 
     * class Class2 extends Class1 implements Interface2, Interface3 {}
-    * 
     * class Class3 extends Class2 {}
-    * 
     * class MyClass extends Class3 implements Interface1 {}
     * </pre>
-    * 
-    * the following details the level of specificity for each eligible constructor argument type
-    * when searching for a copy constructor for {@code MyClass}:
+    * Then the following details the level of specificity for each eligible constructor argument
+    * type when searching for a copy constructor for {@code MyClass}:
     * <table border=1>
     * <tr>
     * <th>Most Specific (preferred)</th>
@@ -475,6 +462,7 @@ public final class Cloners {
     * <th>Least Specific (last resort)</th>
     * <td>{@code Object}</td>
     * </tr>
+    * <caption>Example Specificity Order</caption>
     * </table>
     * As seen in the table above, {@code Interface1A} and {@code Interface1B} have the same level of
     * specificity. So if {@code MyClass} only had two compatible constructors, one that took an

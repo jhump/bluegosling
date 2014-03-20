@@ -157,7 +157,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
          public ArClass visitTypeVariable(ArTypeVariable<?> typeVariable, Void v) {
             List<? extends ArType> bounds = typeVariable.getBounds();
             if (bounds.isEmpty()) {
-               return forJavaLangObject();
+               return forObject();
             } else {
                return forType(bounds.get(0));
             }
@@ -166,7 +166,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
          public ArClass visitWildcardType(ArWildcardType wildcardType, Void v) {
             ArType bound = wildcardType.getExtendsBound();
             if (bound == null) {
-               return forJavaLangObject();
+               return forObject();
             } else {
                return forType(bound);
             }
@@ -182,11 +182,11 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * @throws ClassNotFoundException if the specified class token is not on the compiler's main
     * class path, and thus cannot be loaded as an element by the processing environment 
     */
-   public static ArClass forJavaLangClass(Class<?> clazz) throws ClassNotFoundException {
+   public static ArClass forClass(Class<?> clazz) throws ClassNotFoundException {
       if (clazz.isPrimitive()) {
          return new PrimitiveClass(clazz);
       } else if (clazz.isArray()) {
-         return new ArrayClass(forJavaLangClass(clazz.getComponentType()));
+         return new ArrayClass(forClass(clazz.getComponentType()));
       } else {
          return forName(clazz.getCanonicalName());
       }
@@ -249,10 +249,10 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    private static Pair<ArClass, Elements> memoizedJavaLangObject;
    
    /**
-    * Returns the class for {@code java.lang.Object}.
-    * @return the class for {@code java.lang.Object}
+    * Returns the class for {@code Object}.
+    * @return the class for {@code Object}
     */
-   public static ArClass forJavaLangObject() {
+   public static ArClass forObject() {
       // Use memoized version if we can. Not worrying about synchronization because
       // we don't require updates to be immediately visible to other threads. That
       // could improve the "hit rate" for being able to re-use existing object, but
@@ -638,6 +638,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * <tr><td>{@code int}</td><td>I</td></tr>
     * <tr><td>{@code long}</td><td>J</td></tr>
     * <tr><td>{@code short}</td><td>S</td></tr>
+    * <caption>Primitive type encoding</caption>
     * </table>
     * Reference types are encoded with an "L" followed by the type's fully-qualified name and then a
     * terminating ";".
@@ -1231,7 +1232,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    @SuppressWarnings({ "rawtypes", "unchecked" })
    public List<ArTypeVariable<ArClass>> getClassTypeVariables() {
       // have to cast to raw type List first or else compiler will disallow the
-      // subsequent cast to List<Constructor<Method>>
+      // subsequent cast to List<ArTypeVariable<ArClass>>
       return ((List) getTypeVariables());
    }
 
@@ -1281,25 +1282,25 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    }
    
    /**
-    * Returns a {@link Class Class} token for this class. The current thread's
-    * context class loader is used in the attempt to load the class.
+    * Returns a {@link Class} token for this class. The current thread's context class loader is
+    * used in the attempt to load the class.
     * 
     * @return a {@code Class}
     * @throws ClassNotFoundException if a class cannot be loaded (which means it does not exist
     *       in compiled form on the classpath or in a fashion that is available/visible to the
     *       current thread's context class loader)
     */
-   public abstract Class<?> asJavaLangClass() throws ClassNotFoundException;
+   public abstract Class<?> asClass() throws ClassNotFoundException;
    
    /**
-    * Returns a {@link Class Class} token for this class. The specified class
-    * loader is used in the attempt to load the class.
+    * Returns a {@link Class} token for this class. The specified class loader is used in the
+    * attempt to load the class.
     * 
     * @param classLoader a class loader
     * @return a {@code Class}
     * @throws ClassNotFoundException if no such class could be loaded by the specified class loader
     */
-   public abstract Class<?> asJavaLangClass(ClassLoader classLoader)
+   public abstract Class<?> asClass(ClassLoader classLoader)
          throws ClassNotFoundException;
    
    @Override
@@ -1452,12 +1453,12 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public Class<?> asJavaLangClass() {
+      public Class<?> asClass() {
          return clazz;
       }
 
       @Override
-      public Class<?> asJavaLangClass(ClassLoader classLoader) {
+      public Class<?> asClass(ClassLoader classLoader) {
          return clazz;
       }
 
@@ -1548,26 +1549,26 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
 
       @Override
       public ArClass getSuperclass() {
-         return forJavaLangObject();
+         return forObject();
       }
 
       @Override
       public ArType getGenericSuperclass() {
-         return forJavaLangObject();
+         return forObject();
       }
 
       @Override
       public List<ArClass> getInterfaces() {
          ArClass cloneable, serializable;
          try {
-            cloneable = forJavaLangClass(Cloneable.class);
+            cloneable = forClass(Cloneable.class);
          }
          catch (ClassNotFoundException e) {
             // really should never happen
             throw new AssertionError("Failed to create class for java.lang.Cloneable");
          }
          try {
-            serializable = forJavaLangClass(Serializable.class);
+            serializable = forClass(Serializable.class);
          }
          catch (ClassNotFoundException e) {
             // really should never happen
@@ -1588,7 +1589,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
             sb.append("[");
          }
          if (componentClass instanceof PrimitiveClass) {
-            sb.append(primitiveNameMap.get(((PrimitiveClass) componentClass).asJavaLangClass()));
+            sb.append(primitiveNameMap.get(((PrimitiveClass) componentClass).asClass()));
          } else {
             sb.append("L");
             sb.append(componentClass.getName());
@@ -1647,20 +1648,20 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
          if (clazz instanceof ArrayClass) {
             ArrayClass other = (ArrayClass) clazz;
             return (dimensions == other.dimensions && componentClass.isAssignableFrom(other.componentClass))
-                  || (dimensions < other.dimensions && componentClass.equals(forJavaLangObject()));
+                  || (dimensions < other.dimensions && componentClass.equals(forObject()));
          }
          return false;
       }
 
       @Override
-      public Class<?> asJavaLangClass() throws ClassNotFoundException {
-         return Array.newInstance(getComponentType().asJavaLangClass(), 0).getClass();
+      public Class<?> asClass() throws ClassNotFoundException {
+         return Array.newInstance(getComponentType().asClass(), 0).getClass();
       }
 
       @Override
-      public Class<?> asJavaLangClass(ClassLoader classLoader)
+      public Class<?> asClass(ClassLoader classLoader)
             throws ClassNotFoundException {
-         return Array.newInstance(getComponentType().asJavaLangClass(classLoader), 0).getClass();
+         return Array.newInstance(getComponentType().asClass(classLoader), 0).getClass();
       }
 
       @Override
@@ -1705,6 +1706,9 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
             throw new NullPointerException();
          }
          this.annotatedElement = new ArAbstractAnnotatedElement(element) {
+            // Dummy implementations below -- we won't use them. We just want to use the
+            // implementations of ArAnnotatedElement interface methods that this object provides.
+            
             @Override
             public boolean equals(Object o) {
                return false;
@@ -1953,12 +1957,12 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
       
       @Override
-      public Class<?> asJavaLangClass() throws ClassNotFoundException {
-         return asJavaLangClass(Thread.currentThread().getContextClassLoader());
+      public Class<?> asClass() throws ClassNotFoundException {
+         return asClass(Thread.currentThread().getContextClassLoader());
       }
       
       @Override
-      public Class<?> asJavaLangClass(ClassLoader classLoader)
+      public Class<?> asClass(ClassLoader classLoader)
             throws ClassNotFoundException {
          return classLoader.loadClass(this.getName());
       }

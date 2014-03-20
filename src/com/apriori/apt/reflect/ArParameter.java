@@ -1,21 +1,26 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Parameter;
+
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 
 /**
- * A representation of a parameter to an executable member, like a constructor or method. Unlike
- * many of the other types in this package, this one has no analog in the {@code java.lang.reflect}
- * package since parameter details aren't stored in class files and thus aren't reified for the
- * benefit of runtime reflection. The {@code java.lang.reflect} APIs do have ways to get at
- * parameter details (via {@link java.lang.reflect.Method java.lang.reflect.Method} and
- * {@link java.lang.reflect.Constructor java.lang.reflect.Constructor} classes), but they are
- * lacking one key attribute of a parameter that is available in Java source but not in runtime
- * types: the parameter {@linkplain #getName() name}.
+ * A representation of a parameter to an executable member, like a constructor or method. This is
+ * analogous to {@link Parameter}, except that it represents parameters in Java source (during
+ * annotation processing) vs. representing parameters in runtime types.
+ * 
+ * <p>Unlike reflection-based parameters, there is no way to determine if the parameter name is
+ * synthesized. For types whose source code is being processed, the names are always available. But,
+ * for elements that represent types on the compiler's class path, parameter names may not be
+ * available and instead be synthesized.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <M> the type of executable member (constructor or method) to which the parameter belongs
+ * 
+ * @see Parameter
  */
 public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotatedElement {
 
@@ -27,9 +32,33 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
       if (element == null) {
          throw new NullPointerException();
       } else if (element.getKind() != ElementKind.PARAMETER) {
-         throw new IllegalArgumentException("Invalid element kind. Expected PARAMETER; got " + element.getKind().name());
+         throw new IllegalArgumentException("Invalid element kind. Expected PARAMETER; got "
+               + element.getKind().name());
       }
       return new ArParameter<ArExecutableMember>(element);
+   }
+   
+   public static ArParameter<ArMethod> forMethodParameterElement(VariableElement element) {
+      @SuppressWarnings("unchecked") // we check the type before letting this ref escape
+      ArParameter<ArMethod> param = (ArParameter<ArMethod>) forElement(element);
+      ExecutableElement parent = (ExecutableElement) element.getEnclosingElement();
+      if (parent.getKind() != ElementKind.METHOD) {
+         throw new IllegalArgumentException("Invalid enclosing kind. Expected METHOD; got "
+               + parent.getKind().name());
+      }
+      return param;
+   }
+
+   public static ArParameter<ArConstructor> forConstructorParameterElement(
+         VariableElement element) {
+      @SuppressWarnings("unchecked") // we'll check the type before letting this ref escape
+      ArParameter<ArConstructor> param = (ArParameter<ArConstructor>) forElement(element);
+      ExecutableElement parent = (ExecutableElement) element.getEnclosingElement();
+      if (parent.getKind() != ElementKind.CONSTRUCTOR) {
+         throw new IllegalArgumentException("Invalid enclosing kind. Expected CONSTRUCTOR; got "
+               + parent.getKind().name());
+      }
+      return param;
    }
 
    @Override
@@ -73,7 +102,8 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
     */
    public M getEnclosingMember() {
       @SuppressWarnings("unchecked")
-      M ret = (M) ReflectionVisitors.EXECUTABLE_MEMBER_VISITOR.visit(asElement().getEnclosingElement());
+      M ret =
+         (M) ReflectionVisitors.EXECUTABLE_MEMBER_VISITOR.visit(asElement().getEnclosingElement());
       if (ret == null) {
          throw new AssertionError("Unable to determine enclosing member for parameter");
       }

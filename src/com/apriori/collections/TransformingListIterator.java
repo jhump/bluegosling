@@ -1,8 +1,7 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.ListIterator;
+import java.util.function.Function;
 
 /**
  * A list iterator whose elements are the results of applying a function to results from another
@@ -17,7 +16,8 @@ import java.util.ListIterator;
  * @param <O> the "output" type; the type of elements in this iterator
  */
 //TODO: tests
-public class TransformingListIterator<I, O> extends TransformingIterator<I, O> implements ListIterator<O> {
+public class TransformingListIterator<I, O> extends TransformingIterator<I, O>
+      implements ListIterator<O> {
 
    /**
     * Constructs a new transforming list iterator.
@@ -99,7 +99,7 @@ public class TransformingListIterator<I, O> extends TransformingIterator<I, O> i
    
    /**
     * A transforming list iterator that can transform values in both directions. Since this iterator
-    * can transform values in the other direction (output type -> input type), all operations are
+    * can transform values in the other direction (output type -&gt; input type), all operations are
     * supported, including {@link #add(Object)} and {@link #set(Object)}.
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -119,8 +119,8 @@ public class TransformingListIterator<I, O> extends TransformingIterator<I, O> i
        * {@code function1.apply(function2.apply(o))}.
        * 
        * @param iterator the wrapped iterator
-       * @param function1 transforms elements; "input" -> "output"
-       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       * @param function1 transforms elements; "input" -&gt; "output"
+       * @param function2 the inverse of {@code function1}; "output" -&gt; "input"
        */
       public Bidi(ListIterator<I> iterator, Function<? super I, ? extends O> function1,
             Function<? super O, ? extends I> function2) {

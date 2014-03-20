@@ -1,7 +1,6 @@
 package com.apriori.reflect;
 
-import com.apriori.util.Predicate;
-import com.apriori.util.Predicates;
+import static com.apriori.util.Predicates.alwaysAccept;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
@@ -13,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Utility methods for working with instances of {@link Annotation}. These are mostly helpful in
@@ -179,7 +179,7 @@ public final class Annotations {
     *       method)
     */
    public static Map<String, Object> asMap(Annotation annotation) {
-      return asMap(annotation, Predicates.acceptAll());
+      return asMap(annotation, alwaysAccept());
    }
 
    /**
@@ -218,7 +218,7 @@ public final class Annotations {
     * @see Annotation#equals(Object)
     */
    public static <T extends Annotation> boolean equal(T annotation, Object other) {
-      return equal(annotation, other, Predicates.acceptAll());
+      return equal(annotation, other, alwaysAccept());
    }
 
    /**
@@ -269,7 +269,7 @@ public final class Annotations {
     * @return the annotation's hash code
     */
    public static <T extends Annotation> int hashCode(T annotation) {
-      return hashCode(annotation, Predicates.acceptAll());
+      return hashCode(annotation, alwaysAccept());
    }
    
    /**
@@ -311,7 +311,7 @@ public final class Annotations {
     * @return a string representation of the annotation
     */
    public static <T extends Annotation> String toString(T annotation) {
-      return toString(annotation, Predicates.acceptAll());
+      return toString(annotation, alwaysAccept());
    }
    
    /**

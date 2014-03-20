@@ -4,7 +4,6 @@ import com.apriori.concurrent.ListenableExecutorService;
 import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutures;
-import com.apriori.util.Function;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -110,33 +109,31 @@ public class ParallelSort2 {
                   }
                }));
          ListenableFuture<?> result = ListenableFutures.combine(loHalf, hiHalf,
-               new Function.Bivariate<Object, Object, Object>() {
-                  @Override public Object apply(Object o1, Object o2) {
-                     // once two halves are sorted, merge them into list
-                     ListIterator<T> iter = list.listIterator();
-                     for (int i = 0, j = mid; i < mid || j < hi;) {
-                        if (i == mid) {
+               (o1, o2) -> {
+                  // once two halves are sorted, merge them into list
+                  ListIterator<T> iter = list.listIterator();
+                  for (int i = 0, j = mid; i < mid || j < hi;) {
+                     if (i == mid) {
+                        iter.next();
+                        iter.set(array[j++]);
+                     } else if (j == hi) {
+                        iter.next();
+                        iter.set(array[i++]);
+                     } else {
+                        T t1 = array[i];
+                        T t2 = array[j];
+                        if (comparator.compare(t1, t2) < 0) {
                            iter.next();
-                           iter.set(array[j++]);
-                        } else if (j == hi) {
-                           iter.next();
-                           iter.set(array[i++]);
+                           iter.set(t1);
+                           i++;
                         } else {
-                           T t1 = array[i];
-                           T t2 = array[j];
-                           if (comparator.compare(t1, t2) < 0) {
-                              iter.next();
-                              iter.set(t1);
-                              i++;
-                           } else {
-                              iter.next();
-                              iter.set(t2);
-                              j++;
-                           }
+                           iter.next();
+                           iter.set(t2);
+                           j++;
                         }
                      }
-                     return null;
                   }
+                  return null;
                });
 
          // wait for result to be ready
@@ -179,29 +176,28 @@ public class ParallelSort2 {
       ListenableFuture<Void> hiHalf =
             recursiveSort(array, mid, hi, threshold, comparator, executor);
       // once two halves are sorted, merge them into list
-      return ListenableFutures.combine(loHalf, hiHalf, new Function.Bivariate<Void, Void, Void>() {
-         @Override public Void apply(Void v1, Void v2) {
-            final T tmp[] = Arrays.copyOfRange(array, lo, mid);
-            final int l = tmp.length;
-            for (int i = 0, j = mid, k = lo; i < l || j < hi;) {
-               if (i == l) {
-                  array[k++] = array[j++];
-               } else if (j == hi) {
-                  array[k++] = tmp[i++];
-               } else {
-                  T t1 = tmp[i];
-                  T t2 = array[j];
-                  if (comparator.compare(t1, t2) < 0) {
-                     array[k++] = t1;
-                     i++;
+      return ListenableFutures.combine(loHalf, hiHalf, 
+            (v1, v2) -> {
+               final T tmp[] = Arrays.copyOfRange(array, lo, mid);
+               final int l = tmp.length;
+               for (int i = 0, j = mid, k = lo; i < l || j < hi;) {
+                  if (i == l) {
+                     array[k++] = array[j++];
+                  } else if (j == hi) {
+                     array[k++] = tmp[i++];
                   } else {
-                     array[k++] = t2;
-                     j++;
+                     T t1 = tmp[i];
+                     T t2 = array[j];
+                     if (comparator.compare(t1, t2) < 0) {
+                        array[k++] = t1;
+                        i++;
+                     } else {
+                        array[k++] = t2;
+                        j++;
+                     }
                   }
-               }
-            }            
-            return null;
-         }
-      });
+               }            
+               return null;
+            });
    }
 }

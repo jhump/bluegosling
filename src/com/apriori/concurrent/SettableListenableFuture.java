@@ -3,15 +3,15 @@ package com.apriori.concurrent;
 import com.apriori.possible.Fulfillable;
 import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Source;
 
 import java.util.AbstractSet;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * A future whose result is set programmatically. This exposes protected API in
@@ -76,7 +76,7 @@ public class SettableListenableFuture<T> extends AbstractListenableFuture<T> {
          }
 
          @Override
-         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
             if (isPresent()) {
                return getResult();
             }

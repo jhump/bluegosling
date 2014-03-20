@@ -1,7 +1,7 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
+import com.apriori.util.TriFunction;
+import com.apriori.util.TriPredicate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * A tuple with three items.
@@ -246,8 +247,7 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
     * @param function the function
     * @return the result of applying the function to the three elements of this trio
     */
-   public <D> D combine(
-         Function.Trivariate<? super A, ? super B, ? super C, ? extends D> function) {
+   public <D> D combine(TriFunction<? super A, ? super B, ? super C, ? extends D> function) {
       return function.apply(a, b, c);
    }
    
@@ -257,7 +257,7 @@ public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>,
     * @param predicate the predicate
     * @return true if the contained values match the predicate; false otherwise
     */
-   public boolean test(Predicate.Trivariate<? super A, ? super B, ? super C> predicate) {
+   public boolean test(TriPredicate<? super A, ? super B, ? super C> predicate) {
       return predicate.test(a, b, c);
    }
 }

@@ -1,17 +1,19 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.GenericArrayType;
+
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.TypeMirror;
 
 /**
  * An array type with generic type information. This generally indicates that the array's component
- * type is a parameterized type or type variable. This is analogous to {@link java.lang.reflect.GenericArrayType
- * java.lang.reflect.GenericArrayType}, except that it represents types
- * in Java source (during annotation processing) vs. representing runtime types.
+ * type is a parameterized type or type variable. This is analogous to {@link GenericArrayType},
+ * except that it represents types in Java source (during annotation processing) vs. representing
+ * runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.GenericArrayType
+ * @see GenericArrayType
  */
 public class ArGenericArrayType implements ArType {
    

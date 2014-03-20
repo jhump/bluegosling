@@ -1,5 +1,7 @@
 package com.apriori.apt.reflect;
 
+import com.apriori.reflect.MethodSignature;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,13 +10,13 @@ import java.util.List;
 /**
  * Represents a method signature, composed of a method name and sequence of parameter types.
  * 
- * This class is identical to {@link com.apriori.reflect.MethodSignature} except that it uses
- * {@link com.apriori.apt.reflect.ArClass} instead of {@link java.lang.Class} to model parameter
- * types, so it is suitable for use from an annotation processor.
+ * This class is identical to {@link MethodSignature} except that it uses {@link ArClass} instead
+ * of {@link Class} to model parameter types, so it is suitable for use from an annotation
+ * processor.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see com.apriori.reflect.MethodSignature
+ * @see MethodSignature
  */
 public class ArMethodSignature {
 

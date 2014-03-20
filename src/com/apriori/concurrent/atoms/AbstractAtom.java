@@ -1,9 +1,8 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.util.Predicate;
-
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Predicate;
 
 /**
  * An abstract base class for {@link Atom} implementations. Sub-classes must implement the

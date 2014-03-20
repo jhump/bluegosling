@@ -1,10 +1,9 @@
 package com.apriori.collections;
 
-import com.apriori.util.Predicate;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A filtered view of another set. This is a wrapper that elides all members of the wrapped set that

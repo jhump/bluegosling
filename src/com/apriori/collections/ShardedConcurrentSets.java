@@ -18,7 +18,7 @@ import java.util.SortedSet;
  * snapshot of the set. This is done using "copy-on-iteration" semantics.
  * <p>To reduce the memory pressure that could be caused by creating a snapshot
  * of the set for every iterator, three strategies are employed:
- *   <ol>
+ * <ol>
  *   <li>The snapshots are taken "lazily". So if no write operation ever occurs
  *   during an iteration, no copy is needed and the iterator effectively reads the
  *   actual set contents instead of a copy.</li>
@@ -28,8 +28,6 @@ import java.util.SortedSet;
  *   <li>The granularity of a snapshot is a single shard. So if mutative
  *   operations only impact one shard, only one shard is copied on the heap for
  *   the benefit iteration.</li>
- *   </ol>
- * </li>
  * </ol>
  * <p>All wrapped sets provide strong consistency and all mutative methods are
  * guaranteed to be atomic (unlike many other implementations of concurrent

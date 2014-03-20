@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 /**
@@ -29,12 +27,7 @@ public class ReferenceTest extends AbstractPossibleTest {
    @Test public void allowPresentNulls() {
       checkPresentValue(valuePresent(null), null);
       checkPresentValue(valueAbsent().or(Reference.<String>setTo(null)), null);
-      checkPresentValue(valuePresent("abc").transform(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return null;
-         }
-      }), null);
+      checkPresentValue(valuePresent("abc").transform((s) -> null), null);
    }
 
    @Test public void asReference() {

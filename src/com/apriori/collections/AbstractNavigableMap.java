@@ -527,8 +527,8 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
    }
    
    /**
-    * The type of bound for a {@link SubMap}. Sub-map views have both lower and upper bounds. These
-    * bounds are optional and, if present, can be inclusive or exclusive.
+    * The type of bound for a {@link AbstractNavigableMap.SubMap}. Sub-map views have both lower and
+    * upper bounds. These bounds are optional and, if present, can be inclusive or exclusive.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */

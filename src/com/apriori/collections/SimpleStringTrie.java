@@ -8,8 +8,8 @@ import java.util.NoSuchElementException;
 
 /**
  * A trie that has {@link String} keys. This is nearly the same as using a
- * {@link SortedArrayCompositeTrie SortedArrayCompositeTrie<CharSequence, Character, V>} but has a
- * couple of useful advantages:
+ * {@link SortedArrayCompositeTrie SortedArrayCompositeTrie&lt;CharSequence, Character, V&gt;} but
+ * has a couple of useful advantages:
  * <ul>
  * <li>This trie supports proper localized sorting of keys via a {@link Collator}.</li>
  * <li>This trie is a little more efficient since it uses arrays of primitives ({@code char})

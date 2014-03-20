@@ -1,16 +1,17 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.WildcardType;
+
 import javax.lang.model.type.TypeMirror;
 
 /**
  * A wildcard type. Wildcards indicates unknown (but optionally bounded) values for type parameters.
- * This is analogous to {@link java.lang.reflect.WildcardType java.lang.reflect.WildcardType},
- * except that it represents types in Java source (during annotation processing) vs. representing
- * runtime types.
+ * This is analogous to {@link WildcardType}, except that it represents types in Java source (during
+ * annotation processing) vs. representing runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.WildcardType
+ * @see WildcardType
  */
 public class ArWildcardType implements ArType {
    private final javax.lang.model.type.WildcardType modelType;
@@ -69,7 +70,7 @@ public class ArWildcardType implements ArType {
    public ArType getExtendsBound() {
       TypeMirror bound = modelType.getExtendsBound();
       if (bound == null) {
-         return ArClass.forJavaLangObject();
+         return ArClass.forObject();
       } else {
          return ArTypes.forTypeMirror(bound);
       }

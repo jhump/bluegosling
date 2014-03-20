@@ -1,8 +1,7 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Base interface implemented by all type-safe tuples. Tuples are immutable and provide a rich

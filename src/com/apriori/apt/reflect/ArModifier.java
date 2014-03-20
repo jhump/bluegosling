@@ -1,5 +1,6 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Modifier;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -11,8 +12,7 @@ import java.util.Set;
  * Java source elements whereas some are less generic (for example, the {@code native} modifier
  * cannot be used on a class).
  * 
- * This is similar in nature to the API in {@link java.lang.reflect.Modifier} except for two main
- * differences:
+ * This is similar in nature to the API in {@link Modifier} except for two main differences:
  * <ol>
  * <li>This class is used to represent modifiers in Java source (during annotation processing) vs.
  * representing modifiers on runtime types and their elements.</li>
@@ -23,7 +23,7 @@ import java.util.Set;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see java.lang.reflect.Modifier
+ * @see Modifier
  */
 public enum ArModifier {
    /**

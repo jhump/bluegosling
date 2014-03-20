@@ -1,20 +1,14 @@
 package com.apriori.reflect;
 
-import com.apriori.util.Function;
-
 import java.lang.reflect.Array;
+import java.util.function.Function;
 
 // TODO: javadoc
 public final class Converters {
    private Converters() {}
    
-   public static <I, O> Converter<I, O> fromFunction(final Function<I, O> function) {
-      return new Converter<I, O>() {
-         @Override
-         public O convert(I in, Caster<?> caster) {
-            return function.apply(in);
-         }
-      };
+   public static <I, O> Converter<I, O> fromFunction(Function<I, O> function) {
+      return (o, caster) -> function.apply(o);
    }
 
    public static <I, O> Converter<I[], O[]> forArray(final Class<O> outputComponentType,

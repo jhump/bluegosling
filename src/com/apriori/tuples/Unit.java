@@ -1,13 +1,12 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * A tuple with a single item.

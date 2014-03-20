@@ -6,7 +6,7 @@ import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
 import com.apriori.possible.Fulfillable;
 import com.apriori.possible.Fulfillables;
 import com.apriori.possible.Holder;
-import com.apriori.util.Function;
+import com.apriori.util.TriFunction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +26,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Lots of goodies related to {@link ListenableFuture}s. These include factory methods for creating
@@ -143,7 +145,7 @@ public final class ListenableFutures {
     * @param future the future
     * @return a listenable version of the specified future
     */
-   public static <T> ListenableFuture<T> makeListenable(final Future<T> future) {
+   public static <T> ListenableFuture<T> makeListenable(Future<T> future) {
       if (future instanceof ListenableFuture) {
          return (ListenableFuture<T>) future;
       }
@@ -317,13 +319,9 @@ public final class ListenableFutures {
     * @param executor the executor used to run the task
     * @return a future whose value will be the result of the specified task
     */
-   public static <T, U> ListenableFuture<U> chain(final ListenableFuture<T> future,
-         final Function<? super T, ? extends U> task, Executor executor) {
-      return chain(future, new Callable<U>() {
-         @Override public U call() throws Exception {
-            return task.apply(future.getResult()); 
-         }
-      }, executor);
+   public static <T, U> ListenableFuture<U> chain(ListenableFuture<T> future,
+         Function<? super T, ? extends U> task, Executor executor) {
+      return chain(future, () -> task.apply(future.getResult()), executor);
    }
 
    /**
@@ -560,6 +558,7 @@ public final class ListenableFutures {
     * @param futures the future values
     * @return a future list whose elements are the values from the specified futures
     */
+   @SafeVarargs
    public static <T> ListenableFuture<List<T>> join(ListenableFuture<? extends T>... futures) {
       return join(Arrays.asList(futures));
    }
@@ -631,10 +630,9 @@ public final class ListenableFutures {
     */
    public static <T, U, V> ListenableFuture<V> combine(
          ListenableFuture<T> future1, ListenableFuture<U> future2,
-         final Function.Bivariate<? super T, ? super U, ? extends V> function) {
+         BiFunction<? super T, ? super U, ? extends V> function) {
       final Fulfillable<T> t = Fulfillables.create();
       final Fulfillable<U> u = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-args array is safe here
       CombiningFuture<V> result = new CombiningFuture<V>(Arrays.asList(future1, future2)) {
          @Override V computeValue() {
             return function.apply(t.get(), u.get());
@@ -664,11 +662,10 @@ public final class ListenableFutures {
     */
    public static <T, U, V, W> ListenableFuture<W> combine(ListenableFuture<T> future1,
          ListenableFuture<U> future2, ListenableFuture<V> future3,
-         final Function.Trivariate<? super T, ? super U, ? super V, ? extends W> function) {
+         TriFunction<? super T, ? super U, ? super V, ? extends W> function) {
       final Fulfillable<T> t = Fulfillables.create();
       final Fulfillable<U> u = Fulfillables.create();
       final Fulfillable<V> v = Fulfillables.create();
-      @SuppressWarnings("unchecked") // generic var-args array is safe here
       CombiningFuture<W> result = new CombiningFuture<W>(Arrays.asList(future1, future2, future3)) {
          @Override W computeValue() {
             return function.apply(t.get(), u.get(), v.get());
@@ -696,6 +693,7 @@ public final class ListenableFutures {
     * @return a future that represents the first of the given futures to complete
     * @throws IllegalArgumentException if the given array of futures is empty
     */
+   @SafeVarargs
    public static <T> ListenableFuture<T> firstOf(ListenableFuture<? extends T>... futures) {
       return firstOf(Arrays.asList(futures));
    }
@@ -784,6 +782,7 @@ public final class ListenableFutures {
     * @return a future that represents the first of the given futures to complete successfully
     * @throws IllegalArgumentException if the given array of futures is empty
     */
+   @SafeVarargs
    public static <T> ListenableFuture<T> firstSuccessfulOf(
          ListenableFuture<? extends T>... futures) {
       return firstOf(Arrays.asList(futures));

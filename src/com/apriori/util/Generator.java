@@ -8,6 +8,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * An experimental class to provide generator functionality in Java. Since the Java language does
@@ -23,14 +25,14 @@ import java.util.concurrent.ThreadFactory;
  * allocate any more native threads. Using a thread pool to limit the number of threads can cause
  * the generators to appear frozen. This can happen if garbage collection is not happening
  * frequently, so unused generator threads continue to tie up threads in the pool. It also limits
- * the number of generated sequences that can be examined concurrently.
- * </ol>Transfer of control from one thread to another is significantly more expensive than just
+ * the number of generated sequences that can be examined concurrently.</li>
+ * <li>Transfer of control from one thread to another is significantly more expensive than just
  * popping data from the stack into the heap and then returning control to a caller. So this
  * approach leads to slow iteration. A value must be transferred from one thread to another and
  * threads must be parked and unparked for each transfer of control, from consumer to generator and
- * then back from generator to consumer.
- * </li>
- * Despite its impracticality, it was a fun experiment to implement. The trickier bits of the
+ * then back from generator to consumer.</li>
+ * </ol>
+ * <p>Despite its impracticality, it was a fun experiment to implement. The trickier bits of the
  * implementation are to avoid thread leaks. We must be able to detect if a consumer never reaches
  * the end of the stream and the generator thread never finishes its work. When that happens we
  * must interrupt the thread so that it exits. It may be possible to do this using phantom
@@ -61,6 +63,7 @@ public abstract class Generator<T, X extends Throwable> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    public interface Output<T> {
       /**
        * Yields a value from the generator. This sends the specified value to the consumer and
@@ -144,64 +147,62 @@ public abstract class Generator<T, X extends Throwable> {
    }
 
    /**
-    * Creates a new generator whose generation logic is performed by a {@link Sink} that accepts
-    * the generator's output. This will prove useful API in Java 8 since {@link Sink} is a
-    * functional interface. The new generated creates new threads for each iteration.
+    * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
+    * the generator's output. The new generated creates new threads for each iteration.
     *
-    * @param sink the sink that accepts the generator's output and uses it to yield generated values
+    * @param consumer the consumer that accepts the generator's output and uses it to yield
+    *       generated values
     * @return a new generator that creates a new thread for each iteration
     */
-   public static <T> UncheckedGenerator<T> create(final Sink<Output<T>> sink) {
-      if (sink == null) {
+   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer) {
+      if (consumer == null) {
          throw new NullPointerException();
       }
       return new UncheckedGenerator<T>() {
          @Override protected void run(Output<T> out) {
-            sink.accept(out);
+            consumer.accept(out);
          }
       };
    }
 
    /**
-    * Creates a new generator whose generation logic is performed by a {@link Sink} that accepts
-    * the generator's output. This will prove useful API in Java 8 since {@link Sink} is a
-    * functional interface. The new generated uses the specified factory to create new threads for
+    * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
+    * the generator's output. The new generated uses the specified factory to create new threads for
     * each iteration.
     *
-    * @param sink the sink that accepts the generator's output and uses it to yield generated values
+    * @param consumer the consumer that accepts the generator's output and uses it to yield
+    *       generated values
     * @param factory a thread factory
     * @return a new generator that uses the given factory to create a new thread for each iteration
     */
-   public static <T> UncheckedGenerator<T> create(final Sink<Output<T>> sink,
-         ThreadFactory factory) {
-      if (sink == null) {
+   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer, ThreadFactory factory) {
+      if (consumer == null) {
          throw new NullPointerException();
       }
       return new UncheckedGenerator<T>(factory) {
          @Override protected void run(Output<T> out) {
-            sink.accept(out);
+            consumer.accept(out);
          }
       };
    }
 
    /**
-    * Creates a new generator whose generation logic is performed by a {@link Sink} that accepts
-    * the generator's output. This will prove useful API in Java 8 since {@link Sink} is a
-    * functional interface. The new generator uses the specified executor to run logic for each
+    * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
+    * the generator's output. The new generator uses the specified executor to run logic for each
     * execution.
     *
-    * @param sink the sink that accepts the generator's output and uses it to yield generated values
+    * @param consumer the consumer that accepts the generator's output and uses it to yield
+    *       generated values
     * @param executor an executor
     * @return a new generator that uses the given executor to run generation logic
     */
-   public static <T> UncheckedGenerator<T> create(final Sink<Output<T>> sink,
-         Executor executor) {
-      if (sink == null) {
+   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer, Executor executor) {
+      if (consumer == null) {
          throw new NullPointerException();
       }
       return new UncheckedGenerator<T>(executor) {
          @Override protected void run(Output<T> out) {
-            sink.accept(out);
+            consumer.accept(out);
          }
       };
    }
@@ -255,12 +256,7 @@ public abstract class Generator<T, X extends Throwable> {
     * @return a view of this generator as an {@link Iterable}.
     */
    public Iterable<T> asIterable() {
-      return new Iterable<T>() {
-         @Override
-         public Iterator<T> iterator() {
-            return start().asIterator();
-         }
-      };
+      return () -> start().asIterator();
    }
    
    /**
@@ -390,8 +386,8 @@ public abstract class Generator<T, X extends Throwable> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class SequenceImpl implements Sequence<T, X> {
-      final SynchronousQueue<Source<T>> fromProducer = new SynchronousQueue<Source<T>>();
-      final SynchronousQueue<Object> fromConsumer = new SynchronousQueue<Object>();
+      final SynchronousQueue<Supplier<T>> fromProducer = new SynchronousQueue<>();
+      final SynchronousQueue<Object> fromConsumer = new SynchronousQueue<>();
       Future<?> future;
       boolean finished;
       
@@ -512,62 +508,48 @@ public abstract class Generator<T, X extends Throwable> {
     * @param sequence the sequence object
     * @return a task that will generate the values in the sequence
     */
-   static <T> Runnable createSequenceRunner(final SynchronousQueue<Source<T>> fromProducer,
+   static <T> Runnable createSequenceRunner(final SynchronousQueue<Supplier<T>> fromProducer,
          final SynchronousQueue<Object> fromConsumer, final Generator<T, ?> generator,
          Sequence<T, ?> sequence) {
       final WeakReference<Sequence<T, ?>> sequenceRef = new WeakReference<Sequence<T,?>>(sequence);
-      final Runnable onInterrupt = new Runnable() {
-         @Override
-         public void run() {
-            if (sequenceRef.get() == null) {
-               throw new SequenceIsDeadException();
-            }
+      final Runnable onInterrupt = () -> {
+         if (sequenceRef.get() == null) {
+            throw new SequenceIsDeadException();
          }
       };
-      return new Runnable() {
-         @Override
-         public void run() {
-            Throwable failure = null;
-            try {
-               // wait for consumer to invoke next() for the first time
-               take(fromConsumer);
-               
-               Output<T> output = new Output<T>() {
-                  @Override
-                  public void yield(T t) {
-                     // send value to consumer
-                     put(fromProducer, Sources.of(t), onInterrupt);
-                     // and wait for it invoke next() again
-                     take(fromConsumer, onInterrupt);
+      return () -> {
+         Throwable failure = null;
+         try {
+            // wait for consumer to invoke next() for the first time
+            take(fromConsumer);
+            
+            Output<T> output = new Output<T>() {
+               @Override
+               public void yield(T t) {
+                  // send value to consumer
+                  put(fromProducer, () -> t, onInterrupt);
+                  // and wait for it invoke next() again
+                  take(fromConsumer, onInterrupt);
+               }
+            };
+   
+            generator.run(output);
+            
+         } catch (Throwable t) {
+            failure = t;
+            
+         } finally {
+            if (sequenceRef.get() != null) {
+               try {
+                  if (failure == null) {
+                     put(fromProducer,
+                           () -> { throw new SequenceFinishedException(); },
+                           onInterrupt);
+                  } else {
+                     final Throwable t = failure;
+                     put(fromProducer, () -> { throw new SequenceException(t); }, onInterrupt);
                   }
-               };
-      
-               generator.run(output);
-               
-            } catch (Throwable t) {
-               failure = t;
-               
-            } finally {
-               if (sequenceRef.get() != null) {
-                  try {
-                     if (failure == null) {
-                        put(fromProducer, new Source<T>() {
-                           @Override
-                           public T get() {
-                              throw new SequenceFinishedException();
-                           }
-                        }, onInterrupt);
-                     } else {
-                        final Throwable t = failure;
-                        put(fromProducer, new Source<T>() {
-                           @Override
-                           public T get() {
-                              throw new SequenceException(t);
-                           }
-                        }, onInterrupt);
-                     }
-                  } catch (SequenceIsDeadException ignored) {
-                  }
+               } catch (SequenceIsDeadException ignored) {
                }
             }
          }

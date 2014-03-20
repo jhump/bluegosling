@@ -4,7 +4,6 @@ import static com.apriori.concurrent.ListenableFutures.completedFuture;
 import static com.apriori.concurrent.ListenableFutures.failedFuture;
 
 import com.apriori.collections.TransformingList;
-import com.apriori.util.Function;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -521,13 +520,9 @@ public class ListenableExecutors {
       public List<Runnable> shutdownNow() {
          List<Runnable> tasks = delegate().shutdownNow();
          return new TransformingList.ReadOnly<Runnable, Runnable>(tasks,
-               new Function<Runnable, Runnable>() {
-                  @Override
-                  public Runnable apply(Runnable input) {
-                     @SuppressWarnings("synthetic-access") // wrappers member is private
-                     Runnable unwrapped = wrappers.get(input);
-                     return unwrapped != null ? unwrapped : input;
-                  }
+               (input) -> {
+                  Runnable unwrapped = wrappers.get(input);
+                  return unwrapped != null ? unwrapped : input;
                });
       }
    }

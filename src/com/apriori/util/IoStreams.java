@@ -9,14 +9,14 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 
 /**
- * Utility methods for working with streams. There are helper methods for binary streams
+ * Utility methods for working with I/O streams. There are helper methods for binary streams
  * ({@link InputStream} and {@link OutputStream}) and for text streams (
- * {@link java.util.Reader}/{@link Readable} and {@link java.util.Writer}/{@link Appendable}).
+ * {@link java.io.Reader}/{@link Readable} and {@link java.io.Writer}/{@link Appendable}).
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public final class Streams {
-   private Streams() {}
+public final class IoStreams {
+   private IoStreams() {}
 
    /**
     * Copies binary data by reading from one stream and writing to another.

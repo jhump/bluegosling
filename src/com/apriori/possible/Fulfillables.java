@@ -1,15 +1,14 @@
 package com.apriori.possible;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Source;
-
 import java.util.AbstractSet;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Factory methods for creating instances of {@link Fulfillable}.
@@ -70,7 +69,7 @@ public final class Fulfillables {
          }
 
          @Override
-         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
             return value;
          }
 
@@ -156,7 +155,7 @@ public final class Fulfillables {
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
          if (value == null) {
             throw throwable.get();
          }

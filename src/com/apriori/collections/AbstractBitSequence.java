@@ -1,6 +1,7 @@
 package com.apriori.collections;
 
 import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator;
 
 /**
  * An abstract base class for implementations of {@link BitSequence}. Concrete sub-classes need only
@@ -53,30 +54,26 @@ abstract class AbstractBitSequence implements BitSequence {
       };
    }
 
-   @Override public LongIterator bitTupleIterator(int tupleSize) {
+   @Override public PrimitiveIterator.OfLong bitTupleIterator(int tupleSize) {
       return bitTupleIterator(tupleSize, 0, BitOrder.LSB);
    }
 
-   @Override public LongIterator bitTupleIterator(int tupleSize, BitOrder order) {
+   @Override public PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order) {
       return bitTupleIterator(tupleSize, 0, order);
    }
 
-   @Override public LongIterator bitTupleIterator(final int tupleSize, int startIndex) {
+   @Override public PrimitiveIterator.OfLong bitTupleIterator(final int tupleSize, int startIndex) {
       return bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);
    }
    
-   @Override public LongIterator bitTupleIterator(final int tupleSize, int startIndex,
+   @Override public PrimitiveIterator.OfLong bitTupleIterator(final int tupleSize, int startIndex,
          final BitOrder order) {
       checkTupleLength(tupleSize);
       final Stream stream = stream(startIndex);
       if (tupleSize == 1) {
-         return new LongIterator() {
+         return new PrimitiveIterator.OfLong() {
             @Override public boolean hasNext() {
                return stream.remaining() > 0;
-            }
-
-            @Override public Long next() {
-               return nextLong();
             }
 
             @Override public long nextLong() {
@@ -88,13 +85,9 @@ abstract class AbstractBitSequence implements BitSequence {
             }
          };
       } else {
-         return new LongIterator() {
+         return new PrimitiveIterator.OfLong() {
             @Override public boolean hasNext() {
                return stream.remaining() > 0;
-            }
-
-            @Override public Long next() {
-               return nextLong();
             }
 
             @Override public long nextLong() {
@@ -127,7 +120,7 @@ abstract class AbstractBitSequence implements BitSequence {
    @Override public int hashCode() {
       if (hashCode == 0) {
          int result = 1;
-         LongIterator iter = bitTupleIterator(64);
+         PrimitiveIterator.OfLong iter = bitTupleIterator(64);
          while (iter.hasNext()) {
             long element = iter.nextLong();
             int elementHash = (int)(element ^ (element >>> 32));
@@ -144,8 +137,8 @@ abstract class AbstractBitSequence implements BitSequence {
          if (length() != other.length()) {
             return false;
          }
-         LongIterator iter1 = bitTupleIterator(64);
-         LongIterator iter2 = other.bitTupleIterator(64);
+         PrimitiveIterator.OfLong iter1 = bitTupleIterator(64);
+         PrimitiveIterator.OfLong iter2 = other.bitTupleIterator(64);
          while (iter1.hasNext()) {
             if (iter1.nextLong() != iter2.nextLong()) {
                return false;

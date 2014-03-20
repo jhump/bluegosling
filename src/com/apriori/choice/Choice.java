@@ -1,7 +1,8 @@
 package com.apriori.choice;
 
 import com.apriori.possible.Possible;
-import com.apriori.util.Function;
+
+import java.util.function.Function;
 
 /**
  * An object that represents a choice between one of a few options. This type represents a tagged

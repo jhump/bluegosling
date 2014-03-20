@@ -1,9 +1,8 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * A collection whose elements are the results of applying a function to another collection. This
@@ -30,7 +29,8 @@ import java.util.Iterator;
  * @param <O> the "output" type; the type of elements in this collection
  */
 //TODO: tests
-public class TransformingCollection<I, O> extends TransformingIterable<I, O> implements Collection<O> {
+public class TransformingCollection<I, O> extends TransformingIterable<I, O>
+      implements Collection<O> {
 
    /**
     * Constructs a new transforming collection.
@@ -168,7 +168,7 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
    
    /**
     * A transforming collection that can transform values in both directions. Since this collection
-    * can transform values in the other direction (output type -> input type), all operations are
+    * can transform values in the other direction (output type -&gt; input type), all operations are
     * supported, including {@link #add(Object)} and {@link #addAll(Collection)}.
     * 
     * <p>Several methods are overridden to use the reverse function before delegating to the
@@ -195,8 +195,8 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O> imp
        * {@code function1.apply(function2.apply(o))}.
        * 
        * @param collection the wrapped collection
-       * @param function1 transforms elements; "input" -> "output"
-       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       * @param function1 transforms elements; "input" -&gt; "output"
+       * @param function2 the inverse of {@code function1}; "output" -&gt; "input"
        */
       public Bidi(Collection<I> collection, Function<? super I, ? extends O> function1,
             Function<? super O, ? extends I> function2) {

@@ -1,9 +1,6 @@
 package com.apriori.possible;
 
 import com.apriori.concurrent.ListenableFuture;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Source;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +10,9 @@ import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Utility methods for instances of {@link Possible}.
@@ -85,7 +85,7 @@ public final class Possibles {
             }
 
             @Override
-            public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+            public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
                if (!f.isSuccessful()) {
                   throw throwable.get();
                }
@@ -178,7 +178,7 @@ public final class Possibles {
          }
 
          @Override
-         public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+         public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
             if (!isPresent()) {
                throw throwable.get();
             }

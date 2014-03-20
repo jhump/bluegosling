@@ -45,7 +45,7 @@ public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
       /**
        * Determines if the given object is equal to this entry. This returns true if the given
        * object is also an {@link ImmutableMap.Entry} and has an equal key and equal value. Two
-       * objects are considered equal if the following expression is true:<br/>
+       * objects are considered equal if the following expression is true:<br>
        * {@code o1 == null ? o2 == null : o1.equals(o2)}.
        *
        * @param o the object to test

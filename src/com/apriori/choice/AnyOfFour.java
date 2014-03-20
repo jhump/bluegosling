@@ -1,9 +1,9 @@
 package com.apriori.choice;
 
 import com.apriori.possible.Optional;
-import com.apriori.util.Function;
 
 import java.io.Serializable;
+import java.util.function.Function;
 
 //TODO: javadoc
 //TODO: tests

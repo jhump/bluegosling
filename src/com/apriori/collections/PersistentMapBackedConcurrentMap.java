@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -138,22 +136,12 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
 
    @Override
    public Set<K> keySet() {
-      return new TransformingSet<Entry<K, V>, K>(entrySet(), new Function<Entry<K, V>, K>() {
-         @Override
-         public K apply(Entry<K, V> input) {
-            return input.getKey();
-         }
-      });
+      return new TransformingSet<Entry<K, V>, K>(entrySet(), (entry) -> entry.getKey());
    }
    
    @Override
    public Collection<V> values() {
-      return new TransformingCollection<Entry<K, V>, V>(entrySet(), new Function<Entry<K, V>, V>() {
-         @Override
-         public V apply(Entry<K, V> input) {
-            return input.getValue();
-         }
-      });
+      return new TransformingCollection<Entry<K, V>, V>(entrySet(), (entry) -> entry.getValue());
    }
    
    Entry<K, V> asMutableEntry(final ImmutableMap.Entry<K, V> entry) {

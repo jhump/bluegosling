@@ -1,6 +1,6 @@
 package com.apriori.concurrent;
 
-import com.apriori.util.Sink;
+import java.util.function.Consumer;
 
 /**
  * Factory methods for creating instances of {@link FutureListener}.
@@ -44,19 +44,19 @@ public final class FutureListeners {
    }
 
    /**
-    * Adapts a {@link Sink} to the {@link FutureListener} interface.
+    * Adapts a {@link Consumer} to the {@link FutureListener} interface.
     * 
-    * @param sink a sink
-    * @return a listener that calls {@code sink.accept(completedFuture)} when invoked
+    * @param consumer a consumer
+    * @return a listener that calls {@code consumer.accept(completedFuture)} when invoked
     */
-   public static <T> FutureListener<T> forSink(final Sink<? super ListenableFuture<T>> sink) {
+   public static <T> FutureListener<T> forConsumer(Consumer<? super ListenableFuture<T>> consumer) {
       return new FutureListener<T>() {
          @Override
          public void onCompletion(ListenableFuture<? extends T> completedFuture) {
             // methods on future return Ts but don't accept Ts, so upcasting the type arg is safe
             @SuppressWarnings("unchecked")
             ListenableFuture<T> future = (ListenableFuture<T>) completedFuture;
-            sink.accept(future);
+            consumer.accept(future);
          }
       };
    }
@@ -65,18 +65,18 @@ public final class FutureListeners {
     * Assembles a listener using all of the specified callbacks. Each callback is invoked depending
     * on the disposition of the completed futures.
     * 
-    * <p>This method uses only functional interfaces, which will make it easier to assemble
-    * listeners in Java 8.
+    * <p>This method uses only functional interfaces, so listeners can easily be constructed using
+    * lambdas.
     * 
     * @param onSuccess invoked when the completed future is successful; the future's result is
-    *       passed to the sink
+    *       passed to the consumer
     * @param onFailure invoked when the completed future has failed; the cause of failure is passed
-    *       to the sink
+    *       to the consumer
     * @param onCancel invoked when the completed future is cancelled
     * @return a listener that will call one of the specified callbacks when invoked
     */
-   public static <T> FutureListener<T> assemble(Sink<? super T> onSuccess,
-         Sink<? super Throwable> onFailure, Runnable onCancel) {
+   public static <T> FutureListener<T> assemble(Consumer<? super T> onSuccess,
+         Consumer<? super Throwable> onFailure, Runnable onCancel) {
       return forVisitor(new SimpleFutureVisitor.Builder<T>()
             .onSuccess(onSuccess).onFailure(onFailure).onCancel(onCancel)
             .build());

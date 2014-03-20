@@ -9,8 +9,6 @@ import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.atoms.Transaction.UncheckedTask;
 import com.apriori.possible.Holder;
 import com.apriori.tuples.Trio;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
 
 import org.junit.Test;
 
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Test cases for {@link TransactionalAtom}. This class has mostly simple tests when using such an
@@ -42,7 +42,6 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       return new TransactionalAtom<T>(initialValue, validator);
    }
    
-   @SuppressWarnings("unchecked")
    @Test public void commute() throws Exception {
       TransactionalAtom<String> atom = create("abc", new Predicate<String>() {
          @Override public boolean test(String input) {
@@ -51,11 +50,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       });
       
       // simple
-      ListenableFuture<String> result = atom.commute(new Function<String, String>() {
-         @Override public String apply(String input) {
-            return input.toUpperCase();
-         }
-      });
+      ListenableFuture<String> result = atom.commute(String::toUpperCase);
       assertTrue(result.isDone());
       assertEquals("ABC", result.get());
       assertEquals("ABC", atom.get());
@@ -70,11 +65,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
          }
       };
       atom.addWatcher(watcher);
-      Function<String, String> twice = new Function<String, String>() {
-         @Override public String apply(String input) {
-            return input + input;
-         }
-      };
+      Function<String, String> twice = (s) -> s + s;
       result = atom.commute(twice);
       assertEquals(Arrays.asList(Trio.create(atom, "ABC", "ABCABC")), notices);
       notices.clear();

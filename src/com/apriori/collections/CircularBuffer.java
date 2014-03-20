@@ -274,7 +274,7 @@ public class CircularBuffer<E> {
     * +---+---+---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+      
     * front            end                    front                end
     * </pre>
-    * So the following invocation will shift elements from buffer #2 to buffer #1:<br/>
+    * So the following invocation will shift elements from buffer #2 to buffer #1:<br>
     * <pre>buffer1.pullFirst(3, buffer2);</pre>
     * This would result in the following state after the operation completes:
     * <pre>
@@ -371,7 +371,7 @@ public class CircularBuffer<E> {
     * +---+---+---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+      
     * front            end                    front                end
     * </pre>
-    * So the following invocation will shift elements from buffer #1 to buffer #2:<br/>
+    * So the following invocation will shift elements from buffer #1 to buffer #2:<br>
     * <pre>buffer2.pullLast(2, buffer1);</pre>
     * This would result in the following state after the operation completes:
     * <pre>

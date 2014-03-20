@@ -1,8 +1,7 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * An iterator whose elements are the results of applying a function to results from another

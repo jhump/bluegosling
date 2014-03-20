@@ -1,9 +1,8 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * An atom with a volatile value. Atomic updates are made using atomic compare-and-set operations

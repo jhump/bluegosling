@@ -27,13 +27,13 @@ import java.util.Map;
  * 
  * <p>
  * <code>
- * // <em>Not valid; won't compile:</em><br/>
- * Class&lt;List&lt;String&gt;&gt; clazz = List&lt;String&gt;.class;<br/>
- * <br/>
- * // <em>Compiles, but type of expression has reference to raw type</em><br/>
- * Class&lt;List&gt; clazz = List.class;<br/>
- * <br/>
- * // <em>This won't even compile. Argghh!</em><br/>
+ * // <em>Not valid; won't compile:</em><br>
+ * Class&lt;List&lt;String&gt;&gt; clazz = List&lt;String&gt;.class;<br>
+ * <br>
+ * // <em>Compiles, but type of expression has reference to raw type</em><br>
+ * Class&lt;List&gt; clazz = List.class;<br>
+ * <br>
+ * // <em>This won't even compile. Argghh!</em><br>
  * Class&lt;List&lt;?&gt;&gt; clazz = List.class;
  * </code>
  * </p>
@@ -44,7 +44,7 @@ import java.util.Map;
  * 
  * <p>
  * <code>
- * // <em>Compiles, is valid, and is type safe. Yay!</em><br/>
+ * // <em>Compiles, is valid, and is type safe. Yay!</em><br>
  * Class&lt;List&lt;String&gt;&gt; clazz =
  *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();
  * </code>
@@ -58,10 +58,10 @@ import java.util.Map;
  * <p>
  * <code>
  * Class&lt;List&lt;String&gt;&gt; clazz1 =
- *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();<br/>
+ *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();<br>
  * Class&lt;List&lt;Integer&gt;&gt; clazz2 =
- *     new TypeRef&lt;List&lt;Integer&gt;&gt;() { }.asClass();<br/>
- * // <em>Maybe not intuitive, but sadly true:</em><br/>
+ *     new TypeRef&lt;List&lt;Integer&gt;&gt;() { }.asClass();<br>
+ * // <em>Maybe not intuitive, but sadly true:</em><br>
  * // <strong>clazz1 == clazz2</strong>
  * </code>
  * </p>
@@ -78,44 +78,44 @@ import java.util.Map;
  * {@code TypeRef}. Consider this complex type reference:
  * <p>
  * <code>
- * TypeRef&lt;?&gt; mapType =<br/>
- * &nbsp; new TypeRef&lt;<br/>
- * &nbsp; &nbsp; Map&lt;<br/>
- * &nbsp; &nbsp; &nbsp; Comparable&lt;? super Number&gt;,<br/>
- * &nbsp; &nbsp; &nbsp; List&lt;Set&lt;String&gt;&gt;<br/>
- * &nbsp; &nbsp; &gt;<br/>
- * &nbsp; &gt;() { };<br/>
+ * TypeRef&lt;?&gt; mapType =<br>
+ * &nbsp; new TypeRef&lt;<br>
+ * &nbsp; &nbsp; Map&lt;<br>
+ * &nbsp; &nbsp; &nbsp; Comparable&lt;? super Number&gt;,<br>
+ * &nbsp; &nbsp; &nbsp; List&lt;Set&lt;String&gt;&gt;<br>
+ * &nbsp; &nbsp; &gt;<br>
+ * &nbsp; &gt;() { };<br>
  * </code>
  * </p>
  * We'll then extract as much information as possible:
  * <p>
  * <code>
  * TypeRef&lt;?&gt; comparableType =
- *   mapType.resolveTypeVariable("K");<br/>
- * &nbsp; // <em>This throws exception since wildcards can't be resolved:</em><br/>
+ *   mapType.resolveTypeVariable("K");<br>
+ * &nbsp; // <em>This throws exception since wildcards can't be resolved:</em><br>
  * &nbsp; TypeRef&lt;?&gt; numberType =
- *   comparableType.resolveTypeVariable("T");<br/>
+ *   comparableType.resolveTypeVariable("T");<br>
  * TypeRef&lt;?&gt; listType =
- *   mapType.resolveTypeVariable("V");<br/>
+ *   mapType.resolveTypeVariable("V");<br>
  * &nbsp; TypeRef&lt;?&gt; setType =
- *   listType.resolveTypeVariable("E");<br/>
+ *   listType.resolveTypeVariable("E");<br>
  * &nbsp; &nbsp; TypeRef&lt;?&gt; stringType =
- *   setType.resolveTypeVariable("E");<br/>
+ *   setType.resolveTypeVariable("E");<br>
  * </code>
  * </p>
  * The following implications are then true:
  * <p>
  * <code>
- * mapType.asClass() <strong>=&gt;</strong> Map.class<br/>
+ * mapType.asClass() <strong>=&gt;</strong> Map.class<br>
  * mapType.getTypeVariableNames() <strong>=&gt;</strong>
- *   [ "K", "V" ]<br/>
- * comparableType.asClass() <strong>=&gt;</strong> Comparable.class<br/>
- * comparableType.getTypeVariableNames() <strong>=&gt;</strong> [ "T" ]<br/>
- * listType.asClass() <strong>=&gt;</strong> List.class<br/>
- * listType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br/>
- * setType.asClass() <strong>=&gt;</strong> Set.class<br/>
- * setType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br/>
- * stringType.asClass() <strong>=&gt;</strong> String.class<br/>
+ *   [ "K", "V" ]<br>
+ * comparableType.asClass() <strong>=&gt;</strong> Comparable.class<br>
+ * comparableType.getTypeVariableNames() <strong>=&gt;</strong> [ "T" ]<br>
+ * listType.asClass() <strong>=&gt;</strong> List.class<br>
+ * listType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br>
+ * setType.asClass() <strong>=&gt;</strong> Set.class<br>
+ * setType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br>
+ * stringType.asClass() <strong>=&gt;</strong> String.class<br>
  * stringType.getTypeVariableNames() <strong>=&gt;</strong> [ ]
  * </code>
  * </p>
@@ -347,7 +347,7 @@ public abstract class TypeRef<T> {
     * Constructs a new type reference. This is protected so that construction looks like so:
     * <p>
     * <code>
-    * TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =<br/>
+    * TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =<br>
     * &nbsp; new TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt;()
     * <strong>{ }</strong>;
     * </code>
@@ -358,28 +358,28 @@ public abstract class TypeRef<T> {
     * The generic type must be specified. An exception will be raised otherwise:
     * <p>
     * <code>
-    * // <em>Bad! Generic type references another type parameter</em><br/>
-    * // <em>instead of being adequately specified:</em><br/>
+    * // <em>Bad! Generic type references another type parameter</em><br>
+    * // <em>instead of being adequately specified:</em><br>
     * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;<strong>E</strong>&gt;() { };<br/>
-    * <br/>
-    * // <em>Bad! Same problem, but with an array type:</em><br/>
+    *     new TypeRef&lt;<strong>E</strong>&gt;() { };<br>
+    * <br>
+    * // <em>Bad! Same problem, but with an array type:</em><br>
     * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;<strong>E</strong>[]&gt;() { };<br/>
-    * <br/>
-    * // <em>Good! If the generic type is also parameterized, it is</em><br/>
-    * // <em>okay for <strong>its</strong> parameter to remain unspecified:</em><br/>
+    *     new TypeRef&lt;<strong>E</strong>[]&gt;() { };<br>
+    * <br>
+    * // <em>Good! If the generic type is also parameterized, it is</em><br>
+    * // <em>okay for <strong>its</strong> parameter to remain unspecified:</em><br>
     * TypeRef&lt;?&gt; type =
     *     new TypeRef&lt;Map&lt;<strong>E</strong>, String&gt;&gt;()
-    *     { };<br/>
-    * <br/>
-    * // <em>Good! You can even use wildcards and bounds:</em><br/>
+    *     { };<br>
+    * <br>
+    * // <em>Good! You can even use wildcards and bounds:</em><br>
     * TypeRef&lt;?&gt; type =
     *     new TypeRef&lt;Map&lt;<strong>?</strong>,
-    *     <strong>?</strong>&gt;&gt;() { };<br/>
+    *     <strong>?</strong>&gt;&gt;() { };<br>
     * TypeRef&lt;?&gt; type =
     *     new TypeRef&lt;List&lt;<strong>? extends Number</strong>&gt;()
-    *     { };<br/>
+    *     { };<br>
     * </code>
     * </p>
     * 

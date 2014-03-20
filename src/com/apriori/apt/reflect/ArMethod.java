@@ -1,5 +1,6 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.lang.model.element.AnnotationValue;
@@ -7,14 +8,12 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 
 /**
- * A method. This is analogous to {@link java.lang.reflect.Method
- * java.lang.reflect.Method}, except that it represents methods
- * in Java source (during annotation processing) vs. representing methods
- * of runtime types.
+ * A method. This is analogous to {@link Method}, except that it represents methods in Java source
+ * (during annotation processing) vs. representing methods of runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.Method
+ * @see Method
  */
 public class ArMethod extends ArAbstractExecutableMember {
 
@@ -50,11 +49,11 @@ public class ArMethod extends ArAbstractExecutableMember {
     * 
     * @see #getTypeVariables()
     */
-   @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
+   @SuppressWarnings({ "rawtypes", "unchecked" })
    public List<ArTypeVariable<ArMethod>> getMethodTypeVariables() {
       // have to cast to raw type List first or else compiler will disallow the
-      // subsequent cast to List<TypeVariable<Method>>
-      return (List<ArTypeVariable<ArMethod>>) ((List) getTypeVariables());
+      // subsequent cast to List<ArTypeVariable<ArMethod>>
+      return ((List) getTypeVariables());
    }
    
    /**
@@ -66,11 +65,11 @@ public class ArMethod extends ArAbstractExecutableMember {
     * 
     * @see #getParameters()
     */
-   @SuppressWarnings({ "cast", "rawtypes", "unchecked" })
+   @SuppressWarnings({ "rawtypes", "unchecked" })
    public List<ArParameter<ArMethod>> getMethodParameters() {
       // have to cast to raw type List first or else compiler will disallow the
-      // subsequent cast to List<Parameter<Method>>
-      return (List<ArParameter<ArMethod>>) ((List) getParameters());
+      // subsequent cast to List<ArParameter<ArMethod>>
+      return ((List) getParameters());
    }
    
    /**

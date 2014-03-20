@@ -1,17 +1,18 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.GenericDeclaration;
 import java.util.List;
 
 /**
  * An element that may include the declaration of generic type variables. This currently includes
  * classes (and interfaces), methods, and constructors. This is analogous to
- * {@link java.lang.reflect.GenericDeclaration java.lang.reflect.GenericDeclaration}, except that it
- * represents elements in Java source (during annotation processing) vs. representing runtime types
- * or elements (methods and constructors) of runtime types.
+ * {@link GenericDeclaration}, except that it represents elements in Java source (during annotation
+ * processing) vs. representing runtime types or elements (methods and constructors) of runtime
+ * types.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.GenericDeclaration
+ * @see GenericDeclaration
  */
 public interface ArGenericDeclaration {
    /**

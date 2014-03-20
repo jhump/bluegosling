@@ -1,12 +1,11 @@
 package com.apriori.collections;
 
-import com.apriori.util.Predicate;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Predicate;
 
 /**
  * A filtered view of another list. This is a wrapper that elides all members of the wrapped

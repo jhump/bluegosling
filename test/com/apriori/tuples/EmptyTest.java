@@ -6,8 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link Empty}.

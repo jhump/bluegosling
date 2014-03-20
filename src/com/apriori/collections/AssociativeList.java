@@ -192,7 +192,7 @@ public interface AssociativeList<E, K> extends List<E> {
     * has an associated key. The following code construct can be used to iterate through the
     * indexes with associative keys:
     * <pre>
-    * for (int i = list.nextKeyedIndex(0); i >= 0; i = list.nextKeyedIndex(i + 1)) {
+    * for (int i = list.nextKeyedIndex(0); i &gt;= 0; i = list.nextKeyedIndex(i + 1)) {
     *   // i is an index associated with a key
     * }
     * </pre>

@@ -5,6 +5,9 @@ import com.apriori.possible.Optional;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Numerous utility methods for using {@link PartialFunction}s.
@@ -25,47 +28,31 @@ public final class PartialFunctions {
     * @return a partial function that is equivalent to the specified function
     */
    public static <I, O> PartialFunction<I, O> fromFunction(
-         final Function<? super I, Optional<? extends O>> function) {
-      return new PartialFunction<I, O>() {
-         @Override
-         public Optional<O> apply(I input) {
-            return Optional.upcast(function.apply(input));
-         }
-      };
+         Function<? super I, Optional<? extends O>> function) {
+      return (o) -> Optional.upcast(function.apply(o));
    }
    
    /**
-    * Adapts a compatible bivariate function to the {@link PartialFunction.Bivariate} interface.
+    * Adapts a compatible bivariate function to the {@link PartialBiFunction} interface.
     * 
     * @param function a function that returns an optional result
     * @return a partial function that is equivalent to the specified function
     */
-   public static <I1, I2, O> PartialFunction.Bivariate<I1, I2, O> fromFunction(
-         final Function.Bivariate<? super I1, ? super I2, Optional<? extends O>> function) {
-      return new PartialFunction.Bivariate<I1, I2, O>() {
-         @Override
-         public Optional<O> apply(I1 input1, I2 input2) {
-            return Optional.upcast(function.apply(input1, input2));
-         }
-      };
+   public static <I1, I2, O> PartialBiFunction<I1, I2, O> fromFunction(
+         BiFunction<? super I1, ? super I2, Optional<? extends O>> function) {
+      return (o1, o2) -> Optional.upcast(function.apply(o1, o2));
    }
 
    /**
-    * Adapts a compatible three-argument function to the {@link PartialFunction.Trivariate}
+    * Adapts a compatible three-argument function to the {@link PartialTriFunction}
     * interface.
     * 
     * @param function a function that returns an optional result
     * @return a partial function that is equivalent to the specified function
     */
-   public static <I1, I2, I3, O> PartialFunction.Trivariate<I1, I2, I3, O> fromFunction(
-         final Function.Trivariate<? super I1, ? super I2, ? super I3,
-               Optional<? extends O>> function) {
-      return new PartialFunction.Trivariate<I1, I2, I3, O>() {
-         @Override
-         public Optional<O> apply(I1 input1, I2 input2, I3 input3) {
-            return Optional.upcast(function.apply(input1, input2, input3));
-         }
-      };
+   public static <I1, I2, I3, O> PartialTriFunction<I1, I2, I3, O> fromFunction(
+         TriFunction<? super I1, ? super I2, ? super I3, Optional<? extends O>> function) {
+      return (o1, o2, o3) -> Optional.upcast(function.apply(o1, o2, o3));
    }
 
    /**
@@ -75,14 +62,8 @@ public final class PartialFunctions {
     * @param map a map
     * @return a partial function that computes results by looking up values in the map
     */
-   public static <K, V> PartialFunction<K, V> fromMap(
-         final Map<? super K, ? extends V> map) {
-      return new PartialFunction<K, V>() {
-         @Override
-         public Optional<V> apply(K input) {
-            return Optional.<V>of(map.get(input));
-         }
-      };
+   public static <K, V> PartialFunction<K, V> fromMap(Map<? super K, ? extends V> map) {
+      return (o) -> Optional.of(map.get(o));
    }
    
    /**
@@ -97,17 +78,14 @@ public final class PartialFunctions {
     *       in order to compute result
     */
    public static <I, O> PartialFunction<I, O> chain(
-         final PartialFunction<? super I, ? extends O> function1,
-         final PartialFunction<? super I, ? extends O> function2) {
-      return new PartialFunction<I, O>() {
-         @Override
-         public Optional<O> apply(I input) {
-            Optional<? extends O> result = function1.apply(input);
-            if (!result.isPresent()) {
-               result = function2.apply(input);
-            }
-            return Optional.upcast(result);
+         PartialFunction<? super I, ? extends O> function1,
+         PartialFunction<? super I, ? extends O> function2) {
+      return (o) -> {
+         Optional<? extends O> result = function1.apply(o);
+         if (!result.isPresent()) {
+            result = function2.apply(o);
          }
+         return Optional.upcast(result);
       };
    }
 
@@ -122,18 +100,15 @@ public final class PartialFunctions {
     * @return a partial function that invokes the first function and then, if necessary, the second
     *       in order to compute result
     */
-   public static <I1, I2, O> PartialFunction.Bivariate<I1, I2, O> chain(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function1,
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function2) {
-      return new PartialFunction.Bivariate<I1, I2, O>() {
-         @Override
-         public Optional<O> apply(I1 input1, I2 input2) {
-            Optional<? extends O> result = function1.apply(input1, input2);
-            if (!result.isPresent()) {
-               result = function2.apply(input1, input2);
-            }
-            return Optional.upcast(result);
+   public static <I1, I2, O> PartialBiFunction<I1, I2, O> chain(
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function1,
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function2) {
+      return (o1, o2) -> {
+         Optional<? extends O> result = function1.apply(o1, o2);
+         if (!result.isPresent()) {
+            result = function2.apply(o1, o2);
          }
+         return Optional.upcast(result);
       };
    }
 
@@ -148,18 +123,15 @@ public final class PartialFunctions {
     * @return a partial function that invokes the first function and then, if necessary, the second
     *       in order to compute result
     */
-   public static <I1, I2, I3, O> PartialFunction.Trivariate<I1, I2, I3, O> chain(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function1,
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function2) {
-      return new PartialFunction.Trivariate<I1, I2, I3, O>() {
-         @Override
-         public Optional<O> apply(I1 input1, I2 input2, I3 input3) {
-            Optional<? extends O> result = function1.apply(input1, input2, input3);
-            if (!result.isPresent()) {
-               result = function2.apply(input1, input2, input3);
-            }
-            return Optional.upcast(result);
+   public static <I1, I2, I3, O> PartialTriFunction<I1, I2, I3, O> chain(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function1,
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function2) {
+      return (o1, o2, o3) -> {
+         Optional<? extends O> result = function1.apply(o1, o2, o3);
+         if (!result.isPresent()) {
+            result = function2.apply(o1, o2, o3);
          }
+         return Optional.upcast(result);
       };
    }
    
@@ -199,13 +171,11 @@ public final class PartialFunctions {
     * @param ifUndefined the value to return for unsupported inputs
     * @return a regular function that returns a default value for unsupported inputs
     */
-   public static <I, O> Function<I, O> lift(final PartialFunction<? super I, ? extends O> function,
-         final O ifUndefined) {
-      return new Function<I, O>() {
-         @Override public O apply(I input) {
-            Optional<? extends O> result = function.apply(input);
-            return result.isPresent() ? result.get() : ifUndefined;
-         }
+   public static <I, O> Function<I, O> lift(PartialFunction<? super I, ? extends O> function,
+         O ifUndefined) {
+      return (o) -> {
+         Optional<? extends O> result = function.apply(o);
+         return result.isPresent() ? result.get() : ifUndefined;
       };
    }
 
@@ -220,14 +190,11 @@ public final class PartialFunctions {
     * @param fallback the fallback function
     * @return a regular function that invokes a fallback function for unsupported inputs
     */
-   public static <I, O> Function<I, O> lift(
-         final PartialFunction<? super I, ? extends O> function,
-         final Function<? super I, ? extends O> fallback) {
-      return new Function<I, O>() {
-         @Override public O apply(I input) {
-            Optional<? extends O> result = function.apply(input);
-            return result.isPresent() ? result.get() : fallback.apply(input);
-         }
+   public static <I, O> Function<I, O> lift(PartialFunction<? super I, ? extends O> function,
+         Function<? super I, ? extends O> fallback) {
+      return (o) -> {
+         Optional<? extends O> result = function.apply(o);
+         return result.isPresent() ? result.get() : fallback.apply(o);
       };
    }
 
@@ -242,13 +209,8 @@ public final class PartialFunctions {
     * @param function a partial function
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I, O> Function<I, O> lift(
-         final PartialFunction<? super I, ? extends O> function) {
-      return new Function<I, O>() {
-         @Override public O apply(I input) {
-            return function.apply(input).get();
-         }
-      };
+   public static <I, O> Function<I, O> lift(PartialFunction<? super I, ? extends O> function) {
+      return (o) -> function.apply(o).get();
    }
    
    /**
@@ -265,17 +227,15 @@ public final class PartialFunctions {
     * @param throwIfUndefined the type of exception to 
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I, O> Function<I, O> lift(final PartialFunction<? super I, ? extends O> function,
+   public static <I, O> Function<I, O> lift(PartialFunction<? super I, ? extends O> function,
          Class<? extends RuntimeException> throwIfUndefined) {
-      final Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
-      return new Function<I, O>() {
-         @Override public O apply(I input) {
-            Optional<? extends O> result = function.apply(input);
-            if (result.isPresent()) {
-               return result.get();
-            }
-            throw construct(ctor);
+      Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
+      return (o) -> {
+         Optional<? extends O> result = function.apply(o);
+         if (result.isPresent()) {
+            return result.get();
          }
+         throw construct(ctor);
       };
    }
 
@@ -290,14 +250,11 @@ public final class PartialFunctions {
     * @param ifUndefined the value to return for unsupported inputs
     * @return a regular function that returns a default value for unsupported inputs
     */
-   public static <I1, I2, O> Function.Bivariate<I1, I2, O> lift(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
-         final O ifUndefined) {
-      return new Function.Bivariate<I1, I2, O>() {
-         @Override public O apply(I1 input1, I2 input2) {
-            Optional<? extends O> result = function.apply(input1, input2);
-            return result.isPresent() ? result.get() : ifUndefined;
-         }
+   public static <I1, I2, O> BiFunction<I1, I2, O> lift(
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function, O ifUndefined) {
+      return (o1, o2) -> {
+         Optional<? extends O> result = function.apply(o1, o2);
+         return result.isPresent() ? result.get() : ifUndefined;
       };
    }
    
@@ -312,14 +269,12 @@ public final class PartialFunctions {
     * @param fallback the fallback function
     * @return a regular function that invokes a fallback function for unsupported inputs
     */
-   public static <I1, I2, O> Function.Bivariate<I1, I2, O> lift(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
-         final Function.Bivariate<? super I1, ? super I2, ? extends O> fallback) {
-      return new Function.Bivariate<I1, I2, O>() {
-         @Override public O apply(I1 input1, I2 input2) {
-            Optional<? extends O> result = function.apply(input1, input2);
-            return result.isPresent() ? result.get() : fallback.apply(input1, input2);
-         }
+   public static <I1, I2, O> BiFunction<I1, I2, O> lift(
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function,
+         BiFunction<? super I1, ? super I2, ? extends O> fallback) {
+      return (o1, o2) -> {
+         Optional<? extends O> result = function.apply(o1, o2);
+         return result.isPresent() ? result.get() : fallback.apply(o1, o2);
       };
    }
 
@@ -334,13 +289,9 @@ public final class PartialFunctions {
     * @param function a partial function
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I1, I2, O> Function.Bivariate<I1, I2, O> lift(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function) {
-      return new Function.Bivariate<I1, I2, O>() {
-         @Override public O apply(I1 input1, I2 input2) {
-            return function.apply(input1, input2).get();
-         }
-      };
+   public static <I1, I2, O> BiFunction<I1, I2, O> lift(
+         final PartialBiFunction<? super I1, ? super I2, ? extends O> function) {
+      return (o1, o2) -> function.apply(o1, o2).get();
    }
    
    /**
@@ -357,18 +308,16 @@ public final class PartialFunctions {
     * @param throwIfUndefined the type of exception to 
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I1, I2, O> Function.Bivariate<I1, I2, O> lift(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
+   public static <I1, I2, O> BiFunction<I1, I2, O> lift(
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function,
          Class<? extends RuntimeException> throwIfUndefined) {
-      final Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
-      return new Function.Bivariate<I1, I2, O>() {
-         @Override public O apply(I1 input1, I2 input2) {
-            Optional<? extends O> result = function.apply(input1, input2);
-            if (result.isPresent()) {
-               return result.get();
-            }
-            throw construct(ctor);
+      Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
+      return (o1, o2) -> {
+         Optional<? extends O> result = function.apply(o1, o2);
+         if (result.isPresent()) {
+            return result.get();
          }
+         throw construct(ctor);
       };
    }
 
@@ -383,14 +332,12 @@ public final class PartialFunctions {
     * @param ifUndefined the value to return for unsupported inputs
     * @return a regular function that returns a default value for unsupported inputs
     */
-   public static <I1, I2, I3, O> Function.Trivariate<I1, I2, I3, O> lift(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
-         final O ifUndefined) {
-      return new Function.Trivariate<I1, I2, I3, O>() {
-         @Override public O apply(I1 input1, I2 input2, I3 input3) {
-            Optional<? extends O> result = function.apply(input1, input2, input3);
-            return result.isPresent() ? result.get() : ifUndefined;
-         }
+   public static <I1, I2, I3, O> TriFunction<I1, I2, I3, O> lift(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
+         O ifUndefined) {
+      return (o1, o2, o3) -> {
+         Optional<? extends O> result = function.apply(o1, o2, o3);
+         return result.isPresent() ? result.get() : ifUndefined;
       };
    }
    
@@ -405,14 +352,12 @@ public final class PartialFunctions {
     * @param fallback the fallback function
     * @return a regular function that invokes a fallback function for unsupported inputs
     */
-   public static <I1, I2, I3, O> Function.Trivariate<I1, I2, I3, O> lift(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
-         final Function.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> fallback) {
-      return new Function.Trivariate<I1, I2, I3, O>() {
-         @Override public O apply(I1 input1, I2 input2, I3 input3) {
-            Optional<? extends O> result = function.apply(input1, input2, input3);
-            return result.isPresent() ? result.get() : fallback.apply(input1, input2, input3);
-         }
+   public static <I1, I2, I3, O> TriFunction<I1, I2, I3, O> lift(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
+         TriFunction<? super I1, ? super I2, ? super I3, ? extends O> fallback) {
+      return (o1, o2, o3) -> {
+         Optional<? extends O> result = function.apply(o1, o2, o3);
+         return result.isPresent() ? result.get() : fallback.apply(o1, o2, o3);
       };
    }
    
@@ -427,14 +372,10 @@ public final class PartialFunctions {
     * @param function a partial function
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I1, I2, I3, O> Function.Trivariate<I1, I2, I3, O> lift(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3,
+   public static <I1, I2, I3, O> TriFunction<I1, I2, I3, O> lift(
+         final PartialTriFunction<? super I1, ? super I2, ? super I3,
                ? extends O> function) {
-      return new Function.Trivariate<I1, I2, I3, O>() {
-         @Override public O apply(I1 input1, I2 input2, I3 input3) {
-            return function.apply(input1, input2, input3).get();
-         }
-      };
+      return (o1, o2, o3) -> function.apply(o1, o2, o3).get();
    }
    
    /**
@@ -451,79 +392,49 @@ public final class PartialFunctions {
     * @param throwIfUndefined the type of exception to 
     * @return a regular function that throws an exception for unsupported inputs
     */
-   public static <I1, I2, I3, O> Function.Trivariate<I1, I2, I3, O> lift(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
+   public static <I1, I2, I3, O> TriFunction<I1, I2, I3, O> lift(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
          Class<? extends RuntimeException> throwIfUndefined) {
-      final Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
-      return new Function.Trivariate<I1, I2, I3, O>() {
-         @Override public O apply(I1 input1, I2 input2, I3 input3) {
-            Optional<? extends O> result = function.apply(input1, input2, input3);
-            if (result.isPresent()) {
-               return result.get();
-            }
-            throw construct(ctor);
+      Constructor<? extends RuntimeException> ctor = defaultConstructor(throwIfUndefined);
+      return (o1, o2, o3) -> {
+         Optional<? extends O> result = function.apply(o1, o2, o3);
+         if (result.isPresent()) {
+            return result.get();
          }
+         throw construct(ctor);
       };
    }
    
    // TODO: javadoc
-   public static <I, O> Source<Optional<O>> curry(
-         final PartialFunction<? super I, ? extends O> function,
-         final I arg) {
-      return new Source<Optional<O>>() {
-         @Override public Optional<O> get() {
-            return Optional.upcast(function.apply(arg));
-         }
-      };
+   public static <I, O> Supplier<Optional<O>> curry(
+         PartialFunction<? super I, ? extends O> function, I arg) {
+      return () -> Optional.upcast(function.apply(arg));
    }
 
-   public static <I1, I2, O> Source<Optional<O>> curry(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
-         final I1 arg1, final I2 arg2) {
-      return new Source<Optional<O>>() {
-         @Override public Optional<O> get() {
-            return Optional.upcast(function.apply(arg1, arg2));
-         }
-      };
+   public static <I1, I2, O> Supplier<Optional<O>> curry(
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function, I1 arg1, I2 arg2) {
+      return () -> Optional.upcast(function.apply(arg1, arg2));
    }
 
    public static <I1, I2, O> PartialFunction<I2, O> curry(
-         final PartialFunction.Bivariate<? super I1, ? super I2, ? extends O> function,
-         final I1 arg1) {
-      return new PartialFunction<I2, O>() {
-         @Override public Optional<O> apply(I2 arg2) {
-            return Optional.upcast(function.apply(arg1, arg2));
-         }
-      };
+         PartialBiFunction<? super I1, ? super I2, ? extends O> function, I1 arg1) {
+      return (arg2) -> Optional.upcast(function.apply(arg1, arg2));
    }
 
-   public static <I1, I2, I3, O> Source<Optional<O>> curry(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
-         final I1 arg1, final I2 arg2, final I3 arg3) {
-      return new Source<Optional<O>>() {
-         @Override public Optional<O> get() {
-            return Optional.upcast(function.apply(arg1, arg2, arg3));
-         }
-      };
+   public static <I1, I2, I3, O> Supplier<Optional<O>> curry(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
+         I1 arg1, I2 arg2, I3 arg3) {
+      return () -> Optional.upcast(function.apply(arg1, arg2, arg3));
    }
    
    public static <I1, I2, I3, O> PartialFunction<I3, O> curry(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
-         final I1 arg1, final I2 arg2) {
-      return new PartialFunction<I3, O>() {
-         @Override public Optional<O> apply(I3 arg3) {
-            return Optional.upcast(function.apply(arg1, arg2, arg3));
-         }
-      };
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
+         I1 arg1, I2 arg2) {
+      return (arg3) -> Optional.upcast(function.apply(arg1, arg2, arg3));
    }
    
-   public static <I1, I2, I3, O> PartialFunction.Bivariate<I2, I3, O> curry(
-         final PartialFunction.Trivariate<? super I1, ? super I2, ? super I3, ? extends O> function,
-         final I1 arg1) {
-      return new PartialFunction.Bivariate<I2, I3, O>() {
-         @Override public Optional<O> apply(I2 arg2, I3 arg3) {
-            return Optional.upcast(function.apply(arg1, arg2, arg3));
-         }
-      };
+   public static <I1, I2, I3, O> PartialBiFunction<I2, I3, O> curry(
+         PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function, I1 arg1) {
+      return (arg2, arg3) -> Optional.upcast(function.apply(arg1, arg2, arg3));
    }
 }

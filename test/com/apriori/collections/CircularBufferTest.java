@@ -7,14 +7,13 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Sink;
-
 import org.junit.Test;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.function.IntConsumer;
 
 /**
  * Test cases for {@link CircularBuffer}.
@@ -392,7 +391,7 @@ public class CircularBufferTest {
    }
    
    private void shiftingLeftToRight(CircularBuffer<Object> buffer1, CircularBuffer<Object> buffer2,
-         Sink<Integer> shift) {
+         IntConsumer shift) {
       Random rand = new Random(1);
       Deque<Object> deque1 = new ArrayDeque<Object>();
       Deque<Object> deque2 = new ArrayDeque<Object>();
@@ -431,27 +430,17 @@ public class CircularBufferTest {
    @Test public void pullLast() {
       final CircularBuffer<Object> left = new CircularBuffer<Object>(10);
       final CircularBuffer<Object> right = new CircularBuffer<Object>(20);
-      shiftingLeftToRight(left, right, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            right.pullLast(i, left);
-         }
-      });
+      shiftingLeftToRight(left, right, (i) -> right.pullLast(i, left));
    }
 
    @Test public void pushFirst() {
       final CircularBuffer<Object> left = new CircularBuffer<Object>(10);
       final CircularBuffer<Object> right = new CircularBuffer<Object>(20);
-      shiftingLeftToRight(left, right, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            left.pushFirst(i, right);
-         }
-      });
+      shiftingLeftToRight(left, right, (i) -> left.pushFirst(i, right));
    }
    
    private void shiftingRightToLeft(CircularBuffer<Object> buffer1, CircularBuffer<Object> buffer2,
-         Sink<Integer> shift) {
+         IntConsumer shift) {
       Random rand = new Random(1);
       Deque<Object> deque1 = new ArrayDeque<Object>();
       Deque<Object> deque2 = new ArrayDeque<Object>();
@@ -490,26 +479,16 @@ public class CircularBufferTest {
    @Test public void pullFirst() {
       final CircularBuffer<Object> left = new CircularBuffer<Object>(10);
       final CircularBuffer<Object> right = new CircularBuffer<Object>(20);
-      shiftingRightToLeft(left, right, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            left.pullFirst(i, right);
-         }
-      });
+      shiftingRightToLeft(left, right, (i) -> left.pullFirst(i, right));
    }
 
    @Test public void pushLast() {
       final CircularBuffer<Object> left = new CircularBuffer<Object>(10);
       final CircularBuffer<Object> right = new CircularBuffer<Object>(20);
-      shiftingRightToLeft(left, right, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            right.pushLast(i, left);
-         }
-      });
+      shiftingRightToLeft(left, right, (i) -> right.pushLast(i, left));
    }
    
-   private void shiftingEndToFront(CircularBuffer<Object> buffer, Sink<Integer> shift) {
+   private void shiftingEndToFront(CircularBuffer<Object> buffer, IntConsumer shift) {
       Random rand = new Random(1);
       Deque<Object> deque = new ArrayDeque<Object>();
       for (int i = 0; i < 100; i++) {
@@ -541,25 +520,15 @@ public class CircularBufferTest {
    
    @Test public void pullLast_toFromSelf() {
       final CircularBuffer<Object> buffer = new CircularBuffer<Object>(10);
-      shiftingEndToFront(buffer, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            buffer.pullLast(i, buffer);
-         }
-      });
+      shiftingEndToFront(buffer, (i) -> buffer.pullLast(i, buffer));
    }
 
    @Test public void pushFirst_toFromSelf() {
       final CircularBuffer<Object> buffer = new CircularBuffer<Object>(10);
-      shiftingEndToFront(buffer, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            buffer.pushFirst(i, buffer);
-         }
-      });
+      shiftingEndToFront(buffer, (i) -> buffer.pushFirst(i, buffer));
    }
 
-   private void shiftingFrontToEnd(CircularBuffer<Object> buffer, Sink<Integer> shift) {
+   private void shiftingFrontToEnd(CircularBuffer<Object> buffer, IntConsumer shift) {
       Random rand = new Random(1);
       Deque<Object> deque = new ArrayDeque<Object>();
       for (int i = 0; i < 100; i++) {
@@ -591,22 +560,11 @@ public class CircularBufferTest {
    
    @Test public void pullFirst_toFromSelf() {
       final CircularBuffer<Object> buffer = new CircularBuffer<Object>(10);
-      shiftingFrontToEnd(buffer, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            buffer.pullFirst(i, buffer);
-         }
-      });
+      shiftingFrontToEnd(buffer, (i) -> buffer.pullFirst(i, buffer));
    }
 
    @Test public void pushLast_toFromSelf() {
       final CircularBuffer<Object> buffer = new CircularBuffer<Object>(10);
-      shiftingFrontToEnd(buffer, new Sink<Integer>() {
-         @Override
-         public void accept(Integer i) {
-            buffer.pushLast(i, buffer);
-         }
-      });
+      shiftingFrontToEnd(buffer, (i) -> buffer.pushLast(i, buffer));
    }
-   
 }

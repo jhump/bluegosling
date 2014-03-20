@@ -4,9 +4,6 @@ import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
 import com.apriori.concurrent.PipeliningExecutorService;
 import com.apriori.possible.Reference;
-import com.apriori.util.Function;
-import com.apriori.util.Functions;
-import com.apriori.util.Predicate;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -15,6 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * An atom that is mutated asynchronously using a thread pool. For a given atom, all mutations are
@@ -356,7 +355,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *       complete
     */
    public ListenableFuture<T> getPending() {
-      return apply(Functions.<T>identityFunction());
+      return apply(Function.identity());
    }
    
    /**

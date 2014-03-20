@@ -1,5 +1,6 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Executable;
 import java.util.List;
 
 /**
@@ -8,6 +9,8 @@ import java.util.List;
  * declarations.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see Executable
  */
 public interface ArExecutableMember extends ArMember {
 

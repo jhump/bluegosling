@@ -1,31 +1,30 @@
 package com.apriori.apt.reflect;
 
-import com.apriori.util.Function;
-
 import java.lang.annotation.Annotation;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.AnnotatedElement;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.lang.model.element.Element;
 
 /**
- * An element that can have annotations. This includes representations of things
- * in the Java programming language which can be annotated, like packages, types,
- * fields, constructors, methods, and parameters.
+ * An element that can have annotations. This includes representations of things in the Java
+ * programming language which can be annotated, like packages, types, fields, constructors, methods,
+ * and parameters.
  * 
- * <p>The Java programming language also allows local variables (including exception
- * variables defined in catch blocks) to be annotated, but support for this during
- * annotation processing is incomplete, so there currently are no such implementations.
+ * <p>The Java programming language also allows local variables (including exception variables
+ * defined in catch blocks) to be annotated, but support for this during annotation processing is
+ * incomplete, so there currently are no such implementations.
  *
- * <p>This interface is analogous to {@link java.lang.reflect.AnnotatedElement java.lang.reflect.AnnotatedElement},
- * except that it represents a source-level type (during annotation processing) instead
- * of an actual runtime type.  Unlike {@code java.lang.reflect.AnnotatedElement}, this
- * interface can be used to inspect annotations whose retention policy is
- * {@link RetentionPolicy#CLASS} or {@link RetentionPolicy#SOURCE}.
+ * <p>This interface is analogous to {@link AnnotatedElement}, except that it represents a
+ * source-level type (during annotation processing) instead of an actual runtime type.  Unlike
+ * {@code AnnotatedElement}, this interface can be used to inspect annotations whose retention
+ * policy is {@link RetentionPolicy#CLASS} or {@link RetentionPolicy#SOURCE}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see java.lang.reflect.AnnotatedElement
+ * @see AnnotatedElement
  */
 public interface ArAnnotatedElement {
    /**
@@ -107,10 +106,6 @@ public interface ArAnnotatedElement {
     * {@link ArConstructor}, {@link ArParameter}, or {@link ArPackage}. If the specified input element
     * does not represent one of these types of elements then {@code null} is returned.
     */
-   Function<Element, ArAnnotatedElement> FROM_ELEMENT = new Function<Element, ArAnnotatedElement>() {
-      @Override
-      public ArAnnotatedElement apply(Element input) {
-         return ReflectionVisitors.ANNOTATED_ELEMENT_VISITOR.visit(input);
-      }
-   };
+   Function<Element, ArAnnotatedElement> FROM_ELEMENT =
+         (e) -> ReflectionVisitors.ANNOTATED_ELEMENT_VISITOR.visit(e);
 }

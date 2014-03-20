@@ -1,11 +1,10 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Function;
 
 /**
  * A list whose elements are the results of applying a function to another list. This list is simply
@@ -225,7 +224,7 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
    
    /**
     * A transforming list that can transform values in both directions. Since this list
-    * can transform values in the other direction (output type -> input type), all operations are
+    * can transform values in the other direction (output type -&gt; input type), all operations are
     * supported, including {@link #add(Object)} and {@link #addAll(Collection)}.
     * 
     * <p>Several methods are overridden to use the reverse function before delegating to the
@@ -252,8 +251,8 @@ public class TransformingList<I, O> extends TransformingCollection<I, O> impleme
        * {@code function1.apply(function2.apply(o))}.
        * 
        * @param list the wrapped list
-       * @param function1 transforms elements; "input" -> "output"
-       * @param function2 the inverse of {@code function1}; "output" -> "input"
+       * @param function1 transforms elements; "input" -&gt; "output"
+       * @param function2 the inverse of {@code function1}; "output" -&gt; "input"
        */
       public Bidi(List<I> list, Function<? super I, ? extends O> function1,
             Function<? super O, ? extends I> function2) {

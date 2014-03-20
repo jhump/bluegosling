@@ -34,6 +34,7 @@ import java.util.NoSuchElementException;
  * {@link BitSet} also uses an array of longs, but it does not expose the array directly so
  * operations on a {@link BitSet}-backed {@link BitSequence} are not as efficient as those directly
  * backed by an array.</li>
+ * </ul>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -47,6 +48,8 @@ public final class BitSequences {
    /** Masks for extracting a single bit from a long. */
    static final long INDEX_MASKS[];
    
+   static final long ALL_ONES[];
+   
    /**
     * Method for converting a {@link BitSet} to an array of longs. This method exists in Java 7 but
     * not in Java 6. To maintain compatibility with Java 6, we only use this method if its
@@ -56,16 +59,21 @@ public final class BitSequences {
    
    static {
       PREFIX_MASKS = new long[63];
-      long mask = 1;
-      for (int i = 0; i < 63; i++, mask = (mask << 1) | 1) {
+      for (int i = 0, mask = 1; i < 63; i++, mask = (mask << 1) | 1) {
          PREFIX_MASKS[i] = mask;
       }
 
       INDEX_MASKS = new long[64];
-      mask = 1;
-      for (int i = 0; i < 64; i++, mask <<= 1) {
+      for (int i = 0, mask = 1; i < 64; i++, mask <<= 1) {
          INDEX_MASKS[i] = mask;
       }
+      
+      ALL_ONES = new long[64];
+      ALL_ONES[0] = 0;
+      for (int i = 1, val = 1; i < 64; i++, val = (val << 1) | 1) {
+         ALL_ONES[i] = val;
+      }
+
       
       Method toLongArray;
       try {
@@ -314,13 +322,97 @@ public final class BitSequences {
    }
    
    public static BitSequence allZeros(int length) {
-      // TODO
-      return null;
+      return new AbstractBitSequence() {
+         @Override
+         public Stream stream(int startIndex) {
+            rangeCheck(startIndex);
+            return new AbstractStream() {
+               int remaining = length - startIndex;
+               int index = startIndex;
+               
+               @Override public int remaining() {
+                  return remaining;
+               }
+               
+               @Override public int currentIndex() {
+                  return index;
+               }
+               
+               @Override public void jumpTo(int newIndex) {
+                  rangeCheck(newIndex);
+                  remaining = length - newIndex;
+                  index = newIndex;
+               }
+               
+               @Override public boolean next() {
+                  if (remaining < 1) {
+                     throw new NoSuchElementException();
+                  }
+                  index++; remaining--;
+                  return false;
+               }
+               
+               @Override public long next(int tupleSize) {
+                  checkTupleLength(tupleSize);
+                  index += tupleSize;
+                  remaining -= tupleSize;
+                  return 0;
+               }
+            };
+         }
+         
+         @Override
+         public int length() {
+            return length;
+         }
+      };
    }
    
    public static BitSequence allOnes(int length) {
-      // TODO
-      return null;
+      return new AbstractBitSequence() {
+         @Override
+         public Stream stream(int startIndex) {
+            rangeCheck(startIndex);
+            return new AbstractStream() {
+               int remaining = length - startIndex;
+               int index = startIndex;
+               
+               @Override public int remaining() {
+                  return remaining;
+               }
+               
+               @Override public int currentIndex() {
+                  return index;
+               }
+               
+               @Override public void jumpTo(int newIndex) {
+                  rangeCheck(newIndex);
+                  remaining = length - newIndex;
+                  index = newIndex;
+               }
+               
+               @Override public boolean next() {
+                  if (remaining < 1) {
+                     throw new NoSuchElementException();
+                  }
+                  index++; remaining--;
+                  return true;
+               }
+               
+               @Override public long next(int tupleSize) {
+                  checkTupleLength(tupleSize);
+                  index += tupleSize;
+                  remaining -= tupleSize;
+                  return ALL_ONES[tupleSize];
+               }
+            };
+         }
+         
+         @Override
+         public int length() {
+            return length;
+         }
+      };
    }
    
    public static List<Boolean> asList(final BitSequence bits) {
@@ -1473,7 +1565,7 @@ public final class BitSequences {
             }
             
             @Override public int currentIndex() {
-               return numberOfBits - remaining;
+               return index;
             }
             
             @Override public void jumpTo(int newIndex) {

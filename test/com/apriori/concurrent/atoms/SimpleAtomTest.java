@@ -1,6 +1,6 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.util.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Test cases for {@link SimpleAtom}.

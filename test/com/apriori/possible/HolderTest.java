@@ -1,19 +1,20 @@
 package com.apriori.possible;
 
+import static com.apriori.util.Predicates.alwaysAccept;
+import static com.apriori.util.Predicates.alwaysReject;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicates;
-
 import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link Holder}.
@@ -36,12 +37,7 @@ public class HolderTest extends AbstractPossibleTest {
    @Override
    public void transform() {
       super.transform();
-      Function<String, String> function = new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + ":xyz";
-         }
-      };
+      Function<String, String> function = (s) -> s + ":xyz";
       // values that come back are supposed to be immutable snapshots, not Holders
       assertFalse(valuePresent("abc").transform(function) instanceof Holder);
       assertFalse(valueAbsent().transform(function) instanceof Holder);
@@ -50,21 +46,16 @@ public class HolderTest extends AbstractPossibleTest {
    @Override
    @Test public void filter() {
       // values that come back are supposed to be immutable snapshots, not Holders
-      assertFalse(valuePresent("abc").filter(Predicates.acceptAll()) instanceof Holder);
-      assertFalse(valuePresent("abc").filter(Predicates.rejectAll()) instanceof Holder);
-      assertFalse(valueAbsent().filter(Predicates.acceptAll()) instanceof Holder);
-      assertFalse(valueAbsent().filter(Predicates.rejectAll()) instanceof Holder);
+      assertFalse(valuePresent("abc").filter(alwaysAccept()) instanceof Holder);
+      assertFalse(valuePresent("abc").filter(alwaysReject()) instanceof Holder);
+      assertFalse(valueAbsent().filter(alwaysAccept()) instanceof Holder);
+      assertFalse(valueAbsent().filter(alwaysReject()) instanceof Holder);
    }
    
    @Test public void allowPresentNulls() {
       checkPresentValue(valuePresent(null), null);
       checkPresentValue(valueAbsent().or(Holder.<String>create(null)), null);
-      checkPresentValue(valuePresent("abc").transform(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return null;
-         }
-      }), null);
+      checkPresentValue(valuePresent("abc").transform((s) -> null), null);
    }
 
    

@@ -1,9 +1,8 @@
 package com.apriori.collections;
 
-import com.apriori.util.Predicate;
-
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 /**
  * A filtered view of another list iterator. This is a wrapper that elides all members of the

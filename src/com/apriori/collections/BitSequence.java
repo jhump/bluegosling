@@ -1,6 +1,7 @@
 package com.apriori.collections;
 
 import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator;
 
 /**
  * A sequence of bits. This is very similar to a {@link java.util.BitSet} except it provides
@@ -149,7 +150,7 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see BitSequence.Stream#next(int, BitSequence.BitOrder)
     */
-   LongIterator bitTupleIterator(int tupleSize, BitOrder order);
+   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order);
    
    /**
     * Returns an iterator over arbitrarily-sized chunks in the sequence. This method is equivalent
@@ -162,7 +163,7 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see #bitTupleIterator(int, BitOrder)
     */
-   LongIterator bitTupleIterator(int tupleSize);
+   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize);
 
    /**
     * Returns an iterator over arbitrarily-sized chunks in the sequence. The fetching of values will
@@ -174,7 +175,7 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see #bitTupleIterator(int, BitOrder)
     */
-   LongIterator bitTupleIterator(int tupleSize, int startIndex, BitOrder order);
+   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, int startIndex, BitOrder order);
    
    /**
     * Returns an iterator over arbitrarily-sized chunks in the sequence. This method is equivalent
@@ -186,7 +187,7 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see #bitTupleIterator(int, int, BitOrder)
     */
-   LongIterator bitTupleIterator(int tupleSize, int startIndex);
+   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, int startIndex);
    
    /**
     * Returns a stream, for consuming bits in arbitrary amounts with each fetch.

@@ -7,8 +7,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link NTuple}.

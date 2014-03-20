@@ -1,17 +1,17 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Member;
 import java.util.EnumSet;
 
 /**
  * A member of a Java class or interface. Members include fields (including enum constants), methods
- * (including annotation methods), and constructors. This is analogous to {@link java.lang.reflect.Member
- * java.lang.reflect.Member}, except that it represents members in Java source (during annotation
- * processing) vs. representing members of runtime types or elements (methods and constructors) of
- * runtime types.
+ * (including annotation methods), and constructors. This is analogous to {@link Member}, except
+ * that it represents members in Java source (during annotation processing) vs. representing members
+ * of runtime types or elements (methods and constructors) of runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.Member
+ * @see Member
  */
 public interface ArMember {
    /**

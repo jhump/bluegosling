@@ -1,5 +1,12 @@
 package com.apriori.util;
 
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 /**
  * Numerous utility methods related to using {@link Predicate}s.
  *
@@ -12,172 +19,72 @@ public final class Predicates {
    private Predicates() {
    }
 
-   /**
-    * A predicate that always returns true.
-    */
-   private static Predicate<Object> ALL = new Predicate<Object>() {
-      @Override
-      public boolean test(Object input) {
-         return true;
-      }
-   };
-
-   /**
-    * A predicate that always returns false.
-    */
-   private static Predicate<Object> NONE = new Predicate<Object>() {
-      @Override
-      public boolean test(Object input) {
-         return false;
-      }
-   };
-   
-   /**
-    * A two-argument predicate that always returns true.
-    */
-   private static Predicate.Bivariate<Object, Object> ALL_BIVARIATE =
-         new Predicate.Bivariate<Object, Object>() {
-            @Override
-            public boolean test(Object input1, Object input2) {
-               return true;
-            }
-         };
-
-   /**
-    * A two-argument predicate that always returns false.
-    */
-   private static Predicate.Bivariate<Object, Object> NONE_BIVARIATE =
-         new Predicate.Bivariate<Object, Object>() {
-            @Override
-            public boolean test(Object input1, Object input2) {
-               return false;
-            }
-         };
-
-   /**
-    * A three-argument predicate that always returns true.
-    */
-   private static Predicate.Trivariate<Object, Object, Object> ALL_TRIVARIATE =
-         new Predicate.Trivariate<Object, Object, Object>() {
-            @Override
-            public boolean test(Object input1, Object input2, Object input3) {
-               return true;
-            }
-         };
-
-   /**
-    * A predicate that always returns false.
-    */
-   private static Predicate.Trivariate<Object, Object, Object> NONE_TRIVARIATE =
-         new Predicate.Trivariate<Object, Object, Object>() {
-            @Override
-            public boolean test(Object input1, Object input2, Object input3) {
-               return false;
-            }
-         };
-         
    // TODO: javadoc
-   private static Predicate<Object> IS_NULL = new Predicate<Object>() {
-      @Override public boolean test(Object input) {
-         return input == null;
-      }
-   };
+   private static Predicate<Object> ACCEPT_ALL = (o) -> true;
 
-   private static Predicate<Object> NOT_NULL = new Predicate<Object>() {
-      @Override public boolean test(Object input) {
-         return input != null;
-      }
-   };
+   private static Predicate<Object> REJECT_ALL = (o) -> false;
 
-   /**
-    * Returns a predicate that always returns true.
-    * 
-    * @return a predicate that always returns true
-    */
-   @SuppressWarnings("unchecked") // ALL accepts any object, so re-cast will be safe
-   public static <T> Predicate<T> acceptAll() {
-      return (Predicate<T>) ALL;
-   }
+   private static BiPredicate<Object, Object> ACCEPT_ALL2 = (o1, o2) -> true;
 
-   /**
-    * Returns a bivariate predicate that always returns true.
-    * 
-    * @return a predicate that always returns true
-    */
-   @SuppressWarnings("unchecked") // ALL_BIVARIATE accepts any object, so re-cast will be safe
-   public static <T1, T2> Predicate.Bivariate<T1, T2> acceptAllBivariate() {
-      return (Predicate.Bivariate<T1, T2>) ALL_BIVARIATE;
-   }
+   private static BiPredicate<Object, Object> REJECT_ALL2 = (o1, o2) -> false;
 
-   /**
-    * Returns a three-argument predicate that always returns true.
-    * 
-    * @return a predicate that always returns true
-    */
-   @SuppressWarnings("unchecked") // ALL_TRIVARIATE accepts any object, so re-cast will be safe
-   public static <T1, T2, T3> Predicate.Trivariate<T1, T2, T3> acceptAllTrivariate() {
-      return (Predicate.Trivariate<T1, T2, T3>) ALL_TRIVARIATE;
-   }
+   private static TriPredicate<Object, Object, Object> ACCEPT_ALL3 = (o1, o2, o3) -> true;
 
-   /**
-    * Returns a predicate that always returns false.
-    * 
-    * @return a predicate that always returns false
-    */
-   @SuppressWarnings("unchecked") // NONE accepts any object, so re-cast will be safe
-   public static <T> Predicate<T> rejectAll() {
-      return (Predicate<T>) NONE;
-   }
+   private static TriPredicate<Object, Object, Object> REJECT_ALL3 = (o1, o2, o3) -> false;
 
-   /**
-    * Returns a bivariate predicate that always returns false.
-    * 
-    * @return a predicate that always returns false
-    */
-   @SuppressWarnings("unchecked") // NONE_BIVARIATE accepts any object, so re-cast will be safe
-   public static <T1, T2> Predicate.Bivariate<T1, T2> rejectAllBivariate() {
-      return (Predicate.Bivariate<T1, T2>) NONE_BIVARIATE;
-   }
+   private static Predicate<Object> IS_NULL = (o) -> o == null;
 
-   /**
-    * Returns a three-argument predicate that always returns false.
-    * 
-    * @return a predicate that always returns false
-    */
-   @SuppressWarnings("unchecked") // NONE_TRIVARIATE accepts any object, so re-cast will be safe
-   public static <T1, T2, T3> Predicate.Trivariate<T1, T2, T3> rejectAllTrivariate() {
-      return (Predicate.Trivariate<T1, T2, T3>) NONE_TRIVARIATE;
+   private static Predicate<Object> NOT_NULL = (o) -> o != null;
+
+   @SuppressWarnings("unchecked")
+   public static <T> Predicate<T> alwaysAccept() {
+      return (Predicate<T>) ACCEPT_ALL;
    }
    
-   // TODO: isNull(), isNotNull(), javadoc...
-   
-   public static <T> Predicate<T> isEqualTo(final T object) {
-      return new Predicate<T>() {
-         @Override public boolean test(T input) {
-            return object == null ? input == null : object.equals(input);
-         }
-      };
+   @SuppressWarnings("unchecked")
+   public static <T> Predicate<T> alwaysReject() {
+      return (Predicate<T>) REJECT_ALL;
    }
 
-   public static <T> Predicate<T> isSameAs(final T object) {
-      return new Predicate<T>() {
-         @Override public boolean test(T input) {
-            return object == input;
-         }
-      };
-   }
-
-   public static <T> Predicate<T> isInstanceOf(final Class<? extends T> clazz) {
-      return new Predicate<T>() {
-         @Override public boolean test(T input) {
-            return clazz.isInstance(input);
-         }
-      };
+   @SuppressWarnings("unchecked")
+   public static <T, U> BiPredicate<T, U> alwaysAcceptBoth() {
+      return (BiPredicate<T, U>) ACCEPT_ALL2;
    }
    
-   // TODO: Predicate.Bivariate: areSameObject, areEqual
+   @SuppressWarnings("unchecked")
+   public static <T, U> BiPredicate<T, U> alwaysRejectBoth() {
+      return (BiPredicate<T, U>) REJECT_ALL2;
+   }
 
-   // TODO: boolean arithmetic combinations accept var-args?
+   @SuppressWarnings("unchecked")
+   public static <T, U, V> TriPredicate<T, U, V> alwaysAcceptAll() {
+      return (TriPredicate<T, U, V>) ACCEPT_ALL3;
+   }
+   
+   @SuppressWarnings("unchecked")
+   public static <T, U, V> TriPredicate<T, U, V> alwaysRejectAll() {
+      return (TriPredicate<T, U, V>) REJECT_ALL3;
+   }
+
+   @SuppressWarnings("unchecked")
+   public static <T> Predicate<T> isNull() {
+      return (Predicate<T>) IS_NULL;
+   }
+
+   @SuppressWarnings("unchecked")
+   public static <T> Predicate<T> notNull() {
+      return (Predicate<T>) NOT_NULL;
+   }
+
+   public static <T> Predicate<T> isEqualTo(T object) {
+      return curry(Objects::equals, object);
+   }
+
+   public static <T, U> BiPredicate<T, U> areSameObject() {
+      return (o1, o2) -> o1 == o2;
+   }
+
+   // TODO: boolean arithmetic below accept var-args?
    
    /**
     * Returns a predicate that combines the results from two predicates using an AND operation. The
@@ -188,14 +95,8 @@ public final class Predicates {
     * @param p2 the second predicate
     * @return a predicate that returns {@code p1.test(input) && p2.test(input)}
     */
-   public static <T> Predicate<T> and(final Predicate<? super T> p1,
-         final Predicate<? super T> p2) {
-      return new Predicate<T>() {
-         @Override
-         public boolean test(T input) {
-            return p1.test(input) && p2.test(input);
-         }
-      };
+   public static <T> Predicate<T> and(Predicate<? super T> p1, Predicate<? super T> p2) {
+      return (o) -> p1.test(o) && p2.test(o);
    }
 
    /**
@@ -207,14 +108,8 @@ public final class Predicates {
     * @param p2 the second predicate
     * @return a predicate that returns {@code p1.test(input) || p2.test(input)}
     */
-   public static <T> Predicate<T> or(final Predicate<? super T> p1,
-         final Predicate<? super T> p2) {
-      return new Predicate<T>() {
-         @Override
-         public boolean test(T input) {
-            return p1.test(input) || p2.test(input);
-         }
-      };
+   public static <T> Predicate<T> or(Predicate<? super T> p1, Predicate<? super T> p2) {
+      return (o) -> p1.test(o) || p2.test(o);
    }
    
    /**
@@ -224,14 +119,8 @@ public final class Predicates {
     * @param p2 the second predicate
     * @return a predicate that returns {@code p1.test(input) ^ p2.test(input)}
     */
-   public static <T> Predicate<T> xor(final Predicate<? super T> p1,
-         final Predicate<? super T> p2) {
-      return new Predicate<T>() {
-         @Override
-         public boolean test(T input) {
-            return p1.test(input) ^ p2.test(input);
-         }
-      };
+   public static <T> Predicate<T> xor(Predicate<? super T> p1, Predicate<? super T> p2) {
+      return (o) -> p1.test(o) ^ p2.test(o);
    }
    
    /**
@@ -240,16 +129,11 @@ public final class Predicates {
     * @param p a predicate
     * @return a predicate that returns {@code !p.test(input)}
     */
-   public static <T> Predicate<T> not(final Predicate<? super T> p) {
-      return new Predicate<T>() {
-         @Override
-         public boolean test(T input) {
-            return !p.test(input);
-         }
-      };
+   public static <T> Predicate<T> not(Predicate<? super T> p) {
+      return (o) -> !p.test(o);
    }
 
-   // TODO: Predicate.[Bi,Tri]variate versions of above boolean arithmetic combinations
+   // TODO: [Bi,Tri]Predicate versions of above boolean arithmetic combinations
 
    static boolean toPrimitive(Boolean b) {
       return b != null && b;
@@ -263,17 +147,12 @@ public final class Predicates {
     * @param function a function
     * @return the specified function converted to a predicate
     */
-   public static <T> Predicate<T> fromFunction(final Function<T, Boolean> function) {
-      return new Predicate<T>() {
-         @Override
-         public boolean test(T input) {
-            return toPrimitive(function.apply(input));
-         }
-      };
+   public static <T> Predicate<T> fromFunction(Function<T, Boolean> function) {
+      return (o) -> toPrimitive(function.apply(o));
    }
 
    /**
-    * Converts a bivarite function into a bivariate predicate. Functions return boxed booleans
+    * Converts a bivariate function into a bivariate predicate. Functions return boxed booleans
     * instead of primitives, and thus can return a {@code null}. The returned predicate returns
     * true if the function returns true and false otherwise, so a {@code null} function result is
     * considered false.
@@ -281,14 +160,8 @@ public final class Predicates {
     * @param function a function
     * @return the specified function converted to a predicate
     */
-   public static <T1, T2> Predicate.Bivariate<T1, T2> fromFunction(
-         final Function.Bivariate<T1, T2, Boolean> function) {
-      return new Predicate.Bivariate<T1, T2>() {
-         @Override
-         public boolean test(T1 input1, T2 input2) {
-            return toPrimitive(function.apply(input1, input2));
-         }
-      };
+   public static <T1, T2> BiPredicate<T1, T2> fromFunction(BiFunction<T1, T2, Boolean> function) {
+      return (o1, o2) -> toPrimitive(function.apply(o1, o2));
    }
 
    /**
@@ -300,72 +173,38 @@ public final class Predicates {
     * @param function a function
     * @return the specified function converted to a predicate
     */
-   public static <T1, T2, T3> Predicate.Trivariate<T1, T2, T3> fromFunction(
-         final Function.Trivariate<T1, T2, T3, Boolean> function) {
-      return new Predicate.Trivariate<T1, T2, T3>() {
-         @Override
-         public boolean test(T1 input1, T2 input2, T3 input3) {
-            return toPrimitive(function.apply(input1, input2, input3));
-         }
-      };
+   public static <T1, T2, T3> TriPredicate<T1, T2, T3> fromFunction(
+         TriFunction<T1, T2, T3, Boolean> function) {
+      return (o1, o2, o3) -> toPrimitive(function.apply(o1, o2, o3));
    }
    
    // TODO: javadoc
-   public static <I> Source<Boolean> curry(final Predicate<? super I> predicate, final I arg) {
-      return new Source<Boolean>() {
-         @Override public Boolean get() {
-            return predicate.test(arg);
-         }
-      };
+   public static <I> BooleanSupplier curry(Predicate<? super I> predicate, I arg) {
+      return () -> predicate.test(arg);
    }
 
-   public static <I1, I2> Source<Boolean> curry(
-         final Predicate.Bivariate<? super I1, ? super I2> predicate,
-         final I1 arg1, final I2 arg2) {
-      return new Source<Boolean>() {
-         @Override public Boolean get() {
-            return predicate.test(arg1, arg2);
-         }
-      };
+   public static <I1, I2> BooleanSupplier curry(BiPredicate<? super I1, ? super I2> predicate,
+         I1 arg1, I2 arg2) {
+      return () -> predicate.test(arg1, arg2);
    }
 
-   public static <I1, I2> Predicate<I2> curry(
-         final Predicate.Bivariate<? super I1, ? super I2> predicate,
-         final I1 arg1) {
-      return new Predicate<I2>() {
-         @Override public boolean test(I2 arg2) {
-            return predicate.test(arg1, arg2);
-         }
-      };
+   public static <I1, I2> Predicate<I2> curry(BiPredicate<? super I1, ? super I2> predicate,
+         I1 arg1) {
+      return (arg2) -> predicate.test(arg1, arg2);
    }
 
-   public static <I1, I2, I3> Source<Boolean> curry(
-         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
-         final I1 arg1, final I2 arg2, final I3 arg3) {
-      return new Source<Boolean>() {
-         @Override public Boolean get() {
-            return predicate.test(arg1, arg2, arg3);
-         }
-      };
+   public static <I1, I2, I3> BooleanSupplier curry(
+         TriPredicate<? super I1, ? super I2, ? super I3> predicate, I1 arg1, I2 arg2, I3 arg3) {
+      return () -> predicate.test(arg1, arg2, arg3);
    }
    
    public static <I1, I2, I3> Predicate<I3> curry(
-         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
-         final I1 arg1, final I2 arg2) {
-      return new Predicate<I3>() {
-         @Override public boolean test(I3 arg3) {
-            return predicate.test(arg1, arg2, arg3);
-         }
-      };
+         TriPredicate<? super I1, ? super I2, ? super I3> predicate, I1 arg1, I2 arg2) {
+      return (arg3) -> predicate.test(arg1, arg2, arg3);
    }
    
-   public static <I1, I2, I3> Predicate.Bivariate<I2, I3> curry(
-         final Predicate.Trivariate<? super I1, ? super I2, ? super I3> predicate,
-         final I1 arg1) {
-      return new Predicate.Bivariate<I2, I3>() {
-         @Override public boolean test(I2 arg2, I3 arg3) {
-            return predicate.test(arg1, arg2, arg3);
-         }
-      };
+   public static <I1, I2, I3> BiPredicate<I2, I3> curry(
+         TriPredicate<? super I1, ? super I2, ? super I3> predicate, I1 arg1) {
+      return (arg2, arg3) -> predicate.test(arg1, arg2, arg3);
    }
 }

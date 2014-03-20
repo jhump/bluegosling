@@ -1,13 +1,13 @@
 package com.apriori.concurrent;
 
-import com.apriori.util.Source;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * The implementation for a task that is executed using a {@link ScheduledTaskManager}. The task
- * can be implemented by either a {@link Callable}, a {@link Runnable}, or a {@link Source}.
+ * can be implemented by either a {@link Callable}, a {@link Runnable}, or a {@link Consumer}.
  * 
  * <p>This class implements {@link Callable}. Calling this task will forward to the underlying
  * implementation, so this object also serves as an adapter from any type of implementation to
@@ -53,7 +53,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
        * @param source the task's underlying source
        * @return the result of visiting the source
        */
-      R visitSource(Source<? extends V> source); 
+      R visitSource(Supplier<? extends V> source); 
    }
    
    /**
@@ -122,7 +122,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
     * @param source the source that will underlie this task
     * @return a task that represents the specified source
     */
-   public static <V> TaskImplementation<V> forSource(final Source<V> source) {
+   public static <V> TaskImplementation<V> forSource(final Supplier<V> source) {
       return new TaskImplementation<V>() {
          @Override
          public <R> R visit(Visitor<R, ? super V> visitor) {

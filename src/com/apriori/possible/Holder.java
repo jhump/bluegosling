@@ -1,9 +1,5 @@
 package com.apriori.possible;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Source;
-
 import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.ConcurrentModificationException;
@@ -11,6 +7,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * A {@linkplain Possible possible} value that is mutable. The contained value can be set or
@@ -173,7 +172,7 @@ public class Holder<T> implements Possible<T>, Serializable {
    }
 
    @Override
-   public <X extends Throwable> T getOrThrow(Source<X> throwable) throws X {
+   public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
       if (!isPresent) {
          throw throwable.get();
       }

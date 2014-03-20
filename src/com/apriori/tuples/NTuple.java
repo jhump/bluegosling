@@ -1,10 +1,9 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.function.Function;
 
 /**
  * A tuple that has more than five elements. It is so named since it can have {@code n} number of

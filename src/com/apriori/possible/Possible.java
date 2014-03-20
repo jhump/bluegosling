@@ -1,10 +1,9 @@
 package com.apriori.possible;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Source;
-
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * A possible value. A value might be present, but it may not be. Some implementations may allow a
@@ -84,7 +83,7 @@ public interface Possible<T> {
     * @return the contained value
     * @throws X if a value is not present
     */
-   <X extends Throwable> T getOrThrow(Source<X> throwableSource) throws X;
+   <X extends Throwable> T getOrThrow(Supplier<X> throwableSource) throws X;
    
    /**
     * Returns a view of this possible value as a set. If a value is present, a singleton set with

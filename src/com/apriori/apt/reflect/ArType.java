@@ -1,20 +1,21 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Type;
+
 import javax.lang.model.type.TypeMirror;
 
 
 /**
- * A interface that represents a generic type. Using implementors of this interface,
- * information on generic type variables and even reifiable type parameters can be
- * programmatically determined for processed type elements.
+ * A interface that represents a generic type. Using implementors of this interface, information on
+ * generic type variables and even reifiable type parameters can be programmatically determined for
+ * processed type elements.
  * 
- * <p>This mirrors the {@link java.lang.reflect.Type java.lang.reflect.Type} interface, but is for
- * representing types in source form for annotation processing vs. types in compiled
- * form at runtime.
+ * <p>This mirrors the {@link Type} interface, but is for representing types in source form for
+ * annotation processing vs. types in compiled form at runtime.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see java.lang.reflect.Type
+ * @see Type
  * @see ArTypes
  */
 public interface ArType {

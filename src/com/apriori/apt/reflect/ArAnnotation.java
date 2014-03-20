@@ -2,6 +2,7 @@ package com.apriori.apt.reflect;
 
 import static com.apriori.apt.ProcessingEnvironments.elements;
 
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +12,15 @@ import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ExecutableElement;
 
 /**
- * An annotation in Java source code. It is sort of analogous to the actual
- * {@link java.lang.annotation.Annotation java.lang.annotation.Annotation}
- * interface, except that it represents source-level annotations during
- * annotation processing vs. annotations on actual runtime types.
+ * An annotation in Java source code. It is sort of analogous to the actual {@link Annotation}
+ * interface, except that it represents source-level annotations during annotation processing vs.
+ * annotations on actual runtime types.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
- * @see java.lang.annotation.Annotation
+ * @see Annotation
  */
 public class ArAnnotation {
-   
    private final AnnotationMirror mirror;
    
    private ArAnnotation(AnnotationMirror mirror) {

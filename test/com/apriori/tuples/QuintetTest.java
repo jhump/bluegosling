@@ -6,8 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link Quintet}.
@@ -170,7 +169,6 @@ public class QuintetTest {
             Quintet.separate(
                   Collections.<Quintet<Integer, String, Double, Boolean, Float>>emptyList()));
 
-      @SuppressWarnings("unchecked") // dang generic var-args...
       List<Quintet<Integer, String, Double, Boolean, Float>> quintets =
             Arrays.asList(Quintet.create(1, "a", 101.0, true, 321f),
                   Quintet.create(2, "b", 222.0, false, 432f),
@@ -189,7 +187,6 @@ public class QuintetTest {
       assertEquals(expectedQuintets, Quintet.combine(Quintet.create(a, b, c, d, e)));
    }
    
-   @SuppressWarnings("unchecked") // dang generic var-args...
    @Test public void combine() {
       assertCombinedEquals(Collections.<Quintet<Integer, String, Double, Boolean, Float>>emptyList(),
             Collections.<Integer>emptyList(), Collections.<String>emptySet(),

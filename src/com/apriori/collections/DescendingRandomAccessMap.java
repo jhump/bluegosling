@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -57,23 +55,14 @@ class DescendingRandomAccessMap<K, V> extends DescendingMap<K, V>
    public List<V> values() {
       // keySet() is in proper order thanks to RandomAccessNavigableMap.descendingKeySet()
       // so we create a list that returns items in the correct order based on it
-      return new TransformingList<K, V>(keySet().asList(), new Function<K, V>() {
-         @Override public V apply(K input) {
-            return get(input);
-         }
-      });
+      return new TransformingList<K, V>(keySet().asList(), (k) -> get(k));
    }
 
    @Override
    public RandomAccessSet<Map.Entry<K, V>> entrySet() {
       // can probably do something more efficient, like a specialized descending RandomAccessSet
       // (DescendingRandomAccessSet is actually a RandomAccess*Navigable*Set so doesn't quite work)
-      return new TransformingRandomAccessSet<K, Map.Entry<K, V>>(keySet(),
-            new Function<K, Map.Entry<K, V>>() {
-               @Override public Map.Entry<K, V> apply(K input) {
-                  return floorEntry(input);
-               }
-            });
+      return new TransformingRandomAccessSet<K, Map.Entry<K, V>>(keySet(), (k) -> floorEntry(k));
    }
    
    @Override

@@ -6,10 +6,10 @@ import com.apriori.concurrent.HierarchicalLock.ExclusiveLock;
 import com.apriori.concurrent.HierarchicalLock.SharedLock;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutures;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * An atom whose updates are coordinated in a {@link Transaction}. Transactions allow updates to

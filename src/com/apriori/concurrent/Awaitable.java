@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+//TODO: test
+//TODO: javadoc
 public interface Awaitable {
    /**
     * Awaits the future event, blocking the current thread until the event occurs.
@@ -31,4 +33,40 @@ public interface Awaitable {
     * @return true if the event has occurred; false otherwise
     */
    boolean isDone();
+
+   default void awaitUninterruptibly() {
+      boolean interrupted = false;
+      while (true) {
+         try {
+            await();
+            break;
+         } catch (InterruptedException e) {
+            interrupted = true;
+         }
+      }
+      if (interrupted) {
+         Thread.currentThread().interrupt();
+      }
+   }
+   
+   default boolean awaitUninterruptibly(long limit, TimeUnit unit) {
+      boolean ret;
+      boolean interrupted = false;
+      long startNanos = System.nanoTime();
+      long limitNanos = unit.toNanos(limit);
+      while (true) {
+         try {
+            long spentNanos = System.nanoTime() - startNanos;
+            long remaining = limitNanos - spentNanos;
+            ret = await(remaining, TimeUnit.NANOSECONDS);
+            break;
+         } catch (InterruptedException e) {
+            interrupted = true;
+         }
+      }
+      if (interrupted) {
+         Thread.currentThread().interrupt();
+      }
+      return ret;
+   }
 }

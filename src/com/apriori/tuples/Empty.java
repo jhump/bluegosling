@@ -1,8 +1,7 @@
 package com.apriori.tuples;
 
-import com.apriori.util.Function;
-
 import java.io.Serializable;
+import java.util.function.Function;
 
 /**
  * A tuple that has no elements. Since tuples are immutable, there is no need for more than one

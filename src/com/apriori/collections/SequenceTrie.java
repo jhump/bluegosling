@@ -31,7 +31,7 @@ public interface SequenceTrie<K, V> extends Map<List<K>, V> {
     * will be omitted.
     * 
     * <p>This is effectively shorthand for repeated calls to {@link #prefixMap(Object)}, like so:<pre>
-    * SequenceTrie<K, V> result = someTrie;
+    * SequenceTrie&lt;K, V&gt; result = someTrie;
     * for (K value : prefix) {
     *   result = result.prefixMap(value);
     * }

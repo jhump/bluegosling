@@ -56,7 +56,8 @@ public class ArRoundEnvironment {
       return env.processingOver();
    }
 
-   private Set<? extends ArAnnotatedElement> getRootElements(boolean includeClasses, boolean includePackages) {
+   private Set<? extends ArAnnotatedElement> getRootElements(boolean includeClasses,
+         boolean includePackages) {
       Set<? extends Element> rootElements = env.getRootElements();
       Set<ArAnnotatedElement> ret = new HashSet<ArAnnotatedElement>(rootElements.size() * 4 / 3);
       for (Element e : rootElements) {
@@ -66,7 +67,8 @@ public class ArRoundEnvironment {
                ret.add(clazz);
             }
          } else if (includePackages) {
-            ArPackage pkg = e instanceof PackageElement ? ArPackage.forElement((PackageElement) e) : null;
+            ArPackage pkg = e instanceof PackageElement
+                  ? ArPackage.forElement((PackageElement) e) : null;
             if (pkg != null) {
                ret.add(pkg);
             }

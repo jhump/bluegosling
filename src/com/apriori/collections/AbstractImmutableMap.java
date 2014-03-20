@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Function;
-
 import java.util.Iterator;
 
 // TODO: javadoc
@@ -154,12 +152,7 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
       @Override
       public Iterator<K> iterator() {
          return new TransformingIterator<Entry<K, V>, K>(AbstractImmutableMap.this.iterator(),
-               new Function<Entry<K, V>, K>() {
-                  @Override
-                  public K apply(Entry<K, V> input) {
-                     return input.key();                           
-                  }
-               });
+               (entry) -> entry.key());
       }
    }
 
@@ -210,12 +203,7 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
       @Override
       public Iterator<V> iterator() {
          return new TransformingIterator<Entry<K, V>, V>(AbstractImmutableMap.this.iterator(),
-               new Function<Entry<K, V>, V>() {
-                  @Override
-                  public V apply(Entry<K, V> input) {
-                     return input.value();                           
-                  }
-               });
+               (entry) -> entry.value());
       }
    }
    

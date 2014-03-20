@@ -1,9 +1,8 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * An atom whose values are in thread-local storage.  This varies a bit from other atoms in that

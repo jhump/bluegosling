@@ -1,22 +1,23 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.Field;
 import java.util.EnumSet;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.VariableElement;
 
 /**
- * A field. This is analogous to {@link java.lang.reflect.Field java.lang.reflect.Field},
- * except that it represents fields in Java source (during annotation processing) vs.
- * representing fields of runtime types.
+ * A field. This is analogous to {@link Field}, except that it represents fields in Java source
+ * (during annotation processing) vs. representing fields of runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.Field
+ * @see Field
  */
 public class ArField extends ArAbstractMember {
 
-   private static final EnumSet<ElementKind> ALLOWED_KINDS = EnumSet.of(ElementKind.FIELD, ElementKind.ENUM_CONSTANT);
+   private static final EnumSet<ElementKind> ALLOWED_KINDS =
+         EnumSet.of(ElementKind.FIELD, ElementKind.ENUM_CONSTANT);
    
    private ArField(VariableElement element) {
       super(element);
@@ -96,7 +97,7 @@ public class ArField extends ArAbstractMember {
       }
       @SuppressWarnings({"unchecked", "rawtypes"})
       Enum<?> ret = Enum.valueOf(
-            (Class<? extends Enum>) getDeclaringClass().asJavaLangClass(), getName());
+            (Class<? extends Enum>) getDeclaringClass().asClass(), getName());
       return ret;
    }
 
@@ -115,7 +116,7 @@ public class ArField extends ArAbstractMember {
       }
       @SuppressWarnings({ "unchecked", "rawtypes" })
       Enum<?> ret = Enum.valueOf(
-            (Class<? extends Enum>) getDeclaringClass().asJavaLangClass(classLoader),
+            (Class<? extends Enum>) getDeclaringClass().asClass(classLoader),
             getName());
       return ret;
    }

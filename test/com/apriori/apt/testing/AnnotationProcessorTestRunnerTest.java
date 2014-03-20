@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import com.apriori.collections.TransformingList;
-import com.apriori.util.Function;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -124,12 +123,7 @@ public class AnnotationProcessorTestRunnerTest {
       List<Failure> failures = result.getFailures();
       if (!failures.isEmpty()) {
          throw consolidate(new TransformingList<Failure, Throwable>(failures,
-               new Function<Failure, Throwable>() {
-                  @Override
-                  public Throwable apply(Failure input) {
-                     return input.getException();
-                  }
-               }));
+               Failure::getException));
       }
    }
    

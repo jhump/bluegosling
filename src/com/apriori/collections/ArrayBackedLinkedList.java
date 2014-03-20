@@ -1739,6 +1739,7 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
     * 
     * @param c the comparator used to define the sort order
     */
+   @Override
    @SuppressWarnings("unchecked")
    public void sort(Comparator<? super E> c) {
       modCount++;

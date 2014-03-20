@@ -1,6 +1,6 @@
 package com.apriori.concurrent.atoms;
 
-import com.apriori.util.Function;
+import java.util.function.Function;
 
 /**
  * An atom whose value is modified synchronously and immediately.

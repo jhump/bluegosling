@@ -4,8 +4,6 @@ import com.apriori.concurrent.ListenableExecutorService;
 import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutures;
-import com.apriori.util.Sink;
-import com.apriori.util.Source;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +16,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * A thought experiment into sorting large lists using multiple CPUs/cores. This breaks up the
@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * <p>For {@code n} chunks, there will be exactly {@code n - 1} merger tasks required to assemble
  * all chunks back into a single stream. This diagram shows an example with five chunks:
- * <pre>
+ * <pre>{@code
  *                   /- Chunk #1 -\
  *                  /              >- Merger #1 -\
  *                 /--- Chunk #2 -/               \
@@ -52,7 +52,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *                 \--- Chunk #4 -/                             /
  *                  \                                          /
  *                   \- Chunk #5 -----------------------------/
- * </pre>
+ * }</pre>
  * A given thread serves the role of both a chunk sorter and a merger. So in the above example, once
  * the last chunk is sorted, one of the threads will immediately terminate since it has no merging
  * work to do.
@@ -154,7 +154,7 @@ public class SlowParallelSort {
       List<T> ret = new ArrayList<T>(items.size());
 
       // now create the tasks
-      BlockingQueue<Source<T>> sources = new ArrayBlockingQueue<Source<T>>(numThreads);
+      BlockingQueue<Supplier<T>> sources = new ArrayBlockingQueue<Supplier<T>>(numThreads);
       AtomicInteger chunksSorted = new AtomicInteger();
       AtomicInteger mergersStarted = new AtomicInteger();
       ListenableFuture<?> results[] = new ListenableFuture<?>[numThreads];
@@ -205,13 +205,13 @@ public class SlowParallelSort {
       private final int numThreads;
       private final T[] chunk;
       private final Comparator<? super T> comparator;
-      private final BlockingQueue<Source<T>> sources;
+      private final BlockingQueue<Supplier<T>> sources;
       private final AtomicInteger chunksSorted;
       private final AtomicInteger mergersStarted;
       private final List<T> result;
       
       SorterMerger(int numThreads, T[] chunk, Comparator<? super T> comparator,
-            BlockingQueue<Source<T>> sources, AtomicInteger chunksSorted,
+            BlockingQueue<Supplier<T>> sources, AtomicInteger chunksSorted,
             AtomicInteger mergersStarted, List<T> result) {
          this.numThreads = numThreads;
          this.chunk = chunk;
@@ -232,9 +232,9 @@ public class SlowParallelSort {
                return;
             }
             // setup for merging
-            Source<T> source1 = sources.take();
-            Source<T> source2 = sources.take();
-            Sink<T> sink;
+            Supplier<T> source1 = sources.take();
+            Supplier<T> source2 = sources.take();
+            Consumer<T> sink;
             if (mergersStarted.incrementAndGet() == numThreads - 1) {
                // we are the last merger, so we send results directly to final list
                sink = new CollectionSink<T>(result);
@@ -278,7 +278,7 @@ public class SlowParallelSort {
     *
     * @param <T> the type of element consumed
     */
-   private static class CollectionSink<T> implements Sink<T> {
+   private static class CollectionSink<T> implements Consumer<T> {
       private final Collection<T> target;
 
       CollectionSink(Collection<T> target) {
@@ -301,7 +301,7 @@ public class SlowParallelSort {
     *
     * @param <T> the type of element consumed
     */
-   private static class QueueSink<T> implements Sink<T> {
+   private static class QueueSink<T> implements Consumer<T> {
       private final BlockingQueue<Object> target;
 
       QueueSink(BlockingQueue<Object> target) {
@@ -330,7 +330,7 @@ public class SlowParallelSort {
     *
     * @param <T> the type of element produced
     */
-   private static class QueueSource<T> implements Source<T> {
+   private static class QueueSource<T> implements Supplier<T> {
       private final BlockingQueue<Object> source;
       
       QueueSource(BlockingQueue<Object> source) {
@@ -360,7 +360,7 @@ public class SlowParallelSort {
     *
     * @param <T> the type of element produced
     */
-   private static class ChunkSource<T> implements Source<T> {
+   private static class ChunkSource<T> implements Supplier<T> {
       private final T[] chunk;
       private final int len;
       private int idx;

@@ -1,7 +1,6 @@
 package com.apriori.concurrent;
 
 import com.apriori.collections.TransformingList;
-import com.apriori.util.Function;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
@@ -291,15 +290,12 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    @Override
    public List<Runnable> shutdownNow() {
       return new TransformingList.ReadOnly<Runnable, Runnable>(executor.shutdownNow(),
-            new Function<Runnable, Runnable>() {
-               @Override
-               public Runnable apply(Runnable input) {
-                  Runnable r = ((AbstractStampedTask) input).unwrap();
-                  if (r instanceof Future) {
-                     ((Future<?>) r).cancel(false);
-                  }
-                  return r;
+            (input) -> {
+               Runnable r = ((AbstractStampedTask) input).unwrap();
+               if (r instanceof Future) {
+                  ((Future<?>) r).cancel(false);
                }
+               return r;
             });
    }
 

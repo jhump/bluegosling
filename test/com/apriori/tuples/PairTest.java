@@ -6,8 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Test cases for {@link Pair}.
@@ -136,7 +135,6 @@ public class PairTest {
       assertEquals(Pair.create(Collections.emptyList(), Collections.emptyList()),
             Pair.separate(Collections.<Pair<Integer, String>>emptyList()));
 
-      @SuppressWarnings("unchecked") // dang generic var-args...
       List<Pair<Integer, String>> pairs =
             Arrays.asList(Pair.create(1, "a"), Pair.create(2, "b"), Pair.create(3, "c"));
       assertEquals(Pair.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c")),
@@ -149,7 +147,6 @@ public class PairTest {
       assertEquals(expectedPairs, Pair.combine(Pair.create(a, b)));
    }
    
-   @SuppressWarnings("unchecked") // dang generic var-args...
    @Test public void combine() {
       assertCombinedEquals(Collections.<Pair<Integer, String>>emptyList(),
             Collections.<Integer>emptyList(), Collections.<String>emptyList());

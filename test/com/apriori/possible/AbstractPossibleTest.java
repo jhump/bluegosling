@@ -1,5 +1,9 @@
 package com.apriori.possible;
 
+import static com.apriori.util.Predicates.alwaysAccept;
+import static com.apriori.util.Predicates.alwaysReject;
+import static com.apriori.util.Predicates.isEqualTo;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -7,15 +11,12 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
-import com.apriori.util.Predicates;
-
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Test cases for the basic functionality of any {@link Possible} implementation.
@@ -63,25 +64,15 @@ public abstract class AbstractPossibleTest {
          }
       }));
       
-      Possible<String> transformed = p.transform(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + ":xyz";
-         }
-      });
+      Possible<String> transformed = p.transform((s) -> s + ":xyz");
       assertTrue(transformed.isPresent());
       assertEquals(value + ":xyz", transformed.get());
       
-      Possible<String> stillPresent = p.filter(new Predicate<String>() {
-         @Override
-         public boolean test(String input) {
-            return value == null ? input == null : value.equals(input);
-         }
-      });
+      Possible<String> stillPresent = p.filter(isEqualTo(value));
       assertTrue(stillPresent.isPresent());
       assertEquals(value, stillPresent.get());
 
-      assertFalse(p.filter(Predicates.rejectAll()).isPresent());
+      assertFalse(p.filter(alwaysReject()).isPresent());
    }
    
    @Test public void present() {
@@ -129,14 +120,9 @@ public abstract class AbstractPossibleTest {
          }
       }));
       
-      assertFalse(p.transform(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + ":xyz";
-         }
-      }).isPresent());
+      assertFalse(p.transform((s) -> s + ":xyz").isPresent());
       
-      assertFalse(p.filter(Predicates.acceptAll()).isPresent());
+      assertFalse(p.filter(alwaysAccept()).isPresent());
    }
 
    @Test public void absent() {
@@ -150,21 +136,16 @@ public abstract class AbstractPossibleTest {
    }
 
    @Test public void transform() {
-      Function<String, String> function = new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + ":xyz";
-         }
-      };
+      Function<String, String> function = (s) -> s + ":xyz";
       checkPresentValue(valuePresent("abc").transform(function), "abc:xyz");
       checkAbsentValue(valueAbsent().transform(function));
    }
 
    @Test public void filter() {
-      checkPresentValue(valuePresent("abc").filter(Predicates.acceptAll()), "abc");
-      checkAbsentValue(valueAbsent().filter(Predicates.acceptAll()));
+      checkPresentValue(valuePresent("abc").filter(alwaysAccept()), "abc");
+      checkAbsentValue(valueAbsent().filter(alwaysAccept()));
 
-      checkAbsentValue(valuePresent("abc").filter(Predicates.rejectAll()));
-      checkAbsentValue(valueAbsent().filter(Predicates.rejectAll()));
+      checkAbsentValue(valuePresent("abc").filter(alwaysReject()));
+      checkAbsentValue(valueAbsent().filter(alwaysReject()));
    }
 }

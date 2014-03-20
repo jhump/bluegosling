@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.tuples.Trio;
-import com.apriori.util.Function;
-import com.apriori.util.Predicate;
 
 import org.junit.Test;
 
@@ -13,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.function.Predicate;
 
 public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
    
@@ -31,7 +30,6 @@ public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
       return new ThreadLocalAtom<T>(initialValue, validator);
    }
 
-   @SuppressWarnings("unchecked")
    @Override
    protected void checkWatchers(SynchronousAtom<String> atom, List<?>... noticesArray) {
       // normal mutations do not generate notices
@@ -45,12 +43,7 @@ public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
          assertTrue(notices.isEmpty());
       }
       
-      atom.apply(new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + input;
-         }
-      });
+      atom.apply((s) -> s + s);
       for (List<?> notices : noticesArray) {
          assertTrue(notices.isEmpty());
       }

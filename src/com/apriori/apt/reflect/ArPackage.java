@@ -5,14 +5,12 @@ import static com.apriori.apt.ProcessingEnvironments.elements;
 import javax.lang.model.element.PackageElement;
 
 /**
- * A package. This is analogous to {@link java.lang.Package
- * java.lang.reflect.Package}, except that it represents packages
- * of Java source (during annotation processing) vs. representing packages
- * of runtime types.
+ * A package. This is analogous to {@link Package}, except that it represents packages of Java
+ * source (during annotation processing) vs. representing packages of runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.Package
+ * @see Package
  */
 public class ArPackage extends ArAbstractAnnotatedElement {
 

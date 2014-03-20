@@ -1,10 +1,9 @@
 package com.apriori.reflect;
 
-import com.apriori.util.Function;
-
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * A conversion strategy, which indicates how dispatch of interface methods from a {@link Caster}

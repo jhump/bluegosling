@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
 import com.apriori.tuples.Pair;
-import com.apriori.util.Function;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1136,7 +1135,7 @@ public final class Immutables {
       }
       
       private ImmutableSortedSet<E> getSet() {
-         return (ImmutableSortedSet<E>) cast(collection);
+         return cast((ImmutableSortedSet<? extends E>) collection);
       }
 
       @Override
@@ -1295,13 +1294,7 @@ public final class Immutables {
          ImmutableMap<K, V> castMap = cast(map);
          
          return new TransformingSet<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>(
-               asIfMutable(castMap.entrySet()),
-               new Function<ImmutableMap.Entry<K, V>, Map.Entry<K,V>>() {
-                  @Override
-                  public Map.Entry<K, V> apply(ImmutableMap.Entry<K, V> input) {
-                     return asIfMutable(input);
-                  }
-               });
+               asIfMutable(castMap.entrySet()), (entry) -> asIfMutable(entry));
       }
 
       @Override public boolean equals(Object o) {
@@ -1325,7 +1318,7 @@ public final class Immutables {
       }
       
       private ImmutableSortedMap<K, V> getMap() {
-         return (ImmutableSortedMap<K, V>) cast(map);
+         return cast((ImmutableSortedMap<? extends K, ? extends V>) map);
       }
 
       @Override

@@ -1,5 +1,6 @@
 package com.apriori.apt.reflect;
 
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,12 @@ import javax.lang.model.type.TypeMirror;
  * type specifications in the class. For example, the class {@link ArrayList} has a type parameter
  * ({@code E}) and a method that is declared as {@code boolean add(E)}. In the method signature, the
  * generic type of the one parameter is a reference to the type variable. This is analogous to
- * {@link java.lang.reflect.TypeVariable java.lang.reflect.TypeVariable}, except that it represents
- * types in Java source (during annotation processing) vs. representing runtime types.
+ * {@link TypeVariable}, except that it represents types in Java source (during annotation
+ * processing) vs. representing runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @see java.lang.reflect.TypeVariable
+ * @see TypeVariable
  */
 public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
    private final TypeParameterElement element;
@@ -49,7 +50,8 @@ public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
     * @throws NullPointerException if the specified type mirror is null
     */
    public static ArTypeVariable<?> forTypeMirror(javax.lang.model.type.TypeVariable typeMirror) {
-      ArTypeVariable<?> ret = ReflectionVisitors.TYPE_VARIABLE_VISITOR.visit(typeMirror.asElement());
+      ArTypeVariable<?> ret =
+            ReflectionVisitors.TYPE_VARIABLE_VISITOR.visit(typeMirror.asElement());
       if (ret == null) {
          throw new MirroredTypeException(typeMirror);
       }
@@ -97,7 +99,7 @@ public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
          bounds.add(ArTypes.forTypeMirror(mirror));
       }
       if (bounds.isEmpty()) {
-         bounds.add(ArClass.forJavaLangObject());
+         bounds.add(ArClass.forObject());
       }
       return bounds;
    }
@@ -110,7 +112,8 @@ public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
     */
    public D getGenericDeclaration() {
       @SuppressWarnings("unchecked")
-      D decl = (D) ReflectionVisitors.GENERIC_DECLARATION_VISITOR.visit(element.getGenericElement());
+      D decl =
+         (D) ReflectionVisitors.GENERIC_DECLARATION_VISITOR.visit(element.getGenericElement());
       if (decl == null) {
          throw new AssertionError("Unable to determine generic declaration for type variable");
       }

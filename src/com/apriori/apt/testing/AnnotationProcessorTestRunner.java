@@ -1,8 +1,7 @@
 package com.apriori.apt.testing;
 
 import com.apriori.collections.TransformingList;
-import com.apriori.util.Function;
-import com.apriori.util.Streams;
+import com.apriori.util.IoStreams;
 
 import org.junit.After;
 import org.junit.Before;
@@ -74,7 +73,7 @@ import javax.tools.ToolProvider;
  * comparing it to these files.</li>
  * <li>{@link SupportedSourceVersion @SupportedSourceVersion}: Usually the supported source version comes from
  * the processor under test. But if neither {@link ProcessorUnderTest} nor {@link InitializeProcessorField} is
- * used, then you can use this annotation on the test class to provide this information.<br/>
+ * used, then you can use this annotation on the test class to provide this information.<br>
  * <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined  {@linkplain Inherited
  * inherited}, this test runner will interpret the value as inherited. So if you sub-class a test that has the
  * annotation, it is not necessary re-annotate the sub-class.</li>
@@ -185,11 +184,9 @@ import javax.tools.ToolProvider;
 // @ProcessorUnderTest and @NoProcess not allowed on same method)
 public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
 
-   @SuppressWarnings("unchecked")
    private static final Set<Class<?>> ALLOWED_PROCESS_RETURN_TYPES =
          new HashSet<Class<?>>(Arrays.asList(void.class, boolean.class, Boolean.class));
    
-   @SuppressWarnings("unchecked")
    private static final Set<Class<?>> ALLOWED_NO_PROCESS_RETURN_TYPES = new HashSet<Class<?>>(Arrays.asList(void.class));
    
    public AnnotationProcessorTestRunner(Class<?> klass) throws InitializationError {
@@ -293,17 +290,12 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
    private List<Method> getAnnotatedMethods(Class<? extends Annotation> annotationType) {
       return new TransformingList<FrameworkMethod, Method>(
             getTestClass().getAnnotatedMethods(annotationType),
-            new Function<FrameworkMethod, Method>() {
-               @Override public Method apply(FrameworkMethod input) {
-                  return input.getMethod();
-               }
-            });
+            (m) -> m.getMethod());
    }
    
    // This method is supposedly deprecated, but there is no replacement for intercepting the
    // validation of @Before and @After methods
    @Override
-   @SuppressWarnings("unchecked") // creating var-arg arrays of generic type Class<? extends Annotation>...
    protected void validateInstanceMethods(List<Throwable> errors) {
       // Do not call super since it performs overly strict validation on methods.
       
@@ -343,7 +335,8 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       return "Method " + m.getName() + " in class " + m.getDeclaringClass().getName();
    }
    
-   private void validateAnnotationsNotPresent(List<Method> methods, List<Throwable> errors,
+   @SafeVarargs
+   private final void validateAnnotationsNotPresent(List<Method> methods, List<Throwable> errors,
          Class<? extends Annotation>... notPresentAnnotationTypes) {
       for (Method m : methods) {
          for (Class<? extends Annotation> type : notPresentAnnotationTypes) {
@@ -488,7 +481,8 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
          throw new IllegalArgumentException("Resource not found: " + resourceName);
       }
       try {
-         return fileManager.createFileObject(fileDef.getTargetLocation(), "", fileDef.getFileName(), Streams.toByteArray(in));
+         return fileManager.createFileObject(fileDef.getTargetLocation(), "", fileDef.getFileName(),
+               IoStreams.toByteArray(in));
       } finally {
          in.close();
       }
