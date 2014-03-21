@@ -2,111 +2,36 @@ package com.apriori.possible;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * A {@linkplain Possible possible} value that is immutable and cannot be {@code null}. An optional
- * value is either {@linkplain #some(Object) some value} or {@linkplain #none() none}.
+ * Utility methods related to {@link Optional}s, including conversion to and from the interface
+ * {@link Possible}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
- *
- * @param <T> the type of the optional value
  */
 //TODO: tests for cast, upcast
-//TODO: serializability?
-public abstract class Optional<T> implements Possible<T> {
+public final class Optionals {
 
-   private Optional() {
+   private Optionals() {
    }
    
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Optional}. If
-    * a value is present but the specified function returns {@code null} then {@linkplain
-    * #none() no value} is returned.
-    */
-   @Override
-   public abstract <U> Optional<U> transform(Function<? super T, ? extends U> function);
+   // TODO: doc
    
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Optional}.
-    */
-   @Override
-   public abstract Optional<T> filter(Predicate<? super T> predicate);
-   
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Optional}. If
-    * the specified {@linkplain Possible possible} value is not an {@link Optional} then it will be
-    * {@linkplain #asOptional(Possible) converted}. In particular, if the specified value is present
-    * but {@code null} then {@linkplain #none() no value} is returned.
-    */
-   @Override
-   public abstract Optional<T> or(Possible<T> alternate);
-   
-   /**
-    * Returns the current value if one is present or the specified optional value if not.
-    * 
-    * @param alternate an alternate value
-    * @return returns the current reference if a value is present or the alternate if not
-    */
-   public abstract Optional<T> or(Optional<T> alternate);
+   public static <T> Possible<T> toPossible(Optional<T> optional) {
+      return optional.isPresent() ? new Some<>(optional.get()) : none();
+   }
 
-   /**
-    * Returns an object with no value present.
-    * 
-    * @return an object with no value present
-    */
-   public static <T> Optional<T> none() {
-      return None.instance();
+   public static <T> Optional<T> fromPossible(Possible<T> possible) {
+      return possible.isPresent() ? Optional.ofNullable(possible.get()) : Optional.empty();
    }
-   
-   /**
-    * Creates an object with the specified value. The value cannot be {@code null}.
-    * 
-    * @param t the value
-    * @return an object with the specified value
-    * @throws NullPointerException if the specified value is {@code null}
-    */   
-   public static <T> Optional<T> some(T t) {
-      return new Some<T>(t);
-   }
-   
-   /**
-    * Creates an object that represents the specified value. If the value is not {@code null} then
-    * {@linkplain #some(Object) some value} is returned, otherwise {@linkplain #none() none}.
-    * 
-    * @param t the value
-    * @return {@linkplain #some(Object) some value} with the specified value if not {@code null},
-    *       otherwise {@linkplain #none() none}
-    */
-   public static <T> Optional<T> of(T t) {
-      return t != null ? some(t) : Optional.<T>none();
-   }
-   
-   /**
-    * Converts a possible value to an optional one. If the specified object is an optional value, it
-    * is returned. Otherwise, if the specified value is present and not {@code null} then 
-    * {@linkplain #some(Object) some value} is returned; if the specified value is absent or
-    * {@code null} then {@linkplain #none() none}.
-    * 
-    * @param possible a possible value
-    * @return the possible value, converted to an optional one
-    */
-   public static <T> Optional<T> asOptional(Possible<T> possible) {
-      if (possible instanceof Optional) {
-         return (Optional<T>) possible;
-      }
-      return possible.isPresent() ? of(possible.get()) : Optional.<T>none();
-   }
-   
+
    /**
     * Casts an optional value to a different type. The present value must be assignable to the new
     * type. Using this method is much more efficient than creating a new optional value with a
@@ -129,7 +54,7 @@ public abstract class Optional<T> implements Possible<T> {
             throw new ClassCastException(target.getName());
          }
       } else {
-         return none();
+         return Optional.empty();
       }
    }
 
@@ -146,6 +71,29 @@ public abstract class Optional<T> implements Possible<T> {
    public static <S, T extends S> Optional<S> upcast(Optional<T> from) {
       return (Optional<S>) from;
    }
+   
+   /**
+    * Returns an object with no value present.
+    * 
+    * @return an object with no value present
+    */
+   @SuppressWarnings("unchecked")
+   static <T> Possible<T> none() {
+      return (Possible<T>) None.INSTANCE;
+   }
+   
+   
+   /**
+    * Creates an object that represents the specified value. If the value is not {@code null} then
+    * {@linkplain #some(Object) some value} is returned, otherwise {@linkplain #none() none}.
+    * 
+    * @param t the value
+    * @return {@linkplain #some(Object) some value} with the specified value if not {@code null},
+    *       otherwise {@linkplain #none() none}
+    */
+   static <T> Possible<T> of(T t) {
+      return t != null ? new Some<>(t) : none();
+   }
 
    /**
     * An optional value that has some value. The value cannot be {@code null}.
@@ -154,13 +102,12 @@ public abstract class Optional<T> implements Possible<T> {
     *
     * @param <T> the type of the optional value
     */
-   private static class Some<T> extends Optional<T> implements Serializable {
+   private static class Some<T> implements Possible<T>, Serializable {
 
       private static final long serialVersionUID = 1511876184470865192L;
       
       private final T t;
       
-      @SuppressWarnings("synthetic-access") // super-class ctor is private
       Some(T t) {
          if (t == null) {
             throw new NullPointerException();
@@ -172,6 +119,11 @@ public abstract class Optional<T> implements Possible<T> {
       public boolean isPresent() {
          return true;
       }
+      
+      @Override
+      public void ifPresent(Consumer<? super T> consumer) {
+         consumer.accept(t);
+      }
 
       @Override
       public T get() {
@@ -179,38 +131,38 @@ public abstract class Optional<T> implements Possible<T> {
       }
 
       @Override
-      public T getOr(T alternate) {
+      public T orElse(T alternate) {
+         return t;
+      }
+      
+      @Override
+      public T orElseGet(Supplier<? extends T> supplier) {
          return t;
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(X throwable) throws X {
+      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
          return t;
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
-         return t;
-      }
-
-      @Override
-      public Optional<T> or(Possible<T> alternate) {
+      public Possible<T> or(Possible<T> alternate) {
          return this;
       }
       
       @Override
-      public Optional<T> or(Optional<T> alternate) {
-         return this;
-      }
-      
-      @Override
-      public <U> Optional<U> transform(Function<? super T, ? extends U> function) {
-         return Optional.<U>of(function.apply(t));
+      public <U> Possible<U> map(Function<? super T, ? extends U> function) {
+         return of(function.apply(t));
       }
 
       @Override
-      public Optional<T> filter(Predicate<? super T> predicate) {
-         return predicate.test(t) ? this : None.<T>instance();
+      public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+         return Possible.notNull(function.apply(t));
+      }
+
+      @Override
+      public Possible<T> filter(Predicate<? super T> predicate) {
+         return predicate.test(t) ? this : none();
       }
 
       @Override
@@ -247,7 +199,7 @@ public abstract class Optional<T> implements Possible<T> {
     *
     * @param <T> the type of the optional value
     */
-   private static class None<T> extends Optional<T> implements Serializable {
+   private static class None<T> implements Possible<T>, Serializable {
       
       private static final long serialVersionUID = 5598018120900214802L;
       
@@ -255,39 +207,37 @@ public abstract class Optional<T> implements Possible<T> {
        * The singleton object. Since optionals are immutable, and this form has no present value,
        * the same instance can be used for all usages.
        */
-      private static final None<?> INSTANCE = new None<Object>();
+      static final None<?> INSTANCE = new None<Object>();
       
-      @SuppressWarnings("synthetic-access") // super-class ctor is private
       private None() {
-      }
-      
-      @SuppressWarnings("unchecked") // only need one instance (immutable and type arg is unused)
-      static <T> None<T> instance() {
-         return (None<T>) INSTANCE;
       }
       
       @Override
       public boolean isPresent() {
          return false;
       }
+      
+      @Override
+      public void ifPresent(Consumer<? super T> consumer) {
+      }
 
       @Override
       public T get() {
-         throw new IllegalStateException();
+         throw new NoSuchElementException();
       }
 
       @Override
-      public T getOr(T alternate) {
+      public T orElse(T alternate) {
          return alternate;
       }
-
+      
       @Override
-      public <X extends Throwable> T getOrThrow(X throwable) throws X {
-         throw throwable;
+      public T orElseGet(Supplier<? extends T> supplier) {
+         return supplier.get();
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
          throw throwable.get();
       }
 
@@ -302,22 +252,22 @@ public abstract class Optional<T> implements Possible<T> {
       }
 
       @Override
-      public Optional<T> or(Possible<T> alternate) {
-         return asOptional(alternate);
+      public Possible<T> or(Possible<T> alternate) {
+         return Possible.notNull(alternate);
       }
       
       @Override
-      public Optional<T> or(Optional<T> alternate) {
-         return alternate;
-      }
-      
-      @Override
-      public <U> Optional<U> transform(Function<? super T, ? extends U> function) {
-         return instance();
+      public <U> Possible<U> map(Function<? super T, ? extends U> function) {
+         return none();
       }
 
       @Override
-      public Optional<T> filter(Predicate<? super T> predicate) {
+      public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+         return none();
+      }
+
+      @Override
+      public Possible<T> filter(Predicate<? super T> predicate) {
          return this;
       }
       

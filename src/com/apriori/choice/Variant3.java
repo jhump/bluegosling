@@ -1,5 +1,6 @@
 package com.apriori.choice;
 
+import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
 
 import java.io.Serializable;
@@ -57,15 +58,6 @@ public abstract class Variant3<A, B, C> implements Choice.OfThree<A, B, C> {
    Variant3() {
    }
       
-   @Override
-   public abstract Reference<A> tryFirst();
-
-   @Override
-   public abstract Reference<B> trySecond();
-
-   @Override
-   public abstract Reference<C> tryThird();
-
    @Override
    public abstract <T> Variant3<T, B, C> transformFirst(Function<? super A, ? extends T> function);
    
@@ -138,17 +130,17 @@ public abstract class Variant3<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.setTo(a);
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
@@ -276,17 +268,17 @@ public abstract class Variant3<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.setTo(b);
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
@@ -414,17 +406,17 @@ public abstract class Variant3<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.setTo(c);
       }
    

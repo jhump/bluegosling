@@ -21,7 +21,7 @@ import java.util.function.Function;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO: test serialization
+//TODO: test serialization, apply
 public class HolderTest extends AbstractPossibleTest {
 
    @Override
@@ -39,8 +39,8 @@ public class HolderTest extends AbstractPossibleTest {
       super.transform();
       Function<String, String> function = (s) -> s + ":xyz";
       // values that come back are supposed to be immutable snapshots, not Holders
-      assertFalse(valuePresent("abc").transform(function) instanceof Holder);
-      assertFalse(valueAbsent().transform(function) instanceof Holder);
+      assertFalse(valuePresent("abc").map(function) instanceof Holder);
+      assertFalse(valueAbsent().map(function) instanceof Holder);
    }
 
    @Override
@@ -55,7 +55,7 @@ public class HolderTest extends AbstractPossibleTest {
    @Test public void allowPresentNulls() {
       checkPresentValue(valuePresent(null), null);
       checkPresentValue(valueAbsent().or(Holder.<String>create(null)), null);
-      checkPresentValue(valuePresent("abc").transform((s) -> null), null);
+      checkPresentValue(valuePresent("abc").map((s) -> null), null);
    }
 
    

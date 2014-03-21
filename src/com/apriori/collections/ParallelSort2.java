@@ -108,7 +108,7 @@ public class ParallelSort2 {
                      return recursiveSort(array, mid, hi, threshold, comparator, executor);
                   }
                }));
-         ListenableFuture<?> result = ListenableFutures.combine(loHalf, hiHalf,
+         ListenableFuture<?> result = loHalf.combineWith(hiHalf,
                (o1, o2) -> {
                   // once two halves are sorted, merge them into list
                   ListIterator<T> iter = list.listIterator();
@@ -176,7 +176,7 @@ public class ParallelSort2 {
       ListenableFuture<Void> hiHalf =
             recursiveSort(array, mid, hi, threshold, comparator, executor);
       // once two halves are sorted, merge them into list
-      return ListenableFutures.combine(loHalf, hiHalf, 
+      return loHalf.combineWith(hiHalf, 
             (v1, v2) -> {
                final T tmp[] = Arrays.copyOfRange(array, lo, mid);
                final int l = tmp.length;

@@ -1,6 +1,6 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.FutureListeners.forRunnable;
+import static com.apriori.concurrent.FutureListener.forRunnable;
 import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
 
 import static org.junit.Assert.assertEquals;

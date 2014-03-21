@@ -1,11 +1,6 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.ListenableFutures.addCallback;
-
 import com.apriori.concurrent.ListenableFutures.CombiningFuture;
-import com.apriori.concurrent.ListenableFutures.CombiningVisitor;
-import com.apriori.possible.Fulfillable;
-import com.apriori.possible.Fulfillables;
 import com.apriori.tuples.NTuple;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Quartet;
@@ -21,59 +16,42 @@ import java.util.Arrays;
 //TODO: tests
 public class FutureTuples {
    public static <T> ListenableFuture<Unit<T>> asUnit(ListenableFuture<? extends T> future) {
-      return ListenableFutures.transform(future, (o) -> Unit.create(o));
+      return future.transform((o) -> Unit.create(o));
    }
    
    public static <T, U> ListenableFuture<Pair<T, U>> asPair(ListenableFuture<? extends T> futureT,
          ListenableFuture<? extends U> futureU) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
       CombiningFuture<Pair<T, U>> futurePair =
             new CombiningFuture<Pair<T,U>>(Arrays.asList(futureT, futureU)) {
                @Override Pair<T, U> computeValue() {
-                  return Pair.create(t.get(), u.get());
+                  return Pair.create(futureT.getResult(), futureU.getResult());
                }
             };
-      addCallback(futureT, new CombiningVisitor<T>(t, futurePair));
-      addCallback(futureU, new CombiningVisitor<U>(u, futurePair));
       return futurePair;
    }
 
    public static <T, U, V> ListenableFuture<Trio<T, U, V>> asTrio(
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      final Fulfillable<V> v = Fulfillables.create();
       CombiningFuture<Trio<T, U, V>> futureTrio =
             new CombiningFuture<Trio<T,U, V>>(Arrays.asList(futureT, futureU, futureV)) {
                @Override Trio<T, U, V> computeValue() {
-                  return Trio.create(t.get(), u.get(), v.get());
+                  return Trio.create(futureT.getResult(), futureU.getResult(), futureV.getResult());
                }
             };
-      addCallback(futureT, new CombiningVisitor<T>(t, futureTrio));
-      addCallback(futureU, new CombiningVisitor<U>(u, futureTrio));
-      addCallback(futureV, new CombiningVisitor<V>(v, futureTrio));
       return futureTrio;
    }
 
    public static <T, U, V, W> ListenableFuture<Quartet<T, U, V, W>> asQuartet(
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      final Fulfillable<V> v = Fulfillables.create();
-      final Fulfillable<W> w = Fulfillables.create();
       CombiningFuture<Quartet<T, U, V, W>> futureQuartet =
             new CombiningFuture<Quartet<T,U, V, W>>(Arrays.asList(futureT, futureU, futureV, futureW)) {
                @Override Quartet<T, U, V, W> computeValue() {
-                  return Quartet.create(t.get(), u.get(), v.get(), w.get());
+                  return Quartet.create(futureT.getResult(), futureU.getResult(), futureV.getResult(),
+                        futureW.getResult());
                }
             };
-      addCallback(futureT, new CombiningVisitor<T>(t, futureQuartet));
-      addCallback(futureU, new CombiningVisitor<U>(u, futureQuartet));
-      addCallback(futureV, new CombiningVisitor<V>(v, futureQuartet));
-      addCallback(futureW, new CombiningVisitor<W>(w, futureQuartet));
       return futureQuartet;
    }
 
@@ -81,23 +59,14 @@ public class FutureTuples {
          ListenableFuture<? extends T> futureT, ListenableFuture<? extends U> futureU,
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW,
          ListenableFuture<? extends X> futureX) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      final Fulfillable<V> v = Fulfillables.create();
-      final Fulfillable<W> w = Fulfillables.create();
-      final Fulfillable<X> x = Fulfillables.create();
       CombiningFuture<Quintet<T, U, V, W, X>> futureQuintet =
             new CombiningFuture<Quintet<T,U, V, W, X>>(Arrays.asList(futureT, futureU, futureV,
                   futureW, futureX)) {
                @Override Quintet<T, U, V, W, X> computeValue() {
-                  return Quintet.create(t.get(), u.get(), v.get(), w.get(), x.get());
+                  return Quintet.create(futureT.getResult(), futureU.getResult(), futureV.getResult(),
+                        futureW.getResult(), futureX.getResult());
                }
             };
-      addCallback(futureT, new CombiningVisitor<T>(t, futureQuintet));
-      addCallback(futureU, new CombiningVisitor<U>(u, futureQuintet));
-      addCallback(futureV, new CombiningVisitor<V>(v, futureQuintet));
-      addCallback(futureW, new CombiningVisitor<W>(w, futureQuintet));
-      addCallback(futureX, new CombiningVisitor<X>(x, futureQuintet));
       return futureQuintet;
    }
 
@@ -106,17 +75,6 @@ public class FutureTuples {
          ListenableFuture<? extends V> futureV, ListenableFuture<? extends W> futureW,
          ListenableFuture<? extends X> futureX, ListenableFuture<?> futureY,
          ListenableFuture<?>... futures) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      final Fulfillable<V> v = Fulfillables.create();
-      final Fulfillable<W> w = Fulfillables.create();
-      final Fulfillable<X> x = Fulfillables.create();
-      final Fulfillable<Object> y = Fulfillables.create();
-      @SuppressWarnings("unchecked") // can't create generic array, so have to cast from raw type
-      final Fulfillable<Object> fullfillables[] = new Fulfillable[futures.length];
-      for (int i = 0; i < futures.length; i++) {
-         fullfillables[i] = Fulfillables.create();
-      }
       ListenableFuture<?> all[] = new ListenableFuture<?>[futures.length + 6];
       all[0] = futureT;
       all[1] = futureU;
@@ -128,22 +86,14 @@ public class FutureTuples {
       CombiningFuture<NTuple<T, U, V, W, X>> futureNTuple =
             new CombiningFuture<NTuple<T,U, V, W, X>>(Arrays.asList(all)) {
                @Override NTuple<T, U, V, W, X> computeValue() {
-                  Object args[] = new Object[fullfillables.length];
-                  for (int i = 0; i < fullfillables.length; i++) {
-                     args[i] = fullfillables[i].get();
+                  Object args[] = new Object[futures.length];
+                  for (int i = 0, j = 6; j < all.length; i++, j++) {
+                     args[i] = all[j].getResult();
                   }
-                  return NTuple.create(t.get(), u.get(), v.get(), w.get(), x.get(), y.get(), args);
+                  return NTuple.create(futureT.getResult(), futureU.getResult(), futureV.getResult(),
+                        futureW.getResult(), futureX.getResult(), futureY.getResult(), args);
                }
             };
-      addCallback(futureT, new CombiningVisitor<T>(t, futureNTuple));
-      addCallback(futureU, new CombiningVisitor<U>(u, futureNTuple));
-      addCallback(futureV, new CombiningVisitor<V>(v, futureNTuple));
-      addCallback(futureW, new CombiningVisitor<W>(w, futureNTuple));
-      addCallback(futureX, new CombiningVisitor<X>(x, futureNTuple));
-      addCallback(futureY, new CombiningVisitor<Object>(y, futureNTuple));
-      for (int i = 0; i < futures.length; i++) {
-         addCallback(futures[i], new CombiningVisitor<Object>(fullfillables[i], futureNTuple));
-      }
       return futureNTuple;
    }
 
@@ -152,7 +102,6 @@ public class FutureTuples {
    }
    
    public static ListenableFuture<Tuple> join(Iterable<ListenableFuture<?>> futures) {
-      return ListenableFutures.transform(ListenableFutures.join(futures),
-            (list) -> Tuples.fromCollection(list));
+      return ListenableFutures.join(futures).transform((list) -> Tuples.fromCollection(list));
    }
 }

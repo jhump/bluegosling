@@ -1,7 +1,6 @@
 package com.apriori.util;
 
-import com.apriori.possible.Optional;
-
+import java.util.Optional;
 import java.util.function.Function;
 
 /**

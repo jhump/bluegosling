@@ -1,6 +1,7 @@
 package com.apriori.choice;
 
-import com.apriori.possible.Optional;
+import com.apriori.possible.Possible;
+import com.apriori.possible.Reference;
 
 import java.io.Serializable;
 import java.util.function.Function;
@@ -82,18 +83,6 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
    AnyOfFour() {
    }
       
-   @Override
-   public abstract Optional<A> tryFirst();
-
-   @Override
-   public abstract Optional<B> trySecond();
-
-   @Override
-   public abstract Optional<C> tryThird();
-
-   @Override
-   public abstract Optional<D> tryFourth();
-
    @Override
    public abstract <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
    
@@ -184,23 +173,23 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.of(a);
+      public Possible<A> tryFirst() {
+         return Reference.setTo(a);
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.none();
+      public Possible<B> trySecond() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<C> tryThird() {
-         return Optional.none();
+      public Possible<C> tryThird() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<D> tryFourth() {
-         return Optional.none();
+      public Possible<D> tryFourth() {
+         return Reference.unset();
       }
    
       @Override
@@ -354,23 +343,23 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.none();
+      public Possible<A> tryFirst() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.of(b);
+      public Possible<B> trySecond() {
+         return Reference.setTo(b);
       }
    
       @Override
-      public Optional<C> tryThird() {
-         return Optional.none();
+      public Possible<C> tryThird() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<D> tryFourth() {
-         return Optional.none();
+      public Possible<D> tryFourth() {
+         return Reference.unset();
       }
    
       @Override
@@ -524,23 +513,23 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.none();
+      public Possible<A> tryFirst() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.none();
+      public Possible<B> trySecond() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<C> tryThird() {
-         return Optional.of(c);
+      public Possible<C> tryThird() {
+         return Reference.setTo(c);
       }
    
       @Override
-      public Optional<D> tryFourth() {
-         return Optional.none();
+      public Possible<D> tryFourth() {
+         return Reference.unset();
       }
    
       @Override
@@ -694,23 +683,23 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.none();
+      public Possible<A> tryFirst() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.none();
+      public Possible<B> trySecond() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<C> tryThird() {
-         return Optional.none();
+      public Possible<C> tryThird() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<D> tryFourth() {
-         return Optional.of(d);
+      public Possible<D> tryFourth() {
+         return Reference.setTo(d);
       }
    
       @Override

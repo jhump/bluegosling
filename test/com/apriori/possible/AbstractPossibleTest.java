@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -45,9 +46,9 @@ public abstract class AbstractPossibleTest {
    protected void checkPresentValue(Possible<String> p, final String value) {
       assertTrue(p.isPresent());
       assertEquals(value, p.get());
-      assertEquals(value, p.getOr(null));
-      assertEquals(value, p.getOr(value + "xyz"));
-      assertEquals(value, p.getOrThrow(new RuntimeException()));
+      assertEquals(value, p.orElse(null));
+      assertEquals(value, p.orElse(value + "xyz"));
+      assertEquals(value, p.orElseThrow(() -> new RuntimeException()));
       checkSingletonSet(p.asSet(), value);
       
       assertEquals(123, (int) p.visit(new Possible.Visitor<String, Integer>() {
@@ -64,7 +65,7 @@ public abstract class AbstractPossibleTest {
          }
       }));
       
-      Possible<String> transformed = p.transform((s) -> s + ":xyz");
+      Possible<String> transformed = p.map((s) -> s + ":xyz");
       assertTrue(transformed.isPresent());
       assertEquals(value + ":xyz", transformed.get());
       
@@ -93,14 +94,14 @@ public abstract class AbstractPossibleTest {
       assertFalse(p.isPresent());
       try {
          p.get();
-         fail("expecting IllegalStateException");
-      } catch (IllegalStateException expected) {
+         fail("expecting NoSuchElementException");
+      } catch (NoSuchElementException expected) {
       }
-      assertNull(p.getOr(null));
-      assertEquals("xyz", p.getOr("xyz"));
+      assertNull(p.orElse(null));
+      assertEquals("xyz", p.orElse("xyz"));
       RuntimeException r = new RuntimeException();
       try {
-         p.getOrThrow(r);
+         p.orElseThrow(() -> r);
          fail("expecting RuntimeException");
       } catch (RuntimeException e) {
          assertSame(r, e);
@@ -120,7 +121,7 @@ public abstract class AbstractPossibleTest {
          }
       }));
       
-      assertFalse(p.transform((s) -> s + ":xyz").isPresent());
+      assertFalse(p.map((s) -> s + ":xyz").isPresent());
       
       assertFalse(p.filter(alwaysAccept()).isPresent());
    }
@@ -137,8 +138,8 @@ public abstract class AbstractPossibleTest {
 
    @Test public void transform() {
       Function<String, String> function = (s) -> s + ":xyz";
-      checkPresentValue(valuePresent("abc").transform(function), "abc:xyz");
-      checkAbsentValue(valueAbsent().transform(function));
+      checkPresentValue(valuePresent("abc").map(function), "abc:xyz");
+      checkAbsentValue(valueAbsent().map(function));
    }
 
    @Test public void filter() {

@@ -1,6 +1,6 @@
 package com.apriori.util;
 
-import com.apriori.possible.Optional;
+import java.util.Optional;
 
 /**
  * A partial function that computes a value from three inputs.

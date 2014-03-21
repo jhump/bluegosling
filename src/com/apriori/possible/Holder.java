@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -24,7 +25,6 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of the held value
  */
-//TODO: serializability?
 public class Holder<T> implements Possible<T>, Serializable {
    
    private static final long serialVersionUID = -1290017626307767440L;
@@ -88,13 +88,20 @@ public class Holder<T> implements Possible<T>, Serializable {
    public boolean isPresent() {
       return isPresent;
    }
+   
+   @Override
+   public void ifPresent(Consumer<? super T> consumer) {
+      if (isPresent) {
+         consumer.accept(value);
+      }
+   }
 
    @Override
    public Possible<T> or(Possible<T> alternate) {
       return isPresent ? this : alternate;
    }
 
-   // TODO: transform and filter return views instead of snapshots?
+   // TODO: map, flatMap, and filter return views instead of snapshots
 
    /**
     * {@inheritDoc}
@@ -103,10 +110,23 @@ public class Holder<T> implements Possible<T>, Serializable {
     * present, is a snapshot of applying the function to the held value.
     */
    @Override
-   public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
+   public <U> Possible<U> map(Function<? super T, ? extends U> function) {
       return isPresent
-            ? Reference.<U>setTo(function.apply(value))
-            : Reference.<U>unset();
+            ? Reference.setTo(function.apply(value))
+            : Reference.unset();
+   }
+
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>The returned object will not be a {@link Holder} and thus not be mutable. Its value, if
+    * present, is a snapshot of applying the function to the held value.
+    */
+   @Override
+   public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+      return isPresent
+            ? function.apply(value)
+            : Reference.unset();
    }
 
    /**
@@ -119,7 +139,7 @@ public class Holder<T> implements Possible<T>, Serializable {
    public Possible<T> filter(Predicate<? super T> predicate) {
       return isPresent && predicate.test(value)
             ? Reference.setTo(value)
-            : Reference.<T>unset();
+            : Reference.unset();
    }
    
    // TODO: tests for apply(...)
@@ -153,26 +173,23 @@ public class Holder<T> implements Possible<T>, Serializable {
    @Override
    public T get() {
       if (!isPresent) {
-         throw new IllegalStateException();
+         throw new NoSuchElementException();
       }
       return value;
    }
 
    @Override
-   public T getOr(T alternate) {
+   public T orElse(T alternate) {
       return isPresent ? value : alternate;
    }
 
    @Override
-   public <X extends Throwable> T getOrThrow(X throwable) throws X {
-      if (!isPresent) {
-         throw throwable;
-      }
-      return value;
+   public T orElseGet(Supplier<? extends T> supplier) {
+      return isPresent ? value : supplier.get();
    }
 
    @Override
-   public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+   public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
       if (!isPresent) {
          throw throwable.get();
       }

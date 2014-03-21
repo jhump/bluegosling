@@ -6,6 +6,8 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
+import java.util.Optional;
+
 /**
  * Test cases for {@link Reference}.
  *
@@ -27,12 +29,12 @@ public class ReferenceTest extends AbstractPossibleTest {
    @Test public void allowPresentNulls() {
       checkPresentValue(valuePresent(null), null);
       checkPresentValue(valueAbsent().or(Reference.<String>setTo(null)), null);
-      checkPresentValue(valuePresent("abc").transform((s) -> null), null);
+      checkPresentValue(valuePresent("abc").map((s) -> null), null);
    }
 
    @Test public void asReference() {
-      checkPresentValue(Reference.asReference(Optional.some("abc")), "abc");
-      checkAbsentValue(Reference.asReference(Optional.<String>none()));
+      checkPresentValue(Reference.asReference(Optionals.toPossible(Optional.of("abc"))), "abc");
+      checkAbsentValue(Reference.asReference(Optionals.toPossible(Optional.empty())));
    }
    
    @Test public void equalsAndHashCode() {

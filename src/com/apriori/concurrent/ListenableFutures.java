@@ -1,24 +1,20 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.FutureListeners.forVisitor;
+import static com.apriori.concurrent.FutureListener.forVisitor;
 import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
+import static com.apriori.concurrent.ListenableFuture.cast;
 
 import com.apriori.possible.Fulfillable;
-import com.apriori.possible.Fulfillables;
-import com.apriori.possible.Holder;
-import com.apriori.util.TriFunction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -26,8 +22,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Lots of goodies related to {@link ListenableFuture}s. These include factory methods for creating
@@ -182,324 +176,6 @@ public final class ListenableFutures {
    }
 
    /**
-    * Adds a listener that visits the specified future using a {@linkplain
-    * ListenableExecutors#sameThreadExecutor() same thread executor}. This is such a common pattern
-    * for listeners that this utility method is provided to reduce the boiler-plate involved in
-    * otherwise directly calling {@code future.addListener(...)}.
-    * 
-    * @param future the listenable future that will be visited
-    * @param visitor the visitor that will be called once the future completes
-    */
-   public static <T> void addCallback(ListenableFuture<T> future,
-         FutureVisitor<? super T> visitor) {
-      future.addListener(forVisitor(visitor), sameThreadExecutor());
-   }
-   
-   /**
-    * Chains the specified task to the completion of the specified future. The specified task will
-    * be initiated once the specified future completes successfully. The returned future will
-    * complete successfully once both the given future and chained task have completed. The
-    * returned future will fail if the specified future fails or if the task throws an exception.
-    * 
-    * <p>If the specified future is cancelled then the returned future will be cancelled. But if the
-    * returned future is cancelled, only the task will be cancelled (and interrupted, if
-    * appropriate). Canceling the returned future does not cancel the specified future, even if it
-    * is not yet complete.
-    *
-    * @param future a future
-    * @param task a task that should execute when the future completes
-    * @param executor the executor used to run the task
-    * @return a future whose value will be the result of the specified task
-    */
-   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, final Callable<T> task,
-         Executor executor) {
-      final Holder<Thread> taskThread = Holder.create();
-      final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
-         @Override protected void interrupt() {
-            // must use synchronization to make sure the interrupt can't happen
-            // after the task is no longer running on that thread
-            synchronized (taskThread) {
-               Thread thread = taskThread.get();
-               if (thread != null) {
-                  thread.interrupt();
-               }
-            }
-         }
-      };
-      future.addListener(forVisitor(new FutureVisitor<Object>() {
-         @Override
-         public void successful(Object o) {
-            synchronized (taskThread) {
-               taskThread.set(Thread.currentThread());
-            }
-            try {
-               if (!result.isCancelled()) {
-                  result.setValue(task.call());
-               }
-            } catch (Throwable th) {
-               result.setFailure(th);
-            } finally {
-               synchronized (taskThread) {
-                  taskThread.set(null);
-               }
-            }
-         }
-   
-         @Override
-         public void failed(Throwable t) {
-            result.setFailure(t);
-         }
-         
-         @Override
-         public void cancelled() {
-            result.setCancelled();
-         }
-      }), executor);
-      return result;
-   }
-
-   /**
-    * Chains the specified task to the completion of the specified future. The specified task will
-    * be initiated once the specified future completes successfully. The returned future will
-    * complete successfully once both the given future and chained task have completed. The
-    * returned future will fail if the specified future fails or if the task throws an exception.
-    * 
-    * <p>If the specified future is cancelled then the returned future will be cancelled. But if the
-    * returned future is cancelled, only the task will be cancelled (and interrupted, if
-    * appropriate). Canceling the returned future does not cancel the specified future, even if it
-    * is not yet complete.
-    *
-    * @param future a future
-    * @param task a task that should execute when the future completes
-    * @param result the result of the task when it completes
-    * @param executor the executor used to run the task
-    * @return a future that will complete with the specified result when the specified task
-    *       completes
-    */
-   public static <T> ListenableFuture<T> chain(ListenableFuture<?> future, Runnable task, T result,
-         Executor executor) {
-      return chain(future, Executors.callable(task, result), executor);
-   }
-
-   /**
-    * Chains the specified task to the completion of the specified future. The specified task will
-    * be initiated once the specified future completes successfully. The returned future will
-    * complete successfully once both the given future and chained task have completed. The
-    * returned future will fail if the specified future fails or if the task throws an exception.
-    * 
-    * <p>If the specified future is cancelled then the returned future will be cancelled. But if the
-    * returned future is cancelled, only the task will be cancelled (and interrupted, if
-    * appropriate). Canceling the returned future does not cancel the specified future, even if it
-    * is not yet complete.
-    *
-    * @param future a future
-    * @param task a task that should execute when the future completes
-    * @param executor the executor used to run the task
-    * @return a future that will complete with a {@code null} value when the specified task
-    *       completes
-    */
-   public static ListenableFuture<Void> chain(ListenableFuture<?> future, Runnable task,
-         Executor executor) {
-      return chain(future, task, null, executor);
-   }
-
-   /**
-    * Chains the specified task to the completion of the specified future. The specified task will
-    * be initiated once the specified future completes successfully. The returned future will
-    * complete successfully once both the given future and chained task have completed. The
-    * returned future will fail if the specified future fails or if the task throws an exception.
-    * 
-    * <p>If the specified future is cancelled then the returned future will be cancelled. But if the
-    * returned future is cancelled, only the task will be cancelled (and interrupted, if
-    * appropriate). Canceling the returned future does not cancel the given future, even if it is
-    * not yet complete.
-    *
-    * @param future a future
-    * @param task a task whose input is the result of the specified future
-    * @param executor the executor used to run the task
-    * @return a future whose value will be the result of the specified task
-    */
-   public static <T, U> ListenableFuture<U> chain(ListenableFuture<T> future,
-         Function<? super T, ? extends U> task, Executor executor) {
-      return chain(future, () -> task.apply(future.getResult()), executor);
-   }
-
-   /**
-    * Transforms the specified future value using the specified function. This is similar to
-    * using {@link #chain(ListenableFuture, Function, Executor)} except that no executor is
-    * specified. The function will be executed in the same thread that completes the future, so it
-    * should run quickly and be safe to run from <em>any</em> thread. The function cannot be
-    * interrupted. The returned future will fail if the given future fails or if the function throws
-    * an exception.
-    * 
-    * <p>Also unlike using {@code chain(...)}, the returned future's cancellation status is kept in
-    * sync with the given future. So if the returned future is cancelled, the given future, if it
-    * is not yet done, will also be cancelled.
-    *
-    * @param future a future
-    * @param function a function used to compute the transformed value
-    * @return a future that is the result of applying the function to the given future value
-    */
-   public static <T, U> ListenableFuture<U> transform(final ListenableFuture<T> future,
-         final Function<? super T, ? extends U> function) {
-      final AbstractListenableFuture<U> result = new AbstractListenableFuture<U>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.setCancelled()) {
-               future.cancel(mayInterrupt);
-               return true;
-            }
-            return false;
-         }
-      };
-      addCallback(future, new FutureVisitor<T>() {
-         @Override
-         public void successful(T t) {
-            try {
-               result.setValue(function.apply(t));
-            } catch (Throwable th) {
-               result.setFailure(th);
-            }
-         }
-   
-         @Override
-         public void failed(Throwable t) {
-            result.setFailure(t);
-         }
-         
-         @Override
-         public void cancelled() {
-            result.setCancelled();
-         }
-      });
-      return result;
-   }
-
-   /**
-    * Transforms the specified future using the specified function. The given function is always
-    * applied, unless the given future is cancelled. Since the function takes the future as an input
-    * and not just its resulting value, the function can then inspect the future to see whether it
-    * completed successfully or failed. The function is not invoked until the given future is done,
-    * so it is safe for it call {@link ListenableFuture#getResult()},
-    * {@link ListenableFuture#getFailure()}, or {@link ListenableFuture#visit(FutureVisitor)}.
-    * 
-    * <p>The returned future's cancellation status is kept in sync with the given future. So if the
-    * returned future is cancelled, the given future, if it is not yet done, will be cancelled.
-    * Similarly, if the given future gets cancelled then the returned future will also be cancelled.
-    *
-    * @param future a future
-    * @param function a function used to compute the transformed value
-    * @return a future that is the result of applying the function to the given future value
-    */
-   public static <T, U> ListenableFuture<U> transformFuture(final ListenableFuture<T> future,
-         final Function<? super ListenableFuture<T>, ? extends U> function) {
-      final AbstractListenableFuture<U> result = new AbstractListenableFuture<U>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.setCancelled()) {
-               future.cancel(mayInterrupt);
-               return true;
-            }
-            return false;
-         }
-      };
-      future.addListener(new FutureListener<T>() {
-         @Override
-         public void onCompletion(ListenableFuture<? extends T> completedFuture) {
-            if (completedFuture.isCancelled()) {
-               result.setCancelled();
-            }
-            try {
-               ListenableFuture<T> castFuture = cast(completedFuture);
-               result.setValue(function.apply(castFuture));
-            } catch (Throwable t) {
-               result.setFailure(t);
-            }
-         }
-      }, sameThreadExecutor());
-      return result;
-   }
-
-   /**
-    * Transforms the specified future exception using the specified function. This is nearly
-    * identical to {@link #transform(ListenableFuture, Function)}, except that the function is
-    * applied to the future's exception if it fails, instead of being applied to the future's value
-    * if it succeeds. So if the given future completes successfully then the given function is never
-    * invoked. 
-    * 
-    * <p>The returned future's cancellation status is kept in sync with the given future. So if the
-    * returned future is cancelled, the given future, if it is not yet done, will be cancelled.
-    * Similarly, if the given future gets cancelled then the returned future will also be cancelled.
-    *
-    * @param future a future
-    * @param function a function used to compute the transformed exception
-    * @return a future that, if it fails, will have an exception that is the result of applying the
-    *       given function
-    */
-   public static <T> ListenableFuture<T> transformException(final ListenableFuture<T> future,
-         final Function<Throwable, ? extends Throwable> function) {
-      final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.setCancelled()) {
-               future.cancel(mayInterrupt);
-               return true;
-            }
-            return false;
-         }
-      };
-      addCallback(future, new FutureVisitor<T>() {
-         @Override
-         public void successful(T t) {
-            result.setValue(t);
-         }
-   
-         @Override
-         public void failed(Throwable t) {
-            try {
-               result.setFailure(function.apply(t));
-            } catch (Throwable th) {
-               result.setFailure(th);
-            }
-         }
-         
-         @Override
-         public void cancelled() {
-            result.setCancelled();
-         }
-      });
-      return result;   }
-
-   /**
-    * Recovers a future value from the specified future exception and the specified function. This
-    * is similar to {@link #transform(ListenableFuture, Function)}, except that the function is
-    * applied to the future's exception if it fails, instead of being applied to the future's value
-    * if it succeeds. So if the given future completes successfully then the given function is never
-    * invoked. It is even more similar to {@link #transformException(ListenableFuture, Function)},
-    * except that the given function computes a value for the returned future, not an alternate
-    * cause of failure.
-    * 
-    * <p>The returned future's cancellation status is kept in sync with the given future. So if the
-    * returned future is cancelled, the given future, if it is not yet done, will be cancelled.
-    * Similarly, if the given future gets cancelled then the returned future will also be cancelled.
-    *
-    * @param future a future
-    * @param function a function used to compute the transformed exception
-    * @return a future whose result will be that of the given future, or if that future fails then
-    *       then the result of applying a function to its cause of failure
-    */ 
-   public static <T> ListenableFuture<T> recover(final ListenableFuture<T> future,
-         final Function<Throwable, ? extends T> function) {
-      return transformFuture(future, new Function<ListenableFuture<T>, T>() {
-         @Override
-         public T apply(ListenableFuture<T> completedFuture) {
-            if (completedFuture.isSuccessful()) {
-               return completedFuture.getResult();
-            } else {
-               return function.apply(completedFuture.getFailure());
-            }
-         }
-      });
-   }
-
-   /**
     * Returns a future that has already successfully completed with the specified value.
     * 
     * @param value the future result
@@ -544,7 +220,7 @@ public final class ListenableFutures {
    public static <T> ListenableFuture<T> unfinishableFuture() {
       return (ListenableFuture<T>) UnfinishableFuture.INSTANCE;
    }
-
+   
    /**
     * Joins multiple futures into one future list. The returned future will complete successfully
     * once all constituent futures complete successfully. The returned future will fail if any of
@@ -580,100 +256,22 @@ public final class ListenableFutures {
          final Iterable<ListenableFuture<? extends T>> futures) {
       List<ListenableFuture<? extends T>> futureList = snapshot(futures);
       if (futureList.isEmpty()) {
-         return completedFuture(Collections.<T>emptyList());
+         return completedFuture(Collections.emptyList());
       }
       final int len = futureList.size();
       if (len == 1) {
-         return transform(futureList.get(0), new Function<T, List<T>>() {
-            @Override
-            public List<T> apply(T input) {
-               return Collections.singletonList(input);
-            }
-         });
-      }
-      final List<Fulfillable<T>> resolved = new ArrayList<Fulfillable<T>>(len);
-      for (int i = 0; i < len; i++) {
-         resolved.add(Fulfillables.<T>create());
+         return futureList.get(0).transform((o) -> Collections.singletonList(o));
       }
       @SuppressWarnings({"unchecked", "rawtypes"}) // java generics not expressive enough
-      CombiningFuture<List<T>> result = new CombiningFuture<List<T>>((Collection)futureList) {
+      CombiningFuture<List<T>> result = new CombiningFuture<List<T>>((Collection) futureList) {
          @Override List<T> computeValue() {
             List<T> list = new ArrayList<T>(len);
-            for (Fulfillable<T> f : resolved) {
-               list.add(f.get());
+            for (ListenableFuture<? extends T> future : futureList) {
+               list.add(future.getResult());
             }
             return list;
          }
       };
-      for (int i = 0; i < len; i++) {
-         futureList.get(i).addListener(
-               forVisitor(new CombiningVisitor<T>(resolved.get(i), result)),
-               sameThreadExecutor());
-      }
-      return result;
-   }
-   
-   /**
-    * Combines two futures into one by applying a function. The value of the returned future is the
-    * result of applying the specified function to the values of the two futures. The returned
-    * future will complete successfully when both input futures complete successfully. The returned
-    * future will fail if either of the input futures fails. 
-    *
-    * <p>The returned future's cancellation status will be kept in sync with the two input futures.
-    * So if the returned future is cancelled, any unfinished input futures will also be cancelled.
-    * If either of the input futures is cancelled, the returned future will also be cancelled.
-    * 
-    * @param future1 a future
-    * @param future2 another future
-    * @param function a function that combines two input values into one result
-    * @return the future result of applying the function to the two future values
-    */
-   public static <T, U, V> ListenableFuture<V> combine(
-         ListenableFuture<T> future1, ListenableFuture<U> future2,
-         BiFunction<? super T, ? super U, ? extends V> function) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      CombiningFuture<V> result = new CombiningFuture<V>(Arrays.asList(future1, future2)) {
-         @Override V computeValue() {
-            return function.apply(t.get(), u.get());
-         }
-      };
-      future1.addListener(forVisitor(new CombiningVisitor<T>(t, result)), sameThreadExecutor());
-      future2.addListener(forVisitor(new CombiningVisitor<U>(u, result)), sameThreadExecutor());
-      return result;
-   }
-
-   /**
-    * Combines three futures into one by applying a function. The value of the returned future is
-    * the result of applying the specified function to the values of the three futures. The returned
-    * future will complete successfully all three input futures complete successfully. The returned
-    * future will fail if any of the input futures fails. 
-    *
-    * <p>The returned future's cancellation status will be kept in sync with the three input
-    * futures. So if the returned future is cancelled, any unfinished input futures will also be
-    * cancelled. If any of the input futures is cancelled, the returned future will also be
-    * cancelled.
-    * 
-    * @param future1 a future
-    * @param future2 another future
-    * @param future3 a third future
-    * @param function a function that combines three input values into one result
-    * @return the future result of applying the function to the three future values
-    */
-   public static <T, U, V, W> ListenableFuture<W> combine(ListenableFuture<T> future1,
-         ListenableFuture<U> future2, ListenableFuture<V> future3,
-         TriFunction<? super T, ? super U, ? super V, ? extends W> function) {
-      final Fulfillable<T> t = Fulfillables.create();
-      final Fulfillable<U> u = Fulfillables.create();
-      final Fulfillable<V> v = Fulfillables.create();
-      CombiningFuture<W> result = new CombiningFuture<W>(Arrays.asList(future1, future2, future3)) {
-         @Override W computeValue() {
-            return function.apply(t.get(), u.get(), v.get());
-         }
-      };
-      future1.addListener(forVisitor(new CombiningVisitor<T>(t, result)), sameThreadExecutor());
-      future2.addListener(forVisitor(new CombiningVisitor<U>(u, result)), sameThreadExecutor());
-      future3.addListener(forVisitor(new CombiningVisitor<V>(v, result)), sameThreadExecutor());
       return result;
    }
 
@@ -759,7 +357,7 @@ public final class ListenableFutures {
          }
       };
       for (ListenableFuture<? extends T> future : futureList) {
-         addCallback(future, visitor);
+         future.visitWhenDone(visitor);
       }
       return result;
    }
@@ -851,25 +449,9 @@ public final class ListenableFutures {
          }
       };
       for (ListenableFuture<? extends T> future : futureList) {
-         addCallback(future, visitor);
+         future.visitWhenDone(visitor);
       }
       return result;
-   }
-
-   /**
-    * Casts a future to a super-type. All methods on the future only return instances of the
-    * parameterized type, none accept them as arguments. Since the target type is a super-type of
-    * the future's original type, all instances returned by the original future are instances of
-    * the target type. So the cast is safe thanks.
-    *
-    * @param future a future
-    * @return the same future, but with its type parameter as a super-type of the original
-    */
-   public static <T, U extends T> ListenableFuture<T> cast(ListenableFuture<U> future) {
-      // co-variance makes it safe since all operations return a T, none take a T
-      @SuppressWarnings("unchecked")
-      ListenableFuture<T> cast = (ListenableFuture<T>) future;
-      return cast;
    }
 
    private static <T> List<ListenableFuture<? extends T>> snapshot(
@@ -995,6 +577,10 @@ public final class ListenableFutures {
       CombiningFuture(Collection<ListenableFuture<?>> components) {
          this.components = components;
          remaining = new AtomicInteger(components.size());
+         FutureVisitor<Object> visitor = new CombiningVisitor(this);
+         for (ListenableFuture<?> future : components) {
+            future.visitWhenDone(visitor);
+         }
       }
       
       /**
@@ -1043,8 +629,7 @@ public final class ListenableFutures {
     *
     * @param <T> the type of the component value
     */
-   static class CombiningVisitor<T> implements FutureVisitor<T> {
-      private final Fulfillable<T> component;
+   static class CombiningVisitor implements FutureVisitor<Object> {
       private final CombiningFuture<?> result;
 
       /**
@@ -1055,16 +640,13 @@ public final class ListenableFutures {
        * @param result the combined result, which is marked on successful completion of a component
        *       or set as cancelled or failed on cancelled or failed completion of a component
        */
-      CombiningVisitor(Fulfillable<T> component, CombiningFuture<?> result) {
-         this.component = component;
+      CombiningVisitor(CombiningFuture<?> result) {
          this.result = result;
       }
       
       @Override
-      public void successful(T t) {
-         if (component.fulfill(t)) {
-            result.mark();
-         }
+      public void successful(Object o) {
+         result.mark();
       }
 
       @Override

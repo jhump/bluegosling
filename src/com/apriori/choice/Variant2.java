@@ -1,5 +1,6 @@
 package com.apriori.choice;
 
+import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
 
 import java.io.Serializable;
@@ -39,12 +40,6 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
    Variant2() {
    }
       
-   @Override
-   public abstract Reference<A> tryFirst();
-
-   @Override
-   public abstract Reference<B> trySecond();
-
    @Override
    public abstract <T> Variant2<T, B> transformFirst(Function<? super A, ? extends T> function);
    
@@ -109,12 +104,12 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.setTo(a);
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
@@ -236,12 +231,12 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.setTo(b);
       }
    

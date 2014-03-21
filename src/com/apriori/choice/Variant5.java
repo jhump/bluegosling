@@ -1,5 +1,6 @@
 package com.apriori.choice;
 
+import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
 
 import java.io.Serializable;
@@ -79,21 +80,6 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
    Variant5() {
    }
       
-   @Override
-   public abstract Reference<A> tryFirst();
-
-   @Override
-   public abstract Reference<B> trySecond();
-
-   @Override
-   public abstract Reference<C> tryThird();
-
-   @Override
-   public abstract Reference<D> tryFourth();
-
-   @Override
-   public abstract Reference<E> tryFifth();
-
    @Override
    public abstract <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
    
@@ -184,27 +170,27 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.setTo(a);
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<D> tryFourth() {
+      public Possible<D> tryFourth() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<E> tryFifth() {
+      public Possible<E> tryFifth() {
          return Reference.unset();
       }
       
@@ -356,27 +342,27 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.setTo(b);
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<D> tryFourth() {
+      public Possible<D> tryFourth() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<E> tryFifth() {
+      public Possible<E> tryFifth() {
          return Reference.unset();
       }
       
@@ -528,27 +514,27 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.setTo(c);
       }
    
       @Override
-      public Reference<D> tryFourth() {
+      public Possible<D> tryFourth() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<E> tryFifth() {
+      public Possible<E> tryFifth() {
          return Reference.unset();
       }
       
@@ -700,27 +686,27 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<D> tryFourth() {
+      public Possible<D> tryFourth() {
          return Reference.setTo(d);
       }
    
       @Override
-      public Reference<E> tryFifth() {
+      public Possible<E> tryFifth() {
          return Reference.unset();
       }
       
@@ -872,27 +858,27 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
    
       @Override
-      public Reference<A> tryFirst() {
+      public Possible<A> tryFirst() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<B> trySecond() {
+      public Possible<B> trySecond() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<C> tryThird() {
+      public Possible<C> tryThird() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<D> tryFourth() {
+      public Possible<D> tryFourth() {
          return Reference.unset();
       }
    
       @Override
-      public Reference<E> tryFifth() {
+      public Possible<E> tryFifth() {
          return Reference.setTo(e);
       }
       

@@ -6,7 +6,7 @@ package com.apriori.concurrent;
  * on the actual disposition of the future.
  * 
  * <p>This is particularly handy, when combined with {@link
- * FutureListeners#forVisitor(FutureVisitor)}, for implementing listeners and asynchronously
+ * FutureListener#forVisitor(FutureVisitor)}, for implementing listeners and asynchronously
  * handling futures when they complete.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

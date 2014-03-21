@@ -3,12 +3,14 @@ package com.apriori.concurrent;
 import com.apriori.possible.Fulfillable;
 import com.apriori.possible.Possible;
 import com.apriori.possible.Reference;
+import com.apriori.util.Throwables;
 
 import java.util.AbstractSet;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -46,6 +48,13 @@ public class SettableListenableFuture<T> extends AbstractListenableFuture<T> {
          public boolean isPresent() {
             return isSuccessful();
          }
+         
+         @Override
+         public void ifPresent(Consumer<? super T> consumer) {
+            if (isSuccessful()) {
+               consumer.accept(getResult());
+            }
+         }
 
          @Override
          public boolean fulfill(T value) {
@@ -55,28 +64,26 @@ public class SettableListenableFuture<T> extends AbstractListenableFuture<T> {
          @Override
          public T get() {
             if (!isDone() || isCancelled()) {
-               throw new IllegalStateException("not yet fulfilled");
+               throw new NoSuchElementException("not yet fulfilled");
             } else if (isFailed()) {
-               throw new IllegalStateException("failed to fulfill", getFailure());
+               throw Throwables.withCause(new NoSuchElementException("failed to fulfill"),
+                     getFailure());
             }
             return getResult();
          }
 
          @Override
-         public T getOr(T alternate) {
+         public T orElse(T alternate) {
             return isPresent() ? getResult() : alternate;
          }
 
          @Override
-         public <X extends Throwable> T getOrThrow(X throwable) throws X {
-            if (isPresent()) {
-               return getResult();
-            }
-            throw throwable;
+         public T orElseGet(Supplier<? extends T> supplier) {
+            return isPresent() ? getResult() : supplier.get();
          }
 
          @Override
-         public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+         public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
             if (isPresent()) {
                return getResult();
             }
@@ -88,14 +95,22 @@ public class SettableListenableFuture<T> extends AbstractListenableFuture<T> {
             return isPresent() ? this : alternate;
          }
 
-         // TODO: transform and filter should return views, not snapshots
+         // TODO: map, flatMap, and filter should return views, not snapshots
          
          @Override
-         public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
-            return isPresent() ? Reference.<U>setTo(function.apply(getResult()))
-                  : Reference.<U>unset();
+         public <U> Possible<U> map(Function<? super T, ? extends U> function) {
+            return isPresent()
+                  ? Reference.setTo(function.apply(getResult()))
+                  : Reference.unset();
          }
 
+         @Override
+         public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+            return isPresent()
+                  ? function.apply(getResult())
+                  : Reference.unset();
+         }
+         
          @Override
          public Possible<T> filter(Predicate<? super T> predicate) {
             return isPresent() && predicate.test(getResult()) ? this : Reference.<T>unset();

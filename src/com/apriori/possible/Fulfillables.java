@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -25,12 +26,17 @@ public final class Fulfillables {
     * @param value the fulfilled value
     * @return an object that is already fulfilled
     */
-   public static <T> Fulfillable<T> fulfilled(final T value) {
+   public static <T> Fulfillable<T> fulfilled(T value) {
       return new Fulfillable<T>() {
 
          @Override
          public boolean isPresent() {
             return true;
+         }
+         
+         @Override
+         public void ifPresent(Consumer<? super T> consumer) {
+            consumer.accept(value);
          }
 
          @Override
@@ -44,13 +50,18 @@ public final class Fulfillables {
          }
 
          @Override
-         public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
-            return Reference.<U>setTo(function.apply(value));
+         public <U> Possible<U> map(Function<? super T, ? extends U> function) {
+            return Reference.setTo(function.apply(value));
+         }
+
+         @Override
+         public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+            return function.apply(value);
          }
 
          @Override
          public Possible<T> filter(Predicate<? super T> predicate) {
-            return predicate.test(value) ? this : Reference.<T>unset();
+            return predicate.test(value) ? this : Reference.unset();
          }
          
          @Override
@@ -59,17 +70,17 @@ public final class Fulfillables {
          }
          
          @Override
-         public T getOr(T other) {
+         public T orElse(T other) {
             return value;
          }
          
          @Override
-         public <X extends Throwable> T getOrThrow(X throwable) throws X {
+         public T orElseGet(Supplier<? extends T> supplier) {
             return value;
          }
-
+         
          @Override
-         public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+         public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
             return value;
          }
 
@@ -108,6 +119,13 @@ public final class Fulfillables {
       public boolean isPresent() {
          return value != null;
       }
+      
+      @Override
+      public void ifPresent(Consumer<? super T> consumer) {
+         if (value != null) {
+            consumer.accept(value.get());
+         }
+      }
 
       @Override
       public boolean fulfill(T t) {
@@ -119,13 +137,20 @@ public final class Fulfillables {
          return value != null ? this : alternate;
       }
 
-      // TODO: transform and filter should return views, not snapshots
+      // TODO: map, flatMap, and filter should return views, not snapshots
 
       @Override
-      public <U> Possible<U> transform(Function<? super T, ? extends U> function) {
+      public <U> Possible<U> map(Function<? super T, ? extends U> function) {
          return value != null
-               ? Reference.<U>setTo(function.apply(value.get()))
-               : Reference.<U>unset();
+               ? Reference.setTo(function.apply(value.get()))
+               : Reference.unset();
+      }
+
+      @Override
+      public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+         return value != null
+               ? function.apply(value.get())
+               : Reference.unset();
       }
 
       @Override
@@ -142,20 +167,17 @@ public final class Fulfillables {
       }
       
       @Override
-      public T getOr(T other) {
+      public T orElse(T other) {
          return value != null ? value.get() : other;
       }
       
       @Override
-      public <X extends Throwable> T getOrThrow(X throwable) throws X {
-         if (value == null) {
-            throw throwable;
-         }
-         return value.get();
+      public T orElseGet(Supplier<? extends T> supplier) {
+         return value != null ? value.get() : supplier.get();
       }
-
+      
       @Override
-      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
          if (value == null) {
             throw throwable.get();
          }

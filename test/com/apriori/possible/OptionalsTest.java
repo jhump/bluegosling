@@ -3,9 +3,10 @@ package com.apriori.possible;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import java.util.Optional;
 
 /**
  * Test cases for {@link Optional}.
@@ -13,42 +14,33 @@ import org.junit.Test;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: test serialization
-public class OptionalTest extends AbstractPossibleTest {
+public class OptionalsTest extends AbstractPossibleTest {
 
    @Override
    protected Possible<String> valuePresent(String s) {
-      return Optional.some(s);
+      return Optionals.toPossible(Optional.of(s));
    }
 
    @Override
    protected Possible<String> valueAbsent() {
-      return Optional.none();
+      return Optionals.toPossible(Optional.empty());
    }
    
    @Test public void nullsMeanAbsent() {
-      checkAbsentValue(Optional.<String>of(null));
-
       // this converts present null into absent
-      checkAbsentValue(valueAbsent().or(Reference.<String>setTo(null)));
+      checkAbsentValue(valueAbsent().or(Reference.setTo(null)));
 
-      // and transform treats null results as absent
-      checkAbsentValue(valuePresent("abc").transform((s) -> null));
+      // and map treats null results as absent
+      checkAbsentValue(valuePresent("abc").map((s) -> null));
    }
 
-   @Test public void disallowSomeNull() {
-      try {
-         Optional.some(null);
-         fail("expecting a NullPointerException");
-      } catch (NullPointerException expected) {
-      }
-   }
-   
-   @Test public void asOptional() {
-      checkPresentValue(Optional.asOptional(Reference.setTo("abc")), "abc");
-      checkAbsentValue(Optional.asOptional(Reference.<String>unset()));
+   // TODO: move
+   @Test public void notNull() {
+      checkPresentValue(Possible.notNull(Reference.setTo("abc")), "abc");
+      checkAbsentValue(Possible.notNull(Reference.unset()));
       
       // null means absent for Optional
-      checkAbsentValue(Optional.asOptional(Reference.<String>setTo(null)));
+      checkAbsentValue(Possible.notNull(Reference.setTo(null)));
    }
    
    @Test public void equalsAndHashCode() {

@@ -1,10 +1,10 @@
 package com.apriori.util;
 
-import com.apriori.possible.Optional;
 import com.apriori.tuples.Pair;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -127,7 +127,7 @@ public final class Functions {
 
    /**
     * Returns a bivariate partial function for the specified bivariate function. In spirit, this is
-    * the opposite of {@link PartialFunctions#lift(PartialFunction.PartialBiFunction) "lifting"} a partial
+    * the opposite of {@link PartialFunctions#lift(PartialBiFunction) "lifting"} a partial
     * function to a total function. Since partial functions do not support {@code null} results, the
     * returned partial function will be undefined for any inputs where the specified function
     * returns {@code null}. All other values in the input domain behave as expected and produce a
@@ -144,7 +144,7 @@ public final class Functions {
 
    /**
     * Returns a three-argument partial function for the specified three-argument function. In
-    * spirit, this is the opposite of {@link PartialFunctions#lift(PartialFunction.PartialTriFunction)
+    * spirit, this is the opposite of {@link PartialFunctions#lift(PartialTriFunction)
     * "lifting"} a partial function to a total function. Since partial functions do not support
     * {@code null} results, the returned partial function will be undefined for any inputs where the
     * specified function returns {@code null}. All other values in the input domain behave as

@@ -1,6 +1,7 @@
 package com.apriori.choice;
 
-import com.apriori.possible.Optional;
+import com.apriori.possible.Possible;
+import com.apriori.possible.Reference;
 
 import java.io.Serializable;
 import java.util.function.Function;
@@ -91,12 +92,6 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
    Either() {
    }
       
-   @Override
-   public abstract Optional<A> tryFirst();
-
-   @Override
-   public abstract Optional<B> trySecond();
-
    /**
     * @throws NullPointerException if the function is invoked and returns null
     */
@@ -236,13 +231,13 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.of(a);
+      public Possible<A> tryFirst() {
+         return Reference.setTo(a);
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.none();
+      public Possible<B> trySecond() {
+         return Reference.unset();
       }
    
       @Override
@@ -363,13 +358,13 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public Optional<A> tryFirst() {
-         return Optional.none();
+      public Possible<A> tryFirst() {
+         return Reference.unset();
       }
    
       @Override
-      public Optional<B> trySecond() {
-         return Optional.of(b);
+      public Possible<B> trySecond() {
+         return Reference.setTo(b);
       }
    
       @Override

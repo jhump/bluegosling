@@ -2,7 +2,9 @@ package com.apriori.possible;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -17,53 +19,19 @@ import java.util.function.Supplier;
  * @param <T> the type of the possible value
  */
 //TODO: tests for cast, upcast
-//TODO: serializability?
 public abstract class Reference<T> implements Possible<T> {
 
    private Reference() {
    }
-   
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
-    */
-   @Override
-   public abstract <U> Reference<U> transform(Function<? super T, ? extends U> function);
-   
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
-    */
-   @Override
-   public abstract Reference<T> filter(Predicate<? super T> predicate);
-   
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}. If
-    * the specified {@linkplain Possible possible} value is not a {@link Reference} then it will be
-    * {@linkplain #asReference(Possible) converted}.
-    */
-   @Override
-   public abstract Reference<T> or(Possible<T> alternate);
-
-   /**
-    * Returns the current reference if a value is present or the specified reference if not.
-    * 
-    * @param alternate an alternate value
-    * @return returns the current reference if a value is present or the alternate if not
-    */
-   public abstract Reference<T> or(Reference<T> alternate);
 
    /**
     * Creates a reference where the value is unset (absent).
     * 
     * @return an unset reference
     */
+   @SuppressWarnings("unchecked")
    public static <T> Reference<T> unset() {
-      return UnsetReference.instance();
+      return (Reference<T>) UnsetReference.INSTANCE;
    }
    
    /**
@@ -132,6 +100,48 @@ public abstract class Reference<T> implements Possible<T> {
    }
    
    /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
+   @Override
+   public abstract <U> Reference<U> map(Function<? super T, ? extends U> function);
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
+   @Override
+   public abstract <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function);
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
+   @Override
+   public abstract Reference<T> filter(Predicate<? super T> predicate);
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}. If
+    * the specified {@linkplain Possible possible} value is not a {@link Reference} then it will be
+    * {@linkplain #asReference(Possible) converted}.
+    */
+   @Override
+   public abstract Reference<T> or(Possible<T> alternate);
+
+   /**
+    * Returns the current reference if a value is present or the specified reference if not.
+    * 
+    * @param alternate an alternate value
+    * @return returns the current reference if a value is present or the alternate if not
+    */
+   public abstract Reference<T> or(Reference<T> alternate);
+   
+   /**
     * A reference with a value present.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -153,6 +163,11 @@ public abstract class Reference<T> implements Possible<T> {
       public boolean isPresent() {
          return true;
       }
+      
+      @Override
+      public void ifPresent(Consumer<? super T> consumer) {
+         consumer.accept(t);
+      }
 
       @Override
       public T get() {
@@ -160,17 +175,17 @@ public abstract class Reference<T> implements Possible<T> {
       }
 
       @Override
-      public T getOr(T alternate) {
+      public T orElse(T alternate) {
+         return t;
+      }
+      
+      @Override
+      public T orElseGet(Supplier<? extends T> supplier) {
          return t;
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(X throwable) throws X {
-         return t;
-      }
-
-      @Override
-      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
          return t;
       }
 
@@ -185,13 +200,18 @@ public abstract class Reference<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Reference<U> transform(Function<? super T, ? extends U> function) {
-         return Reference.<U>setTo(function.apply(t));
+      public <U> Reference<U> map(Function<? super T, ? extends U> function) {
+         return setTo(function.apply(t));
+      }
+
+      @Override
+      public <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+         return asReference(function.apply(t));
       }
 
       @Override
       public Reference<T> filter(Predicate<? super T> predicate) {
-         return predicate.test(t) ? this : UnsetReference.<T>instance();
+         return predicate.test(t) ? this : unset();
       }
 
       @Override
@@ -239,39 +259,38 @@ public abstract class Reference<T> implements Possible<T> {
        * The singleton unset reference. Since references are immutable, and this form has no
        * present value, the same instance can be used for all usages.
        */
-      private static final UnsetReference<?> INSTANCE = new UnsetReference<Object>();
+      static final UnsetReference<?> INSTANCE = new UnsetReference<Object>();
       
       @SuppressWarnings("synthetic-access") // super-class ctor is private
       private UnsetReference() {
-      }
-      
-      @SuppressWarnings("unchecked") // only need one instance, regardless of type
-      static <T> UnsetReference<T> instance() {
-         return (UnsetReference<T>) INSTANCE;
       }
       
       @Override
       public boolean isPresent() {
          return false;
       }
+      
+      @Override
+      public void ifPresent(Consumer<? super T> consumer) {
+      }
 
       @Override
       public T get() {
-         throw new IllegalStateException();
+         throw new NoSuchElementException();
       }
 
       @Override
-      public T getOr(T alternate) {
+      public T orElse(T alternate) {
          return alternate;
       }
-
+      
       @Override
-      public <X extends Throwable> T getOrThrow(X throwable) throws X {
-         throw throwable;
+      public T orElseGet(Supplier<? extends T> supplier) {
+         return supplier.get();
       }
 
       @Override
-      public <X extends Throwable> T getOrThrow(Supplier<X> throwable) throws X {
+      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
          throw throwable.get();
       }
 
@@ -296,8 +315,13 @@ public abstract class Reference<T> implements Possible<T> {
       }
       
       @Override
-      public <U> Reference<U> transform(Function<? super T, ? extends U> function) {
-         return instance();
+      public <U> Reference<U> map(Function<? super T, ? extends U> function) {
+         return unset();
+      }
+
+      @Override
+      public <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+         return unset();
       }
 
       @Override
