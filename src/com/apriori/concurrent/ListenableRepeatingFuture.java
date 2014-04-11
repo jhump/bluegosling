@@ -32,7 +32,7 @@ public interface ListenableRepeatingFuture<T> extends ListenableScheduledFuture<
     * <p>If the specified executor runs the task asynchronously then it is possible that the next
     * scheduled occurrence of this task will start (and possibly finish) before or while the
     * listener is executing. If the listener requires consistency and must avoid this possible race,
-    * use a {@link ListenableExecutors#sameThreadExecutor()}.
+    * use a {@link SameThreadExecutor}.
     * 
     * @param listener
     * @param executor

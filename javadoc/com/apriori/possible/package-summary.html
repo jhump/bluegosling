@@ -126,18 +126,13 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible">Optional</a>&lt;T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/possible/Optionals.html" title="class in com.apriori.possible">Optionals</a></td>
 <td class="colLast">
-<div class="block">A <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value that is immutable and cannot be <code>null</code>.</div>
+<div class="block">Utility methods related to <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util"><code>Optional</code></a>s, including conversion to and from the interface
+ <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible"><code>Possible</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/possible/Possibles.html" title="class in com.apriori.possible">Possibles</a></td>
-<td class="colLast">
-<div class="block">Utility methods for instances of <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible"><code>Possible</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value that, even if present, can be <code>null</code>.</div>
@@ -151,13 +146,11 @@
 <!--   -->
 </a>
 <h2 title="Package com.apriori.possible Description">Package com.apriori.possible Description</h2>
-<div class="block">Objects that may or may not have a value. These can be used as indirect references. Concrete
- classes can often distinguish between a value being absent vs. being present but <code>null</code>
- (all but <a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible"><code>Optional</code></a>). Some are mutable (
- <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and, to a limited extent,
- <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>). And one
- (<a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible"><code>Optional</code></a>) can be used to provide safer API compared to
- using nullable references.</div>
+<div class="block">Objects that may or may not have a value. These can be used as indirect references, and carry the
+ same API as <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util"><code>Optional</code></a>. Some implementations distinguish between a value being
+ absent vs. being present but <code>null</code> (unlike <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util"><code>Optional</code></a>). Some are mutable
+ (<a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and, to a limited extent,
+ <a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><code>Fulfillable</code></a>).</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

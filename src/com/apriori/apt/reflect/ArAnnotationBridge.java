@@ -96,6 +96,7 @@ public final class ArAnnotationBridge {
     * 
     * @param annotation the annotation to be bridged
     * @param clazz the annotation type
+    * @param <T> the annotation type
     * @return an annotation bridge
     * @throws IllegalArgumentException if the specified type is not actually an annotation type or
     *       if the specified annotation is not of the specified type
@@ -128,6 +129,7 @@ public final class ArAnnotationBridge {
     *
     * @param annotatedClass the class to which the annotation belongs
     * @param annotationType the type of the annotation to query
+    * @param <T> the annotation type
     * @return an bridge for the annotation of the given type on the given class or {@code null} if
     *       the class has no such annotation
     * @throws NullPointerException if either argument is {@code null}
@@ -241,6 +243,7 @@ public final class ArAnnotationBridge {
     * method on the bridge instance is what should be supplied as the argument to this method.
     * 
     * @param val the value returned from an annotation bridge
+    * @param <T> the type of the annotation value
     * @return the supplied value
     * @throws IllegalStateException if the method appears to be used incorrectly
     */

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":6,"i3":6,"i4":6,"i5":9,"i6":6,"i7":9,"i8":9};
+var methods = {"i0":9,"i1":9,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/possible/Possibles.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li>Next&nbsp;Class</li>
 </ul>
 <ul class="navList">
@@ -174,36 +174,40 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code></td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</code>
+<div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#or-com.apriori.possible.Possible-">or</a></span>(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</code>
 <div class="block">Returns the current possible value if present or the specified value if not.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#or-com.apriori.possible.Reference-">or</a></span>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</code>
 <div class="block">Returns the current reference if a value is present or the specified reference if not.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#setTo-T-">setTo</a></span>(T&nbsp;t)</code>
 <div class="block">Creates a reference set to the specified value.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#transform-java.util.function.Function-">transform</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</code>
-<div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#unset--">unset</a></span>()</code>
 <div class="block">Creates a reference where the value is unset (absent).</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static &lt;S,T extends S&gt;<br><a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#upcast-com.apriori.possible.Reference-">upcast</a></span>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;from)</code>
 <div class="block">Upcasts an reference to a super-type.</div>
@@ -222,7 +226,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.possible.<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></h3>
-<code><a href="../../../com/apriori/possible/Possible.html#asSet--">asSet</a>, <a href="../../../com/apriori/possible/Possible.html#get--">get</a>, <a href="../../../com/apriori/possible/Possible.html#getOr-T-">getOr</a>, <a href="../../../com/apriori/possible/Possible.html#getOrThrow-java.util.function.Supplier-">getOrThrow</a>, <a href="../../../com/apriori/possible/Possible.html#getOrThrow-X-">getOrThrow</a>, <a href="../../../com/apriori/possible/Possible.html#isPresent--">isPresent</a>, <a href="../../../com/apriori/possible/Possible.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></code></li>
+<code><a href="../../../com/apriori/possible/Possible.html#asSet--">asSet</a>, <a href="../../../com/apriori/possible/Possible.html#fromFuture-java.util.concurrent.Future-">fromFuture</a>, <a href="../../../com/apriori/possible/Possible.html#get--">get</a>, <a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a>, <a href="../../../com/apriori/possible/Possible.html#isPresent--">isPresent</a>, <a href="../../../com/apriori/possible/Possible.html#notNull-com.apriori.possible.Possible-">notNull</a>, <a href="../../../com/apriori/possible/Possible.html#nullIfNotPresent-java.util.Collection-">nullIfNotPresent</a>, <a href="../../../com/apriori/possible/Possible.html#orElse-T-">orElse</a>, <a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a>, <a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a>, <a href="../../../com/apriori/possible/Possible.html#presentOnly-java.util.Collection-">presentOnly</a>, <a href="../../../com/apriori/possible/Possible.html#snapshot-com.apriori.possible.Possible-">snapshot</a>, <a href="../../../com/apriori/possible/Possible.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></code></li>
 </ul>
 </li>
 </ul>
@@ -238,88 +242,6 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="transform-java.util.function.Function-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>transform</h4>
-<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;transform(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</pre>
-<div class="block">Returns the current possible value, transformed by the specified function, if present.
- 
- <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#transform-java.util.function.Function-">transform</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>function</code> - the function used to transform the value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current value, transformed by the specified function, if present;
-       otherwise returns a possible value that is absent</dd>
-</dl>
-</li>
-</ul>
-<a name="filter-java.util.function.Predicate-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>filter</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
-<div class="block">Filters the current value per the specified predicate. If a value is present and it matches
- the specified predicate then it is returned. Otherwise a possible value that is absent is
- returned.
- 
- <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#filter-java.util.function.Predicate-">filter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>predicate</code> - the predicated used to test the value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current value if present and it matches the specified predicate; otherwise
-       returns a possible value that is absent</dd>
-</dl>
-</li>
-</ul>
-<a name="or-com.apriori.possible.Possible-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>or</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;or(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</pre>
-<div class="block">Returns the current possible value if present or the specified value if not.
- 
- <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>. If
- the specified <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value is not a <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a> then it will be
- <a href="../../../com/apriori/possible/Reference.html#asReference-com.apriori.possible.Possible-">converted</a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#or-com.apriori.possible.Possible-">or</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alternate</code> - an alternate value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current possible value if present or the alternate if not</dd>
-</dl>
-</li>
-</ul>
-<a name="or-com.apriori.possible.Reference-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>or</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;or(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</pre>
-<div class="block">Returns the current reference if a value is present or the specified reference if not.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alternate</code> - an alternate value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current reference if a value is present or the alternate if not</dd>
-</dl>
-</li>
-</ul>
 <a name="unset--">
 <!--   -->
 </a>
@@ -397,7 +319,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <a name="upcast-com.apriori.possible.Reference-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>upcast</h4>
 <pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;upcast(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;from)</pre>
@@ -411,6 +333,104 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <dd><code>this</code> but re-cast to a <code>Reference&lt;S&gt;</code> where <code>S</code> is the super-type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/possible/Reference.html#cast-com.apriori.possible.Reference-java.lang.Class-"><code>cast(Reference, Class)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="map-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>map</h4>
+<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</pre>
+<div class="block">Returns the current possible value, transformed by the specified function, if present.
+ 
+ <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#map-java.util.function.Function-">map</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>function</code> - the function used to transform the value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>returns the current value, transformed by the specified function, if present;
+       otherwise returns a possible value that is absent</dd>
+</dl>
+</li>
+</ul>
+<a name="flatMap-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flatMap</h4>
+<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
+<div class="block">
+ 
+ <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#flatMap-java.util.function.Function-">flatMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="filter-java.util.function.Predicate-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>filter</h4>
+<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
+<div class="block">Filters the current value per the specified predicate. If a value is present and it matches
+ the specified predicate then it is returned. Otherwise a possible value that is absent is
+ returned.
+ 
+ <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#filter-java.util.function.Predicate-">filter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>predicate</code> - the predicated used to test the value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>returns the current value if present and it matches the specified predicate; otherwise
+       returns a possible value that is absent</dd>
+</dl>
+</li>
+</ul>
+<a name="or-com.apriori.possible.Possible-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>or</h4>
+<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;or(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</pre>
+<div class="block">Returns the current possible value if present or the specified value if not.
+ 
+ <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>. If
+ the specified <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value is not a <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a> then it will be
+ <a href="../../../com/apriori/possible/Reference.html#asReference-com.apriori.possible.Possible-">converted</a>.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#or-com.apriori.possible.Possible-">or</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>alternate</code> - an alternate value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>returns the current possible value if present or the alternate if not</dd>
+</dl>
+</li>
+</ul>
+<a name="or-com.apriori.possible.Reference-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>or</h4>
+<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;or(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;alternate)</pre>
+<div class="block">Returns the current reference if a value is present or the specified reference if not.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>alternate</code> - an alternate value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>returns the current reference if a value is present or the alternate if not</dd>
 </dl>
 </li>
 </ul>
@@ -441,7 +461,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/possible/Possibles.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li>Next&nbsp;Class</li>
 </ul>
 <ul class="navList">

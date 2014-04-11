@@ -111,6 +111,8 @@ public interface ArType {
     * 
     * @param visitor the visitor
     * @param p the optional parameter for the visitor
+    * @param <R> the type of the value returned by the visitor
+    * @param <P> the type of the optional parameter for the visitor
     * @return the value returned by the visitor
     */
    <R, P> R accept(Visitor<R, P> visitor, P p);

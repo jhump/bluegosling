@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 /**
  * A function that does not fully map the input domain to the output domain. This is reflected in
- * the API by returning {@link Optional#none() no value} when a result cannot be computed for a
+ * the API by returning {@link Optional#empty() no value} when a result cannot be computed for a
  * given input.
  * 
  * <p>Note that the use of {@link Optional} means that {@code null} results for a valid input are

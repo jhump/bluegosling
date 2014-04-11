@@ -58,7 +58,8 @@ public final class PartialFunctions {
 
    /**
     * Returns a partial function that is backed by a map. The set of supported inputs are those for
-    * which keys exist in the map. For other inputs, {@linkplain Optional#none() none} is returned.
+    * which keys exist in the map. For other inputs, {@linkplain Optional#empty() empty} is
+    * returned.
     * 
     * @param map a map
     * @return a partial function that computes results by looking up values in the map

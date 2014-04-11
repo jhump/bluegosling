@@ -261,6 +261,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  to get to these values, but as <a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a> objects instead of as <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> tokens.</li>
  </ul></div>
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the annotation type</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotation</code> - the annotation to be bridged</dd>
 <dd><code>clazz</code> - the annotation type</dd>
@@ -285,6 +287,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  class for an annotation of the specified type, and then construct a bridge for it. If the
  given class has no such annotation, <code>null</code> is returned.</div>
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the annotation type</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotatedClass</code> - the class to which the annotation belongs</dd>
 <dd><code>annotationType</code> - the type of the annotation to query</dd>
@@ -403,6 +407,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  consistently, always using a <code>bridge(...)</code> method. The value returned from invoking a
  method on the bridge instance is what should be supplied as the argument to this method.</div>
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of the annotation value</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>val</code> - the value returned from an annotation bridge</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

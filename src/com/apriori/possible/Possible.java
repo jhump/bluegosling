@@ -87,7 +87,7 @@ public interface Possible<T> {
    /**
     * Gets the contained value or gets an exception from the specified source and throws it
     * 
-    * @param throwableSource a source of the exception to throw if a value is not present
+    * @param throwableSupplier a supplier of the exception to throw if a value is not present
     * @return the contained value
     * @throws X if a value is not present
     */
@@ -139,13 +139,11 @@ public interface Possible<T> {
    }
    
    /**
-    * Converts a possible value to an optional one. If the specified object is an optional value, it
-    * is returned. Otherwise, if the specified value is present and not {@code null} then 
-    * {@linkplain #some(Object) some value} is returned; if the specified value is absent or
-    * {@code null} then {@linkplain #none() none}.
+    * Converts a possible {@code null} value to an optional one. If the given possible value is
+    * present but {@code null}, an absent value is returned.
     * 
     * @param possible a possible value
-    * @return the possible value, converted to an optional one
+    * @return the possible value, but with {@code null} values treated as absent
     */
    static <T> Possible<T> notNull(Possible<T> possible) {
       return possible.isPresent() ? Optionals.of(possible.get()) : Optionals.none();

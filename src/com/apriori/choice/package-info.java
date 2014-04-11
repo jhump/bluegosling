@@ -12,8 +12,8 @@
  *    null components are allowed. They are more like traditional union or variant types in that
  *    they do not place constraints on the values that may be present.</li>
  * </ol>
- * The two families of implementations differ in much the same way that
- * {@link com.apriori.possible.Optional} differs from {@link com.apriori.possible.Reference}.
+ * The two families of implementations differ in regards to whether null values are allowed, in much
+ * the same way that {@link java.util.Optional} differs from {@link com.apriori.possible.Reference}.
  * 
  * <p>All of the types herein extend from the main interface {@link com.apriori.choice.Choice}.
  */

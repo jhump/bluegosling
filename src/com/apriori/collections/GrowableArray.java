@@ -11,11 +11,11 @@ import java.util.stream.StreamSupport;
 
 /**
  * A container type that is like an array except that its capacity can change over time. This
- * interface is intentionally much more narrow than {@link List}, which is its closest cousin from
- * the Java Collections Framework. The abstract operations basically match that of an array with
- * two exceptions: {@link #growBy(int)} and {@link #shrinkBy(int)}. There are several additional
- * methods with default implementations but notably absent are methods that allow for insertion into
- * or removal from the beginning or middle of the array.
+ * interface is intentionally much more narrow than {@link java.util.List}, which is its closest
+ * cousin from the Java Collections Framework. The abstract operations basically match that of an
+ * array with two exceptions: {@link #growBy(int)} and {@link #shrinkBy(int)}. There are several
+ * additional methods with default implementations but notably absent are methods that allow for
+ * insertion into or removal from the beginning or middle of the array.
  * 
  * <p>Since this is a generic type, it does not have the type co-variance of actual Java arrays, and
  * so behaves more like a {@link Collection} from that standpoint.

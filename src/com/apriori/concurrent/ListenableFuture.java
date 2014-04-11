@@ -97,8 +97,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * Adds a listener that will be called when the future completes. The listener will be invoked
     * using the specified executor. If the future is already complete when the listener is added,
     * the listener will be immediately invoked. If the listener can be called synchronously (e.g.
-    * it will complete very quickly and not block) then consider using {@link
-    * ListenableExecutors#sameThreadExecutor()}.
+    * it will complete very quickly and not block) then consider using a {@link SameThreadExecutor}.
     * 
     * @param listener the listener
     * @param executor the executor used when calling the listener
@@ -131,8 +130,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    }
 
    /**
-    * Adds a listener that visits this future using a {@linkplain
-    * ListenableExecutors#sameThreadExecutor() same thread executor} when it completes.
+    * Adds a listener that visits this future using a {@link SameThreadExecutor} when it completes.
     * 
     * @param visitor the visitor that will be called once this future completes
     */
@@ -373,9 +371,9 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
 
    /**
     * Transforms any exception from this future using the specified function. This is nearly
-    * identical to {@link #transform(ListenableFuture, Function)}, except that the function is
-    * applied to this future's exception if it fails, <em>not</em> to the future's value if it
-    * succeeds. So if this future completes successfully then the given function is never invoked. 
+    * identical to {@link #map(Function)}, except that the function is applied to this future's
+    * exception if it fails, <em>not</em> to the future's value if it succeeds. So if this future
+    * completes successfully then the given function is never invoked. 
     * 
     * <p>The returned future's cancellation status is kept in sync with the given future. So if the
     * returned future is cancelled, this future is also cancelled (if it is not yet done).
@@ -423,12 +421,12 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
 
    /**
     * Recovers a future value by applying the specified function to any exception from this future.
-    * This is similar to {@link #transform(ListenableFuture, Function)}, except that the function is
-    * applied to the future's exception if it fails, instead of being applied to the future's value
-    * if it succeeds. If this future completes successfully then the given function is never
-    * invoked and the returned future completes with the same value. If this future fails, the
-    * function is invoked to compute a value for the returned future. The returned future only fails
-    * if that function throws an exception.
+    * This is similar to {@link #map(Function)}, except that the function is applied to the future's
+    * exception if it fails, instead of being applied to the future's value if it succeeds. If this
+    * future completes successfully then the given function is never invoked and the returned future
+    * completes with the same value. If this future fails, the function is invoked to compute a
+    * value for the returned future. The returned future only fails if that function throws an
+    * exception.
     * 
     * <p>The returned future's cancellation status is kept in sync with the given future. So if the
     * returned future is cancelled, this future is also cancelled (if it is not yet done).
@@ -541,10 +539,9 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    }
    
    /**
-    * Returns a view of the given future as a {@link CompletionStage}.
+    * Returns a view of this future as a {@link CompletionStage}.
     *
-    * @param future a future
-    * @return a view of the given future as a completion stage
+    * @return a view of this future as a completion stage
     */
    default CompletionStage<T> asCompletionStage() {
       return new ListenableCompletionStage<>(this);

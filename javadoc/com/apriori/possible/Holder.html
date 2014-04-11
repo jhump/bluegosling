@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Optionals.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/possible/Holder.html" target="_top">Frames</a></li>
@@ -209,37 +209,33 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code></td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#get--">get</a></span>()</code>
 <div class="block">Gets the contained value if present.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#getOr-T-">getOr</a></span>(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</code>
-<div class="block">Gets the contained value if present or the specified value if not.</div>
-</td>
-</tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#getOrThrow-java.util.function.Supplier-">getOrThrow</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;X&gt;&nbsp;throwable)</code>
-<div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#getOrThrow-X-">getOrThrow</a></span>(X&nbsp;throwable)</code>
-<div class="block">Gets the contained value or throws the specified exception if not</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#isPresent--">isPresent</a></span>()</code>
 <div class="block">Returns true if a value is present.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</code>
+<div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -250,21 +246,31 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElse-T-">orElse</a></span>(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</code>
+<div class="block">Gets the contained value if present or the specified value if not.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwable)</code>
+<div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#set-T-">set</a></span>(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;t)</code>
 <div class="block">Sets the held value.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#transform-java.util.function.Function-">transform</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</code>
-<div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></span>(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</code>
 <div class="block">Invokes the appropriate method on the specified visitor.</div>
@@ -277,6 +283,13 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.possible.Possible">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.possible.<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></h3>
+<code><a href="../../../com/apriori/possible/Possible.html#fromFuture-java.util.concurrent.Future-">fromFuture</a>, <a href="../../../com/apriori/possible/Possible.html#notNull-com.apriori.possible.Possible-">notNull</a>, <a href="../../../com/apriori/possible/Possible.html#nullIfNotPresent-java.util.Collection-">nullIfNotPresent</a>, <a href="../../../com/apriori/possible/Possible.html#presentOnly-java.util.Collection-">presentOnly</a>, <a href="../../../com/apriori/possible/Possible.html#snapshot-com.apriori.possible.Possible-">snapshot</a></code></li>
 </ul>
 </li>
 </ul>
@@ -373,6 +386,19 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
+<a name="ifPresent-java.util.function.Consumer-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ifPresent</h4>
+<pre>public&nbsp;void&nbsp;ifPresent(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;consumer)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a name="or-com.apriori.possible.Possible-">
 <!--   -->
 </a>
@@ -392,25 +418,42 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
-<a name="transform-java.util.function.Function-">
+<a name="map-java.util.function.Function-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>transform</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;transform(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</pre>
+<h4>map</h4>
+<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.
  
  <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
  present, is a snapshot of applying the function to the held value.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#transform-java.util.function.Function-">transform</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#map-java.util.function.Function-">map</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>function</code> - the function used to transform the value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>returns the current value, transformed by the specified function, if present;
        otherwise returns a possible value that is absent</dd>
+</dl>
+</li>
+</ul>
+<a name="flatMap-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flatMap</h4>
+<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
+<div class="block">
+ 
+ <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
+ present, is a snapshot of applying the function to the held value.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#flatMap-java.util.function.Function-">flatMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -486,20 +529,20 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
-<a name="getOr-java.lang.Object-">
+<a name="orElse-java.lang.Object-">
 <!--   -->
-</a><a name="getOr-T-">
+</a><a name="orElse-T-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getOr</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;getOr(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#getOr-T-">Possible</a></code></span></div>
+<h4>orElse</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElse(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#orElse-T-">Possible</a></code></span></div>
 <div class="block">Gets the contained value if present or the specified value if not.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#getOr-T-">getOr</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#orElse-T-">orElse</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>alternate</code> - the alternate value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -507,46 +550,34 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
-<a name="getOrThrow-java.lang.Throwable-">
-<!--   -->
-</a><a name="getOrThrow-X-">
+<a name="orElseGet-java.util.function.Supplier-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getOrThrow</h4>
-<pre>public&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;getOrThrow(X&nbsp;throwable)
-                                   throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#getOrThrow-X-">Possible</a></code></span></div>
-<div class="block">Gets the contained value or throws the specified exception if not</div>
+<h4>orElseGet</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElseGet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;supplier)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#getOrThrow-X-">getOrThrow</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>throwable</code> - the exception to throw if a value is not present</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the contained value</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>X</code> - if a value is not present</dd>
-<dd><code>X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a name="getOrThrow-java.util.function.Supplier-">
+<a name="orElseThrow-java.util.function.Supplier-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getOrThrow</h4>
-<pre>public&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;getOrThrow(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;X&gt;&nbsp;throwable)
-                                   throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#getOrThrow-java.util.function.Supplier-">Possible</a></code></span></div>
+<h4>orElseThrow</h4>
+<pre>public&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElseThrow(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwable)
+                                    throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">Possible</a></code></span></div>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#getOrThrow-java.util.function.Supplier-">getOrThrow</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>throwable</code> - a source of the exception to throw if a value is not present</dd>
+<dd><code>throwable</code> - a supplier of the exception to throw if a value is not present</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the contained value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -672,7 +703,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/possible/Optional.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Optionals.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/possible/Holder.html" target="_top">Frames</a></li>
