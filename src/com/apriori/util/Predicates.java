@@ -20,60 +20,37 @@ public final class Predicates {
    }
 
    // TODO: javadoc
-   private static Predicate<Object> ACCEPT_ALL = (o) -> true;
 
-   private static Predicate<Object> REJECT_ALL = (o) -> false;
-
-   private static BiPredicate<Object, Object> ACCEPT_ALL2 = (o1, o2) -> true;
-
-   private static BiPredicate<Object, Object> REJECT_ALL2 = (o1, o2) -> false;
-
-   private static TriPredicate<Object, Object, Object> ACCEPT_ALL3 = (o1, o2, o3) -> true;
-
-   private static TriPredicate<Object, Object, Object> REJECT_ALL3 = (o1, o2, o3) -> false;
-
-   private static Predicate<Object> IS_NULL = (o) -> o == null;
-
-   private static Predicate<Object> NOT_NULL = (o) -> o != null;
-
-   @SuppressWarnings("unchecked")
    public static <T> Predicate<T> alwaysAccept() {
-      return (Predicate<T>) ACCEPT_ALL;
+      return (o) -> true;
    }
    
-   @SuppressWarnings("unchecked")
    public static <T> Predicate<T> alwaysReject() {
-      return (Predicate<T>) REJECT_ALL;
+      return (o) -> false;
    }
 
-   @SuppressWarnings("unchecked")
    public static <T, U> BiPredicate<T, U> alwaysAcceptBoth() {
-      return (BiPredicate<T, U>) ACCEPT_ALL2;
+      return (o1, o2) -> true;
    }
    
-   @SuppressWarnings("unchecked")
    public static <T, U> BiPredicate<T, U> alwaysRejectBoth() {
-      return (BiPredicate<T, U>) REJECT_ALL2;
+      return (o1, o2) -> false;
    }
 
-   @SuppressWarnings("unchecked")
    public static <T, U, V> TriPredicate<T, U, V> alwaysAcceptAll() {
-      return (TriPredicate<T, U, V>) ACCEPT_ALL3;
+      return (o1, o2, o3) -> true;
    }
    
-   @SuppressWarnings("unchecked")
    public static <T, U, V> TriPredicate<T, U, V> alwaysRejectAll() {
-      return (TriPredicate<T, U, V>) REJECT_ALL3;
+      return (o1, o2, o3) -> false;
    }
 
-   @SuppressWarnings("unchecked")
    public static <T> Predicate<T> isNull() {
-      return (Predicate<T>) IS_NULL;
+      return (o) -> o == null;
    }
 
-   @SuppressWarnings("unchecked")
    public static <T> Predicate<T> notNull() {
-      return (Predicate<T>) NOT_NULL;
+      return (o) -> o != null;
    }
 
    public static <T> Predicate<T> isEqualTo(T object) {
@@ -82,6 +59,38 @@ public final class Predicates {
 
    public static <T, U> BiPredicate<T, U> areSameObject() {
       return (o1, o2) -> o1 == o2;
+   }
+   
+   public static <T> Predicate<T> everyOther() {
+      return new Predicate<T>() {
+         private boolean accept = true;
+
+         @Override
+         public boolean test(T t) {
+            boolean ret = accept;
+            accept = !accept;
+            return ret;
+         }
+      };
+   }
+   
+   public static <T> Predicate<T> every(int n) {
+      if (n < 1) {
+         throw new IllegalArgumentException();
+      }
+      return new Predicate<T>() {
+         private int i;
+
+         @Override
+         public boolean test(T t) {
+            boolean ret = i == 0;
+            i++;
+            if (i == n) {
+               i = 0;
+            }
+            return ret;
+         }
+      };
    }
 
    // TODO: boolean arithmetic below accept var-args?
@@ -133,8 +142,50 @@ public final class Predicates {
       return (o) -> !p.test(o);
    }
 
-   // TODO: [Bi,Tri]Predicate versions of above boolean arithmetic combinations
+   // TODO: javadoc
 
+   public static <T, U> BiPredicate<T, U> and(BiPredicate<? super T, ? super U> p1,
+         BiPredicate<? super T, ? super U> p2) {
+      return (t, u) -> p1.test(t, u) && p2.test(t, u);
+   }
+
+   public static <T, U> BiPredicate<T, U> or(BiPredicate<? super T, ? super U> p1,
+         BiPredicate<? super T, ? super U> p2) {
+      return (t, u) -> p1.test(t, u) || p2.test(t, u);
+   }
+   
+   public static <T, U> BiPredicate<T, U> xor(BiPredicate<? super T, ? super U> p1,
+         BiPredicate<? super T, ? super U> p2) {
+      return (t, u) -> p1.test(t, u) ^ p2.test(t, u);
+   }
+
+   public static <T, U> BiPredicate<T, U> not(BiPredicate<? super T, ? super U> p) {
+      return (t, u) -> !p.test(t, u);
+   }
+
+   public static <T, U, V> TriPredicate<T, U, V> and(
+         TriPredicate<? super T, ? super U, ? super V> p1,
+         TriPredicate<? super T, ? super U, ? super V> p2) {
+      return (t, u, v) -> p1.test(t, u, v) && p2.test(t, u, v);
+   }
+
+   public static <T, U, V> TriPredicate<T, U, V> or(
+         TriPredicate<? super T, ? super U, ? super V> p1,
+         TriPredicate<? super T, ? super U, ? super V> p2) {
+      return (t, u, v) -> p1.test(t, u, v) || p2.test(t, u, v);
+   }
+
+   public static <T, U, V> TriPredicate<T, U, V> xor(
+         TriPredicate<? super T, ? super U, ? super V> p1,
+         TriPredicate<? super T, ? super U, ? super V> p2) {
+      return (t, u, v) -> p1.test(t, u, v) ^ p2.test(t, u, v);
+   }
+
+   public static <T, U, V> TriPredicate<T, U, V> not(
+         TriPredicate<? super T, ? super U, ? super V> p) {
+      return (t, u, v) -> !p.test(t, u, v);
+   }
+   
    static boolean toPrimitive(Boolean b) {
       return b != null && b;
    }

@@ -26,9 +26,8 @@ import java.util.concurrent.TimeoutException;
  */
 public class ListenableFutureTask<T> extends FutureTask<T> implements ListenableFuture<T> {
 
-   protected final Object listenerLock = new Object();
    private Throwable failure;
-   private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
+   private final FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
    
    /**
     * Constructs a new task for the specified callable. When {@linkplain #run() run}, the callable
@@ -53,27 +52,15 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
 
    @Override
    public void addListener(FutureListener<? super T> listener, Executor executor) {
-      synchronized (listenerLock) {
-         if (listeners != null) {
-            listeners.addListener(listener, executor);
-            return;
-         }
-      }
-      // if we get here, future is complete so run listener immediately
-      FutureListenerSet.runListener(this, listener, executor);
+      listeners.addListener(listener, executor);
    }
    
    @Override
    protected void done() {
-      FutureListenerSet<T> toExecute;
-      synchronized (listenerLock) {
-         toExecute = listeners;
-         listeners = null;
-      }
       if (!isCancelled()) {
          checkForFailure();
       }
-      toExecute.runListeners();
+      listeners.run();
    }
    
    private void checkForFailure() {

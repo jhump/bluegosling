@@ -1,7 +1,6 @@
 package com.apriori.concurrent;
 
 import static com.apriori.concurrent.FutureListener.forRunnable;
-import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -54,7 +53,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
          @Override public void run() {
             instanceListenCount.incrementAndGet();
          }
-      }), sameThreadExecutor());
+      }), SameThreadExecutor.get());
       
       return result;
    }
@@ -65,9 +64,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
    }
    
    @Override
-   protected void assertDone(State taskState) throws Exception {
-      super.assertDone(taskState);
-      
+   protected void whenDone(TaskState taskState) throws Exception {
       assertEquals(1, instanceListenCount.get());
       
       // since the future is completed, the listener should be invoked immediately
@@ -75,7 +72,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
          @Override public void run() {
             instanceListenCount.incrementAndGet();
          }
-      }), sameThreadExecutor());
+      }), SameThreadExecutor.get());
       assertEquals(2, instanceListenCount.get());
    }
 
@@ -119,7 +116,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
    
    @Override
    protected void doSuccessfulCompletion(String s) throws Exception {
-      preAsserts();
+      assertNotDone();
       completeSuccessfully(s);
       afterSuccessChecks(s, 1);
    }
@@ -189,7 +186,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
          @Override public void run() {
             otherListenCount.incrementAndGet();
          }
-      }), sameThreadExecutor());
+      }), SameThreadExecutor.get());
       assertEquals(0, otherListenCount.get()); // not invoked yet
       
       value = "3";

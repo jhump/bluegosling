@@ -30,20 +30,19 @@ public class SimpleListenableFutureTest extends AbstractListenableFutureTest {
    }
    
    @Override
-   protected State completeSuccessfully(String result) {
+   protected TaskState completeSuccessfully(String result) {
       assertTrue(future().setValue(result));
       return null;
    }
 
    @Override
-   protected State completeUnsuccessfully(Throwable failure) {
+   protected TaskState completeUnsuccessfully(Throwable failure) {
       assertTrue(future().setFailure(failure));
       return null;
    }
    
    @Override
-   protected void assertDone(State taskState) throws Exception {
-      super.assertDone(taskState);
+   protected void whenDone(TaskState taskState) throws Exception {
       // once done, no other result can be set
       assertFalse(future().setValue("def"));
       assertFalse(future().setValue(null));
@@ -52,8 +51,8 @@ public class SimpleListenableFutureTest extends AbstractListenableFutureTest {
    }
 
    @Test public void cancellation_viaSetCancelled() throws Exception {
-      doCancellation(new Callable<State>() {
-         @Override public State call() {
+      doCancellation(new Callable<TaskState>() {
+         @Override public TaskState call() {
             assertTrue(future().setCancelled());
             return null;
          }

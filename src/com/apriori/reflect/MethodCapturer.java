@@ -51,6 +51,7 @@ public class MethodCapturer<E> {
     *            {@code ClassLoader} of any of the interfaces
     * @throws NullPointerException if any of the specified class tokens is {@code null}
     */
+   @SafeVarargs
    public MethodCapturer(Class<? extends E>... interfaces) {
       this(new HashSet<Class<? extends E>>(Arrays.asList(interfaces)));
    }
@@ -94,7 +95,7 @@ public class MethodCapturer<E> {
                            throws Throwable {
                         captured = method;
                         capturedSig = new MethodSignature(method);
-                        return ProxyUtils.getNullReturnValue(method.getReturnType());
+                        return ProxyUtils.getDefaultValue(method.getReturnType());
                      }
                   });
             proxy = p;

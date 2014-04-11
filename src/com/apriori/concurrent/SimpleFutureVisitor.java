@@ -51,8 +51,7 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
    }
 
    /**
-    * A builder for constructing visitors from {@link Consumer}s and {@link Runnable}s. This allows
-    * constructing a visitor using lambdas since these are functional interfaces.
+    * A builder for constructing visitors from {@link Consumer}s and {@link Runnable}s.
     * 
     * <p>If any action is not defined when building the visitor, the default implementation in
     * {@link SimpleFutureVisitor} is used.

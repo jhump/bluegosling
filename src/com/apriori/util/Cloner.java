@@ -11,6 +11,7 @@ import com.apriori.testing.InterfaceVerifier;
  * 
  * @see Cloners
  */
+@FunctionalInterface
 public interface Cloner<T> {
    /**
     * Clones an object. Cloning an object copies it, usually a "deep" copy. Cloning can be performed

@@ -16,14 +16,14 @@ public final class ProxyUtils {
    private ProxyUtils() {}
 
    /**
-    * Determines a "null" return value to use for a method. For most methods this will simply be
+    * Determines the default value for a given type. For most types this will simply be
     * {@code null}. But for methods that return primitives, we need to choose a suitable primitive
     * value to avoid a {@code NullPointerException} (such as zero or false).
     * 
-    * @param clazz the return type of the method
-    * @return the "null" value that method should return
+    * @param clazz the type
+    * @return the default value for the given type
     */
-   public static Object getNullReturnValue(Class<?> clazz) {
+   public static Object getDefaultValue(Class<?> clazz) {
       if (!clazz.isPrimitive()) {
          return null;
       }
@@ -57,7 +57,7 @@ public final class ProxyUtils {
       else {
          // this should never happen...
          throw new IllegalArgumentException(
-               "Could not determine null value for "
+               "Could not determine default value for "
                      + clazz.getName());
       }
    }

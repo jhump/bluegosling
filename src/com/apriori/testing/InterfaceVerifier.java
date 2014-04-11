@@ -1545,7 +1545,7 @@ public class InterfaceVerifier<T> {
          // finish
          if (testThrown != null) {
             if (suppressExceptions) {
-               return ProxyUtils.getNullReturnValue(conf.returnType);
+               return ProxyUtils.getDefaultValue(conf.returnType);
             }
             else {
                throw testThrown;

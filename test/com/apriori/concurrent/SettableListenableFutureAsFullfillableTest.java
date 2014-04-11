@@ -1,7 +1,6 @@
 package com.apriori.concurrent;
 
 import static com.apriori.concurrent.FutureListener.forRunnable;
-import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,7 +49,7 @@ public class SettableListenableFutureAsFullfillableTest extends AbstractPossible
          @Override public void run() {
             listenerCount.incrementAndGet();
          }
-      }), sameThreadExecutor());
+      }), SameThreadExecutor.get());
       f = future.asFulfillable();
       set = f.asSet();
       checkEmptySet(set);

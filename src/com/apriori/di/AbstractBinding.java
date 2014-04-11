@@ -333,103 +333,103 @@ public abstract class AbstractBinding implements Binding {
       @Override
       public ScopeBuilder<T> to(Constructor<T> cons) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Type type) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Constructor<Provider<? extends T>> cons) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Type type) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Constructor<SelectionProvider<? extends T>> cons) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(Key<?> otherKey, Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> to(Key<?> otherKey, Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Key<?> otherKey, Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toProvider(Key<?> otherKey, Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Field field) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
 
       @Override
       public ScopeBuilder<T> toSelectionProvider(Key<?> otherKey, Method factoryMethod) {
          // TODO Auto-generated method stub
-         return null;
+         return this;
       }
    }
 }

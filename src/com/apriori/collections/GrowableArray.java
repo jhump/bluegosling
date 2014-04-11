@@ -1,0 +1,255 @@
+package com.apriori.collections;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+/**
+ * A container type that is like an array except that its capacity can change over time. This
+ * interface is intentionally much more narrow than {@link List}, which is its closest cousin from
+ * the Java Collections Framework. The abstract operations basically match that of an array with
+ * two exceptions: {@link #growBy(int)} and {@link #shrinkBy(int)}. There are several additional
+ * methods with default implementations but notably absent are methods that allow for insertion into
+ * or removal from the beginning or middle of the array.
+ * 
+ * <p>Since this is a generic type, it does not have the type co-variance of actual Java arrays, and
+ * so behaves more like a {@link Collection} from that standpoint.
+ * 
+ * @param <T> the type of element in the array
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+//TODO: DoubleEndedGrowableArray?
+public interface GrowableArray<T> extends Iterable<T> {
+   
+   /**
+    * Returns the size, or capacity, of this growable array.
+    *
+    * @return the size of this array
+    */
+   int size();
+   
+   /**
+    * Returns true if this growable array is empty. The array is empty if its capacity is zero.
+    *
+    * @return true if this array is empty
+    */
+   default boolean isEmpty() {
+      return size() == 0;
+   }
+   
+   /**
+    * Retrieves the element at the given index.
+    *
+    * @param index the index
+    * @return the element at the given index
+    * @throws IndexOutOfBoundsException if the given index is not a valid index, meaning it is less
+    *       than zero or is greater than or equal to {@link #size()}
+    */
+   T get(int index);
+   
+   /**
+    * Retrieves the first element in this growable array. The first element is the one at index
+    * zero.
+    *
+    * @return the first element in this array
+    * @throws NoSuchElementException if this array is empty
+    */
+   default T first() {
+      if (isEmpty()) {
+         throw new NoSuchElementException();
+      }
+      return get(0);
+   }
+
+   /**
+    * Retrieves the last element in this growable array. The last element is the one at index
+    * {@code size() - 1}.
+    *
+    * @return the last element in this array
+    * @throws NoSuchElementException if this array is empty
+    */
+   default T last() {
+      if (isEmpty()) {
+         throw new NoSuchElementException();
+      }
+      return get(size() - 1);
+   }
+
+   /**
+    * Sets the value of the element at the given index.
+    *
+    * @param index the index
+    * @param value new value for the given index
+    * @throws IndexOutOfBoundsException if the given index is not a valid index, meaning it is less
+    *       than zero or is greater than or equal to {@link #size()}
+    */
+   void set(int index, T value);
+
+   /**
+    * Grows the capacity of the array by the given number of elements. The extra capacity as added
+    * to the end of the array. The new positions in the array will initially have a value of
+    * {@code null}.
+    *
+    * @param numNewElements the number of new elements by which to grow this array
+    * @throws IllegalArgumentException if the given number of elements is negative
+    */
+   void growBy(int numNewElements);
+   
+   /**
+    * Shrinks the capacity of the array by the given number of elements. The capacity is taken
+    * from the end of the array, and any values contained in those last positions are implicitly
+    * removed.
+    *
+    * @param numRemovedElements the number of elements by which to shrink this array
+    * @throws IllegalArgumentException if the given number of elements is negative or is greater
+    *       than the size of this array
+    */
+   void shrinkBy(int numRemovedElements);
+   
+   /**
+    * Removes all elements from this growable array and shrinks its capacity to zero.
+    */
+   default void clear() {
+      shrinkBy(size());
+   }
+   
+   /**
+    * Pushes a new value to the end of this growable array. This is effectively the same as growing
+    * this array by one element, and then setting that last element to the given value.
+    *
+    * @param value the value to push to the end of this array
+    */
+   default void push(T value) {
+      growBy(1);
+      set(size() - 1, value);
+   }
+   
+   /**
+    * Pops the last value from the end of this growable array. This is effectively the same as
+    * shrinking the array by one element, but returns the item that was in the last, newly-removed
+    * position.
+    *
+    * @return the value that was removed from the end of this array
+    * @throws NoSuchElementException if this array is empty
+    */
+   default T pop() {
+      T ret = last();
+      shrinkBy(1);
+      return ret;
+   }
+   
+   /**
+    * Pushes multiple values to the end of this growable array, in bulk. The order of items pushed
+    * is based on the iteration order of the given collection or sequence.
+    *
+    * @param values the new values to push to the end of this array
+    */
+   default void pushAll(Iterable<? extends T> values) {
+      // mark the initial index, for the first item we'll append
+      int i = size();
+      // try to pre-allocate the entire amount needed
+      if (values instanceof Collection) {
+         growBy(((Collection<?>) values).size());
+      } else if (values instanceof ImmutableCollection) {
+         growBy(((ImmutableCollection<?>) values).size());
+      }
+      for (T t : values) {
+         if (i < size()) {
+            set(i, t);
+         } else {
+            push(t);
+         }
+         i++;
+      }
+      // in case values collection was concurrently modified to have fewer
+      // elements than we initially made room for
+      if (i < size()) {
+         shrinkBy(size() - i);
+      }
+   }
+   
+   /**
+    * Returns an iterator over the contents of this growable array. The returned iterator cannot be
+    * used to remove elements, and thus {@link Iterator#remove()} will throw
+    * {@link UnsupportedOperationException}.
+    * 
+    * @return an iterator over the contents of this array
+    */
+   @Override
+   default Iterator<T> iterator() {
+      return new Iterator<T>() {
+         private int cursor = 0;
+         
+         @Override
+         public boolean hasNext() {
+            return cursor < size();
+         }
+
+         @Override
+         public T next() {
+            if (cursor < size()) {
+               return get(cursor++);
+            } else {
+               throw new NoSuchElementException();
+            }
+         }
+      };
+   }
+   
+   /**
+    * Adjusts the size of this growable array. If the given new capacity is larger than the array's
+    * current capacity, the current array grows. Otherwise, it may shrink.
+    *
+    * @param newCapacity the new capacity for the array
+    */
+   default void adjustSizeTo(int newCapacity) {
+      int sz = size();
+      if (newCapacity == sz) {
+         return;
+      } else if (newCapacity > sz) {
+         growBy(newCapacity - sz);
+      } else {
+         shrinkBy(sz - newCapacity);
+      }
+   }
+   
+   @Override
+   default Spliterator<T> spliterator() {
+      return new GrowableArraySpliterator<T>(this, 0);
+   }
+   
+   /**
+    * Returns a sequential stream of the elements in this growable array.
+    *
+    * @return a new sequential stream
+    */
+   default Stream<T> stream() {
+      return StreamSupport.stream(spliterator(), false);
+   }
+
+   /**
+    * Returns a parallel stream of the elements in this growable array.
+    *
+    * @return a new parallel stream
+    */
+   default Stream<T> parallelStream() {
+      return StreamSupport.stream(spliterator(), true);
+   }
+   
+   /**
+    * Returns a {@link Collector} that will accumulate elements from a stream into a growable array.
+    *
+    * @param supplier supplier of a growable array, into which elements are collected
+    * @return a new collector that accumulates elements into a growable array
+    */
+   static <T, A extends GrowableArray<T>> Collector<T, ?, A> collector(Supplier<A> supplier) {
+      return Collector.of(supplier, (array, t) -> array.push(t),
+            (array1, array2) -> { array1.pushAll(array2); return array1; });
+   }
+}

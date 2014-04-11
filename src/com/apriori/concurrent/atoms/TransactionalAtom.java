@@ -5,7 +5,6 @@ import com.apriori.concurrent.HierarchicalLock;
 import com.apriori.concurrent.HierarchicalLock.ExclusiveLock;
 import com.apriori.concurrent.HierarchicalLock.SharedLock;
 import com.apriori.concurrent.ListenableFuture;
-import com.apriori.concurrent.ListenableFutures;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -345,7 +344,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
             exclusive.unlock();
          }
          notify(oldValue, newValue);
-         return ListenableFutures.completedFuture(newValue);
+         return ListenableFuture.completedFuture(newValue);
       } else {
          return current.enqueueCommute(this, function);
       }

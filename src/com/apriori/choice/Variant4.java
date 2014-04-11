@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 //TODO: javadoc
 //TODO: tests
+//TODO: flatMap*
 public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> {
    
    public static <A, B, C, D> Variant4<A, B, C, D> withFirst(A a) {
@@ -70,16 +71,16 @@ public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> 
    }
       
    @Override
-   public abstract <T> Variant4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> Variant4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function);
    
    @Override
-   public abstract <T> Variant4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> Variant4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function);
 
    @Override
-   public abstract <T> Variant4<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
+   public abstract <T> Variant4<A, B, T, D> mapThird(Function<? super C, ? extends T> function);
 
    @Override
-   public abstract <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
+   public abstract <T> Variant4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function);
 
    @Override
    public abstract <E> Variant5<E, A, B, C, D> expandFirst();
@@ -179,26 +180,26 @@ public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> 
       }
    
       @Override
-      public <T> Variant4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          return Variant4.<T, B, C, D>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> Variant4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant4<A, T, C, D> ret = (Variant4<A, T, C, D>) this;
          return ret;
       }
 
       @Override
-      public <T> Variant4<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant4<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant4<A, B, T, D> ret = (Variant4<A, B, T, D>) this;
          return ret;
       }
 
       @Override
-      public <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant4<A, B, C, T> ret = (Variant4<A, B, C, T>) this;
          return ret;
@@ -349,26 +350,26 @@ public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> 
       }
    
       @Override
-      public <T> Variant4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant4<T, B, C, D> ret = (Variant4<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          return Variant4.<A, T, C, D>withSecond(function.apply(b));
       }
    
       @Override
-      public <T> Variant4<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant4<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant4<A, B, T, D> ret = (Variant4<A, B, T, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant4<A, B, C, T> ret = (Variant4<A, B, C, T>) this;
          return ret;
@@ -519,26 +520,26 @@ public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> 
       }
    
       @Override
-      public <T> Variant4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant4<T, B, C, D> ret = (Variant4<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant4<A, T, C, D> ret = (Variant4<A, T, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant4<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          return Variant4.<A, B, T, D>withThird(function.apply(c));
       }
    
       @Override
-      public <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant4<A, B, C, T> ret = (Variant4<A, B, C, T>) this;
          return ret;
@@ -689,28 +690,28 @@ public abstract class Variant4<A, B, C, D> implements Choice.OfFour<A, B, C, D> 
       }
    
       @Override
-      public <T> Variant4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant4<T, B, C, D> ret = (Variant4<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant4<A, T, C, D> ret = (Variant4<A, T, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant4<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant4<A, B, T, D> ret = (Variant4<A, B, T, D>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          return Variant4.<A, B, C, T>withFourth(function.apply(d));
       }
       

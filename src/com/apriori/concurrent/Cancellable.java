@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
  */
 //TODO: test
 //TODO: javadoc
+@FunctionalInterface
 public interface Cancellable {
    /**
     * Cancels the activity.
@@ -26,12 +27,7 @@ public interface Cancellable {
       if (future instanceof Cancellable) {
          return (Cancellable) future;
       }
-      return new Cancellable() {
-         @Override
-         public boolean cancel(boolean mayInterrupt) {
-            return future.cancel(mayInterrupt);
-         }
-      };
+      return (mayInterrupt) -> future.cancel(mayInterrupt);
    }
    
    static Cancellable fromFutures(Future<?>... futures) {
@@ -39,17 +35,14 @@ public interface Cancellable {
    }
    
    static Cancellable fromFutures(final Iterable<? extends Future<?>> futures) {
-      return new Cancellable() {
-         @Override
-         public boolean cancel(boolean mayInterrupt) {
-            boolean ret = false;
-            for (Future<?> f : futures) {
-               if (f.cancel(mayInterrupt)) {
-                  ret = true;
-               }
+      return (mayInterrupt) -> {
+         boolean ret = false;
+         for (Future<?> f : futures) {
+            if (f.cancel(mayInterrupt)) {
+               ret = true;
             }
-            return ret;
          }
+         return ret;
       };
    }
    
@@ -58,17 +51,14 @@ public interface Cancellable {
    }
    
    static Cancellable group(final Iterable<? extends Cancellable> cancellables) {
-      return new Cancellable() {
-         @Override
-         public boolean cancel(boolean mayInterrupt) {
-            boolean ret = false;
-            for (Cancellable c : cancellables) {
-               if (c.cancel(mayInterrupt)) {
-                  ret = true;
-               }
+      return (mayInterrupt) -> {
+         boolean ret = false;
+         for (Cancellable c : cancellables) {
+            if (c.cancel(mayInterrupt)) {
+               ret = true;
             }
-            return ret;
          }
+         return ret;
       };
    }
 }

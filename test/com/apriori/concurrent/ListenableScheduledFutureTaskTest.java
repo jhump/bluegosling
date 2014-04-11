@@ -95,7 +95,7 @@ public class ListenableScheduledFutureTaskTest extends ListenableFutureTaskTest 
       assertEquals(-1, future().compareTo(d));
    }
    
-   private static class TestDelayed implements Delayed {
+   static class TestDelayed implements Delayed {
       private final long delayNanos;
       
       TestDelayed(long delayNanos) {

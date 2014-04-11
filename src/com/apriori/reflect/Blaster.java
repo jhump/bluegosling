@@ -447,7 +447,7 @@ public class Blaster<T> {
             return ProxyUtils.newProxyInstance(returnType,
                   new BlasterInvocationHandler(nextBlastTargets, onNullAction, onExceptionAction));
          } else {
-            return last == null ? ProxyUtils.getNullReturnValue(returnType) : last.get();
+            return last == null ? ProxyUtils.getDefaultValue(returnType) : last.get();
          }
       }
    }

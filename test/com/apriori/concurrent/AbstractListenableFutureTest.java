@@ -1,23 +1,15 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.FutureListener.forRunnable;
-import static com.apriori.concurrent.ListenableExecutors.sameThreadExecutor;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -33,7 +25,7 @@ public abstract class AbstractListenableFutureTest {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   protected enum State {
+   protected enum TaskState {
       /**
        * The task was never started.
        */
@@ -49,11 +41,16 @@ public abstract class AbstractListenableFutureTest {
        */
       FINISHED
    }
-   
+
    /**
     * The listenable future under test.
     */
    protected ListenableFuture<String> future;
+   
+   /**
+    * Provides assertions about a complete future.
+    */
+   protected ListenableFutureChecker futureChecker;
    
    /**
     * The number of times the listener is called.
@@ -82,7 +79,7 @@ public abstract class AbstractListenableFutureTest {
     * @param result the successful result for the future under test
     * @return the state of any corresponding task
     */
-   protected abstract State completeSuccessfully(String result) throws Exception;
+   protected abstract TaskState completeSuccessfully(String result) throws Exception;
 
    /**
     * Completes the future asynchronously. This is expected to schedule the future to complete with
@@ -116,7 +113,7 @@ public abstract class AbstractListenableFutureTest {
     * @param failure the cause of failure in the future under test
     * @return the state of any corresponding task
     */
-   protected abstract State completeUnsuccessfully(Throwable failure) throws Exception;
+   protected abstract TaskState completeUnsuccessfully(Throwable failure) throws Exception;
    
    /**
     * Cancels the future. This is done via the following code:<pre>
@@ -127,7 +124,7 @@ public abstract class AbstractListenableFutureTest {
     * 
     * @return the state of any corresponding task (this implementation returns {@code null})
     */
-   protected State cancelNoInterrupt() throws Exception {
+   protected TaskState cancelNoInterrupt() throws Exception {
       assertTrue(future.cancel(false));
       return null;
    }
@@ -141,7 +138,7 @@ public abstract class AbstractListenableFutureTest {
     * 
     * @return the state of any corresponding task (this implementation returns {@code null})
     */
-   protected State cancelMayInterruptIfRunning() throws Exception {
+   protected TaskState cancelMayInterruptIfRunning() throws Exception {
       assertTrue(future.cancel(true));
       return null;
    }
@@ -169,78 +166,74 @@ public abstract class AbstractListenableFutureTest {
       interruptCount.incrementAndGet();
    }
    
+   /**
+    * Controls how calls to {@link ListenableFuture#cancel(boolean)} are verified. Most future
+    * implementations only return true if the task was not already completed. However,
+    * {@link CompletableFuture} will always return true after the task is cancelled, even if it
+    * was a different (earlier) invocation that actually caused the future to be cancelled.
+    *
+    * @return false by default
+    */
+   protected boolean cancelReturnsTrueAfterTaskCancelled() {
+      return false;
+   }
+   
    @Before public void setUp() {
       future = makeFuture();
       listenCount = new AtomicInteger();
       interruptCount = new AtomicInteger();
+      futureChecker = new ListenableFutureChecker(future, listenCount,
+            cancelReturnsTrueAfterTaskCancelled());
    }
    
    /**
     * Assertions made about a brand new (not done) future task. This also adds the listener that
     * increments {@link #listenCount}.
     */
-   protected void preAsserts() throws Exception {
-      assertFalse(future.isDone());
-      assertFalse(future.isCancelled());
-      assertFalse(future.isFailed());
-      assertFalse(future.isSuccessful());
-      
-      future.addListener(forRunnable(new Runnable() {
-         @Override public void run() {
-            listenCount.incrementAndGet();
-         }
-      }), sameThreadExecutor());
-      assertEquals(0, listenCount.get());
-      
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but did not catch TimeoutException");
-      } catch (TimeoutException expected) {
-      }
-
-      assertFalse(future.await(0, TimeUnit.MILLISECONDS));
-      
-      try {
-         future.getResult();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      try {
-         future.getFailure();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      try {
-         future.visit(new SimpleFutureVisitor<String>() {
-            @Override public void defaultAction() {
-               fail("Visitor should not be called");
-            }
-         });
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
+   protected void assertNotDone() throws Exception {
+      futureChecker.assertNotDone();
    }
 
    /**
-    * Assertions made about a completed future, depending on the state of the underlying task.
+    * Assertions made about a future that has completed successfully.
     * 
     * @param taskState the state of the underlying task
     */
-   @SuppressWarnings("unused") // sub-classes might need to override and use it
-   protected void assertDone(State taskState) throws Exception {
-      assertTrue(future.isDone());
-      assertTrue(future.await(0, TimeUnit.NANOSECONDS));
-      assertEquals(1, listenCount.get());
-      assertFalse(future.cancel(false));
-      assertFalse(future.cancel(true));
-      
-      // since the future is completed, the listener should be invoked immediately
-      future.addListener(forRunnable(new Runnable() {
-         @Override public void run() {
-            listenCount.incrementAndGet();
-         }
-      }), sameThreadExecutor());
-      assertEquals(2, listenCount.get());
+   protected void assertSuccessful(TaskState taskState, Object value)
+         throws Exception {
+      futureChecker.assertSuccessful(value);
+      whenDone(taskState);
+   }
+   
+   /**
+    * Assertions made about a future that has failed.
+    * 
+    * @param taskState the state of the underlying task
+    */
+   protected void assertFailed(TaskState taskState, Throwable failure)
+         throws Exception {
+      futureChecker.assertFailed(failure);
+      whenDone(taskState);
+   }
+   
+   /**
+    * Assertions made about a completed future that was cancelled.
+    * 
+    * @param taskState the state of the underlying task
+    */
+   protected void assertCancelled(TaskState taskState)
+         throws Exception {
+      futureChecker.assertCancelled();
+      whenDone(taskState);
+   }
+
+   /**
+    * Called when making assertions about a completed future, regardless of its final disposition.
+    *
+    * @param taskState the state of the underlying task
+    */
+   @SuppressWarnings("unused") // sub-classes might need to override and use taskState
+   protected void whenDone(TaskState taskState) throws Exception {
    }
 
    /**
@@ -249,33 +242,8 @@ public abstract class AbstractListenableFutureTest {
     * @param s the task's result
     */
    protected void doSuccessfulCompletion(final String s) throws Exception {
-      preAsserts();
-      
-      assertDone(completeSuccessfully(s));
-      assertFalse(future.isCancelled());
-      assertFalse(future.isFailed());
-      assertTrue(future.isSuccessful());
-      assertEquals(s, future.get(0, TimeUnit.MILLISECONDS));
-      assertEquals(s, future.get());
-      assertEquals(s, future.getResult());
-      try {
-         future.getFailure();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      final AtomicBoolean visited = new AtomicBoolean();
-      future.visit(new SimpleFutureVisitor<String>() {
-         @Override public void defaultAction() {
-            fail("Only successful should be visited");
-         }
-         
-         @Override public void successful(String result) {
-            assertEquals(s, result);
-            visited.set(true);
-         }
-      });
-      assertTrue(visited.get());
-      
+      assertNotDone();
+      assertSuccessful(completeSuccessfully(s), s);
       assertEquals(0, interruptCount.get());      
    }
    
@@ -288,45 +256,9 @@ public abstract class AbstractListenableFutureTest {
    }
    
    @Test public void failedCompletion() throws Exception {
-      preAsserts();
-      
+      assertNotDone();
       final Throwable t = new RuntimeException();
-      assertDone(completeUnsuccessfully(t));
-      
-      assertFalse(future.isCancelled());
-      assertTrue(future.isFailed());
-      assertFalse(future.isSuccessful());
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but did not catch ExecutionException");
-      } catch (ExecutionException e) {
-         assertSame(t, e.getCause());
-      }
-      try {
-         future.get();
-         fail("Expected but did not catch ExecutionException");
-      } catch (ExecutionException e) {
-         assertSame(t, e.getCause());
-      }
-      try {
-         future.getResult();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      assertSame(t, future.getFailure());
-      final AtomicBoolean visited = new AtomicBoolean();
-      future.visit(new SimpleFutureVisitor<String>() {
-         @Override public void defaultAction() {
-            fail("Only failed should be visited");
-         }
-         
-         @Override public void failed(Throwable cause) {
-            assertEquals(t, cause);
-            visited.set(true);
-         }
-      });
-      assertTrue(visited.get());
-
+      assertFailed(completeUnsuccessfully(t), t);
       assertEquals(0, interruptCount.get());      
    }   
 
@@ -337,61 +269,18 @@ public abstract class AbstractListenableFutureTest {
     * 
     * @param cancel cancels the task and returns its state
     */
-   protected void doCancellation(Callable<State> cancel) throws Exception {
-      preAsserts();
-
-      assertDone(cancel.call());
-      assertTrue(future.isCancelled());
-      assertFalse(future.isFailed());
-      assertFalse(future.isSuccessful());
-      try {
-         future.get(0, TimeUnit.MILLISECONDS);
-         fail("Expected but did not catch CancellationException");
-      } catch (CancellationException expected) {
-      }
-      try {
-         future.get();
-         fail("Expected but did not catch CancellationException");
-      } catch (CancellationException expected) {
-      }
-      try {
-         future.getResult();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      try {
-         future.getFailure();
-         fail("Expected but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
-      final AtomicBoolean visited = new AtomicBoolean();
-      future.visit(new SimpleFutureVisitor<String>() {
-         @Override public void defaultAction() {
-            fail("Only cancelled should be visited");
-         }
-         
-         @Override public void cancelled() {
-            visited.set(true);
-         }
-      });
-      assertTrue(visited.get());
+   protected void doCancellation(Callable<TaskState> cancel) throws Exception {
+      assertNotDone();
+      assertCancelled(cancel.call());
    }
    
    @Test public void cancellation() throws Exception {
-      doCancellation(new Callable<State>() {
-         @Override public State call() throws Exception {
-            return cancelNoInterrupt();
-         }
-      });
+      doCancellation(() -> cancelNoInterrupt());
       assertEquals(0, interruptCount.get());
    }   
 
    @Test public void cancellation_interrupt() throws Exception {
-      doCancellation(new Callable<State>() {
-         @Override public State call() throws Exception {
-            return cancelMayInterruptIfRunning();
-         }
-      });
+      doCancellation(() -> cancelMayInterruptIfRunning());
       assertEquals(supportsInterruption() ? 1 : 0, interruptCount.get());
    }
    

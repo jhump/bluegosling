@@ -1711,34 +1711,7 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
       return size;
    }
 
-   /**
-    * Sorts the list. This is slightly more efficient than {@code Collections.sort(List)} and has
-    * the side benefit of optimizing internal storage of the items for subsequent iteration.
-    * 
-    * <p>
-    * The values must be mutually comparable or else a {@code RuntimeException} (such as
-    * {@code ClassCastException}) may be thrown.
-    */
-   public void sort() {
-      modCount++;
-      compact();
-      Arrays.sort(data);
-      for (int i = 0; i < size; i++) {
-         next[i] = i + 1;
-         prev[i] = i - 1;
-      }
-      isOptimized = true;
-   }
-
-   /**
-    * Sorts the list. This is slightly more efficient than {@code Collections.sort(List)} and has
-    * the side benefit of optimizing internal storage of the items for subsequent iteration.
-    * 
-    * <p>
-    * This uses the specified comparator to compare and order items.
-    * 
-    * @param c the comparator used to define the sort order
-    */
+   /** {@inheritDoc} */
    @Override
    @SuppressWarnings("unchecked")
    public void sort(Comparator<? super E> c) {

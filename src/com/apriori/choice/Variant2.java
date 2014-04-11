@@ -41,10 +41,10 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
    }
       
    @Override
-   public abstract <T> Variant2<T, B> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> Variant2<T, B> mapFirst(Function<? super A, ? extends T> function);
    
    @Override
-   public abstract <T> Variant2<A, T> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> Variant2<A, T> mapSecond(Function<? super B, ? extends T> function);
    
    @Override
    public abstract <C> Variant3<C, A, B> expandFirst();
@@ -65,9 +65,9 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
 
    public abstract Variant2<A, B> exchangeSecond(Function<? super B, ? extends A> function);
    
-   public abstract Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function);
+   public abstract Variant2<A, B> flatMapFirst(Function<? super A, Variant2<A, B>> function);
 
-   public abstract Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function);
+   public abstract Variant2<A, B> flatMapSecond(Function<? super B, Variant2<A, B>> function);
    
    private static class First<A, B> extends Variant2<A, B> implements Serializable {
       private static final long serialVersionUID = 7357985018452714303L;
@@ -114,12 +114,12 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public <T> Variant2<T, B> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant2<T, B> mapFirst(Function<? super A, ? extends T> function) {
          return Variant2.<T, B>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> Variant2<A, T> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant2<A, T> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant2<A, T> ret = (Variant2<A, T>) this;
          return ret;
@@ -171,12 +171,12 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
 
       @Override
-      public Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function) {
+      public Variant2<A, B> flatMapFirst(Function<? super A, Variant2<A, B>> function) {
          return function.apply(a);
       }
 
       @Override
-      public Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function) {
+      public Variant2<A, B> flatMapSecond(Function<? super B, Variant2<A, B>> function) {
          return this;
       }
       
@@ -241,14 +241,14 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public <T> Variant2<T, B> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant2<T, B> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant2<T, B> ret = (Variant2<T, B>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant2<A, T> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant2<A, T> mapSecond(Function<? super B, ? extends T> function) {
          return Variant2.<A, T>withSecond(function.apply(b));
       }
 
@@ -298,12 +298,12 @@ public abstract class Variant2<A, B> implements Choice.OfTwo<A, B> {
       }
 
       @Override
-      public Variant2<A, B> mapFirst(Function<? super A, Variant2<A, B>> function) {
+      public Variant2<A, B> flatMapFirst(Function<? super A, Variant2<A, B>> function) {
          return this;
       }
 
       @Override
-      public Variant2<A, B> mapSecond(Function<? super B, Variant2<A, B>> function) {
+      public Variant2<A, B> flatMapSecond(Function<? super B, Variant2<A, B>> function) {
          return function.apply(b);
       }
       

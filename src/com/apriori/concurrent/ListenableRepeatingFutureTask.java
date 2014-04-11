@@ -29,7 +29,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
    private final Rescheduler<? super T> rescheduler;
    private final AtomicInteger executionCount = new AtomicInteger();
    private final AtomicReference<T> latestResult;
-   private FutureListenerSet<T> occurrenceListeners = new FutureListenerSet<T>(this);
+   private final FutureListenerSet<T> occurrenceListeners = new FutureListenerSet<T>(this);
    
    public ListenableRepeatingFutureTask(Callable<T> callable, long startTimeNanos,
          Rescheduler<? super T> rescheduler) {
@@ -53,37 +53,16 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
 
    @Override
    public void addListenerForEachInstance(FutureListener<? super T> listener, Executor executor) {
-      synchronized (listenerLock) {
-         if (occurrenceListeners != null) {
-            // listener set gets set to null during done() so this
-            // means future isn't yet complete
-            occurrenceListeners.addListener(listener, executor);
-            return;
-         }
-      }
-      // if we get here, future is complete so run listener immediately
-      FutureListenerSet.runListener(this, listener, executor);
+      occurrenceListeners.addListener(listener, executor);
    }
    
    @Override
    public void run() {
       if (runAndReset()) {
          executionCount.incrementAndGet();
-         FutureListenerSet<T> toExecute;
-         synchronized (listenerLock) {
-            // snapshot, so we can run listeners w/out
-            // interference from concurrent attempts to add listeners;
-            toExecute = occurrenceListeners == null ? null : occurrenceListeners.clone();
-         }
-         // We need to check for null because concurrent call to runAndReset() could be interleaved
-         // such that it executes, fails, and clears the listeners during done() before we get here.
-         // In that case, we are unable to notify listeners of this penultimate instance. But that's
-         // okay since this can only happen if run() is called by misbehaving client. An actual
-         // executor won't be able to call next scheduled run until after we fire these listeners.
-         if (toExecute != null) {
-            setScheduledNanoTime(rescheduler.computeNextStartTime(this, getScheduledNanoTime()));
-            toExecute.runListeners();
-         }
+         Runnable toExecute = occurrenceListeners.snapshot();
+         setScheduledNanoTime(rescheduler.computeNextStartTime(this, getScheduledNanoTime()));
+         toExecute.run();
       }
    }
    
@@ -92,13 +71,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
       // increment count to account for this final instance
       executionCount.incrementAndGet();
       super.done();
-      // notify for-each-instance listeners of this final instance
-      FutureListenerSet<T> toExecute;
-      synchronized (listenerLock) {
-         toExecute = occurrenceListeners;
-         occurrenceListeners = null;
-      }
-      toExecute.runListeners();
+      occurrenceListeners.run();
    }
 
    @Override

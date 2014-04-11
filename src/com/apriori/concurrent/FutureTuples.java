@@ -16,7 +16,7 @@ import java.util.Arrays;
 //TODO: tests
 public class FutureTuples {
    public static <T> ListenableFuture<Unit<T>> asUnit(ListenableFuture<? extends T> future) {
-      return future.transform((o) -> Unit.create(o));
+      return future.map((o) -> Unit.create(o));
    }
    
    public static <T, U> ListenableFuture<Pair<T, U>> asPair(ListenableFuture<? extends T> futureT,
@@ -102,6 +102,6 @@ public class FutureTuples {
    }
    
    public static ListenableFuture<Tuple> join(Iterable<ListenableFuture<?>> futures) {
-      return ListenableFutures.join(futures).transform((list) -> Tuples.fromCollection(list));
+      return ListenableFuture.join(futures).map((list) -> Tuples.fromCollection(list));
    }
 }

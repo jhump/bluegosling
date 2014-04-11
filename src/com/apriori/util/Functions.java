@@ -29,6 +29,10 @@ public final class Functions {
       return (o) -> value;
    }
    
+   public static <T> TriFunction<Boolean, T, T, T> ternary() {
+      return (condition, t1, t2) -> (condition != null && condition) ? t1 : t2;
+   }
+   
    /**
     * Returns a function that composes two other functions. Given the first function {@code f(x)}
     * and a second function {@code g(x)}, the returned function computes {@code g(f(x))}.
@@ -237,34 +241,34 @@ public final class Functions {
    public static <T> Iterable<T> unfold(final Function<? super T, Pair<T, T>> unspool,
          final Predicate<? super T> finished, final T seed) {
       return () -> new Iterator<T>() {
-               private T val = seed;
-               private Boolean hasNext;
-               
-               @Override
-               public boolean hasNext() {
-                  if (hasNext == null) {
-                     hasNext = !finished.test(val);
-                  }
-                  return hasNext;
-               }
+         private T val = seed;
+         private Boolean hasNext;
+         
+         @Override
+         public boolean hasNext() {
+            if (hasNext == null) {
+               hasNext = !finished.test(val);
+            }
+            return hasNext;
+         }
 
-               @Override
-               public T next() {
-                  if (!hasNext()) {
-                     throw new NoSuchElementException();
-                  }
-                  Pair<T, T> unspooled = unspool.apply(val);
-                  T result = unspooled.getFirst();
-                  val = unspooled.getSecond();
-                  hasNext = null;
-                  return result;
-               }
+         @Override
+         public T next() {
+            if (!hasNext()) {
+               throw new NoSuchElementException();
+            }
+            Pair<T, T> unspooled = unspool.apply(val);
+            T result = unspooled.getFirst();
+            val = unspooled.getSecond();
+            hasNext = null;
+            return result;
+         }
 
-               @Override
-               public void remove() {
-                  throw new UnsupportedOperationException("remove");
-               }
-            };
+         @Override
+         public void remove() {
+            throw new UnsupportedOperationException("remove");
+         }
+      };
    }
    
    public static <I, O> Supplier<O> curry(final Function<? super I, ? extends O> function,

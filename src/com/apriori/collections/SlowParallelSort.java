@@ -3,7 +3,6 @@ package com.apriori.collections;
 import com.apriori.concurrent.ListenableExecutorService;
 import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
-import com.apriori.concurrent.ListenableFutures;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -167,7 +166,7 @@ public class SlowParallelSort {
                   chunksSorted, mergersStarted, ret));
          }
          // wait for them all to finish
-         ListenableFutures.join(results).get();
+         ListenableFuture.join(results).get();
       
       } catch (Exception e) {
          // on failure, make sure all tasks are cancelled

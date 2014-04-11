@@ -6,10 +6,10 @@ package com.apriori.util;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
-    * @param <I1> the type of the first argument
-    * @param <I2> the type of the second argument
-    * @param <I3> the type of the third argument
-    * @param <O> the result type
+ * @param <I1> the type of the first argument
+ * @param <I2> the type of the second argument
+ * @param <I3> the type of the third argument
+ * @param <O> the result type
  */
 @FunctionalInterface
 public interface TriFunction<I1, I2, I3, O> {

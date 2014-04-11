@@ -1,5 +1,6 @@
 package com.apriori.possible;
 
+import static com.apriori.testing.MoreAsserts.assertThrows;
 import static com.apriori.util.Predicates.alwaysAccept;
 import static com.apriori.util.Predicates.alwaysReject;
 import static com.apriori.util.Predicates.isEqualTo;
@@ -13,8 +14,11 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
@@ -65,15 +69,23 @@ public abstract class AbstractPossibleTest {
          }
       }));
       
-      Possible<String> transformed = p.map((s) -> s + ":xyz");
-      assertTrue(transformed.isPresent());
-      assertEquals(value + ":xyz", transformed.get());
-      
+      Possible<String> mapped = p.map((s) -> s + ":xyz");
+      assertTrue(mapped.isPresent());
+      assertEquals(value + ":xyz", mapped.get());
+
+      Possible<String> flatMapped = p.flatMap((s) -> Reference.setTo(s + "s"));
+      assertTrue(flatMapped.isPresent());
+      assertEquals(value + "s", flatMapped.get());
+
       Possible<String> stillPresent = p.filter(isEqualTo(value));
       assertTrue(stillPresent.isPresent());
       assertEquals(value, stillPresent.get());
 
       assertFalse(p.filter(alwaysReject()).isPresent());
+
+      List<String> list = new ArrayList<>();
+      p.ifPresent(list::add);
+      assertEquals(Arrays.asList(value), list);
    }
    
    @Test public void present() {
@@ -92,20 +104,12 @@ public abstract class AbstractPossibleTest {
    
    protected void checkAbsentValue(Possible<String> p) {
       assertFalse(p.isPresent());
-      try {
-         p.get();
-         fail("expecting NoSuchElementException");
-      } catch (NoSuchElementException expected) {
-      }
+      assertThrows(NoSuchElementException.class, () -> { p.get(); });
       assertNull(p.orElse(null));
       assertEquals("xyz", p.orElse("xyz"));
       RuntimeException r = new RuntimeException();
-      try {
-         p.orElseThrow(() -> r);
-         fail("expecting RuntimeException");
-      } catch (RuntimeException e) {
-         assertSame(r, e);
-      }
+      RuntimeException e = assertThrows(RuntimeException.class, () -> { p.orElseThrow(() -> r); });  
+      assertSame(r, e);
       checkEmptySet(p.asSet());
       
       assertEquals(123, (int) p.visit(new Possible.Visitor<String, Integer>() {
@@ -122,9 +126,13 @@ public abstract class AbstractPossibleTest {
       }));
       
       assertFalse(p.map((s) -> s + ":xyz").isPresent());
-      
+      assertFalse(p.flatMap((s) -> Reference.setTo(s + "s")).isPresent());
       assertFalse(p.filter(alwaysAccept()).isPresent());
-   }
+
+      List<String> list = new ArrayList<>();
+      p.ifPresent(list::add);
+      assertTrue(list.isEmpty());
+}
 
    @Test public void absent() {
       checkAbsentValue(valueAbsent());
@@ -136,10 +144,16 @@ public abstract class AbstractPossibleTest {
       checkPresentValue(valueAbsent().or(alternate), "xyz");
    }
 
-   @Test public void transform() {
+   @Test public void map() {
       Function<String, String> function = (s) -> s + ":xyz";
       checkPresentValue(valuePresent("abc").map(function), "abc:xyz");
       checkAbsentValue(valueAbsent().map(function));
+   }
+
+   @Test public void flatMap() {
+      Function<String, Possible<String>> function = (s) -> Reference.setTo(s + ":xyz");
+      checkPresentValue(valuePresent("abc").flatMap(function), "abc:xyz");
+      checkAbsentValue(valueAbsent().flatMap(function));
    }
 
    @Test public void filter() {

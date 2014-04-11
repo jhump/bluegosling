@@ -96,7 +96,7 @@ public interface Choice<A, B> {
     * @return a choice with the first option, it it was present, transformed by applying the given
     *       function to it
     */
-   <T> Choice<T, B> transformFirst(Function<? super A, ? extends T> function);
+   <T> Choice<T, B> mapFirst(Function<? super A, ? extends T> function);
 
    /**
     * Transforms the value of the second option. If the second option is not present, this
@@ -107,7 +107,7 @@ public interface Choice<A, B> {
     * @return a choice with the second option, it it was present, transformed by applying the given
     *       function to it
     */
-   <T> Choice<A, T> transformSecond(Function<? super B, ? extends T> function);
+   <T> Choice<A, T> mapSecond(Function<? super B, ? extends T> function);
    
    /**
     * Extends the {@link Choice} interface with operations for choices with at least three options.
@@ -148,10 +148,10 @@ public interface Choice<A, B> {
       Possible<C> tryThird();
       
       // co-variantly constrains return type to an Ops3
-      @Override <T> Ops3<T, B, C> transformFirst(Function<? super A, ? extends T> function);
+      @Override <T> Ops3<T, B, C> mapFirst(Function<? super A, ? extends T> function);
 
       // co-variantly constrains return type to an Ops3
-      @Override <T> Ops3<A, T, C> transformSecond(Function<? super B, ? extends T> function);
+      @Override <T> Ops3<A, T, C> mapSecond(Function<? super B, ? extends T> function);
       
       /**
        * Transforms the value of the third option. If the third option is not present, this
@@ -162,7 +162,7 @@ public interface Choice<A, B> {
        * @return a choice with the third option, it it was present, transformed by applying the given
        *       function to it
        */
-      <T> Ops3<A, B, T> transformThird(Function<? super C, ? extends T> function);
+      <T> Ops3<A, B, T> mapThird(Function<? super C, ? extends T> function);
    }
 
    /**
@@ -205,13 +205,13 @@ public interface Choice<A, B> {
       Possible<D> tryFourth();
 
       // co-variantly constrains return type to an Ops4
-      @Override <T> Ops4<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
+      @Override <T> Ops4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function);
 
       // co-variantly constrains return type to an Ops4
-      @Override <T> Ops4<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
+      @Override <T> Ops4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function);
       
       // co-variantly constrains return type to an Ops4
-      @Override <T> Ops4<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
+      @Override <T> Ops4<A, B, T, D> mapThird(Function<? super C, ? extends T> function);
       
       /**
        * Transforms the value of the fourth option. If the fourth option is not present, this
@@ -222,7 +222,7 @@ public interface Choice<A, B> {
        * @return a choice with the fourth option, it it was present, transformed by applying the given
        *       function to it
        */
-      <T> Ops4<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
+      <T> Ops4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function);
    }
 
    /**
@@ -266,16 +266,16 @@ public interface Choice<A, B> {
       Possible<E> tryFifth();
       
       // co-variantly constrains return type to an Ops5
-      @Override <T> Ops5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
+      @Override <T> Ops5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function);
 
       // co-variantly constrains return type to an Ops5
-      @Override <T> Ops5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function);
+      @Override <T> Ops5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function);
 
       // co-variantly constrains return type to an Ops5
-      @Override <T> Ops5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function);
+      @Override <T> Ops5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function);
       
       // co-variantly constrains return type to an Ops5
-      @Override <T> Ops5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function);
+      @Override <T> Ops5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function);
 
       /**
        * Transforms the value of the fifth option. If the fifth option is not present, this
@@ -286,7 +286,7 @@ public interface Choice<A, B> {
        * @return a choice with the fifth option, it it was present, transformed by applying the given
        *       function to it
        */
-      <T> Ops5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
+      <T> Ops5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function);
    }
    
    /**
@@ -433,11 +433,11 @@ public interface Choice<A, B> {
        */
       <C> OfThree<A, B, C> expandThird();
 
-      // co-variantly constrains return type to a Choices2
-      @Override <T> OfTwo<T, B> transformFirst(Function<? super A, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfTwo
+      @Override <T> OfTwo<T, B> mapFirst(Function<? super A, ? extends T> function);
 
-      // co-variantly constrains return type to a Choices2
-      @Override <T> OfTwo<A, T> transformSecond(Function<? super B, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfTwo
+      @Override <T> OfTwo<A, T> mapSecond(Function<? super B, ? extends T> function);
    }
 
    public interface OfThree<A, B, C> extends Choice.Ops3<A, B, C> {
@@ -493,14 +493,14 @@ public interface Choice<A, B> {
        */
       <D> OfFour<A, B, C, D> expandFourth();
       
-      // co-variantly constrains return type to a Choices3
-      @Override <T> OfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfThree
+      @Override <T> OfThree<T, B, C> mapFirst(Function<? super A, ? extends T> function);
 
-      // co-variantly constrains return type to a Choices3
-      @Override <T> OfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfThree
+      @Override <T> OfThree<A, T, C> mapSecond(Function<? super B, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices3
-      @Override <T> OfThree<A, B, T> transformThird(Function<? super C, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfThree
+      @Override <T> OfThree<A, B, T> mapThird(Function<? super C, ? extends T> function);
    }
 
    public interface OfFour<A, B, C, D> extends Choice.Ops4<A, B, C, D> {
@@ -567,17 +567,17 @@ public interface Choice<A, B> {
        */
       <E> OfFive<A, B, C, D, E> expandFifth();
 
-      // co-variantly constrains return type to a Choices4
-      @Override <T> OfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFour
+      @Override <T> OfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices4
-      @Override <T> OfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFour
+      @Override <T> OfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices4
-      @Override <T> OfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFour
+      @Override <T> OfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices4
-      @Override <T> OfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFour
+      @Override <T> OfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function);
    }
 
    public interface OfFive<A, B, C, D, E> extends Choice.Ops5<A, B, C, D, E> {
@@ -590,19 +590,19 @@ public interface Choice<A, B> {
        */
       <R> R visit(VisitorOfFive<? super A, ? super B, ? super C, ? super D, ? super E, R> visitor);
       
-      // co-variantly constrains return type to a Choices5
-      @Override <T> OfFive<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFive
+      @Override <T> OfFive<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices5
-      @Override <T> OfFive<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFive
+      @Override <T> OfFive<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices5
-      @Override <T> OfFive<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFive
+      @Override <T> OfFive<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices5
-      @Override <T> OfFive<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFive
+      @Override <T> OfFive<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function);
       
-      // co-variantly constrains return type to a Choices5
-      @Override <T> OfFive<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
+      // co-variantly constrains return type to Choice.OfFive
+      @Override <T> OfFive<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function);
    }
 }

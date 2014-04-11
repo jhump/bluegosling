@@ -96,13 +96,13 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
     * @throws NullPointerException if the function is invoked and returns null
     */
    @Override
-   public abstract <T> Either<T, B> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> Either<T, B> mapFirst(Function<? super A, ? extends T> function);
    
    /**
     * @throws NullPointerException if the function is invoked and returns null
     */
    @Override
-   public abstract <T> Either<A, T> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> Either<A, T> mapSecond(Function<? super B, ? extends T> function);
    
    @Override
    public abstract <C> AnyOfThree<C, A, B> expandFirst();
@@ -182,7 +182,7 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
     * @return the current choice if the second option is present, or the result of applying the
     *       given function to the value of the first option
     */
-   public abstract Either<A, B> mapFirst(Function<? super A, Either<A, B>> function);
+   public abstract Either<A, B> flatMapFirst(Function<? super A, Either<A, B>> function);
 
    /**
     * Maps the value of the second option, if present, to a new choice. If this option has its first
@@ -194,7 +194,7 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
     * @return the current choice if the first option is present, or the result of applying the
     *       given function to the value of the second option
     */
-   public abstract Either<A, B> mapSecond(Function<? super B, Either<A, B>> function);
+   public abstract Either<A, B> flatMapSecond(Function<? super B, Either<A, B>> function);
 
    private static class First<A, B> extends Either<A, B> implements Serializable {
       private static final long serialVersionUID = 660180035695385048L;
@@ -241,12 +241,12 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public <T> Either<T, B> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Either<T, B> mapFirst(Function<? super A, ? extends T> function) {
          return Either.<T, B>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> Either<A, T> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Either<A, T> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Either<A, T> ret = (Either<A, T>) this;
          return ret;
@@ -298,12 +298,12 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
 
       @Override
-      public Either<A, B> mapFirst(Function<? super A, Either<A, B>> function) {
+      public Either<A, B> flatMapFirst(Function<? super A, Either<A, B>> function) {
          return function.apply(a);
       }
 
       @Override
-      public Either<A, B> mapSecond(Function<? super B, Either<A, B>> function) {
+      public Either<A, B> flatMapSecond(Function<? super B, Either<A, B>> function) {
          return this;
       }
       
@@ -368,14 +368,14 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
    
       @Override
-      public <T> Either<T, B> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Either<T, B> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Either<T, B> ret = (Either<T, B>) this;
          return ret;
       }
    
       @Override
-      public <T> Either<A, T> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Either<A, T> mapSecond(Function<? super B, ? extends T> function) {
          return Either.<A, T>withSecond(function.apply(b));
       }
 
@@ -425,12 +425,12 @@ public abstract class Either<A, B> implements Choice.OfTwo<A, B> {
       }
 
       @Override
-      public Either<A, B> mapFirst(Function<? super A, Either<A, B>> function) {
+      public Either<A, B> flatMapFirst(Function<? super A, Either<A, B>> function) {
          return this;
       }
 
       @Override
-      public Either<A, B> mapSecond(Function<? super B, Either<A, B>> function) {
+      public Either<A, B> flatMapSecond(Function<? super B, Either<A, B>> function) {
          return function.apply(b);
       }
       

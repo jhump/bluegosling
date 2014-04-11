@@ -1,7 +1,8 @@
 package com.apriori.concurrent;
 
-import static com.apriori.concurrent.ListenableFutures.completedFuture;
-import static com.apriori.concurrent.ListenableFutures.failedFuture;
+import static com.apriori.concurrent.ListenableFuture.cancelledFuture;
+import static com.apriori.concurrent.ListenableFuture.completedFuture;
+import static com.apriori.concurrent.ListenableFuture.failedFuture;
 
 import com.apriori.collections.TransformingList;
 
@@ -18,7 +19,6 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
@@ -38,38 +38,6 @@ import java.util.concurrent.atomic.AtomicReference;
 // TODO: tests
 public class ListenableExecutors {
 
-   /**
-    * A simple executor that runs each task synchronously in the same thread that submits it.
-    */
-   private static final Executor SAME_THREAD_EXECUTOR = new Executor() {
-      @Override
-      public void execute(Runnable command) {
-         try {
-            command.run();
-         } catch (Throwable t) {
-            if (t instanceof InterruptedException) {
-               Thread.currentThread().interrupt();
-            }
-            
-            try {
-               Thread.currentThread().getUncaughtExceptionHandler()
-                     .uncaughtException(Thread.currentThread(), t);
-            } catch (Exception e) {
-               // TODO: log?
-            }
-         }
-      }
-   };
-   
-   /**
-    * Returns an executor that runs each task synchronously in the same thread that submits it.
-    *
-    * @return an executor that runs tasks immediately in the current thread
-    */
-   public static Executor sameThreadExecutor() {
-      return SAME_THREAD_EXECUTOR;
-   }
-   
    /**
     * Returns a new executor service that runs each task synchronously in the same thread that
     * submits it. Submissions that return futures will always return completed futures.
@@ -225,10 +193,9 @@ public class ListenableExecutors {
          throw new ExecutionException(failure);
       }
 
-      @SuppressWarnings("synthetic-access")
       @Override
       public void execute(Runnable command) {
-         SAME_THREAD_EXECUTOR.execute(command);
+         SameThreadExecutor.get().execute(command);
       }
 
       @Override
@@ -277,7 +244,7 @@ public class ListenableExecutors {
          boolean done = false;
          for (Callable<T> callable : tasks) {
             if (done || System.nanoTime() >= deadline) {
-               results.add(ListenableFutures.<T>cancelledFuture());
+               results.add(cancelledFuture());
                done = true;
             } else {
                results.add(submit(callable));
@@ -483,7 +450,7 @@ public class ListenableExecutors {
                   }
                }
             }
-         }, sameThreadExecutor());
+         }, SameThreadExecutor.get());
       }
       
       @Override
@@ -653,7 +620,7 @@ public class ListenableExecutors {
                   }
                }
             }
-         }, sameThreadExecutor());
+         }, SameThreadExecutor.get());
       }
 
       @Override

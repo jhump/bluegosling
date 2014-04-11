@@ -34,7 +34,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    /**
     * The set of listeners that will be invoked when the future completes.
     */
-   private FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
+   private final FutureListenerSet<T> listeners = new FutureListenerSet<T>(this);
    
    /**
     * The synchronization object.
@@ -42,7 +42,8 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    private final Sync sync = new Sync();
    
    /**
-    * The future's result -- either a value or a failure.
+    * The future's result -- either a value or a failure. It is not declared volatile since
+    * access is protected by {@link #sync}. 
     */
    private Object result;
    
@@ -52,15 +53,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
     * is already complete.
     */
    private void runListeners() {
-      FutureListenerSet<T> toExecute;
-      sync.acquire(0);
-      try {
-         toExecute = listeners;
-         listeners = null;
-      } finally {
-         sync.release(0);
-      }
-      toExecute.runListeners();
+      listeners.run();
    }
    
    /**
@@ -167,17 +160,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
 
    @Override
    public void addListener(FutureListener<? super T> listener, Executor executor) {
-      sync.acquire(0);
-      try {
-         if (listeners != null) {
-            listeners.addListener(listener, executor);
-            return;
-         }
-      } finally {
-         sync.release(0);
-      }
-      // if we get here, future is complete so run listener immediately
-      FutureListenerSet.runListener(this, listener, executor);
+      listeners.addListener(listener, executor);
    }
 
    @Override
@@ -280,18 +263,18 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
     */
    private static class Sync extends AbstractQueuedSynchronizer {
       private static final long serialVersionUID = -1157186986617012632L;
+
+      // bit 0 indicates completion is pending
+      private static final int BIT_PENDING = 1;
+      // bit 1 indicates cancellation
+      private static final int BIT_CANCEL = 2;
+      // bit 2 indicates completion
+      private static final int BIT_COMPLETE = 4;
+      // bit 3 indicates error
+      private static final int BIT_ERROR = 8;
       
-      // bit 0 indicates cancellation
-      private static final int BIT_CANCEL = 1;
-      // bit 1 indicates completion
-      private static final int BIT_COMPLETE = 2;
-      // bit 2 indicates error
-      private static final int BIT_ERROR = 4;
-      
-      private static final int MASK_STATE = BIT_CANCEL | BIT_COMPLETE | BIT_ERROR;
-      private static final int MASK_LISTENER_LOCK = 8;
-      
-      private static final int STATE_CANCELLING = BIT_CANCEL;
+      private static final int STATE_PENDING = BIT_PENDING;
+      private static final int STATE_CANCELLING = BIT_PENDING | BIT_CANCEL;
       private static final int STATE_SUCCESSFUL = BIT_COMPLETE;
       private static final int STATE_CANCELLED = BIT_COMPLETE | BIT_CANCEL;
       private static final int STATE_FAILED = BIT_COMPLETE | BIT_ERROR;
@@ -324,42 +307,6 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
       }
       
       /**
-       * Tries to acquire the lock that guards the future's listener set.
-       */
-      @Override
-      protected boolean tryAcquire(int i) {
-         // acquires the lock that guards the listener set
-         while (true) {
-            int state = getState();
-            if ((state & MASK_LISTENER_LOCK) != 0) {
-               return false;
-            }
-            int newState = state | MASK_LISTENER_LOCK;
-            if (compareAndSetState(state, newState)) {
-               return true;
-            }
-         }
-      }
-      
-      /**
-       * Tries to release the lock that guards the future's listener set.
-       */
-      @Override
-      protected boolean tryRelease(int i) {
-         // releases the lock that guards the listener set
-         while (true) {
-            int state = getState();
-            if ((state & MASK_LISTENER_LOCK) == 0) {
-               return false;
-            }
-            int newState = state & ~MASK_LISTENER_LOCK;
-            if (compareAndSetState(state, newState)) {
-               return true;
-            }
-         }
-      }
-      
-      /**
        * Releases this synchronizer in shared mode and then executes listeners. The synchronizer's
        * state must first be moved into a completed state.
        *
@@ -385,16 +332,16 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
 
          while (true) {
             int state = getState();
-            if ((state & MASK_STATE) != 0) {
-               if (state == STATE_CANCELLING) {
-                  // let cancellation complete before returning
-                  acquire(0);
+            if (state != 0) {
+               if ((state & BIT_PENDING) != 0) {
+                  // let imminent completion run its course
+                  acquireShared(0);
                }
                return false;
             }
-            int newState = state | STATE_SUCCESSFUL;
-            if (compareAndSetState(state, newState)) {
+            if (compareAndSetState(state, STATE_PENDING)) {
                future.result = value;
+               setState(STATE_SUCCESSFUL);
                finish(future);
                return true;
             }
@@ -414,16 +361,16 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
          
          while (true) {
             int state = getState();
-            if ((state & MASK_STATE) != 0) {
-               if (state == STATE_CANCELLING) {
-                  // let cancellation complete before returning
-                  acquire(0);
+            if (state != 0) {
+               if ((state & BIT_PENDING) != 0) {
+                  // let imminent completion run its course
+                  acquireShared(0);
                }
                return false;
             }
-            int newState = state | STATE_FAILED;
-            if (compareAndSetState(state, newState)) {
+            if (compareAndSetState(state, STATE_PENDING)) {
                future.result = failure;
+               setState(STATE_FAILED);
                finish(future);
                return true;
             }
@@ -444,21 +391,22 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
          
          while (true) {
             int state = getState();
-            if ((state & MASK_STATE) != 0) {
-               if (state == STATE_CANCELLING) {
-                  // let cancellation complete before returning
-                  acquire(0);
+            if (state != 0) {
+               if ((state & BIT_PENDING) != 0) {
+                  // let imminent completion run its course
+                  acquireShared(0);
                }
                return false;
             }
-            int newState = state | STATE_CANCELLING;
-            if (compareAndSetState(state, newState)) {
-               setState(STATE_CANCELLED);
+            if (compareAndSetState(state, STATE_CANCELLING)) {
                try {
                   if (interrupt) {
+                     // if this misbehaves, we'll propagate the exception
+                     // to whoever invoked of cancel(...) or setCancelled()
                      future.interrupt();
                   }
                } finally {
+                  setState(STATE_CANCELLED);
                   finish(future);
                }
                return true;
@@ -477,21 +425,21 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        * Returns true if the future is completed and was cancelled.
        */
       public boolean isCancelled() {
-         return (getState() & MASK_STATE) == STATE_CANCELLED;
+         return getState() == STATE_CANCELLED;
       }
 
       /**
        * Returns true if the future completed successfully.
        */
       public boolean isSuccessful() {
-         return (getState() & MASK_STATE) == STATE_SUCCESSFUL;
+         return getState() == STATE_SUCCESSFUL;
       }
 
       /**
        * Returns true if the future is completed and failed.
        */
       public boolean isFailed() {
-         return (getState() & MASK_STATE) == STATE_FAILED;
+         return getState() == STATE_FAILED;
       }
       
       /**
@@ -500,7 +448,10 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        */
       public CompletionState getCompletionState() {
          int state = getState();
-         switch (state & MASK_STATE) {
+         if ((state & BIT_COMPLETE) == 0) {
+            return null; // not done
+         }
+         switch (state) {
             case STATE_SUCCESSFUL:
                return CompletionState.SUCCESSFUL;
             case STATE_FAILED:
@@ -508,8 +459,8 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
             case STATE_CANCELLED:
                return CompletionState.CANCELLED;
             default:
-               assert !isDone(); // if future is done, we must have non-null return
-               return null;
+               // should never happen
+               throw new AssertionError("illegal completion state: " + state);
          }
       }
    }

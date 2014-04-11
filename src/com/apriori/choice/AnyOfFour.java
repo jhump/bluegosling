@@ -84,16 +84,16 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
    }
       
    @Override
-   public abstract <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function);
    
    @Override
-   public abstract <T> AnyOfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function);
 
    @Override
-   public abstract <T> AnyOfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function);
+   public abstract <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function);
 
    @Override
-   public abstract <T> AnyOfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function);
+   public abstract <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function);
 
    @Override
    public abstract <E> AnyOfFive<E, A, B, C, D> expandFirst();
@@ -117,7 +117,15 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
    public abstract AnyOfThree<A, B, D> contractThird(Function<? super C, AnyOfThree<A, B, D>> function);
 
    public abstract AnyOfThree<A, B, C> contractFourth(Function<? super D, AnyOfThree<A, B, C>> function);
+
+   public abstract AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function);
    
+   public abstract AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function);
+   
+   public abstract AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function);
+   
+   public abstract AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function);
+
    private static class First<A, B, C, D> extends AnyOfFour<A, B, C, D> implements Serializable {
       private static final long serialVersionUID = -5776364918376280846L;
 
@@ -193,26 +201,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          return AnyOfFour.<T, B, C, D>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> AnyOfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          AnyOfFour<A, T, C, D> ret = (AnyOfFour<A, T, C, D>) this;
          return ret;
       }
 
       @Override
-      public <T> AnyOfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          AnyOfFour<A, B, T, D> ret = (AnyOfFour<A, B, T, D>) this;
          return ret;
       }
 
       @Override
-      public <T> AnyOfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          AnyOfFour<A, B, C, T> ret = (AnyOfFour<A, B, C, T>) this;
          return ret;
@@ -270,6 +278,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       @Override
       public AnyOfThree<A, B, C> contractFourth(Function<? super D, AnyOfThree<A, B, C>> function) {
          return AnyOfThree.withFirst(a);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function) {
+         return function.apply(a);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function) {
+         return this;
       }
       
       @Override
@@ -363,26 +391,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          AnyOfFour<T, B, C, D> ret = (AnyOfFour<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          return AnyOfFour.<A, T, C, D>withSecond(function.apply(b));
       }
    
       @Override
-      public <T> AnyOfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          AnyOfFour<A, B, T, D> ret = (AnyOfFour<A, B, T, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          AnyOfFour<A, B, C, T> ret = (AnyOfFour<A, B, C, T>) this;
          return ret;
@@ -440,6 +468,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       @Override
       public AnyOfThree<A, B, C> contractFourth(Function<? super D, AnyOfThree<A, B, C>> function) {
          return AnyOfThree.withSecond(b);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function) {
+         return function.apply(b);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function) {
+         return this;
       }
       
       @Override
@@ -533,26 +581,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          AnyOfFour<T, B, C, D> ret = (AnyOfFour<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          AnyOfFour<A, T, C, D> ret = (AnyOfFour<A, T, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          return AnyOfFour.<A, B, T, D>withThird(function.apply(c));
       }
    
       @Override
-      public <T> AnyOfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          AnyOfFour<A, B, C, T> ret = (AnyOfFour<A, B, C, T>) this;
          return ret;
@@ -610,6 +658,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       @Override
       public AnyOfThree<A, B, C> contractFourth(Function<? super D, AnyOfThree<A, B, C>> function) {
          return AnyOfThree.withThird(c);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function) {
+         return function.apply(c);
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function) {
+         return this;
       }
       
       @Override
@@ -703,28 +771,28 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
       }
    
       @Override
-      public <T> AnyOfFour<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          AnyOfFour<T, B, C, D> ret = (AnyOfFour<T, B, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          AnyOfFour<A, T, C, D> ret = (AnyOfFour<A, T, C, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          AnyOfFour<A, B, T, D> ret = (AnyOfFour<A, B, T, D>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfFour<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
          return AnyOfFour.<A, B, C, T>withFourth(function.apply(d));
       }
       
@@ -780,6 +848,26 @@ public abstract class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>
             throw new NullPointerException();
          }
          return result;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function) {
+         return function.apply(d);
       }
       
       @Override

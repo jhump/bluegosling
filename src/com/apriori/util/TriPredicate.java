@@ -5,10 +5,11 @@ package com.apriori.util;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
-    * @param <T1> the first argument type
-    * @param <T2> the second argument type
-    * @param <T3> the third argument type
+ * @param <T1> the first argument type
+ * @param <T2> the second argument type
+ * @param <T3> the third argument type
  */
+@FunctionalInterface
 public interface TriPredicate<T1, T2, T3> {
    /**
     * Tests three objects.

@@ -515,7 +515,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
          long remainingNanos = deadline - System.nanoTime();
          if (remainingNanos < 0) {
             // don't bother submitting a task for execution if deadline has already expired
-            results.add(ListenableFutures.<T>cancelledFuture());
+            results.add(ListenableFuture.cancelledFuture());
          } else {
             results.add(submit(task));
          }

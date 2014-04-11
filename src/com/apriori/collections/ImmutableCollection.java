@@ -1,6 +1,10 @@
 package com.apriori.collections;
 
 import java.util.Collection;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * An immutable, read-only collection. This interface is similar to the standard {@link Collection}
@@ -78,4 +82,19 @@ public interface ImmutableCollection<E> extends Iterable<E> {
     * @return true if this collection contains at least one of the specified items
     */
    boolean containsAny(Iterable<?> items);
+   
+   // TODO: javadoc
+   
+   default Stream<E> stream() {
+      return StreamSupport.stream(spliterator(), false);
+   }
+
+   default Stream<E> parallelStream() {
+      return StreamSupport.stream(spliterator(), true);
+   }
+   
+   @Override
+   default Spliterator<E> spliterator() {
+      return Spliterators.spliterator(iterator(), size(), 0);
+   }
 }

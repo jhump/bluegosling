@@ -35,8 +35,8 @@ public class HolderTest extends AbstractPossibleTest {
    }
 
    @Override
-   public void transform() {
-      super.transform();
+   public void map() {
+      super.map();
       Function<String, String> function = (s) -> s + ":xyz";
       // values that come back are supposed to be immutable snapshots, not Holders
       assertFalse(valuePresent("abc").map(function) instanceof Holder);

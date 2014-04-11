@@ -66,7 +66,7 @@ public class ProxyUtilTest {
    }
 
    /**
-    * Tests {@link ProxyUtils#getNullReturnValue(Class)}.
+    * Tests {@link ProxyUtils#getDefaultValue(Class)}.
     */
    @Test public void getNullReturnValue() {
       // use an actual proxy so we not only check that returned values are what we
@@ -78,7 +78,7 @@ public class ProxyUtilTest {
                @Override
                public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
                   // method under test!
-                  return ProxyUtils.getNullReturnValue(method.getReturnType());
+                  return ProxyUtils.getDefaultValue(method.getReturnType());
                }
             });
 

@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 public class AnnotationSpec<T extends Annotation> {
    
    private static final Predicate<Method> EXCLUDE_NONBINDING_ATTRIBUTES =
-         (o) -> !o.isAnnotationPresent(NonBinding.class);
+         (m) -> !m.isAnnotationPresent(NonBinding.class);
          
    private final Class<T> annotationType;
    private final T annotation;

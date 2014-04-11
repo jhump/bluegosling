@@ -70,13 +70,13 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
    }
       
    @Override
-   public abstract <T> AnyOfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> AnyOfThree<T, B, C> mapFirst(Function<? super A, ? extends T> function);
    
    @Override
-   public abstract <T> AnyOfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> AnyOfThree<A, T, C> mapSecond(Function<? super B, ? extends T> function);
 
    @Override
-   public abstract <T> AnyOfThree<A, B, T> transformThird(Function<? super C, ? extends T> function);
+   public abstract <T> AnyOfThree<A, B, T> mapThird(Function<? super C, ? extends T> function);
 
    @Override
    public abstract <D> AnyOfFour<D, A, B, C> expandFirst();
@@ -96,6 +96,12 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
 
    public abstract Either<A, B> contractThird(Function<? super C, Either<A, B>> function);
 
+   public abstract AnyOfThree<A, B, C> flatMapFirst(Function<? super A, AnyOfThree<A, B, C>> function);
+   
+   public abstract AnyOfThree<A, B, C> flatMapSecond(Function<? super B, AnyOfThree<A, B, C>> function);
+   
+   public abstract AnyOfThree<A, B, C> flatMapThird(Function<? super C, AnyOfThree<A, B, C>> function);
+   
    private static class First<A, B, C> extends AnyOfThree<A, B, C> implements Serializable {
       private static final long serialVersionUID = 5913498780719060275L;
       
@@ -156,19 +162,19 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public <T> AnyOfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfThree<T, B, C> mapFirst(Function<? super A, ? extends T> function) {
          return AnyOfThree.<T, B, C>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> AnyOfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfThree<A, T, C> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          AnyOfThree<A, T, C> ret = (AnyOfThree<A, T, C>) this;
          return ret;
       }
 
       @Override
-      public <T> AnyOfThree<A, B, T> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfThree<A, B, T> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          AnyOfThree<A, B, T> ret = (AnyOfThree<A, B, T>) this;
          return ret;
@@ -218,6 +224,21 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
          return Either.withFirst(a);
       }
       
+      @Override
+      public AnyOfThree<A, B, C> flatMapFirst(Function<? super A, AnyOfThree<A, B, C>> function) {
+         return function.apply(a);
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapSecond(Function<? super B, AnyOfThree<A, B, C>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapThird(Function<? super C, AnyOfThree<A, B, C>> function) {
+         return this;
+      }
+
       @Override
       public boolean equals(Object o) {
          return o instanceof First && a.equals(((First<?, ?, ?>) o).a);
@@ -294,19 +315,19 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public <T> AnyOfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfThree<T, B, C> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          AnyOfThree<T, B, C> ret = (AnyOfThree<T, B, C>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfThree<A, T, C> mapSecond(Function<? super B, ? extends T> function) {
          return AnyOfThree.<A, T, C>withSecond(function.apply(b));
       }
    
       @Override
-      public <T> AnyOfThree<A, B, T> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfThree<A, B, T> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          AnyOfThree<A, B, T> ret = (AnyOfThree<A, B, T>) this;
          return ret;
@@ -354,6 +375,21 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
       @Override
       public Either<A, B> contractThird(Function<? super C, Either<A, B>> function) {
          return Either.withSecond(b);
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapFirst(Function<? super A, AnyOfThree<A, B, C>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapSecond(Function<? super B, AnyOfThree<A, B, C>> function) {
+         return function.apply(b);
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapThird(Function<? super C, AnyOfThree<A, B, C>> function) {
+         return this;
       }
       
       @Override
@@ -432,21 +468,21 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
       }
    
       @Override
-      public <T> AnyOfThree<T, B, C> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> AnyOfThree<T, B, C> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          AnyOfThree<T, B, C> ret = (AnyOfThree<T, B, C>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfThree<A, T, C> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> AnyOfThree<A, T, C> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          AnyOfThree<A, T, C> ret = (AnyOfThree<A, T, C>) this;
          return ret;
       }
    
       @Override
-      public <T> AnyOfThree<A, B, T> transformThird(Function<? super C, ? extends T> function) {
+      public <T> AnyOfThree<A, B, T> mapThird(Function<? super C, ? extends T> function) {
          return AnyOfThree.<A, B, T>withThird(function.apply(c));
       }
       
@@ -494,6 +530,21 @@ public abstract class AnyOfThree<A, B, C> implements Choice.OfThree<A, B, C> {
          return result;
       }
       
+      @Override
+      public AnyOfThree<A, B, C> flatMapFirst(Function<? super A, AnyOfThree<A, B, C>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapSecond(Function<? super B, AnyOfThree<A, B, C>> function) {
+         return this;
+      }
+      
+      @Override
+      public AnyOfThree<A, B, C> flatMapThird(Function<? super C, AnyOfThree<A, B, C>> function) {
+         return function.apply(c);
+      }
+
       @Override
       public boolean equals(Object o) {
          return o instanceof Third && c.equals(((Third<?, ?, ?>) o).c);

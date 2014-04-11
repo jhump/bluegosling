@@ -13,6 +13,7 @@ import java.util.function.Consumer;
  */
 @FunctionalInterface
 public interface FutureListener<T> {
+
    /**
     * Invoked when a future completes.
     * 
@@ -55,20 +56,32 @@ public interface FutureListener<T> {
     * Assembles a listener using all of the specified callbacks. Each callback is invoked depending
     * on the disposition of the completed futures.
     * 
-    * <p>This method uses only functional interfaces, so listeners can easily be constructed using
-    * lambdas.
-    * 
     * @param onSuccess invoked when the completed future is successful; the future's result is
     *       passed to the consumer
     * @param onFailure invoked when the completed future has failed; the cause of failure is passed
     *       to the consumer
     * @param onCancel invoked when the completed future is cancelled
     * @return a listener that will call one of the specified callbacks when invoked
+    * 
+    * @see SimpleFutureVisitor.Builder
     */
-   static <T> FutureListener<T> assemble(Consumer<? super T> onSuccess,
+   static <T> FutureListener<T> o(Consumer<? super T> onSuccess,
          Consumer<? super Throwable> onFailure, Runnable onCancel) {
-      return forVisitor(new SimpleFutureVisitor.Builder<T>()
-            .onSuccess(onSuccess).onFailure(onFailure).onCancel(onCancel)
-            .build());
+      return forVisitor(new FutureVisitor<T>() {
+         @Override
+         public void successful(T result) {
+            onSuccess.accept(result);
+         }
+
+         @Override
+         public void failed(Throwable failure) {
+            onFailure.accept(failure);
+         }
+
+         @Override
+         public void cancelled() {
+            onCancel.run();
+         }
+      });
    }
 }

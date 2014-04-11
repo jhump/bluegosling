@@ -161,7 +161,7 @@ public final class Fulfillables {
       @Override
       public T get() {
          if (value == null) {
-            throw new IllegalStateException("not fulfilled");
+            throw new NoSuchElementException("not fulfilled");
          }
          return value.get();
       }

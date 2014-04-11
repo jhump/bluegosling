@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 //TODO: javadoc
 //TODO: tests
+//TODO: flatMap*
 public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E> {
    
    public static <A, B, C, D, E> Variant5<A, B, C, D, E> withFirst(A a) {
@@ -81,19 +82,19 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
    }
       
    @Override
-   public abstract <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function);
+   public abstract <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function);
    
    @Override
-   public abstract <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function);
+   public abstract <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function);
 
    @Override
-   public abstract <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function);
+   public abstract <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function);
 
    @Override
-   public abstract <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function);
+   public abstract <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function);
 
    @Override
-   public abstract <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function);
+   public abstract <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function);
 
    public abstract Variant4<B, C, D, E> contractFirst(Function<? super A, Variant4<B, C, D, E>> function);
 
@@ -195,33 +196,33 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
       
       @Override
-      public <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
          return Variant5.<T, B, C, D, E>withFirst(function.apply(a));
       }
    
       @Override
-      public <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant5<A, T, C, D, E> ret = (Variant5<A, T, C, D, E>) this;
          return ret;
       }
 
       @Override
-      public <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant5<A, B, T, D, E> ret = (Variant5<A, B, T, D, E>) this;
          return ret;
       }
 
       @Override
-      public <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant5<A, B, C, T, E> ret = (Variant5<A, B, C, T, E>) this;
          return ret;
       }
 
       @Override
-      public <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      public <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fifth not present, can safely recast that variable
          Variant5<A, B, C, D, T> ret = (Variant5<A, B, C, D, T>) this;
          return ret;
@@ -367,33 +368,33 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
       
       @Override
-      public <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant5<T, B, C, D, E> ret = (Variant5<T, B, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
          return Variant5.<A, T, C, D, E>withSecond(function.apply(b));
       }
    
       @Override
-      public <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant5<A, B, T, D, E> ret = (Variant5<A, B, T, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant5<A, B, C, T, E> ret = (Variant5<A, B, C, T, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      public <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fifth not present, can safely recast that variable
          Variant5<A, B, C, D, T> ret = (Variant5<A, B, C, D, T>) this;
          return ret;
@@ -539,33 +540,33 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
       
       @Override
-      public <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant5<T, B, C, D, E> ret = (Variant5<T, B, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant5<A, T, C, D, E> ret = (Variant5<A, T, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
          return Variant5.<A, B, T, D, E>withThird(function.apply(c));
       }
    
       @Override
-      public <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant5<A, B, C, T, E> ret = (Variant5<A, B, C, T, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      public <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fifth not present, can safely recast that variable
          Variant5<A, B, C, D, T> ret = (Variant5<A, B, C, D, T>) this;
          return ret;
@@ -711,33 +712,33 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
       
       @Override
-      public <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant5<T, B, C, D, E> ret = (Variant5<T, B, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant5<A, T, C, D, E> ret = (Variant5<A, T, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant5<A, B, T, D, E> ret = (Variant5<A, B, T, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
          return Variant5.<A, B, C, T, E>withFourth(function.apply(d));
       }
    
       @Override
-      public <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      public <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fifth not present, can safely recast that variable
          Variant5<A, B, C, D, T> ret = (Variant5<A, B, C, D, T>) this;
          return ret;
@@ -883,35 +884,35 @@ public abstract class Variant5<A, B, C, D, E> implements Choice.OfFive<A, B, C, 
       }
       
       @Override
-      public <T> Variant5<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      public <T> Variant5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
          @SuppressWarnings("unchecked") // since first not present, can safely recast that variable
          Variant5<T, B, C, D, E> ret = (Variant5<T, B, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      public <T> Variant5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
          @SuppressWarnings("unchecked") // since second not present, can safely recast that variable
          Variant5<A, T, C, D, E> ret = (Variant5<A, T, C, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      public <T> Variant5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
          @SuppressWarnings("unchecked") // since third not present, can safely recast that variable
          Variant5<A, B, T, D, E> ret = (Variant5<A, B, T, D, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      public <T> Variant5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
          @SuppressWarnings("unchecked") // since fourth not present, can safely recast that variable
          Variant5<A, B, C, T, E> ret = (Variant5<A, B, C, T, E>) this;
          return ret;
       }
    
       @Override
-      public <T> Variant5<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      public <T> Variant5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
          return Variant5.<A, B, C, D, T>withFifth(function.apply(e));
       }
       

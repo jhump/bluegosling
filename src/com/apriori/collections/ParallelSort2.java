@@ -3,7 +3,6 @@ package com.apriori.collections;
 import com.apriori.concurrent.ListenableExecutorService;
 import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
-import com.apriori.concurrent.ListenableFutures;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -94,14 +93,14 @@ public class ParallelSort2 {
          final T array[] = (T[]) list.toArray();
          final int hi = array.length;
          final int mid = hi >>> 1;
-         ListenableFuture<?> loHalf = ListenableFutures.dereference(executor.submit(
+         ListenableFuture<?> loHalf = ListenableFuture.dereference(executor.submit(
                new Callable<ListenableFuture<Void>>() {
                   @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
                   @Override public ListenableFuture<Void> call() {
                      return recursiveSort(array, 0, mid, threshold, comparator, executor);
                   }
                }));
-         ListenableFuture<?> hiHalf = ListenableFutures.dereference(executor.submit(
+         ListenableFuture<?> hiHalf = ListenableFuture.dereference(executor.submit(
                new Callable<ListenableFuture<Void>>() {
                   @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
                   @Override public ListenableFuture<Void> call() {
@@ -161,11 +160,11 @@ public class ParallelSort2 {
          final ListenableExecutorService executor) {
       if (hi - lo <= threshold) {
          Arrays.sort(array, lo, hi, comparator);
-         return ListenableFutures.completedFuture(null);
+         return ListenableFuture.completedFuture(null);
       }
       final int mid = lo + ((hi - lo) >>> 1);
       // submit task to sort lower half in parallel
-      ListenableFuture<Void> loHalf = ListenableFutures.dereference(executor.submit(
+      ListenableFuture<Void> loHalf = ListenableFuture.dereference(executor.submit(
             new Callable<ListenableFuture<Void>>() {
                @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
                @Override public ListenableFuture<Void> call() {
