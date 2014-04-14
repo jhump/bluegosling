@@ -278,7 +278,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></h3>
-<code><a href="../../../com/apriori/collections/GrowableArray.html#adjustSizeTo-int-">adjustSizeTo</a>, <a href="../../../com/apriori/collections/GrowableArray.html#collector-java.util.function.Supplier-">collector</a>, <a href="../../../com/apriori/collections/GrowableArray.html#first--">first</a>, <a href="../../../com/apriori/collections/GrowableArray.html#last--">last</a>, <a href="../../../com/apriori/collections/GrowableArray.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#stream--">stream</a></code></li>
+<code><a href="../../../com/apriori/collections/GrowableArray.html#adjustSizeTo-int-">adjustSizeTo</a>, <a href="../../../com/apriori/collections/GrowableArray.html#collector-java.util.function.Supplier-">collector</a>, <a href="../../../com/apriori/collections/GrowableArray.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/GrowableArray.html#first--">first</a>, <a href="../../../com/apriori/collections/GrowableArray.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/GrowableArray.html#last--">last</a>, <a href="../../../com/apriori/collections/GrowableArray.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#stream--">stream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray-T:A-">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
@@ -477,11 +477,11 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <h4>set</h4>
 <pre>public&nbsp;void&nbsp;set(int&nbsp;index,
                 <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&nbsp;value)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#set-int-T-">GrowableArray</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#set-int-E-">GrowableArray</a></code></span></div>
 <div class="block">Sets the value of the element at the given index.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/GrowableArray.html#set-int-T-">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/GrowableArray.html#set-int-E-">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>index</code> - the index</dd>
 <dd><code>value</code> - new value for the given index</dd>
@@ -535,12 +535,12 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <li class="blockList">
 <h4>push</h4>
 <pre>public&nbsp;void&nbsp;push(<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&nbsp;t)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#push-T-">GrowableArray</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#push-E-">GrowableArray</a></code></span></div>
 <div class="block">Pushes a new value to the end of this growable array. This is effectively the same as growing
  this array by one element, and then setting that last element to the given value.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/GrowableArray.html#push-T-">push</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/GrowableArray.html#push-E-">push</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>t</code> - the value to push to the end of this array</dd>
 </dl>

@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":18,"i12":6,"i13":18,"i14":6,"i15":18,"i16":18,"i17":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -122,8 +122,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface except that it defines no mutation operations.
  
  <p>The <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>remove()</code></a> operation of an immutable map's
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> always throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>. Similarly the
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> for any of the collection views of the map will also always throw
+ <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--"><code>iterator()</code></a> always throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>. Similarly the
+ <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--"><code>iterator()</code></a> for any of the collection views of the map will also always throw
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
@@ -159,7 +159,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -211,16 +211,32 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#size--">size</a></span>()</code>
 <div class="block">Determines the number of entries in this map.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></span>()</code>&nbsp;</td>
 </tr>
@@ -230,7 +246,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
 </ul>
 </li>
 </ul>
@@ -381,13 +397,57 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <a name="hashCode--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>hashCode</h4>
 <pre>int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="stream--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>stream</h4>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;&nbsp;stream()</pre>
+</li>
+</ul>
+<a name="parallelStream--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parallelStream</h4>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;&nbsp;parallelStream()</pre>
+</li>
+</ul>
+<a name="iterator--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>iterator</h4>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;&nbsp;iterator()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="spliterator--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>spliterator</h4>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;&nbsp;spliterator()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">K</a>,<a href="../../../com/apriori/collections/ImmutableMap.html" title="type parameter in ImmutableMap">V</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

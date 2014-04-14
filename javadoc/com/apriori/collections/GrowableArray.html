@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18,"i2":17,"i3":18,"i4":6,"i5":6,"i6":18,"i7":18,"i8":18,"i9":18,"i10":18,"i11":18,"i12":18,"i13":6,"i14":6,"i15":6,"i16":18,"i17":18};
+var methods = {"i0":18,"i1":18,"i2":17,"i3":6,"i4":18,"i5":6,"i6":6,"i7":6,"i8":18,"i9":18,"i10":18,"i11":18,"i12":18,"i13":18,"i14":18,"i15":6,"i16":6,"i17":6,"i18":18,"i19":18,"i20":18,"i21":18};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.collections</div>
-<h2 title="Interface GrowableArray" class="title">Interface GrowableArray&lt;T&gt;</h2>
+<h2 title="Interface GrowableArray" class="title">Interface GrowableArray&lt;E&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,20 +99,20 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - the type of element in the array</dd>
+<dd><code>E</code> - the type of element in the array</dd>
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a>, <a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a>, <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a>, <a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">GrowableArray&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</pre>
+<pre>public interface <span class="typeNameLabel">GrowableArray&lt;E&gt;</span>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</pre>
 <div class="block">A container type that is like an array except that its capacity can change over time. This
  interface is intentionally much more narrow than <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a>, which is its closest
  cousin from the Java Collections Framework. The abstract operations basically match that of an
@@ -159,93 +159,109 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a></code></td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#first--">first</a></span>()</code>
 <div class="block">Retrieves the first element in this growable array.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a></code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#get-int-">get</a></span>(int&nbsp;index)</code>
 <div class="block">Retrieves the element at the given index.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#growBy-int-">growBy</a></span>(int&nbsp;numNewElements)</code>
 <div class="block">Grows the capacity of the array by the given number of elements.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#isEmpty--">isEmpty</a></span>()</code>
 <div class="block">Returns true if this growable array is empty.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#iterator--">iterator</a></span>()</code>
 <div class="block">Returns an iterator over the contents of this growable array.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a></code></td>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#last--">last</a></span>()</code>
 <div class="block">Retrieves the last element in this growable array.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></td>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#parallelStream--">parallelStream</a></span>()</code>
 <div class="block">Returns a parallel stream of the elements in this growable array.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a></code></td>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#pop--">pop</a></span>()</code>
 <div class="block">Pops the last value from the end of this growable array.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#push-T-">push</a></span>(<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;value)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#push-E-">push</a></span>(<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;value)</code>
 <div class="block">Pushes a new value to the end of this growable array.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>default void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#pushAll-java.lang.Iterable-">pushAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;values)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#pushAll-java.lang.Iterable-">pushAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;values)</code>
 <div class="block">Pushes multiple values to the end of this growable array, in bulk.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#set-int-T-">set</a></span>(int&nbsp;index,
-   <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;value)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#set-int-E-">set</a></span>(int&nbsp;index,
+   <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;value)</code>
 <div class="block">Sets the value of the element at the given index.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#shrinkBy-int-">shrinkBy</a></span>(int&nbsp;numRemovedElements)</code>
 <div class="block">Shrinks the capacity of the array by the given number of elements.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#size--">size</a></span>()</code>
 <div class="block">Returns the size, or capacity, of this growable array.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></td>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#spliterator--">spliterator</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></td>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#stream--">stream</a></span>()</code>
 <div class="block">Returns a sequential stream of the elements in this growable array.</div>
 </td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#toArray--">toArray</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>default &lt;T&gt;&nbsp;T[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/GrowableArray.html#toArray-T:A-">toArray</a></span>(T[]&nbsp;array)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -303,7 +319,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre><a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;get(int&nbsp;index)</pre>
+<pre><a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;get(int&nbsp;index)</pre>
 <div class="block">Retrieves the element at the given index.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -322,7 +338,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>first</h4>
-<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;first()</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;first()</pre>
 <div class="block">Retrieves the first element in this growable array. The first element is the one at index
  zero.</div>
 <dl>
@@ -339,7 +355,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>last</h4>
-<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;last()</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;last()</pre>
 <div class="block">Retrieves the last element in this growable array. The last element is the one at index
  <code>size() - 1</code>.</div>
 <dl>
@@ -352,14 +368,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </ul>
 <a name="set-int-java.lang.Object-">
 <!--   -->
-</a><a name="set-int-T-">
+</a><a name="set-int-E-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
 <pre>void&nbsp;set(int&nbsp;index,
-         <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;value)</pre>
+         <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;value)</pre>
 <div class="block">Sets the value of the element at the given index.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -408,6 +424,52 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </dl>
 </li>
 </ul>
+<a name="toArray--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toArray</h4>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
+</li>
+</ul>
+<a name="toArray-java.lang.Object:A-">
+<!--   -->
+</a><a name="toArray-T:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toArray</h4>
+<pre>default&nbsp;&lt;T&gt;&nbsp;T[]&nbsp;toArray(T[]&nbsp;array)</pre>
+</li>
+</ul>
+<a name="equals-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>equals</h4>
+<pre>boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="hashCode--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>int&nbsp;hashCode()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="clear--">
 <!--   -->
 </a>
@@ -420,13 +482,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </ul>
 <a name="push-java.lang.Object-">
 <!--   -->
-</a><a name="push-T-">
+</a><a name="push-E-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>push</h4>
-<pre>default&nbsp;void&nbsp;push(<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;value)</pre>
+<pre>default&nbsp;void&nbsp;push(<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;value)</pre>
 <div class="block">Pushes a new value to the end of this growable array. This is effectively the same as growing
  this array by one element, and then setting that last element to the given value.</div>
 <dl>
@@ -441,7 +503,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>pop</h4>
-<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&nbsp;pop()</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&nbsp;pop()</pre>
 <div class="block">Pops the last value from the end of this growable array. This is effectively the same as
  shrinking the array by one element, but returns the item that was in the last, newly-removed
  position.</div>
@@ -459,7 +521,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>pushAll</h4>
-<pre>default&nbsp;void&nbsp;pushAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;values)</pre>
+<pre>default&nbsp;void&nbsp;pushAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;values)</pre>
 <div class="block">Pushes multiple values to the end of this growable array, in bulk. The order of items pushed
  is based on the iteration order of the given collection or sequence.</div>
 <dl>
@@ -474,13 +536,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;iterator()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;iterator()</pre>
 <div class="block">Returns an iterator over the contents of this growable array. The returned iterator cannot be
  used to remove elements, and thus <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>Iterator.remove()</code></a> will throw
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator over the contents of this array</dd>
 </dl>
@@ -507,10 +569,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>spliterator</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;spliterator()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;spliterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -520,7 +582,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>stream</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;stream()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;stream()</pre>
 <div class="block">Returns a sequential stream of the elements in this growable array.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -534,7 +596,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>parallelStream</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt;&nbsp;parallelStream()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt;&nbsp;parallelStream()</pre>
 <div class="block">Returns a parallel stream of the elements in this growable array.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>

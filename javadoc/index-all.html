@@ -96,6 +96,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractConcurrentScoper.html#AbstractConcurrentScoper--">AbstractConcurrentScoper()</a></span> - Constructor for class com.apriori.di.<a href="com/apriori/di/AbstractConcurrentScoper.html" title="class in com.apriori.di">AbstractConcurrentScoper</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractGrowableArray</span></a>&lt;<a href="com/apriori/collections/AbstractGrowableArray.html" title="type parameter in AbstractGrowableArray">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractGrowableArray.html#AbstractGrowableArray--">AbstractGrowableArray()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractImmutableCollection</span></a>&lt;<a href="com/apriori/collections/AbstractImmutableCollection.html" title="type parameter in AbstractImmutableCollection">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">An abstract base class for implementing <a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><code>ImmutableCollection</code></a> and its sub-interfaces.</div>
@@ -1037,6 +1041,8 @@
 <dd>
 <div class="block">Returns the corresponding bit mask for this modifier.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#asIntStream--">asIntStream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Generator.html#asIterable--">asIterable()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a></dt>
 <dd>
 <div class="block">Returns a view of this generator as an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a>.</div>
@@ -1045,6 +1051,8 @@
 <dd>
 <div class="block">Returns a view of this sequence as an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BooleanIterator.html#asIteratorOfInt--">asIteratorOfInt()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections">BooleanIterator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessEntrySet.html#asList--">asList()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessEntrySet.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.RandomAccessEntrySet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessKeySet.html#asList--">asList()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.RandomAccessKeySet.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.RandomAccessKeySet</a></dt>
@@ -1399,13 +1407,21 @@
 <dd>
 <div class="block">Indicates how bits are ordered when extracting bits into numeric types.</div>
 </dd>
-<dt><a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections"><span class="typeNameLink">BitSequence.Stream</span></a> - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
-<dd>
-<div class="block">A stream of bits.</div>
-</dd>
 <dt><a href="com/apriori/collections/BitSequences.html" title="class in com.apriori.collections"><span class="typeNameLink">BitSequences</span></a> - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">Utility methods for working with <a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a>s.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#bitStream--">bitStream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
+<dd>
+<div class="block">Returns a stream, for consuming bits in arbitrary amounts with each fetch.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#bitStream-int-">bitStream(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
+<dd>
+<div class="block">Returns a stream, for consuming bits in arbitrary amounts with each fetch.</div>
+</dd>
+<dt><a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections"><span class="typeNameLink">BitStream</span></a> - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>
+<div class="block">A stream of bits.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-">bitTupleIterator(int, BitSequence.BitOrder)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
 <dd>
@@ -1423,6 +1439,10 @@
 <dd>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#bitTupleStream-int-">bitTupleStream(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#bitTupleStream-int-com.apriori.collections.BitSequence.BitOrder-">bitTupleStream(int, BitSequence.BitOrder)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Blaster.html#blasted-T-">blasted(T)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Blaster.html" title="class in com.apriori.reflect">Blaster</a></dt>
 <dd>
 <div class="block">Gets the list of values returned from the most recent method invocation on a blasting proxy
@@ -1862,6 +1882,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtMap.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">HamtMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/NoCopyGrowableArray.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dt>
@@ -2229,10 +2251,10 @@
 <dd>
 <div class="block">Creates a new exception with the specified cause and set of error diagnostics.</div>
 </dd>
-<dt><a href="com/apriori/concurrent/CompletableExecutors.html" title="class in com.apriori.concurrent"><span class="typeNameLink">CompletableExecutors</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">CompletableExecutorService</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An executor service that returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a>s.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#completedFuture-T-">completedFuture(T)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Returns a future that has already successfully completed with the specified value.</div>
@@ -2538,6 +2560,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#containsKey-java.lang.Object-">containsKey(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#containsKey-java.lang.Object-">containsKey(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#containsKey-java.lang.Object-">containsKey(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
@@ -2807,7 +2831,7 @@
 <div class="block">Returns details for the currently scheduled invocation, which might be
  executing currently.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#currentIndex--">currentIndex()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#currentIndex--">currentIndex()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the current index of the stream.</div>
 </dd>
@@ -3115,6 +3139,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#entrySet--">entrySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#entrySet--">entrySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#entrySet--">entrySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessNavigableMap.html#entrySet--">entrySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/RandomAccessNavigableMap.html" title="interface in com.apriori.collections">RandomAccessNavigableMap</a></dt>
@@ -3151,6 +3177,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArWildcardType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractGrowableArray.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.SimpleEntry.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="class in com.apriori.collections">AbstractImmutableMap.SimpleEntry</a></dt>
@@ -3176,6 +3204,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringSet.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringSet.html" title="class in com.apriori.collections">FilteringSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableList.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a></dt>
 <dd>
 <div class="block">Returns true if this list is equal to the specified object.</div>
@@ -3190,6 +3220,8 @@
 <dd>
 <div class="block">Returns true if this set is equal to the specified object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/NoCopyGrowableArray.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PriorityQueue.Entry.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a></dt>
 <dd>
 <div class="block">Determines if this entry is equal to another.</div>
@@ -3872,6 +3904,8 @@
 <dd>
 <div class="block">Returns a converter that converts doubles into streams of 64 bits.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#forEach-java.util.function.BiConsumer-">forEach(BiConsumer&lt;? super K, ? super V&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/ClassHierarchyCrawler.Builder.html#forEachClass-com.apriori.reflect.ClassVisitor-">forEachClass(ClassVisitor&lt;R, P&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a></dt>
 <dd>
 <div class="block">A visitor that is invoked for each class in the hierarchy.</div>
@@ -4295,6 +4329,10 @@
 <dd>
 <div class="block">A listener for the completion of a future.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/FutureListenerSet.html" title="class in com.apriori.concurrent"><span class="typeNameLink">FutureListenerSet</span></a>&lt;<a href="com/apriori/concurrent/FutureListenerSet.html" title="type parameter in FutureListenerSet">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">Represents a set of listeners.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent"><span class="typeNameLink">FutureTuples</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/FutureTuples.html#FutureTuples--">FutureTuples()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/FutureTuples.html" title="class in com.apriori.concurrent">FutureTuples</a></dt>
@@ -4385,6 +4423,8 @@
 <div class="block">Retrieves the element at the specified zero-based index.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#get-java.lang.Object-">get(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#get-int-">get(int)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
 <dd>&nbsp;</dd>
@@ -5050,6 +5090,8 @@
 <dd>
 <div class="block">Returns the name of the method that this signature represents.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#getOrDefault-java.lang.Object-V-">getOrDefault(Object, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArParameterizedType.html#getOwnerType--">getOwnerType()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect">ArParameterizedType</a></dt>
 <dd>
 <div class="block">Returns the enclosing type.</div>
@@ -5295,7 +5337,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Cancellable.html#group-java.lang.Iterable-">group(Iterable&lt;? extends Cancellable&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections"><span class="typeNameLink">GrowableArray</span></a>&lt;<a href="com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">T</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dt><a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections"><span class="typeNameLink">GrowableArray</span></a>&lt;<a href="com/apriori/collections/GrowableArray.html" title="type parameter in GrowableArray">E</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">A container type that is like an array except that its capacity can change over time.</div>
 </dd>
@@ -5388,6 +5430,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArWildcardType.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractGrowableArray.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.SimpleEntry.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="class in com.apriori.collections">AbstractImmutableMap.SimpleEntry</a></dt>
@@ -5411,6 +5455,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringList.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringList.html" title="class in com.apriori.collections">FilteringList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringSet.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringSet.html" title="class in com.apriori.collections">FilteringSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#hashCode--">hashCode()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableList.html#hashCode--">hashCode()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a></dt>
 <dd>
@@ -6372,6 +6418,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentSet.html#iterator--">iterator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#iterator--">iterator()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#iterator--">iterator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#iterator--">iterator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
@@ -6417,7 +6465,7 @@
 <dd>
 <div class="block">Joins a list of futures into one future list.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#jumpTo-int-">jumpTo(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#jumpTo-int-">jumpTo(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Sets the current index of the stream.</div>
 </dd>
@@ -6475,6 +6523,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#keySet--">keySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableSortedMap.html#keySet--">keySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#keySet--">keySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#keySet--">keySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
@@ -6638,6 +6688,14 @@
 <div class="block">Lifts a three-argument partial function to a regular function that throws a custom exception
  for incomputable inputs.</div>
 </dd>
+<dt><a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections"><span class="typeNameLink">LinearHashingMap</span></a>&lt;<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">K</a>,<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">V</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#LinearHashingMap--">LinearHashingMap()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#LinearHashingMap-int-">LinearHashingMap(int)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#LinearHashingMap-java.util.Map-">LinearHashingMap(Map&lt;? extends K, ? extends V&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections"><span class="typeNameLink">LinkedCycle</span></a>&lt;<a href="com/apriori/collections/LinkedCycle.html" title="type parameter in LinkedCycle">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#LinkedCycle--">LinkedCycle()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
@@ -6647,12 +6705,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html#LinkedSubList-com.apriori.collections.ImmutableList-int-">LinkedSubList(ImmutableList&lt;E&gt;, int)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#list-javax.tools.JavaFileManager.Location-java.lang.String-java.util.Set-boolean-">list(JavaFileManager.Location, String, Set&lt;JavaFileObject.Kind&gt;, boolean)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ListenableExecutors</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">Factory classes for creating instances of <a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#ListenableExecutors--">ListenableExecutors()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableExecutorService</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
@@ -6821,6 +6873,8 @@
 </a>
 <h2 class="title">M</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/NoCopyGrowableArray.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
@@ -6829,15 +6883,15 @@
 <dd>
 <div class="block">A marker for an injectable static main method.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutors.html#makeCompletable-java.util.concurrent.ExecutorService-">makeCompletable(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutors.html" title="class in com.apriori.concurrent">CompletableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutorService.html#makeCompletable-java.util.concurrent.ExecutorService-">makeCompletable(ExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></dt>
 <dd>
 <div class="block">Converts the specified service into a <a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent"><code>CompletableExecutorService</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#makeListenable-java.util.concurrent.ExecutorService-">makeListenable(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ExecutorService-">makeListenable(ExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dd>
 <div class="block">Converts the specified service into a <a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#makeListenable-java.util.concurrent.ScheduledExecutorService-">makeListenable(ScheduledExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ScheduledExecutorService-">makeListenable(ScheduledExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dd>
 <div class="block">Converts the specified service into a <a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>.</div>
 </dd>
@@ -6853,12 +6907,12 @@
 <dd>
 <div class="block">Converts the specified future into a <a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledFuture</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#makeListenableScheduled-java.util.concurrent.ExecutorService-boolean-">makeListenableScheduled(ExecutorService, boolean)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-">makeListenableScheduled(ExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dd>
 <div class="block">Converts the specified service into a <a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
  scheduling capability if needed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#makeListenableScheduled-java.util.concurrent.ExecutorService-">makeListenableScheduled(ExecutorService)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-boolean-">makeListenableScheduled(ExecutorService, boolean)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dd>
 <div class="block">Converts the specified service into a <a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
  scheduling capability if needed.</div>
@@ -7206,15 +7260,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndicesIterator.html#next--">next()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.SubMapByIndicesIterator.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap.SubMapByIndicesIterator</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#next--">next()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#next--">next()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the next bit in the stream.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#next-int-com.apriori.collections.BitSequence.BitOrder-">next(int, BitSequence.BitOrder)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#next-int-com.apriori.collections.BitSequence.BitOrder-">next(int, BitSequence.BitOrder)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the next chunk of bits in the stream.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#next-int-">next(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#next-int-">next(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the next chunk of bits in the stream.</div>
 </dd>
@@ -7234,7 +7288,7 @@
 <dd>
 <div class="block">Returns the next element in the sequence.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#nextAsSequence-int-">nextAsSequence(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#nextAsSequence-int-">nextAsSequence(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the next chunk of bits in the stream.</div>
 </dd>
@@ -7564,6 +7618,8 @@
 <div class="block">Returns a parallel stream of the elements in this growable array.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/util/PartialBiFunction.html" title="interface in com.apriori.util"><span class="typeNameLink">PartialBiFunction</span></a>&lt;<a href="com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">I1</a>,<a href="com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">I2</a>,<a href="com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">O</a>&gt; - Interface in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
 <dd>
@@ -8024,7 +8080,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayListGrowableArray.html#push-T-">push(T)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#push-T-">push(T)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#push-E-">push(E)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
 <dd>
 <div class="block">Pushes a new value to the end of this growable array.</div>
 </dd>
@@ -8038,7 +8094,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayListGrowableArray.html#pushAll-java.lang.Iterable-">pushAll(Iterable&lt;? extends T&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#pushAll-java.lang.Iterable-">pushAll(Iterable&lt;? extends T&gt;)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#pushAll-java.lang.Iterable-">pushAll(Iterable&lt;? extends E&gt;)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
 <dd>
 <div class="block">Pushes multiple values to the end of this growable array, in bulk.</div>
 </dd>
@@ -8067,6 +8123,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentMap.html#put-K-V-">put(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HashSequenceTrie.html#put-java.util.List-V-">put(List&lt;K&gt;, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections">HashSequenceTrie</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#put-K-V-">put(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMap.html#put-K-V-">put(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a></dt>
 <dd>&nbsp;</dd>
@@ -8106,6 +8164,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#putAll-java.util.Map-">putAll(Map&lt;? extends K, ? extends V&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html#putFirst-E-">putFirst(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
@@ -8305,7 +8365,7 @@
 <dd>
 <div class="block">Specifies that exceptions should be verified using relaxed checking.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.Stream.html#remaining--">remaining()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.Stream.html" title="interface in com.apriori.collections">BitSequence.Stream</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#remaining--">remaining()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Returns the remaining number of bits in the stream.</div>
 </dd>
@@ -8380,6 +8440,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentSet.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HashSequenceTrie.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections">HashSequenceTrie</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#remove-java.lang.Object-java.lang.Object-">remove(Object, Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
@@ -8744,11 +8808,17 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ConcurrentList.html#replace-int-E-E-">replace(int, E, E)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#replace-K-V-">replace(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#replace-K-V-V-">replace(K, V, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentListBackedConcurrentList.html#replace-int-E-E-">replace(int, E, E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections">PersistentListBackedConcurrentList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#replace-K-V-V-">replace(K, V, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#replace-K-V-">replace(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#replaceAll-java.util.function.BiFunction-">replaceAll(BiFunction&lt;? super K, ? super V, ? extends V&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#requiresSelector-com.apriori.di.Key-">requiresSelector(Key&lt;?&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
@@ -8940,6 +9010,10 @@
 <dd>
 <div class="block">Gets the number of the current round (first round is number one).</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/FutureListenerSet.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/FutureListenerSet.html" title="class in com.apriori.concurrent">FutureListenerSet</a></dt>
+<dd>
+<div class="block">Invokes all registered listeners.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/testing/MoreAsserts.Block.html#run--">run()</a></span> - Method in interface com.apriori.testing.<a href="com/apriori/testing/MoreAsserts.Block.html" title="interface in com.apriori.testing">MoreAsserts.Block</a></dt>
@@ -8973,12 +9047,12 @@
 <dd>
 <div class="block">A simple executor that runs each task synchronously in the same thread that submits it.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutors.html#sameThreadExecutorService--">sameThreadExecutorService()</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutors.html" title="class in com.apriori.concurrent">CompletableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutorService.html#sameThreadExecutorService--">sameThreadExecutorService()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></dt>
 <dd>
 <div class="block">Returns a new executor service that runs each task synchronously in the same thread that
  submits it.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutors.html#sameThreadExecutorService--">sameThreadExecutorService()</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent">ListenableExecutors</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#sameThreadExecutorService--">sameThreadExecutorService()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dd>
 <div class="block">Returns a new executor service that runs each task synchronously in the same thread that
  submits it.</div>
@@ -9165,7 +9239,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringListIterator.html#set-E-">set(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringListIterator.html" title="class in com.apriori.collections">FilteringListIterator</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#set-int-T-">set(int, T)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#set-int-E-">set(int, E)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
 <dd>
 <div class="block">Sets the value of the element at the given index.</div>
 </dd>
@@ -9578,6 +9652,8 @@
 <dd>
 <div class="block">Determines the number of entries in this map.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
@@ -9671,6 +9747,10 @@
 <dd>
 <div class="block">Sorts arrays and collections using the <a href="http://en.wikipedia.org/wiki/Smoothsort">
  Smoothsort</a> algorithm.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/FutureListenerSet.html#snapshot--">snapshot()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/FutureListenerSet.html" title="class in com.apriori.concurrent">FutureListenerSet</a></dt>
+<dd>
+<div class="block">Returns a task that will execute a snapshot of the set of listeners.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Possible.html#snapshot-com.apriori.possible.Possible-">snapshot(Possible&lt;T&gt;)</a></span> - Static method in interface com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
 <dd>
@@ -9780,6 +9860,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#spliterator--">spliterator()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#start--">start()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a></dt>
 <dd>
 <div class="block">Returns the first entry that will be visited during iteration.</div>
@@ -9814,19 +9896,13 @@
 <dd>
 <div class="block">Constructs a new stopwatch using the specified clock.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#stream--">stream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
-<dd>
-<div class="block">Returns a stream, for consuming bits in arbitrary amounts with each fetch.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#stream-int-">stream(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
-<dd>
-<div class="block">Returns a stream, for consuming bits in arbitrary amounts with each fetch.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#stream--">stream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
 <dd>
 <div class="block">Returns a sequential stream of the elements in this growable array.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableCollection.html#stream--">stream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableMap.html#stream--">stream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/testing/ObjectVerifiers.html#STRICT_EXCEPTIONS">STRICT_EXCEPTIONS</a></span> - Static variable in class com.apriori.testing.<a href="com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing">ObjectVerifiers</a></dt>
 <dd>
@@ -10291,6 +10367,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringCollection.html#toArray-T:A-">toArray(T[])</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#toArray--">toArray()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/GrowableArray.html#toArray-T:A-">toArray(T[])</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentSet.html#toArray--">toArray()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentSet.html#toArray-T:A-">toArray(T[])</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a></dt>
@@ -10636,6 +10716,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypeVariable.html#toString--">toString()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArWildcardType.html#toString--">toString()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractGrowableArray.html#toString--">toString()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableCollection.html#toString--">toString()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a></dt>
 <dd>&nbsp;</dd>

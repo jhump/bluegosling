@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":17,"i3":17,"i4":17,"i5":17,"i6":17,"i7":6,"i8":6,"i9":6};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -127,7 +127,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -143,14 +143,48 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ExecutorService-">makeListenable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</code>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a>.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ScheduledExecutorService-">makeListenable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a>&nbsp;executor)</code>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-">makeListenableScheduled</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</code>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
+ scheduling capability if needed.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-boolean-">makeListenableScheduled</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor,
+                       boolean&nbsp;waitForScheduledTasksOnShutdown)</code>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
+ scheduling capability if needed.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#sameThreadExecutorService--">sameThreadExecutorService</a></span>()</code>
+<div class="block">Returns a new executor service that runs each task synchronously in the same thread that
+ submits it.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.util.concurrent.Callable-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code></td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code></td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-T-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
       T&nbsp;result)</code></td>
@@ -257,7 +291,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 <a name="invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>invokeAll</h4>
 <pre>&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;&nbsp;invokeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks,
@@ -272,6 +306,111 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="sameThreadExecutorService--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sameThreadExecutorService</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>&nbsp;sameThreadExecutorService()</pre>
+<div class="block">Returns a new executor service that runs each task synchronously in the same thread that
+ submits it. Submissions that return futures will always return completed futures.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new executor service that runs tasks immediately in the current thread</dd>
+</dl>
+</li>
+</ul>
+<a name="makeListenable-java.util.concurrent.ExecutorService-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>makeListenable</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>&nbsp;makeListenable(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</pre>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a>. If the specified
+ service <em>is</em> already listenable, it is returned without any conversion.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor service</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a listenable version of the specified service</dd>
+</dl>
+</li>
+</ul>
+<a name="makeListenable-java.util.concurrent.ScheduledExecutorService-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>makeListenable</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>&nbsp;makeListenable(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a>&nbsp;executor)</pre>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>. If the
+ specified service <em>is</em> already listenable, it is returned without any conversion.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the scheduled executor service</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a listenable version of the specified service</dd>
+</dl>
+</li>
+</ul>
+<a name="makeListenableScheduled-java.util.concurrent.ExecutorService-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>makeListenableScheduled</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>&nbsp;makeListenableScheduled(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</pre>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
+ scheduling capability if needed. If the specified service <em>is</em> already listenable, it
+ is returned without any conversion.
+ 
+ <p>If scheduling functionality is added, any scheduled tasks that are pending when the
+ executor is shutdown will be canceled.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor service</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a listenable version of the specified service that also provides scheduling functions</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>makeListenableScheduled</code></dd>
+</dl>
+</li>
+</ul>
+<a name="makeListenableScheduled-java.util.concurrent.ExecutorService-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>makeListenableScheduled</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>&nbsp;makeListenableScheduled(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor,
+                                                                  boolean&nbsp;waitForScheduledTasksOnShutdown)</pre>
+<div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableScheduledExecutorService</code></a>, adding
+ scheduling capability if needed. If the specified service <em>is</em> already listenable, it
+ is returned without any conversion.
+ 
+ <p>If the specified service does not already support scheduling, this will return a new
+ service that adds that capability at the expense of adding one "scheduler" thread. (The thread
+ won't actually be started until the first scheduled task is submitted. Other tasks, submitted
+ for immediate execution, do not cause the thread to be created.) When
+ 
+ <p>The specified service should not be used other than through the returned wrapper. If it is,
+ it is possible for tasks to be accepted when the executor should be shutdown and vice versa,
+ for tasks to be rejected when the executor should still be active.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor service</dd>
+<dd><code>waitForScheduledTasksOnShutdown</code> - if adding scheduling capability and this flag is true,
+       the returned service will not terminate until after shutdown until all scheduled tasks
+       have completed; if adding scheduling capability and this flag is false, the service will
+       cancel pending scheduled tasks on shutdown; if not adding scheduling capability, this
+       flag is ignored</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a listenable version of the specified service that also provides scheduling functions</dd>
 </dl>
 </li>
 </ul>
@@ -302,7 +441,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/ListenableExecutors.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
