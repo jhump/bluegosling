@@ -18,37 +18,23 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-// TODO: javadoc
+/**
+ * Implementations that back the static methods in {@link CompletableExecutorService}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
-public class CompletableExecutors {
-   CompletableExecutors() {
+final class CompletableExecutors {
+   private CompletableExecutors() {
    }
    
    /**
-    * Returns a new executor service that runs each task synchronously in the same thread that
-    * submits it. Submissions that return futures will always return completed futures.
+    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
+    * failed future, instead of one that is immediately successful.
     *
-    * @return a new executor service that runs tasks immediately in the current thread
+    * @param failure the cause of the future's failure
+    * @return an immediately failed future
     */
-   @SuppressWarnings("synthetic-access")
-   public static CompletableExecutorService sameThreadExecutorService() {
-      return new SameThreadExecutorService();
-   }
-   
-   /**
-    * Converts the specified service into a {@link CompletableExecutorService}. If the specified
-    * service <em>is</em> already completable, it is returned without any conversion.
-    * 
-    * @param executor the executor service
-    * @return a listenable version of the specified service
-    */
-   public static CompletableExecutorService makeCompletable(ExecutorService executor) {
-      if (executor instanceof CompletableExecutorService) {
-         return (CompletableExecutorService) executor;
-      }
-      return new CompletableExecutorServiceWrapper(executor);
-   }
-   
    static <T> CompletableFuture<T> failedFuture(Throwable failure) {
       CompletableFuture<T> ret = new CompletableFuture<T>();
       ret.completeExceptionally(failure);
@@ -59,7 +45,7 @@ public class CompletableExecutors {
     * A {@link ListenableExecutorService} that executes submitted tasks sychronously on the same
     * thread as the one that submits them.
     */
-   private static class SameThreadExecutorService implements CompletableExecutorService {
+   static class SameThreadExecutorService implements CompletableExecutorService {
       private volatile boolean shutdown;
       
       @Override
@@ -186,7 +172,7 @@ public class CompletableExecutors {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class CompletableExecutorServiceWrapper implements CompletableExecutorService {
+   static class CompletableExecutorServiceWrapper implements CompletableExecutorService {
       private final ExecutorService delegate;
       
       CompletableExecutorServiceWrapper(ExecutorService delegate) {

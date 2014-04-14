@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
 import com.apriori.concurrent.ListenableExecutorService;
-import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
@@ -158,7 +157,7 @@ public class SlowParallelSort {
       AtomicInteger mergersStarted = new AtomicInteger();
       ListenableFuture<?> results[] = new ListenableFuture<?>[numThreads];
       ListenableExecutorService svc =
-            ListenableExecutors.makeListenable(Executors.newFixedThreadPool(numThreads));
+            ListenableExecutorService.makeListenable(Executors.newFixedThreadPool(numThreads));
       
       try {
          for (int i = 0; i < numThreads; i++) {

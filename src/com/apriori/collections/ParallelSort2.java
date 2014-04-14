@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
 import com.apriori.concurrent.ListenableExecutorService;
-import com.apriori.concurrent.ListenableExecutors;
 import com.apriori.concurrent.ListenableFuture;
 
 import java.util.Arrays;
@@ -87,7 +86,7 @@ public class ParallelSort2 {
       }
 
       final ListenableExecutorService executor =
-            ListenableExecutors.makeListenable(Executors.newFixedThreadPool(numThreads - 1));
+            ListenableExecutorService.makeListenable(Executors.newFixedThreadPool(numThreads - 1));
       try {
          @SuppressWarnings("unchecked") // we only deal with Ts in the array
          final T array[] = (T[]) list.toArray();

@@ -114,10 +114,11 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    void visit(FutureVisitor<? super T> visitor);
    
    /**
-    * Casts a future to a super-type. All methods on the future only return instances of the
-    * parameterized type, none accept them as arguments. Since the target type is a super-type of
-    * the future's original type, all instances returned by the original future are instances of
-    * the target type. So the cast is safe thanks.
+    * Casts a future to a super-type. The compiler enforces on invariance on generic types, but this
+    * method allows futures to be treated as covariant. Since the target type is a super-type of
+    * the future's original type, all instances returned by the original future are also instances
+    * of the target type. This combined with the fact that no methods accept the target type means
+    * that the covariance is type-safe.
     *
     * @param future a future
     * @return the same future, but with its type parameter as a super-type of the original

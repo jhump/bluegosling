@@ -20,12 +20,12 @@ import java.util.stream.StreamSupport;
  * <p>Since this is a generic type, it does not have the type co-variance of actual Java arrays, and
  * so behaves more like a {@link Collection} from that standpoint.
  * 
- * @param <T> the type of element in the array
+ * @param <E> the type of element in the array
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: DoubleEndedGrowableArray?
-public interface GrowableArray<T> extends Iterable<T> {
+public interface GrowableArray<E> extends Iterable<E> {
    
    /**
     * Returns the size, or capacity, of this growable array.
@@ -51,7 +51,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @throws IndexOutOfBoundsException if the given index is not a valid index, meaning it is less
     *       than zero or is greater than or equal to {@link #size()}
     */
-   T get(int index);
+   E get(int index);
    
    /**
     * Retrieves the first element in this growable array. The first element is the one at index
@@ -60,7 +60,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @return the first element in this array
     * @throws NoSuchElementException if this array is empty
     */
-   default T first() {
+   default E first() {
       if (isEmpty()) {
          throw new NoSuchElementException();
       }
@@ -74,7 +74,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @return the last element in this array
     * @throws NoSuchElementException if this array is empty
     */
-   default T last() {
+   default E last() {
       if (isEmpty()) {
          throw new NoSuchElementException();
       }
@@ -89,7 +89,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @throws IndexOutOfBoundsException if the given index is not a valid index, meaning it is less
     *       than zero or is greater than or equal to {@link #size()}
     */
-   void set(int index, T value);
+   void set(int index, E value);
 
    /**
     * Grows the capacity of the array by the given number of elements. The extra capacity as added
@@ -112,6 +112,22 @@ public interface GrowableArray<T> extends Iterable<T> {
     */
    void shrinkBy(int numRemovedElements);
    
+   // TODO: javadoc
+   
+   default Object[] toArray() {
+      return CollectionUtils.toArray(this);
+   }
+   
+   default <T> T[] toArray(T[] array) {
+      return CollectionUtils.toArray(this, array);
+   }
+   
+   @Override
+   boolean equals(Object o);
+   
+   @Override
+   int hashCode();
+   
    /**
     * Removes all elements from this growable array and shrinks its capacity to zero.
     */
@@ -125,7 +141,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     *
     * @param value the value to push to the end of this array
     */
-   default void push(T value) {
+   default void push(E value) {
       growBy(1);
       set(size() - 1, value);
    }
@@ -138,8 +154,8 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @return the value that was removed from the end of this array
     * @throws NoSuchElementException if this array is empty
     */
-   default T pop() {
-      T ret = last();
+   default E pop() {
+      E ret = last();
       shrinkBy(1);
       return ret;
    }
@@ -150,7 +166,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     *
     * @param values the new values to push to the end of this array
     */
-   default void pushAll(Iterable<? extends T> values) {
+   default void pushAll(Iterable<? extends E> values) {
       // mark the initial index, for the first item we'll append
       int i = size();
       // try to pre-allocate the entire amount needed
@@ -159,7 +175,7 @@ public interface GrowableArray<T> extends Iterable<T> {
       } else if (values instanceof ImmutableCollection) {
          growBy(((ImmutableCollection<?>) values).size());
       }
-      for (T t : values) {
+      for (E t : values) {
          if (i < size()) {
             set(i, t);
          } else {
@@ -182,8 +198,8 @@ public interface GrowableArray<T> extends Iterable<T> {
     * @return an iterator over the contents of this array
     */
    @Override
-   default Iterator<T> iterator() {
-      return new Iterator<T>() {
+   default Iterator<E> iterator() {
+      return new Iterator<E>() {
          private int cursor = 0;
          
          @Override
@@ -192,7 +208,7 @@ public interface GrowableArray<T> extends Iterable<T> {
          }
 
          @Override
-         public T next() {
+         public E next() {
             if (cursor < size()) {
                return get(cursor++);
             } else {
@@ -220,8 +236,8 @@ public interface GrowableArray<T> extends Iterable<T> {
    }
    
    @Override
-   default Spliterator<T> spliterator() {
-      return new GrowableArraySpliterator<T>(this, 0);
+   default Spliterator<E> spliterator() {
+      return new GrowableArraySpliterator<E>(this, 0);
    }
    
    /**
@@ -229,7 +245,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     *
     * @return a new sequential stream
     */
-   default Stream<T> stream() {
+   default Stream<E> stream() {
       return StreamSupport.stream(spliterator(), false);
    }
 
@@ -238,7 +254,7 @@ public interface GrowableArray<T> extends Iterable<T> {
     *
     * @return a new parallel stream
     */
-   default Stream<T> parallelStream() {
+   default Stream<E> parallelStream() {
       return StreamSupport.stream(spliterator(), true);
    }
    

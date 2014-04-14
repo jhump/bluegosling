@@ -28,7 +28,8 @@ import java.util.NoSuchElementException;
 // TODO: serialization, cloning
 // TODO: more efficient iterator, spliterator
 // TODO: concurrent modification checks in iterator and spliterator
-public class NoCopyGrowableArray<T> implements GrowableArray<T>, Serializable, Cloneable {
+public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
+      implements Serializable, Cloneable {
 
    private static final long serialVersionUID = -5864366571938870266L;
    
@@ -270,7 +271,10 @@ public class NoCopyGrowableArray<T> implements GrowableArray<T>, Serializable, C
       superBlockSize = lastSuperBlockOccupancy = dataBlockSize = lastDataBlockOccupancy = 1;
       size = numSuperBlocks = numDataBlocks = 0; 
    }
+
    
+   
+   // TODO: remove and move anything useful into unit tests
    public static void main(String args[]) {
       GrowableArray<String> l = new NoCopyGrowableArray<>();
       for (int i = 0; i < 26; i++) {

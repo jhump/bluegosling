@@ -92,7 +92,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO tests!
+// TODO: move this and related classes/interfaces into sub-package
+// TODO: tests!
 public class ScheduledTaskManager implements ListenableScheduledExecutorService {
    
    private final ThreadPoolExecutor executor;

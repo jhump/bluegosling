@@ -4,15 +4,22 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
 /**
- * Represents a set of listeners. {@link ListenableFuture} implementations use this class to manage
- * the set of registered listeners.
+ * Represents a set of listeners. {@link ListenableFuture} implementations can use this class to
+ * manage the set of registered listeners.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <T> the type of result for the listenable future
  */
-final class FutureListenerSet<T> implements Runnable {
-   
+public class FutureListenerSet<T> implements Runnable {
+
+   /**
+    * A node in a linked list of listeners.
+    *
+    * @param <T> the type of the associated future
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class ListenerNode<T> {
       final FutureListener<? super T> listener;
       final Executor executor;
@@ -30,7 +37,17 @@ final class FutureListenerSet<T> implements Runnable {
       }
    }
 
+   /**
+    * The future whose listeners are tracked by this set.
+    */
    private final ListenableFuture<T> future;
+   
+   /**
+    * A linked list of listeners. When the future is completed, indicating that subsequent listeners
+    * added should be executed immediately, the mark will be set. When the mark is set, the
+    * reference is also cleared (so that listeners can be garbage collected). To add a listener, we
+    * CAS the head of the list.
+    */
    private final AtomicMarkableReference<ListenerNode<T>> listeners =
          new AtomicMarkableReference<>(null, false);
    

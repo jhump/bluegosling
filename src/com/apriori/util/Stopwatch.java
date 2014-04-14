@@ -239,11 +239,11 @@ public class Stopwatch {
       if (nanos < TimeUnit.MICROSECONDS.toNanos(2)) {
          return "" + nanos + "ns";
       } else if (nanos < TimeUnit.MILLISECONDS.toNanos(2)) {
-         return String.format("%1.3fus", nanos / 1000.0);
+         return String.format("%1.3fus", nanos / 1_000.0);
       } else if (nanos < TimeUnit.SECONDS.toNanos(2)) {
-         return String.format("%1.3fms", nanos / 1000000.0);
+         return String.format("%1.3fms", nanos / 1_000_000.0);
       } else if (nanos <= TimeUnit.SECONDS.toNanos(90)) {
-         return String.format("%1.3fsec", nanos / 1000000000.0);
+         return String.format("%1.3fsec", nanos / 1_000_000_000.0);
       } else if (nanos <= TimeUnit.MINUTES.toNanos(90)) {
          long min = TimeUnit.NANOSECONDS.toMinutes(nanos);
          long sec = TimeUnit.NANOSECONDS.toSeconds(nanos) % 60;

@@ -90,20 +90,7 @@ final class CollectionUtils {
       if (l.size() != list.size()) {
          return false;
       }
-      Iterator<?> iter1 = l.iterator();
-      Iterator<?> iter2 = list.iterator();
-      while (iter1.hasNext()) {
-         Object e1 = iter1.next();
-         Object e2 = iter2.next();
-         if ((e1 == list || e2 == list) && e1 != e2) {
-            // handle case where list contains itself - don't overflow stack
-            return false;
-         }
-         if (e1 == null ? e2 != null : !e1.equals(e2)) {
-            return false;
-         }
-      }
-      return true;
+      return listContentsEquals(list, l);
    }
 
    // TODO: javadoc
@@ -118,18 +105,43 @@ final class CollectionUtils {
       if (l.size() != list.size()) {
          return false;
       }
-      Iterator<?> iter1 = l.iterator();
-      Iterator<?> iter2 = list.iterator();
+      return listContentsEquals(list, l);
+   }
+
+   public static boolean equals(GrowableArray<?> a, Object o) {
+      if (!(o instanceof GrowableArray)) {
+         return false;
+      }
+      if (a == o) {
+         return true;
+      }
+      GrowableArray<?> l = (GrowableArray<?>) o;
+      if (l.size() != a.size()) {
+         return false;
+      }
+      return listContentsEquals(a, l);
+   }
+   
+   private static boolean listContentsEquals(Iterable<?> l1, Iterable<?> l2) {
+      Iterator<?> iter1 = l1.iterator();
+      Iterator<?> iter2 = l2.iterator();
       while (iter1.hasNext()) {
+         if (!iter2.hasNext()) {
+            return false;
+         }
          Object e1 = iter1.next();
          Object e2 = iter2.next();
-         if ((e1 == list || e2 == list) && e1 != e2) {
+         if ((e1 == l1 && (e2 == l1 || e2 == l2))
+               || (e1 == l2 && (e2 == l1 || e2 == l2))) {
             // handle case where list contains itself - don't overflow stack
-            return false;
+            continue;
          }
          if (e1 == null ? e2 != null : !e1.equals(e2)) {
             return false;
          }
+      }
+      if (iter2.hasNext()) {
+         return false;
       }
       return true;
    }
@@ -141,22 +153,23 @@ final class CollectionUtils {
     * @return the hash code for {@code list}
     */
    public static int hashCode(List<?> list) {
-      int ret = 1;
-      for (Object e : list) {
-         // don't overflow stack if list contains itself -- substitute default hashcode
-         int elementHash = e == list ? System.identityHashCode(list)
-               : (e == null ? 0 : e.hashCode());
-         ret = 31 * ret + elementHash;
-      }
-      return ret;
+      return listHashCode(list);
    }
 
    // TODO: javadoc
    public static int hashCode(ImmutableList<?> list) {
+      return listHashCode(list);
+   }
+
+   public static int hashCode(GrowableArray<?> a) {
+      return listHashCode(a);
+   }
+
+   private static int listHashCode(Iterable<?> l) {
       int ret = 1;
-      for (Object e : list) {
+      for (Object e : l) {
          // don't overflow stack if list contains itself -- substitute default hashcode
-         int elementHash = e == list ? System.identityHashCode(list)
+         int elementHash = e == l ? System.identityHashCode(l)
                : (e == null ? 0 : e.hashCode());
          ret = 31 * ret + elementHash;
       }
@@ -498,6 +511,10 @@ final class CollectionUtils {
       return toArray(coll, coll.size());
    }
    
+   public static Object[] toArray(GrowableArray<?> a) {
+      return toArray(a, a.size());
+   }
+   
    private static Object[] toArray(Iterable<?> iterable, int size) {
       Object ret[] = new Object[size];
       copyToArray(iterable, ret);
@@ -520,6 +537,10 @@ final class CollectionUtils {
    //TODO: javadoc
    public static <T> T[] toArray(ImmutableCollection<?> coll, T[] array) {
       return toArray(coll, coll.size(), array);
+   }
+   
+   public static <T> T[] toArray(GrowableArray<?> a, T[] array) {
+      return toArray(a, a.size(), array);
    }
    
    private static <T> T[] toArray(Iterable<?> iterable, int size, T[] array) {

@@ -86,8 +86,8 @@ public class BitSequencesTest {
       
       assertEquals(64, bits.length());
 
-      assertEquals(0x123456789abcdef0L, bits.stream().next(64));
-      assertEquals(0x23456L, bits.stream(40).next(20));
+      assertEquals(0x123456789abcdef0L, bits.bitStream().next(64));
+      assertEquals(0x23456L, bits.bitStream(40).next(20));
    }   
    
    @Test public void fromLongs_byteOrder() {
@@ -96,8 +96,8 @@ public class BitSequencesTest {
       
       assertEquals(128, bits.length());
 
-      assertEquals(0x123456789abcdef0L, bits.stream().next(64));
-      assertEquals(0xffaaccee88664422L, bits.stream(64).next(64));
+      assertEquals(0x123456789abcdef0L, bits.bitStream().next(64));
+      assertEquals(0xffaaccee88664422L, bits.bitStream(64).next(64));
       List<Long> expected = new ArrayList<Long>();
       for (long l : longs) {
          expected.add(l);
@@ -111,8 +111,8 @@ public class BitSequencesTest {
       bits = BitSequences.fromLongs(longs, BitOrder.MSB);
       
       assertEquals(128, bits.length());
-      assertEquals(0x0f7b3d591e6a2c48L, bits.stream().next(64));
-      assertEquals(0x44226611773355ffL, bits.stream(64).next(64));
+      assertEquals(0x0f7b3d591e6a2c48L, bits.bitStream().next(64));
+      assertEquals(0x44226611773355ffL, bits.bitStream(64).next(64));
       actual.clear();
       for (long l : BitSequences.toLongs(bits, BitOrder.MSB)) {
          actual.add(l);

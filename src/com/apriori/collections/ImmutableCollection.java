@@ -86,7 +86,8 @@ public interface ImmutableCollection<E> extends Iterable<E> {
    // TODO: javadoc
    
    default Stream<E> stream() {
-      return StreamSupport.stream(spliterator(), false);
+      return StreamSupport.stream(() -> spliterator(), Spliterator.SIZED | Spliterator.SUBSIZED,
+            false);
    }
 
    default Stream<E> parallelStream() {

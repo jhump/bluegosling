@@ -7,6 +7,7 @@ package com.apriori.collections;
  *
  * @param <T> the type of the composite object
  */
+@FunctionalInterface
 public interface BitConverter<T> extends Componentizer<T, Boolean> {
    /**
     * {@inheritDoc}

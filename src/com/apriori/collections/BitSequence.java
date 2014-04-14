@@ -1,7 +1,9 @@
 package com.apriori.collections;
 
-import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
+import java.util.Spliterators;
+import java.util.stream.LongStream;
+import java.util.stream.StreamSupport;
 
 /**
  * A sequence of bits. This is very similar to a {@link java.util.BitSet} except it provides
@@ -24,94 +26,6 @@ public interface BitSequence extends Iterable<Boolean> {
    }
    
    /**
-    * A stream of bits. This interface is similar to an iterator, except it allows for selecting an
-    * arbitrary number of bits with each fetch.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   public interface Stream {
-      /** 
-       * Returns the remaining number of bits in the stream.
-       * 
-       * @return the remaining number of bits in the stream
-       */
-      int remaining();
-      
-      /** 
-       * Returns the current index of the stream. A stream can be "reset" to this point using
-       * {@link #jumpTo(int)}. A new stream can be created that starts back from this point using
-       * {@link BitSequence#stream(int)}.
-       * 
-       * @return the index of the next bit that would be retrieved by this stream
-       */
-      int currentIndex();
-
-      /**
-       * Sets the current index of the stream. The bit at the specified index in the sequence will
-       * be the next one fetched by a call to {@link #next()}. This can be used to perform random
-       * access in the sequence.
-       * 
-       * @param index the new index
-       * @throws IndexOutOfBoundsException if the specified index is negative or is greater than the
-       *       length of the underlying sequence
-       */
-      void jumpTo(int index);
-      
-      /**
-       * Returns the next bit in the stream.
-       * 
-       * @return the next bit
-       * @throws NoSuchElementException if there are no bits remaining
-       */
-      boolean next();
-      
-      /**
-       * Returns the next chunk of bits in the stream. Since the bits are returned as a primitive
-       * long, the chunk size must be 64 bits or less. The next bit in the sequence will either be
-       * the least or most significant bit in the returned value. For example, if the next six bits
-       * in the sequence are as follows:
-       * <pre>0 1 0 0 1 1</pre>
-       * Then fetching the next six bits in {@link BitOrder#LSB LSB} order will return the number
-       * 50, which is 110010 in binary. In {@link BitOrder#MSB MSB} order, the fetch will return the
-       * number 19, or 010011 in binary.
-       * 
-       * @param numberOfBits the number of bits to fetch
-       * @param order the order of bits in the returned value
-       * @return the next chunk of bits
-       * @throws IllegalArgumentException if the requested number of bits is less than one or
-       *       greater than sixty-four
-       * @throws NoSuchElementException if the requested number of bits is greater than the number
-       *       of bits remaining in the stream
-       */
-      long next(int numberOfBits, BitOrder order);
-      
-      /**
-       * Returns the next chunk of bits in the stream. This is equivalent to the following:
-       * <pre>stream.next(numberOfBits, BitOrder.LSB);</pre>
-       * 
-       * @param numberOfBits the number of bits to fetch
-       * @return the next chunk of bits
-       * @throws IllegalArgumentException if the requested number of bits is less than one or
-       *       greater than sixty-four
-       * @throws NoSuchElementException if the requested number of bits is greater than the number
-       *       of bits remaining in the stream
-       */
-      long next(int numberOfBits);
-      
-      /**
-       * Returns the next chunk of bits in the stream. The chunk can be arbitrarily large provided
-       * that there are sufficient remaining bits.
-       * 
-       * @param numberOfBits the number of bits to fetch
-       * @return the next chunk of bits, as a {@link BitSequence}
-       * @throws IllegalArgumentException if the requested number of bits is negative
-       * @throws NoSuchElementException if the requested number of bits is greater than the number
-       *       of bits remaining in the stream
-       */
-      BitSequence nextAsSequence(int numberOfBits);
-   }
-   
-   /**
     * Gets the length of the sequence.
     * 
     * @return the number of bits in this sequence
@@ -122,7 +36,10 @@ public interface BitSequence extends Iterable<Boolean> {
     * Returns an iterator over the values in the sequence. The return type is more constrained
     * than {@link Iterable#iterator()} so that iteration can be done over un-boxed primitives.
     */
-   @Override BooleanIterator iterator();
+   @Override
+   default BooleanIterator iterator() {
+      return iterator(0);
+   }
    
    /**
     * Returns an iterator over the values in the sequence starting at the specified index.
@@ -148,9 +65,11 @@ public interface BitSequence extends Iterable<Boolean> {
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see BitSequence.Stream#next(int, BitSequence.BitOrder)
+    * @see BitStream#next(int, BitSequence.BitOrder)
     */
-   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order);
+   default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order) {
+      return bitTupleIterator(tupleSize, 0, order);
+   }
    
    /**
     * Returns an iterator over arbitrarily-sized chunks in the sequence. This method is equivalent
@@ -163,7 +82,9 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see #bitTupleIterator(int, BitOrder)
     */
-   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize);
+   default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize) {
+      return bitTupleIterator(tupleSize, 0, BitOrder.LSB);
+   }
 
    /**
     * Returns an iterator over arbitrarily-sized chunks in the sequence. The fetching of values will
@@ -187,14 +108,18 @@ public interface BitSequence extends Iterable<Boolean> {
     *       sixty-four.
     * @see #bitTupleIterator(int, int, BitOrder)
     */
-   PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, int startIndex);
+   default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, int startIndex) {
+      return bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);
+   }
    
    /**
     * Returns a stream, for consuming bits in arbitrary amounts with each fetch.
     * 
     * @return a stream
     */
-   Stream stream();
+   default BitStream bitStream() {
+      return bitStream(0);
+   }
    
    /**
     * Returns a stream, for consuming bits in arbitrary amounts with each fetch. The stream will
@@ -202,8 +127,22 @@ public interface BitSequence extends Iterable<Boolean> {
     * 
     * @return a stream
     */
-   Stream stream(int startIndex);
+   BitStream bitStream(int startIndex);
    
+   // TODO: javadoc
+   
+   default LongStream bitTupleStream(int tupleSize) {
+      int size = (63 + length()) >> 6; 
+      return StreamSupport.longStream(
+            Spliterators.spliterator(bitTupleIterator(tupleSize), size, 0), false);
+   }
+
+   default LongStream bitTupleStream(int tupleSize, BitOrder bitOrder) {
+      int size = (63 + length()) >> 6; 
+      return StreamSupport.longStream(
+            Spliterators.spliterator(bitTupleIterator(tupleSize, bitOrder), size, 0), false);
+   }
+
    /**
     * Returns a hash code for the sequence. So different implementations can be compared and stored
     * together in a set, the hash code should conform to the following scheme:

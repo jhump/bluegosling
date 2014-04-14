@@ -8,6 +8,7 @@ package com.apriori.collections;
  * @param <T> the type of the composite object
  * @param <U> the type of the component (sub-object)
  */
+@FunctionalInterface
 public interface Componentizer<T, U> {
    /**
     * Breaks the specified object into a sequence of components.

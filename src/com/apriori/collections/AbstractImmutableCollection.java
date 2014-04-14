@@ -9,6 +9,7 @@ package com.apriori.collections;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
+// TODO: move some of these into default methods on ImmutableCollection
 public abstract class AbstractImmutableCollection<E> implements ImmutableCollection<E> {
    @Override
    public boolean isEmpty() {

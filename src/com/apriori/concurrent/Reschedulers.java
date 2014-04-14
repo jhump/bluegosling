@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 //TODO: javadoc
 //TODO: tests
+//TODO: move all of these into Rescheduler interface
 public final class Reschedulers {
    private Reschedulers() {
    }

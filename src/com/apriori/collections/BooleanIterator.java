@@ -4,6 +4,7 @@ import com.apriori.util.BooleanConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.PrimitiveIterator;
 
 /** An {@link Iterator} that can provide primitive (un-boxed) booleans. */
@@ -25,8 +26,24 @@ public interface BooleanIterator extends PrimitiveIterator<Boolean, BooleanConsu
    
    @Override
    default void forEachRemaining(BooleanConsumer action) {
+      Objects.requireNonNull(action);
       while (hasNext()) {
          action.accept(nextBoolean());
       }
+   }
+   
+   // TODO: javadoc
+   default PrimitiveIterator.OfInt asIteratorOfInt() {
+      return new PrimitiveIterator.OfInt() {
+         @Override
+         public boolean hasNext() {
+            return BooleanIterator.this.hasNext();
+         }
+
+         @Override
+         public int nextInt() {
+            return nextBoolean() ? 1: 0;
+         }
+      };
    }
 }

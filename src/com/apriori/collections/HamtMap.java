@@ -11,6 +11,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,15 +38,18 @@ import java.util.Set;
  * @param <K> the type of keys in the map
  * @param <V> the type of value in the map
  */
-// TODO: add InnerLeafTrieNode to short circuit search when a path has only one node
+// TODO: finish adding InnerLeafTrieNode to short-circuit search when a path has only one leaf node
 // TODO: other performance improvements? Tried free lists, to track and re-use arrays instead
-// of always allocating new arrays, but that didn't speed it up at all. Perhaps change to
-// not rely on polymorphic dispatch to TrieNodes? Also to simply tolerate not-full arrays
-// at intermediate levels to reduce allocations and GC? Might also consider allocating larger
-// "blocks" instead of normal arrays and each sub-hash-table uses a contiguous run in a block.
-// This would mean fewer allocations and re-using structures for sub-hash-table. Clean-up involves
-// defragmenting the blocks and tracking them to ensure trie is never holding on too much junk in
-// the form of unused arrays/chunks.
+// of always allocating new arrays, but that didn't help at all. Perhaps change to not rely on
+// polymorphic dispatch to TrieNodes? Also to simply tolerate not-full arrays at intermediate levels
+// to reduce allocations and GC? Might also consider allocating larger "blocks" instead of normal
+// arrays and each sub-hash-table uses a contiguous chunk in a block. This would mean fewer
+// allocations and re-using structures for sub-hash-table. Clean-up involves defragmenting the
+// blocks and tracking them to ensure trie is never holding on too much junk in the form of unused
+// arrays/chunks.
+// TODO: iteration is the slowest thing in here -- do we care? could speed it up by using insertion
+// order and maintaining orthogonal linked last, like LinkedHashMap
+// TODO: more efficient impls of other Map methods (putIfAbsent, computeIfAbsent, replace, etc)
 public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cloneable {
    
    private static final long serialVersionUID = -9064441005458513893L;
@@ -154,7 +158,6 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        * @return the list node that was removed from the trie or {@code null} if the key was not
        *       found
        */
-      // TODO: support collapsing of intermediate nodes into inner leaf nodes on removal
       ListNode<K, V> removeNode(int hashCode, int currentOffset, Object key);
       
       /**
@@ -407,7 +410,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
       
       protected ListNode<K, V> doRemoveNode(Object keyToRemove) {
-         if (keyToRemove == null ? this.key == null : keyToRemove.equals(this.key)) {
+         if (Objects.equals(this.key, keyToRemove)) {
             if (next == null) {
                // no other list nodes, so just remove this whole thing
                return this;
@@ -428,7 +431,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          ListNode<K, V> current = this;
          while (current.next != null) {
             ListNode<K, V> node = current.next;
-            if (keyToRemove == null ? node.key == null : keyToRemove.equals(node.key)) {
+            if (Objects.equals(this.key, keyToRemove)) {
                // remove found node
                current.next = node.next;
                return node;

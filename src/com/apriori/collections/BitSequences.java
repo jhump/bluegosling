@@ -324,7 +324,7 @@ public final class BitSequences {
    public static BitSequence allZeros(int length) {
       return new AbstractBitSequence() {
          @Override
-         public Stream stream(int startIndex) {
+         public BitStream bitStream(int startIndex) {
             rangeCheck(startIndex);
             return new AbstractStream() {
                int remaining = length - startIndex;
@@ -371,7 +371,7 @@ public final class BitSequences {
    public static BitSequence allOnes(int length) {
       return new AbstractBitSequence() {
          @Override
-         public Stream stream(int startIndex) {
+         public BitStream bitStream(int startIndex) {
             rangeCheck(startIndex);
             return new AbstractStream() {
                int remaining = length - startIndex;
@@ -419,7 +419,7 @@ public final class BitSequences {
       return new AbstractList<Boolean>() {
          @Override
          public Boolean get(int index) {
-            return bits.stream(index).next();
+            return bits.bitStream(index).next();
          }
 
          @Override
@@ -1097,14 +1097,14 @@ public final class BitSequences {
    
    /**
     * Gets the next chunk of bits as a {@link BitSequence}. This does not invoke
-    * {@link BitSequence.Stream#next(int)} so it can safely be used to implement
-    * {@link BitSequence.Stream#nextAsSequence(int)}
+    * {@link BitStream#next(int)} so it can safely be used to implement
+    * {@link BitStream#nextAsSequence(int)}
     * 
     * @param stream the stream from which the bits are fetched
     * @param numberOfBits the number of bits to fetch to build the sequence
     * @return a new sequence
     */
-   static BitSequence nextAsSequence(BitSequence.Stream stream, int numberOfBits) {
+   static BitSequence nextAsSequence(BitStream stream, int numberOfBits) {
       if (numberOfBits == 0) {
          return EmptyBitSequence.INSTANCE;
       }
@@ -1192,7 +1192,7 @@ public final class BitSequences {
          return 0;
       }
 
-      @Override public Stream stream(int startIndex) {
+      @Override public BitStream bitStream(int startIndex) {
          rangeCheck(startIndex);
          
          return new AbstractStream() {
@@ -1250,7 +1250,7 @@ public final class BitSequences {
          return 1;
       }
 
-      @Override public Stream stream(int startIndex) {
+      @Override public BitStream bitStream(int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
@@ -1316,7 +1316,7 @@ public final class BitSequences {
          return length;
       }
       
-      @Override public Stream stream(final int startIndex) {
+      @Override public BitStream bitStream(final int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
@@ -1326,18 +1326,18 @@ public final class BitSequences {
             
             private int remaining;
             private int currentComponent;
-            private Stream componentStream;
+            private BitStream componentStream;
 
             private void findPointInStream(int index) {
                remaining = length - index;
                int i = Arrays.binarySearch(cumulativeCounts, index);
                currentComponent = i < 0 ? (-i - 1) : i + 1;
-               componentStream = components[currentComponent].stream();
+               componentStream = components[currentComponent].bitStream();
             }
             
-            private Stream getComponentStream() {
+            private BitStream getComponentStream() {
                if (componentStream.remaining() == 0) {
-                  componentStream = components[++currentComponent].stream();
+                  componentStream = components[++currentComponent].bitStream();
                }
                return componentStream;
             }
@@ -1369,7 +1369,7 @@ public final class BitSequences {
                int bitsLeft = tupleSize;
                int shiftOffset = 0;
                while (bitsLeft > 0) {
-                  Stream stream = getComponentStream();
+                  BitStream stream = getComponentStream();
                   int nextBits = Math.min(stream.remaining(), bitsLeft);
                   val |= stream.next(nextBits) << shiftOffset;
                   if ((bitsLeft -= nextBits) > 0) {
@@ -1402,11 +1402,11 @@ public final class BitSequences {
          return length;
       }
       
-      @Override public Stream stream(final int startIndex) {
+      @Override public BitStream bitStream(final int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
-            final Stream sourceStream = source.stream(start);
+            final BitStream sourceStream = source.bitStream(start);
             int index = 0;
             
             @Override public int remaining() {
@@ -1457,7 +1457,7 @@ public final class BitSequences {
          return numberOfBits;
       }
 
-      @Override public Stream stream(final int startIndex) {
+      @Override public BitStream bitStream(final int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
@@ -1553,7 +1553,7 @@ public final class BitSequences {
          return numberOfBits;
       }
 
-      @Override public Stream stream(final int startIndex) {
+      @Override public BitStream bitStream(final int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
@@ -1620,7 +1620,7 @@ public final class BitSequences {
          return bits.length();
       }
       
-      @Override public Stream stream(final int startIndex) {
+      @Override public BitStream bitStream(final int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {

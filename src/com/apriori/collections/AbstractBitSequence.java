@@ -5,7 +5,7 @@ import java.util.PrimitiveIterator;
 
 /**
  * An abstract base class for implementations of {@link BitSequence}. Concrete sub-classes need only
- * implement {@link #length()} and {@link #stream(int)}.
+ * implement {@link #length()} and {@link #bitStream(int)}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -29,12 +29,8 @@ abstract class AbstractBitSequence implements BitSequence {
       }
    }
    
-   @Override public BooleanIterator iterator() {
-      return iterator(0);
-   }
-   
    @Override public BooleanIterator iterator(int startIndex) {
-      final Stream stream = stream(startIndex);
+      final BitStream stream = bitStream(startIndex);
       return new BooleanIterator() {
          @Override public boolean hasNext() {
             return stream.remaining() > 0;
@@ -54,22 +50,10 @@ abstract class AbstractBitSequence implements BitSequence {
       };
    }
 
-   @Override public PrimitiveIterator.OfLong bitTupleIterator(int tupleSize) {
-      return bitTupleIterator(tupleSize, 0, BitOrder.LSB);
-   }
-
-   @Override public PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order) {
-      return bitTupleIterator(tupleSize, 0, order);
-   }
-
-   @Override public PrimitiveIterator.OfLong bitTupleIterator(final int tupleSize, int startIndex) {
-      return bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);
-   }
-   
    @Override public PrimitiveIterator.OfLong bitTupleIterator(final int tupleSize, int startIndex,
          final BitOrder order) {
       checkTupleLength(tupleSize);
-      final Stream stream = stream(startIndex);
+      final BitStream stream = bitStream(startIndex);
       if (tupleSize == 1) {
          return new PrimitiveIterator.OfLong() {
             @Override public boolean hasNext() {
@@ -113,10 +97,6 @@ abstract class AbstractBitSequence implements BitSequence {
       }
    }
    
-   @Override public Stream stream() {
-      return stream(0);
-   }
-   
    @Override public int hashCode() {
       if (hashCode == 0) {
          int result = 1;
@@ -150,7 +130,7 @@ abstract class AbstractBitSequence implements BitSequence {
    }
    
    // TODO: javadoc
-   abstract class AbstractStream implements Stream {
+   abstract class AbstractStream implements BitStream {
 
       void checkSequenceLength(int i) {
          if (i < 0) {

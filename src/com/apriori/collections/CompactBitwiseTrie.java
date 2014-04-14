@@ -2,7 +2,6 @@ package com.apriori.collections;
 
 import static com.apriori.collections.SimpleBitwiseTrie.COMPONENT_COMPARATOR;
 
-import com.apriori.collections.BitSequence.Stream;
 import com.apriori.collections.SimpleBitwiseTrie.ValueNode;
 import com.apriori.collections.SimpleBitwiseTrie.WrappedComparator;
 
@@ -93,14 +92,14 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       }
    }
    
-   Stream stream(K key) {
-      return bitConverter.getComponents(key).stream();
+   BitStream stream(K key) {
+      return bitConverter.getComponents(key).bitStream();
    }
    
-   private TrieNodeEdge<K, V> split(ValueNode<K, V> newValue, Stream stream,
+   private TrieNodeEdge<K, V> split(ValueNode<K, V> newValue, BitStream stream,
          TrieNodeEdge<K, V> existingEdge) {
       int prefixLen = 0;
-      Stream prefixStream = existingEdge.prefix.stream();
+      BitStream prefixStream = existingEdge.prefix.bitStream();
       boolean streamBit = false;
       boolean lastBitDifferent = false;
       while (stream.remaining() > 0 && prefixStream.remaining() > 0) {
@@ -213,7 +212,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       return existingEdge; // no change
    }
    
-   private ValueNode<K, V> insertNode(ValueNode<K, V> newValue, Stream stream,
+   private ValueNode<K, V> insertNode(ValueNode<K, V> newValue, BitStream stream,
          TrieNode<K, V> node) {
       if (stream.remaining() > 0) {
          if (stream.next()) {
@@ -301,7 +300,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       return null;
    }
 
-   private ValueNode<K, V> removeNode(K key, Stream stream, TrieNode<K, V> node) {
+   private ValueNode<K, V> removeNode(K key, BitStream stream, TrieNode<K, V> node) {
       if (stream.remaining() > 0) {
          if (stream.next()) {
             if (node.s1 != null
@@ -353,7 +352,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       return null;
    }
    
-   ValueNode<K, V> findNode(K key, Stream stream, boolean acceptNearest,
+   ValueNode<K, V> findNode(K key, BitStream stream, boolean acceptNearest,
          TrieNode<K, V> node) {
       if (stream.remaining() > 0) {
          if (stream.next()) {
@@ -443,12 +442,12 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
    }
 
    public K nearestKey(K key) {
-      ValueNode<K, V> nearest = findNode(key, bitConverter.getComponents(key).stream(), true, root);
+      ValueNode<K, V> nearest = findNode(key, bitConverter.getComponents(key).bitStream(), true, root);
       return nearest == null ? null : nearest.key;
    }
 
    public Entry<K, V> nearestEntry(K key) {
-      ValueNode<K, V> nearest = findNode(key, bitConverter.getComponents(key).stream(), true, root);
+      ValueNode<K, V> nearest = findNode(key, bitConverter.getComponents(key).bitStream(), true, root);
       return nearest == null ? null : mapEntry(nearest);
    }
 

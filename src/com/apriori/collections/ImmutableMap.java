@@ -1,6 +1,9 @@
 package com.apriori.collections;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * An immutable, read-only set of key+value mappings. This interface is similar to the standard
@@ -101,4 +104,22 @@ public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
    @Override boolean equals(Object o);
    
    @Override int hashCode();
+
+   default Stream<Entry<K, V>> stream() {
+      return entrySet().stream();
+   }
+
+   default Stream<Entry<K, V>> parallelStream() {
+      return entrySet().parallelStream();
+   }
+   
+   @Override
+   default Iterator<Entry<K, V>> iterator() {
+      return entrySet().iterator();
+   }
+   
+   @Override
+   default Spliterator<Entry<K, V>> spliterator() {
+      return entrySet().spliterator();
+   }
 }

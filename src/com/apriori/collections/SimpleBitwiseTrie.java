@@ -87,8 +87,8 @@ public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<
       @Override public int compare(K o1, K o2) {
          BitSequence bs1 = bitConverter.getComponents(o1);
          BitSequence bs2 = bitConverter.getComponents(o2);
-         BitSequence.Stream stream1 = bs1.stream();
-         BitSequence.Stream stream2 = bs2.stream();
+         BitStream stream1 = bs1.bitStream();
+         BitStream stream2 = bs2.bitStream();
          while (stream1.remaining() > 0 && stream2.remaining() > 0) {
             int len1 = stream1.remaining();
             int len2 = stream2.remaining();
