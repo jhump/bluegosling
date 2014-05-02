@@ -42,7 +42,7 @@ public interface AssociativeList<E, K> extends List<E> {
    
    /**
     * Adds a collection of mapped entries from a map. The elements are added in whatever iteration
-    * order is for the specified map. The are added to the end of the list. Any key that was
+    * order is for the specified map. They are added to the end of the list. Any key that was
     * already associated with an element in the list will instead be associated with its
     * corresponding value in the specified map. The returned map, if not empty, contains any such
     * overwritten keys along with their previously associated list index.

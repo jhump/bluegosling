@@ -37,7 +37,7 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
 
    @Override
    public List<E> capture() {
-      return Collections.unmodifiableList(new ArrayList<E>(this));
+      return Collections.unmodifiableList(new ArrayList<>(this));
    }
    
    /**
@@ -57,14 +57,15 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
    @Override
    public boolean addAll(int index, Collection<? extends E> c) {
       // check all of the items before trying to add them
-      for (E e : c) {
+      ArrayList<E> snapshot = new ArrayList<>(c);
+      for (E e : snapshot) {
          if (!predicate().test(e)) {
             throw new IllegalArgumentException("Specified object does not pass filter: " + e);
          }
       }
       ListIterator<E> iter = listIterator(index);
       boolean ret = false;
-      for (E element : c) {
+      for (E element : snapshot) {
          iter.add(element);
          ret = true;
       }
@@ -125,7 +126,7 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
 
    @Override
    public ListIterator<E> listIterator() {
-      return new FilteringListIterator<E>(internal().listIterator(), predicate());
+      return new FilteringListIterator<>(internal().listIterator(), predicate());
    }
 
    @Override
@@ -185,7 +186,7 @@ public class FilteringList<E> extends FilteringCollection<E> implements List<E> 
          throw new IndexOutOfBoundsException("" + toIndex + " > " + i);
       }
       
-      return new FilteringList<E>(internal().subList(startIndex, endIndex), predicate());
+      return new FilteringList<>(internal().subList(startIndex, endIndex), predicate());
    }
    
    @Override

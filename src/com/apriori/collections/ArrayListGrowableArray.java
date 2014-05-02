@@ -30,18 +30,46 @@ import java.util.Spliterator;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: consider replacing this with ArrayDoublingGrowableArray and manage the array directly
+// instead of using an ArrayList to manage the underlying array
 // TODO: tests
 public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable, Cloneable {
 
    private static final long serialVersionUID = 7834555062989870534L;
    
-   private ArrayList<T> list;
+   /**
+    * An {@link ArrayList} that lets the enclosing class directly invoke
+    * {@link #removeRange(int, int)}.
+    *
+    * @param <T> the type of element in the list
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class InternalArrayList<T> extends ArrayList<T> {
+
+      private static final long serialVersionUID = 6264804794546117868L;
+      
+      InternalArrayList() {
+      }
+
+      InternalArrayList(Collection<? extends T> coll) {
+         super(coll);
+      }
+
+      // overridden just to make this method visible to the enclosing class
+      @Override
+      protected void removeRange(int fromIndex, int toIndex) {
+         super.removeRange(fromIndex, toIndex);
+      }
+   }
+   
+   private InternalArrayList<T> list;
    
    /**
     * Constructs a new, empty growable array.
     */
    public ArrayListGrowableArray() {
-      list = new ArrayList<>();
+      list = new InternalArrayList<>();
    }
 
    /**
@@ -51,7 +79,7 @@ public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable
     * @param initialSize the size of the new array
     */
    public ArrayListGrowableArray(int initialSize) {
-      list = new ArrayList<>(Collections.nCopies(initialSize, null));
+      list = new InternalArrayList<>(Collections.nCopies(initialSize, null));
    }
    
    /**
@@ -63,9 +91,9 @@ public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable
     */
    public ArrayListGrowableArray(Iterable<? extends T> values) {
       if (values instanceof Collection) {
-         list = new ArrayList<>((Collection<? extends T>) values);
+         list = new InternalArrayList<>((Collection<? extends T>) values);
       } else {
-         list = new ArrayList<>();
+         list = new InternalArrayList<>();
          for (T t : values) {
             list.add(t);
          }
@@ -80,7 +108,7 @@ public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable
       } else {
          try {
             ArrayListGrowableArray<T> clone = (ArrayListGrowableArray<T>) super.clone();
-            clone.list = (ArrayList<T>) this.list.clone();
+            clone.list = (InternalArrayList<T>) this.list.clone();
             return clone;
          } catch (CloneNotSupportedException e) {
             throw Throwables.withCause(new AssertionError(), e);
@@ -147,15 +175,7 @@ public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable
       if (numRemovedElements < 0 || numRemovedElements > sz) {
          throw new IllegalArgumentException();
       }
-      if (numRemovedElements > 16) {
-         list.subList(sz - numRemovedElements, sz).clear();
-      } else {
-         // below threshold? linear algorithm is fine and saves us from allocating a new object
-         while (numRemovedElements > 0) {
-            pop();
-            numRemovedElements--;
-         }
-      }
+      list.removeRange(sz - numRemovedElements, sz);
    }
    
    @Override

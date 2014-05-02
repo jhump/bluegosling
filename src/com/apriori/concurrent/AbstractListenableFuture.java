@@ -48,9 +48,8 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    private Object result;
    
    /**
-    * Runs all listeners and then nulls the listener set. This is done so that any attempts to add
-    * a listener after this step can cause the listener to be invoked immediately, since the future
-    * is already complete.
+    * Runs all listeners. Any listeners added after this is called will be invoked immediately,
+    * since the future is already complete.
     */
    private void runListeners() {
       listeners.run();
@@ -67,7 +66,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    }
    
    @Override
-   public boolean cancel(final boolean mayInterruptIfRunning) {
+   public boolean cancel(boolean mayInterruptIfRunning) {
       return sync.setCancelled(this, mayInterruptIfRunning);
    }
 
@@ -252,12 +251,9 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    /**
     * The synchronizer for the future.
     * 
-    * <p>Its initial state is locked in shared mode. When the future completes, it is released.
-    * Attempts to get the future's result must acquire the lock in shared mode, but only to block
-    * until completion. After that, no further releases are necessary.
-    * 
-    * <p>The synchronizer can also be held in exclusive mode. This is used to guard the future's set
-    * of listeners. So exclusive and shared modes are actually orthogonal.
+    * <p>Its initial state is locked. When the future completes, it is released. Attempts to get the
+    * future's result must acquire the lock in shared mode, but only to block until completion.
+    * After that, no further releases are necessary.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -402,7 +398,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
                try {
                   if (interrupt) {
                      // if this misbehaves, we'll propagate the exception
-                     // to whoever invoked of cancel(...) or setCancelled()
+                     // to whoever invoked cancel(...) or setCancelled()
                      future.interrupt();
                   }
                } finally {

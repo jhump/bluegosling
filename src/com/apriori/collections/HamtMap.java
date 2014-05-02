@@ -451,39 +451,39 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
    
    // TODO: javadoc
    private static class InnerLeafTrieNode<K, V> extends LeafTrieNode<K, V> {
-      private final int hashCode;
+      private final int hash;
       
       InnerLeafTrieNode(int hashCode, K key, V value) {
          super(key, value);
-         this.hashCode = hashCode;
+         this.hash = hashCode;
       }
       
       @Override
       public ListNode<K, V> findNode(int hashCode, int currentOffset, Object searchKey) {
-         return hashCode == this.hashCode ? doFindNode(searchKey) : null;
+         return hashCode == this.hash ? doFindNode(searchKey) : null;
       }
 
       @Override
       @SuppressWarnings("unchecked")
       public ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K newKey, V newValue) {
-         return hashCode == this.hashCode
+         return hashCode == this.hash
                ? doFindOrAddNode(newKey, newValue)
                : (ListNode<K, V>) INNER_NODE_NEEDS_EXPANSION;
       }
 
       @Override
       public ListNode<K, V> removeNode(int hashCode, int currentOffset, Object keyToRemove) {
-         return hashCode == this.hashCode ? doRemoveNode(keyToRemove) : null;
+         return hashCode == this.hash ? doRemoveNode(keyToRemove) : null;
       }
       
       TrieNode<K, V> expand(int newHashCode, int currentOffset) {
          // TODO: get this to work -- should expand this node into long enough branch that
          // it no longer collides with newHashCode and then replace with LeafTrieNode if the
          // branch ends up going all the way down to leaf
-         int significantBits = (hashCode >> currentOffset) & 0x3f;
+         int significantBits = (hash >> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          return new IntermediateTrieNode<K, V>(mask,
-               createNode(hashCode, currentOffset + 6, key, value));
+               createNode(hash, currentOffset + 6, key, value));
       }
    }
    

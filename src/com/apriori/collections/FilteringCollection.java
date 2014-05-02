@@ -21,7 +21,7 @@ import java.util.function.Predicate;
  */
 //TODO: tests
 public class FilteringCollection<E> extends FilteringIterable<E> implements Collection<E> {
-
+   
    /**
     * Constructs a new filtering collection. Elements in this collection will include only the
     * elements from the specified collection that match the specified predicate. An element
@@ -36,7 +36,7 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
 
    @Override
    public Collection<E> capture() {
-      return Collections.unmodifiableCollection(new ArrayList<E>(this));
+      return Collections.unmodifiableCollection(new ArrayList<>(this));
    }
    
    /**
@@ -69,9 +69,12 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
       return CollectionUtils.contains(iterator(), o);
    }
 
+   /**
+    * @see com.apriori.collections.FilteringIterator
+    */
    @Override
    public Iterator<E> iterator() {
-      return new FilteringIterator<E>(internal().iterator(), predicate());
+      return new FilteringIterator<>(internal().iterator(), predicate());
    }
 
    @Override
@@ -112,13 +115,14 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
     */
    @Override
    public boolean addAll(Collection<? extends E> c) {
-      for (E e : c) {
+      ArrayList<E> snapshot = new ArrayList<>(c);
+      for (E e : snapshot) {
          if (!predicate().test(e)) {
             throw new IllegalArgumentException("Specified object does not pass filter: " + e);
          }
       }
       // all items pass, so we can safely add everything
-      return internal().addAll(c);
+      return internal().addAll(snapshot);
    }
 
    @Override

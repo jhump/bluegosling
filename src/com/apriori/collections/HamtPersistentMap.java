@@ -517,7 +517,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
    }
    
-   private class Iter extends ReadOnlyIterator<Entry<K, V>> {
+   private class Iter implements Iterator<Entry<K, V>> {
       private final ArrayDeque<StackFrame<K, V>> stack = new ArrayDeque<StackFrame<K, V>>();
       private ListNode<K, V> current;
       

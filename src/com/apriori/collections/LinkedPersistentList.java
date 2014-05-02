@@ -1,11 +1,11 @@
 package com.apriori.collections;
 
+import static com.apriori.collections.Immutables.cast;
+
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 // TODO: javadoc
@@ -27,48 +27,16 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    
    public static <E> LinkedPersistentList<E> create(Iterable<? extends E> iterable) {
       // recursion would be more elegant, but a large list would blow the stack
-      
       if (iterable instanceof LinkedPersistentList) {
-         @SuppressWarnings("unchecked") // safe since it's immutable and we know type bound
-         LinkedPersistentList<E> list = (LinkedPersistentList<E>) iterable;
+         LinkedPersistentList<E> list = cast((LinkedPersistentList<? extends E>) iterable);
          return list;
-         
-      } else if (iterable instanceof List) {
-         List<? extends E> list = (List<? extends E>) iterable;
-         ListIterator<? extends E> iterator = list.listIterator(list.size());
-         LinkedPersistentList<E> node = null;
-         while (iterator.hasPrevious()) {
-            node = new LinkedPersistentList<E>(iterator.previous(), node);
-         }
-         if (node != null) {
-            return node;
-         }
-         
-      } else {
-         Iterator<? extends E> iterator = iterable.iterator();
-         if (iterator.hasNext()) {
-            ArrayDeque<E> stack; 
-            if (iterable instanceof Collection) {
-               stack = new ArrayDeque<E>(((Collection<? extends E>) iterable).size());
-            } else if (iterable instanceof ImmutableCollection) {
-               stack = new ArrayDeque<E>(((ImmutableCollection<? extends E>) iterable).size());
-            } else {
-               stack = new ArrayDeque<E>();
-            }
-            while (iterator.hasNext()) {
-               stack.push(iterator.next());
-            }
-            LinkedPersistentList<E> node = null;
-            while (!stack.isEmpty()) {
-               node = new LinkedPersistentList<E>(stack.pop(), node);
-            }
-            if (node != null) {
-               return node;
-            }
-         }
       }
-
-      return EmptyList.instance();
+      Iterator<? extends E> iterator = Iterators.reversed(iterable);
+      LinkedPersistentList<E> node = null;
+      while (iterator.hasNext()) {
+         node = new LinkedPersistentList<>(iterator.next(), node);
+      }
+      return node != null ? node : EmptyList.instance(); 
    }
    
    private final E value;
@@ -118,7 +86,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
    @Override
    public int lastIndexOf(Object o) {
-      // don't want to blow out the call stack, so allocate one so we can do this iteratively
+      // don't want to blow out the call stack, so push into a stack so we can do this iteratively
       ArrayDeque<E> elements = new ArrayDeque<E>(size);
       for (LinkedPersistentList<E> current = this; current != null; current = current.next) {
          elements.push(current.value);
@@ -202,8 +170,8 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public ReadOnlyIterator<E> iterator() {
-      return new ReadOnlyIterator<E>() {
+   public Iterator<E> iterator() {
+      return new Iterator<E>() {
          private LinkedPersistentList<E> node = LinkedPersistentList.this;
                
          @Override public boolean hasNext() {
@@ -276,53 +244,28 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
    @Override
    public PersistentList<E> addAll(int i, Iterable<? extends E> items) {
-      rangeCheckWide(i);
-      
-      if (items instanceof List) {
-         List<? extends E> list = (List<? extends E>) items;
-         if (list.isEmpty()) {
-            return this;
-         }
-         ArrayDeque<E> prefix = new ArrayDeque<E>(i);
-         LinkedPersistentList<E> current = this;
-         while (i-- > 0) {
-            prefix.push(current.value);
-            current = current.next;
-         }
-         ListIterator<? extends E> iterator = list.listIterator(list.size());
-         while (iterator.hasPrevious()) {
-            current = new LinkedPersistentList<E>(iterator.previous(), current);
-         }
-         while (!prefix.isEmpty()) {
-            current = new LinkedPersistentList<E>(prefix.pop(), current);
-         }
-         return current;
-      } else {
-         Iterator<? extends E> iterator = items.iterator();
-         if (!iterator.hasNext()) {
-            return this;
-         }
-         ArrayDeque<E> stack; 
-         if (items instanceof Collection) {
-            stack = new ArrayDeque<E>(((Collection<? extends E>) items).size() + i);
-         } else if (items instanceof ImmutableCollection) {
-            stack = new ArrayDeque<E>(((ImmutableCollection<? extends E>) items).size() + i);
-         } else {
-            stack = new ArrayDeque<E>(i + 16);
-         }
-         LinkedPersistentList<E> current = this;
-         while (i-- > 0) {
-            stack.push(current.value);
-            current = current.next;
-         }
-         while (iterator.hasNext()) {
-            stack.push(iterator.next());
-         }
-         while (!stack.isEmpty()) {
-            current = new LinkedPersistentList<E>(stack.pop(), current);
-         }
-         return current;
+      if (i == 0) {
+         return addAll(items);
       }
+      rangeCheckWide(i);
+      Iterator<? extends E> iterator = Iterators.reversed(items);
+      if (!iterator.hasNext()) {
+         return this;
+      }
+      ArrayDeque<E> prefix = new ArrayDeque<E>(i);
+      LinkedPersistentList<E> current = this;
+      while (i-- > 0) {
+         prefix.push(current.value);
+         current = current.next;
+      }
+      while (iterator.hasNext()) {
+         current = new LinkedPersistentList<E>(iterator.next(), current);
+      }
+      iterator = prefix.iterator();
+      while (iterator.hasNext()) {
+         current = new LinkedPersistentList<E>(iterator.next(), current);
+      }
+      return current;
    }
 
    @Override
@@ -499,39 +442,12 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
    @Override
    public PersistentList<E> addAll(Iterable<? extends E> items) {
-      if (items instanceof List) {
-         List<? extends E> list = (List<? extends E>) items;
-         if (list.isEmpty()) {
-            return this;
-         }
-         ListIterator<? extends E> iterator = list.listIterator(list.size());
-         LinkedPersistentList<E> node = this;
-         while (iterator.hasPrevious()) {
-            node = new LinkedPersistentList<E>(iterator.previous(), node);
-         }
-         return node;
-      } else {
-         Iterator<? extends E> iterator = items.iterator();
-         if (!iterator.hasNext()) {
-            return this;
-         }
-         ArrayDeque<E> stack; 
-         if (items instanceof Collection) {
-            stack = new ArrayDeque<E>(((Collection<? extends E>) items).size());
-         } else if (items instanceof ImmutableCollection) {
-            stack = new ArrayDeque<E>(((ImmutableCollection<? extends E>) items).size());
-         } else {
-            stack = new ArrayDeque<E>();
-         }
-         while (iterator.hasNext()) {
-            stack.push(iterator.next());
-         }
-         LinkedPersistentList<E> node = this;
-         while (!stack.isEmpty()) {
-            node = new LinkedPersistentList<E>(stack.pop(), node);
-         }
-         return node;
+      Iterator<? extends E> iterator = Iterators.reversed(items);
+      LinkedPersistentList<E> node = this;
+      while (iterator.hasNext()) {
+         node = new LinkedPersistentList<E>(iterator.next(), node);
       }
+      return node;
    }
 
    private static class EmptyList<E> extends LinkedPersistentList<E> {
@@ -539,16 +455,6 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       private static final long serialVersionUID = 1487151881149064099L;
       
       private static final Object[] EMPTY_ARRAY = new Object[0];
-      private static final ReadOnlyIterator<Object> EMPTY_ITERATOR =
-            new ReadOnlyIterator<Object>() {
-               @Override public boolean hasNext() {
-                  return false;
-               }
-
-               @Override public Object next() {
-                  throw new NoSuchElementException();
-               }
-            };
       
       static final EmptyList<Object> INSTANCE = new EmptyList<Object>();
       
@@ -620,10 +526,9 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
          return false;
       }
 
-      @SuppressWarnings("unchecked") // immutability makes this safe
       @Override
-      public ReadOnlyIterator<E> iterator() {
-         return (ReadOnlyIterator<E>) EMPTY_ITERATOR;
+      public Iterator<E> iterator() {
+         return Iterators.emptyIterator();
       }
 
       @Override

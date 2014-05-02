@@ -6,12 +6,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Phaser;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeoutException;
 
 /**
  * An executor that runs multiple sequential pipelines. When tasks are submitted, they are enqueued
@@ -29,11 +27,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PipeliningExecutorService<P> {
 
    final Executor executor;
-   final ConcurrentMap<P, Pipeline> pipelines =
-         new ConcurrentHashMap<P, Pipeline>();
-   final AtomicInteger pipelineCount = new AtomicInteger();
-   final Lock quietLock = new ReentrantLock();
-   final Condition isQuiet = quietLock.newCondition();
+   final ConcurrentMap<P, Pipeline> pipelines = new ConcurrentHashMap<>();
+   final Phaser phaser = new Phaser() {
+      @Override protected boolean onAdvance(int phase, int registeredParties) {
+         return false; // never terminates
+      }
+   };
    
    /**
     * Constructs a new pipelining executor that uses the specified executor for actually running
@@ -55,7 +54,7 @@ public class PipeliningExecutorService<P> {
     * @return a future that represents the completion of the given task
     */
    public <T> ListenableFuture<T> submit(P pipeline, Callable<T> task) {
-      ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
+      ListenableFutureTask<T> future = new ListenableFutureTask<>(task);
       execute(pipeline, future);
       return future;
    }
@@ -71,7 +70,7 @@ public class PipeliningExecutorService<P> {
     * @return a future that represents the completion of the given task
     */
    public <T> ListenableFuture<T> submit(P pipeline, Runnable task, T result) {
-      ListenableFutureTask<T> future = new ListenableFutureTask<T>(task, result);
+      ListenableFutureTask<T> future = new ListenableFutureTask<>(task, result);
       execute(pipeline, future);
       return future;
    }
@@ -97,14 +96,16 @@ public class PipeliningExecutorService<P> {
     * @param task a task
     */
    public void execute(P pipeline, Runnable task) {
-      // CAS loop to atomically create the pipeline if necessary and enqueue this task therein
+      // Atomically create the pipeline if necessary and enqueue this task therein. In a loop
+      // in the event that selected pipeline (queried from pipelines map) is quitting and a new
+      // one must be created.
       while (true) {
          Pipeline p = pipelines.get(pipeline);
          if (p == null) {
             p = new Pipeline(pipeline, task);
             Pipeline existing = pipelines.putIfAbsent(pipeline,  p);
             if (existing == null) {
-               pipelineCount.incrementAndGet();
+               phaser.register();
                p.run();
                return;
             }
@@ -127,14 +128,17 @@ public class PipeliningExecutorService<P> {
    private void remove(P pipelineKey, Pipeline pipeline) {
       boolean removed = pipelines.remove(pipelineKey,  pipeline);
       assert removed;
-      if (pipelineCount.decrementAndGet() == 0) {
-         quietLock.lock();
-         try {
-            isQuiet.signalAll();
-         } finally {
-            quietLock.unlock();
-         }
-      }
+      phaser.arriveAndDeregister();
+   }
+   
+   /**
+    * Returns true if this executor has no tasks running or queued.
+    *
+    * @return true if this executor has no tasks running or queued
+    * @see #awaitQuiescence()
+    */
+   public boolean isQuiescent() {
+      return phaser.getUnarrivedParties() == 0;
    }
    
    /**
@@ -142,7 +146,7 @@ public class PipeliningExecutorService<P> {
     * implies nothing about the state of the underlying executor as other sources could still be
     * submitting and running tasks with that executor.
     * 
-    * <p>Note that the state of quiescance may be transient and will end as soon as another task is
+    * <p>Note that the state of quiescence may be transient and will end as soon as another task is
     * submitted to this executor. This method is usually used after a source of callbacks
     * is stopped. At that point, no other tasks should be submitted. Once this executor has
     * quiesced, it will then be safe to shutdown the underlying executor. If the underlying executor
@@ -151,18 +155,12 @@ public class PipeliningExecutorService<P> {
     *
     * @throws InterruptedException if the current thread is interrupted while waiting
     */
-   public void awaitQuiescance() throws InterruptedException {
-      quietLock.lock();
-      try {
-         while (true) {
-            if (pipelineCount.get() == 0) {
-               return;
-            }
-            isQuiet.await();
-         }
-      } finally {
-         quietLock.unlock();
+   public void awaitQuiescence() throws InterruptedException {
+      int phase = phaser.getPhase();
+      if (isQuiescent()) {
+         return;
       }
+      phaser.awaitAdvanceInterruptibly(phase);
    }
    
    /**
@@ -171,25 +169,19 @@ public class PipeliningExecutorService<P> {
     * 
     * @param limit the limit of how much time to wait
     * @param unit the unit for the time limit
-    * @return true if quiescance was reached or false if the time limit elapsed first
+    * @return true if quiescence was reached or false if the time limit elapsed first
     * @throws InterruptedException if the current thread is interrupted while waiting
     */
-   public boolean awaitQuiescance(long limit, TimeUnit unit) throws InterruptedException {
-      long startNanos = System.nanoTime();
-      quietLock.lock();
+   public boolean awaitQuiescence(long limit, TimeUnit unit) throws InterruptedException {
+      int phase = phaser.getPhase();
+      if (isQuiescent()) {
+         return true;
+      }
       try {
-         while (true) {
-            if (pipelineCount.get() == 0) {
-               return true;
-            }
-            long elapsedNanos = System.nanoTime() - startNanos;
-            long remainingNanos = unit.toNanos(limit) - elapsedNanos;
-            if (!isQuiet.await(remainingNanos, TimeUnit.NANOSECONDS)) {
-               return false;
-            }
-         }
-      } finally {
-         quietLock.unlock();
+         phaser.awaitAdvanceInterruptibly(phase, limit, unit);
+         return true;
+      } catch (TimeoutException e) {
+         return false;
       }
    }
    
@@ -236,14 +228,11 @@ public class PipeliningExecutorService<P> {
        * Runs the head of the queue using the underlying executor.
        */
       void run() {
-         executor.execute(new Runnable() {
-            @SuppressWarnings("synthetic-access") // current member is private
-            @Override public void run() {
-               try {
-                  current.run();
-               } finally {
-                  runNext();
-               }
+         executor.execute(() -> {
+            try {
+               current.run();
+            } finally {
+               runNext();
             }
          });
       }

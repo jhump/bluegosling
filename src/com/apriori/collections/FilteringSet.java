@@ -34,7 +34,7 @@ public class FilteringSet<E> extends FilteringCollection<E> implements Set<E> {
 
    @Override
    public Set<E> capture() {
-      return Collections.unmodifiableSet(new HashSet<E>(this));
+      return Collections.unmodifiableSet(new HashSet<>(this));
    }
    
    @Override

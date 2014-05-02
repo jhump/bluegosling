@@ -48,7 +48,7 @@ public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmut
 
    @Override
    public Iterator<E> iterator() {
-      return new ReadOnlyIterator<E>() {
+      return new Iterator<E>() {
          private int index = 0;
          
          @Override

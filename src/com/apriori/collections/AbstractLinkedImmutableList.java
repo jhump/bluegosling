@@ -48,7 +48,7 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
 
    @Override
    public Iterator<E> iterator() {
-      return new ReadOnlyIterator<E>() {
+      return new Iterator<E>() {
          private ImmutableList<E> current = AbstractLinkedImmutableList.this;
          
          @Override

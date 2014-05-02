@@ -1,10 +1,14 @@
 package com.apriori.collections;
 
 /**
- * A fully persistent list backed by an array-mapped trie.
- * TODO: document me!
+ * A fully persistent list backed by an array-mapped trie. This structure supports inexpensive
+ * insertions both at the beginning and end of the list. Inexpensive means that only the path to the
+ * first or last leaf trie node is copied in these cases. Insertions or removals from the middle,
+ * however, are expensive and require linear runtime complexity and space overhead. Such operations
+ * mean that much of the list must be copied to form the new list.
  *
- * @param <E>
+ * @param <E> the type of element in the list
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: javadoc
@@ -31,13 +35,15 @@ public class AmtPersistentList<E> implements PersistentList<E>, BidiIterable<E> 
       }
    }
    
+   private final TrieNode<E> root;
    private final int depth;
    private final int size;
-   private final TrieNode<E> root;
+   private final int firstElementIndex;
    
-   private AmtPersistentList(int depth, int size, TrieNode<E> root) {
+   private AmtPersistentList(int depth, int size, int firstElementIndex, TrieNode<E> root) {
       this.depth = depth;
       this.size = size;
+      this.firstElementIndex = firstElementIndex;
       this.root = root;
    }
    

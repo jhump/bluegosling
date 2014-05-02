@@ -41,7 +41,7 @@ public interface CompletableExecutorService extends ExecutorService {
    /**
     * {@inheritDoc}
     * 
-    * <p>Every instance in the returned list will implement {@link CompletableFuture}.
+    * <p>Every instance in the returned list will be an instance of {@link CompletableFuture}.
     */
    @Override <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
          throws InterruptedException;
@@ -49,7 +49,7 @@ public interface CompletableExecutorService extends ExecutorService {
    /**
     * {@inheritDoc}
     * 
-    * <p>Every instance in the returned list will implement {@link CompletableFuture}.
+    * <p>Every instance in the returned list will be an instance of {@link CompletableFuture}.
     */
    @Override <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks,
          long timeout, TimeUnit unit) throws InterruptedException;
@@ -69,7 +69,7 @@ public interface CompletableExecutorService extends ExecutorService {
     * service <em>is</em> already completable, it is returned without any conversion.
     * 
     * @param executor the executor service
-    * @return a listenable version of the specified service
+    * @return a completable version of the specified service
     */
    public static CompletableExecutorService makeCompletable(ExecutorService executor) {
       if (executor instanceof CompletableExecutorService) {

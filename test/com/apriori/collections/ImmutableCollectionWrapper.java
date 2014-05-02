@@ -30,7 +30,7 @@ abstract class ImmutableCollectionWrapper<E, C extends Collection<E>>
    @Override
    public Iterator<E> iterator() {
       final Iterator<E> iter = wrapped().iterator();
-      return new ReadOnlyIterator<E>() {
+      return new Iterator<E>() {
          @Override
          public boolean hasNext() {
             return iter.hasNext();

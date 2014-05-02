@@ -100,7 +100,7 @@ public final class Immutables {
     * @return an iterator that visits elements in descending order
     */
    public static <E> Iterator<E> descendingIterator(final ImmutableSortedSet<E> set) {
-      return new ReadOnlyIterator<E>() {
+      return new Iterator<E>() {
          boolean hasNext = !set.isEmpty();
          E next = hasNext ? set.last() : null; 
          
@@ -175,7 +175,7 @@ public final class Immutables {
    public static <K, V> Iterator<ImmutableMap.Entry<K, V>> descendingIterator(
          ImmutableSortedMap<? extends K, ? extends V> map) {
       final ImmutableSortedMap<K, V> castMap = cast(map);
-      return new ReadOnlyIterator<ImmutableMap.Entry<K, V>>() {
+      return new Iterator<ImmutableMap.Entry<K, V>>() {
          boolean hasNext = !castMap.isEmpty();
          ImmutableMap.Entry<K, V> next = hasNext ? castMap.lastEntry() : null; 
          
@@ -258,54 +258,15 @@ public final class Immutables {
     * invariant collection types, without the need for unchecked casts.
     *
     * @param coll an immutable collection
+    * @param <E> the element type of the collection
+    * @param <S> the source type of the collection being re-cast
+    * @param <T> the target type to which the collection is re-cast
     * @return the input collection, but with its element type re-cast
     */
-   public static <E> ImmutableCollection<E> cast(ImmutableCollection<? extends E> coll) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableCollection<E> cast = (ImmutableCollection<E>) coll;
-      return cast;
-   }
-
-   /**
-    * Safely upcasts the element type of an immutable list. This operation is safe thanks to
-    * the input being immutable. This can help adapt instances of immutable list to otherwise
-    * invariant list types, without the need for unchecked casts.
-    *
-    * @param list an immutable list
-    * @return the input list, but with its element type re-cast
-    */
-   public static <E> ImmutableList<E> cast(ImmutableList<? extends E> list) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableList<E> cast = (ImmutableList<E>) list;
-      return cast;
-   }
-
-   /**
-    * Safely upcasts the element type of an immutable set. This operation is safe thanks to
-    * the input being immutable. This can help adapt instances of immutable set to otherwise
-    * invariant set types, without the need for unchecked casts.
-    *
-    * @param set an immutable set
-    * @return the input set, but with its element type re-cast
-    */
-   public static <E> ImmutableSet<E> cast(ImmutableSet<? extends E> set) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableSet<E> cast = (ImmutableSet<E>) set;
-      return cast;
-   }
-
-   /**
-    * Safely upcasts the element type of an immutable sorted set. This operation is safe thanks to
-    * the input being immutable. This can help adapt instances of immutable set to otherwise
-    * invariant set types, without the need for unchecked casts.
-    *
-    * @param set an immutable sorted set
-    * @return the input set, but with its element type re-cast
-    */
-   public static <E> ImmutableSortedSet<E> cast(ImmutableSortedSet<? extends E> set) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableSortedSet<E> cast = (ImmutableSortedSet<E>) set;
-      return cast;
+   @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
+   public static <E, S extends ImmutableCollection<? extends E>, T extends ImmutableCollection<E>>
+   T cast(S collection) {
+      return (T) collection;
    }
 
    /**
@@ -314,27 +275,16 @@ public final class Immutables {
     * invariant map types, without the need for unchecked casts.
     *
     * @param map an immutable map
+    * @param <K> the key type of the map
+    * @param <V> the value type of the map
+    * @param <S> the source type of the map being re-cast
+    * @param <T> the target type to which the map is re-cast
     * @return the input map, but with its key or value type (or both) re-cast
     */
-   public static <K, V> ImmutableMap<K, V> cast(ImmutableMap<? extends K, ? extends V> map) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableMap<K, V> cast = (ImmutableMap<K, V>) map;
-      return cast;
-   }
-
-   /**
-    * Safely upcasts the key and/or value types of an immutable sorted map. This operation is safe
-    * thanks to the input being immutable. This can help adapt instances of immutable map to
-    * otherwise invariant map types, without the need for unchecked casts.
-    *
-    * @param map an immutable sorted map
-    * @return the input map, but with its key or value type (or both) re-cast
-    */
-   public static <K, V> ImmutableSortedMap<K, V> cast(
-         ImmutableSortedMap<? extends K, ? extends V> map) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableSortedMap<K, V> cast = (ImmutableSortedMap<K, V>) map;
-      return cast;
+   @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
+   public static <K, V, S extends ImmutableMap<? extends K, ? extends V>, T extends ImmutableMap<K, V>>
+   T cast(S entry) {
+      return (T) entry;
    }
 
    /**
@@ -343,13 +293,16 @@ public final class Immutables {
     * otherwise invariant entry types, without the need for unchecked casts.
     *
     * @param entry an immutable map entry
+    * @param <K> the key type of the map entry
+    * @param <V> the value type of the map entry
+    * @param <S> the source type of the map entry being re-cast
+    * @param <T> the target type to which the map entry is re-cast
     * @return the input entry, but with its key or value type (or both) re-cast
     */
-   public static <K, V> ImmutableMap.Entry<K, V> cast(
-         ImmutableMap.Entry<? extends K, ? extends V> entry) {
-      @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
-      ImmutableMap.Entry<K, V> cast = (ImmutableMap.Entry<K, V>) entry;
-      return cast;
+   @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
+   public static <K, V, S extends ImmutableMap.Entry<? extends K, ? extends V>, T extends ImmutableMap.Entry<K, V>>
+   T cast(S entry) {
+      return (T) entry;
    }
    
    public static <E> ImmutableCollection<E> emptyImmutableCollection() {
@@ -1908,7 +1861,7 @@ public final class Immutables {
       
       @Override
       public Iterator<E> iterator() {
-         return new ReadOnlyIterator<E>() {
+         return new Iterator<E>() {
             private boolean needNext = true;
             private int next;
 
@@ -2060,7 +2013,7 @@ public final class Immutables {
       
       @Override
       public Iterator<Entry<K, V>> iterator() {
-         return new ReadOnlyIterator<Entry<K, V>>() {
+         return new Iterator<Entry<K, V>>() {
             private boolean needNext = true;
             private int next;
 
