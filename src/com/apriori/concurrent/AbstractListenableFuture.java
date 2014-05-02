@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * A {@link ListenableFuture} implementation that is suitable for sub-classing. Setting the value
@@ -40,12 +39,6 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
     * The synchronization object.
     */
    private final Sync sync = new Sync();
-   
-   /**
-    * The future's result -- either a value or a failure. It is not declared volatile since
-    * access is protected by {@link #sync}. 
-    */
-   private Object result;
    
    /**
     * Runs all listeners. Any listeners added after this is called will be invoked immediately,
@@ -123,23 +116,18 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
     * @throws CancellationException if the future was cancelled
     */
    private T reportResult() throws ExecutionException {
-      CompletionState state = sync.getCompletionState();
-      assert state != null;
-      switch (state) {
-         case SUCCESSFUL:
-            @SuppressWarnings("unchecked")
-            T ret = (T) result;
-            return ret;
-            
-         case FAILED:
-            throw new ExecutionException((Throwable) result);
-            
-         case CANCELLED:
-            throw new CancellationException();
-            
-         default:
-            throw new AssertionError("unrecognized CompletionState: " + state);
+      Completion state = sync.getState();
+      assert state != null && state != CANCELLING;
+      if (state instanceof Success) {
+         @SuppressWarnings("unchecked")
+         T ret = (T) ((Success) state).result;
+         return ret;
+      } else if (state instanceof Failure) {
+         throw new ExecutionException(((Failure) state).cause);
+      } else if (state == CANCELLED) {
+         throw new CancellationException();
       }
+      throw new AssertionError("invalid completion state: " + state);
    }
 
    @Override
@@ -169,11 +157,12 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
 
    @Override
    public T getResult() {
-      if (!sync.isSuccessful()) {
+      Completion state = sync.getState();
+      if (!(state instanceof Success)) {
          throw new IllegalStateException();
       }
       @SuppressWarnings("unchecked")
-      T ret = (T) result;
+      T ret = (T) ((Success) state).result;
       return ret;
    }
 
@@ -184,69 +173,63 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
 
    @Override
    public Throwable getFailure() {
-      if (!sync.isFailed()) {
+      Completion state = sync.getState();
+      if (!(state instanceof Failure)) {
          throw new IllegalStateException();
       }
-      return (Throwable) result;
+      return ((Failure) state).cause;
    }
 
    @Override
    public void visit(FutureVisitor<? super T> visitor) {
-      CompletionState state = sync.getCompletionState();
-      if (state == null) {
+      Completion state = sync.getState();
+      if (state == null || state == CANCELLING) {
          throw new IllegalStateException();
       }
-      switch (state) {
-         case SUCCESSFUL:
-            @SuppressWarnings("unchecked")
-            T t = (T) result;
-            visitor.successful(t);
-            return;
-            
-         case FAILED:
-            visitor.failed((Throwable) result);
-            return;
-            
-         case CANCELLED:
-            visitor.cancelled();
-            return;
-            
-         default:
-            throw new AssertionError("unrecognized CompletionState: " + state);
+      if (state instanceof Success) {
+         @SuppressWarnings("unchecked")
+         T t = (T) ((Success) state).result;
+         visitor.successful(t);
+      } else if (state instanceof Failure) {
+         visitor.failed(((Failure) state).cause);
+      } else if (state == CANCELLED) {
+         visitor.cancelled();
+      } else {
+         throw new AssertionError("unrecognized completion state: " + state);
       }
    }
 
    @Override
    public void await() throws InterruptedException {
-      sync.acquireSharedInterruptibly(0);
+      sync.acquireSharedInterruptibly(null);
    }
 
    @Override
    public boolean await(long limit, TimeUnit unit) throws InterruptedException {
-      return sync.tryAcquireSharedNanos(0, unit.toNanos(limit));
+      return sync.tryAcquireSharedNanos(null, unit.toNanos(limit));
    }
    
-   /**
-    * An enumeration of possible states the future can be in once it is complete.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private enum CompletionState {
-      /**
-       * The future completed successfully.
-       */
-      SUCCESSFUL,
-      
-      /**
-       * The future failed.
-       */
-      FAILED,
-      
-      /**
-       * The future was cancelled.
-       */
-      CANCELLED;
+   private static interface Completion {
    }
+
+   private static class Failure implements Completion {
+      Throwable cause;
+      
+      Failure(Throwable cause) {
+         this.cause = cause;
+      }
+   }
+
+   private static class Success implements Completion {
+      Object result;
+      
+      Success(Object result) {
+         this.result = result;
+      }
+   }
+
+   private static final Completion CANCELLED = new Completion() {};
+   private static final Completion CANCELLING = new Completion() {};
    
    /**
     * The synchronizer for the future.
@@ -257,24 +240,9 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class Sync extends AbstractQueuedSynchronizer {
+   private static class Sync extends AbstractQueuedReferenceSynchronizer<Completion, Void> {
       private static final long serialVersionUID = -1157186986617012632L;
 
-      // bit 0 indicates completion is pending
-      private static final int BIT_PENDING = 1;
-      // bit 1 indicates cancellation
-      private static final int BIT_CANCEL = 2;
-      // bit 2 indicates completion
-      private static final int BIT_COMPLETE = 4;
-      // bit 3 indicates error
-      private static final int BIT_ERROR = 8;
-      
-      private static final int STATE_PENDING = BIT_PENDING;
-      private static final int STATE_CANCELLING = BIT_PENDING | BIT_CANCEL;
-      private static final int STATE_SUCCESSFUL = BIT_COMPLETE;
-      private static final int STATE_CANCELLED = BIT_COMPLETE | BIT_CANCEL;
-      private static final int STATE_FAILED = BIT_COMPLETE | BIT_ERROR;
-      
       Sync() {
       }
       
@@ -284,7 +252,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        * the completion of the future is achieved by acquiring the sync in shared mode.
        */
       @Override
-      protected int tryAcquireShared(int i) {
+      protected int tryAcquireShared(Void v) {
          return isDone() ? 1 : -1;
       }
 
@@ -297,7 +265,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        * completes.
        */
       @Override
-      protected boolean tryReleaseShared(int i) {
+      protected boolean tryReleaseShared(Void v) {
          assert isDone();
          return true;
       }
@@ -310,7 +278,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        */
       @SuppressWarnings("synthetic-access")
       private void finish(AbstractListenableFuture<?> future) {
-         boolean released = releaseShared(0);
+         boolean released = releaseShared(null);
          assert released;
          future.runListeners();
       }
@@ -325,19 +293,20 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
       @SuppressWarnings("synthetic-access")
       public <T> boolean setValue(AbstractListenableFuture<T> future, T value) {
          assert future.sync == this;
-
+         Success success = null;
          while (true) {
-            int state = getState();
-            if (state != 0) {
-               if ((state & BIT_PENDING) != 0) {
-                  // let imminent completion run its course
-                  acquireShared(0);
+            Completion state = getState();
+            if (state != null) {
+               if (state == CANCELLING) {
+                  // let imminent cancellation run its course
+                  acquireShared(null);
                }
                return false;
             }
-            if (compareAndSetState(state, STATE_PENDING)) {
-               future.result = value;
-               setState(STATE_SUCCESSFUL);
+            if (success == null) {
+               success = new Success(value);
+            }
+            if (compareAndSetState(state, success)) {
                finish(future);
                return true;
             }
@@ -348,25 +317,26 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
        * Completes the future with a given cause of failure.
        *
        * @param future the associated future
-       * @param failure the cause of the future's failure
+       * @param cause the cause of the future's failure
        * @return true if the operation succeeded or false if the future was already completed
        */
       @SuppressWarnings("synthetic-access")
-      public boolean setFailure(AbstractListenableFuture<?> future, Throwable failure) {
+      public boolean setFailure(AbstractListenableFuture<?> future, Throwable cause) {
          assert future.sync == this;
-         
+         Failure failure = null;
          while (true) {
-            int state = getState();
-            if (state != 0) {
-               if ((state & BIT_PENDING) != 0) {
-                  // let imminent completion run its course
-                  acquireShared(0);
+            Completion state = getState();
+            if (state != null) {
+               if (state == CANCELLING) {
+                  // let imminent cancellation run its course
+                  acquireShared(null);
                }
                return false;
             }
-            if (compareAndSetState(state, STATE_PENDING)) {
-               future.result = failure;
-               setState(STATE_FAILED);
+            if (failure == null) {
+               failure = new Failure(cause);
+            }
+            if (compareAndSetState(state, failure)) {
                finish(future);
                return true;
             }
@@ -386,15 +356,15 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
          assert future.sync == this;
          
          while (true) {
-            int state = getState();
-            if (state != 0) {
-               if ((state & BIT_PENDING) != 0) {
-                  // let imminent completion run its course
-                  acquireShared(0);
+            Completion state = getState();
+            if (state != null) {
+               if (state == CANCELLING) {
+                  // let imminent cancellation run its course
+                  acquireShared(null);
                }
                return false;
             }
-            if (compareAndSetState(state, STATE_CANCELLING)) {
+            if (compareAndSetState(state, CANCELLING)) {
                try {
                   if (interrupt) {
                      // if this misbehaves, we'll propagate the exception
@@ -402,7 +372,7 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
                      future.interrupt();
                   }
                } finally {
-                  setState(STATE_CANCELLED);
+                  setState(CANCELLED);
                   finish(future);
                }
                return true;
@@ -413,51 +383,32 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
       /**
        * Returns true if the sync is in a completed state.
        */
+      @SuppressWarnings("synthetic-access")
       public boolean isDone() {
-         return (getState() & BIT_COMPLETE) != 0;
+         Completion state = getState();
+         return state != null && state != CANCELLING;
       }
       
       /**
        * Returns true if the future is completed and was cancelled.
        */
+      @SuppressWarnings("synthetic-access")
       public boolean isCancelled() {
-         return getState() == STATE_CANCELLED;
+         return getState() == CANCELLED;
       }
 
       /**
        * Returns true if the future completed successfully.
        */
       public boolean isSuccessful() {
-         return getState() == STATE_SUCCESSFUL;
+         return getState() instanceof Success;
       }
 
       /**
        * Returns true if the future is completed and failed.
        */
       public boolean isFailed() {
-         return getState() == STATE_FAILED;
-      }
-      
-      /**
-       * Returns the completion state of the future. If the future isn't done then {@code null} is
-       * returned.
-       */
-      public CompletionState getCompletionState() {
-         int state = getState();
-         if ((state & BIT_COMPLETE) == 0) {
-            return null; // not done
-         }
-         switch (state) {
-            case STATE_SUCCESSFUL:
-               return CompletionState.SUCCESSFUL;
-            case STATE_FAILED:
-               return CompletionState.FAILED;
-            case STATE_CANCELLED:
-               return CompletionState.CANCELLED;
-            default:
-               // should never happen
-               throw new AssertionError("illegal completion state: " + state);
-         }
+         return getState() instanceof Failure;
       }
    }
 }
