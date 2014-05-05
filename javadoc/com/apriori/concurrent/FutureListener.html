@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":17,"i1":17,"i2":17,"i3":17,"i4":6};
+var methods = {"i0":17,"i1":17,"i2":17,"i3":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -148,14 +148,6 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#o-java.util.function.Consumer-java.util.function.Consumer-java.lang.Runnable-">o</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super T&gt;&nbsp;onSuccess,
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</code>
-<div class="block">Assembles a listener using all of the specified callbacks.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#onCompletion-com.apriori.concurrent.ListenableFuture-">onCompletion</a></span>(<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/apriori/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</code>
 <div class="block">Invoked when a future completes.</div>
@@ -226,7 +218,7 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <a name="forConsumer-java.util.function.Consumer-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>forConsumer</h4>
 <pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forConsumer(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</pre>
@@ -236,31 +228,6 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <dd><code>consumer</code> - a consumer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a listener that calls <code>consumer.accept(completedFuture)</code> when invoked</dd>
-</dl>
-</li>
-</ul>
-<a name="o-java.util.function.Consumer-java.util.function.Consumer-java.lang.Runnable-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>o</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;o(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super T&gt;&nbsp;onSuccess,
-                               <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
-                               <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</pre>
-<div class="block">Assembles a listener using all of the specified callbacks. Each callback is invoked depending
- on the disposition of the completed futures.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>onSuccess</code> - invoked when the completed future is successful; the future's result is
-       passed to the consumer</dd>
-<dd><code>onFailure</code> - invoked when the completed future has failed; the cause of failure is passed
-       to the consumer</dd>
-<dd><code>onCancel</code> - invoked when the completed future is cancelled</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a listener that will call one of the specified callbacks when invoked</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent"><code>SimpleFutureVisitor.Builder</code></a></dd>
 </dl>
 </li>
 </ul>

@@ -78,6 +78,7 @@
 <li><a href="com/apriori/collections/package-tree.html">com.apriori.collections</a>, </li>
 <li><a href="com/apriori/concurrent/package-tree.html">com.apriori.concurrent</a>, </li>
 <li><a href="com/apriori/concurrent/atoms/package-tree.html">com.apriori.concurrent.atoms</a>, </li>
+<li><a href="com/apriori/concurrent/scheduler/package-tree.html">com.apriori.concurrent.scheduler</a>, </li>
 <li><a href="com/apriori/di/package-tree.html">com.apriori.di</a>, </li>
 <li><a href="com/apriori/di/collections/package-tree.html">com.apriori.di.collections</a>, </li>
 <li><a href="com/apriori/di/tools/package-tree.html">com.apriori.di.tools</a>, </li>
@@ -137,6 +138,17 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections"><span class="typeNameLink">LinkedCycle</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;T&gt;, com.apriori.collections.<a href="com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">RandomizedQueue</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">SkewHeapOrderedQueue</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;)</li>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/TreiberStack.html" title="class in com.apriori.concurrent"><span class="typeNameLink">TreiberStack</span></a>&lt;T&gt;</li>
+</ul>
+</li>
+<li type="circle">com.apriori.possible.<a href="com/apriori/possible/AbstractDynamicPossible.html" title="class in com.apriori.possible"><span class="typeNameLink">AbstractDynamicPossible</span></a>&lt;T&gt; (implements com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;)
+<ul>
+<li type="circle">com.apriori.possible.<a href="com/apriori/possible/Holder.html" title="class in com.apriori.possible"><span class="typeNameLink">Holder</span></a>&lt;T&gt; (implements java.io.<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
+</ul>
+</li>
+<li type="circle">java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/AbstractExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">AbstractExecutorService</span></a> (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ThreadLimitingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ThreadLimitingExecutorService</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>)</li>
 </ul>
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractGrowableArray</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;E&gt;)
@@ -167,7 +179,11 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractImmutableMap.SimpleEntry</span></a>&lt;K,V&gt; (implements com.apriori.collections.<a href="com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">AbstractListenableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">SettableListenableFuture</span></a>&lt;T&gt;</li>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">SettableFuture</span></a>&lt;T&gt;
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">SettableRunnableFuture</span></a>&lt;T&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 <li type="circle">java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util"><span class="typeNameLink">AbstractMap</span></a>&lt;K,V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;)
@@ -207,6 +223,11 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.ValueListIteratorImpl.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractRandomAccessNavigableMap.ValueListIteratorImpl</span></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li type="circle">java.util.concurrent.locks.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/AbstractOwnableSynchronizer.html?is-external=true" title="class or interface in java.util.concurrent.locks"><span class="typeNameLink">AbstractOwnableSynchronizer</span></a> (implements java.io.<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractQueuedReferenceSynchronizer.html" title="class in com.apriori.concurrent"><span class="typeNameLink">AbstractQueuedReferenceSynchronizer</span></a>&lt;S,R&gt;</li>
 </ul>
 </li>
 <li type="circle">javax.annotation.processing.<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true" title="class or interface in javax.annotation.processing"><span class="typeNameLink">AbstractProcessor</span></a> (implements javax.annotation.processing.<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a>)
@@ -303,7 +324,6 @@
 </li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/FilteringIterator.html" title="class in com.apriori.collections"><span class="typeNameLink">FilteringIterator</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/FilteringListIterator.html" title="class in com.apriori.collections"><span class="typeNameLink">FilteringListIterator</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;E&gt;)</li>
-<li type="circle">com.apriori.possible.<a href="com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="typeNameLink">Fulfillables</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Functions.html" title="class in com.apriori.util"><span class="typeNameLink">Functions</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/FutureListenerSet.html" title="class in com.apriori.concurrent"><span class="typeNameLink">FutureListenerSet</span></a>&lt;T&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>)</li>
 <li type="circle">java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/FutureTask.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">FutureTask</span></a>&lt;V&gt; (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;V&gt;)
@@ -330,7 +350,6 @@
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">HierarchicalLock</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">HierarchicalLock.ExclusiveLock</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>)</li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">HierarchicalLock.SharedLock</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>)</li>
-<li type="circle">com.apriori.possible.<a href="com/apriori/possible/Holder.html" title="class in com.apriori.possible"><span class="typeNameLink">Holder</span></a>&lt;T&gt; (implements com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;, java.io.<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/Immutables.html" title="class in com.apriori.collections"><span class="typeNameLink">Immutables</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util"><span class="typeNameLink">IndentingPrinter</span></a></li>
 <li type="circle">com.apriori.testing.<a href="com/apriori/testing/InterfaceVerifier.html" title="class in com.apriori.testing"><span class="typeNameLink">InterfaceVerifier</span></a>&lt;T&gt;</li>
@@ -351,7 +370,7 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ParallelSort2.html" title="class in com.apriori.collections"><span class="typeNameLink">ParallelSort2</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/PartialFunctions.html" title="class in com.apriori.util"><span class="typeNameLink">PartialFunctions</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections"><span class="typeNameLink">PersistentListBackedConcurrentList</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;)</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">PipeliningExecutorService</span></a>&lt;P&gt;</li>
+<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">PipeliningExecutorService</span></a>&lt;K&gt;</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Predicates.html" title="class in com.apriori.util"><span class="typeNameLink">Predicates</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/PrimeIterator.html" title="class in com.apriori.util"><span class="typeNameLink">PrimeIterator</span></a>&lt;T&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueues.html" title="class in com.apriori.collections"><span class="typeNameLink">PriorityQueues</span></a></li>
@@ -362,9 +381,7 @@
 <li type="circle">com.apriori.tuples.<a href="com/apriori/tuples/Quintet.html" title="class in com.apriori.tuples"><span class="typeNameLink">Quintet</span></a>&lt;A,B,C,D,E&gt; (implements java.io.<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a>&lt;A,B,C,D,E&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections"><span class="typeNameLink">RadixTrieMap</span></a>&lt;V&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;)</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/RandomizedMeldableQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">RandomizedMeldableQueue</span></a>&lt;E&gt; (implements com.apriori.collections.<a href="com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,Q&gt;)</li>
-<li type="circle">com.apriori.collections.<a href="com/apriori/collections/ReadOnlyIterator.html" title="class in com.apriori.collections"><span class="typeNameLink">ReadOnlyIterator</span></a>&lt;E&gt; (implements java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;E&gt;)</li>
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Reference.html" title="class in com.apriori.possible"><span class="typeNameLink">Reference</span></a>&lt;T&gt; (implements com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;)</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Reschedulers.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Reschedulers</span></a></li>
 <li type="circle">org.junit.runner.Runner (implements org.junit.runner.Describable)
 <ul>
 <li type="circle">org.junit.runners.ParentRunner&lt;T&gt; (implements org.junit.runner.manipulation.Filterable, org.junit.runner.manipulation.Sortable)
@@ -379,7 +396,7 @@
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/SameThreadExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">SameThreadExecutor</span></a> (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>)</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskManager.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ScheduledTaskManager</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTaskManager</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/ScopeSpec.html" title="class in com.apriori.di"><span class="typeNameLink">ScopeSpec</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ShardedConcurrentSets.html" title="class in com.apriori.collections"><span class="typeNameLink">ShardedConcurrentSets</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections"><span class="typeNameLink">ShardedConcurrentSets.Builder</span></a>&lt;E,T&gt;</li>
@@ -401,8 +418,8 @@
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections"><span class="typeNameLink">SortedArraySet</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;, java.io.<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)</li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Stopwatch.html" title="class in com.apriori.util"><span class="typeNameLink">Stopwatch</span></a></li>
 <li type="circle">com.apriori.util.<a href="com/apriori/util/Suppliers.html" title="class in com.apriori.util"><span class="typeNameLink">Suppliers</span></a></li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/TaskDefinition.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">TaskDefinition.Builder</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/TaskImplementation.html" title="class in com.apriori.concurrent"><span class="typeNameLink">TaskImplementation</span></a>&lt;V&gt; (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;)</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler"><span class="typeNameLink">TaskDefinition.Builder</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler"><span class="typeNameLink">TaskImplementation</span></a>&lt;V&gt; (implements java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;)</li>
 <li type="circle">com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">TestEnvironment</span></a></li>
 <li type="circle">com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">TestJavaFileManager</span></a> (implements javax.tools.<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools">JavaFileManager</a>)</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms"><span class="typeNameLink">ThreadLocalAtom</span></a>&lt;T&gt; (implements com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;)</li>
@@ -530,42 +547,42 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">java.util.function.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function"><span class="typeNameLink">BiFunction</span></a>&lt;T,U,R&gt;
@@ -600,43 +617,43 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTaskDefinition</span></a>&lt;V&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent">TaskDefinition</a>&lt;V&gt;)</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTaskDefinition</span></a>&lt;V&gt; (also extends com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a>&lt;V&gt;)</li>
 </ul>
 </li>
 <li type="circle">com.apriori.choice.<a href="com/apriori/choice/Choice.html" title="interface in com.apriori.choice"><span class="typeNameLink">Choice</span></a>&lt;A,B&gt;
@@ -722,11 +739,11 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 </ul>
@@ -773,22 +790,22 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 <li type="circle">java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">ScheduledFuture</span></a>&lt;V&gt; (also extends java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent">Delayed</a>)
@@ -797,11 +814,11 @@
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableRepeatingFuture</span></a>&lt;T&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">RepeatingScheduledTask</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;V&gt;</li>
 </ul>
 </li>
 </ul>
@@ -1073,9 +1090,9 @@
 <li type="circle">com.apriori.possible.<a href="com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible"><span class="typeNameLink">Possible.Visitor</span></a>&lt;T,R&gt;</li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections"><span class="typeNameLink">PriorityQueue.Entry</span></a>&lt;E,P&gt;</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Provision.html" title="interface in com.apriori.di"><span class="typeNameLink">Provision</span></a></li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Rescheduler</span></a>&lt;T&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskListener.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTaskListener</span></a>&lt;V&gt;</li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduleNextTaskPolicy</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">Rescheduler</span></a>&lt;T&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskListener.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTaskListener</span></a>&lt;V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduleNextTaskPolicy</span></a>&lt;V&gt;</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Scoper.html" title="interface in com.apriori.di"><span class="typeNameLink">Scoper</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/ScoperFactory.html" title="interface in com.apriori.di"><span class="typeNameLink">ScoperFactory</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/SelectionProvider.html" title="interface in com.apriori.di"><span class="typeNameLink">SelectionProvider</span></a>&lt;T&gt;</li>
@@ -1084,12 +1101,12 @@
 <li type="circle">com.apriori.util.<a href="com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util"><span class="typeNameLink">UncheckedSequence</span></a>&lt;T&gt;</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/TaskDefinition.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">TaskDefinition</span></a>&lt;V&gt;
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">TaskDefinition</span></a>&lt;V&gt;
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ScheduledTaskDefinition</span></a>&lt;V&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTaskDefinition</span></a>&lt;V&gt; (also extends com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)</li>
 </ul>
 </li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">TaskImplementation.Visitor</span></a>&lt;R,V&gt;</li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskImplementation.Visitor.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">TaskImplementation.Visitor</span></a>&lt;R,V&gt;</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms"><span class="typeNameLink">Transaction.Computation</span></a>&lt;T,X&gt;
 <ul>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.UncheckedComputation.html" title="interface in com.apriori.concurrent.atoms"><span class="typeNameLink">Transaction.UncheckedComputation</span></a>&lt;T&gt;</li>
@@ -1150,9 +1167,9 @@
 <li type="circle">com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.Kind.html" title="enum in com.apriori.apt.reflect"><span class="typeNameLink">ArClass.Kind</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections"><span class="typeNameLink">BitSequence.BitOrder</span></a></li>
 <li type="circle">com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.BoundType.html" title="enum in com.apriori.collections"><span class="typeNameLink">AbstractNavigableMap.BoundType</span></a></li>
-<li type="circle">com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent"><span class="typeNameLink">ScheduleNextTaskPolicies</span></a> (implements com.apriori.concurrent.<a href="com/apriori/concurrent/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent">ScheduleNextTaskPolicy</a>&lt;V&gt;)</li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms"><span class="typeNameLink">Transaction.IsolationLevel</span></a></li>
 <li type="circle">com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.ErrorAction.html" title="enum in com.apriori.concurrent.atoms"><span class="typeNameLink">AsynchronousAtom.ErrorAction</span></a></li>
+<li type="circle">com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduleNextTaskPolicies.html" title="enum in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduleNextTaskPolicies</span></a> (implements com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler">ScheduleNextTaskPolicy</a>&lt;V&gt;)</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/ConflictResolver.ResolutionStrategy.html" title="enum in com.apriori.di"><span class="typeNameLink">ConflictResolver.ResolutionStrategy</span></a> (implements com.apriori.di.<a href="com/apriori/di/ConflictResolver.html" title="interface in com.apriori.di">ConflictResolver</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Binding.TargetKind.html" title="enum in com.apriori.di"><span class="typeNameLink">Binding.TargetKind</span></a></li>
 <li type="circle">com.apriori.di.<a href="com/apriori/di/Binding.TargetInstanceSourceKind.html" title="enum in com.apriori.di"><span class="typeNameLink">Binding.TargetInstanceSourceKind</span></a></li>

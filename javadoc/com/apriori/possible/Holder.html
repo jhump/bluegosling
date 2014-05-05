@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/possible/Optionals.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -98,7 +98,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="class in com.apriori.possible">com.apriori.possible.AbstractDynamicPossible</a>&lt;T&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.apriori.possible.Holder&lt;T&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -116,8 +121,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Holder&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+extends <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="class in com.apriori.possible">AbstractDynamicPossible</a>&lt;T&gt;
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
 <div class="block">A <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value that is mutable. The contained value can be set or
  cleared programmatically. So the state of whether a value is present can change. This class
  allows values, when present, to be <code>null</code>.
@@ -177,7 +182,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#asSet--">asSet</a></span>()</code>
-<div class="block">Returns a view of this possible value as a set.</div>
+<div class="block">Returns a view of this possible as a set.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -203,80 +208,39 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#filter-java.util.function.Predicate-">filter</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</code>
-<div class="block">Filters the current value per the specified predicate.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code></td>
-</tr>
-<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#get--">get</a></span>()</code>
 <div class="block">Gets the contained value if present.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#isPresent--">isPresent</a></span>()</code>
 <div class="block">Returns true if a value is present.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</code>
-<div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#or-com.apriori.possible.Possible-">or</a></span>(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;alternate)</code>
-<div class="block">Returns the current possible value if present or the specified value if not.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElse-T-">orElse</a></span>(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</code>
-<div class="block">Gets the contained value if present or the specified value if not.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwable)</code>
-<div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#set-T-">set</a></span>(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;t)</code>
 <div class="block">Sets the held value.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Holder.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></span>(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</code>
-<div class="block">Invokes the appropriate method on the specified visitor.</div>
-</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.possible.AbstractDynamicPossible">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.apriori.possible.<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="class in com.apriori.possible">AbstractDynamicPossible</a></h3>
+<code><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#filter-java.util.function.Predicate-">filter</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#flatMap-java.util.function.Function-">flatMap</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#ifPresent-java.util.function.Consumer-">ifPresent</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#map-java.util.function.Function-">map</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#or-com.apriori.possible.Possible-">or</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElse-T-">orElse</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseGet-java.util.function.Supplier-">orElseGet</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a>, <a href="../../../com/apriori/possible/AbstractDynamicPossible.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -386,101 +350,6 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
-<a name="ifPresent-java.util.function.Consumer-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ifPresent</h4>
-<pre>public&nbsp;void&nbsp;ifPresent(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;consumer)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="or-com.apriori.possible.Possible-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>or</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;or(<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;alternate)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#or-com.apriori.possible.Possible-">Possible</a></code></span></div>
-<div class="block">Returns the current possible value if present or the specified value if not.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#or-com.apriori.possible.Possible-">or</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alternate</code> - an alternate value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current possible value if present or the alternate if not</dd>
-</dl>
-</li>
-</ul>
-<a name="map-java.util.function.Function-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>map</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends U&gt;&nbsp;function)</pre>
-<div class="block">Returns the current possible value, transformed by the specified function, if present.
- 
- <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
- present, is a snapshot of applying the function to the held value.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#map-java.util.function.Function-">map</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>function</code> - the function used to transform the value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current value, transformed by the specified function, if present;
-       otherwise returns a possible value that is absent</dd>
-</dl>
-</li>
-</ul>
-<a name="flatMap-java.util.function.Function-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>flatMap</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
-<div class="block">
- 
- <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
- present, is a snapshot of applying the function to the held value.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#flatMap-java.util.function.Function-">flatMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="filter-java.util.function.Predicate-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>filter</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;predicate)</pre>
-<div class="block">Filters the current value per the specified predicate. If a value is present and it matches
- the specified predicate then it is returned. Otherwise a possible value that is absent is
- returned.
- 
- <p>The returned object will not be a <a href="../../../com/apriori/possible/Holder.html" title="class in com.apriori.possible"><code>Holder</code></a> and thus not be mutable. Its value, if
- present, is a snapshot of applying the predicate to the held value.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#filter-java.util.function.Predicate-">filter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>predicate</code> - the predicated used to test the value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>returns the current value if present and it matches the specified predicate; otherwise
-       returns a possible value that is absent</dd>
-</dl>
-</li>
-</ul>
 <a name="apply-java.util.function.Function-">
 <!--   -->
 </a>
@@ -529,63 +398,6 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </dl>
 </li>
 </ul>
-<a name="orElse-java.lang.Object-">
-<!--   -->
-</a><a name="orElse-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>orElse</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElse(<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;alternate)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#orElse-T-">Possible</a></code></span></div>
-<div class="block">Gets the contained value if present or the specified value if not.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#orElse-T-">orElse</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alternate</code> - the alternate value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the contained value if present or the alternate if not</dd>
-</dl>
-</li>
-</ul>
-<a name="orElseGet-java.util.function.Supplier-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>orElseGet</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElseGet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;supplier)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a name="orElseThrow-java.util.function.Supplier-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>orElseThrow</h4>
-<pre>public&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&nbsp;orElseThrow(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwable)
-                                    throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">Possible</a></code></span></div>
-<div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>throwable</code> - a supplier of the exception to throw if a value is not present</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the contained value</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>X</code> - if a value is not present</dd>
-<dd><code>X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
-</dl>
-</li>
-</ul>
 <a name="asSet--">
 <!--   -->
 </a>
@@ -593,8 +405,8 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <li class="blockList">
 <h4>asSet</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;&nbsp;asSet()</pre>
-<div class="block">Returns a view of this possible value as a set. If a value is present, a singleton set with
- that value is returned. Otherwise, an empty set is returned.
+<div class="block">Returns a view of this possible as a set. At any given moment, the set may be an empty set
+ or a singleton set, based on whether or not this possible is present.
  
  <p>The returned set, being a view of this possible value, is mutable. If it is empty then the
  held value is absent and a call to <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#add-E-" title="class or interface in java.util"><code>Set.add(Object)</code></a> will effectively set the held
@@ -611,28 +423,10 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#asSet--">asSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#asSet--">asSet</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="class in com.apriori.possible">AbstractDynamicPossible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a singleton set with the contained value, if present; an empty set otherwise</dd>
-</dl>
-</li>
-</ul>
-<a name="visit-com.apriori.possible.Possible.Visitor-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>visit</h4>
-<pre>public&nbsp;&lt;R&gt;&nbsp;R&nbsp;visit(<a href="../../../com/apriori/possible/Possible.Visitor.html" title="interface in com.apriori.possible">Possible.Visitor</a>&lt;? super <a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>,R&gt;&nbsp;visitor)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#visit-com.apriori.possible.Possible.Visitor-">Possible</a></code></span></div>
-<div class="block">Invokes the appropriate method on the specified visitor. Returns the value that the visitor
- produces.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/possible/Possible.html#visit-com.apriori.possible.Possible.Visitor-">visit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Holder.html" title="type parameter in Holder">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>visitor</code> - a visitor</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the value returned by the visitor</dd>
 </dl>
 </li>
 </ul>
@@ -702,7 +496,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/possible/Fulfillables.html" title="class in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/possible/Optionals.html" title="class in com.apriori.possible"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

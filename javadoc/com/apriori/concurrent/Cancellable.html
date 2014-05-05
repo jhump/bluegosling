@@ -99,11 +99,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent">RepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ScheduledTask.html" title="interface in com.apriori.concurrent">ScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent">ScheduledTaskDefinition</a>&lt;V&gt;</dd>
+<dd><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.html" title="interface in com.apriori.concurrent">ListenableRepeatingFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;, <a href="../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;, <a href="../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskDefinition</a>&lt;V&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a>, <a href="../../../com/apriori/concurrent/SettableListenableFuture.html" title="class in com.apriori.concurrent">SettableListenableFuture</a></dd>
+<dd><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a>, <a href="../../../com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent">SettableFuture</a>, <a href="../../../com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent">SettableRunnableFuture</a></dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -185,7 +185,7 @@ public interface <span class="typeNameLabel">Cancellable</span></pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>mayInterrupt</code> - if true and the activity is executing concurrently, the thread executing
-       the activity will be interrupted</dd>
+       the activity may be interrupted</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the activity was cancelled; false if it could not be cancelled because the
        activity has already completed</dd>

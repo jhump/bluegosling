@@ -492,7 +492,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
  <p>If no transaction is in progress on the current thread, this will effectively create one
  that does nothing but transform this atom. If a serializable transaction is in progress, then
  an exclusive lock is acquired. So, with serializable isolation level, the only difference
- between this operation and <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(Function)</code></a> is that the commutes functions won't
+ between this operation and <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(Function)</code></a> is that the commute functions won't
  actually be evaluated until the transaction is committed.
  
  <p>Watchers are only notified when this operation is committed. If there are other operations

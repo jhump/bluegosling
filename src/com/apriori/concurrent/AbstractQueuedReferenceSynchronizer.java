@@ -9,6 +9,7 @@ import java.util.concurrent.locks.AbstractOwnableSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -842,23 +843,6 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     * @throws UnsupportedOperationException if shared mode is not supported
     */
    protected boolean tryReleaseShared(@SuppressWarnings("unused") R arg) {
-      throw new UnsupportedOperationException();
-   }
-
-   /**
-    * Returns {@code true} if synchronization is held exclusively with respect to the current
-    * (calling) thread. This method is invoked upon each call to a non-waiting
-    * {@link ConditionObject} method. (Waiting methods instead invoke {@link #release}.)
-    *
-    * <p>
-    * The default implementation throws {@link UnsupportedOperationException}. This method is
-    * invoked internally only within {@link ConditionObject} methods, so need not be defined if
-    * conditions are not used.
-    *
-    * @return {@code true} if synchronization is held exclusively; {@code false} otherwise
-    * @throws UnsupportedOperationException if conditions are not supported
-    */
-   protected boolean isHeldExclusively() {
       throw new UnsupportedOperationException();
    }
 

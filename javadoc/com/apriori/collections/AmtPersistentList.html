@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>E</code> - </dd>
+<dd><code>E</code> - the type of element in the list</dd>
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
@@ -118,8 +118,11 @@ var activeTableTab = "activeTableTab";
 <pre>public class <span class="typeNameLabel">AmtPersistentList&lt;E&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;</pre>
-<div class="block">A fully persistent list backed by an array-mapped trie.
- TODO: document me!</div>
+<div class="block">A fully persistent list backed by an array-mapped trie. This structure supports inexpensive
+ insertions both at the beginning and end of the list. Inexpensive means that only the path to the
+ first or last leaf trie node is copied in these cases. Insertions or removals from the middle,
+ however, are expensive and require linear runtime complexity and space overhead. Such operations
+ mean that much of the list must be copied to form the new list.</div>
 </li>
 </ul>
 </div>

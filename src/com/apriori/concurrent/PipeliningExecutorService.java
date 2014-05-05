@@ -130,7 +130,7 @@ public class PipeliningExecutorService<K> {
     * <p>A best effort is made to mark tasks as failed if they are accepted now but then later
     * rejected by the underlying executor. If the task is {@linkplain SettableFuture settable} or
     * {@linkplain CompletableFuture completable}, it will be set/completed with the cause of
-    * failure being a {@link RejectedExceutionException}. Otherwise, if the task is any other type
+    * failure being a {@link RejectedExecutionException}. Otherwise, if the task is any other type
     * of {@link Future} or {@link Cancellable}, then it will be cancelled.
     * 
     * <p>Note that if the given task is not a form of future task and is not cancellable, <i>the

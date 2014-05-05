@@ -162,15 +162,15 @@ implements <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.ht
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask-java.util.concurrent.Callable-long-com.apriori.concurrent.Rescheduler-">ListenableRepeatingFutureTask</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;callable,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask-java.util.concurrent.Callable-long-com.apriori.concurrent.scheduler.Rescheduler-">ListenableRepeatingFutureTask</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;callable,
                              long&nbsp;startTimeNanos,
-                             <a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</code>&nbsp;</td>
+                             <a href="../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask-java.lang.Runnable-T-long-com.apriori.concurrent.Rescheduler-">ListenableRepeatingFutureTask</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html#ListenableRepeatingFutureTask-java.lang.Runnable-T-long-com.apriori.concurrent.scheduler.Rescheduler-">ListenableRepeatingFutureTask</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
                              <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&nbsp;result,
                              long&nbsp;startTimeNanos,
-                             <a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</code>&nbsp;</td>
+                             <a href="../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -224,7 +224,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.ht
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></h3>
-<code><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#compareTo-java.util.concurrent.Delayed-">compareTo</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getDelay-java.util.concurrent.TimeUnit-">getDelay</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getScheduledNanoTime--">getScheduledNanoTime</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#setScheduledNanoTime-long-">setScheduledNanoTime</a></code></li>
+<code><a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#compareTo-java.util.concurrent.Delayed-">compareTo</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getDelay-java.util.concurrent.TimeUnit-">getDelay</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#getScheduledNanoTime--">getScheduledNanoTime</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#now--">now</a>, <a href="../../../com/apriori/concurrent/ListenableScheduledFutureTask.html#setScheduledNanoTime-long-">setScheduledNanoTime</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.ListenableFutureTask">
@@ -303,7 +303,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.ht
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ListenableRepeatingFutureTask-java.util.concurrent.Callable-long-com.apriori.concurrent.Rescheduler-">
+<a name="ListenableRepeatingFutureTask-java.util.concurrent.Callable-long-com.apriori.concurrent.scheduler.Rescheduler-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -311,12 +311,12 @@ implements <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.ht
 <h4>ListenableRepeatingFutureTask</h4>
 <pre>public&nbsp;ListenableRepeatingFutureTask(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;callable,
                                      long&nbsp;startTimeNanos,
-                                     <a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</pre>
+                                     <a href="../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</pre>
 </li>
 </ul>
-<a name="ListenableRepeatingFutureTask-java.lang.Runnable-java.lang.Object-long-com.apriori.concurrent.Rescheduler-">
+<a name="ListenableRepeatingFutureTask-java.lang.Runnable-java.lang.Object-long-com.apriori.concurrent.scheduler.Rescheduler-">
 <!--   -->
-</a><a name="ListenableRepeatingFutureTask-java.lang.Runnable-T-long-com.apriori.concurrent.Rescheduler-">
+</a><a name="ListenableRepeatingFutureTask-java.lang.Runnable-T-long-com.apriori.concurrent.scheduler.Rescheduler-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -325,7 +325,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableRepeatingFuture.ht
 <pre>public&nbsp;ListenableRepeatingFutureTask(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
                                      <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&nbsp;result,
                                      long&nbsp;startTimeNanos,
-                                     <a href="../../../com/apriori/concurrent/Rescheduler.html" title="interface in com.apriori.concurrent">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</pre>
+                                     <a href="../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="type parameter in ListenableRepeatingFutureTask">T</a>&gt;&nbsp;rescheduler)</pre>
 </li>
 </ul>
 </li>

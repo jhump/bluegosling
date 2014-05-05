@@ -257,7 +257,7 @@ public final class Immutables {
     * the input being immutable. This can help adapt instances of immutable collection to otherwise
     * invariant collection types, without the need for unchecked casts.
     *
-    * @param coll an immutable collection
+    * @param collection an immutable collection
     * @param <E> the element type of the collection
     * @param <S> the source type of the collection being re-cast
     * @param <T> the target type to which the collection is re-cast
@@ -283,8 +283,8 @@ public final class Immutables {
     */
    @SuppressWarnings("unchecked") // safe thanks to the type bounds and immutability
    public static <K, V, S extends ImmutableMap<? extends K, ? extends V>, T extends ImmutableMap<K, V>>
-   T cast(S entry) {
-      return (T) entry;
+   T cast(S map) {
+      return (T) map;
    }
 
    /**
