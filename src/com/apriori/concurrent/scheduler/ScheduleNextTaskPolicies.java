@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
 /**
  * An enumeration of commonly used {@link ScheduleNextTaskPolicy} implementations.

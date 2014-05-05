@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Collections;
@@ -266,7 +266,7 @@ public interface TaskDefinition<V> {
        * @return {@code this}, for method chaining
        */
       public Builder<V> repeatAtFixedRate(long period, TimeUnit unit) {
-         this.rescheduler = Reschedulers.atFixedRate(period, unit);
+         this.rescheduler = Rescheduler.atFixedRate(period, unit);
          return this;
       }
 
@@ -278,7 +278,7 @@ public interface TaskDefinition<V> {
        * @return {@code this}, for method chaining
        */
       public Builder<V> repeatWithFixedDelay(long delay, TimeUnit unit) {
-         this.rescheduler = Reschedulers.withFixedDelay(delay, unit);
+         this.rescheduler = Rescheduler.withFixedDelay(delay, unit);
          return this;
       }
       
@@ -353,7 +353,7 @@ public interface TaskDefinition<V> {
             if (rescheduler == null) {
                return false;
             }
-            return Reschedulers.getFixedRatePeriodNanos(rescheduler) != 0;
+            return Rescheduler.getFixedRatePeriodNanos(rescheduler) != 0;
          }
 
          @Override
@@ -361,9 +361,9 @@ public interface TaskDefinition<V> {
             if (rescheduler == null) {
                return 0;
             }
-            long periodNanos = Reschedulers.getFixedRatePeriodNanos(rescheduler);
+            long periodNanos = Rescheduler.getFixedRatePeriodNanos(rescheduler);
             return unit.convert(
-                  periodNanos != 0 ? periodNanos : Reschedulers.getFixedDelayNanos(rescheduler),
+                  periodNanos != 0 ? periodNanos : Rescheduler.getFixedDelayNanos(rescheduler),
                   TimeUnit.NANOSECONDS);
          }
 

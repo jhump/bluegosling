@@ -1,14 +1,6 @@
 /**
  * Classes that extend and enhance the API provided by the {@code java.util.concurrent} package.
  * 
- * <h3>{@link com.apriori.concurrent.ScheduledTaskManager}</h3>
- * This class and its associated types provide an improvement over the
- * {@code ScheduledExecutorService} API for job tracking and management. The API here allows
- * introspection on the status and history of scheduled tasks and allows tasks to be configured
- * with custom exception handling strategies. It also provides more control over scheduling of
- * subsequent instances for recurring tasks, the ability to pause/resume recurring tasks, and cancel
- * individual instances of recurring tasks.
- * 
  * <h3>{@link com.apriori.concurrent.ListenableFuture}</h3>
  * This interface is a {@code Future} that allows completion callbacks to be registered. This means
  * code has the flexibility of either doing things asynchronously with callbacks or synchronously
@@ -29,4 +21,6 @@
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+// TODO: add references to other key APIs? ThreadLimitingExecutorService, TreiberStack,
+// AbstractQueuedReferenceSynchronizer?
 package com.apriori.concurrent;

@@ -21,7 +21,9 @@ public class ListenableScheduledFutureTask<T> extends ListenableFutureTask<T>
       this.scheduledNanoTime = scheduledNanoTime;
    }
    
-   long now() {
+   // TODO: can we make this package-private? have to fix up references in ScheduledTaskManager
+   // stuff, which is outside this package...
+   protected long now() {
       return System.nanoTime();
    }
    

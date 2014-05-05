@@ -1,5 +1,6 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
+import com.apriori.concurrent.ListenableScheduledFutureTaskTest;
 import com.apriori.util.Clock;
 
 import java.util.concurrent.Callable;
@@ -29,7 +30,7 @@ public class ScheduledTaskImplTest extends ListenableScheduledFutureTaskTest {
          ScheduledTaskImpl createTask(Callable<V> callable, AtomicLong taskStart,
                AtomicLong taskEnd, long startNanoTime) {
             return new ScheduledTaskImpl(callable, taskEnd, taskEnd, startNanoTime) {
-               @Override long now() {
+               @Override protected long now() {
                   return clock.nanoTime();
                }
             };

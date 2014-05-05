@@ -1,4 +1,8 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
+
+import com.apriori.concurrent.FutureListener;
+import com.apriori.concurrent.FutureVisitor;
+import com.apriori.concurrent.ListenableFuture;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Delayed;

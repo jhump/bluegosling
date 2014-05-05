@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
 /**
  * A policy that governs whether a task should be repeated or retried.

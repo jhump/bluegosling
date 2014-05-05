@@ -1,4 +1,7 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
+
+import com.apriori.concurrent.ListenableRepeatingFuture;
+import com.apriori.concurrent.ListenableScheduledFutureTask;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayDeque;

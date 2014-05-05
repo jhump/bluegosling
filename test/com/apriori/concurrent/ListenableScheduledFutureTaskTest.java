@@ -21,7 +21,7 @@ public class ListenableScheduledFutureTaskTest extends ListenableFutureTaskTest 
    protected ListenableScheduledFutureTask<String> makeFuture(long scheduledStartNanoTime,
          final Clock clock) {
       return new ListenableScheduledFutureTask<String>(underlyingTask(), scheduledStartNanoTime) {
-         @Override long now() {
+         @Override protected long now() {
             return clock.nanoTime();
          }
       };

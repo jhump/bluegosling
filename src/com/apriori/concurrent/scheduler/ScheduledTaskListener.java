@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
 /**
  * A listener for completions of {@link ScheduledTask}s.

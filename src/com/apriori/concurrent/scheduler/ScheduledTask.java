@@ -1,4 +1,6 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
+
+import com.apriori.concurrent.ListenableScheduledFuture;
 
 import java.util.concurrent.ScheduledFuture;
 

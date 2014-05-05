@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.concurrent.scheduler;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;

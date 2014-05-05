@@ -8,6 +8,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.apriori.concurrent.scheduler.Rescheduler;
 import com.apriori.util.Clock;
 
 import org.junit.Test;
@@ -36,8 +37,8 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
    protected ListenableRepeatingFutureTask<String> makeFuture(long scheduledStartNanoTime,
          final Clock clock) {
       return new ListenableRepeatingFutureTask<String>(underlyingTask(), scheduledStartNanoTime,
-            Reschedulers.atFixedRate(100, TimeUnit.SECONDS)) {
-         @Override long now() {
+            Rescheduler.atFixedRate(100, TimeUnit.SECONDS)) {
+         @Override protected long now() {
             return clock.nanoTime();
          }
       };
@@ -47,7 +48,7 @@ public class ListenableRepeatingFutureTaskTest extends ListenableScheduledFuture
    protected ListenableRepeatingFutureTask<String> makeFuture(long scheduledStartNanoTime) {
       ListenableRepeatingFutureTask<String> result =
             new ListenableRepeatingFutureTask<String>(underlyingTask(), scheduledStartNanoTime,
-                  Reschedulers.atFixedRate(100, TimeUnit.SECONDS));
+                  Rescheduler.atFixedRate(100, TimeUnit.SECONDS));
       
       result.addListenerForEachInstance(forRunnable(new Runnable() {
          @Override public void run() {

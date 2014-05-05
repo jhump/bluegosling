@@ -5,6 +5,7 @@ import static com.apriori.concurrent.ListenableFuture.completedFuture;
 import static com.apriori.concurrent.ListenableFuture.failedFuture;
 
 import com.apriori.collections.TransformingList;
+import com.apriori.concurrent.scheduler.Rescheduler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -367,14 +368,14 @@ final class ListenableExecutors {
       public ListenableRepeatingFuture<Void> scheduleAtFixedRate(Runnable command,
             long initialDelay, long period, TimeUnit unit) {
          return schedulePeriodic(command, initialDelay, unit,
-               Reschedulers.atFixedRate(period, unit));
+               Rescheduler.atFixedRate(period, unit));
       }
 
       @Override
       public ListenableRepeatingFuture<Void> scheduleWithFixedDelay(Runnable command,
             long initialDelay, long delay, TimeUnit unit) {
          return schedulePeriodic(command, initialDelay, unit,
-               Reschedulers.withFixedDelay(delay, unit));
+               Rescheduler.withFixedDelay(delay, unit));
       }
       
       private ListenableRepeatingFuture<Void> schedulePeriodic(Runnable command,
@@ -539,7 +540,7 @@ final class ListenableExecutors {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(initialDelay);
          ListenableRepeatingFutureTask<Void> future =
                new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
-                     Reschedulers.atFixedRate(period, unit));
+                     Rescheduler.atFixedRate(period, unit));
          addReschedulingListener(future);
          delayedExecute(new FutureStampedTask(future));
          return future;
@@ -551,7 +552,7 @@ final class ListenableExecutors {
          long scheduledNanoTime = System.nanoTime() + unit.toNanos(initialDelay);
          ListenableRepeatingFutureTask<Void> future =
                new ListenableRepeatingFutureTask<Void>(command, null, scheduledNanoTime,
-                     Reschedulers.withFixedDelay(delay, unit));
+                     Rescheduler.withFixedDelay(delay, unit));
          addReschedulingListener(future);
          delayedExecute(new FutureStampedTask(future));
          return future;
