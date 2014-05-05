@@ -17,7 +17,7 @@ public interface Cancellable {
     * Cancels the activity.
     *
     * @param mayInterrupt if true and the activity is executing concurrently, the thread executing
-    *       the activity will be interrupted
+    *       the activity may be interrupted
     * @return true if the activity was cancelled; false if it could not be cancelled because the
     *       activity has already completed
     */

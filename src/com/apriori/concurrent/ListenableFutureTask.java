@@ -156,7 +156,6 @@ public class ListenableFutureTask<T> extends FutureTask<T> implements Listenable
       } catch (ExecutionException unused) {
       } catch (CancellationException unused) {
       } catch (TimeoutException e) {
-         // icky that timing out and returning false requires an exception be thrown and caught :(
          return false;
       }
       return true;

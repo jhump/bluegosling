@@ -1,5 +1,7 @@
 package com.apriori.concurrent;
 
+import java.util.function.Consumer;
+
 /**
  * Interface for the visitor pattern with {@link ListenableFuture}s. When a visitor is passed to
  * {@link ListenableFuture#visit(FutureVisitor)}, the future calls one of these methods, depending
@@ -32,4 +34,37 @@ public interface FutureVisitor<T> {
     * Invoked when the visited future was cancelled.
     */
    void cancelled();
+
+   /**
+    * Assembles a visitor using all of the specified callbacks. Which callback is invoked depends
+    * on the disposition of the completed futures.
+    * 
+    * @param onSuccess invoked when the completed future is successful; the future's result is
+    *       passed to the consumer
+    * @param onFailure invoked when the completed future has failed; the cause of failure is passed
+    *       to the consumer
+    * @param onCancel invoked when the completed future is cancelled
+    * @return a listener that will call one of the specified callbacks when invoked
+    * 
+    * @see SimpleFutureVisitor.Builder
+    */
+   static <T> FutureVisitor<T> of(Consumer<? super T> onSuccess,
+         Consumer<? super Throwable> onFailure, Runnable onCancel) {
+      return new FutureVisitor<T>() {
+         @Override
+         public void successful(T result) {
+            onSuccess.accept(result);
+         }
+
+         @Override
+         public void failed(Throwable failure) {
+            onFailure.accept(failure);
+         }
+
+         @Override
+         public void cancelled() {
+            onCancel.run();
+         }
+      };
+   }
 }

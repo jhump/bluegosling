@@ -2,8 +2,6 @@ package com.apriori.concurrent;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-import com.apriori.possible.Holder;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -214,14 +212,14 @@ final class CompletableExecutors {
          // CompletableFuture has no factory method for a Callable. It also ignores requests
          // to interrupt the task if it is running. So we have to do something a little different
          // to get the right semantics (this is a bit hideous...)
-         Holder<Thread> thread = Holder.create(null);
+         Thread runner[] = new Thread[1];
          // make a future that knows how to cancel the task if it is running
          CompletableFuture<T> future = new CompletableFuture<T>() {
             @Override public boolean cancel(boolean mayInterrupt) {
                boolean ret = super.cancel(mayInterrupt);
-               if (mayInterrupt) {
-                  synchronized (thread) {
-                     Thread th = thread.get();
+               if (ret && mayInterrupt) {
+                  synchronized (runner) {
+                     Thread th = runner[0];
                      if (th != null) {
                         th.interrupt();
                      }
@@ -232,21 +230,21 @@ final class CompletableExecutors {
          };
          // the actual task we execute: invokes the callable and completes the future
          Runnable r = () -> {
-            synchronized (thread) {
+            synchronized (runner) {
                if (future.isDone()) {
                   // no need to do anything if task is done
                   // (e.g. asynchronously cancelled or completed)
                   return; 
                }
-               thread.set(Thread.currentThread());
+               runner[0] = Thread.currentThread();
             }
             try {
                future.complete(task.call());
             } catch (Throwable t) {
                future.completeExceptionally(t);
             } finally {
-               synchronized (thread) {
-                  thread.set(null);
+               synchronized (runner) {
+                  runner[0] = null;
                }
             }
          };

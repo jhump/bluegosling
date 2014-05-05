@@ -102,7 +102,7 @@ public final class Optionals {
     *
     * @param <T> the type of the optional value
     */
-   private static class Some<T> implements Possible<T>, Serializable {
+   static class Some<T> implements Possible<T>, Serializable {
 
       private static final long serialVersionUID = 1511876184470865192L;
       
@@ -199,7 +199,7 @@ public final class Optionals {
     *
     * @param <T> the type of the optional value
     */
-   private static class None<T> implements Possible<T>, Serializable {
+   static class None<T> implements Possible<T>, Serializable {
       
       private static final long serialVersionUID = 5598018120900214802L;
       

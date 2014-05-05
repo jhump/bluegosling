@@ -6,7 +6,7 @@ import com.apriori.concurrent.HierarchicalLock.ExclusiveLock;
 import com.apriori.concurrent.HierarchicalLock.SharedLock;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
-import com.apriori.concurrent.SettableListenableFuture;
+import com.apriori.concurrent.SettableFuture;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Trio;
 
@@ -626,8 +626,8 @@ public class Transaction {
        * to apply and a future whose value is set when the transaction is committed and the function
        * has been applied.
        */
-      final Queue<Pair<Function<? super T, ? extends T>, SettableListenableFuture<T>>> commutes =
-            new ArrayDeque<Pair<Function<? super T, ? extends T>, SettableListenableFuture<T>>>();
+      final Queue<Pair<Function<? super T, ? extends T>, SettableFuture<T>>> commutes =
+            new ArrayDeque<Pair<Function<? super T, ? extends T>, SettableFuture<T>>>();
       
       /**
        * The previous lock state for this atom. If this information is rolled back, the atom's lock
@@ -703,7 +703,7 @@ public class Transaction {
        * Cancels all pending futures for commute operations. This is done during a roll-back.
        */
       void cancelFutures() {
-         for (Pair<Function<? super T, ? extends T>, SettableListenableFuture<T>> commute
+         for (Pair<Function<? super T, ? extends T>, SettableFuture<T>> commute
                : commutes) {
             commute.getSecond().cancel(false);
          }
@@ -849,7 +849,7 @@ public class Transaction {
     * {@linkplain TransactionalAtom#markForCommit(Transaction) marked} and commit version number
     * allocated.
     */
-   private volatile SettableListenableFuture<Long> commitVersion;
+   private volatile SettableFuture<Long> commitVersion;
    
    /**
     * A latch that is opened once this transaction is committed. This field is null while the
@@ -964,13 +964,13 @@ public class Transaction {
     *       commute operations as well as their pending computed value
     */
    private <T> void processCommutesForAtom(TransactionalAtom<T> atom, AtomInfo<T> info,
-         List<Pair<SettableListenableFuture<?>, Object>> pendingFutures) {
+         List<Pair<SettableFuture<?>, Object>> pendingFutures) {
       if (info.commutes.isEmpty()) {
          return;
       }
       boolean first = true;
       T value = pinAtom(atom, true);
-      for (Pair<Function<? super T, ? extends T>, SettableListenableFuture<T>> commute
+      for (Pair<Function<? super T, ? extends T>, SettableFuture<T>> commute
             : info.commutes) {
          if (first) {
             first = false;
@@ -980,8 +980,7 @@ public class Transaction {
             atom.validate(value);
          }
          value = commute.getFirst().apply(value);
-         pendingFutures.add(
-               Pair.<SettableListenableFuture<?>, Object>create(commute.getSecond(), value));
+         pendingFutures.add(Pair.create(commute.getSecond(), value));
       }
       setAtom(atom, value, true);
    }
@@ -997,7 +996,7 @@ public class Transaction {
     *       to commute operations as well as their pending computed value
     */
    private void processCommutes(Savepoint sp,
-         List<Pair<SettableListenableFuture<?>, Object>> pendingFutures) {
+         List<Pair<SettableFuture<?>, Object>> pendingFutures) {
       if (sp == null) {
          return;
       }
@@ -1031,8 +1030,8 @@ public class Transaction {
     * Commits the current transaction.
     */
    private void doCommit() {
-      List<Pair<SettableListenableFuture<?>, Object>> pendingFutures =
-            new ArrayList<Pair<SettableListenableFuture<?>, Object>>();
+      List<Pair<SettableFuture<?>, Object>> pendingFutures =
+            new ArrayList<Pair<SettableFuture<?>, Object>>();
       processCommutes(savepoint, pendingFutures);
       // If all pending commutes pass validation, then we should be safe from here on out
       // to successfully complete the transaction
@@ -1045,10 +1044,10 @@ public class Transaction {
       // grab it as their read version, but we haven't yet finished writing data to the atoms. So
       // we use this future and latch to synchronize with those concurrent readers.
       commitLatch = new CountDownLatch(1);
-      commitVersion = new SettableListenableFuture<Long>();
+      commitVersion = new SettableFuture<Long>();
       try {
          // Mark atoms that we're about to change
-         Set<TransactionalAtom<?>> markedAtoms = new HashSet<TransactionalAtom<?>>();
+         Set<TransactionalAtom<?>> markedAtoms = new HashSet<>();
          for (Savepoint sp = savepoint; sp != null; sp = sp.predecessor) {
             for (Map.Entry<TransactionalAtom<?>, AtomInfo<?>> entry : sp.atomInfo.entrySet()) {
                TransactionalAtom<?> atom = entry.getKey();
@@ -1058,8 +1057,7 @@ public class Transaction {
             }
          }
          
-         List<Trio<TransactionalAtom<Object>, Object, Object>> notifications =
-               new ArrayList<Trio<TransactionalAtom<Object>, Object, Object>>();
+         List<Trio<TransactionalAtom<Object>, Object, Object>> notifications = new ArrayList<>();
          
          long newVersion = pinNewVersion();
          try {
@@ -1079,6 +1077,7 @@ public class Transaction {
                   }
                }
             }
+            commitLatch.countDown();
          } finally {
             unpinVersion(newVersion);
          }
@@ -1087,10 +1086,10 @@ public class Transaction {
          unlockAll();
          
          // fulfill pending commute futures
-         for (Pair<SettableListenableFuture<?>, Object> pending : pendingFutures) {
+         for (Pair<SettableFuture<?>, Object> pending : pendingFutures) {
             @SuppressWarnings("unchecked")
-            SettableListenableFuture<Object> future =
-                  (SettableListenableFuture<Object>) pending.getFirst();
+            SettableFuture<Object> future =
+                  (SettableFuture<Object>) pending.getFirst();
             future.setValue(pending.getSecond());
          }
          
@@ -1401,12 +1400,12 @@ public class Transaction {
     */
    <T> ListenableFuture<T> enqueueCommute(final TransactionalAtom<T> atom,
          final Function<? super T, ? extends T> function) {
-      SettableListenableFuture<T> future = new SettableListenableFuture<T>();
+      SettableFuture<T> future = new SettableFuture<T>();
       AtomInfo<T> info = createAtomInfo(atom);
       if (isolationLevel == IsolationLevel.SERIALIZABLE) {
          acquireLock(atom, info, LockState.LOCKED_EXCLUSIVE, true);
       }
-      info.commutes.add(Pair.<Function<? super T, ? extends T>, SettableListenableFuture<T>>
+      info.commutes.add(Pair.<Function<? super T, ? extends T>, SettableFuture<T>>
             create(function, future));
       return future;
    }

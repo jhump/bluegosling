@@ -16,12 +16,12 @@ public class FulfillablesTest extends AbstractPossibleTest {
 
    @Override
    protected Fulfillable<String> valuePresent(String s) {
-      return Fulfillables.fulfilled(s);
+      return Fulfillable.fulfilled(s);
    }
 
    @Override
    protected Fulfillable<String> valueAbsent() {
-      return Fulfillables.create();
+      return Fulfillable.create();
    }
 
    @Test public void fulfill() {

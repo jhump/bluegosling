@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Tests for the default and static methods in {@link ListenableFuture} and the supporting future
- * implementations in {@link ListenableFutures}. Since {@link SettableListenableFuture} doesn't
+ * implementations in {@link ListenableFutures}. Since {@link SettableFuture} doesn't
  * override any of the default methods, that is the implementation class used to test them.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)

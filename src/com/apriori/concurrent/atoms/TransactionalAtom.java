@@ -56,7 +56,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * When a commit operation that affects this atom is in progress, this reference is set to the
     * transaction that is committing.
     */
-   private final AtomicReference<Transaction> committer = new AtomicReference<Transaction>();
+   private final AtomicReference<Transaction> committer = new AtomicReference<>();
    
    /**
     * The head of the versions list, which contains the atom's current/latest value.
@@ -173,7 +173,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * Marks the current atom with a reference to the transaction that is currently modifying it. The
     * atom is only marked when the transaction is being committed.
     *
-    * @param transaction the transaction that is currently committed data to this atom
+    * @param transaction the transaction that is currently committing data to this atom
     */
    void markForCommit(Transaction transaction) {
       Transaction previous = committer.getAndSet(transaction);
@@ -279,7 +279,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
             oldValue = latest.value;
-            newValue = function.apply(latest.value);
+            newValue = function.apply(oldValue);
             validate(newValue);
             long version = Transaction.pinNewVersion();
             addValue(newValue, version, Transaction.oldestVersion());
@@ -312,7 +312,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * <p>If no transaction is in progress on the current thread, this will effectively create one
     * that does nothing but transform this atom. If a serializable transaction is in progress, then
     * an exclusive lock is acquired. So, with serializable isolation level, the only difference
-    * between this operation and {@link #apply(Function)} is that the commutes functions won't
+    * between this operation and {@link #apply(Function)} is that the commute functions won't
     * actually be evaluated until the transaction is committed.
     * 
     * <p>Watchers are only notified when this operation is committed. If there are other operations
@@ -335,7 +335,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
             oldValue = latest.value;
-            newValue = function.apply(latest.value);
+            newValue = function.apply(oldValue);
             validate(newValue);
             long version = Transaction.pinNewVersion();
             addValue(newValue, version, Transaction.oldestVersion());

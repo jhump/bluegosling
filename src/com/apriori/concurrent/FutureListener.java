@@ -51,37 +51,4 @@ public interface FutureListener<T> {
    static <T> FutureListener<T> forConsumer(Consumer<? super ListenableFuture<T>> consumer) {
       return (future) -> { consumer.accept(ListenableFuture.cast(future)); };
    }
-   
-   /**
-    * Assembles a listener using all of the specified callbacks. Each callback is invoked depending
-    * on the disposition of the completed futures.
-    * 
-    * @param onSuccess invoked when the completed future is successful; the future's result is
-    *       passed to the consumer
-    * @param onFailure invoked when the completed future has failed; the cause of failure is passed
-    *       to the consumer
-    * @param onCancel invoked when the completed future is cancelled
-    * @return a listener that will call one of the specified callbacks when invoked
-    * 
-    * @see SimpleFutureVisitor.Builder
-    */
-   static <T> FutureListener<T> o(Consumer<? super T> onSuccess,
-         Consumer<? super Throwable> onFailure, Runnable onCancel) {
-      return forVisitor(new FutureVisitor<T>() {
-         @Override
-         public void successful(T result) {
-            onSuccess.accept(result);
-         }
-
-         @Override
-         public void failed(Throwable failure) {
-            onFailure.accept(failure);
-         }
-
-         @Override
-         public void cancelled() {
-            onCancel.run();
-         }
-      });
-   }
 }

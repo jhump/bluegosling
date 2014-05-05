@@ -1,15 +1,15 @@
 package com.apriori.possible;
 
 import com.apriori.concurrent.ListenableFuture;
+import com.apriori.possible.Possibles.FuturePossible;
+import com.apriori.possible.Possibles.ListenableFuturePossible;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -70,7 +70,7 @@ public interface Possible<T> {
     * Gets the contained value if present.
     * 
     * @return the contained value
-    * @throws IllegalStateException if a value is not present
+    * @throws NoSuchElementException if a value is not present
     */
    T get();
    
@@ -145,8 +145,32 @@ public interface Possible<T> {
     * @param possible a possible value
     * @return the possible value, but with {@code null} values treated as absent
     */
-   static <T> Possible<T> notNull(Possible<T> possible) {
-      return possible.isPresent() ? Optionals.of(possible.get()) : Optionals.none();
+   static <T> Possible<T> notNull(final Possible<T> possible) {
+      if (possible instanceof Optionals.Some || possible instanceof Optionals.None) {
+         return possible;
+      }
+      if (possible instanceof Reference) {
+         return possible.isPresent() ? Optionals.of(possible.get()) : Optionals.none();
+      }
+      return new AbstractDynamicPossible<T>() {
+         @Override
+         public boolean isPresent() {
+            try {
+               return possible.isPresent() && possible.get() != null;
+            } catch (NoSuchElementException e) {
+               return false;
+            }
+         }
+
+         @Override
+         public T get() {
+            T ret = possible.get();
+            if (ret != null) {
+               return ret;
+            }
+            throw new NoSuchElementException();
+         }
+      };
    }
    
    /**
@@ -157,193 +181,12 @@ public interface Possible<T> {
     * @param future the future
     * @return a view of the future as a {@link Possible}
     */
-   static <T> Possible<T> fromFuture(final Future<? extends T> future) {
+   static <T> Possible<T> fromFuture(Future<? extends T> future) {
       if (future instanceof ListenableFuture) {
-         // ListenableFuture provides extra API that make this prettier/easier
-         final ListenableFuture<? extends T> f = (ListenableFuture<? extends T>) future;
-         return new Possible<T>() {
-            
-            @Override
-            public boolean isPresent() {
-               return f.isSuccessful();
-            }
-            
-            @Override
-            public void ifPresent(Consumer<? super T> consumer) {
-               if (isPresent()) {
-                  consumer.accept(f.getResult());
-               }
-            }
-
-            @Override
-            public Possible<T> or(Possible<T> alternate) {
-               return f.isSuccessful() ? this : alternate;
-            }
-            
-            // TODO: transform and filter should return views, not snapshots
-            
-            @Override
-            public <U> Possible<U> map(Function<? super T, ? extends U> function) {
-               return f.isSuccessful()
-                     ? Reference.setTo(function.apply(f.getResult()))
-                     : Reference.unset();
-            }
-
-            @Override
-            public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-               return f.isSuccessful()
-                     ? function.apply(f.getResult())
-                     : Reference.unset();
-            }
-
-            @Override
-            public Possible<T> filter(Predicate<? super T> predicate) {
-               return f.isSuccessful() && predicate.test(f.getResult())
-                     ? this : Reference.<T>unset();
-            }
-
-            @Override
-            public T get() {
-               if (!f.isSuccessful()) {
-                  throw new IllegalStateException();
-               }
-               return f.getResult();
-            }
-
-            @Override
-            public T orElse(T alternate) {
-               return f.isSuccessful() ? f.getResult() : alternate;
-            }
-
-            @Override
-            public T orElseGet(Supplier<? extends T> alternate) {
-               return f.isSuccessful() ? f.getResult() : alternate.get();
-            }
-
-            @Override
-            public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-               if (!f.isSuccessful()) {
-                  throw throwable.get();
-               }
-               return f.getResult();
-            }
-
-            @Override
-            public Set<T> asSet() {
-               return f.isSuccessful() ? Collections.<T>singleton(f.getResult())
-                     : Collections.<T>emptySet();
-            }
-
-            @Override
-            public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-               return f.isSuccessful() ? visitor.present(f.getResult()) : visitor.absent();
-            }
-         };
+         return new ListenableFuturePossible<T>((ListenableFuture<? extends T>) future);
+      } else {
+         return new FuturePossible<T>(future);
       }
-      // if not a ListenableFuture, then it's a little uglier...
-      return new Possible<T>() {
-         private volatile Boolean isPresent;
-         private volatile T value;
-         
-         private synchronized boolean determineIfPresent() {
-            if (isPresent == null) {
-               boolean interrupted = false;
-               while (true) {
-                  try {
-                     value = future.get();
-                     isPresent = true;
-                     break;
-                  } catch (InterruptedException e) {
-                     interrupted = true;
-                  } catch (ExecutionException e) {
-                     isPresent = false;
-                     break;
-                  } catch (CancellationException e) {
-                     isPresent = false;
-                     break;
-                  }
-               }
-               if (interrupted) {
-                  Thread.currentThread().interrupt();
-               }
-            }
-            return isPresent;
-         }
-         
-         @Override
-         public boolean isPresent() {
-            return future.isDone() && determineIfPresent();
-         }
-         
-         @Override
-         public void ifPresent(Consumer<? super T> consumer) {
-            if (isPresent()) {
-               consumer.accept(value);
-            }
-         }
-
-         // TODO: all API returning Possibles should return views instead of References
-         
-         @Override
-         public Possible<T> or(Possible<T> alternate) {
-            return isPresent() ? this : alternate;
-         }
-
-         @Override
-         public <U> Possible<U> map(Function<? super T, ? extends U> function) {
-            return isPresent()
-                  ? Reference.setTo(function.apply(value))
-                  : Reference.unset();
-         }
-
-         @Override
-         public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-            return isPresent()
-                  ? function.apply(value)
-                  : Reference.unset();
-         }
-
-         @Override
-         public Possible<T> filter(Predicate<? super T> predicate) {
-            return isPresent() && predicate.test(value) ? this : Reference.unset();
-         }
-
-         @Override
-         public T get() {
-            if (!isPresent()) {
-               throw new IllegalStateException();
-            }
-            return value;
-         }
-
-         @Override
-         public T orElse(T alternate) {
-            return isPresent() ? value : alternate;
-         }
-
-         @Override
-         public T orElseGet(Supplier<? extends T> alternate) {
-            return isPresent() ? value : alternate.get();
-         }
-
-         @Override
-         public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-            if (!isPresent()) {
-               throw throwable.get();
-            }
-            return value;
-         }
-
-         @Override
-         public Set<T> asSet() {
-            return isPresent() ? Collections.<T>singleton(value) : Collections.<T>emptySet();
-         }
-
-         @Override
-         public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-            return isPresent() ? visitor.present(value) : visitor.absent();
-         }
-      };
    }
 
    /**
@@ -361,7 +204,7 @@ public interface Possible<T> {
          if (p.isPresent()) {
             try {
                present.add(p.get());
-            } catch (IllegalStateException e) {
+            } catch (NoSuchElementException e) {
                // this should happen rarely if ever, but could occur with a mutable object if a
                // race occurs and the value becomes absent after the call to isPresent()
             }
