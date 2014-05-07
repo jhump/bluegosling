@@ -108,6 +108,15 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static interface <span class="typeNameLabel">HierarchicalLock.AcquiredLock</span></pre>
+<div class="block">The result of acquiring a <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>. After acquisition, this object can be used
+ to release, demote, or promote the held lock. This API just contains methods in common to both
+ types of acquired locks. Both concrete lock implementations provide a wider API, with methods
+ that are specific to them.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a>, 
+<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -128,15 +137,21 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#demoteToChild-com.apriori.concurrent.HierarchicalLock-">demoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#demoteToChild-com.apriori.concurrent.HierarchicalLock-">demoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>
+<div class="block">Demotes this lock to a lock of the same type (exclusive or shared) on one of its children.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#promoteToParent--">promoteToParent</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#promoteToParent--">promoteToParent</a></span>()</code>
+<div class="block">Promotes this lock to a lock of the same type (exclusive or shared) on its parent.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#unlock--">unlock</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#unlock--">unlock</a></span>()</code>
+<div class="block">Releases the held lock.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -160,6 +175,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>unlock</h4>
 <pre>void&nbsp;unlock()</pre>
+<div class="block">Releases the held lock.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+       released it</dd>
+</dl>
 </li>
 </ul>
 <a name="demoteToChild-com.apriori.concurrent.HierarchicalLock-">
@@ -169,6 +190,24 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>demoteToChild</h4>
 <pre><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>&nbsp;demoteToChild(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</pre>
+<div class="block">Demotes this lock to a lock of the same type (exclusive or shared) on one of its children.
+ On success, the held lock is released and replaced with a new <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a> that
+ represents the lock on the child. This method will block until the child lock becomes
+ available, if necessary.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>child</code> - the child of this lock to which this lock is demoted</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the given child</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; if the given lock is not actually a child of the <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>
+    which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a>; or if the lock could not be demoted because
+    this thread holds the lock more than once (from re-entrance)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the child lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the child lock)</dd>
+</dl>
 </li>
 </ul>
 <a name="promoteToParent--">
@@ -178,6 +217,23 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>promoteToParent</h4>
 <pre><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a>&nbsp;promoteToParent()</pre>
+<div class="block">Promotes this lock to a lock of the same type (exclusive or shared) on its parent. On
+ success, the held lock is released and replaced with a new <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a> that
+ represents the lock on the parent. This method will block until the parent lock becomes
+ available, if necessary.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the parent</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a> is a root lock and does
+    not have a parent; or if this operation involved promoting the implicit parent lock, and
+    that could not be done because this thread already holds the parent lock more than once
+    (from re-entrance)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the parent lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the parent lock)</dd>
+</dl>
 </li>
 </ul>
 </li>

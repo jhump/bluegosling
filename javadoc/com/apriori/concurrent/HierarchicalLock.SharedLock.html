@@ -119,7 +119,11 @@ var activeTableTab = "activeTableTab";
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></pre>
 <div class="block">The result of acquiring a shared lock on a <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>. This object is used to
- release the lock or to change it (via promotion or demotion).</div>
+ release the lock or to change it (via promotion or demotion).
+ 
+ <p>Unlike other types of promotion and demotion, promoting a shared lock to its parent or
+ demoting to one of its children will succeed, even if more than one such shared lock is held
+ (from re-entrance).</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/concurrent/HierarchicalLock.html#sharedLock--"><code>HierarchicalLock.sharedLock()</code></a>, 
@@ -147,46 +151,72 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#demoteToChild-com.apriori.concurrent.HierarchicalLock-">demoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#demoteToChild-com.apriori.concurrent.HierarchicalLock-">demoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>
+<div class="block">Demotes this lock to a shared lock on one of its children.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#demoteToChildInterruptibly-com.apriori.concurrent.HierarchicalLock-">demoteToChildInterruptibly</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#demoteToChildInterruptibly-com.apriori.concurrent.HierarchicalLock-">demoteToChildInterruptibly</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>
+<div class="block">Demotes this lock to a shared lock on one of its children, waiting interruptibly until it
+ is available.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToExclusive--">promoteToExclusive</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToExclusive--">promoteToExclusive</a></span>()</code>
+<div class="block">Promotes this shared lock into an exclusive lock.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToExclusiveInterruptibly--">promoteToExclusiveInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToExclusiveInterruptibly--">promoteToExclusiveInterruptibly</a></span>()</code>
+<div class="block">Promotes this shared lock into an exclusive lock, waiting interruptibly until the exclusive
+ lock becomes available.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToParent--">promoteToParent</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#promoteToParent--">promoteToParent</a></span>()</code>
+<div class="block">Promotes this lock to a shared lock on its parent.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryDemoteToChild-com.apriori.concurrent.HierarchicalLock-">tryDemoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryDemoteToChild-com.apriori.concurrent.HierarchicalLock-">tryDemoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</code>
+<div class="block">Tries to demote this lock to a shared lock on one of its children, returning immediately if
+ the child lock is unavailable.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryDemoteToChild-com.apriori.concurrent.HierarchicalLock-long-java.util.concurrent.TimeUnit-">tryDemoteToChild</a></span>(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child,
                 long&nbsp;timeLimit,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Tries to demote this lock to a shared lock on one of its children, waiting for the
+ specified amount of time before giving up.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryPromoteToExclusive--">tryPromoteToExclusive</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryPromoteToExclusive--">tryPromoteToExclusive</a></span>()</code>
+<div class="block">Promotes this shared lock into an exclusive lock, returning immediately if the exclusive
+ lock is unavailable.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#tryPromoteToExclusive-long-java.util.concurrent.TimeUnit-">tryPromoteToExclusive</a></span>(long&nbsp;timeLimit,
-                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Promotes this shared lock into an exclusive lock, waiting up to the given amount of time
+ before giving up.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#unlock--">unlock</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html#unlock--">unlock</a></span>()</code>
+<div class="block">Releases the held lock.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -217,6 +247,8 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>unlock</h4>
 <pre>public&nbsp;void&nbsp;unlock()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#unlock--">HierarchicalLock.AcquiredLock</a></code></span></div>
+<div class="block">Releases the held lock.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#unlock--">unlock</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></dd>
@@ -230,6 +262,21 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>promoteToExclusive</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;promoteToExclusive()</pre>
+<div class="block">Promotes this shared lock into an exclusive lock. This basically releases the held lock and
+ replaces it with an exclusive lock on the same <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>. This method will
+ block until the exclusive lock becomes available.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired exclusive lock</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the shared lock has been acquired by this thread more than once (in a
+    re-entrant manner)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the exclusive lock would result in a deadlock
+    (e.g. this thread holds a lock for which another thread is waiting, and that thread, or
+    some other thread that directly or indirectly is waiting on it, is holding the exclusive
+    lock)</dd>
+</dl>
 </li>
 </ul>
 <a name="promoteToExclusiveInterruptibly--">
@@ -240,9 +287,22 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <h4>promoteToExclusiveInterruptibly</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;promoteToExclusiveInterruptibly()
                                                                throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Promotes this shared lock into an exclusive lock, waiting interruptibly until the exclusive
+ lock becomes available. This basically releases the held lock and replaces it with an
+ exclusive lock on the same <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired exclusive lock</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the exclusive
+    lock to become available</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the shared lock has been acquired by this thread more than once (in a
+    re-entrant manner)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the exclusive lock would result in a deadlock
+    (e.g. this thread holds a lock for which another thread is waiting, and that thread, or
+    some other thread that directly or indirectly is waiting on it, is holding the exclusive
+    lock)</dd>
 </dl>
 </li>
 </ul>
@@ -253,6 +313,23 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>tryPromoteToExclusive</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;tryPromoteToExclusive()</pre>
+<div class="block">Promotes this shared lock into an exclusive lock, returning immediately if the exclusive
+ lock is unavailable. This basically releases the held lock and replaces it with an
+ exclusive lock on the same <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired exclusive lock or <code>null</code> if it is not available</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the exclusive
+    lock to become available</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the shared lock has been acquired by this thread more than once (in a
+    re-entrant manner)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the exclusive lock would result in a deadlock
+    (e.g. this thread holds a lock for which another thread is waiting, and that thread, or
+    some other thread that directly or indirectly is waiting on it, is holding the exclusive
+    lock)</dd>
+</dl>
 </li>
 </ul>
 <a name="tryPromoteToExclusive-long-java.util.concurrent.TimeUnit-">
@@ -264,9 +341,26 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;tryPromoteToExclusive(long&nbsp;timeLimit,
                                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
                                                      throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Promotes this shared lock into an exclusive lock, waiting up to the given amount of time
+ before giving up. This basically releases the held lock and replaces it with an exclusive
+ lock on the same <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>timeLimit</code> - the limit of time to wait for the lock</dd>
+<dd><code>unit</code> - the unit of the time limit</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired exclusive lock or <code>null</code> if the time limit lapsed before
+    the lock became available</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the exclusive
+    lock to become available</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the shared lock has been acquired by this thread more than once (in a
+    re-entrant manner)</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the exclusive lock would result in a deadlock
+    (e.g. this thread holds a lock for which another thread is waiting, and that thread, or
+    some other thread that directly or indirectly is waiting on it, is holding the exclusive
+    lock)</dd>
 </dl>
 </li>
 </ul>
@@ -277,9 +371,23 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>demoteToChild</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;demoteToChild(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</pre>
+<div class="block">Demotes this lock to a shared lock on one of its children. On success, this held lock
+ is released and replaced with a new <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> that represents the lock on the
+ child. This method will block until the child lock is available.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#demoteToChild-com.apriori.concurrent.HierarchicalLock-">demoteToChild</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>child</code> - the child of this lock to which this lock is demoted</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the given child</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the given lock is not actually a child of the
+    <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a> which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the child lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the child lock)</dd>
 </dl>
 </li>
 </ul>
@@ -291,9 +399,24 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <h4>demoteToChildInterruptibly</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;demoteToChildInterruptibly(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)
                                                        throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Demotes this lock to a shared lock on one of its children, waiting interruptibly until it
+ is available. On success, this held lock is released and replaced with a new
+ <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> that represents the lock on the child.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>child</code> - the child of this lock to which this lock is demoted</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the given child</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the child lock
+    to become available</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the given lock is not actually a child of the
+    <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a> which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the child lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the child lock)</dd>
 </dl>
 </li>
 </ul>
@@ -304,6 +427,23 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>tryDemoteToChild</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;tryDemoteToChild(<a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a>&nbsp;child)</pre>
+<div class="block">Tries to demote this lock to a shared lock on one of its children, returning immediately if
+ the child lock is unavailable. On success, this held lock is released and replaced with a
+ new <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> that represents the lock on the child.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>child</code> - the child of this lock to which this lock is demoted</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the given child or <code>null</code> if it was not available</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the given lock is not actually a child of the
+    <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a> which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the child lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the child lock)</dd>
+</dl>
 </li>
 </ul>
 <a name="tryDemoteToChild-com.apriori.concurrent.HierarchicalLock-long-java.util.concurrent.TimeUnit-">
@@ -316,9 +456,26 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
                                                     long&nbsp;timeLimit,
                                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
                                              throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Tries to demote this lock to a shared lock on one of its children, waiting for the
+ specified amount of time before giving up. On success, this held lock is released and
+ replaced with a new <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> that represents the lock on the child.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>child</code> - the child of this lock to which this lock is demoted</dd>
+<dd><code>timeLimit</code> - the limit of time to wait for the lock</dd>
+<dd><code>unit</code> - the unit of the time limit</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the given child or <code>null</code> if the time limit lapsed
+    before the lock became available</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the child lock
+    to become available</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the given lock is not actually a child of the
+    <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a> which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the child lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the child lock)</dd>
 </dl>
 </li>
 </ul>
@@ -329,9 +486,22 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>promoteToParent</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;promoteToParent()</pre>
+<div class="block">Promotes this lock to a shared lock on its parent. On success, the held lock is released
+ and replaced with a new <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> that represents the lock on the parent. This
+ method does not need to block since all acquired locks also hold implicit shared locks on
+ parent/ancestor locks.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html#promoteToParent--">promoteToParent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the newly acquired lock on the parent</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+    released it; or if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> is a root lock and
+    does not have a parent</dd>
+<dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for the parent lock would result in a deadlock (e.g.
+    this thread holds a lock for which another thread is waiting, and that thread, or some
+    other thread that directly or indirectly is waiting on it, is holding the parent lock)</dd>
 </dl>
 </li>
 </ul>

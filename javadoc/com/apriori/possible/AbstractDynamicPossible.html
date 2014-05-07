@@ -123,9 +123,11 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
  extend this base class as they can be implemented much more efficiently due to their unchanging
  state.
  
- <p>If the value can only change from being absent to being present then the implementations in
- this class are thread-safe. If, however, the value can also change from being present to absent,
- the implementations here are racy and could throw spurious <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util"><code>NoSuchElementException</code></a>s.</div>
+ <p>The default implementations in this base class are thread-safe and suitable for sub-classes
+ that support concurrent usage. Where appropriate, this is handled by first checking the abstract
+ <a href="../../../com/apriori/possible/Possible.html#isPresent--"><code>Possible.isPresent()</code></a> before calling <a href="../../../com/apriori/possible/Possible.html#get--"><code>Possible.get()</code></a>. However, <code>get()</code> could still throw if
+ the value suddenly becomes absent. So the implementations catch <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util"><code>NoSuchElementException</code></a>
+ and then proceed as if <code>isPresent()</code> had returned false.</div>
 </li>
 </ul>
 </div>

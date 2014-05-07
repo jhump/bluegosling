@@ -131,6 +131,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
  <a href="../../../com/apriori/concurrent/ListenableFuture.html#visit-com.apriori.concurrent.FutureVisitor-"><code>visit(FutureVisitor)</code></a>). All of these new methods are non-blocking and are intended to
  assist with implementing listeners and with writing asynchronous code. Many will throw an
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> if invoked before the future is done.</li>
+ <li><strong>Monadic</strong>: This future includes numerous useful default methods, all built on
+ top of the listener primitive, that allow it to be used as a monad, chaining additional
+ operations and applying numerous kinds of transformations.
  </ol></div>
 </li>
 </ul>

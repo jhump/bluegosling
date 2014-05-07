@@ -1187,8 +1187,6 @@ public class HierarchicalLock {
        * exclusive lock on the same {@link HierarchicalLock}.
        *
        * @return the newly acquired exclusive lock or {@code null} if it is not available
-       * @throws InterruptedException if this thread is interrupted while waiting for the exclusive
-       *    lock to become available
        * @throws IllegalStateException if this thread does not hold this lock or has already
        *    released it; or if the shared lock has been acquired by this thread more than once (in a
        *    re-entrant manner)

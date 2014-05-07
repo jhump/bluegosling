@@ -177,7 +177,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;E&gt;&nbsp;fromDeque(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;&nbsp;deque)</pre>
 <div class="block">Returns a view of the specified double-ended queue as a cycle. Modifications to the cycle end
  up also modifying the deque. Navigating through the cycle modifies the underlying deque by
- shifting elements from the begining to end and vice versa. That way, the cycle's "current"
+ shifting elements from the beginning to end and vice versa. That way, the cycle's "current"
  element is always the first in the deque.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -195,8 +195,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>fromList</h4>
 <pre>public static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;E&gt;&nbsp;fromList(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;&nbsp;list)</pre>
 <div class="block">Returns a view of the specified list as a cycle. Modifications to the cycle end up also
- modifying the deque. Navigating through the cycle simply navigates using a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util"><code>ListIterator</code></a>
- and does not modify the underlying list.</div>
+ modifying the deque. Navigating through the cycle simply navigates using a
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util"><code>ListIterator</code></a> and does not modify the underlying list.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>list</code> - a list</dd>
