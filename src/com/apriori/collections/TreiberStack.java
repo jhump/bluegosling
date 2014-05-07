@@ -1,4 +1,4 @@
-package com.apriori.concurrent;
+package com.apriori.collections;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -21,14 +21,19 @@ import java.util.function.Supplier;
  * 
  * <p>This structure is safe to use concurrently from multiple threads. Iterators will never throw
  * {@link ConcurrentModificationException}s. However, a single iterator is not meant to be used by
- * multiple concurrent threads and is thus not thread-safe.
+ * multiple concurrent threads and is thus not thread-safe. This collection supports all optional
+ * operations.
+ * 
+ * <p>Bulk operations are not atomic. So reads that execute concurrently with bulk operations may
+ * see partial results from in-progress the bulk operations.
  *
  * @param <T> the type of values stored in the stack
  * 
+ * @see SimpleTreiberStack
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public class TreiberStack<T> extends AbstractCollection<T> {
+public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
 
    @SuppressWarnings("rawtypes")
    private static final AtomicReferenceFieldUpdater<TreiberStack, Node> headUpdater =
@@ -112,7 +117,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
             current = next;
             do {
                next = next.get(removed);
-            } while (next != null && !removed[0]);
+            } while (next != null && removed[0]);
             lastFetchedWasRemoved = false;
             return current.value;
          }
@@ -241,6 +246,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     *
     * @param value the value to push
     */
+   @Override
    public void push(T value) {
       add(value);
    }
@@ -251,6 +257,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     *
     * @return the most recently added item, or null if the stack is empty
     */
+   @Override
    public T peek() {
       return doPeek(() -> null);
    }
@@ -261,6 +268,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     * @return the most recently added item
     * @throws NoSuchElementException if the stack is empty
     */
+   @Override
    public T element() {
       return doPeek(() -> { throw new NoSuchElementException(); });
    }
@@ -290,6 +298,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     * @return the most recently added item, removed from the stack
     * @throws NoSuchElementException if the stack is empty
     */
+   @Override
    public T pop() {
       return doPop(() -> { throw new NoSuchElementException(); });
    }
@@ -300,6 +309,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     *
     * @return the most recently added item, removed from the stack; or null if the stack is empty
     */
+   @Override
    public T poll() {
       return doPop(() -> null);
    }
@@ -332,6 +342,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     *
     * @param coll the collection to which the removed items are added
     */
+   @Override
    public void drainTo(Collection<? super T> coll) {
       doClear(null, (v, n) -> { coll.add(n.value); return null; });
    }
@@ -341,6 +352,7 @@ public class TreiberStack<T> extends AbstractCollection<T> {
     *
     * @return a new stack that contains all of the items removed from this stack
     */
+   @Override
    public TreiberStack<T> removeAll() {
       int sz[] = new int[1];
       @SuppressWarnings("unchecked")

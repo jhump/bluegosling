@@ -87,7 +87,7 @@ public final class Cycles {
    /**
     * Returns a view of the specified double-ended queue as a cycle. Modifications to the cycle end
     * up also modifying the deque. Navigating through the cycle modifies the underlying deque by
-    * shifting elements from the begining to end and vice versa. That way, the cycle's "current"
+    * shifting elements from the beginning to end and vice versa. That way, the cycle's "current"
     * element is always the first in the deque.
     *
     * @param deque a deque
@@ -261,8 +261,8 @@ public final class Cycles {
    
    /**
     * Returns a view of the specified list as a cycle. Modifications to the cycle end up also
-    * modifying the deque. Navigating through the cycle simply navigates using a {@link ListIterator}
-    * and does not modify the underlying list.
+    * modifying the deque. Navigating through the cycle simply navigates using a
+    * {@link ListIterator} and does not modify the underlying list.
     *
     * @param list a list
     * @return a view of the specified list as a cycle

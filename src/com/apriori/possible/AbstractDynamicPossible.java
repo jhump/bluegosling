@@ -15,9 +15,11 @@ import java.util.function.Supplier;
  * extend this base class as they can be implemented much more efficiently due to their unchanging
  * state.
  * 
- * <p>If the value can only change from being absent to being present then the implementations in
- * this class are thread-safe. If, however, the value can also change from being present to absent,
- * the implementations here are racy and could throw spurious {@link NoSuchElementException}s.
+ * <p>The default implementations in this base class are thread-safe and suitable for sub-classes
+ * that support concurrent usage. Where appropriate, this is handled by first checking the abstract
+ * {@link #isPresent()} before calling {@link #get()}. However, {@code get()} could still throw if
+ * the value suddenly becomes absent. So the implementations catch {@link NoSuchElementException}
+ * and then proceed as if {@code isPresent()} had returned false.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -39,7 +41,14 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
 
          @Override
          public T get() {
-            return self.isPresent() ? self.get() : alternate.get();
+            if (self.isPresent()) {
+               try {
+                  return self.get();
+               } catch (NoSuchElementException e) {
+                  // in case there was a race and the value became absent, fall through
+               }
+            }
+            return alternate.get();
          }
       };
    }
@@ -85,7 +94,20 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
       return new AbstractDynamicPossible<U>() {
          @Override
          public boolean isPresent() {
-            return self.isPresent() && function.apply(self.get()).isPresent();
+            if (self.isPresent()) {
+               boolean reallyPresent = true;
+               T t = null;
+               try {
+                  t = self.get();
+               } catch (NoSuchElementException e) {
+                  // in case there was a race and the value became absent
+                  reallyPresent = false;
+               }
+               if (reallyPresent) {
+                  return function.apply(t).isPresent();
+               }
+            }
+            return false;
          }
 
          @Override
@@ -110,7 +132,20 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
       return new AbstractDynamicPossible<T>() {
          @Override
          public boolean isPresent() {
-            return self.isPresent() && predicate.test(self.get());
+            if (self.isPresent()) {
+               boolean reallyPresent = true;
+               T t = null;
+               try {
+                  t = self.get();
+               } catch (NoSuchElementException e) {
+                  // in case there was a race and the value became absent
+                  reallyPresent = false;
+               }
+               if (reallyPresent) {
+                  return predicate.test(t);
+               }
+            }
+            return false;
          }
 
          @Override
@@ -126,18 +161,36 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
 
    @Override
    public T orElse(T alternate) {
-      return isPresent() ? get() : alternate;
+      if (isPresent()) {
+         try {
+            return get();
+         } catch (NoSuchElementException e) {
+            // in case there was a race and the value became absent, fall through
+         }
+      }
+      return alternate;
    }
 
    @Override
    public T orElseGet(Supplier<? extends T> supplier) {
-      return isPresent() ? get() : supplier.get();
+      if (isPresent()) {
+         try {
+            return get();
+         } catch (NoSuchElementException e) {
+            // in case there was a race and the value became absent, fall through
+         }
+      }
+      return supplier.get();
    }
 
    @Override
    public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwableSupplier) throws X {
       if (isPresent()) {
-         return get();
+         try {
+            return get();
+         } catch (NoSuchElementException e) {
+            // in case there was a race and the value became absent, fall through
+         }
       }
       throw throwableSupplier.get();
    }
@@ -145,7 +198,17 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
    @Override
    public void ifPresent(Consumer<? super T> consumer) {
       if (isPresent()) {
-         consumer.accept(get());
+         boolean reallyPresent = true;
+         T t = null;
+         try {
+            t = get();
+         } catch (NoSuchElementException e) {
+            // in case there was a race and the value became absent
+            reallyPresent = false;
+         }
+         if (reallyPresent) {
+            consumer.accept(t);
+         }
       }
    }
 
@@ -167,7 +230,15 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
                   if (!foundNext) {
                      hasNext = isPresent();
                      if (hasNext) {
-                        next = get();
+                        try {
+                           next = get();
+                        } catch (NoSuchElementException e) {
+                           // in case there was a race and the value became absent
+                           hasNext = false;
+                           next = null;
+                        }
+                     } else {
+                        next = null;
                      }
                      foundNext = true;
                   }
@@ -183,6 +254,7 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
                public T next() {
                   findNext();
                   if (hasNext) {
+                     // no next after consuming the single present value 
                      hasNext = false;
                      T ret = next;
                      next = null;
@@ -207,6 +279,19 @@ public abstract class AbstractDynamicPossible<T> implements Possible<T> {
 
    @Override
    public <R> R visit(Visitor<? super T, R> visitor) {
-      return isPresent() ? visitor.present(get()) : visitor.absent();
+      if (isPresent()) {
+         boolean reallyPresent = true;
+         T t = null;
+         try {
+            t = get();
+         } catch (NoSuchElementException e) {
+            // in case there was a race and the value became absent
+            reallyPresent = false;
+         }
+         if (reallyPresent) {
+            return visitor.present(t);
+         }
+      }
+      return visitor.absent();
    }
 }

@@ -13,7 +13,6 @@ import com.apriori.concurrent.ListenableFutures.ListenableCompletionStage;
 import com.apriori.concurrent.ListenableFutures.ListenableFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.ListenableScheduledFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.UnfinishableFuture;
-import com.apriori.possible.Holder;
 import com.apriori.util.TriFunction;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
@@ -53,6 +51,9 @@ import java.util.function.Function;
  * {@link #visit(FutureVisitor)}). All of these new methods are non-blocking and are intended to
  * assist with implementing listeners and with writing asynchronous code. Many will throw an
  * {@link IllegalStateException} if invoked before the future is done.</li>
+ * <li><strong>Monadic</strong>: This future includes numerous useful default methods, all built on
+ * top of the listener primitive, that allow it to be used as a monad, chaining additional
+ * operations and applying numerous kinds of transformations.
  * </ol>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -154,36 +155,11 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future whose value will be the result of the specified task
     */
    default <U> ListenableFuture<U> chainTo(Callable<U> task, Executor executor) {
-      Holder<Thread> taskThread = Holder.create(null);
-      AbstractListenableFuture<U> result = new AbstractListenableFuture<U>() {
-         @Override protected void interrupt() {
-            // must use synchronization to make sure the interrupt can't happen
-            // after the task is no longer running on that thread
-            synchronized (taskThread) {
-               Thread thread = taskThread.get();
-               if (thread != null) {
-                  thread.interrupt();
-               }
-            }
-         }
-      };
+      SettableRunnableFuture<U> result = new SettableRunnableFuture<U>(task);
       addListener(forVisitor(new FutureVisitor<Object>() {
          @Override
          public void successful(Object o) {
-            synchronized (taskThread) {
-               taskThread.set(Thread.currentThread());
-            }
-            try {
-               if (!result.isCancelled()) {
-                  result.setValue(task.call());
-               }
-            } catch (Throwable th) {
-               result.setFailure(th);
-            } finally {
-               synchronized (taskThread) {
-                  taskThread.set(null);
-               }
-            }
+            result.run();
          }
    
          @Override
@@ -287,7 +263,9 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
          @Override
          public void successful(T t) {
             try {
-               result.setValue(function.apply(t));
+               if (!result.isDone()) {
+                  result.setValue(function.apply(t));
+               }
             } catch (Throwable th) {
                result.setFailure(th);
             }
@@ -360,8 +338,9 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
                result.setCancelled();
             }
             try {
-               ListenableFuture<T> castFuture = cast(completedFuture);
-               result.setValue(function.apply(castFuture));
+               if (!result.isDone()) {
+                  result.setValue(function.apply(cast(completedFuture)));
+               }
             } catch (Throwable t) {
                result.setFailure(t);
             }
@@ -406,7 +385,9 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
          @Override
          public void failed(Throwable t) {
             try {
-               result.setFailure(function.apply(t));
+               if (!result.isDone()) {
+                  result.setFailure(function.apply(t));
+               }
             } catch (Throwable th) {
                result.setFailure(th);
             }
@@ -577,11 +558,11 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a listenable version of the specified future
     */
    static <T> ListenableFuture<T> makeListenable(Future<T> future) {
-      if (future instanceof ListenableFuture) {
-         return (ListenableFuture<T>) future;
-      }
       if (future instanceof ScheduledFuture) {
          return makeListenable((ScheduledFuture<T>) future);
+      }
+      if (future instanceof ListenableFuture) {
+         return (ListenableFuture<T>) future;
       }
       if (future instanceof CompletableFuture) {
          return makeListenable((CompletableFuture<T>) future);
@@ -840,7 +821,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    @SafeVarargs
    static <T> ListenableFuture<T> firstSuccessfulOf(
          ListenableFuture<? extends T>... futures) {
-      return firstOf(Arrays.asList(futures));
+      return firstSuccessfulOf(Arrays.asList(futures));
    }
 
    /**
@@ -925,13 +906,13 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     */
    static <T> ListenableFuture<T> dereference(
          final ListenableFuture<? extends ListenableFuture<T>> future) {
-      final AtomicReference<ListenableFuture<?>> outstanding =
-            new AtomicReference<ListenableFuture<?>>(future);
-      final AtomicBoolean shouldInterrupt = new AtomicBoolean();
+      final AtomicReference<ListenableFuture<?>> outstanding = new AtomicReference<>(future);
+      // visible thanks to always written before volatile write and read after volatile read
+      final boolean shouldInterrupt[] = new boolean[1];
       final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
          @Override public boolean cancel(boolean mayInterrupt) {
             if (super.setCancelled()) {
-               shouldInterrupt.set(mayInterrupt);
+               shouldInterrupt[0] = mayInterrupt;
                // If there's a race here and the input future completes before we can cancel it,
                // then the listener below will execute. If we get here first, then the null value
                // signals the listener to cancel the future's value. If we get here second, then
@@ -952,7 +933,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
             if (outstanding.getAndSet(value) == null) {
                // result already cancelled, so also cancel this value
                if (value != null) {
-                  value.cancel(shouldInterrupt.get());
+                  value.cancel(shouldInterrupt[0]);
                }
                return;
             }

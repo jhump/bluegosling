@@ -38,15 +38,6 @@ import java.util.Set;
  * @param <K> the type of keys in the map
  * @param <V> the type of value in the map
  */
-// TODO: finish adding InnerLeafTrieNode to short-circuit search when a path has only one leaf node
-// TODO: other performance improvements? Tried free lists, to track and re-use arrays instead
-// of always allocating new arrays, but that didn't help at all. Perhaps change to not rely on
-// polymorphic dispatch to TrieNodes? Also to simply tolerate not-full arrays at intermediate levels
-// to reduce allocations and GC? Might also consider allocating larger "blocks" instead of normal
-// arrays and each sub-hash-table uses a contiguous chunk in a block. This would mean fewer
-// allocations and re-using structures for sub-hash-table. Clean-up involves defragmenting the
-// blocks and tracking them to ensure trie is never holding on too much junk in the form of unused
-// arrays/chunks.
 // TODO: iteration is the slowest thing in here -- do we care? could speed it up by using insertion
 // order and maintaining orthogonal linked last, like LinkedHashMap
 // TODO: more efficient impls of other Map methods (putIfAbsent, computeIfAbsent, replace, etc)
@@ -69,7 +60,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class ListNode<K, V> {
+   private static class ListNode<K, V> implements Cloneable {
       /**
        * The key.
        */
@@ -94,6 +85,21 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       ListNode(K key, V value) {
          this.key = key;
          this.value = value;
+      }
+      
+      @Override
+      protected ListNode<K, V> clone() {
+         try {
+            @SuppressWarnings("unchecked")
+            ListNode<K, V> clone = (ListNode<K, V>) super.clone();
+            // recursively clone the whole linked list
+            if (next != null) {
+               clone.next = next.clone();
+            }
+            return clone;
+         } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e); // shouldn't be possible since this class is Cloneable
+         }
       }
    }
    
@@ -159,6 +165,19 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        *       found
        */
       ListNode<K, V> removeNode(int hashCode, int currentOffset, Object key);
+
+      /**
+       * Tries to collapse this node into an {@link InnerLeafTrieNode}. This is possible if this
+       * node has only one descendant. Ancestors of that one descendant, up to and including this
+       * node, can be collapsed into a single node.
+       *
+       * @param hashCode a hash code that is known to exist under this trie node
+       * @param currentOffset represents the number of bits of the hash code represented by this
+       *       node's ancestors
+       * @return a new {@link InnerLeafTrieNode} with the single descendant or {@code null} if this
+       *       node could not be collapsed
+       */
+      InnerLeafTrieNode<K, V> tryCollapse(int hashCode, int currentOffset);
       
       /**
        * Determines if this node has any mappings.
@@ -167,6 +186,21 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        *       otherwise
        */
       boolean isEmpty();
+      
+      /**
+       * Computes the depth of this trie. The depth is the maximum height of the tree, determined by
+       * traversing each sub-trie until we find the deepest leaf node.
+       *
+       * @return the depth of this trie
+       */
+      int depth();
+      
+      /**
+       * Clones this trie node by creating a deep copy that shares no references with this original.
+       *
+       * @return a deep copy of this node
+       */
+      TrieNode<K, V> clone();
    }
    
    /**
@@ -180,7 +214,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class IntermediateTrieNode<K, V> implements TrieNode<K, V> {
+   private static class IntermediateTrieNode<K, V> implements TrieNode<K, V>, Cloneable {
       
       private static final TrieNode<?, ?> EMPTY[] = new TrieNode<?, ?>[0];
       
@@ -301,8 +335,15 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> child = children[index];
          ListNode<K, V> ret = child.removeNode(hashCode, currentOffset + 6, key);
-         // TODO: handle collapsing child into InnerLeafTrieNode
-         if (ret == null || (ret != child && !child.isEmpty())) {
+         if (ret == null) {
+            return null; // nothing removed
+         }
+         if (ret != child && !child.isEmpty()) {
+            // not deleting this child, but maybe we need to collapse it into an InnerLeafTrieNode
+            InnerLeafTrieNode<K, V> replacement = child.tryCollapse(hashCode, currentOffset);
+            if (replacement != null) {
+               children[index] = replacement;
+            }
             return ret;
          }
          present &= ~mask;
@@ -326,8 +367,67 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
       
       @Override
+      public InnerLeafTrieNode<K, V> tryCollapse(int hashCode, int currentOffset) {
+         if (children.length != 1) {
+            return null;
+         }
+         TrieNode<K, V> child = children[0];
+         if (child instanceof InnerLeafTrieNode) {
+            // our only child is an inner-leaf node, so we can fold this node into it
+            InnerLeafTrieNode<K, V> ret = (InnerLeafTrieNode<K, V>) child;
+            // assertion verifies that the inner-leaf node's hash code is compatible
+            assert (((1 << currentOffset) - 1) & hashCode)
+                  == (((1 << currentOffset) - 1) & ret.hash); 
+            return ret;
+         } else if (child instanceof LeafTrieNode) {
+            assert currentOffset == 30;
+            int lowBits = (((1 << 30) - 1) & hashCode);
+            assert Long.bitCount(present) == 1;
+            // we need to compute the right hash code for the leaf based on 30 bits of the
+            // supplied hash code and two bits from the position of this child
+            int highBits = Long.numberOfTrailingZeros(present);
+            assert highBits >= 0 && highBits <= 3;
+            int hash = highBits << 30 + lowBits;
+            LeafTrieNode<K, V> leaf = (LeafTrieNode<K, V>) child;
+            // make an inner-leaf node that looks the same as the given leaf node
+            InnerLeafTrieNode<K, V> ret = new InnerLeafTrieNode<>(hash, leaf.key, leaf.value);
+            ret.next = leaf.next;
+            return ret;
+         } else {
+            return null;
+         }
+      }
+      
+      @Override
       public boolean isEmpty() {
          return present == 0;
+      }
+      
+      @Override
+      public int depth() {
+         int max = 0;
+         for (TrieNode<K, V> child : children) {
+            int d = child.depth();
+            if (d > max) {
+               max = d;
+            }
+         }
+         return max + 1;
+      }
+
+      @Override
+      public TrieNode<K, V> clone() {
+         try {
+            @SuppressWarnings("unchecked")
+            IntermediateTrieNode<K, V> clone = (IntermediateTrieNode<K, V>) super.clone();
+            clone.children = createChildren(children.length);
+            for (int i = 0, len = children.length; i < len; i++) {
+               clone.children[i] = children[i].clone();
+            }
+            return clone;
+         } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e); // shouldn't be possible since this class is Cloneable
+         }
       }
    }
    
@@ -398,7 +498,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          }
          // not found, so add it
          ListNode<K, V> newNode = new ListNode<K, V>(newKey, newValue);
-         newNode = this.next;
+         newNode.next = this.next;
          this.next = newNode;
          return null;
       }
@@ -424,19 +524,19 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
             next.value = tmpV;
             ListNode<K, V> ret = next;
             next = next.next;
+            ret.next = null;
             return ret;
          }
          
          // find node in linked list
-         ListNode<K, V> current = this;
-         while (current.next != null) {
-            ListNode<K, V> node = current.next;
-            if (Objects.equals(this.key, keyToRemove)) {
+         ListNode<K, V> predecessor = this;
+         for (ListNode<K, V> node = next; node != null; predecessor = node, node = node.next) {
+            if (Objects.equals(node.key, keyToRemove)) {
                // remove found node
-               current.next = node.next;
+               predecessor.next = node.next;
+               node.next = null;
                return node;
             }
-            current = current.next;
          }
          
          // not found
@@ -444,14 +544,49 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       }
 
       @Override
+      public InnerLeafTrieNode<K, V> tryCollapse(int hashCode, int currentOffset) {
+         // nothing to collapse
+         return null;
+      }
+      
+      @Override
       public boolean isEmpty() {
          return false;
       }
+      
+      @Override
+      public int depth() {
+         return 1;
+      }
+         
+      @Override
+      public LeafTrieNode<K, V> clone() {
+         return (LeafTrieNode<K, V>) super.clone();
+      }
    }
    
-   // TODO: javadoc
+   /**
+    * An inner node in the trie, but with leaf information. This type of node is used to
+    * "short-circuit" searches down a branch that has only one descendant. Instead of storing the
+    * extra nodes along the branch just to store a single leaf, the entire branch can be collapsed
+    * into one of these nodes.
+    * 
+    * <p>This can reduce search times by minimizing operations during key queries. It can also speed
+    * up store operations since we don't need to create the whole branch of intermediate nodes if a
+    * branch has only one descendant. When branches later get more occupants, the node can be easily
+    * expanded, deferring the work of constructing the whole branch with minimal overhead. There is
+    * some level of overhead when removing nodes, to collapse branches into these inner-leaf nodes
+    * where possible, but it is minor. 
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class InnerLeafTrieNode<K, V> extends LeafTrieNode<K, V> {
-      private final int hash;
+      // Since this leaf isn't at the bottom of the branch, we can't infer its hash code just from
+      // the path to this node. So we must store it explicitly.
+      final int hash;
       
       InnerLeafTrieNode(int hashCode, K key, V value) {
          super(key, value);
@@ -476,39 +611,73 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          return hashCode == this.hash ? doRemoveNode(keyToRemove) : null;
       }
       
-      TrieNode<K, V> expand(int newHashCode, int currentOffset) {
-         // TODO: get this to work -- should expand this node into long enough branch that
-         // it no longer collides with newHashCode and then replace with LeafTrieNode if the
-         // branch ends up going all the way down to leaf
-         int significantBits = (hash >> currentOffset) & 0x3f;
-         long mask = 1L << significantBits;
-         return new IntermediateTrieNode<K, V>(mask,
-               createNode(hash, currentOffset + 6, key, value));
+      /**
+       * Expands this node into a branch of one or more {@link IntermediateTrieNode}s. The length
+       * of the branch depends on the differences between the given new hash code that we must
+       * accommodate and this node's hash code.
+       *
+       * @param newHashCode the new hash code that is being added to this branch
+       * @param currentOffset the current offset into the hash code, representing the number of bits
+       *       already represented by the path to this node
+       * @return a new node that includes a branch that holds this node's current keys and values
+       *       and is long enough to accommodate insertion of a key with the given hash code
+       */
+      IntermediateTrieNode<K, V> expand(int newHashCode, int currentOffset) {
+         // TODO: this would be a little simpler via recursion -- change it?
+         int branchLength = 0;
+         while (true) {
+            assert currentOffset < 32;
+            int mySignificantBits = (hash >> currentOffset) & 0x3f;
+            int newSignificantBits = (newHashCode >> currentOffset) & 0x3f;
+            if (mySignificantBits != newSignificantBits) {
+               // here's the point where we split them
+               long mask = 1L << mySignificantBits;
+               // last intermediate level is at offset == 30
+               LeafTrieNode<K, V> leaf;
+               if (currentOffset < 30) {
+                  // just pushing this inner-leaf down deeper in the tree
+                  leaf = this;
+               } else {
+                  assert currentOffset == 30;
+                  // at the bottom, so copy this inner-leaf to a normal leaf
+                  leaf = new LeafTrieNode<K, V>(key, value);
+                  leaf.next = this.next;
+               }
+               IntermediateTrieNode<K, V> node = new IntermediateTrieNode<K, V>(mask, leaf);
+               while (branchLength > 0) {
+                  // pop back up the tree, creating intermediate nodes as we go
+                  currentOffset -= 6;
+                  assert currentOffset >= 0;
+                  mySignificantBits = (hash >> currentOffset) & 0x3f;
+                  mask = 1L << mySignificantBits;
+                  node = new IntermediateTrieNode<K, V>(mask, node);
+                  branchLength--;
+               }
+               return node;
+            }
+            // need to go further down the tree to find where the node must split
+            currentOffset += 6;
+            branchLength++;
+         }
       }
    }
    
    /**
-    * Creates a path of trie nodes for the specified key. If less than 32 bits of the hash code
-    * remain, then this will not be a full path. It will be just long enough to get from the
-    * current level of the trie (implied by the number of bits remaining) to the leaf that will
-    * contain the new mapping.
+    * Creates a trie node for the specified key. If less than 32 bits of the hash code remain, then
+    * this will be inner-leaf node. Otherwise, it is a normal leaf, at the bottom of the tree.
     *
-    * @param hashCodeRemaining the remaining hash code for the key, shifted so that prior bits
-    *       (for higher levels in the trie) are absent so that the number of bits remaining are
-    *       the least significant bits and more significant bits are all zero
-    * @param bitsRemaining the number of bits remaining in the hash code, 32 at the root node
+    * @param hashCode the hash code for the key
+    * @param currentOffset the number of bits remaining in the hash code, 32 at the root node
     *       but only two at the deepest level
+    * @param currentOffset the current offset into the hash code, representing the number of bits
+    *       already represented by the path to this node
     * @param key the key to find
     * @param value the value to associate with this key if not found and a new mapping is created
-    * @return the newly created trie node (which may have a line of new descendants)
+    * @return the newly created trie node
     */
-   static <K, V> TrieNode<K, V> createNode(int hashCode, int currentOffset, K key, V value) {
+   static <K, V> LeafTrieNode<K, V> createNode(int hashCode, int currentOffset, K key, V value) {
       if (currentOffset < 32) {
-         int significantBits = (hashCode >> currentOffset) & 0x3f;
-         long mask = 1L << significantBits;
-         // TODO: create InnerLeafTrieNode
-         return new IntermediateTrieNode<K, V>(mask,
-               createNode(hashCode, currentOffset + 6, key, value));
+         return new InnerLeafTrieNode<K, V>(hashCode, key, value);
       } else {
          return new LeafTrieNode<K, V>(key, value);
       }
@@ -525,9 +694,9 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
    transient int size;
    
    /**
-    * The root node of the trie ({@code null} if the trie is empty).
+    * The root node of the trie, {@code null} if the trie is empty.
     */
-   transient IntermediateTrieNode<K, V> root;
+   transient TrieNode<K, V> root;
    
    /**
     * Constructs a new, empty map.
@@ -594,12 +763,18 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
    @Override
    public V put(K key, V value) {
       if (root == null) {
-         root = (IntermediateTrieNode<K, V>) createNode(hash(key), 0, key, value);
+         root = createNode(hash(key), 0, key, value);
          modCount++;
          size++;
          return null;
       }
-      ListNode<K, V> existing = root.findOrAddNode(hash(key), 0, key, value);
+      int hash = hash(key);
+      ListNode<K, V> existing = root.findOrAddNode(hash, 0, key, value);
+      if (existing == INNER_NODE_NEEDS_EXPANSION) {
+         root = ((InnerLeafTrieNode<K, V>) root).expand(hash, 0);
+         existing = root.findOrAddNode(hash, 0, key, value);
+         assert existing != INNER_NODE_NEEDS_EXPANSION;
+      }
       if (existing != null) {
          V ret = existing.value;
          existing.value = value;
@@ -615,8 +790,16 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       if (root == null) {
          return null;
       }
-      ListNode<K, V> removed = root.removeNode(hash(key), 0, key);
+      int hash = hash(key);
+      ListNode<K, V> removed = root.removeNode(hash, 0, key);
       if (removed != null) {
+         if (removed != root && !root.isEmpty()) {
+            // didn't remove the root, but maybe we need to collapse it
+            InnerLeafTrieNode<K, V> replacement = root.tryCollapse(hash, 0);
+            if (replacement != null) {
+               root = replacement;
+            }
+         }
          modCount++;
          if (--size == 0) {
             assert root.isEmpty();
@@ -647,32 +830,49 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
     */
    Entry<K, V> entry(final ListNode<K, V> node) {
       return new Entry<K, V>() {
+         private final K key = node.key;
+         private V memoizedValue = node.value;
          private ListNode<K, V> listNode = node;
-         private final int myModCount = modCount; 
+         private int myModCount = modCount;
+         
+         private boolean refreshNode() {
+            if (modCount != myModCount) {
+               if (root == null) {
+                  return false;
+               }
+               ListNode<K, V> newNode = root.findNode(hash(key), 0, key);
+               if (newNode == null) {
+                  return false;
+               }
+               listNode = newNode;
+               memoizedValue = newNode.value;
+               myModCount = modCount;
+            }
+            return true;
+         }
          
          @Override
          public K getKey() {
-            return listNode.key;
+            return key;
          }
 
          @Override
          public V getValue() {
+            if (!refreshNode()) {
+               return memoizedValue;
+            }
             return listNode.value;
          }
 
          @Override
          public V setValue(V value) {
-            V ret = listNode.value;
-            if (modCount != myModCount) {
-               if (root == null) {
-                  throw new ConcurrentModificationException();
-               }
-               listNode = root.findNode(hash(listNode.key), 0, listNode.key);
-               if (listNode == null) {
-                  throw new ConcurrentModificationException();
-               }
+            if (!refreshNode()) {
+               // key was concurrently removed from the map
+               throw new ConcurrentModificationException();
             }
+            V ret = listNode.value;
             listNode.value = value;
+            memoizedValue = value;
             return ret;
          }
          
@@ -693,22 +893,23 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       };
    }
    
+   // for testing
+   int depth() {
+      return root == null ? 0 : root.depth();
+   }
+   
    @Override
    public HamtMap<K, V> clone() {
-      if (this.getClass() == HamtMap.class) {
-         return new HamtMap<K, V>(this);
-      } else {
-         try {
-            @SuppressWarnings("unchecked")
-            HamtMap<K, V> clone = (HamtMap<K, V>) super.clone();
-            clone.clear();
-            clone.putAll(this);
-            return clone;
-            
-         } catch (CloneNotSupportedException e) {
-            // we implement Cloneable, so this shouldn't be possible
-            throw new AssertionError();
-         }
+      try {
+         @SuppressWarnings("unchecked")
+         HamtMap<K, V> clone = (HamtMap<K, V>) super.clone();
+         clone.modCount = 0;
+         clone.root = root.clone();
+         return clone;
+         
+      } catch (CloneNotSupportedException e) {
+         // we implement Cloneable, so this shouldn't be possible
+         throw new AssertionError();
       }
    }
    
@@ -874,7 +1075,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          } else {
             stack = new ArrayDeque<StackFrame<K, V>>(6);
             TrieNode<K, V> node = root;
-            for (int i = 0; i < 6; i++) {
+            while (node instanceof IntermediateTrieNode) {
                IntermediateTrieNode<K, V> iNode = (IntermediateTrieNode<K, V>) node; 
                stack.push(new StackFrame<K, V>(iNode));
                node = iNode.children[0];
@@ -916,7 +1117,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
                if (++frame.childIndex < frame.node.children.length) {
                   stack.push(frame);
                   TrieNode<K, V> node = frame.node.children[frame.childIndex];
-                  for (int i = stack.size(); i < 6; i++) {
+                  while (node instanceof IntermediateTrieNode) {
                      IntermediateTrieNode<K, V> iNode = (IntermediateTrieNode<K, V>) node; 
                      stack.push(new StackFrame<K, V>(iNode));
                      node = iNode.children[0];
@@ -961,7 +1162,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          int hashCode = hash(key);
          int currentOffset = 0;
          TrieNode<K, V> node = root;
-         while (currentOffset < 32) {
+         while (node instanceof IntermediateTrieNode) {
             IntermediateTrieNode<K, V> iNode = (IntermediateTrieNode<K, V>) node; 
             int significantBits = (hashCode >> currentOffset) & 0x3f;
             long mask = 1L << significantBits;
