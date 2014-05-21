@@ -146,7 +146,7 @@ public class WeightBalancedTreeMap<K, V>
 
    public WeightBalancedTreeMap(Comparator<? super K> comparator) {
       if (comparator == null) {
-         this.comparator = CollectionUtils.NATURAL_ORDERING;
+         this.comparator = CollectionUtils.naturalOrder();
       } else {
          this.comparator = comparator;
       }
@@ -196,7 +196,7 @@ public class WeightBalancedTreeMap<K, V>
 
    @Override
    public Comparator<? super K> comparator() {
-      return comparator == CollectionUtils.NATURAL_ORDERING ? null : comparator;
+      return comparator == Comparator.naturalOrder() ? null : comparator;
    }
 
    @Override

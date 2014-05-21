@@ -17,21 +17,7 @@ import java.util.stream.StreamSupport;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface ImmutableCollection<E> extends Iterable<E> {
-   /**
-    * Determines the size of the collection.
-    *
-    * @return the number of elements in this collection
-    */
-   int size();
-   
-   /**
-    * Determines if the collection is empty or not.
-    *
-    * @return true if the collection is empty, false otherwise
-    */
-   boolean isEmpty();
-   
+public interface ImmutableCollection<E> extends SizedIterable<E> {
    /**
     * Returns an array with the same elements as this collection. The order of elements in the
     * returned array is the same as the order that elements are returned by the collection's

@@ -282,7 +282,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       /** {@inheritDoc} */
       @Override
       public Comparator<? super E> comparator() {
-         return comp == CollectionUtils.NATURAL_ORDERING ? null : comp;
+         return comp == Comparator.naturalOrder() ? null : comp;
       }
 
       /** {@inheritDoc} */
@@ -701,7 +701,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       data = new Object[initialCapacity];
       size = 0;
       if (comp == null) {
-         this.comp = CollectionUtils.NATURAL_ORDERING;
+         this.comp = CollectionUtils.naturalOrder();
       } else {
          this.comp = comp;
       }
@@ -751,7 +751,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     * used to re-sort the array after bulk insertion operations.
     */
    private void sort() {
-      if (comp == CollectionUtils.NATURAL_ORDERING) {
+      if (comp == Comparator.naturalOrder()) {
          Arrays.sort(data);
       }
       else {
@@ -1253,7 +1253,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
       in.defaultReadObject();
       comp = (Comparator<? super E>) in.readObject();
       if (comp == null) {
-         comp = CollectionUtils.NATURAL_ORDERING;
+         comp = CollectionUtils.naturalOrder();
       }
       size = in.readInt();
       data = new Object[size];
@@ -1270,7 +1270,7 @@ public class SortedArraySet<E> implements NavigableSet<E>, Cloneable, Serializab
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
       out.defaultWriteObject();
-      out.writeObject(comp == CollectionUtils.NATURAL_ORDERING ? null : comp);
+      out.writeObject(comp == Comparator.naturalOrder() ? null : comp);
       out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);

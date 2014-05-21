@@ -82,7 +82,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     */
    protected AbstractNavigableMap(Comparator<? super K> comparator) {
       if (comparator == null) {
-         this.comparator = CollectionUtils.NATURAL_ORDERING;
+         this.comparator = CollectionUtils.naturalOrder();
       } else {
          this.comparator = comparator;
       }
@@ -96,7 +96,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     */
    @Override
    public Comparator<? super K> comparator() {
-      return comparator == CollectionUtils.NATURAL_ORDERING ? null : comparator;
+      return comparator == Comparator.naturalOrder() ? null : comparator;
    }
    
    private K key(Entry<K, V> entry) {
@@ -509,7 +509,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       in.defaultReadObject();
       comparator = (Comparator<? super K>) in.readObject();
       if (comparator == null) {
-         comparator = CollectionUtils.NATURAL_ORDERING;
+         comparator = CollectionUtils.naturalOrder();
       }
    }
    

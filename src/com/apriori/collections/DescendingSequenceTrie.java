@@ -15,9 +15,14 @@ class DescendingSequenceTrie<K, V> extends DescendingMap<List<K>, V>
    NavigableSequenceTrie<K, V> base() {
       return (NavigableSequenceTrie<K, V>) base;
    }
+   
+   @Override
+   public V put(Iterable<K> key, V value) {
+      return base().put(key, value);
+   }
 
    @Override
-   public Comparator<? extends K> componentComparator() {
+   public Comparator<? super K> componentComparator() {
       return base().componentComparator();
    }
    
@@ -27,12 +32,12 @@ class DescendingSequenceTrie<K, V> extends DescendingMap<List<K>, V>
    }
 
    @Override 
-   public NavigableSequenceTrie<K, V> prefixMap(List<K> prefix) {
+   public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix) {
       return new DescendingSequenceTrie<K, V>(base().prefixMap(prefix));
    }
 
    @Override 
-   public NavigableSequenceTrie<K, V> prefixMap(List<K> prefix, int numComponents) {
+   public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
       return new DescendingSequenceTrie<K, V>(base().prefixMap(prefix, numComponents));
    }
    
@@ -71,5 +76,45 @@ class DescendingSequenceTrie<K, V> extends DescendingMap<List<K>, V>
    @Override
    public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey) {
       return new DescendingSequenceTrie<K, V>(base().tailMap(fromKey));
+   }
+   
+   @Override
+   public Entry<List<K>, V> lowerEntry(Iterable<K> key) {
+      return base().higherEntry(key);
+   }
+
+   @Override
+   public List<K> lowerKey(Iterable<K> key) {
+      return base().higherKey(key);
+   }
+
+   @Override
+   public Entry<List<K>, V> floorEntry(Iterable<K> key) {
+      return base().ceilingEntry(key);
+   }
+
+   @Override
+   public List<K> floorKey(Iterable<K> key) {
+      return base().ceilingKey(key);
+   }
+
+   @Override
+   public Entry<List<K>, V> ceilingEntry(Iterable<K> key) {
+      return base().floorEntry(key);
+   }
+
+   @Override
+   public List<K> ceilingKey(Iterable<K> key) {
+      return base().floorKey(key);
+   }
+
+   @Override
+   public Entry<List<K>, V> higherEntry(Iterable<K> key) {
+      return base().lowerEntry(key);
+   }
+
+   @Override
+   public List<K> higherKey(Iterable<K> key) {
+      return base().lowerKey(key);
    }
 }

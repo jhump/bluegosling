@@ -42,7 +42,7 @@ import java.util.Map;
  * annotation.arrayOfClasses() == null; // true! 
  * 
  * // So the bridge to the rescue!
- * com.apriori.apt.reflect.Class classes[] = bridge(annotation.arrayOfClasses());
+ * ArClass classes[] = bridge(annotation.arrayOfClasses());
  * // Yay!
  * classes[0].getName(); // "SomeClass" ftw!
  * </pre>
@@ -50,12 +50,12 @@ import java.util.Map;
  * <p>So use {@link #createBridge(ArAnnotation)} to create an instance of an annotation interface
  * based on a {@link ArAnnotation}. And then use {@link #bridge(Class)} or {@link #bridge(Class[])}
  * to access class tokens returned from that interface. You can optionally use
- * {@link #bridge(Object)} to access other fields returned from the interface but it's not
- * necessary.
+ * {@link #bridge(Object)} to access other fields returned from the interface, for consistency, but
+ * it's not necessary.
  * 
  * <p>Since the annotation method actually returns {@code null}, the {@link #bridge(Class)} method
  * doesn't actually "convert" the incoming argument. In reality, the call to the annotation method
- * sets thread-local state to the bridged value which is then accessed via the call to
+ * sets thread-local state about the bridged value, which is then accessed via the call to
  * {@link #bridge(Class)}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)

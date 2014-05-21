@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.RandomAccess;
 
@@ -22,12 +21,35 @@ import java.util.RandomAccess;
 //TODO: use/enforce capacity constraint
 public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<E>, RandomAccess {
 
+   private static final int DEFAULT_SIZE = 16;
+   private static final int MINIMUM_SIZE = 2;
+   
    transient int head;
    transient int tail;
    transient int capacity;
    transient int size;
    transient Object data[];
    
+   public RandomAccessArrayDeque() {
+      data = new Object[DEFAULT_SIZE];
+   }
+
+   public RandomAccessArrayDeque(Collection<? extends E> coll) {
+      data = new Object[Math.min(MINIMUM_SIZE, coll.size())];
+      addAll(coll);
+   }
+
+   public RandomAccessArrayDeque(int initialCapacity, int maximumCapacity) {
+      if (maximumCapacity < 0) {
+         throw new IllegalArgumentException();
+      }
+      if (initialCapacity < 0) {
+         throw new IllegalArgumentException();
+      }
+      capacity = maximumCapacity;
+      data = new Object[Math.min(MINIMUM_SIZE, initialCapacity)];
+   }
+
    @Override
    public boolean isEmpty() {
       return size == 0;
@@ -43,6 +65,12 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    public <T> T[] toArray(T[] a) {
       // TODO Auto-generated method stub
       return null;
+   }
+   
+   @Override
+   protected void removeRange(int fromIndex, int toIndex) {
+      // TODO Auto-generated method stub
+      modCount++;
    }
    
    @Override
@@ -106,23 +134,6 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    }
    
    @Override
-   public ListIterator<E> listIterator() {
-      return listIterator(0);
-   }
-   
-   @Override
-   public ListIterator<E> listIterator(int index) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-   
-   @Override
-   public List<E> subList(int fromIndex, int toIndex) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-   
-   @Override
    public void addFirst(E e) {
       if (!offerFirst(e)) {
          throw new IllegalStateException("deque is full");
@@ -138,6 +149,9 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public boolean offerFirst(E e) {
+      if (size == capacity && capacity != 0) {
+         return false;
+      }
       // TODO Auto-generated method stub
       modCount++;
       return false;
@@ -145,6 +159,9 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public boolean offerLast(E e) {
+      if (size == capacity && capacity != 0) {
+         return false;
+      }
       // TODO Auto-generated method stub
       modCount++;
       return false;
@@ -168,16 +185,30 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public E pollFirst() {
-      // TODO Auto-generated method stub
+      if (size == 0) {
+         return null;
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[head];
+      if (++head >= data.length) {
+         head -= data.length;
+      }
       modCount++;
-      return null;
+      return ret;
    }
    
    @Override
    public E pollLast() {
-      // TODO Auto-generated method stub
+      if (size == 0) {
+         return null;
+      }
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[tail];
+      if (--tail < 0) {
+         tail += data.length;
+      }
       modCount++;
-      return null;
+      return ret;
    }
    
    @Override
@@ -210,15 +241,19 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public boolean removeFirstOccurrence(Object o) {
-      // TODO Auto-generated method stub
-      modCount++;
+      if (CollectionUtils.removeObject(o, iterator(), true)) {
+         modCount++;
+         return true;
+      }
       return false;
    }
    
    @Override
    public boolean removeLastOccurrence(Object o) {
-      // TODO Auto-generated method stub
-      modCount++;
+      if (CollectionUtils.removeObject(o, descendingIterator(), true)) {
+         modCount++;
+         return true;
+      }
       return false;
    }
    
@@ -269,15 +304,9 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    }
    
    @Override
-   public Iterator<E> iterator() {
-      return listIterator();
-   }
-   
-   @Override
    public Iterator<E> descendingIterator() {
-      final ListIterator<E> listIter = listIterator(size());
+      ListIterator<E> listIter = listIterator(size());
       return new Iterator<E>() {
-
          @Override
          public boolean hasNext() {
             return listIter.hasPrevious();

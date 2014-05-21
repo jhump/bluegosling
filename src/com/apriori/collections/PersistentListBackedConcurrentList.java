@@ -3,14 +3,14 @@ package com.apriori.collections;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
 // TODO: tests
-public class PersistentListBackedConcurrentList<E> implements List<E> {
+public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> {
    
    private final AtomicReference<PersistentList<E>> underlying;
    
@@ -161,6 +161,7 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
       }
    }
 
+   @Override
    public boolean replace(int index, E existing, E replacement) {
       while (true) {
          PersistentList<E> original = underlying.get();
@@ -187,6 +188,42 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
    }
 
    @Override
+   public boolean addAfter(int index, E expectedPriorValue, E addition) {
+      if (index < 1) {
+         throw new IllegalArgumentException();
+      }
+      while (true) {
+         PersistentList<E> original = underlying.get();
+         E priorValue = original.get(index - 1);
+         if (!Objects.equals(priorValue, expectedPriorValue)) {
+            return false;
+         }
+         PersistentList<E> modified = original.add(index, addition);
+         if (underlying.compareAndSet(original, modified)) {
+            return true;
+         }
+      }
+   }
+
+   @Override
+   public boolean addBefore(int index, E expectedNextValue, E addition) {
+      while (true) {
+         PersistentList<E> original = underlying.get();
+         if (index >= original.size()) {
+            throw new IllegalArgumentException();
+         }
+         E nextValue = original.get(index);
+         if (!Objects.equals(nextValue, expectedNextValue)) {
+            return false;
+         }
+         PersistentList<E> modified = original.add(index, addition);
+         if (underlying.compareAndSet(original, modified)) {
+            return true;
+         }
+      }
+   }
+
+   @Override
    public E remove(int index) {
       while (true) {
          PersistentList<E> original = underlying.get();
@@ -197,6 +234,7 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
       }
    }
 
+   @Override
    public boolean remove(int index, Object o) {
       while (true) {
          PersistentList<E> original = underlying.get();
@@ -236,7 +274,7 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
    }
 
    @Override
-   public List<E> subList(int fromIndex, int toIndex) {
+   public ConcurrentList<E> subList(int fromIndex, int toIndex) {
       ImmutableList<E> list = underlying.get();
       if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
          throw new IndexOutOfBoundsException();
@@ -244,7 +282,7 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
       return new SubList(fromIndex, toIndex);
    }
    
-   private class SubList implements List<E> {
+   private class SubList implements ConcurrentList<E> {
       private final int from;
       private final int to;
       
@@ -350,14 +388,38 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
       }
 
       @Override
+      public boolean replace(int index, E expectedValue, E newValue) {
+         // TODO: implement me
+         return false;
+      }
+
+      @Override
       public void add(int index, E element) {
          // TODO: implement me
+      }
+
+      @Override
+      public boolean addAfter(int index, E expectedPriorValue, E addition) {
+         // TODO: implement me
+         return false;
+      }
+
+      @Override
+      public boolean addBefore(int index, E expectedNextValue, E addition) {
+         // TODO: implement me
+         return false;
       }
 
       @Override
       public E remove(int index) {
          // TODO: implement me
          return null;
+      }
+
+      @Override
+      public boolean remove(int index, E expectedValue) {
+         // TODO: implement me
+         return false;
       }
 
       @Override
@@ -382,14 +444,13 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
       }
 
       @Override
-      public List<E> subList(int fromIndex, int toIndex) {
+      public ConcurrentList<E> subList(int fromIndex, int toIndex) {
          ImmutableList<E> list = underlying();
          if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
             throw new IndexOutOfBoundsException();
          }
          return new SubList(from + fromIndex, from + toIndex);
       }
-      
    }
    
    private static class IterNode<E> {
@@ -551,8 +612,8 @@ public class PersistentListBackedConcurrentList<E> implements List<E> {
 
       @Override
       public void add(E e) {
+         // TODO: use addAfter if last fetched was next, addBefore otherwise
          throw new UnsupportedOperationException();
       }
-      
    }
 }

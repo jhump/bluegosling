@@ -25,24 +25,8 @@ import java.util.stream.StreamSupport;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: DoubleEndedGrowableArray?
-public interface GrowableArray<E> extends Iterable<E> {
-   
-   /**
-    * Returns the size, or capacity, of this growable array.
-    *
-    * @return the size of this array
-    */
-   int size();
-   
-   /**
-    * Returns true if this growable array is empty. The array is empty if its capacity is zero.
-    *
-    * @return true if this array is empty
-    */
-   default boolean isEmpty() {
-      return size() == 0;
-   }
-   
+public interface GrowableArray<E> extends SizedIterable<E> {
+
    /**
     * Retrieves the element at the given index.
     *

@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: javadoc
-public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
+public interface ImmutableMap<K, V> extends SizedIterable<ImmutableMap.Entry<K, V>> {
    
    /** 
     * A key-value-pair entry in an immutable map.
@@ -65,21 +65,6 @@ public interface ImmutableMap<K, V> extends Iterable<ImmutableMap.Entry<K, V>> {
        */
       @Override int hashCode();
    }
-   
-   /**
-    * Determines the number of entries in this map.
-    *
-    * @return the number of entries in this map
-    */
-   int size();
-   
-   /**
-    * Determines whether this map is empty or not. The map is empty if and only if it contains zero
-    * entries.
-    *
-    * @return true if this map is entry, false otherwise
-    */
-   boolean isEmpty();
    
    boolean containsKey(Object o);
    

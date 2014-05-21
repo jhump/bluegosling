@@ -1,7 +1,7 @@
 package com.apriori.collections;
 
 import java.text.Collator;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -26,29 +26,26 @@ import java.util.NoSuchElementException;
 //TODO: javadoc
 //TODO: tests
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
-public abstract class SimpleStringTrie<V> implements NavigableCompositeTrie<CharSequence, Character, V> {
+public abstract class SimpleStringTrie<V>
+      implements NavigableCompositeTrie<CharSequence, Character, V> {
 
    static final Componentizer<CharSequence, Character> COMPONENTIZER =
          new Componentizer<CharSequence, Character>() {
             @Override public Iterable<Character> getComponents(final CharSequence key) {
                return new Iterable<Character>() {
-                  @Override public Iterator<Character> iterator() {
-                     return new Iterator<Character>() {
+                  @Override public CharIterator iterator() {
+                     return new CharIterator() {
                         private int index = 0;
                         
                         @Override public boolean hasNext() {
                            return index < key.length();
                         }
 
-                        @Override public Character next() {
+                        @Override public char nextChar() {
                            if (index >= key.length()) {
                               throw new NoSuchElementException();
                            }
                            return key.charAt(index++);
-                        }
-
-                        @Override public void remove() {
-                           throw new UnsupportedOperationException();
                         }
                      };
                   }
@@ -87,6 +84,10 @@ public abstract class SimpleStringTrie<V> implements NavigableCompositeTrie<Char
    
    public Collator collator() {
       return collator;
+   }
+   
+   @Override public Comparator<CharSequence> comparator() {
+      return collator::compare;
    }
    
    @Override public Componentizer<CharSequence, Character> componentizer() {

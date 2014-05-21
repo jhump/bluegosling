@@ -23,19 +23,13 @@ final class CollectionUtils {
    }
    
    /**
-    * A comparator that uses the objects' {@linkplain Comparable natural ordering}.
+    * Exactly the same as {@link Comparator#naturalOrder()}, but can be used to compare objects
+    * whose type is unknown. The comparator will throw a {@link ClassCastException} if presented
+    * with arguments that aren't mutually {@linkplain Comparable comparable}. 
     */
-   public static final Comparator<Object> NATURAL_ORDERING = new Comparator<Object>() {
-      @SuppressWarnings("unchecked")
-      @Override
-      public int compare(Object o1, Object o2) {
-         return ((Comparable<Object>) o1).compareTo(o2);
-      }
-   };
-   
-   @SuppressWarnings({ "unchecked", "rawtypes" })
-   public static final <T extends Comparable<T>> Comparator<T> naturalOrdering() {
-      return (Comparator) NATURAL_ORDERING;
+   @SuppressWarnings("unchecked")
+   public static Comparator<Object> naturalOrder() {
+      return (Comparator<Object>) Comparator.naturalOrder();
    }
 
    /**
@@ -507,12 +501,8 @@ final class CollectionUtils {
    }
    
    // TODO: javadoc
-   public static Object[] toArray(ImmutableCollection<?> coll) {
+   public static Object[] toArray(SizedIterable<?> coll) {
       return toArray(coll, coll.size());
-   }
-   
-   public static Object[] toArray(GrowableArray<?> a) {
-      return toArray(a, a.size());
    }
    
    private static Object[] toArray(Iterable<?> iterable, int size) {
@@ -535,12 +525,8 @@ final class CollectionUtils {
    }
    
    //TODO: javadoc
-   public static <T> T[] toArray(ImmutableCollection<?> coll, T[] array) {
+   public static <T> T[] toArray(SizedIterable<?> coll, T[] array) {
       return toArray(coll, coll.size(), array);
-   }
-   
-   public static <T> T[] toArray(GrowableArray<?> a, T[] array) {
-      return toArray(a, a.size(), array);
    }
    
    private static <T> T[] toArray(Iterable<?> iterable, int size, T[] array) {

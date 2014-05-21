@@ -364,7 +364,7 @@ public final class PriorityQueues {
             public int compare(Entry<E, P> o1, Entry<E, P> o2) {
                Comparator<? super P> comp = priorityQueue.comparator();
                if (comp == null) {
-                  comp = CollectionUtils.NATURAL_ORDERING;
+                  comp = CollectionUtils.naturalOrder();
                }
                return comp.compare(o1.getPriority(), o2.getPriority());
             }

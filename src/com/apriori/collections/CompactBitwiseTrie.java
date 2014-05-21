@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -49,7 +48,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       }
       this.bitConverter = bitConverter;
       if (comparator == null) {
-         this.comparator = CollectionUtils.NATURAL_ORDERING;
+         this.comparator = CollectionUtils.naturalOrder();
       } else {
          this.comparator = comparator;
       }
@@ -637,7 +636,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
 
    @Override public Comparator<? super K> comparator() {
       return new WrappedComparator<K>(bitConverter,
-            comparator == CollectionUtils.NATURAL_ORDERING ? null : comparator);
+            comparator == Comparator.naturalOrder() ? null : comparator);
    }
 
    @Override
@@ -668,12 +667,13 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
       return prefixMap(BitSequences.fromIterator(prefix.iterator()));
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix,
+         int numComponents) {
       return prefixMap(BitSequences.fromIterator(prefix.iterator()), numComponents);
    }
    

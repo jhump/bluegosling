@@ -40,7 +40,7 @@ import java.util.Queue;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface PriorityQueue<E, P> extends Iterable<PriorityQueue.Entry<E, P>> {
+public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E, P>> {
 
    /**
     * An entry in a priority queue. This represents an element in the queue and its associated
@@ -121,20 +121,6 @@ public interface PriorityQueue<E, P> extends Iterable<PriorityQueue.Entry<E, P>>
     *       {@linkplain Comparable natural ordering}
     */
    Comparator<? super P> comparator();
-   
-   /**
-    * Determines the size of the queue.
-    *
-    * @return the number of elements in this queue
-    */
-   int size();
-   
-   /**
-    * Determines if the queue is empty or not.
-    *
-    * @return true if the queue is empty, false otherwise
-    */
-   boolean isEmpty();
    
    /**
     * Returns an array with the same entries as this queue. The order of entries in the returned

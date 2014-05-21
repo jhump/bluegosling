@@ -38,7 +38,7 @@ public class ParallelSort {
     *       to complete
     */
    public static <T extends Comparable<T>> void sort(List<T> list, int requestedNumThreads) {
-      sort(list, CollectionUtils.<T> naturalOrdering(), requestedNumThreads);
+      sort(list, Comparator.naturalOrder(), requestedNumThreads);
    }
    
    /**

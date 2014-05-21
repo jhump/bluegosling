@@ -24,7 +24,8 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    
    @Override
    public Comparator<? super K> comparator() {
-      return DescendingSet.reverseComparator(base.comparator());
+      Comparator<? super K> comp = base.comparator();
+      return comp == null ? null : comp.reversed();
    }
 
    @Override
@@ -50,7 +51,7 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Set<Map.Entry<K, V>> entrySet() {
+   public Set<Entry<K, V>> entrySet() {
       return new TransformingSet<K, Map.Entry<K, V>>(keySet(), (k) -> floorEntry(k));
    }
 
@@ -100,7 +101,7 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Map.Entry<K, V> lowerEntry(K key) {
+   public Entry<K, V> lowerEntry(K key) {
       return base.higherEntry(key);
    }
 
@@ -110,7 +111,7 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Map.Entry<K, V> floorEntry(K key) {
+   public Entry<K, V> floorEntry(K key) {
       return base.ceilingEntry(key);
    }
 
@@ -120,7 +121,7 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Map.Entry<K, V> ceilingEntry(K key) {
+   public Entry<K, V> ceilingEntry(K key) {
       return base.floorEntry(key);
    }
 
@@ -130,7 +131,7 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Map.Entry<K, V> higherEntry(K key) {
+   public Entry<K, V> higherEntry(K key) {
       return base.lowerEntry(key);
    }
 
@@ -140,22 +141,22 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    }
 
    @Override
-   public Map.Entry<K, V> firstEntry() {
+   public Entry<K, V> firstEntry() {
       return base.lastEntry();
    }
 
    @Override
-   public Map.Entry<K, V> lastEntry() {
+   public Entry<K, V> lastEntry() {
       return base.firstEntry();
    }
 
    @Override
-   public Map.Entry<K, V> pollFirstEntry() {
+   public Entry<K, V> pollFirstEntry() {
       return base.pollLastEntry();
    }
 
    @Override
-   public java.util.Map.Entry<K, V> pollLastEntry() {
+   public Entry<K, V> pollLastEntry() {
       return base.pollFirstEntry();
    }
 

@@ -82,7 +82,7 @@ public class SlowParallelSort {
     */
    public static <T extends Comparable<T>> List<T> sort(List<? extends T> items,
          int requestedNumThreads) {
-      return sort(items, CollectionUtils.<T>naturalOrdering(), requestedNumThreads);
+      return sort(items, Comparator.naturalOrder(), requestedNumThreads);
    }
    
    /**

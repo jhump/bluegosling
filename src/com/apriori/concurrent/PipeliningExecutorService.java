@@ -341,13 +341,13 @@ public class PipeliningExecutorService<K> {
    /**
     * Creates a new service whose tasks are submitted to the specified pipeline. Shutting down the
     * returned service only affects submissions to the pipeline made by that service. Other tasks
-    * submitted from other sources will be continue to be accepted. Similarly, shutting down the
+    * submitted from other sources will continue to be accepted. Similarly, shutting down the
     * returned service in no way affects this {@link PipeliningExecutorService}, nor its underlying
     * executor.
     * 
     * <p>This method is an adapter. For APIs that expect an {@link ExecutorService}, you can use
-    * this to provide an executor that acts like a single-threaded executor, except it might
-    * actually be backed by a pool of threads.
+    * this to construct an executor that acts like a single-threaded executor and interleaves tasks
+    * with others for the same pipeline.
     *
     * @param pipelineKey the key that identifies the pipeline
     * @return a new executor service whose tasks are submitted to the given pipeline

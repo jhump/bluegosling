@@ -6,7 +6,6 @@ import com.apriori.collections.SimpleBitwiseTrie.WrappedComparator;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -19,32 +18,22 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    private final Comparator<? super K> comparator;
    
    public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter) {
-      this(bitConverter, (Comparator<? super K>) null);
+      this(bitConverter, null);
    }
 
-   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
+   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter,
+         Comparator<? super K> comparator) {
       if (bitConverter == null) {
          throw new NullPointerException();
       }
       this.bitConverter = bitConverter;
       if (comparator == null) {
-         this.comparator = CollectionUtils.NATURAL_ORDERING;
+         this.comparator = CollectionUtils.naturalOrder();
       } else {
          this.comparator = comparator;
       }
    }
 
-   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
-      this(bitConverter);
-      putAll(map);
-   }
-   
-   public ArrayMappedBitwiseTrie(BitConverter<? super K> bitConverter,
-         Comparator<? super K> comparator, Map<? extends K, ? extends V> map) {
-      this(bitConverter, comparator);
-      putAll(map);
-   }
-   
    @Override public BitConverter<? super K> componentizer() {
       return bitConverter;
    }
@@ -55,7 +44,7 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
 
    @Override public Comparator<? super K> comparator() {
       return new WrappedComparator<K>(bitConverter,
-            comparator == CollectionUtils.NATURAL_ORDERING ? null : comparator);
+            comparator == Comparator.naturalOrder() ? null : comparator);
    }
 
    @Override
@@ -245,13 +234,13 @@ public class ArrayMappedBitwiseTrie<K, V> implements NavigableCompositeTrie<K, B
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
       // TODO Auto-generated method stub
       return null;
    }
 
    @Override
-   public NavigableCompositeTrie<K, Boolean, V> prefixMap(List<Boolean> prefix, int numComponents) {
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix, int numComponents) {
       // TODO Auto-generated method stub
       return null;
    }

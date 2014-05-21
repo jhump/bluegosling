@@ -1,16 +1,16 @@
 package com.apriori.collections;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
- * are first broken down into a {@linkplain List list} of constituent components.
+ * are first broken down into a {@linkplain Iterable sequence} of constituent components using a
+ * {@link Componentizer}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <K> the type of keys in the map
- * @param <C> the component type of keys in the map (a key represents a sequence of these components)  
+ * @param <C> the component type of keys in the map (each key represents a sequence of components)  
  * @param <V> the type of values in the map
  * 
  * @see SequenceTrie
@@ -18,17 +18,45 @@ import java.util.Map;
 public interface CompositeTrie<K, C, V> extends Map<K, V> {
 
    /**
-    * The object used to break up single key values into a sequence of components. This can be
-    * null for {@link CompositeTrie}s that have their own internal mechanism for breaking a key
-    * into a sequence.
+    * The object used to break up single key values into a sequence of components.
     * 
-    * @return the object used to break up keys into sequences or {@code null} if that behavior is
-    *       intrinsic to the trie implementation
+    * @return the object used to break up keys into sequences
     */
    Componentizer<? super K, ? extends C> componentizer();
    
    /**
-    * Generates a view of all mappings whose keys have the specified prefix.
+    * Generates a view of all mappings whose keys have the specified prefix. The returned map is a
+    * constrained sub-map. Attempts to add mappings to the returned map with keys that do not begin
+    * with the prefix will generate {@link IllegalArgumentException}s.
+    * 
+    * <p>For example, suppose we have a trie that uses strings as keys. The strings are broken into
+    * character components. The trie has the following mappings:
+    * <pre>
+    * { "abcd" } -> 123,
+    * { "abxyz" } -> 456,
+    * { "efgh" } -> 789
+    * </pre>
+    * The prefix map, with a prefix of {@code 'a'}, would look like so:
+    * <pre>
+    * { "abcd" } -> 123,
+    * { "abxyz" } -> 456,
+    * </pre>
+    * If the mapping <tt>{ "mno" } -> 1001</tt> were added to the prefix map, an
+    * {@link IllegalArgumentException} would be thrown since it does not begin with the correct
+    * prefix. But adding <tt>{ "amno" } -> 1001</tt> would succeed, and the resulting prefix map
+    * would then look like the following:
+    * <pre>
+    * { "abcd" } -> 123,
+    * { "abxyz" } -> 456,
+    * { "amno" } -> 1001
+    * </pre>
+    * The new mapping would also be present in the main, underlying map:
+    * <pre>
+    * { "abcd" } -> 123,
+    * { "abxyz" } -> 456,
+    * { "amno" } -> 1001,
+    * { "efgh" } -> 789
+    * </pre>
     * 
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
@@ -38,10 +66,20 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
    /**
     * Generates a view of all mappings whose keys have the specified prefix.
     * 
+    * <p>This is effectively shorthand for repeated calls to {@link #prefixMap(Object)}, like so:
+    * <pre>
+    * CompositeTrie&lt;K, C, V&gt; result = someTrie;
+    * for (C component : prefix) {
+    *   result = result.prefixMap(component);
+    * }
+    * </pre>
+    * 
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
+    * 
+    * @see #prefixMap(Object)
     */
-   CompositeTrie<K, C, V> prefixMap(List<C> prefix);
+   CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. A maximum number of
@@ -51,29 +89,42 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * @param prefix a key prefix
     * @param numComponents the maximum number of components of the prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
+    * 
+    * @see #prefixMap(Object)
     */
-   CompositeTrie<K, C, V> prefixMap(List<C> prefix, int numComponents);
+   CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. The specified key
     * is broken up into components, and the resulting sequence is used as a prefix.
     * 
+    * <p>This is equivalent to the following:
+    * <pre>
+    * trie.prefixMap(componentizer().getComponents(prefix));
+    * </pre>
+    * 
     * @param prefix a key prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     * 
-    * @see #prefixMap(List)
+    * @see #prefixMap(Iterable)
     */
    CompositeTrie<K, C, V> prefixMapByKey(K prefix);
    
    /**
     * Generates a view of all mappings whose keys have the specified prefix. The specified key
-    * is broken up into components, and the resulting sequence is used as a prefix.
+    * is broken up into components, and up to the specified number of elements of the resulting
+    * sequence are used as a prefix.
+    * 
+    * <p>This is equivalent to the following:
+    * <pre>
+    * trie.prefixMap(componentizer().getComponents(prefix), numComponents);
+    * </pre>
     * 
     * @param prefix a key prefix
     * @param numComponents the maximum number of components of the prefix
     * @return a view of this map that represents the subset of keys with the specified prefix
     * 
-    * @see #prefixMap(List, int)
+    * @see #prefixMap(Iterable, int)
     */
    CompositeTrie<K, C, V> prefixMapByKey(K prefix, int numComponents);
 }

@@ -118,7 +118,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
     * natural ordering}.
     */
    public FibonacciHeapOrderedQueue() {
-      this(CollectionUtils.NATURAL_ORDERING);
+      this((Comparator<? super E>) null);
    }
    
    /**
@@ -128,7 +128,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
     */
    public FibonacciHeapOrderedQueue(Comparator<? super E> comp) {
       if (comp == null) {
-         this.comp = CollectionUtils.NATURAL_ORDERING;
+         this.comp = CollectionUtils.naturalOrder();
       } else {
          this.comp = comp;
       }
@@ -141,7 +141,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
     * @param coll a collection of elements that will be in the constructed queue
     */
    public FibonacciHeapOrderedQueue(Collection<? extends E> coll) {
-      this(coll, CollectionUtils.NATURAL_ORDERING);
+      this(coll, null);
    }
 
    public FibonacciHeapOrderedQueue(Collection<? extends E> coll, Comparator<? super E> comp) {
@@ -193,7 +193,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
     * @return the comparator used to sort elements or {@code null}
     */
    @Override public Comparator<? super E> comparator() {
-      return comp == CollectionUtils.NATURAL_ORDERING ? null : comp;
+      return comp == Comparator.naturalOrder() ? null : comp;
    }
 
    @Override
@@ -389,7 +389,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
       in.defaultReadObject();
       comp = (Comparator<? super E>) in.readObject();
       if (comp == null) {
-         comp = CollectionUtils.NATURAL_ORDERING;
+         comp = CollectionUtils.naturalOrder();
       }
       size = in.readInt();
       for (int i = 0; i < size; i++) {
@@ -405,7 +405,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
       out.defaultWriteObject();
-      out.writeObject(comp == CollectionUtils.NATURAL_ORDERING ? null : comp);
+      out.writeObject(comparator());
       out.writeInt(size);
       for (E e : this) {
          out.writeObject(e);
@@ -647,6 +647,7 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
       return name;
    }
 
+   
    
    private void printState(String title) {
       System.out.println("*** " + title.toUpperCase() + " ***");

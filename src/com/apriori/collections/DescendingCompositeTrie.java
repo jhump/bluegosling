@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
 import java.util.Comparator;
-import java.util.List;
 
 //TODO: javadoc
 class DescendingCompositeTrie<K, C, V> extends DescendingMap<K, V>
@@ -22,7 +21,7 @@ class DescendingCompositeTrie<K, C, V> extends DescendingMap<K, V>
    }
    
    @Override 
-   public Comparator<? extends C> componentComparator() {
+   public Comparator<? super C> componentComparator() {
       return base().componentComparator();
    }
    
@@ -42,12 +41,12 @@ class DescendingCompositeTrie<K, C, V> extends DescendingMap<K, V>
    }
    
    @Override 
-   public NavigableCompositeTrie<K, C, V> prefixMap(List<C> prefix) {
+   public NavigableCompositeTrie<K, C, V> prefixMap(Iterable<C> prefix) {
       return new DescendingCompositeTrie<K, C, V>(base().prefixMap(prefix));
    }
    
    @Override 
-   public NavigableCompositeTrie<K, C, V> prefixMap(List<C> prefix, int numComponents) {
+   public NavigableCompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents) {
       return new DescendingCompositeTrie<K, C, V>(base().prefixMap(prefix, numComponents));
    }
 

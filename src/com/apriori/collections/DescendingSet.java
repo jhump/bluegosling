@@ -36,22 +36,10 @@ class DescendingSet<E> implements NavigableSet<E> {
       this.base = base;
    }
    
-   static <T> Comparator<T> reverseComparator(final Comparator<? super T> comp) {
-      if (comp == null) {
-         return null;
-      }
-      return new Comparator<T>() {
-         @Override
-         public int compare(T o1, T o2) {
-            // reverse it
-            return comp.compare(o2, o1);
-         }
-      };
-   }
-   
    @Override
    public Comparator<? super E> comparator() {
-      return reverseComparator(base.comparator());
+      Comparator<? super E> comp = base.comparator();
+      return comp == null ? null : comp.reversed();
    }
 
    @Override

@@ -75,9 +75,9 @@ public class SmoothSortTest {
                list2.add(v);
             }
             // benchmark
-            Collections.sort(list1, CollectionUtils.NATURAL_ORDERING);
+            Collections.sort(list1, Comparator.naturalOrder());
             // ours
-            SmoothSort.sort(list2, CollectionUtils.NATURAL_ORDERING);
+            SmoothSort.sort(list2);
             
             assertEquals(list1, list2);
          }
@@ -101,12 +101,12 @@ public class SmoothSortTest {
             }
             // benchmark
             sw1.start();
-            Collections.sort(list1, CollectionUtils.NATURAL_ORDERING);
+            Collections.sort(list1, Comparator.naturalOrder());
             sw1.stop();
             sw1.lap();
             // ours
             sw2.start();
-            SmoothSort.sort(list2, CollectionUtils.NATURAL_ORDERING);
+            SmoothSort.sort(list2);
             sw2.stop();
             sw2.lap();
             

@@ -108,7 +108,6 @@ public abstract class RadixTrieMap<V> implements NavigableMap<Long, V> {
     *
     * @param size the size of the returned list
     * @return a view of this map as a dense list of values
-    * @throws IllegalStateException if the map contains any keys less than zero
     */
    public List<V> denseValues(int size) {
       // TODO

@@ -299,7 +299,7 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
       }
       // new empty set
       if (comp == null) {
-         this.comp = CollectionUtils.NATURAL_ORDERING;
+         this.comp = CollectionUtils.naturalOrder();
       } else {
          this.comp = comp;
       }
@@ -334,7 +334,7 @@ public class ConcurrentSortedArraySet<E> implements Serializable, Cloneable, Nav
    /** {@inheritDoc} */
    @Override
    public Comparator<? super E> comparator() {
-      return comp;
+      return comp == Comparator.naturalOrder() ? null : comp;
    }
 
    /** {@inheritDoc} */

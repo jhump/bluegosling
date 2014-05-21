@@ -129,7 +129,7 @@ public final class Immutables {
             E first = set.first();
             Comparator<? super E> comp = set.comparator();
             if (comp == null) {
-               comp = CollectionUtils.NATURAL_ORDERING;
+               comp = CollectionUtils.naturalOrder();
             }
             return comp.compare(element,  first) == 0;
          }
@@ -204,7 +204,7 @@ public final class Immutables {
             ImmutableMap.Entry<K, V> first = castMap.firstEntry();
             Comparator<? super K> comp = castMap.comparator();
             if (comp == null) {
-               comp = CollectionUtils.NATURAL_ORDERING;
+               comp = CollectionUtils.naturalOrder();
             }
             return comp.compare(element.key(),  first.key()) == 0;
          }
@@ -315,6 +315,7 @@ public final class Immutables {
       return new SingletonCollection<E>(element);
    }
    
+   @SafeVarargs
    public static <E> ImmutableCollection<E> toImmutableCollection(E... elements) {
       return toImmutableList(elements);
    }
@@ -333,72 +334,6 @@ public final class Immutables {
       return new SingletonList<E>(element);
    }
    
-   /**
-    * Creates a snapshot of the given iterable. For performance, the most compact representation is
-    * an array. {@link Collection} and {@link ImmutableCollection} already have {@code toArray}
-    * methods that can be used.
-    * 
-    * <p>Iterables that implement neither of these interfaces must resort to a custom mechanism.
-    * Instead of using a growable array, where we have to copy contents on each resize, we use a
-    * structure of linked nodes, where each node has an array whose length is the same as all nodes
-    * before it (so adding a new node effectively doubles the capacity, just like in standard
-    * growable array approaches). The last step is to consolidate the nodes into a single array once
-    * the iterable's contents have been exhausted.
-    *
-    * @param iterable an iterable
-    * @return a snapshot of the iterable's contents in an array
-    */
-   private static Object[] toArray(Iterable<?> iterable) {
-      Iterator<?> iter = iterable.iterator();
-      if (!iter.hasNext()) {
-         return EMPTY;
-      } else if (iterable instanceof Collection) {
-         return ((Collection<?>) iterable).toArray();
-      } else if (iterable instanceof ImmutableCollection) {
-         return ((ImmutableCollection<?>) iterable).toArray();
-      } else {
-         class Chunk {
-            final Object contents[];
-            Chunk next;
-            Chunk(int limit) {
-               contents = new Object[limit];
-            }
-         }
-         int size = 0;
-         int chunkLimit = 16;
-         Chunk head = new Chunk(chunkLimit);
-         Chunk current = head;
-         int currentIndex = 0;
-         for (Object o : iterable) {
-            current.contents[currentIndex++] = o;
-            if (currentIndex == chunkLimit) {
-               chunkLimit = size;
-               size += currentIndex;
-               current.next = new Chunk(chunkLimit);
-               current = current.next;
-               currentIndex = 0;
-            }
-         }
-         size += currentIndex;
-         int lastChunkSize = currentIndex;
-         Object elements[] = new Object[size];
-         currentIndex = 0;
-         for (current = head; current != null; current = current.next) {
-            if (current.next == null) {
-               // last chunk
-               if (lastChunkSize > 0) {
-                  System.arraycopy(current.contents, 0, elements, currentIndex, lastChunkSize);
-               }
-            } else {
-               int chunkLength = current.contents.length;
-               System.arraycopy(current.contents, 0, elements, currentIndex, chunkLength);
-               currentIndex += chunkLength;
-            }
-         }
-         return elements;
-      }
-   }
-   
    @SuppressWarnings("unchecked")
    private static <E> ImmutableList<E> makeImmutableList(final Object elements[]) {
       switch (elements.length) {
@@ -415,9 +350,10 @@ public final class Immutables {
       if (iterable instanceof ImmutableList) {
          return cast((ImmutableList<? extends E>) iterable);
       }
-      return makeImmutableList(toArray(iterable));
+      return makeImmutableList(Iterables.toArray(iterable));
    }
 
+   @SafeVarargs
    public static <E> ImmutableList<E> toImmutableList(E... elements) {
       return makeImmutableList(elements.clone());
    }
@@ -448,9 +384,10 @@ public final class Immutables {
       if (iterable instanceof ImmutableSet) {
          return cast((ImmutableSet<? extends E>) iterable);
       }
-      return makeImmutableSet(toArray(iterable));
+      return makeImmutableSet(Iterables.toArray(iterable));
    }
 
+   @SafeVarargs
    public static <E> ImmutableSet<E> toImmutableSet(E... elements) {
       return makeImmutableSet(elements.clone());
    }
@@ -467,17 +404,17 @@ public final class Immutables {
       return ret;
    }
    
-   public static <E> ImmutableSortedSet<E>singletonImmutableSortedSet(E e) {
-      // TODO
-      return null;
+   public static <E> ImmutableSortedSet<E> singletonImmutableSortedSet(E e) {
+      return singletonImmutableSortedSet(null, e);
    }
 
-   public static <E> ImmutableSortedSet<E>singletonImmutableSortedSet(Comparator<? super E> comp,
+   public static <E> ImmutableSortedSet<E> singletonImmutableSortedSet(Comparator<? super E> comp,
          E e) {
       // TODO
       return null;
    }
 
+   @SafeVarargs
    public static <E extends Comparable<E>> ImmutableSortedSet<E> toImmutableSortedSet(
          E... elements) {
       return toImmutableSortedSet(Arrays.asList(elements));
@@ -485,9 +422,10 @@ public final class Immutables {
 
    public static <E extends Comparable<E>> ImmutableSortedSet<E> toImmutableSortedSet(
          Iterable<? extends E> iterable) {
-      return toImmutableSortedSet(CollectionUtils.NATURAL_ORDERING, iterable);
+      return toImmutableSortedSet(null, iterable);
    }
 
+   @SafeVarargs
    public static <E> ImmutableSortedSet<E> toImmutableSortedSet(Comparator<? super E> comparator,
          E... elements) {
       return toImmutableSortedSet(comparator, Arrays.asList(elements));
@@ -519,26 +457,22 @@ public final class Immutables {
    // using numerous overrides and support up to 5 key-value pairs.
    // (There are also overloads to accept Pair<K,V>s)
    
-   @SuppressWarnings("unchecked")
    public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2) {
       return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
          K key3, V value3) {
       return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
             Pair.create(key3, value3)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
          K key3, V value3, K key4, V value4) {
       return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
             Pair.create(key3, value3), Pair.create(key4, value4)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K, V> ImmutableMap<K, V> toImmutableMap(K key1, V value1, K key2, V value2,
          K key3, V value3, K key4, V value4, K key5, V value5) {
       return toImmutableMap(Arrays.asList(Pair.create(key1, value1), Pair.create(key2, value2),
@@ -558,6 +492,7 @@ public final class Immutables {
       }
    }
    
+   @SafeVarargs
    public static <E> ImmutableMap<E, E> toImmutableMap(E... keysAndValues) {
       int len = keysAndValues.length;
       if ((len & 1) != 0) {
@@ -571,12 +506,13 @@ public final class Immutables {
       return makeImmutableMap(pairs);
    }
 
+   @SafeVarargs
    public static <K, V> ImmutableMap<K, V> toImmutableMap(Pair<K, V>... keysAndValues) {
       return makeImmutableMap(keysAndValues.clone());
    }
 
    public static <K, V> ImmutableMap<K, V> toImmutableMap(Iterable<Pair<K, V>> keysAndValues) {
-      return makeImmutableMap(toArray(keysAndValues));
+      return makeImmutableMap(Iterables.toArray(keysAndValues));
    }
 
    public static <K, V> ImmutableMap<K, V> toImmutableMap(Map<? extends K, ? extends V> map) {
@@ -594,8 +530,7 @@ public final class Immutables {
    }
 
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> emptyImmutableSortedMap() {
-      // TODO
-      return null;
+      return emptyImmutableSortedMap(null);
    }
    
    public static <K, V> ImmutableSortedMap<K, V> emptyImmutableSortedMap(
@@ -606,8 +541,7 @@ public final class Immutables {
    
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> singletonImmutableSortedMap(
          K key, V value) {
-      // TODO
-      return null;
+      return singletonImmutableSortedMap(null, key, value);
    }
 
    public static <K, V> ImmutableSortedMap<K, V> singletonImmutableSortedMap(
@@ -616,28 +550,24 @@ public final class Immutables {
       return null;
    }
 
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2) {
       return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
             Pair.create(key2, value2)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3) {
       return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
             Pair.create(key2, value2), Pair.create(key3, value3)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4) {
       return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
             Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5) {
       return toImmutableSortedMap(Arrays.asList(Pair.create(key1, value1),
@@ -645,21 +575,18 @@ public final class Immutables {
             Pair.create(key5, value5)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2) {
       return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
             Pair.create(key2, value2)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3) {
       return toImmutableSortedMap(comparator, Arrays.asList(Pair.create(key1, value1),
             Pair.create(key2, value2), Pair.create(key3, value3)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3,
          K key4, V value4) {
@@ -667,7 +594,6 @@ public final class Immutables {
             Pair.create(key2, value2), Pair.create(key3, value3), Pair.create(key4, value4)));
    }
    
-   @SuppressWarnings("unchecked")
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, K key1, V value1, K key2, V value2, K key3, V value3,
          K key4, V value4, K key5, V value5) {
@@ -676,20 +602,13 @@ public final class Immutables {
             Pair.create(key5, value5)));
    }
    
+   @SafeVarargs
    public static <E extends Comparable<E>> ImmutableSortedMap<E, E> toImmutableSortedMap(
          E... keysAndValues) {
-      int len = keysAndValues.length;
-      if ((len & 1) != 0) {
-         throw new IllegalArgumentException("Must specify even number of keys/values");
-      }
-      ArrayList<Pair<E, E>> pairs = new ArrayList<Pair<E, E>>(len >> 1);
-      for (int i = 0; i < len; i += 2) {
-         pairs.add(Pair.create(keysAndValues[i], keysAndValues[i+1]));
-      }
-      // TODO
-      return null;
+      return toImmutableSortedMap(null, keysAndValues);
    }
    
+   @SafeVarargs
    public static <E> ImmutableSortedMap<E, E> toImmutableSortedMap(Comparator<? super E> comp,
          E... keysAndValues) {
       int len = keysAndValues.length;
@@ -704,17 +623,18 @@ public final class Immutables {
       return null;
    }
 
+   @SafeVarargs
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Pair<K, V>... keysAndValues) {
-      return toImmutableSortedMap(Arrays.asList(keysAndValues));
+      return toImmutableSortedMap((Comparator<K>) null, keysAndValues);
    }
 
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Iterable<Pair<K, V>> keysAndValues) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(null, keysAndValues);
    }
    
+   @SafeVarargs
    public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(Comparator<? super K> comp,
          Pair<K, V>... keysAndValues) {
       return toImmutableSortedMap(comp, Arrays.asList(keysAndValues));
@@ -728,25 +648,16 @@ public final class Immutables {
    
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Map<? extends K, ? extends V> map) {
-      // TODO
-      return null;
+      return toImmutableSortedMap(null, map);
    }
 
    public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
-         SortedMap<? extends K, ? extends V> map) {
-      // TODO
-      return null;
+         SortedMap<K, ? extends V> map) {
+      return toImmutableSortedMap(map.comparator(), map);
    }
 
-   public static <K extends Comparable<K>, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
+   public static <K, V> ImmutableSortedMap<K, V> toImmutableSortedMap(
          Comparator<? super K> comparator, Map<? extends K, ? extends V> map) {
-      if (map instanceof SortedMap) {
-         SortedMap<? extends K, ? extends V> sortedMap = (SortedMap<? extends K, ? extends V>) map;
-         if (comparator == null ? sortedMap.comparator() == null
-               : comparator.equals(sortedMap.comparator())) {
-            return toImmutableSortedMap((SortedMap<? extends K, ? extends V>) map);
-         }
-      }
       // TODO
       return null;
    }
@@ -1448,7 +1359,7 @@ public final class Immutables {
 
       @Override
       public Iterator<Object> iterator() {
-         return Iterators.emptyIterator();
+         return Iterables.emptyIterator();
       }
    }
 
@@ -1644,7 +1555,7 @@ public final class Immutables {
 
       @Override
       public Iterator<E> iterator() {
-         return Iterators.singletonIterator(element);
+         return Iterables.singletonIterator(element);
       }
    }
 

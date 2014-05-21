@@ -327,8 +327,8 @@ public final class SmoothSort {
     *
     * @param list the list which will be sorted in place
     */
-   public static <T> void sort(List<T> list) {
-      sort(list, CollectionUtils.NATURAL_ORDERING);
+   public static <T extends Comparable<? super T>> void sort(List<T> list) {
+      sort(list, Comparator.naturalOrder());
    }
    
    /**
@@ -361,8 +361,8 @@ public final class SmoothSort {
     *
     * @param array the array which will be sorted in place
     */
-   public static <T> void sort(T[] array) {
-      sort(array, CollectionUtils.NATURAL_ORDERING);
+   public static <T extends Comparable<? super T>> void sort(T[] array) {
+      sort(array, Comparator.naturalOrder());
    }
 
    /**

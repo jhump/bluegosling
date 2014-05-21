@@ -2,7 +2,10 @@ package com.apriori.collections;
 
 import com.apriori.collections.BitSequence.BitOrder;
 
+import java.util.AbstractMap;
 import java.util.Comparator;
+import java.util.NavigableSet;
+import java.util.Set;
 
 /**
  * A trie structure that most closely resembles a binary tree. Each node in the trie has only two
@@ -37,8 +40,9 @@ import java.util.Comparator;
  * @param <V> the type of value in the map
  */
 //TODO: javadoc
-//TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
-public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boolean, V> {
+//TODO: implement me (don't forget serialization and cloning)
+public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
+      implements NavigableCompositeTrie<K, Boolean, V> {
    
    static final Comparator<Boolean> COMPONENT_COMPARATOR = new Comparator<Boolean>() {
       @Override public int compare(Boolean b1, Boolean b2) {
@@ -54,7 +58,11 @@ public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<
       }
    };
    
-   static class ValueNode<K, V> {
+   static class TrieNode {
+      TrieNode n0, n1;
+   }
+   
+   static class ValueNode<K, V> extends TrieNode {
       K key;
       V value;
       ValueNode<K, V> next;
@@ -65,6 +73,21 @@ public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<
       }
    }
    
+   final BitConverter<? super K> bitConverter;
+   final Comparator<? super K> tieBreaker;
+   TrieNode root;
+   int size;
+   int modCount;
+   
+   public SimpleBitwiseTrie(BitConverter<? super K> bitConverter) {
+      this(bitConverter, null);
+   }
+   
+   public SimpleBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> tieBreaker) {
+      this.bitConverter = bitConverter;
+      this.tieBreaker = tieBreaker;
+   }
+
    public K nearestKey(K key) {
       // TODO
       return null;
@@ -74,7 +97,264 @@ public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<
       // TODO
       return null;
    }
+   
+   @Override public Comparator<? super K> comparator() {
+      return new WrappedComparator<>(bitConverter, tieBreaker);
+   }
 
+   @Override
+   public BitConverter<? super K> componentizer() {
+      return bitConverter;
+   }
+
+   @Override
+   public int size() {
+      return size;
+   }
+
+   @Override
+   public boolean containsKey(Object key) {
+      @SuppressWarnings("unchecked") // okay if cast causes bitConverter to throw ClassCastException
+      K k = (K) key;
+      BooleanIterator iter = bitConverter.getComponents(k).iterator();
+      TrieNode node = root;
+      while (iter.hasNext() && node != null) {
+         node = iter.nextBoolean() ? node.n1 : node.n0;
+      }
+      if (iter.hasNext()) {
+         return false;
+      }
+      if (!(node instanceof ValueNode)) {
+         return false;
+      }
+      @SuppressWarnings("unchecked") // see above remark
+      ValueNode<K, V> valueNode = (ValueNode<K, V>) node;
+      if (tieBreaker == null) {
+         assert valueNode.next == null;
+         return true;
+      }
+      while (valueNode != null) {
+         if (tieBreaker.compare(k, valueNode.key) == 0) {
+            // found it!
+            return true;
+         }
+         valueNode = valueNode.next;
+      }
+      return false;
+   }
+
+   @Override
+   public V get(Object key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public V put(K key, V value) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public V remove(Object key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public void clear() {
+      size = 0;
+      root = null;
+      modCount++;
+      
+   }
+
+   @Override
+   public Set<K> keySet() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Set<Entry<K, V>> entrySet() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> lowerEntry(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public K lowerKey(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> floorEntry(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public K floorKey(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> ceilingEntry(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public K ceilingKey(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> higherEntry(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public K higherKey(K key) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> firstEntry() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> lastEntry() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> pollFirstEntry() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Entry<K, V> pollLastEntry() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableSet<K> navigableKeySet() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableSet<K> descendingKeySet() {
+      return navigableKeySet().descendingSet();
+   }
+
+   @Override
+   public K firstKey() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public K lastKey() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public Comparator<? super Boolean> componentComparator() {
+      return COMPONENT_COMPARATOR;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMapByKey(K prefix, int numComponents) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Boolean prefix) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> prefixMap(Iterable<Boolean> prefix,
+         int numComponents) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> descendingMap() {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> subMap(K fromKey, boolean fromInclusive, K toKey,
+         boolean toInclusive) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> headMap(K toKey, boolean inclusive) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> tailMap(K fromKey, boolean inclusive) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> subMap(K fromKey, K toKey) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> headMap(K toKey) {
+      // TODO: implement me
+      return null;
+   }
+
+   @Override
+   public NavigableCompositeTrie<K, Boolean, V> tailMap(K fromKey) {
+      // TODO: implement me
+      return null;
+   }
+   
    static class WrappedComparator<K> implements Comparator<K> {
       private final BitConverter<? super K> bitConverter;
       private final Comparator<? super K> tieBreaker;
@@ -110,7 +390,7 @@ public abstract class SimpleBitwiseTrie<K, V> implements NavigableCompositeTrie<
             return -1;
          }
          // resolve ties with the specified comparator
-         return tieBreaker.compare(o1, o2);
+         return tieBreaker == null ? 0 : tieBreaker.compare(o1, o2);
       }
       
       @Override public boolean equals(Object o) {

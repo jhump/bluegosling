@@ -31,7 +31,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
          LinkedPersistentList<E> list = cast((LinkedPersistentList<? extends E>) iterable);
          return list;
       }
-      Iterator<? extends E> iterator = Iterators.reversed(iterable);
+      Iterator<? extends E> iterator = Iterables.reversed(iterable);
       LinkedPersistentList<E> node = null;
       while (iterator.hasNext()) {
          node = new LinkedPersistentList<>(iterator.next(), node);
@@ -248,7 +248,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
          return addAll(items);
       }
       rangeCheckWide(i);
-      Iterator<? extends E> iterator = Iterators.reversed(items);
+      Iterator<? extends E> iterator = Iterables.reversed(items);
       if (!iterator.hasNext()) {
          return this;
       }
@@ -442,7 +442,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
    @Override
    public PersistentList<E> addAll(Iterable<? extends E> items) {
-      Iterator<? extends E> iterator = Iterators.reversed(items);
+      Iterator<? extends E> iterator = Iterables.reversed(items);
       LinkedPersistentList<E> node = this;
       while (iterator.hasNext()) {
          node = new LinkedPersistentList<E>(iterator.next(), node);
@@ -528,7 +528,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
       @Override
       public Iterator<E> iterator() {
-         return Iterators.emptyIterator();
+         return Iterables.emptyIterator();
       }
 
       @Override

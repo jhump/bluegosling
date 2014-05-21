@@ -503,7 +503,7 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
    private void setComparator() {
       comp = ((SortedSet<E>) shards[0]).comparator();
       if (comp == null) {
-         comp = CollectionUtils.NATURAL_ORDERING;
+         comp = CollectionUtils.naturalOrder();
       }
    }
 
@@ -584,7 +584,7 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
    
    private void writeObject(ObjectOutputStream out) throws IOException {
       out.defaultWriteObject();
-      out.writeObject(comp == CollectionUtils.NATURAL_ORDERING ? null : comp);
+      out.writeObject(comp == Comparator.naturalOrder() ? null : comp);
    }
    
    @SuppressWarnings("unchecked")
@@ -592,7 +592,7 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
       in.defaultReadObject();
       comp = (Comparator<? super E>) in.readObject();
       if (comp == null) {
-         comp = CollectionUtils.NATURAL_ORDERING;
+         comp = CollectionUtils.naturalOrder();
       }
    }
 }

@@ -7,13 +7,13 @@ import java.util.NavigableMap;
 //TODO: javadoc
 public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, NavigableMap<List<K>, V> {
 
-   Comparator<? extends K> componentComparator();
+   Comparator<? super K> componentComparator();
    
    @Override NavigableSequenceTrie<K, V> prefixMap(K prefix);
    
-   @Override NavigableSequenceTrie<K, V> prefixMap(List<K> prefix);
+   @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix);
 
-   @Override NavigableSequenceTrie<K, V> prefixMap(List<K> prefix, int numComponents);
+   @Override NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents);
    
    @Override NavigableSequenceTrie<K, V> descendingMap();
 
@@ -29,4 +29,13 @@ public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, Navigab
    @Override NavigableSequenceTrie<K, V> headMap(List<K> toKey);
 
    @Override NavigableSequenceTrie<K, V> tailMap(List<K> fromKey);
+   
+   Entry<List<K>, V> lowerEntry(Iterable<K> keys);
+   List<K> lowerKey(Iterable<K> keys);
+   Entry<List<K>, V> higherEntry(Iterable<K> keys);
+   List<K> higherKey(Iterable<K> keys);
+   Entry<List<K>, V> ceilingEntry(Iterable<K> keys);
+   List<K> ceilingKey(Iterable<K> keys);
+   Entry<List<K>, V> floorEntry(Iterable<K> keys);
+   List<K> floorKey(Iterable<K> keys);
 }
