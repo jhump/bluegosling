@@ -21,42 +21,68 @@ import javax.lang.model.type.TypeMirror;
 public interface ArType {
    
    /**
-    * A visitor for simulating multiple dispatch over the concrete implementations of {@link ArType}.
-    * This can be used to more elegantly handle polymorphism of types than using numerous
-    * {@code if-else} type checks (either using {@code instanceof} or looking
-    * at the value returned from {@link ArType#getTypeKind()}) and then downcasts (or equivalent
-    * calls to methods in {@link ArTypes}, such as {@link ArTypes#asClass(ArType)}).
+    * A visitor for simulating multiple dispatch over the concrete implementations of
+    * {@link ArType}. This can be used to more elegantly handle polymorphism of types than using
+    * numerous {@code if-else} type checks (either using {@code instanceof} or looking at the value
+    * returned from {@link ArType#getTypeKind()}) and then downcasts (or equivalent calls to methods
+    * in {@link ArTypes}, such as {@link ArTypes#asClass(ArType)}).
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <R> the type of value returned by the visitor
-    * @param <P> an optional parameter that is passed to the visitor (if not needed, use {@link Void})
+    * @param <P> an optional parameter that is passed to the visitor (if not needed, use
+    *    {@link Void})
     * 
     * @see ArType#accept(Visitor, Object)
     */
    interface Visitor<R, P> {
       /**
-       * Called from {@link ArType#accept(Visitor, Object)} to visit a {@link ArClass}.
+       * Visits a class. This is called from {@link ArType#accept(Visitor, Object)} when the type
+       * being visited is an {@link ArClass}.
+       * 
+       * @param clazz the class being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this class
        */
       R visitClass(ArClass clazz, P p);
 
       /**
-       * Called from {@link ArType#accept(Visitor, Object)} to visit a {@link ArGenericArrayType}.
+       * Visits a generic array type. This is called from {@link ArType#accept(Visitor, Object)} 
+       * when the type being visited is an {@link ArGenericArrayType}.
+       * 
+       * @param arrayType the generic array type being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this array type
        */
       R visitGenericArrayType(ArGenericArrayType arrayType, P p);
       
       /**
-       * Called from {@link ArType#accept(Visitor, Object)} to visit a {@link ArParameterizedType}.
+       * Visits a parameterized type. This is called from {@link ArType#accept(Visitor, Object)}
+       * when the type being visited is an {@link ArParameterizedType}.
+       * 
+       * @param parameterizedType the parameterized type being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this parameterized type
        */
       R visitParameterizedType(ArParameterizedType parameterizedType, P p);
 
       /**
-       * Called from {@link ArType#accept(Visitor, Object)} to visit a {@link ArTypeVariable}.
+       * Visits a type variable This is called from {@link ArType#accept(Visitor, Object)} when the
+       * type being visited is an {@link ArTypeVariable}.
+       * 
+       * @param typeVariable the type variable being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this type variable
        */
       R visitTypeVariable(ArTypeVariable<?> typeVariable, P p);
       
       /**
-       * Called from {@link ArType#accept(Visitor, Object)} to visit a {@link ArWildcardType}.
+       * Visits a wildcard type. This is called from {@link ArType#accept(Visitor, Object)} when the
+       * type being visited is an {@link ArWildcardType}.
+       * 
+       * @param wildcardType the wildcard type being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this wildcard type
        */
       R visitWildcardType(ArWildcardType wildcardType, P p);
    }

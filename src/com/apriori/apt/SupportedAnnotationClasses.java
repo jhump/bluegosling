@@ -24,6 +24,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 public @interface SupportedAnnotationClasses {
    /**
     * The set of supported annotation types, indicated via their class tokens.
+    * @return the set of supported annotaton types
     */
    Class<? extends Annotation>[] value();
 }

@@ -33,6 +33,7 @@ public @interface ValidateGeneratedFiles {
    /**
     * A set of resources to validate. After processing completes, the contents of these
     * resources will be compared to the contents of corresponding output files.
+    * @return the set of resources to validate
     */
    OutputFiles[] value();
 
@@ -43,6 +44,7 @@ public @interface ValidateGeneratedFiles {
     * are ignored and only the files named on the method are used. But, if true,
     * the method's set of files is incremental, meaning they are in addition to
     * the files named on the class.
+    * @return true if the given resources are incremental to those defined on the test class
     */
    boolean incremental() default false;
 }

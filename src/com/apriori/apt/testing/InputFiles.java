@@ -16,6 +16,7 @@ import javax.tools.StandardLocation;
 public @interface InputFiles {
    /**
     * The names of the files/resources, relative to {@link #folder()}.
+    * @return the names of the input resource
     */
    String[] value();
    
@@ -25,6 +26,7 @@ public @interface InputFiles {
     * for example), the following is the path used when trying to load the file
     * as a resource:
     * <pre> folder() + "/" + value()[i]</pre>
+    * @return the name of the folder that contains the resources
     */
    String folder() default "";
    
@@ -35,6 +37,7 @@ public @interface InputFiles {
     * given file name (the {@code i}<sup>th</sup> file in the array returned by 
     * {@link #value()}, for example) is as follows:
     * <pre> location().getName() + "/" + value()[i]</pre>
+    * @return the location in the file system where the resources will exist
     */
    StandardLocation location() default StandardLocation.SOURCE_PATH;
 }

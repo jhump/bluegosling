@@ -121,7 +121,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -193,7 +193,7 @@ extends <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableL
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html#size--">size</a></span>()</code>
-<div class="block">Determines the size of the collection.</div>
+<div class="block">Determines the size of the sequence.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -230,7 +230,14 @@ extends <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableL
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
@@ -279,11 +286,11 @@ extends <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableL
 <li class="blockList">
 <h4>size</h4>
 <pre>public&nbsp;int&nbsp;size()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#size--">ImmutableCollection</a></code></span></div>
-<div class="block">Determines the size of the collection.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html#size--">SizedIterable</a></code></span></div>
+<div class="block">Determines the size of the sequence.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the number of elements in this collection</dd>
+<dd>the number of elements in this sequence</dd>
 </dl>
 </li>
 </ul>

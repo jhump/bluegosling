@@ -320,8 +320,6 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired exclusive lock or <code>null</code> if it is not available</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the exclusive
-    lock to become available</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; or if the shared lock has been acquired by this thread more than once (in a
     re-entrant manner)</dd>

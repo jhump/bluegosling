@@ -139,7 +139,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  annotation.arrayOfClasses() == null; // true! 
  
  // So the bridge to the rescue!
- com.apriori.apt.reflect.Class classes[] = bridge(annotation.arrayOfClasses());
+ ArClass classes[] = bridge(annotation.arrayOfClasses());
  // Yay!
  classes[0].getName(); // "SomeClass" ftw!
  </pre>
@@ -147,12 +147,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p>So use <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#createBridge-com.apriori.apt.reflect.ArAnnotation-"><code>createBridge(ArAnnotation)</code></a> to create an instance of an annotation interface
  based on a <a href="../../../../com/apriori/apt/reflect/ArAnnotation.html" title="class in com.apriori.apt.reflect"><code>ArAnnotation</code></a>. And then use <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-"><code>bridge(Class)</code></a> or <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class:A-"><code>bridge(Class[])</code></a>
  to access class tokens returned from that interface. You can optionally use
- <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-T-"><code>bridge(Object)</code></a> to access other fields returned from the interface but it's not
- necessary.
+ <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-T-"><code>bridge(Object)</code></a> to access other fields returned from the interface, for consistency, but
+ it's not necessary.
  
  <p>Since the annotation method actually returns <code>null</code>, the <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-"><code>bridge(Class)</code></a> method
  doesn't actually "convert" the incoming argument. In reality, the call to the annotation method
- sets thread-local state to the bridged value which is then accessed via the call to
+ sets thread-local state about the bridged value, which is then accessed via the call to
  <a href="../../../../com/apriori/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-"><code>bridge(Class)</code></a>.</div>
 </li>
 </ul>

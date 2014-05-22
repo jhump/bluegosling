@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
 public @interface OptionsForProcessing {
    /**
     * The list of options.
+    * @return the list of options
     */
    String[] value();
    
@@ -35,6 +36,7 @@ public @interface OptionsForProcessing {
     * and only the options defined on the method are used. But, if true, the method's set
     * of options is incremental, meaning they are appened to the list of options defined
     * on the class.
+    * @return true if the given options are incremental to those defined on the test class
     */
    boolean incremental() default false;
 }

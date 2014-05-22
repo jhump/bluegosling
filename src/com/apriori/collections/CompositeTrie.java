@@ -32,30 +32,30 @@ public interface CompositeTrie<K, C, V> extends Map<K, V> {
     * <p>For example, suppose we have a trie that uses strings as keys. The strings are broken into
     * character components. The trie has the following mappings:
     * <pre>
-    * { "abcd" } -> 123,
-    * { "abxyz" } -> 456,
-    * { "efgh" } -> 789
+    * { "abcd" } -&gt; 123,
+    * { "abxyz" } -&gt; 456,
+    * { "efgh" } -&gt; 789
     * </pre>
     * The prefix map, with a prefix of {@code 'a'}, would look like so:
     * <pre>
-    * { "abcd" } -> 123,
-    * { "abxyz" } -> 456,
+    * { "abcd" } -&gt; 123,
+    * { "abxyz" } -&gt; 456,
     * </pre>
-    * If the mapping <tt>{ "mno" } -> 1001</tt> were added to the prefix map, an
+    * If the mapping <tt>{ "mno" } -&gt; 1001</tt> were added to the prefix map, an
     * {@link IllegalArgumentException} would be thrown since it does not begin with the correct
-    * prefix. But adding <tt>{ "amno" } -> 1001</tt> would succeed, and the resulting prefix map
+    * prefix. But adding <tt>{ "amno" } -&gt; 1001</tt> would succeed, and the resulting prefix map
     * would then look like the following:
     * <pre>
-    * { "abcd" } -> 123,
-    * { "abxyz" } -> 456,
-    * { "amno" } -> 1001
+    * { "abcd" } -&gt; 123,
+    * { "abxyz" } -&gt; 456,
+    * { "amno" } -&gt; 1001
     * </pre>
     * The new mapping would also be present in the main, underlying map:
     * <pre>
-    * { "abcd" } -> 123,
-    * { "abxyz" } -> 456,
-    * { "amno" } -> 1001,
-    * { "efgh" } -> 789
+    * { "abcd" } -&gt; 123,
+    * { "abxyz" } -&gt; 456,
+    * { "amno" } -&gt; 1001,
+    * { "efgh" } -&gt; 789
     * </pre>
     * 
     * @param prefix a key prefix

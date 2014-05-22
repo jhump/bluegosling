@@ -100,7 +100,8 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>R</code> - the type of value returned by the visitor</dd>
-<dd><code>P</code> - an optional parameter that is passed to the visitor (if not needed, use <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang"><code>Void</code></a>)</dd>
+<dd><code>P</code> - an optional parameter that is passed to the visitor (if not needed, use
+    <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang"><code>Void</code></a>)</dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
@@ -109,11 +110,11 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static interface <span class="typeNameLabel">ArType.Visitor&lt;R,P&gt;</span></pre>
-<div class="block">A visitor for simulating multiple dispatch over the concrete implementations of <a href="../../../../com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect"><code>ArType</code></a>.
- This can be used to more elegantly handle polymorphism of types than using numerous
- <code>if-else</code> type checks (either using <code>instanceof</code> or looking
- at the value returned from <a href="../../../../com/apriori/apt/reflect/ArType.html#getTypeKind--"><code>ArType.getTypeKind()</code></a>) and then downcasts (or equivalent
- calls to methods in <a href="../../../../com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect"><code>ArTypes</code></a>, such as <a href="../../../../com/apriori/apt/reflect/ArTypes.html#asClass-com.apriori.apt.reflect.ArType-"><code>ArTypes.asClass(ArType)</code></a>).</div>
+<div class="block">A visitor for simulating multiple dispatch over the concrete implementations of
+ <a href="../../../../com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect"><code>ArType</code></a>. This can be used to more elegantly handle polymorphism of types than using
+ numerous <code>if-else</code> type checks (either using <code>instanceof</code> or looking at the value
+ returned from <a href="../../../../com/apriori/apt/reflect/ArType.html#getTypeKind--"><code>ArType.getTypeKind()</code></a>) and then downcasts (or equivalent calls to methods
+ in <a href="../../../../com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect"><code>ArTypes</code></a>, such as <a href="../../../../com/apriori/apt/reflect/ArTypes.html#asClass-com.apriori.apt.reflect.ArType-"><code>ArTypes.asClass(ArType)</code></a>).</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
@@ -140,35 +141,36 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html#visitClass-com.apriori.apt.reflect.ArClass-P-">visitClass</a></span>(<a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a>&nbsp;clazz,
           <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</code>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a>.</div>
+<div class="block">Visits a class.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html#visitGenericArrayType-com.apriori.apt.reflect.ArGenericArrayType-P-">visitGenericArrayType</a></span>(<a href="../../../../com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect">ArGenericArrayType</a>&nbsp;arrayType,
                      <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</code>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect"><code>ArGenericArrayType</code></a>.</div>
+<div class="block">Visits a generic array type.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html#visitParameterizedType-com.apriori.apt.reflect.ArParameterizedType-P-">visitParameterizedType</a></span>(<a href="../../../../com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect">ArParameterizedType</a>&nbsp;parameterizedType,
                       <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</code>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect"><code>ArParameterizedType</code></a>.</div>
+<div class="block">Visits a parameterized type.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html#visitTypeVariable-com.apriori.apt.reflect.ArTypeVariable-P-">visitTypeVariable</a></span>(<a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect">ArTypeVariable</a>&lt;?&gt;&nbsp;typeVariable,
                  <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</code>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect"><code>ArTypeVariable</code></a>.</div>
+<div class="block">Visits a type variable This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> when the
+ type being visited is an <a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect"><code>ArTypeVariable</code></a>.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html#visitWildcardType-com.apriori.apt.reflect.ArWildcardType-P-">visitWildcardType</a></span>(<a href="../../../../com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a>&nbsp;wildcardType,
                  <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</code>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect"><code>ArWildcardType</code></a>.</div>
+<div class="block">Visits a wildcard type.</div>
 </td>
 </tr>
 </table>
@@ -196,7 +198,15 @@ var activeTableTab = "activeTableTab";
 <h4>visitClass</h4>
 <pre><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>&nbsp;visitClass(<a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a>&nbsp;clazz,
              <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</pre>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a>.</div>
+<div class="block">Visits a class. This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> when the type
+ being visited is an <a href="../../../../com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>clazz</code> - the class being visited</dd>
+<dd><code>p</code> - extra parameter supplied to <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of visiting this class</dd>
+</dl>
 </li>
 </ul>
 <a name="visitGenericArrayType-com.apriori.apt.reflect.ArGenericArrayType-java.lang.Object-">
@@ -209,7 +219,15 @@ var activeTableTab = "activeTableTab";
 <h4>visitGenericArrayType</h4>
 <pre><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>&nbsp;visitGenericArrayType(<a href="../../../../com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect">ArGenericArrayType</a>&nbsp;arrayType,
                         <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</pre>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect"><code>ArGenericArrayType</code></a>.</div>
+<div class="block">Visits a generic array type. This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> 
+ when the type being visited is an <a href="../../../../com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect"><code>ArGenericArrayType</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>arrayType</code> - the generic array type being visited</dd>
+<dd><code>p</code> - extra parameter supplied to <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of visiting this array type</dd>
+</dl>
 </li>
 </ul>
 <a name="visitParameterizedType-com.apriori.apt.reflect.ArParameterizedType-java.lang.Object-">
@@ -222,7 +240,15 @@ var activeTableTab = "activeTableTab";
 <h4>visitParameterizedType</h4>
 <pre><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>&nbsp;visitParameterizedType(<a href="../../../../com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect">ArParameterizedType</a>&nbsp;parameterizedType,
                          <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</pre>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect"><code>ArParameterizedType</code></a>.</div>
+<div class="block">Visits a parameterized type. This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a>
+ when the type being visited is an <a href="../../../../com/apriori/apt/reflect/ArParameterizedType.html" title="class in com.apriori.apt.reflect"><code>ArParameterizedType</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parameterizedType</code> - the parameterized type being visited</dd>
+<dd><code>p</code> - extra parameter supplied to <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of visiting this parameterized type</dd>
+</dl>
 </li>
 </ul>
 <a name="visitTypeVariable-com.apriori.apt.reflect.ArTypeVariable-java.lang.Object-">
@@ -235,7 +261,15 @@ var activeTableTab = "activeTableTab";
 <h4>visitTypeVariable</h4>
 <pre><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>&nbsp;visitTypeVariable(<a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect">ArTypeVariable</a>&lt;?&gt;&nbsp;typeVariable,
                     <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</pre>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect"><code>ArTypeVariable</code></a>.</div>
+<div class="block">Visits a type variable This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> when the
+ type being visited is an <a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect"><code>ArTypeVariable</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeVariable</code> - the type variable being visited</dd>
+<dd><code>p</code> - extra parameter supplied to <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of visiting this type variable</dd>
+</dl>
 </li>
 </ul>
 <a name="visitWildcardType-com.apriori.apt.reflect.ArWildcardType-java.lang.Object-">
@@ -248,7 +282,15 @@ var activeTableTab = "activeTableTab";
 <h4>visitWildcardType</h4>
 <pre><a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>&nbsp;visitWildcardType(<a href="../../../../com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a>&nbsp;wildcardType,
                     <a href="../../../../com/apriori/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&nbsp;p)</pre>
-<div class="block">Called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> to visit a <a href="../../../../com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect"><code>ArWildcardType</code></a>.</div>
+<div class="block">Visits a wildcard type. This is called from <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> when the
+ type being visited is an <a href="../../../../com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect"><code>ArWildcardType</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>wildcardType</code> - the wildcard type being visited</dd>
+<dd><code>p</code> - extra parameter supplied to <a href="../../../../com/apriori/apt/reflect/ArType.html#accept-com.apriori.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of visiting this wildcard type</dd>
+</dl>
 </li>
 </ul>
 </li>

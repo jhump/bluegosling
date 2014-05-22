@@ -179,6 +179,10 @@ public @interface <span class="memberNameLabel">FilesToProcess</span></pre>
  prior to starting the processing environment. Any Java source files specified (i.e.
  file names ending in <code>".java"</code>) will be specified as inputs to the Java
  compiler.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the set of resources to process</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -198,6 +202,10 @@ public @interface <span class="memberNameLabel">FilesToProcess</span></pre>
  are ignored and only the files named on the method are used. But, if true,
  the method's set of files is incremental, meaning they are in addition to
  the files named on the class.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the given resources are incremental to those named on the test class</dd>
+</dl>
 <dl>
 <dt>Default:</dt>
 <dd>false</dd>

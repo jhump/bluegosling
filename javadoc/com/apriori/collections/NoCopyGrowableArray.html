@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -245,7 +245,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NoCopyGrowableArray.html#size--">size</a></span>()</code>
-<div class="block">Returns the size, or capacity, of this growable array.</div>
+<div class="block">Determines the size of the sequence.</div>
 </td>
 </tr>
 </table>
@@ -268,7 +268,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a></h3>
-<code><a href="../../../com/apriori/collections/GrowableArray.html#adjustSizeTo-int-">adjustSizeTo</a>, <a href="../../../com/apriori/collections/GrowableArray.html#collector-java.util.function.Supplier-">collector</a>, <a href="../../../com/apriori/collections/GrowableArray.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/GrowableArray.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/GrowableArray.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/GrowableArray.html#stream--">stream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray-T:A-">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/GrowableArray.html#adjustSizeTo-int-">adjustSizeTo</a>, <a href="../../../com/apriori/collections/GrowableArray.html#collector-java.util.function.Supplier-">collector</a>, <a href="../../../com/apriori/collections/GrowableArray.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/GrowableArray.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/GrowableArray.html#stream--">stream</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/GrowableArray.html#toArray-T:A-">toArray</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
@@ -504,13 +511,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>size</h4>
 <pre>public&nbsp;int&nbsp;size()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#size--">GrowableArray</a></code></span></div>
-<div class="block">Returns the size, or capacity, of this growable array.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html#size--">SizedIterable</a></code></span></div>
+<div class="block">Determines the size of the sequence.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/GrowableArray.html#size--">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="type parameter in NoCopyGrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="type parameter in NoCopyGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the size of this array</dd>
+<dd>the number of elements in this sequence</dd>
 </dl>
 </li>
 </ul>

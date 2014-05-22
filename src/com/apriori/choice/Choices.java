@@ -28,6 +28,7 @@ public class Choices {
     * Coalesces two options into a single result. This is the same as {@link OfTwo#get()} except
     * that it can return a type other than {@code Object} thanks to additional type constraints.
     *
+    * @param <T> a super-type of both options in the given choice
     * @param choice the choice to coalesce
     * @return the value of the choice's present option
     */
@@ -42,6 +43,7 @@ public class Choices {
     * except that it can return a type other than {@code Object} thanks to additional type
     * constraints.
     *
+    * @param <T> a super-type of all three options in the given choice
     * @param choice the choice to coalesce
     * @return the value of the choice's present option
     */
@@ -55,6 +57,7 @@ public class Choices {
     * Coalesces four options into a single result. This is the same as {@link OfTwo#get()} except
     * that it can return a type other than {@code Object} thanks to additional type constraints.
     *
+    * @param <T> a super-type of all four options in the given choice
     * @param choice the choice to coalesce
     * @return the value of the choice's present option
     */
@@ -68,6 +71,7 @@ public class Choices {
     * Coalesces five options into a single result. This is the same as {@link OfTwo#get()} except
     * that it can return a type other than {@code Object} thanks to additional type constraints.
     *
+    * @param <T> a super-type of all five options in the given choice
     * @param choice the choice to coalesce
     * @return the value of the choice's present option
     */

@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -124,7 +124,7 @@ var activeTableTab = "activeTableTab";
 extends <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>&lt;E&gt;
 implements <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</pre>
 <div class="block">An abstract base class for implementing an <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections"><code>ImmutableSet</code></a>. This provides implementations
- for all methods except <a href="../../../com/apriori/collections/ImmutableCollection.html#size--"><code>ImmutableCollection.size()</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.
+ for all methods except <a href="../../../com/apriori/collections/SizedIterable.html#size--"><code>SizedIterable.size()</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.
 
  <p>Nothing in this base class enforces set invariants. The only difference between this class
  and its super-class, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections"><code>AbstractImmutableCollection</code></a>, is that this one implements
@@ -200,7 +200,14 @@ implements <a href="../../../com/apriori/collections/ImmutableSet.html" title="i
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#size--">size</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">

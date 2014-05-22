@@ -182,6 +182,10 @@ public @interface <span class="memberNameLabel">ValidateGeneratedFiles</span></p
 <pre>public abstract&nbsp;<a href="../../../../com/apriori/apt/testing/OutputFiles.html" title="annotation in com.apriori.apt.testing">OutputFiles</a>[]&nbsp;value</pre>
 <div class="block">A set of resources to validate. After processing completes, the contents of these
  resources will be compared to the contents of corresponding output files.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the set of resources to validate</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -201,6 +205,10 @@ public @interface <span class="memberNameLabel">ValidateGeneratedFiles</span></p
  are ignored and only the files named on the method are used. But, if true,
  the method's set of files is incremental, meaning they are in addition to
  the files named on the class.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the given resources are incremental to those defined on the test class</dd>
+</dl>
 <dl>
 <dt>Default:</dt>
 <dd>false</dd>

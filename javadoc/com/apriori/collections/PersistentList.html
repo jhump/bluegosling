@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -235,7 +235,14 @@ extends <a href="../../../com/apriori/collections/ImmutableList.html" title="int
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#size--">size</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
@@ -304,7 +311,7 @@ extends <a href="../../../com/apriori/collections/ImmutableList.html" title="int
 <dd>a new list with the specified element inserted at the specified position</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified index is less than zero or greater than
-       this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size--"><code>ImmutableCollection.size()</code></a></dd>
+       this list's <a href="../../../com/apriori/collections/SizedIterable.html#size--"><code>SizedIterable.size()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -327,7 +334,7 @@ extends <a href="../../../com/apriori/collections/ImmutableList.html" title="int
 <dd>a new list with the specified elements inserted at the specified position</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified index is less than zero or greater than
-       this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size--"><code>ImmutableCollection.size()</code></a></dd>
+       this list's <a href="../../../com/apriori/collections/SizedIterable.html#size--"><code>SizedIterable.size()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -391,7 +398,7 @@ extends <a href="../../../com/apriori/collections/ImmutableList.html" title="int
 <dd>a new list with the element at the specified position updated to the specified value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified index is less than zero or greater than
-       or equal to this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size--"><code>ImmutableCollection.size()</code></a></dd>
+       or equal to this list's <a href="../../../com/apriori/collections/SizedIterable.html#size--"><code>SizedIterable.size()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -413,7 +420,7 @@ extends <a href="../../../com/apriori/collections/ImmutableList.html" title="int
 <dd>a new list with the element at the specified position removed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified index is less than zero or greater than
-       or equal to this list's <a href="../../../com/apriori/collections/ImmutableCollection.html#size--"><code>ImmutableCollection.size()</code></a></dd>
+       or equal to this list's <a href="../../../com/apriori/collections/SizedIterable.html#size--"><code>SizedIterable.size()</code></a></dd>
 </dl>
 </li>
 </ul>

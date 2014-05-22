@@ -27,6 +27,7 @@ import javax.tools.JavaCompiler;
 public @interface ClassesToProcess {
    /**
     * The classes to process.
+    * @return the classes to process
     */
    Class<?>[] value();
    
@@ -37,6 +38,7 @@ public @interface ClassesToProcess {
     * are ignored and only the classes named on the method are used. But, if true,
     * the method's set of classes is incremental, meaning they are in addition to
     * the classes named on the test class.
+    * @return true if the given classes are incremental to those named on the test class
     */
    boolean incremental() default false;
 }

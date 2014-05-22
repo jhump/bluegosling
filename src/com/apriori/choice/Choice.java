@@ -290,7 +290,7 @@ public interface Choice<A, B> {
    }
    
    /**
-    * A visitor for a choice with two options. When passed to {@link OfTwo#visit(Choices.VisitorOfTwo)},
+    * A visitor for a choice with two options. When passed to {@link OfTwo#visit(VisitorOfTwo)},
     * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
@@ -318,7 +318,7 @@ public interface Choice<A, B> {
    }
    
    /**
-    * A visitor for a choice with three options. When passed to {@link OfThree#visit(Choices.VisitorOfThree)},
+    * A visitor for a choice with three options. When passed to {@link OfThree#visit(VisitorOfThree)},
     * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
@@ -339,7 +339,7 @@ public interface Choice<A, B> {
    }
 
    /**
-    * A visitor for a choice with four options. When passed to {@link OfFour#visit(Choices.VisitorOfFour)},
+    * A visitor for a choice with four options. When passed to {@link OfFour#visit(VisitorOfFour)},
     * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
@@ -361,7 +361,7 @@ public interface Choice<A, B> {
    }
 
    /**
-    * A visitor for a choice with five options. When passed to {@link OfFive#visit(Choices.VisitorOfFive)},
+    * A visitor for a choice with five options. When passed to {@link OfFive#visit(VisitorOfFive)},
     * one of the {@code visit*} methods will be invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
@@ -396,6 +396,7 @@ public interface Choice<A, B> {
        * Invokes the appropriate visit method on the given visitor. For example, if this choice has
        * the first option present, then {@link VisitorOfTwo#visitFirst(Object)} will be invoked.
        *
+       * @param <R> the type of result from visiting
        * @param visitor the visitor
        * @return the value returned by the given visitor
        */
@@ -407,6 +408,7 @@ public interface Choice<A, B> {
        * present in this choice will have its position shifted to the corresponding option of the
        * new choice.
        *
+       * @param <C> the type of an absent first option in the expanded choice
        * @return a choice of three options with the same value as this and whose first option is
        *       never present
        */
@@ -418,6 +420,7 @@ public interface Choice<A, B> {
        * present in this choice will have its position shifted to the corresponding option of the
        * new choice.
        *
+       * @param <C> the type of an absent second option in the expanded choice
        * @return a choice of three options with the same value as this and whose second option is
        *       never present
        */
@@ -428,6 +431,7 @@ public interface Choice<A, B> {
        * never present. The new choice will have the same value as this choice. Whichever option is
        * present in this choice will also be present in the new choice.
        *
+       * @param <C> the type of an absent third option in the expanded choice
        * @return a choice of three options with the same value as this and whose third option is
        *       never present
        */

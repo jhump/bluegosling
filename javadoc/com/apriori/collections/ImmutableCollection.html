@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":18,"i5":6,"i6":18,"i7":18,"i8":6,"i9":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":18,"i4":18,"i5":18,"i6":6,"i7":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ImmutableCollection&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</pre>
+extends <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</pre>
 <div class="block">An immutable, read-only collection. This interface is similar to the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a>
  interface except that it defines no mutation operations.
  
@@ -159,36 +159,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#isEmpty--">isEmpty</a></span>()</code>
-<div class="block">Determines if the collection is empty or not.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#size--">size</a></span>()</code>
-<div class="block">Determines the size of the collection.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a></span>()</code>
 <div class="block">Returns an array with the same elements as this collection.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></span>(T[]&nbsp;array)</code>
 <div class="block">Returns an array with the same elements as this collection and the same component type as the
@@ -196,6 +184,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
@@ -217,34 +212,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="size--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>size</h4>
-<pre>int&nbsp;size()</pre>
-<div class="block">Determines the size of the collection.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the number of elements in this collection</dd>
-</dl>
-</li>
-</ul>
-<a name="isEmpty--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isEmpty</h4>
-<pre>boolean&nbsp;isEmpty()</pre>
-<div class="block">Determines if the collection is empty or not.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the collection is empty, false otherwise</dd>
-</dl>
-</li>
-</ul>
 <a name="toArray--">
 <!--   -->
 </a>

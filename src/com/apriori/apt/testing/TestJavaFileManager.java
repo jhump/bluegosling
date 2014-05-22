@@ -77,7 +77,11 @@ public class TestJavaFileManager implements JavaFileManager {
    
    /**
     * Constructs a new file manager. The invoking thread's context class loader will be used as the
-    * parent class loader for any {@linkplain #getClassLoader class loaders created by the file manager}.
+    * parent class loader for any {@linkplain #getClassLoader class loaders created by the file
+    * manager}.
+    * 
+    * @param platformFileManager the platform file manager
+    *    (see {@link JavaCompiler#getStandardFileManager})
     */
    public TestJavaFileManager(JavaFileManager platformFileManager) {
       this(platformFileManager, Thread.currentThread().getContextClassLoader());
@@ -87,6 +91,8 @@ public class TestJavaFileManager implements JavaFileManager {
     * Constructs a new file manager. The specified class loader will be used as the parent class loader
     * for any {@linkplain #getClassLoader class loaders created by the file manager}.
     * 
+    * @param platformFileManager the platform file manager
+    *    (see {@link JavaCompiler#getStandardFileManager})
     * @param parentClassLoader the parent class loader
     */
    public TestJavaFileManager(JavaFileManager platformFileManager, ClassLoader parentClassLoader) {

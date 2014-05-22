@@ -330,7 +330,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFil
 <h4>TestJavaFileManager</h4>
 <pre>public&nbsp;TestJavaFileManager(<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools">JavaFileManager</a>&nbsp;platformFileManager)</pre>
 <div class="block">Constructs a new file manager. The invoking thread's context class loader will be used as the
- parent class loader for any <a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html#getClassLoader-javax.tools.JavaFileManager.Location-">class loaders created by the file manager</a>.</div>
+ parent class loader for any <a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html#getClassLoader-javax.tools.JavaFileManager.Location-">class loaders created by the file
+ manager</a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>platformFileManager</code> - the platform file manager
+    (see <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html?is-external=true#getStandardFileManager-javax.tools.DiagnosticListener-java.util.Locale-java.nio.charset.Charset-" title="class or interface in javax.tools"><code>JavaCompiler.getStandardFileManager(javax.tools.DiagnosticListener&lt;? super javax.tools.JavaFileObject&gt;, java.util.Locale, java.nio.charset.Charset)</code></a>)</dd>
+</dl>
 </li>
 </ul>
 <a name="TestJavaFileManager-javax.tools.JavaFileManager-java.lang.ClassLoader-">
@@ -345,6 +351,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFil
  for any <a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html#getClassLoader-javax.tools.JavaFileManager.Location-">class loaders created by the file manager</a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>platformFileManager</code> - the platform file manager
+    (see <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html?is-external=true#getStandardFileManager-javax.tools.DiagnosticListener-java.util.Locale-java.nio.charset.Charset-" title="class or interface in javax.tools"><code>JavaCompiler.getStandardFileManager(javax.tools.DiagnosticListener&lt;? super javax.tools.JavaFileObject&gt;, java.util.Locale, java.nio.charset.Charset)</code></a>)</dd>
 <dd><code>parentClassLoader</code> - the parent class loader</dd>
 </dl>
 </li>

@@ -32,6 +32,7 @@ import javax.annotation.processing.Processor;
 public @interface ProcessorUnderTest {
    /**
     * The processor class that will be tested.
+    * @return the process class under test
     */
    Class<? extends Processor> value();
 }

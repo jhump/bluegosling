@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -203,6 +203,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SimpleStringTrie.html#collator--">collator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SimpleStringTrie.html#comparator--">comparator</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SimpleStringTrie.html#componentizer--">componentizer</a></span>()</code>
 <div class="block">The object used to break up single key values into a sequence of components.</div>
@@ -221,7 +225,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a></h3>
-<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#componentComparator--">componentComparator</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#descendingMap--">descendingMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-boolean-">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-C-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.util.List-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.util.List-int-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-boolean-K-boolean-">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-K-">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-">tailMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-boolean-">tailMap</a></code></li>
+<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#componentComparator--">componentComparator</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#descendingMap--">descendingMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-boolean-">headMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-C-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-boolean-K-boolean-">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-K-">subMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-">tailMap</a>, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-boolean-">tailMap</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.NavigableMap">
@@ -235,7 +239,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#comparator--" title="class or interface in java.util">comparator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#firstKey--" title="class or interface in java.util">firstKey</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#lastKey--" title="class or interface in java.util">lastKey</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code></li>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#firstKey--" title="class or interface in java.util">firstKey</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#lastKey--" title="class or interface in java.util">lastKey</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
@@ -331,6 +335,19 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/text/Collator.html?is-external=true" title="class or interface in java.text">Collator</a>&nbsp;collator()</pre>
 </li>
 </ul>
+<a name="comparator--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>comparator</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;comparator()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#comparator--" title="class or interface in java.util">comparator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a name="componentizer--">
 <!--   -->
 </a>
@@ -339,15 +356,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <h4>componentizer</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/Componentizer.html" title="interface in com.apriori.collections">Componentizer</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;&nbsp;componentizer()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer--">CompositeTrie</a></code></span></div>
-<div class="block">The object used to break up single key values into a sequence of components. This can be
- null for <a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><code>CompositeTrie</code></a>s that have their own internal mechanism for breaking a key
- into a sequence.</div>
+<div class="block">The object used to break up single key values into a sequence of components.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer--">componentizer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,<a href="../../../com/apriori/collections/SimpleStringTrie.html" title="type parameter in SimpleStringTrie">V</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the object used to break up keys into sequences or <code>null</code> if that behavior is
-       intrinsic to the trie implementation</dd>
+<dd>the object used to break up keys into sequences</dd>
 </dl>
 </li>
 </ul>

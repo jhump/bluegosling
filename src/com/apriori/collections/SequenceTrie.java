@@ -42,28 +42,28 @@ public interface SequenceTrie<K, V> extends Map<List<K>, V> {
     * <p>Inserting mappings into this prefix map will also insert them into the underlying trie, but
     * with the prefix implied. For example, suppose we have a trie with the following mappings:
     * <pre>
-    * { "a", "b", "c", "d" } -> 123,
-    * { "a", "b", "x", "y", "z" } -> 456,
-    * { "e", "f", "g", "h" } -> 789
+    * { "a", "b", "c", "d" } -&gt; 123,
+    * { "a", "b", "x", "y", "z" } -&gt; 456,
+    * { "e", "f", "g", "h" } -&gt; 789
     * </pre>
     * The prefix map, with a prefix of {@code "a"}, would look like so:
     * <pre>
-    * { "b", "c", "d" } -> 123,
-    * { "b", "x", "y", "z" } -> 456
+    * { "b", "c", "d" } -&gt; 123,
+    * { "b", "x", "y", "z" } -&gt; 456
     * </pre>
-    * If the mapping <tt>{ "m", "n", "o" } -> 1001</tt> were added to the prefix map, it would look
-    * like the following:
+    * If the mapping <tt>{ "m", "n", "o" } -&gt; 1001</tt> were added to the prefix map, it would
+    * look like the following:
     * <pre>
-    * { "b", "c", "d" } -> 123,
-    * { "b", "x", "y", "z" } -> 456,
-    * { "m", "n", "o" } -> 1001
+    * { "b", "c", "d" } -&gt; 123,
+    * { "b", "x", "y", "z" } -&gt; 456,
+    * { "m", "n", "o" } -&gt; 1001
     * </pre>
     * And the main, underlying map would then have the following mappings:
     * <pre>
-    * { "a", "b", "c", "d" } -> 123,
-    * { "a", "b", "x", "y", "z" } -> 456,
-    * { "a", "m", "n", "o" } -> 1001,
-    * { "e", "f", "g", "h" } -> 789
+    * { "a", "b", "c", "d" } -&gt; 123,
+    * { "a", "b", "x", "y", "z" } -&gt; 456,
+    * { "a", "m", "n", "o" } -&gt; 1001,
+    * { "e", "f", "g", "h" } -&gt; 789
     * </pre>
     * 
     * @param prefix the key prefix

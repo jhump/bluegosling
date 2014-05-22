@@ -599,13 +599,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>&nbsp;newExecutorServiceForPipeline(<a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="type parameter in PipeliningExecutorService">K</a>&nbsp;pipelineKey)</pre>
 <div class="block">Creates a new service whose tasks are submitted to the specified pipeline. Shutting down the
  returned service only affects submissions to the pipeline made by that service. Other tasks
- submitted from other sources will be continue to be accepted. Similarly, shutting down the
+ submitted from other sources will continue to be accepted. Similarly, shutting down the
  returned service in no way affects this <a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><code>PipeliningExecutorService</code></a>, nor its underlying
  executor.
  
  <p>This method is an adapter. For APIs that expect an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutorService</code></a>, you can use
- this to provide an executor that acts like a single-threaded executor, except it might
- actually be backed by a pool of threads.</div>
+ this to construct an executor that acts like a single-threaded executor and interleaves tasks
+ with others for the same pipeline.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>pipelineKey</code> - the key that identifies the pipeline</dd>

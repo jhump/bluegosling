@@ -30,6 +30,7 @@ public @interface FilesToProcess {
     * prior to starting the processing environment. Any Java source files specified (i.e.
     * file names ending in {@code ".java"}) will be specified as inputs to the Java
     * compiler.
+    * @return the set of resources to process
     */
    InputFiles[] value();
    
@@ -40,6 +41,7 @@ public @interface FilesToProcess {
     * are ignored and only the files named on the method are used. But, if true,
     * the method's set of files is incremental, meaning they are in addition to
     * the files named on the class.
+    * @return true if the given resources are incremental to those named on the test class
     */
    boolean incremental() default false;
 }

@@ -176,6 +176,10 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
 <div class="block">The names of the files/resources, relative to <a href="../../../../com/apriori/apt/testing/OutputFiles.html#folder--"><code>folder()</code></a>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the names of the benchmark output resources</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -194,6 +198,10 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
  for example), the following is the path used when trying to load the file
  as a resource:
  <pre> folder() + "/" + value()[i]</pre></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the name of the folder that contains the resources</dd>
+</dl>
 <dl>
 <dt>Default:</dt>
 <dd>""</dd>
@@ -216,6 +224,10 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
  given file name (the <code>i</code><sup>th</sup> file in the array returned by 
  <a href="../../../../com/apriori/apt/testing/OutputFiles.html#value--"><code>value()</code></a>, for example) is as follows:
  <pre> location().getName() + "/" + value()[i]</pre></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the location in the file system where the resources will exist</dd>
+</dl>
 <dl>
 <dt>Default:</dt>
 <dd>javax.tools.StandardLocation.CLASS_OUTPUT</dd>
