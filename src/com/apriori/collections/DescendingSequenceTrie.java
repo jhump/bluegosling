@@ -49,33 +49,66 @@ class DescendingSequenceTrie<K, V> extends DescendingMap<List<K>, V>
    @Override 
    public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, boolean fromInclusive,
          List<K> toKey, boolean toInclusive) {
-      return new DescendingSequenceTrie<K, V>(base().subMap(fromKey, fromInclusive, toKey, toInclusive));
+      return new DescendingSequenceTrie<>(
+            base().subMap(fromKey, fromInclusive, toKey, toInclusive));
    }
 
    @Override
    public NavigableSequenceTrie<K, V> headMap(List<K> toKey, boolean inclusive) {
-      return new DescendingSequenceTrie<K, V>(base().headMap(toKey, inclusive));
+      return new DescendingSequenceTrie<>(base().headMap(toKey, inclusive));
       
    }
 
    @Override
    public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey, boolean inclusive) {
-      return new DescendingSequenceTrie<K, V>(base().tailMap(fromKey, inclusive));
+      return new DescendingSequenceTrie<>(base().tailMap(fromKey, inclusive));
    }
 
    @Override
    public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, List<K> toKey) {
-      return new DescendingSequenceTrie<K, V>(base().subMap(fromKey, toKey));
+      return new DescendingSequenceTrie<>(base().subMap(fromKey, toKey));
    }
 
    @Override
    public NavigableSequenceTrie<K, V> headMap(List<K> toKey) {
-      return new DescendingSequenceTrie<K, V>(base().headMap(toKey));
+      return new DescendingSequenceTrie<>(base().headMap(toKey));
    }
 
    @Override
    public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey) {
-      return new DescendingSequenceTrie<K, V>(base().tailMap(fromKey));
+      return new DescendingSequenceTrie<>(base().tailMap(fromKey));
+   }
+   
+   @Override
+   public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
+         Iterable<K> toKey, boolean toInclusive) {
+      return new DescendingSequenceTrie<>(
+            base().subMap(fromKey, fromInclusive, toKey, toInclusive));
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey, boolean inclusive) {
+      return new DescendingSequenceTrie<>(base().headMap(toKey, inclusive));
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey, boolean inclusive) {
+      return new DescendingSequenceTrie<>(base().tailMap(fromKey, inclusive));
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, Iterable<K> toKey) {
+      return new DescendingSequenceTrie<>(base().subMap(fromKey, toKey));
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey) {
+      return new DescendingSequenceTrie<>(base().headMap(toKey));
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey) {
+      return new DescendingSequenceTrie<>(base().tailMap(fromKey));
    }
    
    @Override

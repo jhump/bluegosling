@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V, N>>
+abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V, N>>
       extends AbstractTrie<K, Void, V, N> implements SequenceTrie<K, V> {
 
    @SuppressWarnings("unchecked")
@@ -180,6 +180,21 @@ public abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, 
    @Override
    public SequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
       return prefixMap(upToN(prefix, numComponents));
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return MapUtils.equals(this, o);
+   }
+   
+   @Override
+   public int hashCode() {
+      return MapUtils.hashCode(this);
+   }
+   
+   @Override
+   public String toString() {
+      return MapUtils.toString(this);
    }
    
    static class PrefixSequenceTrie<K, V, N extends Node<K, Void, V, N>>

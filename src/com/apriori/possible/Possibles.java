@@ -42,28 +42,34 @@ final class Possibles {
       }
       
       private synchronized boolean determineIfPresent() {
-         if (isPresent == null) {
+         if (isPresent != null) {
+            return isPresent;
+         }
+         synchronized (this) {
+            // double-checked locking so we only compute these values once
+            if (isPresent != null) {
+               return isPresent;
+            }
             boolean interrupted = false;
             while (true) {
                try {
                   value = future.get();
                   isPresent = true;
-                  break;
                } catch (InterruptedException e) {
                   interrupted = true;
+                  continue;
                } catch (ExecutionException e) {
                   isPresent = false;
-                  break;
                } catch (CancellationException e) {
                   isPresent = false;
-                  break;
                }
+               break;
             }
             if (interrupted) {
                Thread.currentThread().interrupt();
             }
+            return isPresent;
          }
-         return isPresent;
       }
       
       @Override

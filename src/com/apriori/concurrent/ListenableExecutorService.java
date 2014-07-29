@@ -76,6 +76,8 @@ public interface ListenableExecutorService extends ExecutorService {
    static ListenableExecutorService makeListenable(ExecutorService executor) {
       if (executor instanceof ListenableExecutorService) {
          return (ListenableExecutorService) executor;
+      } else if (executor instanceof ScheduledExecutorService) {
+         return new ListenableScheduledExecutorServiceWrapper((ScheduledExecutorService) executor);
       }
       return new ListenableExecutorServiceWrapper(executor);
    }

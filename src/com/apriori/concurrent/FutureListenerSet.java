@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  *
  * @param <T> the type of result for the listenable future
  */
-public class FutureListenerSet<T> implements Runnable {
+class FutureListenerSet<T> implements Runnable {
 
    /**
     * A node in a linked list of listeners.
@@ -70,9 +70,7 @@ public class FutureListenerSet<T> implements Runnable {
     */
    public Runnable snapshot() {
       ListenerNode<T> node = listeners.getReference();
-      return node == null ? () -> {} : () -> {
-         runListeners(node);
-      };
+      return node == null ? () -> {} : () -> runListeners(node);
    }
 
    /**
@@ -107,6 +105,7 @@ public class FutureListenerSet<T> implements Runnable {
     * @throws IllegalStateException if this method is called more than once
     */
    @Override public void run() {
+      assert future.isDone();
       boolean mark[] = new boolean[1];
       ListenerNode<T> node;
       while (true) {
@@ -156,11 +155,7 @@ public class FutureListenerSet<T> implements Runnable {
    static <T> void runListener(final ListenableFuture<T> future,
          final FutureListener<? super T> listener, Executor executor) {
       try {
-         executor.execute(new Runnable() {
-            @Override public void run() {
-               listener.onCompletion(future);
-            }
-         });
+         executor.execute(() -> listener.onCompletion(future));
       } catch (RuntimeException e) {
          // TODO: log?
       }

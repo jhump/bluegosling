@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
- * A very simple, thread-safe stack. This is simple and lighter weight version than
+ * A very simple, thread-safe stack. This is a simpler and lighter weight version than
  * {@link TreiberStack}. It does not expose arbitrary remove operations, only {@link #pop}. All
  * operations are atomic.
  * 

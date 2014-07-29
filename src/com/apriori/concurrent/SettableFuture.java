@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -34,15 +35,57 @@ public class SettableFuture<T> extends AbstractListenableFuture<T> {
       return super.setFailure(failure);
    }
    
+   /**
+    * Returns a view of this future as a {@link RunnableListenableFuture} that executes the given
+    * task when run. If the task completes successfully before the future's value (or cause of
+    * failure) is otherwise set, the future's value is set to {@code null}.
+    * 
+    * <p>The returned future can be cancelled and may interrupt the given task if it is running.
+    * Calling {@link #cancel(boolean)} directly on the underlying {@link SettableFuture}, however,
+    * will not interrupt the given task.
+    *
+    * @param runnable the task to run
+    * @return a view of this settable future as a runnable future
+    * 
+    * @see SettableRunnableFuture
+    */
    public RunnableListenableFuture<T> asRunnableFuture(Runnable runnable) {
       return asRunnableFuture(runnable, null);
    }
 
+   /**
+    * Returns a view of this future as a {@link RunnableListenableFuture} that executes the given
+    * task when run. If the task completes successfully before the future's value (or cause of
+    * failure) is otherwise set, the future's value is set to the specified value.
+    * 
+    * <p>The returned future can be cancelled and may interrupt the given task if it is running.
+    * Calling {@link #cancel(boolean)} directly on the underlying {@link SettableFuture}, however,
+    * will not interrupt the given task.
+    *
+    * @param runnable the task to run
+    * @param result the value of this future upon successful completion of the task
+    * @return a view of this settable future as a runnable future
+    * 
+    * @see SettableRunnableFuture
+    */
    public RunnableListenableFuture<T> asRunnableFuture(Runnable runnable, T result) {
-      return asRunnableFuture(() -> { runnable.run(); return result; });
+      return asRunnableFuture(Executors.callable(runnable, result));
    }
    
-   public RunnableListenableFuture<T> asRunnableFuture(Callable<T> callable) {
+   /**
+    * Returns a view of this future as a {@link RunnableListenableFuture} that performs the given
+    * computation when run. If the task completes successfully before the future's value (or cause
+    * of failure) is otherwise set, the future's value is set to the result of that computation.
+    * 
+    * <p>The returned future can be cancelled and may interrupt the given task if it is running.
+    * Calling {@link #cancel(boolean)} directly on the underlying {@link SettableFuture}, however,
+    * will not interrupt the given task.
+    *
+    * @param callable the computation to perform
+    * @return a view of this settable future as a runnable future
+    * 
+    * @see SettableRunnableFuture
+    */   public RunnableListenableFuture<T> asRunnableFuture(Callable<T> callable) {
       return new RunnableView(callable);
    }
 

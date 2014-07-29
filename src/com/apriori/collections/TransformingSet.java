@@ -24,8 +24,8 @@ import java.util.function.Function;
  * Function&lt;Type1, Type2&gt; function;
  * // take a snapshot to produce a transformed set that will never
  * // violate set invariants
- * Set&lt;Type2&gt; transformed = new HashSet&lt;Type2&gt;(
- *       new TransformingCollection&lt;Type1, Type2&gt;(input, function));
+ * Set&lt;Type2&gt; transformed = new HashSet&lt;&gt;(
+ *       new TransformingCollection&lt;&gt;(input, function));
  * </pre>
  * 
  * <p>Since transformations can only be done in one direction, some operations are not supported.

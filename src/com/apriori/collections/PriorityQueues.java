@@ -14,7 +14,7 @@ import java.util.Iterator;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: test
+// TODO: tests
 public final class PriorityQueues {
    private PriorityQueues() {
    }
@@ -22,7 +22,18 @@ public final class PriorityQueues {
    /**
     * A type of value that automatically associates itself with a queue entry when added to a
     * {@link PriorityQueue}. This only works when using the object's {@link
-    * #add(Object, PriorityQueue) method}.
+    * #add(Object, PriorityQueue)} method.
+    * 
+    * <p>This can be very useful since usage of a {@link PriorityQueue} requires keeping track of an
+    * associated {@link Entry} after adding a value to the queue in order to perform other useful
+    * operations later. A common pattern is to store a reference to the associated entry in the
+    * actual value, after it is added to the queue. This class encapsulates that pattern.
+    * 
+    * <p>To use, extend this class and add fields that represent the actual object/state being added
+    * to a queue. Always use the object's {@link #add} method (instead of using the queue's
+    * {@link PriorityQueue#add} method). This class also provides utility methods for interacting
+    * with the queue directly through the associated entry, like for removing the entry or changing
+    * its priority.
     *
     * @param <P> the type of priority associated with this object
     * @param <E> the type of this object

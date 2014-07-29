@@ -82,7 +82,6 @@ public final class Optionals {
       return (Possible<T>) None.INSTANCE;
    }
    
-   
    /**
     * Creates an object that represents the specified value. If the value is not {@code null} then
     * {@linkplain #some(Object) some value} is returned, otherwise {@linkplain #none() none}.

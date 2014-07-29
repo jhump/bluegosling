@@ -19,17 +19,20 @@ public interface NavigableSequenceTrie<K, V> extends SequenceTrie<K, V>, Navigab
 
    @Override NavigableSequenceTrie<K, V> subMap(List<K> fromKey, boolean fromInclusive,
          List<K> toKey, boolean toInclusive);
-
    @Override NavigableSequenceTrie<K, V> headMap(List<K> toKey, boolean inclusive);
-
    @Override NavigableSequenceTrie<K, V> tailMap(List<K> fromKey, boolean inclusive);
-
    @Override NavigableSequenceTrie<K, V> subMap(List<K> fromKey, List<K> toKey);
-
    @Override NavigableSequenceTrie<K, V> headMap(List<K> toKey);
-
    @Override NavigableSequenceTrie<K, V> tailMap(List<K> fromKey);
-   
+
+   NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
+         Iterable<K> toKey, boolean toInclusive);
+   NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey, boolean inclusive);
+   NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey, boolean inclusive);
+   NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, Iterable<K> toKey);
+   NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey);
+   NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey);
+
    Entry<List<K>, V> lowerEntry(Iterable<K> keys);
    List<K> lowerKey(Iterable<K> keys);
    Entry<List<K>, V> higherEntry(Iterable<K> keys);

@@ -40,6 +40,26 @@ public final class Iterables {
       };
    }
    
+   public static <E> boolean addTo(Iterator<E> iter, Collection<? super E> coll) {
+      boolean ret = false;
+      while (iter.hasNext()) {
+         if (coll.add(iter.next())) {
+            ret = true;
+         }
+      }
+      return ret;
+   }
+   
+   public static <E> boolean addTo(Iterable<E> iter, Collection<? super E> coll) {
+      if (iter instanceof Collection) {
+         return coll.addAll((Collection<E>) iter);
+      } else if (iter instanceof SizedIterable) {
+         return coll.addAll(SizedIterable.toCollection((SizedIterable<E>) iter));
+      } else {
+         return addTo(iter.iterator(), coll);
+      }
+   }
+   
    public static <E> Iterator<E> emptyIterator() {
       @SuppressWarnings("unchecked")
       Iterator<E> ret = (Iterator<E>) EmptyIterator.INSTANCE;

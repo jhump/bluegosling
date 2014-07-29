@@ -48,11 +48,11 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
    protected N root;
    protected int generation;
    
-   AbstractTrie() {
+   protected AbstractTrie() {
       this.root = newNode(null, null);
    }
    
-   AbstractTrie(N root) {
+   protected AbstractTrie(N root) {
       this.root = root;
    }
    
@@ -174,6 +174,11 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       return new EntryIterator<>(root, producer);
    }
    
+   protected <T> Iterator<T> entryIteratorFrom(
+         BiFunction<EntryIterator<T, K, X, V, N>, N, T> producer, N startAt) {
+      return new EntryIterator<>(root, producer, startAt);
+   }
+
    protected List<K> createKeyList(N start, N end) {
       List<K> ret = new ArrayList<>();
       N node = start;
@@ -239,14 +244,26 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       
       final ArrayDeque<StackFrame<K, X, V, N>> frames = new ArrayDeque<>();
       final BiFunction<EntryIterator<T, K, X, V, N>, N, T> producer;
-      boolean first;
+      boolean first = true;
       N lastFetched;
       
-      EntryIterator(N root, BiFunction<EntryIterator<T, K, X, V, N>, N, T> producer) {
-         frames.push(newStackFrame(root));
+      protected EntryIterator(N root, BiFunction<EntryIterator<T, K, X, V, N>, N, T> producer) {
+         this(root, producer, root);
+      }
+
+      protected EntryIterator(N root, BiFunction<EntryIterator<T, K, X, V, N>, N, T> producer,
+            N startAt) {
+         while(true) {
+            assert startAt != null;
+            frames.push(newStackFrame(startAt));
+            if (startAt == root) {
+               break;
+            }
+            startAt = startAt.getParent();
+         }
          this.producer = producer;
       }
-      
+
       private StackFrame<K, X, V, N> newStackFrame(N node) {
          return new StackFrame<>(node, node.childIterator());
       }
@@ -303,7 +320,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       
       public List<K> createKeyList() {
          // TODO: Use AmtPersistentList instead of ArrayDeque so we don't need to create a new
-         // list every time. We could instead just return a "view" of the persistent list.
+         // list every time? Then we could instead just return a "view" of the persistent list.
          List<K> ret = new ArrayList<>(frames.size() - 1);
          boolean isFirst = true;
          for (Iterator<StackFrame<K, X, V, N>> iter = frames.descendingIterator();

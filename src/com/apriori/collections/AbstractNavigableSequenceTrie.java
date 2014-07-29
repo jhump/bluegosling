@@ -2,6 +2,7 @@ package com.apriori.collections;
 
 import static com.apriori.collections.Iterables.upToN;
 
+import com.apriori.collections.AbstractNavigableMap.BoundType;
 import com.apriori.possible.Reference;
 
 import java.util.AbstractCollection;
@@ -17,16 +18,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public abstract class AbstractNavigableSequenceTrie
-         <K, V, N extends AbstractNavigableTrie.NavigableNode<K, Void, V, N>>
+abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTrie.NavigableNode<K, Void, V, N>>
       extends AbstractNavigableTrie<K, Void, V, N> implements NavigableSequenceTrie<K, V> {
 
-   final Comparator<? super K> componentComparator;
-   
    public AbstractNavigableSequenceTrie(Comparator<? super K> componentComparator) {
-      this.componentComparator = componentComparator == null
-            ? CollectionUtils.naturalOrder()
-            : componentComparator;
+      super(componentComparator);
    }
    
    @SuppressWarnings("unchecked")
@@ -313,40 +309,68 @@ public abstract class AbstractNavigableSequenceTrie
    }
 
    @Override
+   public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
+         Iterable<K> toKey, boolean toInclusive) {
+      return new SubTrie<>(this, fromKey, fromInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+            toKey, toInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey, boolean inclusive) {
+      return new SubTrie<>(this, null, BoundType.NO_BOUND, toKey,
+            inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey, boolean inclusive) {
+      return new SubTrie<>(this, fromKey, inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+            null, BoundType.NO_BOUND);
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, Iterable<K> toKey) {
+      return subMap(fromKey, true, toKey, false);
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey) {
+      return headMap(toKey, false);
+   }
+
+   @Override
+   public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey) {
+      return tailMap(fromKey, true);
+   }
+   
+   @Override
    public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, boolean fromInclusive, List<K> toKey,
          boolean toInclusive) {
-      // TODO: implement me
-      return null;
+      return subMap((Iterable<K>) fromKey, fromInclusive, toKey, toInclusive);
    }
-
+   
    @Override
    public NavigableSequenceTrie<K, V> headMap(List<K> toKey, boolean inclusive) {
-      // TODO: implement me
-      return null;
+      return headMap((Iterable<K>) toKey, inclusive);
    }
-
+   
    @Override
    public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey, boolean inclusive) {
-      // TODO: implement me
-      return null;
+      return tailMap((Iterable<K>) fromKey, inclusive);
    }
-
+   
    @Override
    public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, List<K> toKey) {
-      // TODO: implement me
-      return null;
+      return subMap((Iterable<K>) fromKey, toKey);
    }
-
+   
    @Override
    public NavigableSequenceTrie<K, V> headMap(List<K> toKey) {
-      // TODO: implement me
-      return null;
+      return headMap((Iterable<K>) toKey);
    }
-
+   
    @Override
    public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey) {
-      // TODO: implement me
-      return null;
+      return tailMap((Iterable<K>) fromKey);
    }
    
    @Override
@@ -636,6 +660,232 @@ public abstract class AbstractNavigableSequenceTrie
       @Override
       public NavigableSet<List<K>> tailSet(List<K> fromElement) {
          return tailSet(fromElement, true);
+      }
+   }
+   
+   protected static class SubTrie<K, V, N extends AbstractNavigableTrie.NavigableNode<K, Void, V, N>>
+         extends AbstractNavigableMap<List<K>, V> implements NavigableSequenceTrie<K, V> {
+      private final AbstractNavigableSequenceTrie<K, V, N> base;
+      private final Iterable<K> lowerBound;
+      private final BoundType lowerBoundType;
+      private final Iterable<K> upperBound;
+      private final BoundType upperBoundType;
+      
+      SubTrie(AbstractNavigableSequenceTrie<K, V, N> base, Iterable<K> lowerBound,
+            BoundType lowerBoundType, Iterable<K> upperBound, BoundType upperBoundType) {
+         this.base = base;
+         this.lowerBound = lowerBound;
+         this.lowerBoundType = lowerBoundType;
+         this.upperBound = upperBound;
+         this.upperBoundType = upperBoundType;
+      }
+
+      @Override
+      public int size() {
+         // TODO: implement me
+         return 0;
+      }
+
+      @Override
+      public V put(Iterable<K> key, V value) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public V put(List<K> key, V value) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public Comparator<? super K> componentComparator() {
+         return base.componentComparator();
+      }
+      
+      @Override
+      public Comparator<? super List<K>> comparator() {
+         return base.comparator();
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> prefixMap(K prefix) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> descendingMap() {
+         return new DescendingSequenceTrie<>(this);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
+            Iterable<K> toKey, boolean toInclusive) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey, boolean inclusive) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey, boolean inclusive) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, Iterable<K> toKey) {
+         return subMap(fromKey, true, toKey, false);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey) {
+         return headMap(toKey, false);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey) {
+         return tailMap(fromKey, true);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, boolean fromInclusive,
+            List<K> toKey, boolean toInclusive) {
+         return subMap((Iterable<K>) fromKey, fromInclusive, toKey, toInclusive);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> headMap(List<K> toKey, boolean inclusive) {
+         return headMap((Iterable<K>) toKey, inclusive);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey, boolean inclusive) {
+         return tailMap((Iterable<K>) fromKey, inclusive);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> subMap(List<K> fromKey, List<K> toKey) {
+         return subMap(fromKey, true, toKey, false);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> headMap(List<K> toKey) {
+         return headMap(toKey, false);
+      }
+
+      @Override
+      public NavigableSequenceTrie<K, V> tailMap(List<K> fromKey) {
+         return tailMap(fromKey, true);
+      }
+
+      @Override
+      public Entry<List<K>, V> lowerEntry(List<K> keys) {
+         return lowerEntry((Iterable<K>) keys);
+      }
+
+      @Override
+      public Entry<List<K>, V> higherEntry(List<K> keys) {
+         return higherEntry((Iterable<K>) keys);
+      }
+
+      @Override
+      public Entry<List<K>, V> ceilingEntry(List<K> keys) {
+         return ceilingEntry((Iterable<K>) keys);
+      }
+
+      @Override
+      public Entry<List<K>, V> floorEntry(List<K> keys) {
+         return floorEntry((Iterable<K>) keys);
+      }
+      
+      @Override
+      public Entry<List<K>, V> firstEntry() {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public Entry<List<K>, V> lastEntry() {
+         // TODO: implement me
+         return null;
+      }
+      
+      @Override
+      public Entry<List<K>, V> lowerEntry(Iterable<K> keys) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public List<K> lowerKey(Iterable<K> keys) {
+         Entry<List<K>, V> entry = lowerEntry(keys);
+         return entry != null ? entry.getKey() : null;
+      }
+
+      @Override
+      public Entry<List<K>, V> higherEntry(Iterable<K> keys) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public List<K> higherKey(Iterable<K> keys) {
+         Entry<List<K>, V> entry = higherEntry(keys);
+         return entry != null ? entry.getKey() : null;
+      }
+
+      @Override
+      public Entry<List<K>, V> ceilingEntry(Iterable<K> keys) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public List<K> ceilingKey(Iterable<K> keys) {
+         Entry<List<K>, V> entry = ceilingEntry(keys);
+         return entry != null ? entry.getKey() : null;
+      }
+
+      @Override
+      public Entry<List<K>, V> floorEntry(Iterable<K> keys) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public List<K> floorKey(Iterable<K> keys) {
+         Entry<List<K>, V> entry = floorEntry(keys);
+         return entry != null ? entry.getKey() : null;
+      }
+
+      @Override
+      protected Entry<List<K>, V> getEntry(Object key) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      protected Entry<List<K>, V> removeEntry(Object key) {
+         // TODO: implement me
+         return null;
       }
    }
 }

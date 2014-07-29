@@ -16,10 +16,10 @@ final class Fulfillables {
    
    static class FulfillableImpl<T> extends AbstractDynamicPossible<T> implements Fulfillable<T> {
       @SuppressWarnings("rawtypes") // class tokens require use of raw types
-      private static AtomicReferenceFieldUpdater<FulfillableImpl, Reference> updater =
-            AtomicReferenceFieldUpdater.newUpdater(FulfillableImpl.class, Reference.class, "value");
+      private static AtomicReferenceFieldUpdater<FulfillableImpl, Object[]> updater =
+            AtomicReferenceFieldUpdater.newUpdater(FulfillableImpl.class, Object[].class, "value");
 
-      private volatile Reference<T> value;
+      private volatile T[] value;
       
       FulfillableImpl() {
       }
@@ -31,7 +31,9 @@ final class Fulfillables {
       
       @Override
       public boolean fulfill(T t) {
-         return updater.compareAndSet(this, null, Reference.setTo(t));
+         @SuppressWarnings("unchecked")
+         T v[] = (T[]) new Object[] { t };
+         return updater.compareAndSet(this, null, v);
       }
       
       @Override
@@ -39,7 +41,7 @@ final class Fulfillables {
          if (value == null) {
             throw new NoSuchElementException("not fulfilled");
          }
-         return value.get();
+         return value[0];
       }
       
       @Override
@@ -47,7 +49,7 @@ final class Fulfillables {
          // since it can never be unset, we can just return a singleton set if
          // the value has been fulfilled
          if (value != null) {
-            return Collections.singleton(value.get());
+            return Collections.singleton(value[0]);
          }
          return super.asSet();
       }

@@ -6,6 +6,7 @@ import com.apriori.possible.Possibles.ListenableFuturePossible;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -150,8 +151,10 @@ public interface Possible<T> {
          return possible;
       }
       if (possible instanceof Reference) {
+         // References are immutable, so this is easy.
          return possible.isPresent() ? Optionals.of(possible.get()) : Optionals.none();
       }
+      // Given instance could be mutable, so we need to wrap it.
       return new AbstractDynamicPossible<T>() {
          @Override
          public boolean isPresent() {
@@ -174,9 +177,9 @@ public interface Possible<T> {
    }
    
    /**
-    * Returns a view of a future as a possible value. If the future is incomplete, fails, or is
-    * cancelled then the value is not present. If and when the future completes successfully, the
-    * value will become present. The actual value is the future's result.
+    * Returns a view of a future as a possible value. If the future is incomplete, has failed, or
+    * has been cancelled then the value is not present. If and when the future completes
+    * successfully, the value will become present. The actual value is the future's result.
     * 
     * @param future the future
     * @return a view of the future as a {@link Possible}
@@ -193,7 +196,10 @@ public interface Possible<T> {
     * Returns a list of the present values from the specified collection of possible values.
     * Possible values where no value is present are excluded. So the resulting list will have fewer
     * elements than the specified collection in the event that not all values are present. The order
-    * of items in the list matches the iteration order of the specified collection.
+    * of items in the list matches the iteration order of the specified collection. The returned
+    * list is a snapshot of the of the values present at the time this method is executed. If any of
+    * the input values are mutable and later become present or absent, that will never be reflected
+    * in the returned list.
     * 
     * @param possibles a collection of possible values
     * @return a list of present values
@@ -210,14 +216,17 @@ public interface Possible<T> {
             }
          }
       }
-      return present;
+      return Collections.unmodifiableList(present);
    }
 
    /**
     * Returns a list of the values, {@code null} if no value is present, from the specified
     * collection of possible values. The resulting list will always have exactly the same number of
     * elements as the specified collection, even if not all values are present. The order of items
-    * in the list matches the iteration order of the specified collection.
+    * in the list matches the iteration order of the specified collection. The returned list is a
+    * snapshot of the of the values present at the time this method is executed. If any of
+    * the input values are mutable and later become present or absent, that will never be reflected
+    * in the returned list.
     * 
     * @param possibles a collection of possible values
     * @return a list of values extracted from the collection, {@code null} for objects where a value
@@ -228,7 +237,7 @@ public interface Possible<T> {
       for (Possible<T> p : possibles) {
          present.add(p.orElse(null));
       }
-      return present;
+      return Collections.unmodifiableList(present);
    }
    
    /**

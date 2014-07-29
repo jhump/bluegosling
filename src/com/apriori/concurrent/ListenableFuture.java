@@ -142,10 +142,10 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    
    /**
     * Chains the specified task to the completion of this future. The specified task will be
-    * initiated once the specified future completes successfully. The returned future will complete
-    * successfully once both this future and chained task have completed. The returned future will
-    * fail if this future fails (in which case the task is never invoked) or if the task throws an
-    * exception.
+    * initiated once this future completes successfully. The returned future will complete
+    * successfully once both this future and the chained task have completed. The returned future
+    * will fail if this future fails (in which case the task is never invoked) or if the task throws
+    * an exception.
     * 
     * <p>If this future is cancelled then the returned future will also be cancelled. But not vice
     * versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.
@@ -177,10 +177,10 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
 
    /**
     * Chains the specified task to the completion of this future. The specified task will be
-    * initiated once the specified future completes successfully. The returned future will complete
-    * successfully once both this future and chained task have completed. The returned future will
-    * fail if this future fails (in which case the task is never invoked) or if the task throws an
-    * exception.
+    * initiated once this future completes successfully. The returned future will complete
+    * successfully once both this future and the chained task have completed. The returned future
+    * will fail if this future fails (in which case the task is never invoked) or if the task throws
+    * an exception.
     * 
     * <p>If this future is cancelled then the returned future will also be cancelled. But not vice
     * versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.
@@ -197,10 +197,10 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
 
    /**
     * Chains the specified task to the completion of this future. The specified task will be
-    * initiated once the specified future completes successfully. The returned future will complete
-    * successfully once both this future and chained task have completed. The returned future will
-    * fail if this future fails (in which case the task is never invoked) or if the task throws an
-    * exception.
+    * initiated once this future completes successfully. The returned future will complete
+    * successfully once both this future and the chained task have completed. The returned future
+    * will fail if this future fails (in which case the task is never invoked) or if the task throws
+    * an exception.
     * 
     * <p>If this future is cancelled then the returned future will also be cancelled. But not vice
     * versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.
@@ -216,10 +216,10 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
 
    /**
     * Chains the specified task to the completion of this future. The specified task will be
-    * initiated once the specified future completes successfully. The returned future will complete
-    * successfully once both this future and chained task have completed. The returned future will
-    * fail if this future fails (in which case the task is never invoked) or if the task throws an
-    * exception.
+    * initiated once this future completes successfully. The returned future will complete
+    * successfully once both this future and the chained task have completed. The returned future
+    * will fail if this future fails (in which case the task is never invoked) or if the task throws
+    * an exception.
     * 
     * <p>If this future is cancelled then the returned future will also be cancelled. But not vice
     * versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.
@@ -547,7 +547,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * Converts the specified future into a {@link ListenableFuture}. If the specified future
     * <em>is</em> a {@link ListenableFuture}, it is returned without any conversion. Note that if
     * the specified future is not yet done and is not a {@link CompletableFuture}, conversion
-    * requires creating a new thread. The thread simply blocks until the specified future completes,
+    * requires creating a new thread that simply blocks until the specified future completes,
     * at which time the returned listenable future is also completed (asynchronously).
     * 
     * <p>The returned future's cancellation status will be kept in sync with the specified future.
@@ -648,9 +648,10 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * asynchronous functional idioms, and also for testing.
     * 
     * <p>The returned future cannot be used with blocking calls, since they would never return or
-    * always timeout. Additionally, the future cannot be cancelled. So calls to
-    * {@link ListenableFuture#cancel(boolean)}, both variants of {@link ListenableFuture#get}, and
-    * both variants of {@link ListenableFuture#await} all throw {@link UnsupportedOperationException}.
+    * always timeout. So calls to both forms of {@link ListenableFuture#get} and both forms of
+    * {@link ListenableFuture#await} all throw {@link UnsupportedOperationException}. Additionally,
+    * the future cannot be cancelled (as that would implicitly finish it). So calls to
+    * {@link #cancel(boolean)} always return false.
     *
     * @return a future that will never finish
     */

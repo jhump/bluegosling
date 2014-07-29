@@ -76,7 +76,7 @@ public interface GrowableArray<E> extends SizedIterable<E> {
    void set(int index, E value);
 
    /**
-    * Grows the capacity of the array by the given number of elements. The extra capacity as added
+    * Grows the capacity of the array by the given number of elements. The extra capacity is added
     * to the end of the array. The new positions in the array will initially have a value of
     * {@code null}.
     *
@@ -156,8 +156,8 @@ public interface GrowableArray<E> extends SizedIterable<E> {
       // try to pre-allocate the entire amount needed
       if (values instanceof Collection) {
          growBy(((Collection<?>) values).size());
-      } else if (values instanceof ImmutableCollection) {
-         growBy(((ImmutableCollection<?>) values).size());
+      } else if (values instanceof SizedIterable) {
+         growBy(((SizedIterable<?>) values).size());
       }
       for (E t : values) {
          if (i < size()) {

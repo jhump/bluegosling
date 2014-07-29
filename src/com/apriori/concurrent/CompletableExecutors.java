@@ -40,7 +40,7 @@ final class CompletableExecutors {
    }
    
    /**
-    * A {@link ListenableExecutorService} that executes submitted tasks sychronously on the same
+    * A {@link ListenableExecutorService} that executes submitted tasks synchronously on the same
     * thread as the one that submits them.
     */
    static class SameThreadExecutorService implements CompletableExecutorService {

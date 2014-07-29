@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -37,6 +38,25 @@ public interface SizedIterable<E> extends Iterable<E> {
          @Override
          public boolean isEmpty() {
             return coll.isEmpty();
+         }
+      };
+   }
+   
+   static <E> Collection<E> toCollection(SizedIterable<? extends E> iter) {
+      return new AbstractCollection<E>() {
+         @Override
+         public Iterator<E> iterator() {
+            return Iterables.cast(iter.iterator());
+         }
+
+         @Override
+         public int size() {
+            return iter.size();
+         }
+
+         @Override
+         public boolean isEmpty() {
+            return iter.isEmpty();
          }
       };
    }

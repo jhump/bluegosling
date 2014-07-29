@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -25,7 +26,7 @@ import java.util.function.Supplier;
  * operations.
  * 
  * <p>Bulk operations are not atomic. So reads that execute concurrently with bulk operations may
- * see partial results from in-progress the bulk operations.
+ * see partial results from the in-progress bulk operations.
  *
  * @param <T> the type of values stored in the stack
  * 
@@ -63,7 +64,7 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
          super(next, false);
          this.value = value;
       }
-}
+   }
    
    volatile Node<T> head;
    volatile int size;
@@ -157,8 +158,7 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
                // not found
                return false;
             }
-            T t = current.value;
-            if (value == null ? t == null : value.equals(t)) {
+            if (Objects.equals(value, current.value)) {
                // found it
                break;
             }

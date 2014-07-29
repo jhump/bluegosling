@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, V, N>>
+abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, V, N>>
       extends AbstractTrie<C, K, V, N> implements CompositeTrie<K, C, V> {
 
    final Componentizer<? super K, ? extends C> componentizer;
@@ -200,6 +200,21 @@ public abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node
       return prefixMap(upToN(prefix, numComponents));
    }
    
+   @Override
+   public boolean equals(Object o) {
+      return MapUtils.equals(this, o);
+   }
+   
+   @Override
+   public int hashCode() {
+      return MapUtils.hashCode(this);
+   }
+   
+   @Override
+   public String toString() {
+      return MapUtils.toString(this);
+   }
+
    static class PrefixCompositeTrie<K, C, V, N extends Node<C, K, V, N>>
          extends AbstractCompositeTrie<K, C, V, N> {
       final Iterable<C> prefix;

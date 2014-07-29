@@ -26,11 +26,11 @@ import java.util.concurrent.TimeUnit;
  * are created atop a thread pool with a maximum of 50 threads. So each sub-system can try to use
  * up to 20 threads, but we've constrained the total across all four sub-systems to just 50, not 80.
  *
- * <p>Note: since this executor must maintains its own set of queues, independent of the underlying
+ * <p>Note: since this executor must maintain its own set of queues, independent of the underlying
  * executor's main work queue (for constraining its level of parallelism), it is possible for tasks
  * to be accepted by this executor but then later rejected by the underlying executor. Care should
- * be exercised to coordinate the life cycle of the underlying executor and the sources of
- * submissions to pipelines.
+ * be exercised to coordinate the life cycle of the underlying executor and the sources of task
+ * submissions.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

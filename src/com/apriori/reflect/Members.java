@@ -34,16 +34,13 @@ public final class Members {
     * @return the method with the specified signature or {@code null}
     */
    public static Method findMethod(Class<?> clazz, final String name, final Class<?>... argTypes) {
-      return ClassHierarchyCrawler.crawlWith(clazz, null, new ClassVisitor<Method, Void>() {
-         @Override
-         public Method visit(Class<?> aClass, Void v) {
-            try {
-               Method m = aClass.getDeclaredMethod(name, argTypes);
-               // only want instance methods
-               return Modifier.isStatic(m.getModifiers()) ? null : m;
-            } catch (NoSuchMethodException e) {
-               return null;
-            }
+      return ClassHierarchyCrawler.crawlWith(clazz, null, (aClass, v) -> {
+         try {
+            Method m = aClass.getDeclaredMethod(name, argTypes);
+            // only want instance methods
+            return Modifier.isStatic(m.getModifiers()) ? null : m;
+         } catch (NoSuchMethodException e) {
+            return null;
          }
       });
    }
@@ -80,22 +77,18 @@ public final class Members {
     */
    public static Collection<Method> findMethods(Class<?> clazz, final String name) {
       Map<MethodSignature, Method> methods = new HashMap<MethodSignature, Method>();
-      ClassHierarchyCrawler.crawlWith(clazz, methods,
-            new ClassVisitor<Void, Map<MethodSignature, Method>>() {
-               @Override
-               public Void visit(Class<?> aClass, Map<MethodSignature, Method> methodMap) {
-                  for (Method m : aClass.getDeclaredMethods()) {
-                     if (m.getName().equals(name) && !Modifier.isStatic(m.getModifiers())) {
-                        MethodSignature sig = new MethodSignature(m);
-                        // don't overwrite an entry with one from a more distant type
-                        if (!methodMap.containsKey(sig)) {
-                           methodMap.put(new MethodSignature(m), m);
-                        }
-                     }
+      ClassHierarchyCrawler.crawlWith(clazz, methods, (aClass, methodMap) -> {
+            for (Method m : aClass.getDeclaredMethods()) {
+               if (m.getName().equals(name) && !Modifier.isStatic(m.getModifiers())) {
+                  MethodSignature sig = new MethodSignature(m);
+                  // don't overwrite an entry with one from a more distant type
+                  if (!methodMap.containsKey(sig)) {
+                     methodMap.put(new MethodSignature(m), m);
                   }
-                  return null;
                }
-            });
+            }
+            return null;
+      });
       return methods.values();
    }
    
@@ -112,14 +105,11 @@ public final class Members {
     * @return the field with the specified name or {@code null}
     */
    public static Field findField(Class<?> clazz, final String name) {
-      return ClassHierarchyCrawler.crawlWith(clazz, null, new ClassVisitor<Field, Void>() {
-         @Override
-         public Field visit(Class<?> aClass, Void v) {
-            try {
-               return aClass.getDeclaredField(name);
-            } catch (NoSuchFieldException e) {
-               return null;
-            }
+      return ClassHierarchyCrawler.crawlWith(clazz, null, (aClass, v) -> {
+         try {
+            return aClass.getDeclaredField(name);
+         } catch (NoSuchFieldException e) {
+            return null;
          }
       });
    }
@@ -137,16 +127,13 @@ public final class Members {
     */
    public static Collection<Field> findFields(Class<?> clazz, final String name) {
       List<Field> fields = new ArrayList<Field>();
-      ClassHierarchyCrawler.<Void, List<Field>> builder()
-            .forEachClass(new ClassVisitor<Void, List<Field>>() {
-               @Override
-               public Void visit(Class<?> aClass, List<Field> fieldList) {
-                  try {
-                     fieldList.add(aClass.getDeclaredField(name));
-                  } catch (NoSuchFieldException ignore) {
-                  }
-                  return null;
+      ClassHierarchyCrawler.<Void, List<Field>>builder()
+            .forEachClass((aClass, fieldList) -> {
+               try {
+                  fieldList.add(aClass.getDeclaredField(name));
+               } catch (NoSuchFieldException ignore) {
                }
+               return null;
             }).build().visit(clazz, fields);
       return fields;
    }

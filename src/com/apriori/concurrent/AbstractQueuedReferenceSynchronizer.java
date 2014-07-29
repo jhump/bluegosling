@@ -17,7 +17,7 @@ import java.util.concurrent.locks.LockSupport;
  * wait queues. This variant can be useful above and beyond its kin,
  * {@link AbstractQueuedSynchronizer} and {@link AbstractQueuedLongSynchronizer}, since it allows
  * for atomically maintaining state outside of just 32- and 64-bit numeric values. With those
- * classes, encoding multiple counters into a single state value can mean drastic loss in precision,
+ * classes, encoding multiple counters into a single state value can lead to lack of precision,
  * often manifesting as arbitrary limits in the usage of derived synchronizers. This class provides
  * an alternative that allows you to instead encode multiple full-precision counters into a simple
  * value type. A reference to that value type is the managed state, not just a fixed-precision

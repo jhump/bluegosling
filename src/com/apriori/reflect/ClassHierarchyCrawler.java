@@ -147,7 +147,8 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
     * @return the first non-null result from the specified visitor
     */
    public static <R, P> R crawlWith(Class<?> clazz, P param, ClassVisitor<R, P> visitor) {
-      return ClassHierarchyCrawler.<R, P> builder().forEachClass(visitor).build().visit(clazz, param);
+      return ClassHierarchyCrawler.<R, P>builder().forEachClass(visitor).build()
+            .visit(clazz, param);
    }
    
    private final ClassVisitor<R, P> visitor;
@@ -155,7 +156,8 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
    private final boolean earlyOut;
    private final boolean includeInterfaces;
    
-   ClassHierarchyCrawler(ClassVisitor<R, P> visitor, boolean preOrder, boolean earlyOut, boolean includeInterfaces) {
+   ClassHierarchyCrawler(ClassVisitor<R, P> visitor, boolean preOrder, boolean earlyOut,
+         boolean includeInterfaces) {
       this.visitor = visitor;
       this.preOrder = preOrder;
       this.earlyOut = earlyOut;

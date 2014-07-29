@@ -4,10 +4,31 @@ import java.util.Comparator;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-//TODO: javadoc
+/**
+ * A specialization of {@link Delayed} that allows for more accurate comparisons between the time
+ * at which instances are scheduled.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public interface Scheduled extends Delayed {
+   /**
+    * Returns the time at which this instance is scheduled, in {@linkplain System#nanoTime() system
+    * nanos}.
+    *
+    * @return the time at which this instance is scheduled
+    */
    long getScheduledNanoTime();
    
+   /**
+    * An accurate and precise comparator of {@link Delayed} objects that will compare the scheduled
+    * nano-time if both objects happen to be {@link Scheduled}.
+    * 
+    * <p>Comparing objects just based on delay is inherently racy at very fine precision since
+    * nanoseconds pass between the method calls to query the objects' delay. So it may be
+    * impossible to otherwise determine if two delayed objects are actually scheduled for precisely
+    * the same instant in time. Comparing absolute scheduled times allows for such precise
+    * comparisons.
+    */
    Comparator<Delayed> COMPARATOR = new Comparator<Delayed>() {
       @Override
       public int compare(Delayed o1, Delayed o2) {

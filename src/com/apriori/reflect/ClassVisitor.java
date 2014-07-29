@@ -8,6 +8,7 @@ package com.apriori.reflect;
  * @param <R> result type of invoking the visitor
  * @param <P> parameter type for invoking the visitor (or {@code Void} if there is no parameter)
  */
+@FunctionalInterface
 public interface ClassVisitor<R, P> {
    /**
     * Visit a class token.

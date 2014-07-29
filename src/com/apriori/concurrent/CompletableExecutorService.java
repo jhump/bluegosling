@@ -60,7 +60,7 @@ public interface CompletableExecutorService extends ExecutorService {
     *
     * @return a new executor service that runs tasks immediately in the current thread
     */
-   public static CompletableExecutorService sameThreadExecutorService() {
+   static CompletableExecutorService sameThreadExecutorService() {
       return new SameThreadExecutorService();
    }
 
@@ -71,7 +71,7 @@ public interface CompletableExecutorService extends ExecutorService {
     * @param executor the executor service
     * @return a completable version of the specified service
     */
-   public static CompletableExecutorService makeCompletable(ExecutorService executor) {
+   static CompletableExecutorService makeCompletable(ExecutorService executor) {
       if (executor instanceof CompletableExecutorService) {
          return (CompletableExecutorService) executor;
       }

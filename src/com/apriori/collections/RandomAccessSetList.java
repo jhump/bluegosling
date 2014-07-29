@@ -8,7 +8,7 @@ import java.util.RandomAccess;
 
 /**
  * An implementation of {@link List} that delegates to an instance of {@link RandomAccessSet}. This
- * can be conveniently usd to implement {@link RandomAccessSet#asList()}.
+ * can be conveniently used to implement {@link RandomAccessSet#asList()}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
