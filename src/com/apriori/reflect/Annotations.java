@@ -4,12 +4,16 @@ import static com.apriori.util.Predicates.alwaysAccept;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -97,12 +101,12 @@ public final class Annotations {
     * @param annotationType the type of annotation to create
     * @param attributes a map of values that are returned by the annotations methods
     * @return an annotation
-    * @throws NullPointerException if either argument is {@code null} or if any of the map values
-    *       is {@code null}
-    * @throws IllegalArgumentException if the map contains a value of the wrong type (i.e. value's
-    *       type does not match the expected return type of the corresponding method), if the map
-    *       is missing a required value (a required value is one that has no default value defined
-    *       on the annotation), or if the map has unrecognized keys
+    * @throws NullPointerException if either argument is {@code null}
+    * @throws IllegalArgumentException if the map contains a value of the wrong type (includes null
+    *       values and values whose type does not match the expected return type of the
+    *       corresponding method), if the map is missing a required value (a required value is one
+    *       that has no default value defined on the annotation), or if the map has unrecognized
+    *       keys
     */
    public static <T extends Annotation> T create(final Class<T> annotationType,
          Map<String, Object> attributes) {
@@ -117,27 +121,15 @@ public final class Annotations {
             }
             resolvedAttributes.put(m.getName(), value);
          } else {
-            Object value = attributes.get(m.getName());
-            if (value == null) {
-               throw new NullPointerException(m.getName() + " should not be null");
+            Object value;
+            try {
+               value = getFieldValue(m.getReturnType(), m.getGenericReturnType(),
+                     attributes.get(m.getName()));
+            } catch (IllegalArgumentException e) {
+               throw new IllegalArgumentException("Unable to compute "
+                     + m.getGenericReturnType().getTypeName() + " from map value");
             }
-            if (!m.getReturnType().isAssignableFrom(value.getClass())) {
-               if (Annotation.class.isAssignableFrom(m.getReturnType()) && value instanceof Map) {
-                  
-                  @SuppressWarnings("unchecked") // we just did assignability check, so this is ok
-                  Class<? extends Annotation> returnType = (Class<? extends Annotation>) m.getReturnType();
-                  
-                  @SuppressWarnings("unchecked") // this could cause ClassCastExceptions if caller
-                                                // provides a bad sub-map :(
-                  Map<String, Object> subMap = (Map<String, Object>) value;
-                  
-                  // create annotation from the sub-map
-                  resolvedAttributes.put(m.getName(), create(returnType, subMap));
-               } else {
-                  throw new IllegalArgumentException(m.getName() + " value must be of type "
-                        + m.getReturnType().getName());
-               }
-            }
+            resolvedAttributes.put(m.getName(), value);
          }
       }
       if (!keys.isEmpty()) {
@@ -167,6 +159,136 @@ public final class Annotations {
                }
             });
       return ret;
+   }
+   
+   private static Object getFieldValue(Class<?> fieldType, Type genericFieldType, Object value) {
+      if (value == null) {
+         throw new IllegalArgumentException(
+               "Could not convert null to " + genericFieldType.getTypeName());
+      }
+      if (Class.class.isAssignableFrom(fieldType)) {
+         return getClassValue(genericFieldType, value);
+      } else if (Object[].class.isAssignableFrom(fieldType)) {
+         return getArrayValue(fieldType, genericFieldType, value);
+      } else if (Annotation.class.isAssignableFrom(fieldType)) {
+         @SuppressWarnings("unchecked") // we just did assignability check, so this is ok
+         Class<? extends Annotation> annotationType = (Class<? extends Annotation>) fieldType;
+         return getAnnotationValue(annotationType, value);
+      } else if (fieldType == byte.class) {
+         return getNumericValue(value, byte.class).byteValue();
+      } else if (fieldType == short.class) {
+         return getNumericValue(value, short.class).shortValue();
+      } else if (fieldType == char.class) {
+         if (value instanceof Character) {
+            return ((Character) value).charValue();
+         }
+         return (char) getNumericValue(value, char.class).shortValue();
+      } else if (fieldType == int.class) {
+         return getNumericValue(value, int.class).intValue();
+      } else if (fieldType == long.class) {
+         return getNumericValue(value, long.class).longValue();
+      } else if (fieldType == float.class) {
+         return getNumericValue(value, float.class).floatValue();
+      } else if (fieldType == double.class) {
+         return getNumericValue(value, double.class).doubleValue();
+      } else if (fieldType == boolean.class) {
+         if (value instanceof Boolean) {
+            return value;
+         } else {
+            return badType(boolean.class, value.getClass());
+         }
+      } else if (fieldType.isInstance(value)) {
+         return value;
+      } else {
+         return badType(genericFieldType, value.getClass());
+      }
+   }
+   
+   private static Class<?> getClassValue(Type returnType, Object value) {
+      if (!(value instanceof Class)) {
+         return badType(returnType, value.getClass());
+      }
+      Class<?> classValue = (Class<?>) value;
+      // Using int.class as the value for an annotation method that returns List<Integer>, or
+      // even List<? extends Number>, is totally legit since int.class is actually a List<Integer>.
+      // So we box the types before checking assignability.
+      Type actualTypeArg = Types.box(classValue);
+      if (returnType instanceof Class) {
+         // not a parameterized type, so any Class value will do
+         return classValue;
+      } else if (returnType instanceof ParameterizedType) {
+         ParameterizedType pt = (ParameterizedType) returnType;
+         Type args[] = pt.getActualTypeArguments();
+         // the given Class value must conform to the given arg
+         assert args.length == 1;
+         if (!Types.isAssignableFrom(args[0], actualTypeArg)) {
+            badClassType(returnType, classValue);
+         }
+         return classValue;
+      } else {
+         throw new AssertionError("Class return type should be a Class or a ParameterizedType");
+      }      
+   }
+   
+   private static Object[] getArrayValue(Class<?> arrayType, Type genericArrayType, Object value) {
+      if (value instanceof Object[]) {
+         value = Arrays.asList((Object[]) value);
+      }
+      
+      if (value instanceof List) {
+         Class<?> componentType = arrayType.getComponentType();
+         Type genericComponentType = Types.getComponentType(genericArrayType);
+         assert componentType != null;
+         assert genericComponentType != null;
+         List<?> list = (List<?>) value;
+         Object newArray[] = (Object[]) Array.newInstance(componentType, list.size());
+         int index = 0;
+         for (Object o : list) {
+            newArray[index] = getFieldValue(componentType, genericComponentType, o);
+         }
+         return newArray;
+      } else {
+         return badType(genericArrayType, value.getClass());
+      }
+   }
+   
+   private static Annotation getAnnotationValue(Class<? extends Annotation> annotationType,
+         Object value) {
+      if (annotationType.isInstance(value)) {
+         return (Annotation) value;
+      } else if (value instanceof Map) {
+         Map<?, ?> subMap = (Map<?, ?>) value;
+         for (Object k : subMap.keySet()) {
+            if (!(k instanceof String)) {
+               throw new IllegalArgumentException("Cannot convert map to "
+                     + annotationType.getTypeName() + " because it has non-string keys");
+            }
+         }
+         @SuppressWarnings("unchecked") // we just checked the keys, so this will be okay
+         Map<String, Object> typedMap = (Map<String, Object>) subMap;
+         // recursively create annotation field value
+         return create(annotationType, typedMap);
+      } else {
+         return badType(annotationType, value.getClass());
+      }
+   }
+   
+   private static Number getNumericValue(Object value, Class<?> numericType) {
+      if (value instanceof Number) {
+         return (Number) value;
+      } else {
+         return badType(numericType, value.getClass());
+      }
+   }
+
+   private static <T> T badClassType(Type expectedType, Class<?> actualType) {
+      throw new IllegalArgumentException("Could not convert Class<" + actualType.getTypeName()
+            + "> to " + expectedType.getTypeName());
+   }
+   
+   private static <T> T badType(Type expectedType, Class<?> actualType) {
+      throw new IllegalArgumentException("Could not convert " + actualType.getTypeName()
+            + " to " + expectedType.getTypeName());
    }
    
    /**
@@ -360,9 +482,9 @@ public final class Annotations {
    
    private static Object getAnnotationFieldValue(Method annotationField, Object annotation) {
       try {
+         annotationField.setAccessible(true);
          return annotationField.invoke(annotation);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
          if (e instanceof RuntimeException) {
             throw (RuntimeException) e;
          }
