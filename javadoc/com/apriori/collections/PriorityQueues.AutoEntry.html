@@ -119,7 +119,18 @@ var activeTableTab = "activeTableTab";
 <pre>public abstract class <span class="typeNameLabel">PriorityQueues.AutoEntry&lt;P,E extends PriorityQueues.AutoEntry&lt;P,E&gt;&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A type of value that automatically associates itself with a queue entry when added to a
- <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a>. This only works when using the object's <a href="../../../com/apriori/collections/PriorityQueues.AutoEntry.html#add-P-com.apriori.collections.PriorityQueue-"><code>method</code></a>.</div>
+ <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a>. This only works when using the object's <a href="../../../com/apriori/collections/PriorityQueues.AutoEntry.html#add-P-com.apriori.collections.PriorityQueue-"><code>add(Object, PriorityQueue)</code></a> method.
+ 
+ <p>This can be very useful since usage of a <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a> requires keeping track of an
+ associated <a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections"><code>PriorityQueue.Entry</code></a> after adding a value to the queue in order to perform other useful
+ operations later. A common pattern is to store a reference to the associated entry in the
+ actual value, after it is added to the queue. This class encapsulates that pattern.
+ 
+ <p>To use, extend this class and add fields that represent the actual object/state being added
+ to a queue. Always use the object's <a href="../../../com/apriori/collections/PriorityQueues.AutoEntry.html#add-P-com.apriori.collections.PriorityQueue-"><code>add(P, com.apriori.collections.PriorityQueue&lt;E, P&gt;)</code></a> method (instead of using the queue's
+ <a href="../../../com/apriori/collections/PriorityQueue.html#add-E-P-"><code>PriorityQueue.add(E, P)</code></a> method). This class also provides utility methods for interacting
+ with the queue directly through the associated entry, like for removing the entry or changing
+ its priority.</div>
 </li>
 </ul>
 </div>

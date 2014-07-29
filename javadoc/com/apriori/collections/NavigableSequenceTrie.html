@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/AbstractNavigableSequenceTrie.html" title="class in com.apriori.collections">AbstractNavigableSequenceTrie</a>, <a href="../../../com/apriori/collections/SortedArraySequenceTrie.html" title="class in com.apriori.collections">SortedArraySequenceTrie</a></dd>
+<dd><a href="../../../com/apriori/collections/SortedArraySequenceTrie.html" title="class in com.apriori.collections">SortedArraySequenceTrie</a></dd>
 </dl>
 <hr>
 <br>
@@ -168,65 +168,95 @@ extends <a href="../../../com/apriori/collections/SequenceTrie.html" title="inte
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#headMap-java.util.List-">headMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#headMap-java.lang.Iterable-">headMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#headMap-java.lang.Iterable-boolean-">headMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
+       boolean&nbsp;inclusive)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#headMap-java.util.List-">headMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#headMap-java.util.List-boolean-">headMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#higherEntry-java.lang.Iterable-">higherEntry</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#higherKey-java.lang.Iterable-">higherKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#lowerEntry-java.lang.Iterable-">lowerEntry</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#lowerKey-java.lang.Iterable-">lowerKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;prefix,
          int&nbsp;numComponents)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#prefixMap-K-">prefixMap</a></span>(<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys start with the specified value.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#subMap-java.lang.Iterable-boolean-java.lang.Iterable-boolean-">subMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+      boolean&nbsp;fromInclusive,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
+      boolean&nbsp;toInclusive)</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#subMap-java.lang.Iterable-java.lang.Iterable-">subMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</code>&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#subMap-java.util.List-boolean-java.util.List-boolean-">subMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
       boolean&nbsp;fromInclusive,
       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
       boolean&nbsp;toInclusive)</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#subMap-java.util.List-java.util.List-">subMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#tailMap-java.lang.Iterable-">tailMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey)</code>&nbsp;</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#tailMap-java.lang.Iterable-boolean-">tailMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+       boolean&nbsp;inclusive)</code>&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#tailMap-java.util.List-">tailMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey)</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/NavigableSequenceTrie.html#tailMap-java.util.List-boolean-">tailMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
@@ -490,6 +520,66 @@ extends <a href="../../../com/apriori/collections/SequenceTrie.html" title="inte
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#tailMap-K-" title="class or interface in java.util">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;</code></dd>
 </dl>
+</li>
+</ul>
+<a name="subMap-java.lang.Iterable-boolean-java.lang.Iterable-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;subMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+                                  boolean&nbsp;fromInclusive,
+                                  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
+                                  boolean&nbsp;toInclusive)</pre>
+</li>
+</ul>
+<a name="headMap-java.lang.Iterable-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;headMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey,
+                                   boolean&nbsp;inclusive)</pre>
+</li>
+</ul>
+<a name="tailMap-java.lang.Iterable-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;tailMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+                                   boolean&nbsp;inclusive)</pre>
+</li>
+</ul>
+<a name="subMap-java.lang.Iterable-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;subMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey,
+                                  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</pre>
+</li>
+</ul>
+<a name="headMap-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;headMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;toKey)</pre>
+</li>
+</ul>
+<a name="tailMap-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre><a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="interface in com.apriori.collections">NavigableSequenceTrie</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>,<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">V</a>&gt;&nbsp;tailMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/NavigableSequenceTrie.html" title="type parameter in NavigableSequenceTrie">K</a>&gt;&nbsp;fromKey)</pre>
 </li>
 </ul>
 <a name="lowerEntry-java.lang.Iterable-">

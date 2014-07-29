@@ -172,16 +172,25 @@ extends <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" 
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SettableFuture.html#asRunnableFuture-java.util.concurrent.Callable-">asRunnableFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;callable)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SettableFuture.html#asRunnableFuture-java.util.concurrent.Callable-">asRunnableFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;callable)</code>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that performs the given
+ computation when run.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SettableFuture.html#asRunnableFuture-java.lang.Runnable-">asRunnableFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SettableFuture.html#asRunnableFuture-java.lang.Runnable-">asRunnableFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that executes the given
+ task when run.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SettableFuture.html#asRunnableFuture-java.lang.Runnable-T-">asRunnableFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
-                <a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&nbsp;result)</code>&nbsp;</td>
+                <a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&nbsp;result)</code>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that executes the given
+ task when run.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -311,6 +320,21 @@ extends <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" 
 <li class="blockList">
 <h4>asRunnableFuture</h4>
 <pre>public&nbsp;com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;asRunnableFuture(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that executes the given
+ task when run. If the task completes successfully before the future's value (or cause of
+ failure) is otherwise set, the future's value is set to <code>null</code>.
+ 
+ <p>The returned future can be cancelled and may interrupt the given task if it is running.
+ Calling <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#cancel-boolean-"><code>AbstractListenableFuture.cancel(boolean)</code></a> directly on the underlying <a href="../../../com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent"><code>SettableFuture</code></a>, however,
+ will not interrupt the given task.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>runnable</code> - the task to run</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of this settable future as a runnable future</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent"><code>SettableRunnableFuture</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="asRunnableFuture-java.lang.Runnable-java.lang.Object-">
@@ -323,6 +347,22 @@ extends <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" 
 <h4>asRunnableFuture</h4>
 <pre>public&nbsp;com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;asRunnableFuture(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
                                                                            <a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&nbsp;result)</pre>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that executes the given
+ task when run. If the task completes successfully before the future's value (or cause of
+ failure) is otherwise set, the future's value is set to the specified value.
+ 
+ <p>The returned future can be cancelled and may interrupt the given task if it is running.
+ Calling <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#cancel-boolean-"><code>AbstractListenableFuture.cancel(boolean)</code></a> directly on the underlying <a href="../../../com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent"><code>SettableFuture</code></a>, however,
+ will not interrupt the given task.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>runnable</code> - the task to run</dd>
+<dd><code>result</code> - the value of this future upon successful completion of the task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of this settable future as a runnable future</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent"><code>SettableRunnableFuture</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="asRunnableFuture-java.util.concurrent.Callable-">
@@ -332,6 +372,21 @@ extends <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" 
 <li class="blockList">
 <h4>asRunnableFuture</h4>
 <pre>public&nbsp;com.apriori.concurrent.RunnableListenableFuture&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;asRunnableFuture(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/apriori/concurrent/SettableFuture.html" title="type parameter in SettableFuture">T</a>&gt;&nbsp;callable)</pre>
+<div class="block">Returns a view of this future as a <code>RunnableListenableFuture</code> that performs the given
+ computation when run. If the task completes successfully before the future's value (or cause
+ of failure) is otherwise set, the future's value is set to the result of that computation.
+ 
+ <p>The returned future can be cancelled and may interrupt the given task if it is running.
+ Calling <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#cancel-boolean-"><code>AbstractListenableFuture.cancel(boolean)</code></a> directly on the underlying <a href="../../../com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent"><code>SettableFuture</code></a>, however,
+ will not interrupt the given task.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>callable</code> - the computation to perform</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of this settable future as a runnable future</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent"><code>SettableRunnableFuture</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="asFulfillable--">

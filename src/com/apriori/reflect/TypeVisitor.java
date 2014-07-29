@@ -9,14 +9,13 @@ import java.util.function.BiFunction;
 
 /**
  * A visitor for generic types. This enables dynamic-dispatch-like algorithms without the
- * {@code if-else} boiler-plate with {@code instanceof} checks and casts.
+ * {@code if-else} boiler-plate with {@code instanceof} checks and casts. To visit a type, use
+ * the main entry-point method: {@link #visit(Type, Object)}.
  *
  * @param <R> the type of value returned from visiting a type
  * @param <P> an optional context parameter that is supplied to the visitor when visiting a type
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
- * 
- * @see Types#visit(java.lang.reflect.Type, TypeVisitor, Object)
  */
 public interface TypeVisitor<R, P> {
    
@@ -226,8 +225,8 @@ public interface TypeVisitor<R, P> {
       }
       
       /**
-       * Builds a visitor using the actions defined so far. Any actions not defined will simply use
-       * the default implementation of {@link DefaultTypeVisitor}.
+       * Builds a visitor using the actions defined so far. Any actions not defined will behave the
+       * same as their default implementations.
        *
        * @return a visitor that uses the configured actions when visiting a type
        */

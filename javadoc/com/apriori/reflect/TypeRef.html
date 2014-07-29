@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/reflect/ProxyUtils.html" title="class in com.apriori.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../com/apriori/reflect/Types.html" title="class in com.apriori.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/reflect/TypeRef.html" target="_top">Frames</a></li>
@@ -109,10 +109,15 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type represented by this token</dd>
 </dl>
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">TypeRef&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></pre>
 <div class="block">A type token that represents a generic type. Unlike class tokens, which don't adequately support
  generic classes, this can be used to better represent generic types. Furthermore, it provides
  access to reifiable generic type information: values for generic type parameters that are known
@@ -144,7 +149,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <code>
  // <em>Compiles, is valid, and is type safe. Yay!</em><br>
  Class&lt;List&lt;String&gt;&gt; clazz =
-     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();
+     new TypeRef&lt;List&lt;String&gt;&gt;(){}.asClass();
  </code>
  </p>
  
@@ -156,9 +161,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p>
  <code>
  Class&lt;List&lt;String&gt;&gt; clazz1 =
-     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();<br>
+     new TypeRef&lt;List&lt;String&gt;&gt;(){}.asClass();<br>
  Class&lt;List&lt;Integer&gt;&gt; clazz2 =
-     new TypeRef&lt;List&lt;Integer&gt;&gt;() { }.asClass();<br>
+     new TypeRef&lt;List&lt;Integer&gt;&gt;(){}.asClass();<br>
  // <em>Maybe not intuitive, but sadly true:</em><br>
  // <strong>clazz1 == clazz2</strong>
  </code>
@@ -182,7 +187,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  &nbsp; &nbsp; &nbsp; Comparable&lt;? super Number&gt;,<br>
  &nbsp; &nbsp; &nbsp; List&lt;Set&lt;String&gt;&gt;<br>
  &nbsp; &nbsp; &gt;<br>
- &nbsp; &gt;() { };<br>
+ &nbsp; &gt;(){};<br>
  </code>
  </p>
  We'll then extract as much information as possible:
@@ -257,21 +262,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T[]&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#arrayTypeRef-com.apriori.reflect.TypeRef-">arrayTypeRef</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;componentType)</code>
+<div class="block">Creates a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a> for an array type with the given component type.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#asClass--">asClass</a></span>()</code>
 <div class="block">Returns a <code>Class</code> representation of this type.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#asType--">asType</a></span>()</code>
 <div class="block">Returns a <code>java.lang.reflect.Type</code> representation of this type token.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#canResolveTypeVariable-java.lang.String-">canResolveTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</code>
-<div class="block">Determines if the specified type variable can be resolved into a <code>TypeRef</code>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -281,84 +286,137 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static &lt;S,T extends S&gt;<br><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#findSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">findSuperTypeRef</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</code>
+<div class="block">Returns a super-type of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#forClass-java.lang.Class-">forClass</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;clazz)</code>
 <div class="block">Constructs a type token that represents a specified class.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#forType-java.lang.reflect.Type-">forType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Constructs a type token that represents a specified <code>java.lang.reflect.Type</code>.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>static &lt;S,T extends S&gt;<br><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">getSuperTypeRef</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
-               <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</code>&nbsp;</td>
-</tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getTypeVariable-java.lang.String-">getTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</code>
-<div class="block">Returns the <code>TypeVariable</code> for the specified generic type variable name.</div>
-</td>
+<td class="colFirst"><code>&lt;A extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>A</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getAnnotation-java.lang.Class-">getAnnotation</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;A&gt;&nbsp;annotationClass)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getTypeVariableNames--">getTypeVariableNames</a></span>()</code>
-<div class="block">Returns the names of this type's generic type variables (as declared in code).</div>
-</td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getAnnotations--">getAnnotations</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#hashCode--">hashCode</a></span>()</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getComponentTypeRef--">getComponentTypeRef</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getDeclaredAnnotations--">getDeclaredAnnotations</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#interfaceTypeRefs--">interfaceTypeRefs</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getInterfaceTypeRefs--">getInterfaceTypeRefs</a></span>()</code>
 <div class="block">Returns the interfaces implemented by the current type, as <code>TypeRef</code>s.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isResolved--">isResolved</a></span>()</code>
-<div class="block">Returns true if this type token is fully resolved -- which means all type variables can be
- resolved into <code>TypeRef</code>s and those are also fully resolved.</div>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getOwnerTypeRef--">getOwnerTypeRef</a></span>()</code>
+<div class="block">Gets the owner type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getRawType--">getRawType</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getSuperclassTypeRef--">getSuperclassTypeRef</a></span>()</code>
+<div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getTypeParameterNamed-java.lang.String-">getTypeParameterNamed</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</code>
+<div class="block">Returns the <code>TypeVariable</code> for the specified type parameter name.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getTypeParameterNames--">getTypeParameterNames</a></span>()</code>
+<div class="block">Returns the names of this type's generic type variables (as declared in code).</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#getTypeParameters--">getTypeParameters</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isAnnotation--">isAnnotation</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isArray--">isArray</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isAssignableFrom-com.apriori.reflect.TypeRef-">isAssignableFrom</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
+<div class="block">Determines if this is a super type of the specified type token.</div>
+</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isEnum--">isEnum</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isFullyResolved--">isFullyResolved</a></span>()</code>
+<div class="block">Returns true if this type token is fully resolved, which means that this type <a href="../../../com/apriori/reflect/TypeRef.html#isFullyResolved--">is resolved</a> and so are the values for all type arguments.</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isPrimitive--">isPrimitive</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isResolved--">isResolved</a></span>()</code>
+<div class="block">Returns true if this type token is resolved, which means that the actual type is known.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isSubTypeOf-com.apriori.reflect.TypeRef-">isSubTypeOf</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
 <div class="block">Determines if this is a sub-type of the specified type token.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isSuperTypeOf-com.apriori.reflect.TypeRef-">isSuperTypeOf</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
-<div class="block">Determines if this is a super type of the specified type token.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveTypeVariable-java.lang.String-">resolveTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</code>
-<div class="block">Resolves the specified type variable into a <code>TypeRef</code>.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#superTypeRef--">superTypeRef</a></span>()</code>
-<div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#superTypeRefFor-java.lang.Class-">superTypeRefFor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-java.lang.Class-">resolveSuperTypeRef</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</code>
 <div class="block">Returns a super type of the current type, as a <code>TypeRef</code>.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i28" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveTypeParameter-java.lang.String-">resolveTypeParameter</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;parameterName)</code>
+<div class="block">Resolves the specified type parameter into a <code>TypeRef</code>.</div>
+</td>
+</tr>
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#toString--">toString</a></span>()</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -367,6 +425,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.lang.reflect.AnnotatedElement">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.lang.reflect.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getAnnotationsByType-java.lang.Class-" title="class or interface in java.lang.reflect">getAnnotationsByType</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getDeclaredAnnotation-java.lang.Class-" title="class or interface in java.lang.reflect">getDeclaredAnnotation</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getDeclaredAnnotationsByType-java.lang.Class-" title="class or interface in java.lang.reflect">getDeclaredAnnotationsByType</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#isAnnotationPresent-java.lang.Class-" title="class or interface in java.lang.reflect">isAnnotationPresent</a></code></li>
 </ul>
 </li>
 </ul>
@@ -477,13 +542,56 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getTypeVariableNames--">
+<a name="arrayTypeRef-com.apriori.reflect.TypeRef-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTypeVariableNames</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getTypeVariableNames()</pre>
+<h4>arrayTypeRef</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T[]&gt;&nbsp;arrayTypeRef(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;componentType)</pre>
+<div class="block">Creates a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a> for an array type with the given component type.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>componentType</code> - the component type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an array type with the given component type</dd>
+</dl>
+</li>
+</ul>
+<a name="findSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findSuperTypeRef</h4>
+<pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;&nbsp;findSuperTypeRef(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
+                                                          <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</pre>
+<div class="block">Returns a super-type of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>. This could be an ancestor class
+ of the given type or an interface implemented by the given type.
+ 
+ <p>This method is similar to <a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-java.lang.Class-"><code>resolveSuperTypeRef(Class)</code></a> except that, being a static
+ method, can better express the relationships between the two types and provide a more precise
+ return type.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>subType</code> - the type for whom a super-type is queried</dd>
+<dd><code>superType</code> - the super type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <code>TypeRef</code> representation of the specified super type</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either of the given types is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given super type is not actually a super type of the
+       given sub-type (which the compiler will only allow when using arguments with raw types)</dd>
+</dl>
+</li>
+</ul>
+<a name="getTypeParameterNames--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTypeParameterNames</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getTypeParameterNames()</pre>
 <div class="block">Returns the names of this type's generic type variables (as declared in code).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -491,14 +599,23 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getTypeVariable-java.lang.String-">
+<a name="getTypeParameters--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTypeVariable</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;getTypeVariable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</pre>
-<div class="block">Returns the <code>TypeVariable</code> for the specified generic type variable name.</div>
+<h4>getTypeParameters</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&gt;&nbsp;getTypeParameters()</pre>
+</li>
+</ul>
+<a name="getTypeParameterNamed-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTypeParameterNamed</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;getTypeParameterNamed(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</pre>
+<div class="block">Returns the <code>TypeVariable</code> for the specified type parameter name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>variableName</code> - the variable name</dd>
@@ -510,44 +627,22 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="canResolveTypeVariable-java.lang.String-">
+<a name="resolveTypeParameter-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>canResolveTypeVariable</h4>
-<pre>public&nbsp;boolean&nbsp;canResolveTypeVariable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</pre>
-<div class="block">Determines if the specified type variable can be resolved into a <code>TypeRef</code>.</div>
+<h4>resolveTypeParameter</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;resolveTypeParameter(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;parameterName)</pre>
+<div class="block">Resolves the specified type parameter into a <code>TypeRef</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>variableName</code> - the variable name</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the specified variable can be resolved</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified name is <code>null</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if this type has no type variable with the specified name</dd>
-</dl>
-</li>
-</ul>
-<a name="resolveTypeVariable-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>resolveTypeVariable</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;resolveTypeVariable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;variableName)</pre>
-<div class="block">Resolves the specified type variable into a <code>TypeRef</code>.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>variableName</code> - the variable name</dd>
+<dd><code>parameterName</code> - the parameter name</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a <code>TypeRef</code> that represents the type of <code>variableName</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified name is <code>null</code></dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if this type has no type variable with the specified name</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this type has no resolution details for the specified type
-            variable, which happens if only a bound (like from a type variable declaration or
-            from a wildcard) is known at compile time</dd>
 </dl>
 </li>
 </ul>
@@ -558,8 +653,23 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>isResolved</h4>
 <pre>public&nbsp;boolean&nbsp;isResolved()</pre>
-<div class="block">Returns true if this type token is fully resolved -- which means all type variables can be
- resolved into <code>TypeRef</code>s and those are also fully resolved.</div>
+<div class="block">Returns true if this type token is resolved, which means that the actual type is known.
+ Resolved types have an underlying type that is a class, a generic array type, or a
+ parameterized type. Other types (wildcard types and type variables) are unresolved.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if this type token is resolved or false otherwise</dd>
+</dl>
+</li>
+</ul>
+<a name="isFullyResolved--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isFullyResolved</h4>
+<pre>public&nbsp;boolean&nbsp;isFullyResolved()</pre>
+<div class="block">Returns true if this type token is fully resolved, which means that this type <a href="../../../com/apriori/reflect/TypeRef.html#isFullyResolved--">is resolved</a> and so are the values for all type arguments.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this type token is fully resolved or false otherwise</dd>
@@ -574,11 +684,23 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>asClass</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;asClass()</pre>
 <div class="block">Returns a <code>Class</code> representation of this type. Unlike using normal class tokens (e.g.
- <code>MyType.class</code>), this token properly supports generic classes.</div>
+ <code>MyType.class</code>), this token can encode type arguments. This type can only be represented
+ as a class if it <a href="../../../com/apriori/reflect/TypeRef.html#isResolved--">is resolved</a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a <code>Class</code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this type is not resolved</dd>
 </dl>
+</li>
+</ul>
+<a name="getRawType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRawType</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;getRawType()</pre>
 </li>
 </ul>
 <a name="asType--">
@@ -595,14 +717,120 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="superTypeRef--">
+<a name="isArray--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>superTypeRef</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;superTypeRef()</pre>
-<div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.</div>
+<h4>isArray</h4>
+<pre>public&nbsp;boolean&nbsp;isArray()</pre>
+</li>
+</ul>
+<a name="isEnum--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEnum</h4>
+<pre>public&nbsp;boolean&nbsp;isEnum()</pre>
+</li>
+</ul>
+<a name="isAnnotation--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAnnotation</h4>
+<pre>public&nbsp;boolean&nbsp;isAnnotation()</pre>
+</li>
+</ul>
+<a name="isPrimitive--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isPrimitive</h4>
+<pre>public&nbsp;boolean&nbsp;isPrimitive()</pre>
+</li>
+</ul>
+<a name="getComponentTypeRef--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getComponentTypeRef</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;getComponentTypeRef()</pre>
+</li>
+</ul>
+<a name="getAnnotation-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotation</h4>
+<pre>public&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;A&nbsp;getAnnotation(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;A&gt;&nbsp;annotationClass)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getAnnotation-java.lang.Class-" title="class or interface in java.lang.reflect">getAnnotation</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getAnnotations--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAnnotations</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;getAnnotations()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getAnnotations--" title="class or interface in java.lang.reflect">getAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getDeclaredAnnotations--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDeclaredAnnotations</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;getDeclaredAnnotations()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true#getDeclaredAnnotations--" title="class or interface in java.lang.reflect">getDeclaredAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedElement</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getOwnerTypeRef--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOwnerTypeRef</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;getOwnerTypeRef()</pre>
+<div class="block">Gets the owner type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>. The owner type is the declaring type of a nested
+ or inner class. Array types will not have an owner type, but their component type might.
+ Wildcard types and type variables also have no owner type, but super-types representing their
+ upper bounds might. If this type has no owner type then <code>null</code> is returned.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this type's owner type or <code>null</code> if it has no owner type</dd>
+</dl>
+</li>
+</ul>
+<a name="getSuperclassTypeRef--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSuperclassTypeRef</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;getSuperclassTypeRef()</pre>
+<div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.
+ 
+ <p>If the super-class is a generic type, its type arguments will be resolved based on the
+ context of the current type. For example, the super-type for a class <code>ListOfSomeType
+ extends ArrayList&lt;SomeType&gt;</code> will be <code>ArrayList&lt;SomeType&gt;</code>, and the resulting type
+ reference will have the type argument <code>E</code> resolved to <code>SomeType</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current type's superclass or <code>null</code> if the current type has no superclass
@@ -610,19 +838,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="interfaceTypeRefs--">
+<a name="getInterfaceTypeRefs--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>interfaceTypeRefs</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&gt;&nbsp;interfaceTypeRefs()</pre>
+<h4>getInterfaceTypeRefs</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&gt;&nbsp;getInterfaceTypeRefs()</pre>
 <div class="block">Returns the interfaces implemented by the current type, as <code>TypeRef</code>s. This list only
  includes interfaces directly implemented by this type, not their super-interfaces or
  interfaces implemented by ancestor classes. The contents and order of the returned list is the
  same as the contents and order of elements in the array returned by
- <code>typeRef.asClass().getInterfaces()</code>. If the current type is an interface then this
- returns its super-interfaces.</div>
+ <code>typeRef.getRawType().getInterfaces()</code>. If the current type is an interface then this
+ returns its super-interfaces.
+ 
+ <p>If any of the interfaces is a generic type, its type arguments will be resolved based on
+ the context of the current type. For example, the interface for a class <code>ListOfSomeType
+ implements List&lt;SomeType&gt;</code> will be <code>List&lt;SomeType&gt;</code>, and the resulting type
+ reference will have the type argument <code>E</code> resolved to <code>SomeType</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current type's interfaces or an empty list if the current type does not directly
@@ -630,25 +863,18 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">
+<a name="resolveSuperTypeRef-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getSuperTypeRef</h4>
-<pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;&nbsp;getSuperTypeRef(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
-                                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</pre>
-</li>
-</ul>
-<a name="superTypeRefFor-java.lang.Class-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>superTypeRefFor</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;superTypeRefFor(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</pre>
+<h4>resolveSuperTypeRef</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;resolveSuperTypeRef(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</pre>
 <div class="block">Returns a super type of the current type, as a <code>TypeRef</code>. This could be an ancestor
- class of the current type or an interface implemented by the current type.</div>
+ class of the current type or an interface implemented by the current type.
+ 
+ <p>Limitations on the expressiveness of method type variables prevent a more precise return
+ type. Consider instead using the static version, <a href="../../../com/apriori/reflect/TypeRef.html#findSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-"><code>findSuperTypeRef(TypeRef, Class)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>superclass</code> - the super type</dd>
@@ -656,8 +882,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd>a <code>TypeRef</code> representation of the specified super type</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified type is <code>null</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified type is not a super type of the current
-            type, which can easily be tested using <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#isAssignableFrom-java.lang.Class-" title="class or interface in java.lang"><code>superclass.isAssignableFrom(typeRef.asClass())</code></a></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified type is not actually a super type of the
+       current type</dd>
 </dl>
 </li>
 </ul>
@@ -677,17 +903,17 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ref</code> - a <code>Type Ref</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if <code>ref</code> represents a sub-type of this</dd>
+<dd>true if this represents a sub-type of <code>ref</code></dd>
 </dl>
 </li>
 </ul>
-<a name="isSuperTypeOf-com.apriori.reflect.TypeRef-">
+<a name="isAssignableFrom-com.apriori.reflect.TypeRef-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isSuperTypeOf</h4>
-<pre>public&nbsp;boolean&nbsp;isSuperTypeOf(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</pre>
+<h4>isAssignableFrom</h4>
+<pre>public&nbsp;boolean&nbsp;isAssignableFrom(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</pre>
 <div class="block">Determines if this is a super type of the specified type token. This has the same caveats as
  does <a href="../../../com/apriori/reflect/TypeRef.html#equals-java.lang.Object-"><code>equals(Object)</code></a> in that wildcard and type variables are not "captured" and 
  wildcard bounds are not checked for compatibility. If either this type token or the specified
@@ -697,7 +923,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ref</code> - a <code>TypeRef</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if <code>ref</code> represents a super type of this</dd>
+<dd>true if this represents a super type of <code>ref</code></dd>
 </dl>
 </li>
 </ul>
@@ -780,7 +1006,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/reflect/ProxyUtils.html" title="class in com.apriori.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../com/apriori/reflect/Types.html" title="class in com.apriori.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/reflect/TypeRef.html" target="_top">Frames</a></li>

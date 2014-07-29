@@ -275,12 +275,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an annotation</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either argument is <code>null</code> or if any of the map values
-       is <code>null</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the map contains a value of the wrong type (i.e. value's
-       type does not match the expected return type of the corresponding method), if the map
-       is missing a required value (a required value is one that has no default value defined
-       on the annotation), or if the map has unrecognized keys</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either argument is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the map contains a value of the wrong type (includes null
+       values and values whose type does not match the expected return type of the
+       corresponding method), if the map is missing a required value (a required value is one
+       that has no default value defined on the annotation), or if the map has unrecognized
+       keys</dd>
 </dl>
 </li>
 </ul>

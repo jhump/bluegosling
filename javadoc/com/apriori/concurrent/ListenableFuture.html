@@ -559,10 +559,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
 <pre>default&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;chainTo(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;U&gt;&nbsp;task,
                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Chains the specified task to the completion of this future. The specified task will be
- initiated once the specified future completes successfully. The returned future will complete
- successfully once both this future and chained task have completed. The returned future will
- fail if this future fails (in which case the task is never invoked) or if the task throws an
- exception.
+ initiated once this future completes successfully. The returned future will complete
+ successfully once both this future and the chained task have completed. The returned future
+ will fail if this future fails (in which case the task is never invoked) or if the task throws
+ an exception.
  
  <p>If this future is cancelled then the returned future will also be cancelled. But not vice
  versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.</div>
@@ -587,10 +587,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
                                         U&nbsp;result,
                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Chains the specified task to the completion of this future. The specified task will be
- initiated once the specified future completes successfully. The returned future will complete
- successfully once both this future and chained task have completed. The returned future will
- fail if this future fails (in which case the task is never invoked) or if the task throws an
- exception.
+ initiated once this future completes successfully. The returned future will complete
+ successfully once both this future and the chained task have completed. The returned future
+ will fail if this future fails (in which case the task is never invoked) or if the task throws
+ an exception.
  
  <p>If this future is cancelled then the returned future will also be cancelled. But not vice
  versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.</div>
@@ -614,10 +614,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
 <pre>default&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;chainTo(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                                        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Chains the specified task to the completion of this future. The specified task will be
- initiated once the specified future completes successfully. The returned future will complete
- successfully once both this future and chained task have completed. The returned future will
- fail if this future fails (in which case the task is never invoked) or if the task throws an
- exception.
+ initiated once this future completes successfully. The returned future will complete
+ successfully once both this future and the chained task have completed. The returned future
+ will fail if this future fails (in which case the task is never invoked) or if the task throws
+ an exception.
  
  <p>If this future is cancelled then the returned future will also be cancelled. But not vice
  versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.</div>
@@ -640,10 +640,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
 <pre>default&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;chainTo(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="type parameter in ListenableFuture">T</a>,? extends U&gt;&nbsp;task,
                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Chains the specified task to the completion of this future. The specified task will be
- initiated once the specified future completes successfully. The returned future will complete
- successfully once both this future and chained task have completed. The returned future will
- fail if this future fails (in which case the task is never invoked) or if the task throws an
- exception.
+ initiated once this future completes successfully. The returned future will complete
+ successfully once both this future and the chained task have completed. The returned future
+ will fail if this future fails (in which case the task is never invoked) or if the task throws
+ an exception.
  
  <p>If this future is cancelled then the returned future will also be cancelled. But not vice
  versa, so canceling the returned future will <em>not</em> cause this future to be cancelled.</div>
@@ -901,7 +901,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
 <div class="block">Converts the specified future into a <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>. If the specified future
  <em>is</em> a <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>, it is returned without any conversion. Note that if
  the specified future is not yet done and is not a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a>, conversion
- requires creating a new thread. The thread simply blocks until the specified future completes,
+ requires creating a new thread that simply blocks until the specified future completes,
  at which time the returned listenable future is also completed (asynchronously).
  
  <p>The returned future's cancellation status will be kept in sync with the specified future.
@@ -1018,9 +1018,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/F
  asynchronous functional idioms, and also for testing.
  
  <p>The returned future cannot be used with blocking calls, since they would never return or
- always timeout. Additionally, the future cannot be cancelled. So calls to
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#cancel-boolean-" title="class or interface in java.util.concurrent"><code>Future.cancel(boolean)</code></a>, both variants of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#get--" title="class or interface in java.util.concurrent"><code>Future.get()</code></a>, and
- both variants of <a href="../../../com/apriori/concurrent/Awaitable.html#await--"><code>Awaitable.await()</code></a> all throw <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
+ always timeout. So calls to both forms of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#get--" title="class or interface in java.util.concurrent"><code>Future.get()</code></a> and both forms of
+ <a href="../../../com/apriori/concurrent/Awaitable.html#await--"><code>Awaitable.await()</code></a> all throw <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>. Additionally,
+ the future cannot be cancelled (as that would implicitly finish it). So calls to
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#cancel-boolean-" title="class or interface in java.util.concurrent"><code>Future.cancel(boolean)</code></a> always return false.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a future that will never finish</dd>
