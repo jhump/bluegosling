@@ -17,13 +17,13 @@ public class MoreAsserts {
    public static <T extends Throwable> T assertThrows(Class<T> thrownType, Block block) {
       try {
          block.run();
-         fail("Expecting a "+ thrownType.getName() + " but nothing thrown");
-         return null; // make compiler happy; we'll never actually reach this
       } catch (Throwable thrown) {
          assertTrue("Expecting a " + thrownType.getName() + " but caught "
                + thrown.getClass().getName(), thrownType.isInstance(thrown));
          return thrownType.cast(thrown);
       }
+      fail("Expecting a "+ thrownType.getName() + " but nothing thrown");
+      return null; // make compiler happy; we'll never actually reach this
    }
    
    public static <T> void assertNotEquals(T t1, T t2) {

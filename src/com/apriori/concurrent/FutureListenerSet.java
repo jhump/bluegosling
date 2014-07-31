@@ -63,7 +63,9 @@ class FutureListenerSet<T> implements Runnable {
    /**
     * Returns a task that will execute a snapshot of the set of listeners. This can be used to
     * invoke listeners more than once since {@link #run()} can only be invoked once. Listeners added
-    * to the set after this snapshot is taken will not be invoked when the returned task is run.
+    * to the set after this snapshot is taken will not be invoked when the returned task is run. If
+    * the snapshot is taken after the future has completed and listeners have been run, the returned
+    * task is a no-op and does not invoke any listeners.
     *
     * @return a task that represents a snapshot of the listeners and will invoke those listeners
     *       when run

@@ -1,5 +1,7 @@
 package com.apriori.concurrent;
 
+import com.apriori.util.IsDerivedFrom;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +37,7 @@ import java.util.concurrent.locks.LockSupport;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@IsDerivedFrom(AbstractQueuedSynchronizer.class)
 public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSynchronizer {
    
    /*

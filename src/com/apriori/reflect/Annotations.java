@@ -221,7 +221,7 @@ public final class Annotations {
          Type args[] = pt.getActualTypeArguments();
          // the given Class value must conform to the given arg
          assert args.length == 1;
-         if (!Types.isAssignableFrom(args[0], actualTypeArg)) {
+         if (!Types.isAssignable(args[0], actualTypeArg)) {
             badClassType(returnType, classValue);
          }
          return classValue;

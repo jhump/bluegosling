@@ -18,118 +18,19 @@ import java.util.stream.Collectors;
 
 /**
  * A type token that represents a generic type. Unlike class tokens, which don't adequately support
- * generic classes, this can be used to better represent generic types. Furthermore, it provides
- * access to reifiable generic type information: values for generic type parameters that are known
- * at compile-time.
+ * generic classes, this can be used to represent generic types, and it provides access to reifiable
+ * generic type information: values for generic type parameters that are known at compile-time. So
+ * it can fully represent wildcard types, type variables, and parameterized types.
  * 
- * <p>
- * When using class tokens to assist with type safety, the limitation is that their generic type
- * parameter is always a raw type:
- * </p>
- * 
- * <p>
- * <code>
- * // <em>Not valid; won't compile:</em><br>
- * Class&lt;List&lt;String&gt;&gt; clazz = List&lt;String&gt;.class;<br>
- * <br>
- * // <em>Compiles, but type of expression has reference to raw type</em><br>
- * Class&lt;List&gt; clazz = List.class;<br>
- * <br>
- * // <em>This won't even compile. Argghh!</em><br>
- * Class&lt;List&lt;?&gt;&gt; clazz = List.class;
- * </code>
- * </p>
- * 
- * <p>
- * {@code TypeRef} to the rescue!
- * </p>
- * 
- * <p>
- * <code>
- * // <em>Compiles, is valid, and is type safe. Yay!</em><br>
- * Class&lt;List&lt;String&gt;&gt; clazz =
- *     new TypeRef&lt;List&lt;String&gt;&gt;(){}.asClass();
- * </code>
- * </p>
- * 
- * <p>
- * Note that, due to type erasure, the actual class instance returned is the same, regardless of
- * generic signature:
- * </p>
- * 
- * <p>
- * <code>
- * Class&lt;List&lt;String&gt;&gt; clazz1 =
- *     new TypeRef&lt;List&lt;String&gt;&gt;(){}.asClass();<br>
- * Class&lt;List&lt;Integer&gt;&gt; clazz2 =
- *     new TypeRef&lt;List&lt;Integer&gt;&gt;(){}.asClass();<br>
- * // <em>Maybe not intuitive, but sadly true:</em><br>
- * // <strong>clazz1 == clazz2</strong>
- * </code>
- * </p>
- * 
- * <p>
- * So you have to be careful using these class tokens. For example, they cannot be used as keys in a
- * map to distinguish between {@code List<String>} and {@code List<Integer>} values (a la the
- * "Typesafe Heterogeneous Container" pattern) since the key values for these will be the same
- * object instance.
- * </p>
- * 
- * <p>
- * The following snippets show examples of extracting reifiable generic type information from a
- * {@code TypeRef}. Consider this complex type reference:
- * <p>
- * <code>
- * TypeRef&lt;?&gt; mapType =<br>
- * &nbsp; new TypeRef&lt;<br>
- * &nbsp; &nbsp; Map&lt;<br>
- * &nbsp; &nbsp; &nbsp; Comparable&lt;? super Number&gt;,<br>
- * &nbsp; &nbsp; &nbsp; List&lt;Set&lt;String&gt;&gt;<br>
- * &nbsp; &nbsp; &gt;<br>
- * &nbsp; &gt;(){};<br>
- * </code>
- * </p>
- * We'll then extract as much information as possible:
- * <p>
- * <code>
- * TypeRef&lt;?&gt; comparableType =
- *   mapType.resolveTypeVariable("K");<br>
- * &nbsp; // <em>This throws exception since wildcards can't be resolved:</em><br>
- * &nbsp; TypeRef&lt;?&gt; numberType =
- *   comparableType.resolveTypeVariable("T");<br>
- * TypeRef&lt;?&gt; listType =
- *   mapType.resolveTypeVariable("V");<br>
- * &nbsp; TypeRef&lt;?&gt; setType =
- *   listType.resolveTypeVariable("E");<br>
- * &nbsp; &nbsp; TypeRef&lt;?&gt; stringType =
- *   setType.resolveTypeVariable("E");<br>
- * </code>
- * </p>
- * The following implications are then true:
- * <p>
- * <code>
- * mapType.asClass() <strong>=&gt;</strong> Map.class<br>
- * mapType.getTypeVariableNames() <strong>=&gt;</strong>
- *   [ "K", "V" ]<br>
- * comparableType.asClass() <strong>=&gt;</strong> Comparable.class<br>
- * comparableType.getTypeVariableNames() <strong>=&gt;</strong> [ "T" ]<br>
- * listType.asClass() <strong>=&gt;</strong> List.class<br>
- * listType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br>
- * setType.asClass() <strong>=&gt;</strong> Set.class<br>
- * setType.getTypeVariableNames() <strong>=&gt;</strong> [ "E" ]<br>
- * stringType.asClass() <strong>=&gt;</strong> String.class<br>
- * stringType.getTypeVariableNames() <strong>=&gt;</strong> [ ]
- * </code>
- * </p>
+ * <p>This class is effectively a wrapper around the {@link Type} interface and provides useful
+ * methods to do interesting things related to generic types. In a way, it takes the static utility
+ * methods from {@link Types} and incorporates them into a type-safe and object-oriented API.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @param <T> the type represented by this token
  */
-// TODO: redo doc
 public abstract class TypeRef<T> implements AnnotatedElement {
-   private static final TypeVariable<?> TYPE_REF_VARIABLE = TypeRef.class.getTypeParameters()[0];
-
    /**
     * A non-abstract {@code TypeRef}, used internally when building resolved {@code TypeRef}s for
     * generic type variables.
@@ -211,7 +112,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    // Constraints on type variables mean this should be safe. Limitations in Java generics prevent
    // this from being possible, without unchecked cast, as a non-static method
    @SuppressWarnings("unchecked")
-   public static <S, T extends S> TypeRef<S> findSuperTypeRef(TypeRef<T> subType,
+   public static <S, T extends S> TypeRef<S> resolveSuperTypeRef(TypeRef<T> subType,
          Class<S> superType) {
       return (TypeRef<S>) subType.resolveSuperTypeRef(superType);
    }
@@ -226,48 +127,21 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    private transient int hashCode = -1;
 
    /**
-    * Constructs a new type reference. This is protected so that construction looks like so:
-    * <p>
-    * <code>
-    * TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =<br>
-    * &nbsp; new TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt;()
-    * <strong>{ }</strong>;
-    * </code>
-    * </p>
-    * Note the curly braces used to construct an anonymous sub-class of {@code TypeRef}.
+    * Constructs a new type reference. This is protected so that construction requires the use of
+    * a sub-class:
+    * <pre>
+    * TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt; type =
+    *   new TypeRef&lt;List&lt;Map&lt;String, Number&gt;&gt;&gt;() <strong>{ }</strong>;
+    * </pre>
+    * Notice the curly braces, used to construct an anonymous sub-class of {@code TypeRef}.
     * 
-    * <p>
-    * The generic type must be specified. An exception will be raised otherwise:
-    * <p>
-    * <code>
-    * // <em>Bad! Generic type references another type parameter</em><br>
-    * // <em>instead of being adequately specified:</em><br>
-    * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;<strong>E</strong>&gt;() { };<br>
-    * <br>
-    * // <em>Bad! Same problem, but with an array type:</em><br>
-    * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;<strong>E</strong>[]&gt;() { };<br>
-    * <br>
-    * // <em>Good! If the generic type is also parameterized, it is</em><br>
-    * // <em>okay for <strong>its</strong> parameter to remain unspecified:</em><br>
-    * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;Map&lt;<strong>E</strong>, String&gt;&gt;()
-    *     { };<br>
-    * <br>
-    * // <em>Good! You can even use wildcards and bounds:</em><br>
-    * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;Map&lt;<strong>?</strong>,
-    *     <strong>?</strong>&gt;&gt;() { };<br>
-    * TypeRef&lt;?&gt; type =
-    *     new TypeRef&lt;List&lt;<strong>? extends Number</strong>&gt;()
-    *     { };<br>
-    * </code>
-    * </p>
+    * <p>The generic type must be specified. An exception will be raised otherwise. For example, the
+    * following invocation will generated and exception:
+    * <pre>
+    * TypeRef&lt;?&gt; type = new TypeRef() { };
+    * </pre>
     * 
-    * @throws IllegalArgumentException if the generic type parameter is not adequately specified.
-    *            Sadly, this must be a runtime exception instead of a compile error due to type
-    *            erasure.
+    * @throws IllegalArgumentException if the generic type parameter is not specified
     */
    protected TypeRef() {
       Type genericType = Types.resolveSuperType(getClass().getGenericSuperclass(), TypeRef.class);
@@ -290,13 +164,20 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    /**
     * Returns the names of this type's generic type variables (as declared in code).
     * 
-    * @return list of type variable names
+    * @return list of type variable names; an empty list if this type has no parameters
     */
    public List<String> getTypeParameterNames() {
-      return new TransformingList.ReadOnly<>(getTypeParameters(), tv -> tv.getName());
+      return new TransformingList.ReadOnly<>(Arrays.asList(Types.getTypeParameters(type)),
+            tv -> tv.getName());
    }
    
-   // TODO: doc
+   /**
+    * Returns this type's type variables if it has any. If the underlying generic type is a class
+    * token or a parameterized type, this returns the parameters for that type. Wildcard types,
+    * type variables, and generic array types have no type parameters.
+    *
+    * @return list of type parameters; an empty list if this type has no parameters
+    */
    public List<TypeVariable<Class<?>>> getTypeParameters() {
       return Collections.unmodifiableList(Arrays.asList(Types.getTypeParameters(type)));
    }
@@ -311,7 +192,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     */
    public TypeVariable<Class<?>> getTypeParameterNamed(String variableName) {
       requireNonNull(variableName);
-      Optional<TypeVariable<Class<?>>> var = getTypeParameters().stream()
+      Optional<TypeVariable<Class<?>>> var = Arrays.stream(Types.getTypeParameters(type))
             .filter(tv -> tv.getName().equals(variableName)).findFirst();
       if (!var.isPresent()) {
          throw new IllegalArgumentException(variableName
@@ -328,7 +209,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @throws NullPointerException if the specified name is {@code null}
     * @throws IllegalArgumentException if this type has no type variable with the specified name
     */
-   public TypeRef<?> resolveTypeParameter(String parameterName) {
+   public TypeRef<?> resolveTypeParameterNamed(String parameterName) {
       TypeVariable<?> parameter = getTypeParameterNamed(parameterName);
       Type resolvedParameter = Types.resolveTypeVariable(type, parameter);
       if (resolvedParameter == null) {
@@ -387,6 +268,24 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * {@code MyType.class}), this token can encode type arguments. This type can only be represented
     * as a class if it {@linkplain #isResolved() is resolved}.
     * 
+    * <p>This is a convenience for using generic types with APIs that require class tokens:
+    * <pre>
+    * // <em>Won't compile. Generic types are invariant so List != List&lt;String&gt;</em>
+    * Class&lt;List&lt;String&gt;&gt; clazz = List.class;
+    * 
+    * // <em>Won't compile. Bad syntax -- can't specify type parameters</em>
+    * // <em>with a class literal</em>
+    * Class&lt;List&lt;String&gt;&gt; clazz = List&lt;String&gt;.class;
+    * 
+    * // <em>TypeRef to the rescue!</em>
+    * Class&lt;List&lt;String&gt;&gt; clazz =
+    *     new TypeRef&lt;List&lt;String&gt;&gt;() { }.asClass();
+    * </pre>
+    * Note that a {@code Class<List<String>>} is the same instance as a {@code Class<List<Number>>}.
+    * Under the hood, they are both {@code List.class}. So using the returned class tokens as keys
+    * in a map will not work since different class tokens for the same raw type cannot be
+    * distinguished. So use caution when, where, and how you use this method.
+    * 
     * @return a {@code Class}
     * @throws IllegalStateException if this type is not resolved
     */
@@ -399,7 +298,14 @@ public abstract class TypeRef<T> implements AnnotatedElement {
       return ret;
    }
    
-   // TODO: doc!
+   /**
+    * Returns the raw type that corresponds to this generic type. For example, the raw type for a
+    * {@code List<String>} is simply {@code List}. The raw type for wildcards and type variables
+    * will be their first upper bound.
+    *
+    * @return the raw type that corresponds to this generic type
+    * @see Types#getRawType(Type)
+    */
    public Class<? super T> getRawType() {
       // this eyesore is to make the compiler let us cast our Class<?> to a Class<? super T>
       @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -408,35 +314,71 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    }
 
    /**
-    * Returns a {@code java.lang.reflect.Type} representation of this type token.
+    * Returns the {@link Type} representation of this type token.
     * 
-    * @return a {@code Type}
+    * @return a generic type
     */
    public Type asType() {
       return type;
    }
    
-   // TODO: doc
+   /**
+    * Determines if this type is an interface.
+    *
+    * @return true if this type represents an interface
+    * @see Types#isInterface(Type)
+    */
+   public boolean isInterface() {
+      return Types.isInterface(type);
+   }
+   
+   /**
+    * Determines if this type is an array.
+    *
+    * @return true if this type represents an array type
+    * @see Types#isArray(Type)
+    */
    public boolean isArray() {
       return Types.isArray(type);
    }
 
-   // TODO: doc
+   /**
+    * Determines if this type is an enum.
+    *
+    * @return true if this type represents an enum type
+    * @see Types#isEnum(Type)
+    */
    public boolean isEnum() {
       return Types.isEnum(type);
    }
 
-   // TODO: doc
+   /**
+    * Determines if this type is an annotation.
+    *
+    * @return true if this type represents an annotation type
+    * @see Types#isAnnotation(Type)
+    */
    public boolean isAnnotation() {
       return Types.isAnnotation(type);
    }
 
-   // TODO: doc
+   /**
+    * Determines if this type is any of the eight primitive types or {@code void}.
+    *
+    * @return true if this type represents a primitive type
+    * @see Types#isPrimitive(Type)
+    */
    public boolean isPrimitive() {
       return Types.isPrimitive(type);
    }
 
-   // TODO: doc
+   /**
+    * Returns the component type, as a {@link TypeRef}, if this represents an array type. If this
+    * type is not an array type then {@code null} is returned.
+    *
+    * @return the component type of this array type or {@code null} if this is not an array type
+    * @see Types#getComponentType(Type)
+    */
    public TypeRef<?> getComponentTypeRef() {
       Type componentType = Types.getComponentType(type); 
       return componentType != null ? forTypeInternal(componentType) : null;
@@ -480,6 +422,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * 
     * @return the current type's superclass or {@code null} if the current type has no superclass
     *         (like if it is {@code Object}, an interface, a primitive, or {@code void})
+    * @see Types#getGenericSuperclass(Type)
     */
    public TypeRef<? super T> getSuperclassTypeRef() {
       Type superClass = Types.getGenericSuperclass(type);
@@ -501,6 +444,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * 
     * @return the current type's interfaces or an empty list if the current type does not directly
     *         implement any interfaces
+    * @see Types#getGenericInterfaces(Type)
     */
    public List<TypeRef<? super T>> getInterfaceTypeRefs() {
       Type ifaces[] = Types.getGenericInterfaces(type);
@@ -513,18 +457,20 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * class of the current type or an interface implemented by the current type.
     * 
     * <p>Limitations on the expressiveness of method type variables prevent a more precise return
-    * type. Consider instead using the static version, {@link #findSuperTypeRef(TypeRef, Class)}. 
+    * type. Consider instead using the static version, {@link #resolveSuperTypeRef(TypeRef, Class)}. 
     * 
     * @param superclass the super type
     * @return a {@code TypeRef} representation of the specified super type
     * @throws NullPointerException if the specified type is {@code null}
     * @throws IllegalArgumentException if the specified type is not actually a super type of the
     *       current type
+    * @see Types#resolveSuperType(Type, Class)
     */
    public TypeRef<? super T> resolveSuperTypeRef(Class<?> superclass) {
       Type superType = Types.resolveSuperType(type, superclass);
       if (superType == null) {
-         throw new IllegalArgumentException(); // TODO: message
+         throw new IllegalArgumentException(
+               Types.toString(superclass) + " is not a super type of " + this);
       }
       return forTypeInternal(superType);
    }
@@ -540,7 +486,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @return true if this represents a sub-type of {@code ref}
     */
    public boolean isSubTypeOf(TypeRef<?> ref) {
-      return Types.isAssignableFrom(ref.type, this.type);
+      return Types.isAssignable(ref.type, this.type);
    }
 
    /**
@@ -552,24 +498,17 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * 
     * @param ref a {@code TypeRef}
     * @return true if this represents a super type of {@code ref}
+    * @see Types#isAssignable(Type, Type)
     */
    public boolean isAssignableFrom(TypeRef<?> ref) {
-      return Types.isAssignableFrom(this.type, ref.type);
+      return Types.isAssignable(this.type, ref.type);
    }
 
    /**
-    * Compares this object to another. This object is equal to another object if they are the same
-    * instance <strong>or</strong> if both objects are {@code TypeRef} instances and represent the
-    * same types.
+    * Compares this object to another. This object is equal to another object if they are both
+    * {@link TypeRef}s and represent the same types.
     * 
-    * <p>
-    * For two {@code TypeRef} instances to represent the same types, they must resolve to the same
-    * {@code Class} and have the same generic type parameters. Note that two seemingly equal
-    * {@code TypeRef}s with <em>unresolved</em> type variables (for example, two instances that
-    * aren't the same instance but both represent {@code List<?>}) are considered
-    * <strong>not</strong> equal.
-    * 
-    * @param other the object against which this object is compared
+    * @see Types#equals(Object) 
     */
    @Override
    public boolean equals(Object other) {

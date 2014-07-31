@@ -1,6 +1,9 @@
 package com.apriori.reflect;
 
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -136,5 +139,97 @@ public final class Members {
                return null;
             }).build().visit(clazz, fields);
       return fields;
+   }
+   
+   /**
+    * Determines if the given member is accessible from the given calling class, per the rules of
+    * member visibility in the Java language.
+    *
+    * @param member the member
+    * @param callingClass the calling class
+    * @return true if the member is accessible from the given calling class; false otherwise
+    */
+   public static boolean isAccessible(Member member, Class<?> callingClass) {
+      switch (requireNonNull(getEffectiveVisibility(member))) {
+         case PUBLIC:
+            return true;
+         case PROTECTED:
+            Class<?> owner = member.getDeclaringClass();
+            return samePackage(callingClass, owner) || owner.isAssignableFrom(callingClass);
+         case PACKAGE_PRIVATE:
+            return samePackage(callingClass, member.getDeclaringClass());
+         case PRIVATE:
+            return sameEnclosingClass(callingClass, member.getDeclaringClass());
+         default:
+            throw new AssertionError();
+      }
+   }
+   
+   private enum EffectiveVisibility {
+      PUBLIC, PROTECTED, PACKAGE_PRIVATE, PRIVATE
+   }
+   
+   private static EffectiveVisibility getEffectiveVisibility(Member member) {
+      Class<?> owner = member.getDeclaringClass();
+      int memberMods = member.getModifiers();
+      int classMods = owner.getModifiers();
+      boolean memberIsPublic = Modifier.isPublic(memberMods);
+      boolean classIsPublic = Modifier.isPublic(classMods);
+      // Member can be public, private, protected, or default.
+      // Class can only be public, private, or default (and private is only allowed for
+      // enclosed classes)
+      if (memberIsPublic && classIsPublic) {
+         return EffectiveVisibility.PUBLIC;
+      }
+      boolean memberIsPrivate = Modifier.isPrivate(memberMods);
+      boolean classIsPrivate = Modifier.isPrivate(classMods);
+      assert !classIsPrivate || owner.getEnclosingClass() != null;
+      if (memberIsPrivate || classIsPrivate) {
+         return EffectiveVisibility.PRIVATE;
+      }
+      boolean memberIsProtected = Modifier.isProtected(memberMods);
+      if (memberIsProtected && classIsPublic) {
+         return EffectiveVisibility.PROTECTED;
+      }
+      // default visibility
+      return EffectiveVisibility.PACKAGE_PRIVATE;
+   }
+   
+   private static boolean samePackage(Class<?> a, Class<?> b) {
+      return a.getClassLoader() == b.getClassLoader() && getPackage(a).equals(getPackage(b));
+   }
+   
+   private static String getPackage(Class<?> clazz) {
+      while (clazz.isArray()) {
+         clazz = clazz.getComponentType();
+      }
+      String name = clazz.getName();
+      int pos = name.lastIndexOf('.');
+      return pos == -1 ? "" : name.substring(0, pos);
+   }
+   
+   private static boolean sameEnclosingClass(Class<?> a, Class<?> b) {
+      // Find top-level types that enclose each class. If they are the same then the two types
+      // are contained in the same enclosing class (which means private members are accessible).
+      while (true) {
+         if (a.equals(b)) {
+            return true;
+         }
+         Class<?> enclosingClass = a.getEnclosingClass();
+         if (enclosingClass == null) {
+            // found top-level type
+            break;
+         }
+         a = enclosingClass;
+      }
+      while (true) {
+         Class<?> enclosingClass = b.getEnclosingClass();
+         if (enclosingClass == null) {
+            // found top-level type
+            break;
+         }
+         b = enclosingClass;
+      }
+      return a.equals(b);
    }
 }

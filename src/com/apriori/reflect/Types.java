@@ -31,12 +31,11 @@ import java.util.stream.Collectors;
  * 
  * @see Type
  */
-// TODO: moar tests...
 public final class Types {
    
    static final Type EMPTY_TYPES[] = new Type[0];
    static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
-   static final Type ARRAY_INTERFACES[] = new Type[] { Cloneable.class, Serializable.class };
+   static final Class<?> ARRAY_INTERFACES[] = new Class<?>[] { Cloneable.class, Serializable.class };
    static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
    
    private Types() {}
@@ -177,7 +176,31 @@ public final class Types {
       Type unboxed = UNBOX.get(requireNonNull(type));
       return unboxed == null ? type : unboxed;
    }
-   
+
+   public static Class<?> getSuperclass(Type type) {
+      return getRawType(getGenericSuperclass(type));
+   }
+
+   public static Class<?>[] getInterfaces(Type type) {
+      requireNonNull(type);
+      if (type instanceof Class) {
+         return ((Class<?>) type).getInterfaces();
+      } else if (type instanceof ParameterizedType) {
+         return Types.getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
+      } else if (type instanceof GenericArrayType) {
+         return ARRAY_INTERFACES;
+      } else if (type instanceof WildcardType || type instanceof TypeVariable) {
+         Type bounds[] = type instanceof WildcardType ? ((WildcardType) type).getUpperBounds()
+               : ((TypeVariable<?>) type).getBounds();
+         assert bounds.length > 0;
+         List<Class<?>> interfaceBounds = Arrays.stream(bounds)
+               .map(Types::getRawType).filter(Class::isInterface).collect(Collectors.toList());
+         return interfaceBounds.toArray(new Class<?>[interfaceBounds.size()]);
+      } else {
+         throw new IllegalArgumentException("Unrecognized Type: " + type);
+      }
+   }
+
    // TODO: doc
    public static Type getGenericSuperclass(Type type) {
       requireNonNull(type);
@@ -209,7 +232,8 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getGenericInterfaces();
       } else if (type instanceof ParameterizedType) {
-         Class<?> interfaces[] = Types.getRawType(type).getInterfaces();
+         Class<?> interfaces[] =
+               Types.getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
          if (interfaces.length == 0) {
             return interfaces;
          }
@@ -576,7 +600,7 @@ public final class Types {
     * @param from the RHS of assignment
     * @return true if the assignment is allowed
     */
-   public static boolean isAssignableFrom(Type to, Type from) {
+   public static boolean isAssignable(Type to, Type from) {
       if (requireNonNull(to) == requireNonNull(from)) {
          return true;
       } else if (to instanceof Class && from instanceof Class) {
@@ -588,7 +612,7 @@ public final class Types {
                ? ((WildcardType) from).getUpperBounds()
                : ((TypeVariable<?>) from).getBounds();
          for (Type bound : bounds) {
-            if (isAssignableFrom(to, bound)) {
+            if (isAssignable(to, bound)) {
                return true;
             }
          }
@@ -597,7 +621,7 @@ public final class Types {
          Class<?> toClass = (Class<?>) to;
          if (from instanceof GenericArrayType) {
             GenericArrayType fromArrayType = (GenericArrayType) from;
-            return toClass.isArray() && isAssignableFrom(toClass.getComponentType(),
+            return toClass.isArray() && isAssignable(toClass.getComponentType(),
                   fromArrayType.getGenericComponentType());
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
@@ -639,12 +663,12 @@ public final class Types {
             if (toArg instanceof WildcardType) {
                WildcardType wildcardArg = (WildcardType) toArg;
                for (Type upperBound : wildcardArg.getUpperBounds()) {
-                  if (!isAssignableFrom(upperBound, fromArg)) {
+                  if (!isAssignable(upperBound, fromArg)) {
                      return false;
                   }
                }
                for (Type lowerBound : wildcardArg.getLowerBounds()) {
-                  if (!isAssignableFrom(fromArg, lowerBound)) {
+                  if (!isAssignable(fromArg, lowerBound)) {
                      return false;
                   }
                }
@@ -657,10 +681,10 @@ public final class Types {
          GenericArrayType toArrayType = (GenericArrayType) to;
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
-            return fromClass.isArray() && isAssignableFrom(toArrayType.getGenericComponentType(),
+            return fromClass.isArray() && isAssignable(toArrayType.getGenericComponentType(),
                   fromClass.getComponentType());
          } else if (from instanceof GenericArrayType) {
-            return isAssignableFrom(toArrayType.getGenericComponentType(),
+            return isAssignable(toArrayType.getGenericComponentType(),
                   ((GenericArrayType) from).getGenericComponentType());
          }
       } else if (to instanceof TypeVariable) {
@@ -678,7 +702,7 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignableFrom(from, bound)) {
+            if (!isAssignable(from, bound)) {
                return false;
             }
          }
@@ -892,7 +916,7 @@ public final class Types {
       for (Type bound : variable.getBounds()) {
          // do any substitutions on owner type variables that may be referenced
          bound = replaceTypeVariablesInternal(bound, resolvedVariables);
-         if (!isAssignableFrom(bound, argument)) {
+         if (!isAssignable(bound, argument)) {
             throw new IllegalArgumentException("Argument" + id + ", "
                   + argument.getTypeName() + " does not extend bound "+ bound.getTypeName());
          }

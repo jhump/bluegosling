@@ -272,27 +272,27 @@ public class TypesTest {
    
    @Test public void isAssignableFrom_toObject() {
       // anything assignable to Object
-      assertTrue(Types.isAssignableFrom(Object.class, Integer.class));
-      assertTrue(Types.isAssignableFrom(Object.class, Object[].class));
-      assertTrue(Types.isAssignableFrom(Object.class, GENERIC_ARRAY_TYPE));
-      assertTrue(Types.isAssignableFrom(Object.class, GENERIC_ARRAY_TYPE_VARIABLE));
-      assertTrue(Types.isAssignableFrom(Object.class, WILDCARD_EXTENDS));
-      assertTrue(Types.isAssignableFrom(Object.class, WILDCARD_SUPER));
-      assertTrue(Types.isAssignableFrom(Object.class, WILDCARD_ARRAY));
-      assertTrue(Types.isAssignableFrom(Object.class, TYPE_VAR_T));
-      assertTrue(Types.isAssignableFrom(Object.class, TYPE_VAR_Z));
-      assertTrue(Types.isAssignableFrom(Object.class, PARAM_TYPE));
-      assertTrue(Types.isAssignableFrom(Object.class, InvalidType.INSTANCE));
+      assertTrue(Types.isAssignable(Object.class, Integer.class));
+      assertTrue(Types.isAssignable(Object.class, Object[].class));
+      assertTrue(Types.isAssignable(Object.class, GENERIC_ARRAY_TYPE));
+      assertTrue(Types.isAssignable(Object.class, GENERIC_ARRAY_TYPE_VARIABLE));
+      assertTrue(Types.isAssignable(Object.class, WILDCARD_EXTENDS));
+      assertTrue(Types.isAssignable(Object.class, WILDCARD_SUPER));
+      assertTrue(Types.isAssignable(Object.class, WILDCARD_ARRAY));
+      assertTrue(Types.isAssignable(Object.class, TYPE_VAR_T));
+      assertTrue(Types.isAssignable(Object.class, TYPE_VAR_Z));
+      assertTrue(Types.isAssignable(Object.class, PARAM_TYPE));
+      assertTrue(Types.isAssignable(Object.class, InvalidType.INSTANCE));
       // except primitives
-      assertFalse(Types.isAssignableFrom(Object.class, boolean.class));
-      assertFalse(Types.isAssignableFrom(Object.class, byte.class));
-      assertFalse(Types.isAssignableFrom(Object.class, char.class));
-      assertFalse(Types.isAssignableFrom(Object.class, short.class));
-      assertFalse(Types.isAssignableFrom(Object.class, int.class));
-      assertFalse(Types.isAssignableFrom(Object.class, long.class));
-      assertFalse(Types.isAssignableFrom(Object.class, float.class));
-      assertFalse(Types.isAssignableFrom(Object.class, double.class));
-      assertFalse(Types.isAssignableFrom(Object.class, void.class));
+      assertFalse(Types.isAssignable(Object.class, boolean.class));
+      assertFalse(Types.isAssignable(Object.class, byte.class));
+      assertFalse(Types.isAssignable(Object.class, char.class));
+      assertFalse(Types.isAssignable(Object.class, short.class));
+      assertFalse(Types.isAssignable(Object.class, int.class));
+      assertFalse(Types.isAssignable(Object.class, long.class));
+      assertFalse(Types.isAssignable(Object.class, float.class));
+      assertFalse(Types.isAssignable(Object.class, double.class));
+      assertFalse(Types.isAssignable(Object.class, void.class));
    }
    
    @Test public void isAssignableFrom_toClass() {

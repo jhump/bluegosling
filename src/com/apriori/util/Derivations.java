@@ -125,8 +125,8 @@ public final class Derivations {
             (TypeRef<? extends DerivedFrom<?>>) TypeRef.forClass(derivedType);
       @SuppressWarnings("rawtypes") // can only get raw type from class token...
       TypeRef<DerivedFrom> derivedFrom =
-            TypeRef.findSuperTypeRef(derivedTypeRef, DerivedFrom.class);
-      TypeRef<?> var = derivedFrom.resolveTypeParameter(TYPE_VAR_NAME);
+            TypeRef.resolveSuperTypeRef(derivedTypeRef, DerivedFrom.class);
+      TypeRef<?> var = derivedFrom.resolveTypeParameterNamed(TYPE_VAR_NAME);
       return var.isResolved() ? var.asClass() : null;
    }
 
