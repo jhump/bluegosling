@@ -5,14 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation on a single {@code boolean}-valued operand that produces an
- * {@code boolean}-valued result. This is the primitive type specialization of {@link UnaryOperator}
- * for {@code boolean}.
+ * Represents an operation on a single {@code byte}-valued operand that produces a
+ * {@code byte}-valued result. This is the primitive type specialization of {@link UnaryOperator}
+ * for {@code byte}.
  *
  * @see UnaryOperator
  */
 @FunctionalInterface
-public interface BooleanUnaryOperator {
+public interface ByteUnaryOperator {
 
    /**
     * Applies this operator to the given operand.
@@ -20,7 +20,7 @@ public interface BooleanUnaryOperator {
     * @param operand the operand
     * @return the operator result
     */
-   boolean applyAsBoolean(boolean operand);
+   byte applyAsByte(byte operand);
 
    /**
     * Returns a composed operator that first applies the {@code before} operator to its input, and
@@ -32,11 +32,11 @@ public interface BooleanUnaryOperator {
     *         this operator
     * @throws NullPointerException if before is null
     *
-    * @see #andThen(BooleanUnaryOperator)
+    * @see #andThen(ByteUnaryOperator)
     */
-   default BooleanUnaryOperator compose(BooleanUnaryOperator before) {
+   default ByteUnaryOperator compose(ByteUnaryOperator before) {
       requireNonNull(before);
-      return v -> applyAsBoolean(before.applyAsBoolean(v));
+      return v -> applyAsByte(before.applyAsByte(v));
    }
 
    /**
@@ -49,11 +49,11 @@ public interface BooleanUnaryOperator {
     *         {@code after} operator
     * @throws NullPointerException if after is null
     *
-    * @see #compose(BooleanUnaryOperator)
+    * @see #compose(ByteUnaryOperator)
     */
-   default BooleanUnaryOperator andThen(BooleanUnaryOperator after) {
+   default ByteUnaryOperator andThen(ByteUnaryOperator after) {
       requireNonNull(after);
-      return v -> after.applyAsBoolean(applyAsBoolean(v));
+      return v -> after.applyAsByte(applyAsByte(v));
    }
 
    /**
@@ -61,7 +61,7 @@ public interface BooleanUnaryOperator {
     *
     * @return a unary operator that always returns its input argument
     */
-   static BooleanUnaryOperator identity() {
+   static ByteUnaryOperator identity() {
       return v -> v;
    }
 }

@@ -49,7 +49,7 @@ public class AnnotationSpec<T extends Annotation> {
    
    public Map<String, Object> attributes() {
       return annotation == null ? null
-            : Annotations.asMap(annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
+            : Annotations.toMap(annotation, EXCLUDE_NONBINDING_ATTRIBUTES);
    }
    
    public T asAnnotation() {

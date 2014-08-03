@@ -10,9 +10,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +32,9 @@ public final class Annotations {
     * Prevents instantiation.
     */
    private Annotations() {}
-   
+
+   static final Object[] EMPTY = new Object[0];
+
    /**
     * Returns an annotation, possibly searching for the annotation on super-types if not declared
     * on the specified type. This will find annotations on super-types even if they aren't
@@ -110,7 +115,11 @@ public final class Annotations {
     */
    public static <T extends Annotation> T create(final Class<T> annotationType,
          Map<String, Object> attributes) {
-      final Map<String, Object> resolvedAttributes = new HashMap<String, Object>(attributes);
+      if (!annotationType.isAnnotation()) {
+         throw new IllegalArgumentException(annotationType + " is not an annotation");
+      }
+      final Map<String, Object> resolvedAttributes =
+            new HashMap<String, Object>((attributes.size() << 2) / 3, 0.75f);
       Set<String> keys = new HashSet<String>(attributes.keySet());
       for (Method m : annotationType.getDeclaredMethods()) {
          if (!keys.remove(m.getName())) {
@@ -127,9 +136,16 @@ public final class Annotations {
                      attributes.get(m.getName()));
             } catch (IllegalArgumentException e) {
                throw new IllegalArgumentException("Unable to compute "
-                     + m.getGenericReturnType().getTypeName() + " from map value");
+                     + m.getGenericReturnType().getTypeName() + " from map value", e);
             }
             resolvedAttributes.put(m.getName(), value);
+         }
+      }
+      if (keys.remove("annotationType")) {
+         Object typeFromMap = attributes.get("annotationType"); 
+         if (!annotationType.equals(typeFromMap)) {
+            throw new IllegalArgumentException("Map contains key \"annotationType\" with invalid"
+                  + " value. Expecting " + annotationType + "; found " + typeFromMap);
          }
       }
       if (!keys.isEmpty()) {
@@ -140,6 +156,10 @@ public final class Annotations {
             new InvocationHandler() {
                @Override
                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                  // ugh, why does this send null instead of empty array when there are no args...
+                  if (args == null) {
+                     args = EMPTY;
+                  }
                   Object val = resolvedAttributes.get(method.getName());
                   if (val == null || args.length > 0) {
                      if (args.length == 1 && method.getName().equals("equals")) {
@@ -168,7 +188,7 @@ public final class Annotations {
       }
       if (Class.class.isAssignableFrom(fieldType)) {
          return getClassValue(genericFieldType, value);
-      } else if (Object[].class.isAssignableFrom(fieldType)) {
+      } else if (fieldType.isArray()) {
          return getArrayValue(fieldType, genericFieldType, value);
       } else if (Annotation.class.isAssignableFrom(fieldType)) {
          @SuppressWarnings("unchecked") // we just did assignability check, so this is ok
@@ -230,23 +250,25 @@ public final class Annotations {
       }      
    }
    
-   private static Object[] getArrayValue(Class<?> arrayType, Type genericArrayType, Object value) {
-      if (value instanceof Object[]) {
-         value = Arrays.asList((Object[]) value);
+   private static Object getArrayValue(Class<?> arrayType, Type genericArrayType, Object value) {
+      if (arrayType.isInstance(value)) {
+         return value;
       }
-      
+      if (value.getClass().isArray()) {
+         value = ArrayUtils.asList(value);
+      }
       if (value instanceof List) {
          Class<?> componentType = arrayType.getComponentType();
          Type genericComponentType = Types.getComponentType(genericArrayType);
          assert componentType != null;
          assert genericComponentType != null;
          List<?> list = (List<?>) value;
-         Object newArray[] = (Object[]) Array.newInstance(componentType, list.size());
+         Object ret = Array.newInstance(componentType, list.size());
          int index = 0;
          for (Object o : list) {
-            newArray[index] = getFieldValue(componentType, genericComponentType, o);
+            Array.set(ret, index++, getFieldValue(componentType, genericComponentType, o));
          }
-         return newArray;
+         return ret;
       } else {
          return badType(genericArrayType, value.getClass());
       }
@@ -292,7 +314,9 @@ public final class Annotations {
    }
    
    /**
-    * Returns a map of values that correspond to the annotation's methods.
+    * Returns a map of values that correspond to the annotation's methods. If the given annotation
+    * has any fields that are nested annotations or arrays of annotations, their values in the
+    * returned map will be recursively converted to maps.
     * 
     * @param annotation the annotation
     * @return a map of values where keys are the annotation method names and values are the
@@ -300,32 +324,60 @@ public final class Annotations {
     *       map values that are sub-maps, constructed from the other annotation using this same
     *       method)
     */
-   public static Map<String, Object> asMap(Annotation annotation) {
-      return asMap(annotation, alwaysAccept());
+   public static Map<String, Object> toMap(Annotation annotation) {
+      return toMap(annotation, alwaysAccept());
+   }
+
+   // TODO: doc
+   public static Map<String, Object> toMap(Annotation annotation, boolean includeAnnotationType) {
+      return toMap(annotation, includeAnnotationType, alwaysAccept());
    }
 
    /**
     * Returns a map of values that correspond to the annotation's methods that match the specified
-    * predicate.
+    * predicate. If the given annotation has any fields that are nested annotations or arrays of
+    * annotations, their values in the returned map will be recursively converted to maps. Arrays
+    * will be converted to lists so that creating maps from two equal annotations will result in
+    * equal maps (array values in the map prevent this since arrays don't have a sane equals
+    * implementation).
     * 
     * @param annotation the annotation
     * @param filterAttributes a predicate, for filtering the annotation's methods
     * @return a map of values where keys are the annotation method names and values are the values
     *       returned by those methods, filtered according to the specified predicate
     */
-   public static Map<String, Object> asMap(Annotation annotation,
+   public static Map<String, Object> toMap(Annotation annotation,
          Predicate<? super Method> filterAttributes) {
-      Map<String, Object> ret = new HashMap<String, Object>();
-      for (Method m : annotation.annotationType().getDeclaredMethods()) {
+      return toMap(annotation, false, filterAttributes);
+   }
+   
+   // TODO: doc
+   public static Map<String, Object> toMap(Annotation annotation, boolean includeAnnotationType,
+         Predicate<? super Method> filterAttributes) {
+      Map<String, Object> ret = new LinkedHashMap<String, Object>();
+      Class<?> annotationType = annotation.annotationType();
+      if (includeAnnotationType) {
+         ret.put("annotationType", annotationType);
+      }
+      for (Method m : annotationType.getDeclaredMethods()) {
          if (filterAttributes.test(m)) {
             Object value = getAnnotationFieldValue(m, annotation);
             if (value instanceof Annotation) {
-               value = asMap((Annotation) value, filterAttributes);
+               value = toMap((Annotation) value, includeAnnotationType);
+            } else if (value instanceof Annotation[]) {
+               Annotation annotationArray[] = (Annotation[]) value;
+               ArrayList<Object> list = new ArrayList<>(annotationArray.length);
+               for (Annotation a : annotationArray) {
+                  list.add(toMap(a, includeAnnotationType));
+               }
+               value = list;
+            } else if (value.getClass().isArray()) {
+               value = ArrayUtils.asList(value);
             }
             ret.put(m.getName(), value);
          }
       }
-      return ret;
+      return Collections.unmodifiableMap(ret);
    }
    
    /**
@@ -365,14 +417,12 @@ public final class Annotations {
             if (filterAttributes.test(annotationField)) {
                Object v1 = getAnnotationFieldValue(annotationField, annotation);
                Object v2 = getAnnotationFieldValue(annotationField, other);
-               if (v1 instanceof Object[]) {
-                  if (!Arrays.deepEquals((Object[]) v1, (Object[]) v2)) {
+               if (v1 != null && v1.getClass().isArray()) {
+                  if (!ArrayUtils.equals(v1, v2)) {
                      return false;
                   }
-               } else {
-                  if (v1 == null ? v1 != v2 : !v1.equals(v2)) {
-                     return false;
-                  }
+               } else if (v1 == null ? v1 != v2 : !v1.equals(v2)) {
+                  return false;
                }
             }
          }
@@ -411,8 +461,8 @@ public final class Annotations {
             int memberCode;
             if (val == null) {
                memberCode = 0;
-            } else if (val instanceof Object[]) {
-               memberCode = Arrays.deepHashCode((Object[]) val);
+            } else if (val.getClass().isArray()) {
+               memberCode = ArrayUtils.hashCode(val);
             } else {
                memberCode = val.hashCode();
             }
@@ -454,7 +504,7 @@ public final class Annotations {
       Class<?> annotationType = annotation.annotationType();
       sb.append(annotationType.getName());
       boolean first = true;
-      for (Method annotationField : annotation.annotationType().getDeclaredMethods()) {
+      for (Method annotationField : annotationType.getDeclaredMethods()) {
          if (filterAttributes.test(annotationField)) {
             Object val = getAnnotationFieldValue(annotationField, annotation);
             if (val != null) {
@@ -466,8 +516,8 @@ public final class Annotations {
                }
                sb.append(annotationField.getName());
                sb.append(" = ");
-               if (val instanceof Object[]) {
-                  sb.append(Arrays.deepToString((Object[]) val));
+               if (val.getClass().isArray()) {
+                  sb.append(ArrayUtils.toString(val));
                } else {
                   sb.append(val);
                }

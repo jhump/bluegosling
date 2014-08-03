@@ -138,11 +138,11 @@ public final class Types {
       return requireNonNull(type) instanceof Class && ((Class<?>) type).isPrimitive();
    }
    
-   private static final Map<Type, Type> BOX;
-   private static final Map<Type, Type> UNBOX;
+   private static final Map<Class<?>, Class<?>> BOX;
+   private static final Map<Class<?>, Class<?>> UNBOX;
    static {
-      Map<Type, Type> box = new HashMap<>();
-      Map<Type, Type> unbox = new HashMap<>();
+      Map<Class<?>, Class<?>> box = new HashMap<>();
+      Map<Class<?>, Class<?>> unbox = new HashMap<>();
       box.put(boolean.class, Boolean.class);
       unbox.put(Boolean.class, boolean.class);
       box.put(byte.class, Byte.class);
@@ -167,14 +167,26 @@ public final class Types {
    
    // TODO: doc
    public static Type box(Type type) {
-      Type boxed = BOX.get(requireNonNull(type));
+      Class<?> boxed = BOX.get(requireNonNull(type));
       return boxed == null ? type : boxed;
    }
    
    // TODO: doc
+   public static Class<?> box(Class<?> clazz) {
+      Class<?> boxed = BOX.get(requireNonNull(clazz));
+      return boxed == null ? clazz : boxed;
+   }
+   
+   // TODO: doc
    public static Type unbox(Type type) {
-      Type unboxed = UNBOX.get(requireNonNull(type));
+      Class<?> unboxed = UNBOX.get(requireNonNull(type));
       return unboxed == null ? type : unboxed;
+   }
+   
+   // TODO: doc
+   public static Class<?> unbox(Class<?> clazz) {
+      Class<?> unboxed = UNBOX.get(requireNonNull(clazz));
+      return unboxed == null ? clazz : unboxed;
    }
 
    public static Class<?> getSuperclass(Type type) {

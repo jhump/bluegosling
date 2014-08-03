@@ -5,14 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation on a single {@code boolean}-valued operand that produces an
- * {@code boolean}-valued result. This is the primitive type specialization of {@link UnaryOperator}
- * for {@code boolean}.
+ * Represents an operation on a single {@code float}-valued operand that produces a
+ * {@code float}-valued result. This is the primitive type specialization of {@link UnaryOperator}
+ * for {@code float}.
  *
  * @see UnaryOperator
  */
 @FunctionalInterface
-public interface BooleanUnaryOperator {
+public interface FloatUnaryOperator {
 
    /**
     * Applies this operator to the given operand.
@@ -20,7 +20,7 @@ public interface BooleanUnaryOperator {
     * @param operand the operand
     * @return the operator result
     */
-   boolean applyAsBoolean(boolean operand);
+   float applyAsFloat(float operand);
 
    /**
     * Returns a composed operator that first applies the {@code before} operator to its input, and
@@ -32,11 +32,11 @@ public interface BooleanUnaryOperator {
     *         this operator
     * @throws NullPointerException if before is null
     *
-    * @see #andThen(BooleanUnaryOperator)
+    * @see #andThen(FloatUnaryOperator)
     */
-   default BooleanUnaryOperator compose(BooleanUnaryOperator before) {
+   default FloatUnaryOperator compose(FloatUnaryOperator before) {
       requireNonNull(before);
-      return v -> applyAsBoolean(before.applyAsBoolean(v));
+      return v -> applyAsFloat(before.applyAsFloat(v));
    }
 
    /**
@@ -49,11 +49,11 @@ public interface BooleanUnaryOperator {
     *         {@code after} operator
     * @throws NullPointerException if after is null
     *
-    * @see #compose(BooleanUnaryOperator)
+    * @see #compose(FloatUnaryOperator)
     */
-   default BooleanUnaryOperator andThen(BooleanUnaryOperator after) {
+   default FloatUnaryOperator andThen(FloatUnaryOperator after) {
       requireNonNull(after);
-      return v -> after.applyAsBoolean(applyAsBoolean(v));
+      return v -> after.applyAsFloat(applyAsFloat(v));
    }
 
    /**
@@ -61,7 +61,7 @@ public interface BooleanUnaryOperator {
     *
     * @return a unary operator that always returns its input argument
     */
-   static BooleanUnaryOperator identity() {
+   static FloatUnaryOperator identity() {
       return v -> v;
    }
 }

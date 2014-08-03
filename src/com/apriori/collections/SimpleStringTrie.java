@@ -30,26 +30,18 @@ public abstract class SimpleStringTrie<V>
       implements NavigableCompositeTrie<CharSequence, Character, V> {
 
    static final Componentizer<CharSequence, Character> COMPONENTIZER =
-         new Componentizer<CharSequence, Character>() {
-            @Override public Iterable<Character> getComponents(final CharSequence key) {
-               return new Iterable<Character>() {
-                  @Override public CharIterator iterator() {
-                     return new CharIterator() {
-                        private int index = 0;
-                        
-                        @Override public boolean hasNext() {
-                           return index < key.length();
-                        }
+         key -> () -> new CharIterator() {
+            private int index = 0;
+            
+            @Override public boolean hasNext() {
+               return index < key.length();
+            }
 
-                        @Override public char nextChar() {
-                           if (index >= key.length()) {
-                              throw new NoSuchElementException();
-                           }
-                           return key.charAt(index++);
-                        }
-                     };
-                  }
-               };
+            @Override public char nextChar() {
+               if (index >= key.length()) {
+                  throw new NoSuchElementException();
+               }
+               return key.charAt(index++);
             }
          };
          

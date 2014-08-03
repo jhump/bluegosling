@@ -32,6 +32,21 @@ public interface CharIterator extends PrimitiveIterator<Character, CharConsumer>
       }
    }
    
+   // TODO: javadoc
+   default PrimitiveIterator.OfInt asIteratorOfInt() {
+      return new PrimitiveIterator.OfInt() {
+         @Override
+         public boolean hasNext() {
+            return CharIterator.this.hasNext();
+         }
+
+         @Override
+         public int nextInt() {
+            return nextChar();
+         }
+      };
+   }
+
    static CharIterator from(CharSequence str) {
       return new CharIterator() {
          char next;

@@ -3,12 +3,12 @@ package com.apriori.util;
 import java.util.function.BinaryOperator;
 
 /**
- * Represents an operation upon two {@code boolean}-valued operands and producing an
+ * Represents an operation upon two {@code boolean}-valued operands and producing a
  * {@code boolean}-valued result. This is the primitive type specialization of
  * {@link BinaryOperator} for {@code boolean}.
  *
  * @see BinaryOperator
- * @see BinaryUnaryOperator
+ * @see BooleanUnaryOperator
  */
 @FunctionalInterface
 public interface BooleanBinaryOperator {
