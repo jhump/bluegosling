@@ -149,6 +149,9 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
          }
          list.remove(lastFetched);
          this.modCount = list.modCount();
+         if (lastFetched < index) {
+            index--;
+         }
          lastFetched = -1;
       }
 
@@ -349,6 +352,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+         
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Boolean next() {
+            return nextBoolean();
+         }
+         
+         @Override
+         public Boolean previous() {
+            return previousBoolean();
+         }
       }
    }
 
@@ -419,6 +438,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -608,6 +628,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+         
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Byte next() {
+            return nextByte();
+         }
+         
+         @Override
+         public Byte previous() {
+            return previousByte();
+         }
       }
    }
 
@@ -678,6 +714,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -867,6 +904,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Character next() {
+            return nextChar();
+         }
+         
+         @Override
+         public Character previous() {
+            return previousChar();
+         }
       }
    }
 
@@ -937,6 +990,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -1126,6 +1180,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+         
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Short next() {
+            return nextShort();
+         }
+         
+         @Override
+         public Short previous() {
+            return previousShort();
+         }
       }
    }
 
@@ -1193,9 +1263,10 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
          checkModCount();
          return toIndex - fromIndex;
       }
-
+      
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -1400,6 +1471,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Integer next() {
+            return nextInt();
+         }
+         
+         @Override
+         public Integer previous() {
+            return previousInt();
+         }
       }
    }
 
@@ -1470,9 +1557,16 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
+      @Override
+      public PrimitiveListIterator.OfInt listIterator(int index) {
+         checkModCount();
+         return super.listIterator(index);
+      }
+
       @Override
       public PrimitiveList.OfInt subList(int from, int to) {
          checkModCount();
@@ -1674,6 +1768,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+         
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Long next() {
+            return nextLong();
+         }
+         
+         @Override
+         public Long previous() {
+            return previousLong();
+         }
       }
    }
 
@@ -1744,6 +1854,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -1933,6 +2044,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+         
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Float next() {
+            return nextFloat();
+         }
+         
+         @Override
+         public Float previous() {
+            return previousFloat();
+         }
       }
    }
 
@@ -2003,6 +2130,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       
@@ -2207,6 +2335,22 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
             afterPrevious();
             return ret;
          }
+
+         /*
+          * Having to re-define these, even though they are defined as default methods, because
+          * otherwise compiler fails to synthesize bridge methods. AbstractMethodErrors can
+          * result...
+          */
+         
+         @Override
+         public Double next() {
+            return nextDouble();
+         }
+         
+         @Override
+         public Double previous() {
+            return previousDouble();
+         }
       }
    }
 
@@ -2277,6 +2421,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
 
       @Override
       public void clear() {
+         checkModCount();
          list.removeRange(fromIndex, toIndex);
       }
       

@@ -36,16 +36,8 @@ abstract class AbstractBitSequence implements BitSequence {
             return stream.remaining() > 0;
          }
 
-         @Override public Boolean next() {
-            return nextBoolean();
-         }
-
          @Override public boolean nextBoolean() {
             return stream.next();
-         }
-         
-         @Override public void remove() {
-            throw new UnsupportedOperationException();
          }
       };
    }
@@ -129,7 +121,12 @@ abstract class AbstractBitSequence implements BitSequence {
       return false;
    }
    
-   // TODO: javadoc
+   /**
+    * An abstract base class for {@link BitStream}s that are backed by an
+    * {@link AbstractBitSequence}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    abstract class AbstractStream implements BitStream {
 
       void checkSequenceLength(int i) {
@@ -161,9 +158,8 @@ abstract class AbstractBitSequence implements BitSequence {
       
       @Override public BitSequence nextAsSequence(int sequenceLength) {
          checkSequenceLength(sequenceLength);
-         return sequenceLength == 0
-               ? BitSequences.empty()
-               : BitSequences.nextAsSequence(this, sequenceLength);
+         int offset = currentIndex();
+         return BitSequences.subSequence(AbstractBitSequence.this, offset, offset + sequenceLength);
       }
    }
 }

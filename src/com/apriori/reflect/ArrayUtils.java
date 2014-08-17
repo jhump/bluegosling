@@ -7,12 +7,26 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO: javadoc
+/**
+ * Utility methods for dealing with arrays, including primitive arrays.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public final class ArrayUtils {
    private ArrayUtils() {
    }
-   
+
+   /**
+    * Constructs a new array of the given (non-primitive) component type and length.  This is a
+    * convenient wrapper around {@link Array#newInstance(Class, int)} that provides a more useful
+    * return type for reference component types: no cast required.
+    *
+    * @param elementType the type of elements in the new array
+    * @param len the length, or capacity, of the new array
+    * @return a new array with the given component type and length, initially filled with all
+    *       {@code null}s.
+    */
    public static <T> T[] newInstance(Class<T> elementType, int len) {
       if (elementType.isPrimitive()) {
          throw new IllegalArgumentException("element type cannot be primitive: " + elementType);
@@ -22,6 +36,16 @@ public final class ArrayUtils {
       return ret;
    }
    
+   /**
+    * Returns a view of the given array as a list. If the given array has a non-primitive component
+    * type then this is the same as using {@link Arrays#asList(Object...)}. This version, however,
+    * can also be used with primitive array types. If the given array is a primitive array type then
+    * the returned list will be a {@link PrimitiveList} specialization for that type.
+    *
+    * @param array the array
+    * @return a view of the given array as a list
+    * @throws IllegalArgumentException if the given object is not actually an array
+    */
    public static List<?> asList(Object array) {
       Class<?> arrayType = array.getClass();
       if (!arrayType.isArray()) {
@@ -54,38 +78,99 @@ public final class ArrayUtils {
       }
    }
    
-   public static PrimitiveList.OfBoolean asList(boolean... bools) {
-      return new BooleanList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive boolean arrays.
+    *
+    * @param array an array of booleans
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfBoolean asList(boolean... array) {
+      return new BooleanList(array);
    }
 
-   public static PrimitiveList.OfByte asList(byte... bools) {
-      return new ByteList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive byte arrays.
+    *
+    * @param array an array of bytes
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfByte asList(byte... array) {
+      return new ByteList(array);
    }
 
-   public static PrimitiveList.OfChar asList(char... bools) {
-      return new CharList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive char arrays.
+    *
+    * @param array an array of chars
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfChar asList(char... array) {
+      return new CharList(array);
    }
 
-   public static PrimitiveList.OfShort asList(short... bools) {
-      return new ShortList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive short arrays.
+    *
+    * @param array an array of shorts
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfShort asList(short... array) {
+      return new ShortList(array);
    }
 
-   public static PrimitiveList.OfInt asList(int... bools) {
-      return new IntList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive int arrays.
+    *
+    * @param array an array of ints
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfInt asList(int... array) {
+      return new IntList(array);
    }
 
-   public static PrimitiveList.OfLong asList(long... bools) {
-      return new LongList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive long arrays.
+    *
+    * @param array an array of long
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfLong asList(long... array) {
+      return new LongList(array);
    }
 
-   public static PrimitiveList.OfFloat asList(float... bools) {
-      return new FloatList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive float arrays.
+    *
+    * @param array an array of floats
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfFloat asList(float... array) {
+      return new FloatList(array);
    }
 
-   public static PrimitiveList.OfDouble asList(double... bools) {
-      return new DoubleList(bools);
+   /**
+    * A primitive specialization of {@link Arrays#asList(Object...)} for primitive double arrays.
+    *
+    * @param array an array of doubles
+    * @return a list view of the given array
+    */
+   public static PrimitiveList.OfDouble asList(double... array) {
+      return new DoubleList(array);
    }
    
+   /**
+    * Determines if the given two arrays are equal, as determined by comparing their contents for
+    * equality. This provides a convenience above and beyond similar methods in {@link Arrays}
+    * because it accepts any array types, including primitive array types.
+    *
+    * @param array1 an array
+    * @param array2 another array
+    * @return true if {@code array2} is an array of the same type as {@code array1} and has equal
+    *    elements
+    * @throws IllegalArgumentException if {@code array1} is not actually an array
+    * 
+    * @see Arrays#equals(Object[], Object[])
+    */
    public static boolean equals(Object array1, Object array2) {
       Class<?> arrayType = array1.getClass();
       if (!arrayType.isArray()) {
@@ -119,6 +204,17 @@ public final class ArrayUtils {
       }
    }
 
+   /**
+    * Computes a hash code for the given array based on its content instead of on its identity. This
+    * provides a convenience above and beyond similar methods in {@link Arrays} because it accepts
+    * any array types, including primitive array types.
+    *
+    * @param array an array
+    * @return a hash code for the given array based on its content
+    * @throws IllegalArgumentException if {@code array} is not actually an array
+    * 
+    * @see Arrays#hashCode(Object[])
+    */
    public static int hashCode(Object array) {
       Class<?> arrayType = array.getClass();
       if (!arrayType.isArray()) {
@@ -150,6 +246,18 @@ public final class ArrayUtils {
       }
    }
    
+   /**
+    * Constructs a string representation for the given array that describes its contents (as
+    * opposed to the default {@link Object#toString()} version that arrays inherit). This provides a
+    * convenience above and beyond similar methods in {@link Arrays} because it accepts any array
+    * types, including primitive array types.
+    *
+    * @param array an array
+    * @return a string representation for the given array that describes its contents
+    * @throws IllegalArgumentException if {@code array} is not actually an array
+    * 
+    * @see Arrays#toString(Object[])
+    */
    public static String toString(Object array) {
       Class<?> arrayType = array.getClass();
       if (!arrayType.isArray()) {
@@ -204,6 +312,11 @@ public final class ArrayUtils {
       public int size() {
          return array.length;
       }
+      
+      @Override
+      public boolean[] toBooleanArray() {
+         return array.clone();
+      }
    }
 
    private static class ByteList extends AbstractPrimitiveList.OfByte {
@@ -228,6 +341,11 @@ public final class ArrayUtils {
       @Override
       public int size() {
          return array.length;
+      }
+      
+      @Override
+      public byte[] toByteArray() {
+         return array.clone();
       }
    }
 
@@ -254,6 +372,11 @@ public final class ArrayUtils {
       public int size() {
          return array.length;
       }
+      
+      @Override
+      public char[] toCharArray() {
+         return array.clone();
+      }
    }
 
    private static class ShortList extends AbstractPrimitiveList.OfShort {
@@ -278,6 +401,11 @@ public final class ArrayUtils {
       @Override
       public int size() {
          return array.length;
+      }
+      
+      @Override
+      public short[] toShortArray() {
+         return array.clone();
       }
    }
 
@@ -304,6 +432,11 @@ public final class ArrayUtils {
       public int size() {
          return array.length;
       }
+      
+      @Override
+      public int[] toIntArray() {
+         return array.clone();
+      }
    }
 
    private static class LongList extends AbstractPrimitiveList.OfLong {
@@ -328,6 +461,11 @@ public final class ArrayUtils {
       @Override
       public int size() {
          return array.length;
+      }
+
+      @Override
+      public long[] toLongArray() {
+         return array.clone();
       }
    }
 
@@ -354,6 +492,11 @@ public final class ArrayUtils {
       public int size() {
          return array.length;
       }
+      
+      @Override
+      public float[] toFloatArray() {
+         return array.clone();
+      }
    }
 
    private static class DoubleList extends AbstractPrimitiveList.OfDouble {
@@ -378,6 +521,11 @@ public final class ArrayUtils {
       @Override
       public int size() {
          return array.length;
+      }
+      
+      @Override
+      public double[] toDoubleArray() {
+         return array.clone();
       }
    }
 }

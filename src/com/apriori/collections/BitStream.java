@@ -7,12 +7,21 @@ import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
  * A stream of bits. This interface is similar to an iterator, except it allows for selecting an
  * arbitrary number of bits with each fetch. It also includes a method that allows for random
  * access seeks over the underlying bits.
+ * 
+ * <p>Conceptually, this is like an I/O stream from which you can read arbitrarily sized chunks of
+ * bits as opposed to just reading bytes.
+ * 
+ * <p>Despite the similar name, it is not a Java 8 {@link Stream}. But a
+ * {@linkplain #asIntStream() method} is provided to adapt to that kind of stream.
+ * 
+ * @see BitSequence
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -97,8 +106,13 @@ public interface BitStream {
     */
    BitSequence nextAsSequence(int numberOfBits);
    
-   // TODO: javadoc
-   
+   /**
+    * Provides a view of this bit stream as an {@link IntStream}. This allows code to operate on
+    * the stream in a functional way. The elements of the int streams as just bits, so each value
+    * in the stream is a zero or one.
+    *
+    * @return a view of the bits as an {@link IntStream}
+    */
    default IntStream asIntStream() {
       return StreamSupport.intStream(() -> {
          PrimitiveIterator.OfInt iter = new PrimitiveIterator.OfInt() {

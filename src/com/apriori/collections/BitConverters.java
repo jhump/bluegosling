@@ -93,7 +93,7 @@ public final class BitConverters {
     * Returns a converter that converts characters into stream of bits using the specified character
     * encoding.
     */
-   public static BitConverter<Character> forCharacter(final Charset charset) {
+   public static BitConverter<Character> forCharacter(Charset charset) {
       return new BitConverter<Character>() {
          @Override
          public BitSequence getComponents(Character t) {

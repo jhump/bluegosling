@@ -2,13 +2,14 @@ package com.apriori.reflect;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.collections.MapBuilder;
+
 import org.junit.Test;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -99,9 +100,9 @@ public class AnnotationsTest {
    
    // Map representation of the annotation on TestExhaustive
    private static final Map<String, Object> NESTED_ANNOTATION_OUTER_MAP =
-         new MapBuilder<String, Object>()
-               .put("xyz", new MapBuilder<>()
-                     .put("value", Arrays.asList(new MapBuilder<>()
+         AnnotationsTest.<String, Object>mapBuilder()
+               .put("xyz", mapBuilder()
+                     .put("value", Arrays.asList(mapBuilder()
                            .put("someValue",  1234)
                            .put("someFlag", false)
                            .build()))
@@ -110,7 +111,7 @@ public class AnnotationsTest {
    
    // Map representation of the annotation on TestExhaustive
    private static final Map<String, Object> EXHAUSTIVE_ANNOTATION_MAP =
-         new MapBuilder<String, Object>()
+         AnnotationsTest.<String, Object>mapBuilder()
                .put("booleanField", false).put("booleanFieldWithDefault", true)
                .put("byteField", Byte.MAX_VALUE).put("byteFieldWithDefault", (byte) 1)
                .put("charField", 'A').put("charFieldWithDefault", 'x')
@@ -122,9 +123,9 @@ public class AnnotationsTest {
                .put("stringField", "--").put("stringFieldWithDefault", "abc")
                .put("enumField", TestEnum.C).put("enumFieldWithDefault", TestEnum.A)
                .put("annotationField",
-                     new MapBuilder<>().put("someValue", 0).put("someFlag", true).build())
+                     mapBuilder().put("someValue", 0).put("someFlag", true).build())
                .put("annotationFieldWithDefault",
-                     new MapBuilder<>().put("someValue", 1).put("someFlag", false).build())
+                     mapBuilder().put("someValue", 1).put("someFlag", false).build())
                .build();
 
    @ExhaustiveArraysAnnotation(
@@ -141,7 +142,7 @@ public class AnnotationsTest {
 
    // Map representation of the annotation on TestExhaustiveArrays
    private static final Map<String, Object> EXHAUSTIVE_ARRAYS_ANNOTATION_MAP =
-         new MapBuilder<String, Object>()
+         AnnotationsTest.<String, Object>mapBuilder()
                .put("booleanField", Arrays.asList(false, true))
                .put("booleanFieldWithDefault", Arrays.asList(true, false, true))
                .put("byteField", Arrays.asList(Byte.MAX_VALUE, Byte.MIN_VALUE))
@@ -163,11 +164,11 @@ public class AnnotationsTest {
                .put("enumField", Arrays.asList(TestEnum.C))
                .put("enumFieldWithDefault", Arrays.asList(TestEnum.A, TestEnum.B))
                .put("annotationField", Arrays.asList(
-                     new MapBuilder<>().put("someValue", 0).put("someFlag", true).build(),
-                     new MapBuilder<>().put("someValue", -1).put("someFlag", false).build()))
+                     mapBuilder().put("someValue", 0).put("someFlag", true).build(),
+                     mapBuilder().put("someValue", -1).put("someFlag", false).build()))
                .put("annotationFieldWithDefault", Arrays.asList(
-                     new MapBuilder<>().put("someValue", 1).put("someFlag", true).build(),
-                     new MapBuilder<>().put("someValue", 2).put("someFlag", false).build()))
+                     mapBuilder().put("someValue", 1).put("someFlag", true).build(),
+                     mapBuilder().put("someValue", 2).put("someFlag", false).build()))
                .build();
    
    @Test public void toMap() {
@@ -195,21 +196,9 @@ public class AnnotationsTest {
       assertEquals(a3,
             Annotations.create(ExhaustiveArraysAnnotation.class, EXHAUSTIVE_ARRAYS_ANNOTATION_MAP));
    }
-
-   /** Simple class for imperatively constructing maps. */
-   private static class MapBuilder<K, V> {
-      private final Map<K, V> map = new LinkedHashMap<>();
-      
-      MapBuilder() {
-      }
-      
-      MapBuilder<K, V> put(K key, V value) {
-         map.put(key, value);
-         return this;
-      }
-      
-      Map<K, V> build() {
-         return Collections.unmodifiableMap(map);
-      }
+   
+   private static <K, V> MapBuilder<K, V, ?, ?> mapBuilder() {
+      // argh... why can't you infer these type variables, javac!?! 
+      return MapBuilder.<K, V>forLinkedHashMap();
    }
 }

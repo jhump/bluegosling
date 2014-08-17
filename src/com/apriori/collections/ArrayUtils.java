@@ -5,9 +5,9 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
- * Utility methods for working with arrays that back collection implementations.
- * This class includes functionality for manipulating "auto-resizing" arrays,
- * like the ones used to implement array-backed collections.
+ * Utility methods for working with arrays that back collection implementations. This class also
+ * includes functionality for manipulating "auto-resizing" arrays, like the ones used to implement
+ * array-backed collections.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

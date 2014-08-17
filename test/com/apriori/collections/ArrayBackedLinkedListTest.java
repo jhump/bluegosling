@@ -1,7 +1,6 @@
 package com.apriori.collections;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.list.AbstractTestList;
 
 import java.util.Arrays;
 import java.util.List;

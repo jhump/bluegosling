@@ -1,5 +1,7 @@
 package com.apriori.collections;
 
+import com.apriori.tuples.Pair;
+
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -7,12 +9,13 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 // TODO: javadoc
 // TODO: tests
 public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> {
    
-   private final AtomicReference<PersistentList<E>> underlying;
+   final AtomicReference<PersistentList<E>> underlying;
    
    public PersistentListBackedConcurrentList(PersistentList<E> underlying) {
       this.underlying = new AtomicReference<PersistentList<E>>(underlying);
@@ -285,34 +288,43 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
    private class SubList implements ConcurrentList<E> {
       private final int from;
       private final int to;
+      private final AtomicReference<Pair<ImmutableList<E>, ImmutableList<E>>> memoized;
       
       SubList(int from, int to) {
          this.from = from;
          this.to = to;
+         memoized = new AtomicReference<>();
       }
       
-      @SuppressWarnings("synthetic-access")
-      private ImmutableList<E> underlying() {
-         ImmutableList<E> list = underlying.get();
-         if (from > size()) {
-            throw new ConcurrentModificationException();
-         }  
-         return list.subList(from, Math.min(to, list.size()));
+      private ImmutableList<E> underlyingSublist() {
+         while (true) {
+            Pair<ImmutableList<E>, ImmutableList<E>> pair = memoized.get();
+            ImmutableList<E> l = underlying.get();
+            if (pair != null && l == pair.getFirst()) {
+               return pair.getSecond();
+            }
+            int start = from > l.size() ? l.size() : from;
+            int end = to > l.size() ? l.size() : to;
+            ImmutableList<E> subList = l.subList(start, end);
+            if (memoized.compareAndSet(pair, Pair.create(l, subList))) {
+               return subList;
+            }
+         }
       }
       
       @Override
       public int size() {
-         return underlying().size();
+         return underlyingSublist().size();
       }
 
       @Override
       public boolean isEmpty() {
-         return underlying().isEmpty();
+         return underlyingSublist().isEmpty();
       }
 
       @Override
       public boolean contains(Object o) {
-         return underlying().contains(o);
+         return underlyingSublist().contains(o);
       }
 
       @Override
@@ -322,12 +334,12 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
       @Override
       public Object[] toArray() {
-         return underlying().toArray();
+         return underlyingSublist().toArray();
       }
 
       @Override
       public <T> T[] toArray(T[] a) {
-         return underlying().toArray(a);
+         return underlyingSublist().toArray(a);
       }
 
       @Override
@@ -344,7 +356,7 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
       @Override
       public boolean containsAll(Collection<?> c) {
-         return underlying().containsAll(c);
+         return underlyingSublist().containsAll(c);
       }
 
       @Override
@@ -378,7 +390,7 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
       @Override
       public E get(int index) {
-         return underlying().get(index);
+         return underlyingSublist().get(index);
       }
 
       @Override
@@ -424,12 +436,12 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
       @Override
       public int indexOf(Object o) {
-         return underlying().indexOf(o);
+         return underlyingSublist().indexOf(o);
       }
 
       @Override
       public int lastIndexOf(Object o) {
-         return underlying().lastIndexOf(o);
+         return underlyingSublist().lastIndexOf(o);
       }
 
       @Override
@@ -439,13 +451,12 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
       @Override
       public ListIterator<E> listIterator(int index) {
-         // TODO: implement me
-         return null;
+         return new Iter(underlyingSublist(), index, from);
       }
 
       @Override
       public ConcurrentList<E> subList(int fromIndex, int toIndex) {
-         ImmutableList<E> list = underlying();
+         ImmutableList<E> list = underlyingSublist();
          if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
             throw new IndexOutOfBoundsException();
          }
@@ -453,128 +464,211 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
       }
    }
    
+   /**
+    * A node in a doubly-linked list, used to represent the snapshot view of the list for iteration
+    * and support mutation operations. The iterator is a consistent snapshot of the list at the
+    * time iteration began, and will reflect all mutations made through the iterator. But it will
+    * not reflect any modifications made directly to the list, outside of the iterator.
+    * 
+    * <p>This linked list is capped at the end with a special "end" node. This allows advancing the
+    * iterator to a position "after the end of the list", with navigating back through the list via
+    * predecessor nodes still being possible.
+    *
+    * @param <E> the type of element in the list
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class IterNode<E> {
-      private IterNode<E> previous;
-      private IterNode<E> next;
-      private final ImmutableList<E> head;
-      private E value;
-      private boolean hasValue;
-      final int index;
-      
-      IterNode(ImmutableList<E> list, int index, IterNode<E> previous) {
-         this.head = list;
-         this.index = index;
-         this.previous = previous;
+
+      /**
+       * Returns the head of the given list as a node with no predecessor.
+       *
+       * @param list a list
+       * @return a node whose value is the head of the given list and that has no predecessor
+       */
+      static <E> IterNode<E> listHead(ImmutableList<E> list) {
+         return list.isEmpty()
+               ? endNode(null) : new IterNode<E>(list.first(), null, nextFromList(list));
+      }
+
+      /**
+       * Returns a function that computes the next node as the head of the given list.
+       *
+       * @param list the list
+       * @return a function that uses the head of the given list as the next node
+       */
+      private static <E> Function<IterNode<E>, IterNode<E>> nextFromList(ImmutableList<E> list) {
+         return prev -> list.isEmpty()
+               ? endNode(prev)
+               : new IterNode<E>(list.first(), prev, nextFromList(list.rest()));
       }
       
-      synchronized IterNode<E> next() {
-         if (next == null) {
-            next = new IterNode<E>(head.rest(), index + 1, this);
+      /**
+       * Creates a new node with the given value and adjacent nodes.
+       *
+       * @param value the node's value
+       * @param prev the node's predecessor
+       * @param next the node's successor
+       * @return the new node
+       */
+      static <E> IterNode<E> create(E value, IterNode<E> prev, IterNode<E> next) {
+         return new IterNode<>(value, prev, next);
+      }
+      
+      /**
+       * Creates an "end" node with the given predecessor. The predecessor is the tail of the list.
+       *
+       * @param tail the predecessor
+       * @return an end node
+       */
+      static <E> IterNode<E> endNode(IterNode<E> tail) {
+         return new IterNode<>(tail);
+      }
+
+      private final boolean isEnd;
+      private IterNode<E> previous;
+      private IterNode<E> next;
+      private Function<IterNode<E>, IterNode<E>> nextFn;
+      private E value;
+      
+      private IterNode(IterNode<E> previous) {
+         isEnd = true;
+         this.value = null;
+         this.previous = previous;
+         this.next = null;
+      }
+      
+      private IterNode(E value, IterNode<E> previous, Function<IterNode<E>, IterNode<E>> nextFn) {
+         isEnd = false;
+         this.value = value;
+         this.previous = previous;
+         assert nextFn != null;
+         this.nextFn = nextFn;
+      }
+
+      private IterNode(E value, IterNode<E> previous, IterNode<E> next) {
+         isEnd = false;
+         this.value = value;
+         this.previous = previous;
+         assert next != null;
+         this.next = next;
+      }
+      
+      boolean isEnd() {
+         return isEnd;
+      }
+
+      IterNode<E> next() {
+         assert !isEnd;
+         if (next == null && nextFn != null) {
+            next = nextFn.apply(this);
+            assert next != null;
+            nextFn = null;
          }
          return next;
       }
       
-      synchronized void setNext(IterNode<E> next) {
+      void setNext(IterNode<E> next) {
+         assert !isEnd;
          this.next = next;
       }
       
-      synchronized E value() {
-         return hasValue ? value : head.first();
+      E value() {
+         assert !isEnd;
+         return value;
       }
       
-      synchronized void setValue(E value) {
+      void setValue(E value) {
+         assert !isEnd;
          this.value = value;
-         hasValue = true;
       }
       
       IterNode<E> previous() {
          return previous;
       }
       
-      synchronized void setPrevious(IterNode<E> previous) {
+      void setPrevious(IterNode<E> previous) {
          this.previous = previous;
       }
    }
    
    private class Iter implements ListIterator<E> {
+      private final int offset;
+      private int currentIndex;
       private IterNode<E> current;
       private IterNode<E> lastFetched;
-      private boolean lastFetchedPrevious;
-      private final int from;
-      private final int to;
       
       Iter(ImmutableList<E> list, int start) {
-         this(list, start, 0, list.size());
+         this(list, start, 0);
       }
 
-      Iter(ImmutableList<E> list, int start, int from, int to) {
-         this.from = from;
-         this.to = to;
-         while (from > 0) {
-            list = list.rest();
-            from--;
-         }
-         IterNode<E> node = new IterNode<E>(list, 0, null);
+      Iter(ImmutableList<E> list, int start, int offset) {
+         this.offset = offset;
+         currentIndex = start;
+         current = IterNode.listHead(list);
          for (int i = 0; i < start; i++) {
-            node = node.next();
+            current = current.next();
          }
-         current = node;
       }
-
+      
       @Override
       public boolean hasNext() {
-         return current.index + from < to;
+         return !current.isEnd();
       }
 
       @Override
-      public synchronized E next() {
+      public E next() {
          if (!hasNext()) {
             throw new NoSuchElementException();
          }
          E ret = current.value();
          lastFetched = current;
-         lastFetchedPrevious = false;
          current = current.next();
+         currentIndex++;
          return ret;
       }
 
       @Override
-      public synchronized boolean hasPrevious() {
+      public boolean hasPrevious() {
          return current.previous() != null;
       }
 
       @Override
-      public synchronized E previous() {
-         if (!hasNext()) {
+      public E previous() {
+         if (!hasPrevious()) {
             throw new NoSuchElementException();
          }
          current = current.previous();
          lastFetched = current;
-         lastFetchedPrevious = true;
+         currentIndex--;
          return current.value();
       }
 
       @Override
-      public synchronized int nextIndex() {
-         return current.index;
+      public int nextIndex() {
+         return currentIndex;
       }
 
       @Override
-      public synchronized int previousIndex() {
-         return current.index - 1;
+      public int previousIndex() {
+         return currentIndex - 1;
+      }
+      
+      private int lastFetchedIndex() {
+         return lastFetched == current ? currentIndex : currentIndex - 1;
       }
 
       @Override
-      public synchronized void remove() {
+      public void remove() {
          if (lastFetched == null) {
             throw new IllegalStateException();
          }
          if (!PersistentListBackedConcurrentList.this
-               .remove(lastFetched.index + from, lastFetched.value())) {
+               .remove(lastFetchedIndex() + offset, lastFetched.value())) {
             throw new ConcurrentModificationException();
          }
          // re-wire current iterator state to reflect removal
-         if (lastFetchedPrevious) {
+         if (lastFetched == current) {
             IterNode<E> prev = current.previous();
             IterNode<E> next = current.next();
             if (prev != null) {
@@ -583,37 +677,72 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
             next.setPrevious(prev);
             current = next;
          } else {
-            IterNode<E> rem = current.previous();
-            IterNode<E> prev = rem.previous();
+            assert lastFetched == current.previous();
+            IterNode<E> prev = lastFetched.previous();
             if (prev != null) {
                prev.setNext(current);
             }
             current.setPrevious(prev);
+            currentIndex--;
          }
          lastFetched = null;
       }
 
       @Override
-      public synchronized void set(E e) {
+      public void set(E e) {
          if (lastFetched == null) {
             throw new IllegalStateException();
          }
          if (!PersistentListBackedConcurrentList.this
-               .replace(lastFetched.index + from, lastFetched.value(), e)) {
+               .replace(lastFetchedIndex() + offset, lastFetched.value(), e)) {
             throw new ConcurrentModificationException();
          }
          // update current iterator state to show new element
-         if (lastFetchedPrevious) {
-            current.setValue(e);
-         } else {
-            current.previous().setValue(e);
-         }
+         lastFetched.setValue(e);
       }
 
       @Override
       public void add(E e) {
-         // TODO: use addAfter if last fetched was next, addBefore otherwise
-         throw new UnsupportedOperationException();
+         boolean isPredecessor;
+         IterNode<E> adjacent;
+         if (lastFetched == null) {
+            if (hasNext()) {
+               // grab successor
+               adjacent = current;
+               isPredecessor = false;
+            } else if (hasPrevious()) {
+               // grab predecessor
+               adjacent = current.previous();
+               isPredecessor = true;
+            } else {
+               adjacent = null;
+               isPredecessor = false; // doesn't matter...
+            }
+         } else {
+            adjacent = lastFetched;
+            isPredecessor = lastFetched != current;
+         }
+         
+         if (adjacent == null) {
+            PersistentListBackedConcurrentList.this.add(offset, e);
+         } else if (isPredecessor) {
+            if (!PersistentListBackedConcurrentList.this
+                  .addAfter(currentIndex + offset, adjacent.value(), e)) {
+               throw new ConcurrentModificationException();
+            }
+         } else {
+            if (!PersistentListBackedConcurrentList.this
+                  .addBefore(currentIndex + offset, adjacent.value(), e)) {
+               throw new ConcurrentModificationException();
+            }
+         }
+         IterNode<E> prev = current.previous();
+         IterNode<E> newNode = IterNode.create(e, prev, current.next());
+         if (prev != null) {
+            prev.setNext(newNode);
+         }
+         current.setPrevious(newNode);
+         currentIndex++;
       }
    }
 }

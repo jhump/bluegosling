@@ -118,22 +118,42 @@ public final class Types {
       return null;
    }
    
-   // TODO: doc
+   /**
+    * Determines if the given type is an interface type.
+    *
+    * @param type a generic type
+    * @return true if the given type is an interface type; false otherwise
+    */
    public static boolean isInterface(Type type) {
       return getRawType(type).isInterface();
    }
    
-   // TODO: doc
+   /**
+    * Determines if the given type is an enum type.
+    *
+    * @param type a generic type
+    * @return true if the given type is an enum type; false otherwise
+    */
    public static boolean isEnum(Type type) {
       return getRawType(type).isEnum();
    }
    
-   // TODO: doc
+   /**
+    * Determines if the given type is an annotation type.
+    *
+    * @param type a generic type
+    * @return true if the given type is an annotation type; false otherwise
+    */
    public static boolean isAnnotation(Type type) {
       return getRawType(type).isAnnotation();
    }
    
-   // TODO: doc
+   /**
+    * Determines if the given type is one of the eight primitive types or {@code void}.
+    *
+    * @param type a generic type
+    * @return true if the given type is primitive; false otherwise
+    */
    public static boolean isPrimitive(Type type) {
       return requireNonNull(type) instanceof Class && ((Class<?>) type).isPrimitive();
    }
@@ -165,34 +185,109 @@ public final class Types {
       UNBOX = Collections.unmodifiableMap(unbox);
    }
    
-   // TODO: doc
+   /**
+    * Boxes the given class if it is a primitive type. For example, if the given class is
+    * {@code byte} then this returns the wrapper type {@link Byte}. If the given class is not a
+    * primitive type then it is returned, unchanged.
+    *
+    * @param clazz a class
+    * @return true the given class if it is not primitive or the corresponding wrapper type if it is
+    */
+   public static Class<?> box(Class<?> clazz) {
+      Class<?> boxed = BOX.get(requireNonNull(clazz));
+      return boxed == null ? clazz : boxed;
+   }
+
+   /**
+    * Boxes the given type if it is a primitive type. This is just like {@link #box(Class)} except
+    * that it accepts any generic type. If the given type is not a raw class then it is returned
+    * unchanged
+    *
+    * @param type a generic type
+    * @return true the given type if it is not primitive or the corresponding wrapper type if it is
+    */
    public static Type box(Type type) {
       Class<?> boxed = BOX.get(requireNonNull(type));
       return boxed == null ? type : boxed;
    }
    
-   // TODO: doc
-   public static Class<?> box(Class<?> clazz) {
-      Class<?> boxed = BOX.get(requireNonNull(clazz));
-      return boxed == null ? clazz : boxed;
-   }
-   
-   // TODO: doc
-   public static Type unbox(Type type) {
-      Class<?> unboxed = UNBOX.get(requireNonNull(type));
-      return unboxed == null ? type : unboxed;
-   }
-   
-   // TODO: doc
+   /**
+    * Unboxes the given class if it is a wrapper for a primitive type. For example, if the given
+    * class is {@link Byte} then this returns the primitive type {@link byte}. If the given class is
+    * not a wrapper type then it is returned, unchanged.
+    *
+    * @param clazz a class
+    * @return true the given class if it is not a wrapper type or the corresponding primitive type
+    *       if it is
+    */
    public static Class<?> unbox(Class<?> clazz) {
       Class<?> unboxed = UNBOX.get(requireNonNull(clazz));
       return unboxed == null ? clazz : unboxed;
    }
 
+   /**
+    * Unboxes the given type if it is a primitive type. This is just like {@link #unbox(Class)}
+    * except that it accepts any generic type. If the given type is not a raw class then it is
+    * returned unchanged
+    *
+    * @param type a generic type
+    * @return true the given type if it is not a wrapper type or the corresponding primitive type
+    *       if it is
+    */
+   public static Type unbox(Type type) {
+      Class<?> unboxed = UNBOX.get(requireNonNull(type));
+      return unboxed == null ? type : unboxed;
+   }
+   
+   /**
+    * Returns the superclass of the given type. If the given type is one of the eight primitive
+    * types or {@code void}, if it is {@code Object}, or if it is an interface then {@code null} is
+    * returned. If the given type is an array type then {@code Object} is the returned superclass.
+    * 
+    * <p>If the given type is a wildcard or type variable (and is not an interface) then its first
+    * upper bound is its superclass.
+    *
+    * @param type a generic type
+    * @return the superclass of the given type
+    * 
+    * @see Class#getSuperclass()
+    * @see #getGenericSuperclass(Type)
+    */
    public static Class<?> getSuperclass(Type type) {
-      return getRawType(getGenericSuperclass(type));
+      requireNonNull(type);
+      if (type instanceof Class) {
+         return ((Class<?>) type).getSuperclass();
+      } else if (type instanceof ParameterizedType) {
+         return Types.getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
+      } else if (type instanceof GenericArrayType) {
+         return Object.class;
+      } else if (type instanceof WildcardType || type instanceof TypeVariable) {
+         Type bounds[] = type instanceof WildcardType ? ((WildcardType) type).getUpperBounds()
+               : ((TypeVariable<?>) type).getBounds();
+         assert bounds.length > 0;
+         Class<?> superclass = getRawType(bounds[0]);
+         return superclass.isInterface() ? null : superclass;
+      } else {
+         throw new IllegalArgumentException("Unrecognized Type: " + type);
+      }
    }
 
+   /**
+    * Returns the interfaces implemented by the given type. If the given type is an interface then
+    * the interfaces it directly extends are returned. If the given type is an array then an array
+    * containing {@code Serializable} and {@code Cloneable} is returned. If the given type is a
+    * class that does not directly implement any interfaces (including primitive types) then an
+    * empty array is returned.
+    * 
+    * <p>If the given type is a wildcard or type variable, then this returns an array containing any
+    * upper bounds that are interfaces.
+    *
+    * @param type a generic type
+    * @return the interfaces directly implemented by the given type
+    * 
+    * @see Class#getInterfaces()
+    * @see #getGenericInterfaces(Type)
+    */
    public static Class<?>[] getInterfaces(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
@@ -213,13 +308,31 @@ public final class Types {
       }
    }
 
-   // TODO: doc
+   /**
+    * Returns the generic superclass of the given type. If the given type is one of the eight
+    * primitive types or {@code void}, if it is {@code Object}, or if it is an interface then
+    * {@code null} is returned. If the given type is an array type then {@code Object} is the
+    * returned superclass.
+    * 
+    * <p>If the given type is a wildcard or type variable (and is not an interface) then its first
+    * upper bound is its superclass.
+    * 
+    * <p>This differs from {@link #getSuperclass(Type)} in that it can return a non-raw type. For
+    * example if a wildcard's bound is a parameterized type or if a class extends a parameterized
+    * type (e.g. {@code class MyClass extends ArrayList<String>}) then a parameterized type is
+    * returned. 
+    *
+    * @param type a generic type
+    * @return the superclass of the given type
+    * 
+    * @see Class#getGenericSuperclass()
+    */
    public static Type getGenericSuperclass(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
          return ((Class<?>) type).getGenericSuperclass();
       } else if (type instanceof ParameterizedType) {
-         Class<?> superClass = getRawType(type).getSuperclass();
+         Class<?> superClass = getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
          if (superClass == null) {
             return null;
          }
@@ -238,7 +351,26 @@ public final class Types {
       }
    }
    
-   // TODO: doc!
+   /**
+    * Returns the generic interfaces implemented by the given type. If the given type is an
+    * interface then the interfaces it directly extends are returned. If the given type is an array
+    * then an array containing {@code Serializable} and {@code Cloneable} is returned. If the given
+    * type is a class that does not directly implement any interfaces (including primitive types)
+    * then an empty array is returned.
+    * 
+    * <p>If the given type is a wildcard or type variable, then this returns an array containing any
+    * upper bounds that are interfaces.
+    * 
+    * <p>This differs from {@link #getSuperclass(Type)} in that it can return a non-raw type. For
+    * example if a wildcard type has an interface bound that is a parameterized type or if a class
+    * implements a parameterized type (e.g. {@code class MyClass implements List<String>}) then a
+    * parameterized type is returned. 
+    *
+    * @param type a generic type
+    * @return the interfaces directly implemented by the given type
+    * 
+    * @see Class#getGenericInterfaces()
+    */
    public static Type[] getGenericInterfaces(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
@@ -269,22 +401,52 @@ public final class Types {
          throw new IllegalArgumentException("Unrecognized Type: " + type);
       }
    }
-   
-   // TODO: doc!
+
+   /**
+    * Returns the owner of the given type. The owner is the type's declaring class. If the given
+    * type is a top-level type then the owner is {@code null}. Array types, wildcard types, and
+    * type variables do not have owners, though their component types / bounds might. So this method
+    * return {@code null} if given such a type.
+    * 
+    * <p>For non-static inner classes, the owner could be a parameterized type. In other cases, the
+    * owner type will be a raw type (e.g. a {@code Class} token)
+    *
+    * @param type the generic type
+    * @return the owner of the given type or {@code null} if it has no owner
+    * 
+    * @see Class#getDeclaringClass()
+    * @see ParameterizedType#getOwnerType()
+    */
    public static Type getOwnerType(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
          return ((Class<?>) type).getDeclaringClass();
       } else if (type instanceof ParameterizedType) {
-         Type ownerType = ((ParameterizedType) type).getOwnerType();
-         if (ownerType == null) {
-            return getRawType(ownerType).getDeclaringClass();
-         }
+         ParameterizedType parameterizedType = (ParameterizedType) type; 
+         Type ownerType = parameterizedType.getOwnerType();
+         return ownerType != null
+               ? ownerType : getRawType(parameterizedType.getRawType()).getDeclaringClass();
       }
       return null;
    }
    
-   // TODO: doc!
+   /**
+    * Finds the given annotation on the given type. This finds annotations on the class that
+    * corresponds to the given generic type. If the annotation is {@linkplain Inherited inherited}
+    * and not present on the given type then it may come from the type's superclass (if it has one).
+    * If the annotation cannot be found then {@code null} is returned.
+    * 
+    * <p>If the given type is a wildcard type or a type variable then the annotation must be
+    * inherited from the type's superclass (if it has one). Otherwise, {@code null} will be
+    * returned. 
+    *
+    * @param type the generic type
+    * @param annotationType the annotation type
+    * @return the instance of the given annotation that is defined on or inherited by the given
+    *       type, or {@code null} if no such annotation exists
+    * 
+    * @see Class#getAnnotation(Class)
+    */
    public static <A extends Annotation> A getAnnotation(Type type, Class<A> annotationType) {
       requireNonNull(type); 
       requireNonNull(annotationType);
@@ -298,8 +460,7 @@ public final class Types {
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          // we must get annotations from the superclass, so it only works if given type is inherited
          Type superclass = getGenericSuperclass(type);
-         assert superclass != null;
-         return annotationType.getAnnotation(Inherited.class) != null
+         return superclass != null && annotationType.getAnnotation(Inherited.class) != null
                ? getAnnotation(superclass, annotationType)
                : null;
       } else {
@@ -307,7 +468,21 @@ public final class Types {
       }
    }
    
-   // TODO: doc!
+   /**
+    * Finds all annotations on the given type. This finds annotations on the class that corresponds
+    * to the given generic type. For annotations that are {@linkplain Inherited inherited} and not
+    * present on the given type, they could instead come from the type's superclass (if it has one).
+    * If no annotations can be found then an empty array is returned.
+    * 
+    * <p>If the given type is a wildcard type or a type variable then the annotations must be
+    * inherited from the type's superclass (if it has one). Otherwise, an empty array will be
+    * returned. 
+    *
+    * @param type the generic type
+    * @return annotations that are defined or inherited by the given type 
+    * 
+    * @see Class#getAnnotations()
+    */
    public static Annotation[] getAnnotations(Type type) {
       requireNonNull(type); 
       if (type instanceof Class) {
@@ -334,7 +509,18 @@ public final class Types {
       }
    }
 
-   // TODO: doc!
+   /**
+    * Finds all annotations declared on the given type. This finds annotations on the class that
+    * corresponds to the given generic type. Annotations inherited from the type's superclass are
+    * not included. If no annotations can be found then an empty array is returned.
+    * 
+    * <p>If the given type is a wildcard type or a type variable then an empty array is returned.
+    *
+    * @param type the generic type
+    * @return annotations that are directly defined on the given type 
+    * 
+    * @see Class#getDeclaredAnnotations()
+    */
    public static Annotation[] getDeclaredAnnotations(Type type) {
       requireNonNull(type); 
       if (type instanceof Class) {
@@ -724,7 +910,19 @@ public final class Types {
       return false;
    }
    
-   // TODO: doc
+   /**
+    * Resolves the given type variable in the context of the given type. For example, if the given
+    * type variable is {@code Collection.<E>} and the given type is the parameterized type
+    * {@code List<Optional<String>>}, then this will return {@code Optional<String>}.
+    * 
+    * <p>If the given type variable cannot be resolved then {@code null} is returned. For example,
+    * if the type variable given is {@code Map.<K>} and the given type is {@link List<Number>}, then
+    * the variable cannot be resolved.
+    *
+    * @param context the generic type whose context is used to resolve the given variable
+    * @param variable the type variable to resolve
+    * @return the resolved value of the given variable or {@code null} if it cannot be resolved
+    */
    public static Type resolveTypeVariable(Type context, TypeVariable<?> variable) {
       GenericDeclaration declaration = variable.getGenericDeclaration();
       if (!(declaration instanceof Class)) {
@@ -754,38 +952,58 @@ public final class Types {
       throw new AssertionError("should not be reachable");
    }
 
-   // TODO: doc
+   /**
+    * Resolves the given type in the context of another type. Any type variable references in the
+    * type will be resolved using the given context. For example, if the given type is
+    * {@code Map<? extends K, ? extends V>} (where {@code K} and {@code V} are the type variables
+    * of interface {@code Map}) and the given context is the parameterized type
+    * {@code TreeMap<String, List<String>>} then the type returned will be
+    * {@code Map<? super String, ? super List<String>>}.
+    * 
+    * <p>If any type variables present in the given type cannot be resolved, they will be unchanged
+    * and continue to refer to type variables in the returned type.
+    *
+    * @param context the generic type whose context is used to resolve the given type
+    * @param typeToResolve the generic type to resolve
+    * @return the resolved type
+    */
    public static Type resolveType(Type context, Type typeToResolve) {
-      Map<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
-      resolveTypeVariables(context, typeToResolve, resolvedVariables);
-      return replaceTypeVariablesInternal(typeToResolve, resolvedVariables);
+      Map<TypeVariableWrapper, Type> resolvedVariableValues = new HashMap<>();
+      Set<TypeVariableWrapper> resolvedVariables = new HashSet<>();
+      resolveTypeVariables(context, typeToResolve, resolvedVariableValues, resolvedVariables);
+      return replaceTypeVariablesInternal(typeToResolve, resolvedVariableValues);
    }
    
    private static void resolveTypeVariables(Type context, Type type,
-         Map<TypeVariableWrapper, Type> resolvedVariables) {
+         Map<TypeVariableWrapper, Type> resolvedVariableValues,
+         Set<TypeVariableWrapper> resolvedVariables) {
       if (type instanceof Class) {
          // no-op
       } else if (type instanceof ParameterizedType) {
          for (Type arg : ((ParameterizedType) type).getActualTypeArguments()) {
-            resolveTypeVariables(context, arg, resolvedVariables);
+            resolveTypeVariables(context, arg, resolvedVariableValues, resolvedVariables);
          }
       } else if (type instanceof GenericArrayType) {
          resolveTypeVariables(context, ((GenericArrayType) type).getGenericComponentType(),
-               resolvedVariables);
+               resolvedVariableValues, resolvedVariables);
       } else if (type instanceof WildcardType) {
          WildcardType wt = (WildcardType) type;
          for (Type bound : wt.getUpperBounds()) {
-            resolveTypeVariables(context, bound, resolvedVariables);
+            resolveTypeVariables(context, bound, resolvedVariableValues, resolvedVariables);
          }
          for (Type bound : wt.getLowerBounds()) {
-            resolveTypeVariables(context, bound, resolvedVariables);
+            resolveTypeVariables(context, bound, resolvedVariableValues, resolvedVariables);
          }
       } else if (type instanceof TypeVariable) {
          TypeVariable<?> tv = (TypeVariable<?>) type;
+         TypeVariableWrapper wrapper = wrap(tv);
          if (tv.getGenericDeclaration() instanceof Class) {
-            Type resolvedValue = resolveTypeVariable(context, tv);
-            if (resolvedValue != null) {
-               resolvedVariables.put(wrap(tv), resolvedValue);
+            // don't bother re-resolving occurrences of variables we've already seen
+            if (resolvedVariables.add(wrapper)) {
+               Type resolvedValue = resolveTypeVariable(context, tv);
+               if (resolvedValue != null) {
+                  resolvedVariableValues.put(wrapper, resolvedValue);
+               }
             }
          }
       } else {

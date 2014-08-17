@@ -57,15 +57,15 @@ public interface BitSequence extends Iterable<Boolean> {
     * If the sequence length isn't a multiple of the specified tuple size then the last value
     * returned from the iterator may have 0 bits padded to it. For {@link BitOrder#LSB LSB} order,
     * the zero bits are on the more significant end of the value. But for {@link BitOrder#MSB MSB}
-    * order, the zero bits are on the less signifcant end, which means the last value is effectively
-    * shifted left by the number of bits absent from the sequence.
+    * order, the zero bits are on the less significant end, which means the last value is
+    * effectively shifted left by the number of bits absent from the sequence.
     * 
     * @param tupleSize the number of bits of each chunk
     * @param order the order of bits in the returned value
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see BitStream#next(int, BitSequence.BitOrder)
+    * @see BitStream#next(int, BitOrder)
     */
    default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order) {
       return bitTupleIterator(tupleSize, 0, order);
@@ -91,6 +91,8 @@ public interface BitSequence extends Iterable<Boolean> {
     * start at the specified index (zero-based) instead of starting with the first bit.
     * 
     * @param tupleSize the number of bits of each chunk
+    * @param startIndex an offset into the sequence from which the tuples will start
+    * @param order the order of bits in the returned value
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
@@ -103,6 +105,8 @@ public interface BitSequence extends Iterable<Boolean> {
     * to the following:
     * <pre>bitSequence.bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);</pre>
     * 
+    * @param tupleSize the number of bits of each chunk
+    * @param startIndex an offset into the sequence from which the tuples will start
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
@@ -110,6 +114,17 @@ public interface BitSequence extends Iterable<Boolean> {
     */
    default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, int startIndex) {
       return bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);
+   }
+   
+   /**
+    * Returns a view of a portion of this sequence.
+    *
+    * @param offset the starting position of the portion of interest
+    * @param length the number of bits in the portion of interest
+    * @return a view of a portion of this sequence, as another {@link BitSequence}
+    */
+   default BitSequence subSequence(int start, int end) {
+      return BitSequences.subSequence(this, start, end);
    }
    
    /**
@@ -126,17 +141,34 @@ public interface BitSequence extends Iterable<Boolean> {
     * begin with the specified index (zero-based) instead of beginning with the first bit.
     * 
     * @return a stream
+    * @param startIndex an offset into the sequence from which the stream will start
     */
    BitStream bitStream(int startIndex);
    
-   // TODO: javadoc
-   
+   /**
+    * Creates a {@link LongStream} over arbitrarily-sized chunks of bits. This is similar to
+    * {@link #bitTupleIterator(int)} but allowing functional operations on the stream of values.
+    *
+    * @param tupleSize the number of bits of each chunk
+    * @return a stream of long values, each value being a chunk of bits
+    */
    default LongStream bitTupleStream(int tupleSize) {
       int size = (63 + length()) >> 6; 
       return StreamSupport.longStream(
             Spliterators.spliterator(bitTupleIterator(tupleSize), size, 0), false);
    }
 
+   /**
+    * Creates a {@link LongStream} over arbitrarily-sized chunks of bits. This is similar to
+    * {@link #bitTupleIterator(int, BitOrder)} but allowing functional operations on the stream of
+    * values.
+    *
+    * @param tupleSize the number of bits of each chunk
+    * @param order the order of bits in the returned value
+    * @return a stream of long values, each value being a chunk of bits
+    * 
+    * @see #bitTupleIterator(int, BitOrder)
+    */
    default LongStream bitTupleStream(int tupleSize, BitOrder bitOrder) {
       int size = (63 + length()) >> 6; 
       return StreamSupport.longStream(

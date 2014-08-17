@@ -2,20 +2,16 @@ package com.apriori.collections;
 
 import com.apriori.collections.BitSequence.BitOrder;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 import java.nio.charset.Charset;
-import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -30,10 +26,6 @@ import java.util.NoSuchElementException;
  * <li>{@link #concat(BitSequence...)}: uses an array of other {@link BitSequence}s. This sort of
  * sequence may not be as efficient as an array of longs, but its performance is still good and
  * eliminates array-copy operations which could otherwise make concatenations slower.
- * <li>{@link #fromBitSet(BitSet)}: uses a {@link BitSet} to store the sequence. Under the hood,
- * {@link BitSet} also uses an array of longs, but it does not expose the array directly so
- * operations on a {@link BitSet}-backed {@link BitSequence} are not as efficient as those directly
- * backed by an array.</li>
  * </ul>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -50,42 +42,26 @@ public final class BitSequences {
    
    static final long ALL_ONES[];
    
-   /**
-    * Method for converting a {@link BitSet} to an array of longs. This method exists in Java 7 but
-    * not in Java 6. To maintain compatibility with Java 6, we only use this method if its
-    * available, so it's invoked reflectively.
-    */
-   private static final Method bitSetToLongArray;
-   
    static {
+      long mask;
       PREFIX_MASKS = new long[63];
-      for (int i = 0, mask = 1; i < 63; i++, mask = (mask << 1) | 1) {
+      mask = 1;
+      for (int i = 0; i < 63; i++, mask = (mask << 1) | 1) {
          PREFIX_MASKS[i] = mask;
       }
 
       INDEX_MASKS = new long[64];
-      for (int i = 0, mask = 1; i < 64; i++, mask <<= 1) {
+      mask = 1;
+      for (int i = 0; i < 64; i++, mask <<= 1) {
          INDEX_MASKS[i] = mask;
       }
       
       ALL_ONES = new long[64];
       ALL_ONES[0] = 0;
-      for (int i = 1, val = 1; i < 64; i++, val = (val << 1) | 1) {
+      long val = 1;
+      for (int i = 1; i < 64; i++, val = (val << 1) | 1) {
          ALL_ONES[i] = val;
       }
-
-      
-      Method toLongArray;
-      try {
-         toLongArray = BitSet.class.getMethod("");
-      }
-      catch (SecurityException e) {
-         toLongArray = null;
-      }
-      catch (NoSuchMethodException e) {
-         toLongArray = null;
-      }
-      bitSetToLongArray = toLongArray;
    }
 
    /** Prevents instantiation. */
@@ -177,9 +153,9 @@ public final class BitSequences {
     *       start index or greater than the length of the sequence
     * @throws NullPointerException if the specified sequence is null
     */
-   public static BitSequence subSequence(BitSequence bits, int start, int end) {
-      if (bits == null) {
-         throw new NullPointerException();
+   static BitSequence subSequence(BitSequence bits, int start, int end) {
+      if (end == start) {
+         return EmptyBitSequence.INSTANCE;
       }
       if (start < 0 || end < start || end > bits.length()) {
          throw new IndexOutOfBoundsException();
@@ -202,8 +178,8 @@ public final class BitSequences {
       for (int i = len - 1; i >= 0; i--) {
          words[i] = Long.reverse(iter.next());
       }
-      // if last word is not a full 64 bits, then reverse moved bits to the end and now we need
-      // to shift them back
+      // if last word is not a full 64 bits then reverse(...) moved bits to the end and now we
+      // need to shift them back
       int trailingBits = numBits & 0x3f;
       if (trailingBits != 0) {
          words[len - 1] >>>= 64 - trailingBits;
@@ -415,10 +391,10 @@ public final class BitSequences {
       };
    }
    
-   public static List<Boolean> asList(final BitSequence bits) {
-      return new AbstractList<Boolean>() {
+   public static PrimitiveList.OfBoolean asList(final BitSequence bits) {
+      return new AbstractPrimitiveList.OfBoolean() {
          @Override
-         public Boolean get(int index) {
+         public boolean getBoolean(int index) {
             return bits.bitStream(index).next();
          }
 
@@ -429,14 +405,14 @@ public final class BitSequences {
       };
    }
 
-   public static List<Byte> asListOfBytes(BitSequence bits) {
+   public static PrimitiveList.OfByte asListOfBytes(BitSequence bits) {
       return asListOfBytes(bits, BitOrder.LSB);
    }
 
-   public static List<Byte> asListOfBytes(final BitSequence bits, final BitOrder bitOrder) {
-      return new AbstractList<Byte>() {
+   public static PrimitiveList.OfByte asListOfBytes(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractPrimitiveList.OfByte() {
          @Override
-         public Byte get(int index) {
+         public byte getByte(int index) {
             return (byte) bits.bitTupleIterator(8, index << 3, bitOrder).nextLong();
          }
 
@@ -447,14 +423,14 @@ public final class BitSequences {
       };
    }
 
-   public static List<Short> asListOfShorts(BitSequence bits) {
+   public static PrimitiveList.OfShort asListOfShorts(BitSequence bits) {
       return asListOfShorts(bits, BitOrder.LSB);
    }
 
-   public static List<Short> asListOfShorts(final BitSequence bits, final BitOrder bitOrder) {
-      return new AbstractList<Short>() {
+   public static PrimitiveList.OfShort asListOfShorts(final BitSequence bits, final BitOrder bitOrder) {
+      return new AbstractPrimitiveList.OfShort() {
          @Override
-         public Short get(int index) {
+         public short getShort(int index) {
             return (short) bits.bitTupleIterator(16, index << 4, bitOrder).nextLong();
          }
 
@@ -465,14 +441,14 @@ public final class BitSequences {
       };
    }
 
-   public static List<Integer> asListOfInts(BitSequence bits) {
+   public static PrimitiveList.OfInt asListOfInts(BitSequence bits) {
       return asListOfInts(bits, BitOrder.LSB);
    }
 
-   public static List<Integer> asListOfInts(final BitSequence bits, final BitOrder bitOrder) {
-      return new AbstractList<Integer>() {
+   public static PrimitiveList.OfInt asListOfInts(BitSequence bits, BitOrder bitOrder) {
+      return new AbstractPrimitiveList.OfInt() {
          @Override
-         public Integer get(int index) {
+         public int getInt(int index) {
             return (int) bits.bitTupleIterator(32, index << 5, bitOrder).nextLong();
          }
 
@@ -483,14 +459,14 @@ public final class BitSequences {
       };
    }
 
-   public static List<Long> asListOfLongs(BitSequence bits) {
+   public static PrimitiveList.OfLong asListOfLongs(BitSequence bits) {
       return asListOfLongs(bits, BitOrder.LSB);
    }
 
-   public static List<Long> asListOfLongs(final BitSequence bits, final BitOrder bitOrder) {
-      return new AbstractList<Long>() {
+   public static PrimitiveList.OfLong asListOfLongs(BitSequence bits, BitOrder bitOrder) {
+      return new AbstractPrimitiveList.OfLong() {
          @Override
-         public Long get(int index) {
+         public long getLong(int index) {
             return bits.bitTupleIterator(64, index << 6, bitOrder).nextLong();
          }
 
@@ -501,15 +477,15 @@ public final class BitSequences {
       };
    }
 
-   public static List<Long> asListOfBitTuples(BitSequence bits, int tupleSize) {
+   public static PrimitiveList.OfLong asListOfBitTuples(BitSequence bits, int tupleSize) {
       return asListOfBitTuples(bits, tupleSize, BitOrder.LSB);
    }
    
-   public static List<Long> asListOfBitTuples(final BitSequence bits, final int tupleSize,
-         final BitOrder bitOrder) {
-      return new AbstractList<Long>() {
+   public static PrimitiveList.OfLong asListOfBitTuples(BitSequence bits, int tupleSize,
+         BitOrder bitOrder) {
+      return new AbstractPrimitiveList.OfLong() {
          @Override
-         public Long get(int index) {
+         public long getLong(int index) {
             return bits.bitTupleIterator(tupleSize, index * tupleSize, bitOrder).nextLong();
          }
 
@@ -1095,33 +1071,6 @@ public final class BitSequences {
       return fromArray(longs, longs.length << 3);
    }
    
-   /**
-    * Gets the next chunk of bits as a {@link BitSequence}. This does not invoke
-    * {@link BitStream#next(int)} so it can safely be used to implement
-    * {@link BitStream#nextAsSequence(int)}
-    * 
-    * @param stream the stream from which the bits are fetched
-    * @param numberOfBits the number of bits to fetch to build the sequence
-    * @return a new sequence
-    */
-   static BitSequence nextAsSequence(BitStream stream, int numberOfBits) {
-      if (numberOfBits == 0) {
-         return EmptyBitSequence.INSTANCE;
-      }
-      
-      int len = (numberOfBits + 63) >> 6;
-      long words[] = new long[len];
-      int trailingBits = numberOfBits & 0x3f;
-      int limit = trailingBits == 0 ? len : len - 1;
-      for (int i = 0; i < limit; i++) {
-         words[i] = stream.next(64);
-      }
-      if (trailingBits != 0) {
-         words[len - 1] = stream.next(trailingBits);
-      }
-      return fromArray(words, numberOfBits);
-   }
-   
    private static BitSequence fromArray(final long words[], final int numberOfBits) {
       assert numberOfBits <= (words.length << 6) && numberOfBits > ((words.length - 1) << 6);
       if (numberOfBits <= 64) {
@@ -1150,29 +1099,7 @@ public final class BitSequences {
    }
 
    public static BitSequence fromBitSet(BitSet bits) {
-      if (bitSetToLongArray != null) {
-         // Try to create a sequence from array of longs (more efficient than just wrapping the
-         // BitSet)
-         try {
-            long words[] = (long[]) bitSetToLongArray.invoke(bits);
-            return fromArray(words, bits.size());
-         }
-         catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-         }
-         catch (InvocationTargetException e) {
-            Throwable t = e.getCause();
-            if (t instanceof RuntimeException) {
-               throw (RuntimeException) t;
-            } else if (t instanceof Error) {
-               throw (Error) t;
-            } else {
-               throw  new RuntimeException(t);
-            }
-         }
-      }
-      // fall back to just wrapping the BitSet (less efficient, but required for Java 6)
-      return new BitSetBitSequence((BitSet) bits.clone() /* defensive copy */);
+      return fromArray(bits.toLongArray(), bits.size());
    }
    
    /**
@@ -1383,63 +1310,6 @@ public final class BitSequences {
    }
 
    /**
-    * A sequence that represents a concatenation of multiple other bit sequences.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class SubBitSequence extends AbstractBitSequence {
-      final BitSequence source;
-      final int start;
-      final int length;
-      
-      SubBitSequence(BitSequence source, int start, int length) {
-         this.source = source;
-         this.start = start;
-         this.length = length;
-      }
-      
-      @Override public int length() {
-         return length;
-      }
-      
-      @Override public BitStream bitStream(final int startIndex) {
-         rangeCheck(startIndex);
-
-         return new AbstractStream() {
-            final BitStream sourceStream = source.bitStream(start);
-            int index = 0;
-            
-            @Override public int remaining() {
-               return length - index;
-            }
-            
-            @Override public int currentIndex() {
-               return index;
-            }
-            
-            @Override public void jumpTo(int newIndex) {
-               rangeCheck(newIndex);
-               index = newIndex;
-            }
-            
-            @Override public boolean next() {
-               if (index == length) {
-                  throw new NoSuchElementException();
-               }
-               index++;
-               return sourceStream.next();
-            }
-
-            @Override public long next(int tupleSize) {
-               checkTupleLength(tupleSize);
-               index += tupleSize;
-               return sourceStream.next(tupleSize);
-            }
-         };
-      }
-   }
-
-   /**
     * A bit sequence represented by a single 64-bit long. The sequence can have up to 64 bits.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -1601,72 +1471,103 @@ public final class BitSequences {
             }
          };
       }
-   }
-   
-   /**
-    * A bit sequence that is backed by a {@link BitSet}. The underlying set should be a defensive
-    * copy to preserve the immutability of the sequence.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class BitSetBitSequence extends AbstractBitSequence {
-      final BitSet bits;
+   }   
+
+   private static class SubBitSequence extends AbstractBitSequence {
+      final BitSequence underlying;
+      final int offset;
+      final int length;
       
-      BitSetBitSequence(BitSet bits) {
-         this.bits = bits;
+      SubBitSequence(BitSequence underlying, int offset, int length) {
+         this.underlying = underlying;
+         this.offset = offset;
+         this.length = length;
       }
-      
-      @Override public int length() {
-         return bits.length();
+
+      @Override
+      public int length() {
+         return length;
       }
-      
-      @Override public BitStream bitStream(final int startIndex) {
+
+      @Override
+      public BitStream bitStream(int startIndex) {
          rangeCheck(startIndex);
 
          return new AbstractStream() {
-            private int remaining = bits.length() - startIndex;
-            private int index = startIndex;
+            final BitStream base = underlying.bitStream(startIndex + offset);
+            int remaining = length;
             
-            @Override public int remaining() {
+            @Override
+            public int remaining() {
                return remaining;
             }
 
-            @Override public int currentIndex() {
-               return bits.length() - remaining;
+            @Override
+            public int currentIndex() {
+               return base.currentIndex() - offset;
             }
-            
-            @Override public void jumpTo(int newIndex) {
-               rangeCheck(newIndex);
-               remaining = bits.length() - newIndex;
-               index = newIndex;
+
+            @Override
+            public void jumpTo(int index) {
+               rangeCheck(index);
+               base.jumpTo(index + offset);
             }
-            
-            @Override public boolean next() {
-               if (remaining < 1) {
+
+            @Override
+            public boolean next() {
+               if (remaining == 0) {
                   throw new NoSuchElementException();
                }
+               boolean ret = base.next();
                remaining--;
-               return bits.get(index++);
+               return ret;
             }
 
-            @Override public long next(int tupleSize) {
-               checkTupleLength(tupleSize);
-
-               long val = 0;
-               int len = bits.length();
-               int limit = index + tupleSize;
-               if (limit > len) {
-                  limit = len;
+            @Override
+            public long next(int numberOfBits) {
+               if (remaining < numberOfBits) {
+                  throw new NoSuchElementException();
                }
-               for (int bit = 1; index < limit; index++, bit <<= 1) {
-                  if (bits.get(index)) {
-                     val |= bit;
-                  }
-               }
-               remaining -= tupleSize;
-               return val;
+               long ret = base.next(numberOfBits);
+               remaining -= numberOfBits;
+               return ret;
+            }
+            
+            @Override
+            public BitSequence nextAsSequence(int numberOfBits) {
+               checkSequenceLength(numberOfBits);
+               int start = base.currentIndex();
+               return BitSequences.subSequence(underlying, start, start + numberOfBits);
             }
          };
+      }
+
+      @Override
+      public BooleanIterator iterator() {
+         return new BooleanIterator() {
+            final BooleanIterator base = underlying.iterator(offset);
+            int remaining = length;
+            
+            @Override
+            public boolean hasNext() {
+               return remaining > 0;
+            }
+
+            @Override
+            public boolean nextBoolean() {
+               if (remaining == 0) {
+                  throw new NoSuchElementException();
+               }
+               boolean ret = base.nextBoolean();
+               remaining--;
+               return ret;
+            }
+         };
+      }
+      
+      @Override
+      public BitSequence subSequence(int start, int end) {
+         return underlying.subSequence(offset + start, offset + end);
       }
    }
 }

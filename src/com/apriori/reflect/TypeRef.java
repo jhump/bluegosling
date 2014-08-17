@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.apriori.collections.TransformingList;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.GenericArrayType;
@@ -41,6 +42,9 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     */
    private static class ConcreteTypeRef<T> extends TypeRef<T> {
       static final TypeRef<Object> OBJECT = new ConcreteTypeRef<>(Object.class);
+      static final List<TypeRef<?>> ARRAY_INTERFACES = Collections.unmodifiableList(
+            Arrays.asList(new ConcreteTypeRef<>(Cloneable.class),
+                  new ConcreteTypeRef<>(Serializable.class)));
       
       @SuppressWarnings("synthetic-access")
       private ConcreteTypeRef(Type type) {
@@ -447,6 +451,11 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @see Types#getGenericInterfaces(Type)
     */
    public List<TypeRef<? super T>> getInterfaceTypeRefs() {
+      if (Types.isArray(type)) {
+         @SuppressWarnings({ "unchecked", "rawtypes" })
+         List<TypeRef<? super T>> ifaces = (List) ConcreteTypeRef.ARRAY_INTERFACES;
+         return ifaces;
+      }
       Type ifaces[] = Types.getGenericInterfaces(type);
       return Collections.unmodifiableList(
             Arrays.stream(ifaces).map(TypeRef::forTypeInternal).collect(Collectors.toList()));
