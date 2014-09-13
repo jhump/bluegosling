@@ -22,7 +22,7 @@ public interface TypeVisitor<R, P> {
    /**
     * Visits the given type. This is the entry point and generally need not be overridden by
     * implementing classes. This method will re-dispatch to one of the other visit methods based on
-    * the kind of type specified.
+    * the kind of given type.
     *
     * @param type the type
     * @param param the context parameter
@@ -46,7 +46,7 @@ public interface TypeVisitor<R, P> {
    
    /**
     * The default action for visiting a type, called when visiting a type where the corresponding
-    * {@code visit} method has not been overridden.
+    * {@code visit*} method has not been overridden.
     * 
     * <p>The default implementation returns {@code null}.
     *
@@ -115,14 +115,18 @@ public interface TypeVisitor<R, P> {
    }
    
    /**
-    * Invoked when the visited type is not a known sub-type of the {@link Type} interface. 
+    * Invoked when the visited type is not a known sub-type of the {@link Type} interface.
+    * 
+    * <p>Other {@code visit*} methods have a default implementation that calls
+    * {@link #defaultAction(Type, Object)}. But the default implementation of this method is
+    * different. Instead, it throws an {@link UnknownTypeException}. 
     *
     * @param type the type
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   default R visitUnknownType(Type type, P param) {
-      return defaultAction(type, param);
+   default R visitUnknownType(Type type, @SuppressWarnings("unused") P param) {
+      throw new UnknownTypeException(type);
    }
    
    /**
@@ -286,9 +290,10 @@ public interface TypeVisitor<R, P> {
             
             @Override
             public R visitUnknownType(Type type, P param) {
-               return onUnknownType != null
-                     ? onUnknownType.apply(type, param)
-                     : defaultAction(type, param);
+               if (onUnknownType != null) {
+                  return onUnknownType.apply(type, param);
+               }
+               throw new UnknownTypeException(type);
             }
          };
       }

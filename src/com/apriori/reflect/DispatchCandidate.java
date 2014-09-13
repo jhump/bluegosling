@@ -3,7 +3,6 @@ package com.apriori.reflect;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.function.Function;
 
 /**
@@ -122,8 +121,7 @@ class DispatchCandidate {
                if (strategy.doesRequireCast()) {
                   numCastArgs++;
                }
-               @SuppressWarnings("rawtypes") // so we can pass Object as input
-               Converter argConverter = strategy.getConverter(); 
+               Converter<?, ?> argConverter = strategy.getConverter(); 
                if (argConverter != null) {
                   anyArgNeedsConversion = true;
                   argConverters[i] = argConverter; 
@@ -228,11 +226,8 @@ class DispatchCandidate {
          }
          @SuppressWarnings("rawtypes") // so we can pass Object as input
          Converter returnConverter = strategy.getConverter();
-         // got a good candidate!
-         if (!Modifier.isPublic(candidateMethod.getModifiers())) {
-            // make sure we can invoke it
-            candidateMethod.setAccessible(true);
-         }
+         // got a good candidate! make sure we can invoke it
+         candidateMethod.setAccessible(true);
          return new DispatchCandidate(candidateMethod, autobox, varArgs, numCastArgs,
                anyArgNeedsConversion ? argConverters : null, varArgsConverter, returnConverter);
       }

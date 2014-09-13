@@ -37,8 +37,8 @@ import java.util.function.Function;
  * changes made in the transaction are committed. Otherwise, all changes are rolled back and the
  * exception that was thrown from the block is propagated.
  * 
- * <p>{@link AsynchronousAtomTest}s also participate in transactions. Changes that are queued for an
- * {@link AsynchronousAtomTest} are only submitted for execution when the transaction commits. Any
+ * <p>{@link AsynchronousAtom}s also participate in transactions. Changes that are queued for an
+ * {@link AsynchronousAtom} are only submitted for execution when the transaction commits. Any
  * pending operations that are effected by a rollback will be cancelled.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -57,17 +57,17 @@ public class Transaction {
        * state of the database would be as if all transactions were executed sequentially.
        * 
        * <p>This can result in lower throughput and greater contention since it means that the
-       * transaction running in this mode must acquire exclusive locks, even for atoms that it is
-       * just reading (in order to prevent "write skew").
+       * transaction running in this mode must acquire locks, even for atoms that it is just
+       * reading, in order to prevent a write skew anomaly.
        */
       SERIALIZABLE,
       
       /**
        * Repeatable read isolation; aka snapshot isolation. This is close to serializable, but can
        * provide better performance since locks aren't required for every read. The main artifact
-       * that can occur is called "write skew". But this can be mitigated in updates to a
-       * transactional atom by using its {@link TransactionalAtom#commute(Function)
-       * commute(Function)} method.
+       * that can occur is an anomaly called write skew. But this can be mitigated in updates to a
+       * transactional atom by using {@linkplain TransactionalAtom#commute(Function) commutative}
+       * operations or by {@linkplain TransactionalAtom#pin() pinning} read values.
        * 
        * <p>This is the default isolation level for a transaction when not otherwise configured.
        */
@@ -1403,7 +1403,7 @@ public class Transaction {
       SettableFuture<T> future = new SettableFuture<T>();
       AtomInfo<T> info = createAtomInfo(atom);
       if (isolationLevel == IsolationLevel.SERIALIZABLE) {
-         acquireLock(atom, info, LockState.LOCKED_EXCLUSIVE, true);
+         acquireLock(atom, info, LockState.LOCKED_EXCLUSIVE, false);
       }
       info.commutes.add(Pair.<Function<? super T, ? extends T>, SettableFuture<T>>
             create(function, future));

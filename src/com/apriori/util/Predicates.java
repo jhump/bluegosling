@@ -96,32 +96,6 @@ public final class Predicates {
    // TODO: boolean arithmetic below accept var-args?
    
    /**
-    * Returns a predicate that combines the results from two predicates using an AND operation. The
-    * operation is short-circuited so that the second predicate will not be invoked if the first
-    * predicate returns false.
-    * 
-    * @param p1 the first predicate
-    * @param p2 the second predicate
-    * @return a predicate that returns {@code p1.test(input) && p2.test(input)}
-    */
-   public static <T> Predicate<T> and(Predicate<? super T> p1, Predicate<? super T> p2) {
-      return (o) -> p1.test(o) && p2.test(o);
-   }
-
-   /**
-    * Returns a predicate that combines the results from two predicates using an OR operation. The
-    * operation is short-circuited so that the second predicate will not be invoked if the first
-    * predicate returns true.
-    * 
-    * @param p1 the first predicate
-    * @param p2 the second predicate
-    * @return a predicate that returns {@code p1.test(input) || p2.test(input)}
-    */
-   public static <T> Predicate<T> or(Predicate<? super T> p1, Predicate<? super T> p2) {
-      return (o) -> p1.test(o) || p2.test(o);
-   }
-   
-   /**
     * Returns a predicate that combines the results from two predicates using an XOR operation.
     * 
     * @param p1 the first predicate
@@ -131,59 +105,18 @@ public final class Predicates {
    public static <T> Predicate<T> xor(Predicate<? super T> p1, Predicate<? super T> p2) {
       return (o) -> p1.test(o) ^ p2.test(o);
    }
-   
-   /**
-    * Returns a predicate that negates the results of the specified predicate.
-    * 
-    * @param p a predicate
-    * @return a predicate that returns {@code !p.test(input)}
-    */
-   public static <T> Predicate<T> not(Predicate<? super T> p) {
-      return (o) -> !p.test(o);
-   }
 
    // TODO: javadoc
 
-   public static <T, U> BiPredicate<T, U> and(BiPredicate<? super T, ? super U> p1,
-         BiPredicate<? super T, ? super U> p2) {
-      return (t, u) -> p1.test(t, u) && p2.test(t, u);
-   }
-
-   public static <T, U> BiPredicate<T, U> or(BiPredicate<? super T, ? super U> p1,
-         BiPredicate<? super T, ? super U> p2) {
-      return (t, u) -> p1.test(t, u) || p2.test(t, u);
-   }
-   
    public static <T, U> BiPredicate<T, U> xor(BiPredicate<? super T, ? super U> p1,
          BiPredicate<? super T, ? super U> p2) {
       return (t, u) -> p1.test(t, u) ^ p2.test(t, u);
-   }
-
-   public static <T, U> BiPredicate<T, U> not(BiPredicate<? super T, ? super U> p) {
-      return (t, u) -> !p.test(t, u);
-   }
-
-   public static <T, U, V> TriPredicate<T, U, V> and(
-         TriPredicate<? super T, ? super U, ? super V> p1,
-         TriPredicate<? super T, ? super U, ? super V> p2) {
-      return (t, u, v) -> p1.test(t, u, v) && p2.test(t, u, v);
-   }
-
-   public static <T, U, V> TriPredicate<T, U, V> or(
-         TriPredicate<? super T, ? super U, ? super V> p1,
-         TriPredicate<? super T, ? super U, ? super V> p2) {
-      return (t, u, v) -> p1.test(t, u, v) || p2.test(t, u, v);
    }
 
    public static <T, U, V> TriPredicate<T, U, V> xor(
          TriPredicate<? super T, ? super U, ? super V> p1,
          TriPredicate<? super T, ? super U, ? super V> p2) {
       return (t, u, v) -> p1.test(t, u, v) ^ p2.test(t, u, v);
-   }
-
-   public static <T, U, V> TriPredicate<T, U, V> not(
-         TriPredicate<? super T, ? super U, ? super V> p) {
-      return (t, u, v) -> !p.test(t, u, v);
    }
    
    static boolean toPrimitive(Boolean b) {

@@ -151,7 +151,6 @@ public class LinearHashingMap<K, V> extends AbstractMap<K, V> implements Seriali
       TableEntry<K, V> entry = getEntry(key);
       return entry != null ? entry.value : defaultValue;
    }
-   
 
    private TableEntry<K, V> getEntry(Object key) {
       int hash = Objects.hashCode(key);
@@ -481,11 +480,7 @@ public class LinearHashingMap<K, V> extends AbstractMap<K, V> implements Seriali
       public boolean remove(Object o) {
          if (o instanceof Entry) {
             Entry<?, ?> other = (Entry<?, ?>) o;
-            @SuppressWarnings("synthetic-access")
-            TableEntry<K, V> entry = getEntry(other.getKey());
-            if (entry != null && Objects.equals(entry.value, other.getValue())) {
-               return LinearHashingMap.this.remove(entry.key, entry.value);
-            }
+            return LinearHashingMap.this.remove(other.getKey(), other.getValue());
          }
          return false;
       }

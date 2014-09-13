@@ -316,7 +316,9 @@ public final class Annotations {
    /**
     * Returns a map of values that correspond to the annotation's methods. If the given annotation
     * has any fields that are nested annotations or arrays of annotations, their values in the
-    * returned map will be recursively converted to maps.
+    * returned map will be recursively converted to maps. Arrays will be converted to lists so that
+    * creating maps from two equal annotations will result in equal maps (array values in the map
+    * prevent this since arrays don't have a sane equals implementation).
     * 
     * @param annotation the annotation
     * @return a map of values where keys are the annotation method names and values are the
@@ -328,7 +330,20 @@ public final class Annotations {
       return toMap(annotation, alwaysAccept());
    }
 
-   // TODO: doc
+   /**
+    * Returns a map of values that correspond to the annotation's methods, optionally including the
+    * {@link Annotation#annotationType()}. If the given annotation has any fields that are nested
+    * annotations or arrays of annotations, their values in the returned map will be recursively
+    * converted to maps. Arrays will be converted to lists so that creating maps from two equal
+    * annotations will result in equal maps (array values in the map prevent this since arrays don't
+    * have a sane equals implementation).
+    * 
+    * @param annotation the annotation
+    * @return a map of values where keys are the annotation method names and values are the
+    *       values returned by those methods (methods that return other annotations will result in
+    *       map values that are sub-maps, constructed from the other annotation using this same
+    *       method)
+    */
    public static Map<String, Object> toMap(Annotation annotation, boolean includeAnnotationType) {
       return toMap(annotation, includeAnnotationType, alwaysAccept());
    }
@@ -351,7 +366,21 @@ public final class Annotations {
       return toMap(annotation, false, filterAttributes);
    }
    
-   // TODO: doc
+   /**
+    * Returns a map of values that correspond to the annotation's methods that match the specified
+    * predicate, optionally including the {@link Annotation#annotationType()}. If the given
+    * annotation has any fields that are nested annotations or arrays of annotations, their values
+    * in the returned map will be recursively converted to maps. Arrays will be converted to lists
+    * so that creating maps from two equal annotations will result in equal maps (array values in
+    * the map prevent this since arrays don't have a sane equals implementation).
+    * 
+    * @param annotation the annotation
+    * @param includeAnnotationType if true, the map will have a key named "annotationType" whose
+    *       value is the class token returned from calling {@code annotation.annotationType()}
+    * @param filterAttributes a predicate, for filtering the annotation's methods
+    * @return a map of values where keys are the annotation method names and values are the values
+    *       returned by those methods, filtered according to the specified predicate
+    */
    public static Map<String, Object> toMap(Annotation annotation, boolean includeAnnotationType,
          Predicate<? super Method> filterAttributes) {
       Map<String, Object> ret = new LinkedHashMap<String, Object>();
@@ -410,13 +439,14 @@ public final class Annotations {
     */
    public static <T extends Annotation> boolean equal(T annotation, Object other,
          Predicate<? super Method> filterAttributes) {
-      Class<?> annotationType = annotation.annotationType();
+      Class<? extends Annotation> annotationType = annotation.annotationType();
       if (annotationType.isInstance(other)
             && annotationType.equals(((Annotation) other).annotationType())) {
+         Annotation otherAnnotation = annotationType.cast(other);
          for (Method annotationField : annotationType.getDeclaredMethods()) {
             if (filterAttributes.test(annotationField)) {
                Object v1 = getAnnotationFieldValue(annotationField, annotation);
-               Object v2 = getAnnotationFieldValue(annotationField, other);
+               Object v2 = getAnnotationFieldValue(annotationField, otherAnnotation);
                if (v1 != null && v1.getClass().isArray()) {
                   if (!ArrayUtils.equals(v1, v2)) {
                      return false;
@@ -433,9 +463,7 @@ public final class Annotations {
    /**
     * Computes the hash code for an annotation as defined in the contract on {@link Annotation}.
     * This is useful for creating proxies that implement annotation interfaces so as to completely
-    * adhere to the annotation spec. This implements the logic defined in the contract for hash code
-    * defined on {@link Annotation}, except that it only uses methods that match the specified
-    * predicate as part of the computation.
+    * adhere to the annotation spec.
     * 
     * @param annotation the annotation
     * @return the annotation's hash code
@@ -445,8 +473,10 @@ public final class Annotations {
    }
    
    /**
-    * Computes the has code for an annotation, only considering attributes that match the specified
-    * predicate.
+    * Computes the hash code for an annotation, only considering attributes that match the specified
+    * predicate. This implements the logic defined in the contract for hash code defined on
+    * {@link Annotation}, except that it only includes methods that match the specified predicate as
+    * part of the computation.
     * 
     * @param annotation an annotation
     * @param filterAttributes a predicate, for filtering the annotation's methods
@@ -530,7 +560,7 @@ public final class Annotations {
       return sb.toString();
    }
    
-   private static Object getAnnotationFieldValue(Method annotationField, Object annotation) {
+   private static Object getAnnotationFieldValue(Method annotationField, Annotation annotation) {
       try {
          annotationField.setAccessible(true);
          return annotationField.invoke(annotation);

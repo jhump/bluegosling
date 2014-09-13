@@ -5,7 +5,7 @@ import java.util.Set;
 
 // TODO: javadoc
 class PersistentSetWrapper<E>
-      extends PersistentCollectionWrapper<E, Set<E>, ImmutableSetWrapper<E>, PersistentSetWrapper<E>>
+      extends PersistentCollectionWrapper<E, Set<E>, PersistentSetWrapper<E>>
       implements PersistentSet<E> {
 
    PersistentSetWrapper(Set<E> set) {
@@ -18,12 +18,7 @@ class PersistentSetWrapper<E>
    }
 
    @Override
-   protected ImmutableSetWrapper<E> wrapImmutable(Set<E> collection) {
-      return new ImmutableSetWrapper<E>(collection);
-   }
-
-   @Override
-   protected PersistentSetWrapper<E> wrapPersistent(Set<E> collection) {
-      return new PersistentSetWrapper<E>(collection);
+   protected PersistentSetWrapper<E> wrapPersistent(Set<E> coll) {
+      return new PersistentSetWrapper<E>(coll);
    }
 }

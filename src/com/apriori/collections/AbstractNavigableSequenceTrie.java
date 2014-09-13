@@ -44,12 +44,18 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
    @Override
    public boolean containsKey(Object key) {
+      if (!(key instanceof Iterable)) {
+         return false;
+      }
       N node = get(asIterable(key));
       return node != null && node.valuePresent();
    }
 
    @Override
    public V get(Object key) {
+      if (!(key instanceof Iterable)) {
+         return null;
+      }
       N node = get(asIterable(key));
       return node != null ? node.getValue() : null;
    }
@@ -199,6 +205,9 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
    @Override
    public V remove(Object key) {
+      if (!(key instanceof Iterable)) {
+         return null;
+      }
       return remove(asIterable(key)).orElse(null);
    }
 
@@ -616,6 +625,9 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public boolean remove(Object o) {
+         if (!(o instanceof Iterable)) {
+            return false;
+         }
          return AbstractNavigableSequenceTrie.this.remove(asIterable(o)).isPresent();
       }
 

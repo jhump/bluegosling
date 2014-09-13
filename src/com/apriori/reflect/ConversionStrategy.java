@@ -239,9 +239,6 @@ class ConversionStrategy<I, O> {
     * @param to a target type
     * @param castArguments if true then "casting" source types to target interface types is
     *       permitted
-    * @param forVarArgsArray if true then the resulting converter assumes it receives an object
-    *       array and performs a conversion on all elements of the array (for converting the
-    *       contents of a var-args array)
     * @return the conversion strategy
     */
    static <I, O> ConversionStrategy<I, O> getConversionStrategy(Class<I> from,

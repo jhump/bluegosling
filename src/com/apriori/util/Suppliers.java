@@ -46,7 +46,7 @@ public final class Suppliers {
    public static <T> Supplier<T> memoize(Supplier<T> supplier) {
       return new Supplier<T>() {
          private volatile boolean invoked;
-         private volatile T result;
+         private T result; // visibility piggy-backs on invoked
          
          @Override
          public T get() {

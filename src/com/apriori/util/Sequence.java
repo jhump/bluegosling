@@ -1,6 +1,7 @@
 package com.apriori.util;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Represents a sequence of items produced by a {@link Generator}. This is very similar to the
@@ -34,5 +35,54 @@ public interface Sequence<T, X extends Throwable> {
     *
     * @return a view of this sequence as an {@link Iterator}
     */
-   Iterator<T> asIterator();
+   default Iterator<T> asIterator() {
+      return new Iterator<T>() {
+         private T next;
+         private boolean retrievedNext;
+         private boolean hasNext;
+         
+         private void retrieveNext() {
+            if (retrievedNext) {
+               return;
+            }
+            try {
+               next = Sequence.this.next();
+               hasNext = true;
+            } catch (SequenceFinishedException e) {
+               hasNext = false;
+            } catch (RuntimeException | Error e) {
+               hasNext = false;
+               throw e;
+            } catch (Throwable t) {
+               hasNext = false;
+               throw new RuntimeException(t);
+            } finally {
+               retrievedNext = true;
+            }
+         }
+         
+         @Override
+         public boolean hasNext() {
+            retrieveNext();
+            return hasNext;
+         }
+
+         @Override
+         public T next() {
+            retrieveNext();
+            if (!hasNext) {
+               throw new NoSuchElementException();
+            }
+            retrievedNext = false;
+            T ret = next;
+            next = null; // let it be collected
+            return ret;
+         }
+
+         @Override
+         public void remove() {
+            throw new UnsupportedOperationException();
+         }
+      };
+   }
 }

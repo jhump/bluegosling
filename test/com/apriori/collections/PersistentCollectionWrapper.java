@@ -1,86 +1,51 @@
 package com.apriori.collections;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.apriori.collections.ImmutableCollectionWrapper.fromIterable;
-
+/**
+ * A wrapper to adapt a {@link Collection} to a {@link PersistentCollection}. This is used to create
+ * "reference implementations" for a {@link PersistentCollection}, against which the behavior of
+ * other implementations can be tested. For example, we wrap an {@link ArrayList} and use the
+ * resulting persistent list to verify behavior of other persistent lists. These wrapped persistent
+ * collections are for testing. They copy the entire wrapped collection during update operations, so
+ * they are not expected to perform well.
+ *
+ * @param <E> the type of element in the collection
+ * @param <C> the type of collection being wrapped
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 abstract class PersistentCollectionWrapper<E, C extends Collection<E>,
-                                           I extends ImmutableCollectionWrapper<E, C>,
-                                           P extends PersistentCollectionWrapper<E, C, I, P>>
+                                           P extends PersistentCollectionWrapper<E, C, P>>
+      extends ImmutableCollectionWrapper<E, C>
       implements PersistentCollection<E> {
    
-   protected final I wrapper;
-   
    PersistentCollectionWrapper(C collection) {
-      this.wrapper = wrapImmutable(collection);
+      super(collection);
    }
    
    protected abstract C copy(C original);
-   protected abstract I wrapImmutable(C collection);
-   protected abstract P wrapPersistent(C collection);
-   
-   protected C wrapped() {
-      return wrapper.wrapped();
-   }
-
-   @Override
-   public int size() {
-      return wrapper.size();
-   }
-
-   @Override
-   public boolean isEmpty() {
-      return wrapper.isEmpty();
-   }
-
-   @Override
-   public Object[] toArray() {
-      return wrapper.toArray();
-   }
-
-   @Override
-   public <T> T[] toArray(T[] array) {
-      return wrapper.toArray(array);
-   }
-
-   @Override
-   public boolean contains(Object o) {
-      return wrapper.contains(o);
-   }
-
-   @Override
-   public boolean containsAll(Iterable<?> items) {
-      return wrapper.containsAll(items);
-   }
-
-   @Override
-   public boolean containsAny(Iterable<?> items) {
-      return wrapper.containsAny(items);
-   }
-
-   @Override
-   public Iterator<E> iterator() {
-      return wrapper.iterator();
-   }
+   protected abstract P wrapPersistent(C coll);
 
    @Override
    public P add(E e) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       newCollection.add(e);
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P remove(Object o) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       newCollection.remove(o);
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P removeAll(Object o) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       for (Iterator<E> iter = newCollection.iterator(); iter.hasNext();) {
          E e = iter.next();
          if (o == null ? e == null : o.equals(e)) {
@@ -92,21 +57,21 @@ abstract class PersistentCollectionWrapper<E, C extends Collection<E>,
 
    @Override
    public P removeAll(Iterable<?> items) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       newCollection.removeAll(fromIterable(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P retainAll(Iterable<?> items) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       newCollection.retainAll(fromIterable(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P addAll(Iterable<? extends E> items) {
-      C newCollection = copy(wrapped());
+      C newCollection = copy(collection);
       newCollection.addAll(fromIterable(items));
       return wrapPersistent(newCollection);
    }

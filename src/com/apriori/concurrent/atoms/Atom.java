@@ -8,7 +8,9 @@ package com.apriori.concurrent.atoms;
  * <ul>
  *   <li><strong>Synchronous</strong>: Mutation events are made immediately, in the current thread.
  *   When a synchronous mutation method has returned, the change has been made and watchers have
- *   been notified.</li>
+ *   been notified. One subtle exception is the {@link TransactionalAtom}, in which case the
+ *   mutation is visible in the current transaction but not visible to other threads until the
+ *   transaction commits, and watchers are not notified until the change is committed.</li>
  *   <li><strong>Asynchronous</strong>: Mutation events are queued immediately but may execute at
  *   some point in the future, in a different thread. Asynchronous mutations return futures that
  *   are completed when the changes have been made and watchers have been notified.</li>
@@ -30,6 +32,7 @@ public interface Atom<T> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @FunctionalInterface
    interface Watcher<T> {
       /**
        * Handles changes to the specified atom.

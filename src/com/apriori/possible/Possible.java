@@ -30,6 +30,8 @@ import java.util.function.Supplier;
 // TODO: review docs!
 public interface Possible<T> {
    
+   // TODO: cast, upcast static methods
+   
    /**
     * Returns true if a value is present.
     * 

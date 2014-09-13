@@ -88,7 +88,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static abstract class AbstractListIterator<T, T_CONS,
-            T_LIST extends AbstractPrimitiveList<T, T_CONS,?, ?, ?>>
+            T_LIST extends AbstractPrimitiveList<T, T_CONS, ?, ?, ?>>
          implements PrimitiveListIterator<T, T_CONS> {
 
       T_LIST list;

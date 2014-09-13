@@ -1,10 +1,11 @@
 package com.apriori.concurrent.atoms;
 
+import static com.apriori.testing.MoreAsserts.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.apriori.tuples.Trio;
 
@@ -33,19 +34,11 @@ public abstract class AbstractSynchronousAtomTest {
       assertNull(atom.get());
       atom = create(123);
       assertEquals(Integer.valueOf(123), atom.get());
-      Predicate<Integer> validator = new Predicate<Integer>() {
-         @Override
-         public boolean test(Integer input) {
-            return input < 100;
-         }
-      };
+      Predicate<Integer> validator = i -> i < 100;
       atom = create(99, validator);
       assertEquals(Integer.valueOf(99), atom.get());
-      try {
-         create(100, validator); // validator requires < 100
-         fail("Expecting IllegalArgumentException but caught nothing");
-      } catch (IllegalArgumentException expected) {
-      }
+      // validator requires < 100
+      assertThrows(IllegalArgumentException.class, () -> create(100, validator));
       assertEquals(Integer.valueOf(99), atom.get()); // unchanged
    }
    
@@ -59,30 +52,17 @@ public abstract class AbstractSynchronousAtomTest {
    }
    
    @Test public void invalidMutations() {
-      Predicate<Integer> validator = new Predicate<Integer>() {
-         @Override
-         public boolean test(Integer input) {
-            return input != null && input < 100;
-         }
-      };
+      Predicate<Integer> validator = i -> i != null && i < 100;
       SynchronousAtom<Integer> atom = create(0, validator);
-      final AtomicBoolean notified = new AtomicBoolean();
-      atom.addWatcher(new Atom.Watcher<Integer>() {
-         @Override
-         public void changed(Atom<? extends Integer> a, Integer oldValue, Integer newValue) {
-            notified.set(true);
-         }
-      });
+      AtomicBoolean notified = new AtomicBoolean();
+      atom.addWatcher((a, oldValue, newValue) -> notified.set(true));
       
       atom.set(90);
       assertEquals(Integer.valueOf(90), atom.get());
 
       notified.set(false);
-      try {
-         atom.set(100); // validator requires < 100
-         fail("Expecting IllegalArgumentException but caught nothing");
-      } catch (IllegalArgumentException expected) {
-      }
+      // validator requires < 100
+      assertThrows(IllegalArgumentException.class, () -> atom.set(100));
       assertEquals(Integer.valueOf(90), atom.get()); // unchanged
       assertFalse(notified.get());
       
@@ -91,34 +71,21 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals(Integer.valueOf(99), atom.get());
 
       notified.set(false);
-      try {
-         atom.apply(addNine); // another nine would push it over 100
-         fail("Expecting IllegalArgumentException but caught nothing");
-      } catch (IllegalArgumentException expected) {
-      }
+      // another nine would push it over 100
+      assertThrows(IllegalArgumentException.class, () -> atom.apply(addNine));
       assertEquals(Integer.valueOf(99), atom.get()); // unchanged
       assertFalse(notified.get());
    }
    
    @Test public void watchers() {
-      final List<Trio<Atom<? extends String>, String, String>> notices1 =
+      List<Trio<Atom<? extends String>, String, String>> notices1 =
             new ArrayList<Trio<Atom<? extends String>, String, String>>();
-      final List<Trio<Atom<? extends String>, String, String>> notices2 =
+      List<Trio<Atom<? extends String>, String, String>> notices2 =
             new ArrayList<Trio<Atom<? extends String>, String, String>>();
-      Atom.Watcher<String> watcher1 = new Atom.Watcher<String>() {
-         @Override
-         public void changed(Atom<? extends String> atom, String oldValue, String newValue) {
-            notices1.add(
-                  Trio.<Atom<? extends String>, String, String>create(atom, oldValue, newValue));
-         }
-      };
-      Atom.Watcher<String> watcher2 = new Atom.Watcher<String>() {
-         @Override
-         public void changed(Atom<? extends String> atom, String oldValue, String newValue) {
-            notices2.add(
-                  Trio.<Atom<? extends String>, String, String>create(atom, oldValue, newValue));
-         }
-      };
+      Atom.Watcher<String> watcher1 = (atom, oldValue, newValue) ->
+            notices1.add(Trio.create(atom, oldValue, newValue));
+      Atom.Watcher<String> watcher2 = (atom, oldValue, newValue) ->
+            notices2.add(Trio.create(atom, oldValue, newValue));
 
       SynchronousAtom<String> atom = create();
       atom.addWatcher(watcher1);
@@ -142,12 +109,7 @@ public abstract class AbstractSynchronousAtomTest {
          notices.clear();
       }
       
-      Function<String,String> twice = new Function<String, String>() {
-         @Override
-         public String apply(String input) {
-            return input + input;
-         }
-      };
+      Function<String,String> twice = i -> i + i;
       atom.apply(twice);
       for (List<?> notices : noticesArray) {
          assertEquals(Arrays.asList(Trio.create(atom, "abc", "abcabc")), notices);

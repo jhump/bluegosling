@@ -19,6 +19,8 @@ import java.util.function.Supplier;
 //TODO: tests for cast, upcast
 public final class Optionals {
 
+   // TODO: presentOnly, nullIfNotPresent static methods
+
    private Optionals() {
    }
    

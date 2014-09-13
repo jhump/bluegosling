@@ -177,7 +177,7 @@ public final class ObjectVerifiers extends Assert {
     * 
     * @see #relaxedExceptions(Set)
     */
-   // @SafeVarargs
+   @SafeVarargs
    public static ObjectVerifier<Throwable> relaxedExceptions(
          Class<? extends Throwable>... exceptions) {
       return relaxedExceptions(new HashSet<Class<? extends Throwable>>(Arrays.asList(exceptions)));
@@ -290,7 +290,7 @@ public final class ObjectVerifiers extends Assert {
     * @return the object verifier
     * @throws NullPointerException if any of the specified verifiers is {@code null}
     */
-   // @SafeVarargs
+   @SafeVarargs
    public static <T> ObjectVerifier<T> compositeVerifier(ObjectVerifier<T>... verifiers) {
       return compositeVerifier(new ArrayList<ObjectVerifier<T>>(Arrays.asList(verifiers)));
    }

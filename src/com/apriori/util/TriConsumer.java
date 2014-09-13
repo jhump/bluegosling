@@ -2,6 +2,10 @@ package com.apriori.util;
 
 // TODO: javadoc
 @FunctionalInterface
-public interface TriConsumer<I1, I2, I3> {
-   void accept(I1 input1, I2 input2, I3 input3);
+public interface TriConsumer<T, U, V> {
+   void accept(T input1, U input2, V input3);
+
+   default TriConsumer<T, U, V> andThen(TriConsumer<T, U, V> after) {
+      return (t, u, v) -> { accept(t, u, v); after.accept(t, u, v); };
+   }
 }

@@ -31,6 +31,7 @@ import java.util.function.Supplier;
  * @param <T> the type of values stored in the stack
  * 
  * @see SimpleTreiberStack
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
@@ -197,7 +198,7 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
       Node<T> replaced = node;
       while (true) {
          if (predecessor == null) {
-            if (headUpdater.compareAndSet(TreiberStack.this, replaced, next)) {
+            if (headUpdater.compareAndSet(this, replaced, next)) {
                break;
             }
          } else if (predecessor.compareAndSet(replaced, next, false, false)) {
@@ -275,20 +276,18 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
    
    private T doPeek(Supplier<T> ifEmpty) {
       boolean removed[] = new boolean[1];
+      Node<T> node = head;
+      Node<T> next;
+      // find a successor that isn't already removed
       while (true) {
-         Node<T> node = head;
-         Node<T> next;
-         // find a successor that isn't already removed
-         while (true) {
-            if (node == null) {
-               return ifEmpty.get();
-            }
-            next = node.get(removed);
-            if (!removed[0]) {
-               return node.value; 
-            }
-            node = next;
+         if (node == null) {
+            return ifEmpty.get();
          }
+         next = node.get(removed);
+         if (!removed[0]) {
+            return node.value; 
+         }
+         node = next;
       }
    }
    
@@ -317,7 +316,8 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
    private T doPop(Supplier<T> ifEmpty) {
       boolean removed[] = new boolean[1];
       while (true) {
-         Node<T> node = head;
+         Node<T> first = head;
+         Node<T> node = first;
          Node<T> next;
          // find a successor that isn't already removed
          while (true) {
@@ -330,7 +330,7 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
             }
             node = next;
          }
-         if (headUpdater.compareAndSet(this, node, next)) {
+         if (headUpdater.compareAndSet(this, first, next)) {
             sizeUpdater.decrementAndGet(this);
             return node.value;
          }

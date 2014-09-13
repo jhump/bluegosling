@@ -37,13 +37,14 @@ public final class Types {
    static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
    static final Class<?> ARRAY_INTERFACES[] = new Class<?>[] { Cloneable.class, Serializable.class };
    static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
+   static final WildcardType EXTENDS_ANY = newExtendsWildcardType(Object.class);
    
    private Types() {}
 
    /**
-    * Finds the raw class token that best represents to the given type. If the type is a class then
-    * it is returned. If it is a parameterized type, the parameterized type's raw type is returned.
-    * If it is a generic array type, an class token representing an array of the component type is
+    * Finds the raw class token that best represents the given type. If the type is a class then it
+    * is returned. If it is a parameterized type, the parameterized type's raw type is returned. If
+    * it is a generic array type, an class token representing an array of the component type is
     * returned. Finally, if it is either a wildcard type or type variable, its first upper bound is
     * returned. 
     *
@@ -65,7 +66,7 @@ public final class Types {
          Type bounds[] = ((WildcardType) type).getUpperBounds();
          return bounds.length > 0 ? getRawType(bounds[0]) : Object.class;
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -268,7 +269,7 @@ public final class Types {
          Class<?> superclass = getRawType(bounds[0]);
          return superclass.isInterface() ? null : superclass;
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -304,7 +305,7 @@ public final class Types {
                .map(Types::getRawType).filter(Class::isInterface).collect(Collectors.toList());
          return interfaceBounds.toArray(new Class<?>[interfaceBounds.size()]);
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -347,7 +348,7 @@ public final class Types {
          assert bounds.length > 0;
          return isInterface(bounds[0]) ? null : bounds[0];
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
    
@@ -398,7 +399,7 @@ public final class Types {
                Arrays.stream(bounds).filter(Types::isInterface).collect(Collectors.toList());
          return interfaceBounds.toArray(new Type[interfaceBounds.size()]);
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -459,12 +460,12 @@ public final class Types {
          return Object[].class.getAnnotation(annotationType);
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          // we must get annotations from the superclass, so it only works if given type is inherited
-         Type superclass = getGenericSuperclass(type);
+         Class<?> superclass = getSuperclass(type);
          return superclass != null && annotationType.getAnnotation(Inherited.class) != null
-               ? getAnnotation(superclass, annotationType)
+               ? superclass.getAnnotation(annotationType)
                : null;
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
    
@@ -494,7 +495,7 @@ public final class Types {
          return Object[].class.getAnnotations();
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          // we must get annotations from the superclass, so only include inherited annotations
-         Annotation annotations[] = getAnnotations(getGenericSuperclass(type));
+         Annotation annotations[] = getSuperclass(type).getAnnotations();
          List<Annotation> inheritedOnly = Arrays.stream(annotations)
                .filter(a -> a.annotationType().getAnnotation(Inherited.class) != null)
                .collect(Collectors.toList());
@@ -505,7 +506,7 @@ public final class Types {
          }
          return inheritedOnly.toArray(new Annotation[inheritedOnly.size()]);
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -533,7 +534,7 @@ public final class Types {
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          return EMPTY_ANNOTATIONS;
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -835,13 +836,15 @@ public final class Types {
                // an unchecked cast, so no go
                return false;
             }
-            if (!((Class<?>) toRawType).isAssignableFrom(fromClass)) {
+            if (!toRawType.isAssignableFrom(fromClass)) {
+               // Raw types aren't even compatible? Abort!
                return false;
             }
          } else if (from instanceof ParameterizedType) {
             ParameterizedType fromParamType = (ParameterizedType) from;
             Class<?> fromRawType = (Class<?>) fromParamType.getRawType();
-            if (!((Class<?>) toRawType).isAssignableFrom(fromRawType)) {
+            if (!toRawType.isAssignableFrom(fromRawType)) {
+               // Raw types aren't even compatible? Abort!
                return false;
             }
          } else {
@@ -853,6 +856,10 @@ public final class Types {
          Type resolvedToType = resolveSuperType(from, toRawType);
          Type args[] = toParamType.getActualTypeArguments();
          Type resolvedArgs[] = getActualTypeArguments(resolvedToType);
+         if (resolvedArgs.length == 0) {
+            // assigning from raw type to parameterized type requires unchecked cast, so no go
+            return false;
+         }
          assert args.length == resolvedArgs.length;
          // check each type argument
          for (int i = 0, len = args.length; i < len; i++) {
@@ -958,7 +965,7 @@ public final class Types {
     * {@code Map<? extends K, ? extends V>} (where {@code K} and {@code V} are the type variables
     * of interface {@code Map}) and the given context is the parameterized type
     * {@code TreeMap<String, List<String>>} then the type returned will be
-    * {@code Map<? super String, ? super List<String>>}.
+    * {@code Map<? extends String, ? extends List<String>>}.
     * 
     * <p>If any type variables present in the given type cannot be resolved, they will be unchanged
     * and continue to refer to type variables in the returned type.
@@ -1007,7 +1014,7 @@ public final class Types {
             }
          }
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
    
@@ -1023,6 +1030,11 @@ public final class Types {
     */
    public static Type replaceTypeVariable(Type type, TypeVariable<?> typeVariable,
          Type typeValue) {
+      // TODO: extract "context" from given type. For example, if given type variable is on a method
+      // or a nested type and has bounds that refer to owner type, then we need to know the owner
+      // type arguments to verify bounds. If given type includes resolved references to those owner
+      // type variables, we could use that to inform type checking. If given type includes *no*
+      // such references, maybe check owner type variables against their bounds?
       Map<TypeVariableWrapper, Type> wrappedVariables =
             Collections.singletonMap(wrap(typeVariable), typeValue); 
       checkTypeValue(typeVariable, typeValue, wrappedVariables);
@@ -1040,6 +1052,9 @@ public final class Types {
     *       given mapped values
     */
    public static Type replaceTypeVariables(Type type, Map<TypeVariable<?>, Type> typeVariables) {
+      // TODO: extract "context" from given type. See comment in replaceTypeVariable(...) above
+      // for more details.
+
       // wrap the variables to make sure their hashCode and equals are well-behaved
       Map<TypeVariableWrapper, Type> wrappedVariables = new HashMap<>(typeVariables.size() * 4 / 3,
             0.75f);
@@ -1055,6 +1070,10 @@ public final class Types {
    
    private static Type replaceTypeVariablesInternal(Type type,
          Map<TypeVariableWrapper, Type> typeVariables) {
+      // NB: if replacing variable references in this type result in no changes (e.g. no references
+      // to replace), then return the given type object as is. Do *not* return a different-but-equal
+      // type since that could cause a lot of excess work to re-construct a complex type for a
+      // no-op replacement operation.
       if (typeVariables.isEmpty()) {
          return type;
       }
@@ -1121,7 +1140,7 @@ public final class Types {
          return resolvedType != null ? resolvedType : type;
          
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
 
@@ -1214,8 +1233,18 @@ public final class Types {
          Map<TypeVariableWrapper, Type> typeVariables) {
       if (type instanceof Class) {
          Class<?> clazz = (Class<?>) type;
-         // if this is a raw type reference to a generic type, just forget generic type information
-         // and use raw types from here on out
+         // If this is a raw type reference to a generic type, just forget generic type information
+         // and use raw types from here on out.
+         // NOTE: This is how the Java compiler works. However, it would be nice to support a case
+         // like so:
+         //    interface X<T> extends List<String> { ... }
+         //    X x; // raw type
+         //    List<String> l = x; // generates an unchecked cast warning!
+         // The Java compiler insists that the last line is an unchecked cast since raw types cause
+         // it to ignore generic type information. However, the missing type parameter to X, in this
+         // example, shouldn't really matter. We statically know, even without the type arg, that
+         // the assignment is safe.
+         // TODO: change this to behave in the more intuitive way instead of mimic'ing javac
          boolean useRawTypes = clazz.getTypeParameters().length > 0; 
          return findGenericSuperType(clazz, superClass, useRawTypes, typeVariables);
           
@@ -1261,7 +1290,7 @@ public final class Types {
          return null;
          
       } else {
-         throw new IllegalArgumentException("Unrecognized Type: " + type);
+         throw new UnknownTypeException(type);
       }
    }
    
@@ -1284,7 +1313,6 @@ public final class Types {
    
    private static Type findGenericSuperclass(Class<?> clazz, Class<?> superClass,
          Map<TypeVariableWrapper, Type> typeVariables) {
-      // TODO: iterative instead of recursive?
       Class<?> actualSuper = clazz.getSuperclass();
       assert actualSuper != null;
       Type genericSuper = clazz.getGenericSuperclass();
@@ -1309,7 +1337,6 @@ public final class Types {
       if (alreadyChecked.contains(clazz)) {
          return null;
       }
-      // TODO: iterative and breadth-first instead of recursive?
       Class<?> actualInterfaces[] = clazz.getInterfaces();
       Type genericInterfaces[] = clazz.getGenericInterfaces();
       assert actualInterfaces.length > 0;
@@ -1430,10 +1457,10 @@ public final class Types {
       } else {
          arrayClassName.append("L").append(componentType.getName()).append(";");
       }
+      String className = arrayClassName.toString();
       // use the component type's class loader to make sure the array type is correct
       ClassLoader loader = componentType.getClassLoader();
       try {
-         String className = arrayClassName.toString();
          @SuppressWarnings("unchecked") // we know the type is right since we just built the name
          Class<T[]> arrayType = (Class<T[]>)
                (loader == null ? Class.forName(className)
@@ -1604,23 +1631,24 @@ public final class Types {
                + " type variable(s), but " + copyOfArguments.size()
                + " argument(s) were specified");
       }
-      Map<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
-      // add current type variables, in case there are recursive bounds
-      for (int i = 0; i < len; i++) {
-         resolvedVariables.put(wrap(typeVariables[i]), copyOfArguments.get(i));
-      }      
-      if (ownerType != null) {
-         // also resolve owners' variables
-         collectTypeParameters(ownerType, resolvedVariables);
-      }
-      for (int i = 0; i < len; i++) {
-         TypeVariable<?> variable = typeVariables[i];
-         Type argument = copyOfArguments.get(i);
-         checkTypeValue(variable, argument, resolvedVariables);
-      }
       if (ownerType == null && len == 0) {
          throw new IllegalArgumentException("A ParameterizedType must have either a parameterized"
                + " owner or its own type parameters");
+      }
+      Map<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
+      if (ownerType != null) {
+         // resolve owners' type variables
+         collectTypeParameters(ownerType, resolvedVariables);
+      }
+      for (int i = 0; i < len; i++) {
+         // add current type variables, in case there are recursive bounds
+         resolvedVariables.put(wrap(typeVariables[i]), copyOfArguments.get(i));
+      }
+      for (int i = 0; i < len; i++) {
+         // validate that given arguments are compatible with bounds
+         TypeVariable<?> variable = typeVariables[i];
+         Type argument = copyOfArguments.get(i);
+         checkTypeValue(variable, argument, resolvedVariables);
       }
       return new ParameterizedTypeImpl(owner, rawType, copyOfArguments);
    }
@@ -1693,6 +1721,11 @@ public final class Types {
     */
    public static WildcardType newExtendsWildcardType(Type bound) {
       return newWildcardTypeInternal(bound, true);
+   }
+   
+   // TODO: javadoc
+   public static WildcardType extendsAnyWildcard() {
+      return EXTENDS_ANY;
    }
 
    /**

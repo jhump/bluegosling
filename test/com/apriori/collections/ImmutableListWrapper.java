@@ -14,22 +14,22 @@ class ImmutableListWrapper<E> extends ImmutableCollectionWrapper<E, List<E>>
 
    @Override
    public E get(int i) {
-      return wrapped().get(i);
+      return collection.get(i);
    }
 
    @Override
    public int indexOf(Object o) {
-      return wrapped().indexOf(o);
+      return collection.indexOf(o);
    }
 
    @Override
    public int lastIndexOf(Object o) {
-      return wrapped().lastIndexOf(o);
+      return collection.lastIndexOf(o);
    }
 
    @Override
    public ImmutableList<E> subList(int from, int to) {
-      return new ImmutableListWrapper<E>(wrapped().subList(from, to));
+      return new ImmutableListWrapper<E>(collection.subList(from, to));
    }
 
    @Override

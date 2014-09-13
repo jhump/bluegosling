@@ -12,11 +12,11 @@ import java.util.Map;
 
 
 class TypeTesting {
-   static final Type EMPTY[] = new Type[0];
+   public static final Type EMPTY[] = new Type[0];
 
    // An implementation of Type that is not one of the known implementations (e.g. not Class,
    // ParameterizedType, GenericArrayType, WildcardType, or TypeVariable).
-   static enum InvalidType implements Type {
+   public static enum InvalidType implements Type {
       INSTANCE
    }
    
@@ -39,16 +39,44 @@ class TypeTesting {
          Dummy<? extends Z[]> complexType();
    }
    
-   static final Method GENERIC_METHOD;
-   static final ParameterizedType PARAM_TYPE;
-   static final GenericArrayType GENERIC_ARRAY_TYPE;
-   static final GenericArrayType GENERIC_ARRAY_TYPE_VARIABLE;
-   static final TypeVariable<?> TYPE_VAR_T;
-   static final TypeVariable<?> TYPE_VAR_Z;
-   static final WildcardType WILDCARD_EXTENDS;
-   static final WildcardType WILDCARD_SUPER;
-   static final WildcardType WILDCARD_ARRAY;
-   static final Type COMPLEX_TYPE;
+   /**
+    * {@code <X extends Number, Y extends List<T>, Z extends Map<X, Y> & Serializable & Cloneable>
+    * Dummy<Z> complexTypeParam()}
+    */
+   public static final Method GENERIC_METHOD;
+   
+   /** {@code List<Map<T, Integer>>} */
+   public static final ParameterizedType PARAM_TYPE;
+   
+   /** {@code Map<String, Number>[]} */
+   public static final GenericArrayType GENERIC_ARRAY_TYPE;
+   
+   /** {@code X[]} (where {@code X extends CharSequence}) */
+   public static final GenericArrayType GENERIC_ARRAY_TYPE_VARIABLE;
+   
+   /** {@code T}, given {@code <T>} */
+   public static final TypeVariable<?> TYPE_VAR_T;
+   
+   /**
+    * {@code Z}, given {@code <T>} and {@code <X extends Number, Y extends List<T>, Z extends
+    * Map<X, Y> & Serializable & Cloneable>} 
+    */
+   public static final TypeVariable<?> TYPE_VAR_Z;
+   
+   /** {@code ? extends Number} */
+   public static final WildcardType WILDCARD_EXTENDS;
+   
+   /** {@code ? super List<T>}, given {@code <T>} */
+   public static final WildcardType WILDCARD_SUPER;
+   
+   /** {@code ? extends List<T>[]}, given {@code <T>} */
+   public static final WildcardType WILDCARD_ARRAY;
+   
+   /**
+    * {@code ? extends Z[]}, given {@code <T>} and {@code <X extends Number, Y extends List<T>,
+    * Z extends Map<X, Y> & Serializable & Cloneable>}
+    */
+   public static final Type COMPLEX_TYPE;
    
    static {
       try {

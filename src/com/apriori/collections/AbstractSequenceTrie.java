@@ -25,12 +25,18 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
 
    @Override
    public boolean containsKey(Object key) {
+      if (!(key instanceof Iterable)) {
+         return false;
+      }
       N node = get(asIterable(key));
       return node != null && node.valuePresent();
    }
 
    @Override
    public V get(Object key) {
+      if (!(key instanceof Iterable)) {
+         return null;
+      }
       N node = get(asIterable(key));
       return node != null ? node.getValue() : null;
    }
@@ -47,6 +53,9 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
 
    @Override
    public V remove(Object key) {
+      if (!(key instanceof Iterable)) {
+         return null;
+      }
       return remove(asIterable(key)).orElse(null);
    }
 
@@ -77,6 +86,9 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
          
          @Override
          public boolean remove(Object o) {
+            if (!(o instanceof Iterable)) {
+               return false;
+            }
             return AbstractSequenceTrie.this.remove(asIterable(o)).isPresent();
          }
 

@@ -37,7 +37,7 @@ public final class Members {
     * @return the method with the specified signature or {@code null}
     */
    public static Method findMethod(Class<?> clazz, final String name, final Class<?>... argTypes) {
-      return ClassHierarchyCrawler.crawlWith(clazz, null, (aClass, v) -> {
+      return ClassHierarchyScanner.scanWith(clazz, null, (aClass, v) -> {
          try {
             Method m = aClass.getDeclaredMethod(name, argTypes);
             // only want instance methods
@@ -80,7 +80,7 @@ public final class Members {
     */
    public static Collection<Method> findMethods(Class<?> clazz, final String name) {
       Map<MethodSignature, Method> methods = new HashMap<MethodSignature, Method>();
-      ClassHierarchyCrawler.crawlWith(clazz, methods, (aClass, methodMap) -> {
+      ClassHierarchyScanner.scanWith(clazz, methods, (aClass, methodMap) -> {
             for (Method m : aClass.getDeclaredMethods()) {
                if (m.getName().equals(name) && !Modifier.isStatic(m.getModifiers())) {
                   MethodSignature sig = new MethodSignature(m);
@@ -108,7 +108,7 @@ public final class Members {
     * @return the field with the specified name or {@code null}
     */
    public static Field findField(Class<?> clazz, final String name) {
-      return ClassHierarchyCrawler.crawlWith(clazz, null, (aClass, v) -> {
+      return ClassHierarchyScanner.scanWith(clazz, null, (aClass, v) -> {
          try {
             return aClass.getDeclaredField(name);
          } catch (NoSuchFieldException e) {
@@ -130,14 +130,14 @@ public final class Members {
     */
    public static Collection<Field> findFields(Class<?> clazz, final String name) {
       List<Field> fields = new ArrayList<Field>();
-      ClassHierarchyCrawler.<Void, List<Field>>builder()
+      ClassHierarchyScanner.<Void, List<Field>>builder()
             .forEachClass((aClass, fieldList) -> {
                try {
                   fieldList.add(aClass.getDeclaredField(name));
                } catch (NoSuchFieldException ignore) {
                }
                return null;
-            }).build().visit(clazz, fields);
+            }).build().scan(clazz, fields);
       return fields;
    }
    

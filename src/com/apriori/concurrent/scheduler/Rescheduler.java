@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @param <T> the type of future value for which a subsequent calculation may be rescheduled
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@FunctionalInterface
 public interface Rescheduler<T> {
    /**
     * Computes the next scheduled execution time for a repeating task, in system nano-time.
@@ -26,25 +27,25 @@ public interface Rescheduler<T> {
    long computeNextStartTime(ListenableRepeatingFuture<? extends T> future,
          long priorStartTimeNanos);
 
-   public static long getFixedDelayNanos(Rescheduler<?> rescheduler) {
+   static long getFixedDelayNanos(Rescheduler<?> rescheduler) {
       return rescheduler instanceof Reschedulers.RescheduleWithFixedDelay
             ? ((Reschedulers.RescheduleWithFixedDelay) rescheduler).delayNanos : 0;
    }
 
-   public static Rescheduler<Object> withFixedDelay(long delay, TimeUnit unit) {
+   static Rescheduler<Object> withFixedDelay(long delay, TimeUnit unit) {
       return new Reschedulers.RescheduleWithFixedDelay(unit.toNanos(delay));
    }
 
-   public static long getFixedRatePeriodNanos(Rescheduler<?> rescheduler) {
+   static long getFixedRatePeriodNanos(Rescheduler<?> rescheduler) {
       return rescheduler instanceof Reschedulers.RescheduleAtFixedRate
             ? ((Reschedulers.RescheduleAtFixedRate) rescheduler).periodNanos : 0;
    }
 
-   public static Rescheduler<Object> atFixedRateSkippingMissedOccurrences(long period, TimeUnit unit) {
+   static Rescheduler<Object> atFixedRateSkippingMissedOccurrences(long period, TimeUnit unit) {
       return new Reschedulers.RescheduleAtFixedRate(unit.toNanos(period), true);
    }
 
-   public static Rescheduler<Object> atFixedRate(long period, TimeUnit unit) {
+   static Rescheduler<Object> atFixedRate(long period, TimeUnit unit) {
       return new Reschedulers.RescheduleAtFixedRate(unit.toNanos(period), false);
    }
 }

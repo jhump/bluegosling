@@ -18,8 +18,8 @@ public final class ArrayUtils {
    }
 
    /**
-    * Constructs a new array of the given (non-primitive) component type and length.  This is a
-    * convenient wrapper around {@link Array#newInstance(Class, int)} that provides a more useful
+    * Constructs a new array of the given <em>non-primitive</em> component type and length.  This is
+    * a convenient wrapper around {@link Array#newInstance(Class, int)} that provides a more useful
     * return type for reference component types: no cast required.
     *
     * @param elementType the type of elements in the new array
@@ -161,7 +161,7 @@ public final class ArrayUtils {
    /**
     * Determines if the given two arrays are equal, as determined by comparing their contents for
     * equality. This provides a convenience above and beyond similar methods in {@link Arrays}
-    * because it accepts any array types, including primitive array types.
+    * because it accepts any array type, including primitive array types.
     *
     * @param array1 an array
     * @param array2 another array
@@ -207,7 +207,7 @@ public final class ArrayUtils {
    /**
     * Computes a hash code for the given array based on its content instead of on its identity. This
     * provides a convenience above and beyond similar methods in {@link Arrays} because it accepts
-    * any array types, including primitive array types.
+    * any array type, including primitive array types.
     *
     * @param array an array
     * @return a hash code for the given array based on its content
@@ -250,7 +250,7 @@ public final class ArrayUtils {
     * Constructs a string representation for the given array that describes its contents (as
     * opposed to the default {@link Object#toString()} version that arrays inherit). This provides a
     * convenience above and beyond similar methods in {@link Arrays} because it accepts any array
-    * types, including primitive array types.
+    * type, including primitive array types.
     *
     * @param array an array
     * @return a string representation for the given array that describes its contents
@@ -289,6 +289,7 @@ public final class ArrayUtils {
       }
    }
    
+   /** A {@link PrimitiveList.OfBoolean} that wraps a primitive array of booleans. */
    private static class BooleanList extends AbstractPrimitiveList.OfBoolean {
       private final boolean array[];
       
@@ -319,6 +320,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfByte} that wraps a primitive array of bytes. */
    private static class ByteList extends AbstractPrimitiveList.OfByte {
       private final byte array[];
       
@@ -349,6 +351,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfChar} that wraps a primitive array of chars. */
    private static class CharList extends AbstractPrimitiveList.OfChar {
       private final char array[];
       
@@ -379,6 +382,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfShort} that wraps a primitive array of shorts. */
    private static class ShortList extends AbstractPrimitiveList.OfShort {
       private final short array[];
       
@@ -409,6 +413,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfInt} that wraps a primitive array of ints. */
    private static class IntList extends AbstractPrimitiveList.OfInt {
       private final int array[];
       
@@ -439,6 +444,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfLong} that wraps a primitive array of longs. */
    private static class LongList extends AbstractPrimitiveList.OfLong {
       private final long array[];
       
@@ -469,6 +475,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfFloat} that wraps a primitive array of floats. */
    private static class FloatList extends AbstractPrimitiveList.OfFloat {
       private final float array[];
       
@@ -499,6 +506,7 @@ public final class ArrayUtils {
       }
    }
 
+   /** A {@link PrimitiveList.OfDouble} that wraps a primitive array of doubles. */
    private static class DoubleList extends AbstractPrimitiveList.OfDouble {
       private final double array[];
       

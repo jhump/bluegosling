@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * Forwards method calls to multiple instances. Effectively, this broadcasts methods invoked on a
@@ -355,12 +356,7 @@ public class Blaster<T> {
       
       BlasterInvocationHandler(Collection<?> targets, Action onNullAction,
             Action onExceptionAction) {
-         ArrayList<Result<?>> asResults = new ArrayList<Result<?>>();
-         for (Object t : targets) {
-            asResults.add(Result.create(t));
-         }
-         asResults.trimToSize();
-         this.targets = asResults;
+         this.targets = targets.stream().map(Result::create).collect(Collectors.toList());
          this.onNullAction = onNullAction;
          this.onExceptionAction = onExceptionAction;
       }

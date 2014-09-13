@@ -27,9 +27,16 @@ import java.util.stream.Collectors;
  * methods to do interesting things related to generic types. In a way, it takes the static utility
  * methods from {@link Types} and incorporates them into a type-safe and object-oriented API.
  * 
+ * <p>This class implements {@link AnnotatedElement}, but the annotations do not represent
+ * annotations on type uses. Rather, they represent annotations on the declared types that a given
+ * {@link TypeRef} represents (see {@link Types#getAnnotations(Type)}). For annotations on type
+ * use, you instead want {@link AnnotatedTypeRef}.
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @param <T> the type represented by this token
+ * 
+ * @see Types
  */
 public abstract class TypeRef<T> implements AnnotatedElement {
    /**

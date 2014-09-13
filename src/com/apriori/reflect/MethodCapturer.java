@@ -37,7 +37,7 @@ public class MethodCapturer<E> {
     * @throws NullPointerException if the specified class token is {@code null}
     */
    public MethodCapturer(Class<E> iface) {
-      this(Collections.<Class<? extends E>> singleton(iface));
+      this(Collections.singleton(iface));
    }
 
    /**
@@ -53,7 +53,7 @@ public class MethodCapturer<E> {
     */
    @SafeVarargs
    public MethodCapturer(Class<? extends E>... interfaces) {
-      this(new HashSet<Class<? extends E>>(Arrays.asList(interfaces)));
+      this(new HashSet<>(Arrays.asList(interfaces)));
    }
 
    /**
@@ -73,7 +73,7 @@ public class MethodCapturer<E> {
          throw new IllegalArgumentException(
                "Must provide at least one interface");
       }
-      HashSet<ClassLoader> classLoaders = new HashSet<ClassLoader>();
+      HashSet<ClassLoader> classLoaders = new HashSet<>();
       for (Class<?> clazz : interfaces) {
          if (!clazz.isInterface()) {
             throw new IllegalArgumentException(clazz.getName()
@@ -81,7 +81,7 @@ public class MethodCapturer<E> {
          }
          classLoaders.add(clazz.getClassLoader());
       }
-      this.interfaces = new HashSet<Class<? extends E>>(interfaces); // defensive copy
+      this.interfaces = new HashSet<>(interfaces); // defensive copy
       // use first class loader that works for creating proxy
       IllegalArgumentException e = null;
       for (ClassLoader classLoader : classLoaders) {

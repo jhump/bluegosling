@@ -6,6 +6,11 @@ import java.util.Map;
  * A <a href="package-summary.html#trie">trie</a> whose keys are composite objects. These composites
  * are first broken down into a {@linkplain Iterable sequence} of constituent components using a
  * {@link Componentizer}.
+ * 
+ * <p>Note: Maps and their collection views expose operations that accept {@link Object} instead of
+ * the key type {@code K}. Using these methods and passing values of the wrong type (e.g. passing a
+ * {@code TypeA} when the keys' type is {@code TypeB}) may result in {@code ClassCastException}s if
+ * the trie's {@linkplain #componentizer() componentizer} cannot handle the actual given type.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *

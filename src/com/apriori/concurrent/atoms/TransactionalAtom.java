@@ -20,6 +20,11 @@ import java.util.function.Predicate;
  * 
  * <p>When a transaction is rolled back, all futures corresponding to rolled back commute operations
  * are cancelled.
+ * 
+ * <p>Every transactional atom uses a {@link HierarchicalLock} for synchronizing access from
+ * potentially multiple concurrent transactions. Transactions that pin the atom's value acquire
+ * shared locks; those that modify atom's value acquire exclusive locks. Transactions are restarted
+ * if a deadlock is detected when acquiring atoms' locks.
  */
 // TODO: tests
 public class TransactionalAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
@@ -214,9 +219,9 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * committed. This method essentially walks the list of versions for this atom and returns the
     * value for the most recent version that is less than or equal to the specified version.
     * 
-    * <p>If this atom is marked with in-process transaction and the requested version number is
+    * <p>If this atom is marked by an in-process transaction and the requested version number is
     * greater than the most recent version number associated with the atom, this method will block,
-    * waiting on the transaction to commit. 
+    * waiting on that transaction to commit. 
     *
     * @param version a version number
     * @return the atom's value at the specified version
@@ -272,7 +277,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     *       transaction has updated the atom since the current transaction's version was established 
     */
    @Override 
-   public T apply(final Function<? super T, ? extends T> function) {
+   public T apply(Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
          T oldValue, newValue;
@@ -282,8 +287,11 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
             newValue = function.apply(oldValue);
             validate(newValue);
             long version = Transaction.pinNewVersion();
-            addValue(newValue, version, Transaction.oldestVersion());
-            Transaction.unpinVersion(version);
+            try {
+               addValue(newValue, version, Transaction.oldestVersion());
+            } finally {
+               Transaction.unpinVersion(version);
+            }
          } finally {
             exclusive.unlock();
          }
@@ -338,8 +346,11 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
             newValue = function.apply(oldValue);
             validate(newValue);
             long version = Transaction.pinNewVersion();
-            addValue(newValue, version, Transaction.oldestVersion());
-            Transaction.unpinVersion(version);
+            try {
+               addValue(newValue, version, Transaction.oldestVersion());
+            } finally {
+               Transaction.unpinVersion(version);
+            }
          } finally {
             exclusive.unlock();
          }
@@ -376,8 +387,11 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
          try {
             oldValue = latest.value;
             long version = Transaction.pinNewVersion();
-            addValue(newValue, version, Transaction.oldestVersion());
-            Transaction.unpinVersion(version);
+            try {
+               addValue(newValue, version, Transaction.oldestVersion());
+            } finally {
+               Transaction.unpinVersion(version);
+            }
          } finally {
             exclusive.unlock();
          }
@@ -399,6 +413,8 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     */
    T addValue(T newValue, long version, long oldestVersion) {
       // must hold exclusive lock on this atom when calling this method!
+      assert lock.getExclusiveHolder() == Thread.currentThread();
+      
       assert oldestVersion <= version;
       Version<T> node = latest;
       assert version > node.version;

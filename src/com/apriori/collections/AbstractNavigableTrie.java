@@ -57,7 +57,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       return findLast(root);
    }
 
-   static <K, X, V, N extends NavigableNode<K, X, V, N>> N findLast(N start) {
+   static <N extends NavigableNode<?, ?, ?, N>> N findLast(N start) {
       if (start == null || start.isEmpty()) {
          return null;
       }
@@ -147,8 +147,8 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       }
       
       // At this point, node represents the predecessor branch of the given sequence, or null if
-      // there is no such branch in the trie. So we just look for the "greatest" item in this
-      // sub-trie to find the floor.
+      // there is no such branch in the trie. So we just look for the largest item in this sub-trie
+      // to find the floor.
       N ret = findLast(node);
       assert node == null || ret != null;
       return ret;
@@ -224,7 +224,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       }
       
       // At this point, node represents the successor branch of the given sequence, or null if
-      // there is no such branch in the trie. So we just look for the "least" item in this sub-trie
+      // there is no such branch in the trie. So we just look for the smallest item in this sub-trie
       // to find the ceiling.
       N ret = findFirst(node);
       assert node == null || ret != null;
@@ -242,13 +242,11 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       return new DescendingEntryIterator<>(root, producer, startAt);
    }
 
-   // TODO: make this descend -- needs to use descendingChildIterator for each node and to visit
-   // node values on the way back up the tree (popping) instead of the way down (pushing)
    protected static class DescendingEntryIterator<T, K, X, V, N extends NavigableNode<K, X, V, N>>
          implements Iterator<T> {
       final ArrayDeque<StackFrame<K, X, V, N>> frames = new ArrayDeque<>();
       final BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer;
-      boolean first;
+      boolean first = true;
       N lastFetched;
       
       protected DescendingEntryIterator(N root,

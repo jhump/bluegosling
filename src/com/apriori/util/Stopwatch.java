@@ -1,6 +1,8 @@
 package com.apriori.util;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -17,7 +19,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class Stopwatch {
    
    private final Clock clock;
-   private final LinkedList<Long> lapNanos = new LinkedList<Long>();
+   private final List<Long> lapNanos = Collections.synchronizedList(new LinkedList<Long>());
    private final ReentrantReadWriteLock guard = new ReentrantReadWriteLock(true);
    private long soFar;
    private long currentBase;
@@ -145,16 +147,13 @@ public class Stopwatch {
     * @return an array of lap times, in nanoseconds
     */
    public long[] lapResults() {
-      guard.readLock().lock();
-      try {
+      synchronized (lapNanos) {
          long laps[] = new long[lapNanos.size()];
          int i = 0;
          for (long lap : lapNanos) {
             laps[i++] = lap;
          }
          return laps;
-      } finally {
-         guard.readLock().unlock();
       }
    }
    

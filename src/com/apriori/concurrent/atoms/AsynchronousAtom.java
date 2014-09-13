@@ -22,7 +22,8 @@ import java.util.function.Predicate;
  * not immediate values.
  * 
  * <p>If an error occurs while applying a change, the future that represents that change fails.
- * Additionally, the atom will consult an error handler to decide what to do. There are two options:
+ * Additionally, the atom will consult an error handler to decide what to do. There are three
+ * options:
  * <ol>
  *    <li><strong>Ignore:</strong> Processing continues. The failed mutation is ignored and
  *    subsequent mutations continue to be processed.</li>
@@ -275,31 +276,25 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       if (newSeed.isPresent()) {
          validate(newSeed.get());
       }
-      final AtomicBoolean success = new AtomicBoolean();
-      final CountDownLatch latch = new CountDownLatch(1);
-      threadPool.execute(this, new Runnable() {
-         @SuppressWarnings("synthetic-access")
-         @Override
-         public void run() {
-            success.set(blocked);
-            latch.countDown();
-            if (blocked) {
-               blocked = false;
-               if (newSeed.isPresent()) {
-                  seedValue = value = newSeed.get();
-               } else {
-                  value = seedValue;
+      AtomicBoolean success = new AtomicBoolean();
+      CountDownLatch latch = new CountDownLatch(1);
+      threadPool.execute(this, () -> {
+         success.set(blocked);
+         latch.countDown();
+         if (blocked) {
+            blocked = false;
+            if (newSeed.isPresent()) {
+               seedValue = value = newSeed.get();
+            } else {
+               value = seedValue;
+            }
+            if (cancelPending) {
+               while (!queued.isEmpty()) {
+                  queued.remove().cancel(false);
                }
-               if (cancelPending) {
-                  while (!queued.isEmpty()) {
-                     ListenableFutureTask<T> op = queued.remove();
-                     op.cancel(false);
-                  }
-                  queued.clear();
-               } else {
-                  while (!queued.isEmpty() && !blocked) {
-                     runSingleTask(queued.remove());
-                  }
+            } else {
+               while (!queued.isEmpty() && !blocked) {
+                  runSingleTask(queued.remove());
                }
             }
          }
@@ -368,42 +363,34 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @throws IllegalArgumentException if the specified value is not valid for this atom
     * 
     */
-   public ListenableFuture<T> set(final T newValue) {
+   public ListenableFuture<T> set(T newValue) {
       validate(newValue);
-      return submit(new Callable<T>() {
-         @SuppressWarnings("synthetic-access")
-         @Override
-         public T call() {
-            T oldValue = value;
-            value = newValue;
-            AsynchronousAtom.this.notify(oldValue, newValue);
-            return oldValue;
-         }
+      return submit(() -> {
+         T oldValue = value;
+         value = newValue;
+         AsynchronousAtom.this.notify(oldValue, newValue);
+         return oldValue;
       });
    }
 
    /**
     * Submits a mutation that will apply the specified function and set the atom's value to its
     * result. Validation cannot be done immediately, so a validation failure manifests as a failed
-    * future result. Depending on the atom's {@link #getErrorHandler() error handler}, a validation
-    * failure could block subsequent mutations.
+    * future. Depending on the atom's {@link #getErrorHandler() error handler}, a validation failure
+    * could block subsequent mutations.
     *
     * @param function the function to apply; the atom's new value will be the result of applying
     *       this function to the atom's previous value
     * @return a future result that will be the atom's new value after the function is applied
     */
-   public ListenableFuture<T> apply(final Function<? super T, ? extends T> function) {
-      return submit(new Callable<T>() {
-         @SuppressWarnings("synthetic-access")
-         @Override
-         public T call() throws Exception {
-            T oldValue = value;
-            T newValue = function.apply(oldValue);
-            validate(newValue);
-            value = newValue;
-            AsynchronousAtom.this.notify(oldValue, newValue);
-            return newValue;
-         }
+   public ListenableFuture<T> apply(Function<? super T, ? extends T> function) {
+      return submit(() -> {
+         T oldValue = value;
+         T newValue = function.apply(oldValue);
+         validate(newValue);
+         value = newValue;
+         AsynchronousAtom.this.notify(oldValue, newValue);
+         return newValue;
       });
    }
 
@@ -417,7 +404,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @return a future that completes when the specified operation completes
     */
    private ListenableFuture<T> submit(Callable<T> task) {
-      final ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
+      ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
       Transaction transaction = Transaction.current();
       if (transaction != null) {
          // play nice with transactions -- queue up actions so that they are only submitted
@@ -438,13 +425,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     */
    static <T> void submitFuture(final AsynchronousAtom<T> atom,
          final ListenableFutureTask<T> future) {
-      threadPool.execute(atom, new Runnable() {
-         @SuppressWarnings("synthetic-access")
-         @Override 
-         public void run() {
-            atom.runSingleTask(future);
-         }
-      });
+      threadPool.execute(atom, () -> atom.runSingleTask(future));
    }
    
    /**

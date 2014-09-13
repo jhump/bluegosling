@@ -11,6 +11,9 @@ public class HashCompositeTrie<K, C, V>
 
    static class TrieNode<C, K, V> extends HashMap<C, TrieNode<C, K, V>>
          implements AbstractTrie.Node<C, K, V, TrieNode<C, K, V>> {
+      
+      private static final long serialVersionUID = -3245742966082088036L;
+      
       final TrieNode<C, K, V> parent;
       final C key;
       K leafKey;

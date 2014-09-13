@@ -35,12 +35,12 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       void addToCount(int delta);
 
       N getParent();
+      Iterator<N> childIterator();
 
       // map operations, for working with direct children of this node
       N get(Object key);
-      N put (K key, N node);
+      N put(K key, N node);
       N remove(Object key);
-      Iterator<N> childIterator();
       boolean isEmpty();
       void clear();
    }

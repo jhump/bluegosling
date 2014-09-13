@@ -13,6 +13,9 @@ public class HashSequenceTrie<K, V>
 
    static class TrieNode<K, V> extends HashMap<K, TrieNode<K, V>>
          implements AbstractTrie.Node<K, Void, V, TrieNode<K, V>> {
+
+      private static final long serialVersionUID = -681414287890324281L;
+      
       final TrieNode<K, V> parent;
       final K key;
       V value;

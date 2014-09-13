@@ -454,6 +454,7 @@ public class PipeliningExecutorService<K> {
             // try to interrupt current task
             ((Future<?>) r).cancel(true);
          }
+         // TODO: terminated latch needs to be opened
          return Collections.unmodifiableList(aborted);
       }
       
@@ -482,6 +483,7 @@ public class PipeliningExecutorService<K> {
             }
          }
          return Collections.unmodifiableList(purged);
+         // TODO: terminated latch may need to be opened
       }
       
       /**

@@ -1,17 +1,63 @@
 package com.apriori.util;
 
+import com.apriori.possible.Optionals;
+
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A partial function that computes a value from three inputs.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @param <I1> the type of the first input
- * @param <I2> the type of the second input
- * @param <I3> the type of the three input
- * @param <O> the output type
+ * @param <T> the type of the first input
+ * @param <U> the type of the second input
+ * @param <V> the type of the three input
+ * @param <R> the result type
  */
 @FunctionalInterface
-public interface PartialTriFunction<I1, I2, I3, O> extends TriFunction<I1, I2, I3, Optional<O>> {
+public interface PartialTriFunction<T, U, V, R> extends TriFunction<T, U, V, Optional<R>> {
+   /**
+    * Returns a composed function that first applies this function to
+    * its input, and then applies the {@code after} function to the result.
+    * If evaluation of either function throws an exception, it is relayed to
+    * the caller of the composed function.
+    *
+    * @param <V> the type of output of the {@code after} function, and of the
+    *           composed function
+    * @param after the function to apply after this function is applied
+    * @return a composed function that first applies this function and then
+    * applies the {@code after} function
+    * @throws NullPointerException if after is null
+    */
+   default <W> PartialTriFunction<T, U, V, W> maybeThen(Function<? super R, ? extends W> after) {
+       Objects.requireNonNull(after);
+       return (T t, U u, V v) -> {
+          Optional<R> r = apply(t, u, v);
+          return r.isPresent() ? Optional.ofNullable(after.apply(r.get())) : Optional.empty();
+       };
+   }
+
+   /**
+    * Returns a composed function that first applies this function to
+    * its input, and then applies the {@code after} function to the result.
+    * If evaluation of either function throws an exception, it is relayed to
+    * the caller of the composed function.
+    *
+    * @param <V> the type of output of the {@code after} function, and of the
+    *           composed function
+    * @param after the function to apply after this function is applied
+    * @return a composed function that first applies this function and then
+    * applies the {@code after} function
+    * @throws NullPointerException if after is null
+    */
+   default <W> PartialTriFunction<T, U, V, W> maybeThen(
+         PartialFunction<? super R, ? extends W> after) {
+       Objects.requireNonNull(after);
+       return (T t, U u, V v) -> {
+          Optional<R> r = apply(t, u, v);
+          return r.isPresent() ? Optionals.upcast(after.apply(r.get())) : Optional.empty();
+       };
+   }
 }

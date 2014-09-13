@@ -140,9 +140,6 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
             }
             Entry<?, ?> other = (Entry<?, ?>) o;
             Object key = other.getKey();
-            if (!(key instanceof Iterable)) {
-               return false;
-            }
             N node = get(asIterable(key));
             return node != null && node.valuePresent()
                   && Objects.equals(node.getValue(), other.getValue());
@@ -155,9 +152,6 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
             }
             Entry<?, ?> other = (Entry<?, ?>) o;
             Object key = other.getKey();
-            if (!(key instanceof Iterable)) {
-               return false;
-            }
             N node = get(asIterable(key));
             if (node == null || !node.valuePresent()
                   || !Objects.equals(node.getValue(), other.getValue())) {

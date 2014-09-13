@@ -1,31 +1,34 @@
 package com.apriori.reflect;
 
+import java.util.Objects;
+import java.util.function.BiFunction;
+
 /**
- * A {@link ClassVisitor} that crawls an entire type hierarchy. It delegates to another visitor for
- * each type in the hierarchy.
+ * An object that scans an entire type hierarchy. It delegates to a given action for each type in
+ * the hierarchy.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
- * @param <R> result type of invoking the crawler
- * @param <P> parameter type for invoking the crawler (or {@code Void} if there is no parameter)
+ * @param <R> result type of invoking the scanner
+ * @param <P> parameter type for invoking the scanner (or {@code Void} if there is no parameter)
  * 
  * @see #builder()
- * @see #crawlWith(Class, Object, ClassVisitor)
+ * @see #scanWith(Class, Object, BiFunction)
  */
-public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
+public class ClassHierarchyScanner<R, P> {
    
    /**
-    * Builder pattern for constructing {@link ClassHierarchyCrawler} instances.
+    * Builder pattern for constructing {@link ClassHierarchyScanner} instances.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
-    * @param <R> result type of invoking the crawler
-    * @param <P> parameter type for invoking the crawler (or {@code Void} if there is no parameter)
+    * @param <R> result type of invoking the scanner
+    * @param <P> parameter type for invoking the scanner (or {@code Void} if there is no parameter)
     * 
-    * @see ClassHierarchyCrawler#builder()
+    * @see ClassHierarchyScanner#builder()
     */
    public static class Builder<R, P> {
-      private ClassVisitor<R, P> visitor;
+      private BiFunction<Class<?>, P, R> fn;
       private boolean preOrder = true;
       private boolean earlyOut = true;
       private boolean includeInterfaces = true;
@@ -34,16 +37,14 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       }
       
       /**
-       * A visitor that is invoked for each class in the hierarchy.
+       * An action that is invoked for each class in the hierarchy.
        * 
-       * @param aVisitor a visitor
+       * @param function a function that accepts the visited class and the current context parameter
+       *       and returns a result value
        * @return {@code this}, for method chaining
        */
-      public Builder<R, P> forEachClass(ClassVisitor<R, P> aVisitor) {
-         if (aVisitor == null) {
-            throw new NullPointerException();
-         }
-         this.visitor = aVisitor;
+      public Builder<R, P> forEachClass(BiFunction<Class<?>, P, R> function) {
+         this.fn = Objects.requireNonNull(function);
          return this;
       }
 
@@ -71,29 +72,29 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       
       /**
        * Indicates that crawling should end as soon as visiting one of the types results in a
-       * non-null value. The first non-null value returned by a visitor is the returned result from
-       * the crawl.
+       * non-null value. The first non-null value returned by an action is the returned result from
+       * the scan operation.
        * 
        * @return {@code this}, for method chaining
        */
-      public Builder<R, P> crawlUntilValueFound() {
+      public Builder<R, P> scanUntilValueFound() {
          this.earlyOut = true;
          return this;
       }
       
       /**
-       * Indicates that all types are crawled. Only the last result, from visiting the last type, is
+       * Indicates that all types are scanned. Only the last result, from visiting the last type, is
        * returned.
        * 
        * @return {@code this}, for method chaining
        */
-      public Builder<R, P> crawlEverything() {
+      public Builder<R, P> scanEverything() {
          this.earlyOut = false;
          return this;
       }
       
       /**
-       * Indicates that all interfaces implemented by a type will be included in the crawl.
+       * Indicates that all interfaces implemented by a type will be included in the scan.
        * 
        * @return {@code this}, for method chaining
        */
@@ -103,8 +104,8 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       }
       
       /**
-       * Indicates that interfaces are skipped during the crawl. Only non-interface types - classes
-       * and ancestor classes - are included in the crawl.
+       * Indicates that interfaces are skipped during the scan. Only non-interface types - classes
+       * and ancestor classes - are included in the scan.
        * 
        * @return {@code this}, for method chaining
        */
@@ -114,21 +115,21 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       }
       
       /**
-       * Builds a crawler with the settings specified via this builder.
+       * Builds a scanner with the settings specified via this builder.
        * 
        * @return a type hierarchy crawler
        */
-      public ClassHierarchyCrawler<R, P> build() {
-         if (visitor == null) {
+      public ClassHierarchyScanner<R, P> build() {
+         if (fn == null) {
             throw new IllegalStateException("Visitor for each class never specified");
          }
-         return new ClassHierarchyCrawler<R, P>(visitor, preOrder, earlyOut, includeInterfaces);
+         return new ClassHierarchyScanner<R, P>(fn, preOrder, earlyOut, includeInterfaces);
       }
    }
    
    /**
-    * Creates a new builder. The default settings include pre-order traversal, stopping the crawl on
-    * the first non-null result, and including interfaces in the crawl.
+    * Creates a new builder. The default settings include pre-order traversal, stopping the scan on
+    * the first non-null result, and including interfaces in the scan.
     * 
     * @return a new builder
     */
@@ -137,50 +138,49 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
    }
    
    /**
-    * Crawls the hierarchy of the specified type using the specified visitor. The default settings
-    * will be used: pre-order traversal, stopping the crawl on the first non-null result, and
-    * including interfaces in the crawl.
+    * Scans the hierarchy of the specified type using the specified action. The default settings
+    * will be used: pre-order traversal, stopping the scan on the first non-null result, and
+    * including interfaces in the scan.
     * 
-    * @param clazz the type whose hierarchy will be crawled
+    * @param clazz the type whose hierarchy will be scanned
     * @param param an optional parameter
-    * @param visitor the visitor that is invoked for each type in the hierarchy
-    * @return the first non-null result from the specified visitor
+    * @param action the action that is invoked for each type in the hierarchy
+    * @return the first non-null result from the specified action
     */
-   public static <R, P> R crawlWith(Class<?> clazz, P param, ClassVisitor<R, P> visitor) {
-      return ClassHierarchyCrawler.<R, P>builder().forEachClass(visitor).build()
-            .visit(clazz, param);
+   public static <R, P> R scanWith(Class<?> clazz, P param, BiFunction<Class<?>, P, R> action) {
+      return ClassHierarchyScanner.<R, P>builder().forEachClass(action).build()
+            .scan(clazz, param);
    }
    
-   private final ClassVisitor<R, P> visitor;
+   private final BiFunction<Class<?>, P, R> fn;
    private final boolean preOrder;
    private final boolean earlyOut;
    private final boolean includeInterfaces;
    
-   ClassHierarchyCrawler(ClassVisitor<R, P> visitor, boolean preOrder, boolean earlyOut,
+   ClassHierarchyScanner(BiFunction<Class<?>, P, R> fn, boolean preOrder, boolean earlyOut,
          boolean includeInterfaces) {
-      this.visitor = visitor;
+      this.fn = fn;
       this.preOrder = preOrder;
       this.earlyOut = earlyOut;
       this.includeInterfaces = includeInterfaces;
    }
    
    /**
-    * Crawls the hierarchy of the specified type. The parameter is passed to the underlying visitor
+    * Scans the hierarchy of the specified type. The parameter is passed to the underlying action
     * for each type visited. The result will either be the first non-null result from the underlying
-    * visitor or the last result.
+    * action or the last result.
     * 
     * @param clazz a type
     * @param param an optional parameter
     * @return a result
     * 
-    * @see Builder#crawlEverything()
-    * @see Builder#crawlUntilValueFound() 
+    * @see Builder#scanEverything()
+    * @see Builder#scanUntilValueFound() 
     */
-   @Override
-   public R visit(Class<?> clazz, P param) {
+   public R scan(Class<?> clazz, P param) {
       R ret = null;
       if (preOrder) {
-         ret = visitor.visit(clazz, param);
+         ret = fn.apply(clazz, param);
          if (ret != null && earlyOut) {
             return ret;
          }
@@ -188,7 +188,7 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       // now go through super-classes
       Class<?> superClass = clazz.getSuperclass();
       if (superClass != null) {
-         R val = visit(superClass, param);
+         R val = scan(superClass, param);
          if (val != null && earlyOut) {
             return val;
          }
@@ -196,14 +196,14 @@ public class ClassHierarchyCrawler<R, P> implements ClassVisitor<R, P> {
       // and interfaces
       if (includeInterfaces) {
          for (Class<?> iface : clazz.getInterfaces()) {
-            R val = visit(iface, param);
+            R val = scan(iface, param);
             if (val != null && earlyOut) {
                return val;
             }
          }
       }
       if (!preOrder) {
-         ret = visitor.visit(clazz, param);
+         ret = fn.apply(clazz, param);
       }
       return ret;
    }

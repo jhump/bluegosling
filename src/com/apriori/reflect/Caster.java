@@ -53,6 +53,7 @@ import java.util.Map;
  *
  * @param <T> the interface type to which objects are cast
  */
+// TODO: use Types.isAssignable when determining method compatibility instead of raw class tokens
 public class Caster<T> {
    /** The interface to which objects are cast. */
    private final Class<T> iface;

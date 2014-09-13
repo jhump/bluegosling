@@ -21,10 +21,22 @@ public interface ImmutableSortedSet<E> extends ImmutableSet<E> {
    E higher(E e);
    E ceil(E e);
    E lower(E e);
-   ImmutableSortedSet<E> subSet(E from, E to);
+   
+   default ImmutableSortedSet<E> subSet(E from, E to) {
+      return subSet(from, true, to, false);
+   }
+   
    ImmutableSortedSet<E> subSet(E from, boolean fromInclusive, E to, boolean toInclusive);
-   ImmutableSortedSet<E> headSet(E to);
+   
+   default ImmutableSortedSet<E> headSet(E to) {
+      return headSet(to, false);
+   }
+   
    ImmutableSortedSet<E> headSet(E to, boolean inclusive);
-   ImmutableSortedSet<E> tailSet(E from);
+   
+   default ImmutableSortedSet<E> tailSet(E from) {
+      return tailSet(from, true);
+   }
+   
    ImmutableSortedSet<E> tailSet(E from, boolean inclusive);
 }

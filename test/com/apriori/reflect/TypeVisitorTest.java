@@ -4,6 +4,7 @@ import static com.apriori.reflect.TypeTesting.GENERIC_ARRAY_TYPE;
 import static com.apriori.reflect.TypeTesting.PARAM_TYPE;
 import static com.apriori.reflect.TypeTesting.TYPE_VAR_T;
 import static com.apriori.reflect.TypeTesting.WILDCARD_EXTENDS;
+import static com.apriori.testing.MoreAsserts.assertThrows;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -25,68 +26,76 @@ import java.util.concurrent.atomic.AtomicReference;
 public class TypeVisitorTest {
    
    @Test public void defaults() {
-      TypeVisitor<Object, Void> visitor = new TypeVisitor<Object, Void>() { };
-      // defaultAction returns null unless overridden
-      assertNull(visitor.visit(Class.class, null));
-      assertNull(visitor.visit(PARAM_TYPE, null));
-      assertNull(visitor.visit(GENERIC_ARRAY_TYPE, null));
-      assertNull(visitor.visit(WILDCARD_EXTENDS, null));
-      assertNull(visitor.visit(TYPE_VAR_T, null));
-      assertNull(visitor.visit(InvalidType.INSTANCE, null));
-      // double-check that all other methods call defaultAction
-      AtomicInteger count = new AtomicInteger();
-      Object r = new Object();
-      visitor = new TypeVisitor<Object, Void>() {
-         @Override public Object defaultAction(Type type, Void v) {
-            count.incrementAndGet();
-            return r;
-         }
-      };
-      assertSame(r, visitor.visit(Class.class, null));
-      assertEquals(1, count.get());
-      assertSame(r, visitor.visit(PARAM_TYPE, null));
-      assertEquals(2, count.get());
-      assertSame(r, visitor.visit(GENERIC_ARRAY_TYPE, null));
-      assertEquals(3, count.get());
-      assertSame(r, visitor.visit(WILDCARD_EXTENDS, null));
-      assertEquals(4, count.get());
-      assertSame(r, visitor.visit(TYPE_VAR_T, null));
-      assertEquals(5, count.get());
-      assertSame(r, visitor.visit(InvalidType.INSTANCE, null));
-      assertEquals(6, count.get());
+      {
+         TypeVisitor<Object, Void> visitor = new TypeVisitor<Object, Void>() { };
+         // defaultAction returns null unless overridden
+         assertNull(visitor.visit(Class.class, null));
+         assertNull(visitor.visit(PARAM_TYPE, null));
+         assertNull(visitor.visit(GENERIC_ARRAY_TYPE, null));
+         assertNull(visitor.visit(WILDCARD_EXTENDS, null));
+         assertNull(visitor.visit(TYPE_VAR_T, null));
+         // unknown type throws
+         assertThrows(UnknownTypeException.class, () -> visitor.visit(InvalidType.INSTANCE, null));
+      }
+      {
+         // double-check that all other methods call defaultAction
+         AtomicInteger count = new AtomicInteger();
+         Object r = new Object();
+         TypeVisitor<Object, Void> visitor = new TypeVisitor<Object, Void>() {
+            @Override public Object defaultAction(Type type, Void v) {
+               count.incrementAndGet();
+               return r;
+            }
+         };
+         assertSame(r, visitor.visit(Class.class, null));
+         assertEquals(1, count.get());
+         assertSame(r, visitor.visit(PARAM_TYPE, null));
+         assertEquals(2, count.get());
+         assertSame(r, visitor.visit(GENERIC_ARRAY_TYPE, null));
+         assertEquals(3, count.get());
+         assertSame(r, visitor.visit(WILDCARD_EXTENDS, null));
+         assertEquals(4, count.get());
+         assertSame(r, visitor.visit(TYPE_VAR_T, null));
+         assertEquals(5, count.get());
+         // unknown type throws
+         assertThrows(UnknownTypeException.class, () -> visitor.visit(InvalidType.INSTANCE, null));
+      }
    }
 
    @Test public void builderDefaults() {
       // Like above, but using result of a Builder to make sure it behaves the same way
-      
-      TypeVisitor<Object, Void> visitor = new TypeVisitor.Builder<Object, Void>().build();
-      // defaultAction returns null unless overridden
-      assertNull(visitor.visit(Class.class, null));
-      assertNull(visitor.visit(PARAM_TYPE, null));
-      assertNull(visitor.visit(GENERIC_ARRAY_TYPE, null));
-      assertNull(visitor.visit(WILDCARD_EXTENDS, null));
-      assertNull(visitor.visit(TYPE_VAR_T, null));
-      assertNull(visitor.visit(InvalidType.INSTANCE, null));
-      // double-check that all other methods call defaultAction
-      AtomicInteger count = new AtomicInteger();
-      Object r = new Object();
-      visitor = new TypeVisitor.Builder<Object, Void>().defaultAction(
-            (type, v) -> {
-               count.incrementAndGet();
-               return r;
-            }).build();
-      assertSame(r, visitor.visit(Class.class, null));
-      assertEquals(1, count.get());
-      assertSame(r, visitor.visit(PARAM_TYPE, null));
-      assertEquals(2, count.get());
-      assertSame(r, visitor.visit(GENERIC_ARRAY_TYPE, null));
-      assertEquals(3, count.get());
-      assertSame(r, visitor.visit(WILDCARD_EXTENDS, null));
-      assertEquals(4, count.get());
-      assertSame(r, visitor.visit(TYPE_VAR_T, null));
-      assertEquals(5, count.get());
-      assertSame(r, visitor.visit(InvalidType.INSTANCE, null));
-      assertEquals(6, count.get());
+      {
+         TypeVisitor<Object, Void> visitor = new TypeVisitor.Builder<Object, Void>().build();
+         // defaultAction returns null unless overridden
+         assertNull(visitor.visit(Class.class, null));
+         assertNull(visitor.visit(PARAM_TYPE, null));
+         assertNull(visitor.visit(GENERIC_ARRAY_TYPE, null));
+         assertNull(visitor.visit(WILDCARD_EXTENDS, null));
+         assertNull(visitor.visit(TYPE_VAR_T, null));
+         assertThrows(UnknownTypeException.class, () -> visitor.visit(InvalidType.INSTANCE, null));
+      }
+      {
+         // double-check that all other methods call defaultAction
+         AtomicInteger count = new AtomicInteger();
+         Object r = new Object();
+         TypeVisitor<Object, Void> visitor = new TypeVisitor.Builder<Object, Void>().defaultAction(
+               (type, v) -> {
+                  count.incrementAndGet();
+                  return r;
+               }).build();
+         assertSame(r, visitor.visit(Class.class, null));
+         assertEquals(1, count.get());
+         assertSame(r, visitor.visit(PARAM_TYPE, null));
+         assertEquals(2, count.get());
+         assertSame(r, visitor.visit(GENERIC_ARRAY_TYPE, null));
+         assertEquals(3, count.get());
+         assertSame(r, visitor.visit(WILDCARD_EXTENDS, null));
+         assertEquals(4, count.get());
+         assertSame(r, visitor.visit(TYPE_VAR_T, null));
+         assertEquals(5, count.get());
+         // unknown type throws
+         assertThrows(UnknownTypeException.class, () -> visitor.visit(InvalidType.INSTANCE, null));
+      }
    }
 
    @Test public void visit() {

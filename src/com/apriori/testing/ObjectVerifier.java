@@ -14,14 +14,13 @@ public interface ObjectVerifier<T> {
     * <p>
     * The return value will generally be the test object but a different value can be returned
     * instead for various effects. If the verification fails, this method should throw an
-    * {@code AssertionFailedError}.
+    * {@link AssertionError}.
     * 
     * @param test the object to test
     * @param reference the reference object
     * @return a value to return to the calling test, usually {@code test} but could be
     *         {@code reference} or even a different object of the same type
-    * @throws junit.framework.AssertionFailedError if the test object does not sufficiently match
-    *            the reference object
+    * @throws AssertionError if the test object does not sufficiently match the reference object
     */
    T verify(T test, T reference);
 }

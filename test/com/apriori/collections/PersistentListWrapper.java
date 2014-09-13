@@ -2,12 +2,11 @@ package com.apriori.collections;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.apriori.collections.ImmutableCollectionWrapper.fromIterable;
+import java.util.NoSuchElementException;
 
 // TODO: javadoc
 class PersistentListWrapper<E>
-      extends PersistentCollectionWrapper<E, List<E>, ImmutableListWrapper<E>, PersistentListWrapper<E>>
+      extends PersistentCollectionWrapper<E, List<E>, PersistentListWrapper<E>>
       implements PersistentList<E> {
    
    private final boolean addLast;
@@ -27,33 +26,32 @@ class PersistentListWrapper<E>
    }
 
    @Override
-   protected ImmutableListWrapper<E> wrapImmutable(List<E> list) {
-      return new ImmutableListWrapper<E>(list);
-   }
-
-   @Override
    protected PersistentListWrapper<E> wrapPersistent(List<E> list) {
       return new PersistentListWrapper<E>(list);
    }
 
    @Override
    public E get(int i) {
-      return wrapper.get(i);
+      return collection.get(i);
    }
 
    @Override
    public int indexOf(Object o) {
-      return wrapper.indexOf(o);
+      return collection.indexOf(o);
    }
 
    @Override
    public int lastIndexOf(Object o) {
-      return wrapper.lastIndexOf(o);
+      return collection.lastIndexOf(o);
    }
 
    @Override
    public E first() {
-      return wrapper.first();
+      try {
+         return collection.get(0);
+      } catch (IndexOutOfBoundsException e) {
+         throw new NoSuchElementException();
+      }
    }
 
    @Override
@@ -76,53 +74,53 @@ class PersistentListWrapper<E>
 
    @Override
    public PersistentListWrapper<E> add(int i, E e) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.add(i, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> addAll(int i, Iterable<? extends E> items) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.addAll(i, fromIterable(items));
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> addFirst(E e) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.add(0, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> addLast(E e) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.add(e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> set(int i, E e) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.set(i, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> remove(int i) {
-      List<E> newList = new ArrayList<E>(wrapped());
+      List<E> newList = new ArrayList<E>(collection);
       newList.remove(i);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
    public PersistentListWrapper<E> subList(int from, int to) {
-      return new PersistentListWrapper<E>(addLast, wrapped().subList(from, to));
+      return new PersistentListWrapper<E>(addLast, collection.subList(from, to));
    }
 
    @Override
    public PersistentListWrapper<E> rest() {
-      return isEmpty() ? this : new PersistentListWrapper<E>(addLast, wrapped().subList(1, size()));
+      return isEmpty() ? this : new PersistentListWrapper<E>(addLast, collection.subList(1, size()));
    }
 }

@@ -73,13 +73,10 @@ public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
       assertEquals("ABC", atom.getRootValue());
       assertEquals("def", atom.get()); // root changes only impact new threads
       
-      Callable<String> getRootValue = new Callable<String>() {
-         @Override
-         public String call() throws Exception {
-            assertEquals(atom.getRootValue(), atom.get());
-            atom.set("something else");
-            return atom.getRootValue();
-         }
+      Callable<String> getRootValue = () -> {
+         assertEquals(atom.getRootValue(), atom.get());
+         atom.set("something else");
+         return atom.getRootValue();
       };
       FutureTask<String> future1 = new FutureTask<String>(getRootValue);
       new Thread(future1).start();

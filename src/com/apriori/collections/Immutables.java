@@ -392,7 +392,7 @@ public final class Immutables {
       return makeImmutableSet(elements.clone());
    }
 
-   public static <E> ImmutableSortedSet<E> emptyImmutableSortedSet() {
+   public static <E extends Comparable<E>> ImmutableSortedSet<E> emptyImmutableSortedSet() {
       @SuppressWarnings("unchecked")
       ImmutableSortedSet<E> ret = (ImmutableSortedSet<E>) EmptySortedSet.INSTANCE;
       return ret;
@@ -410,8 +410,7 @@ public final class Immutables {
 
    public static <E> ImmutableSortedSet<E> singletonImmutableSortedSet(Comparator<? super E> comp,
          E e) {
-      // TODO
-      return null;
+      return new SingletonSortedSet<E>(e, comp);
    }
 
    @SafeVarargs
@@ -437,8 +436,8 @@ public final class Immutables {
       return null;
    }
 
-   public static <E> ImmutableSortedSet<E> toImmutableSortedSet(Comparator<? super E> comparator,
-         SortedSet<? extends E> set) {
+   public static <E> ImmutableSortedSet<E> toImmutableSortedSet(SortedSet<E> set) {
+      Comparator<? super E> comparator = set.comparator();
       // TODO
       return null;
    }
@@ -1637,7 +1636,82 @@ public final class Immutables {
          return CollectionUtils.hashCode(this);
       }
    }
-   
+
+   private static class SingletonSortedSet<E> extends SingletonSet<E>
+         implements ImmutableSortedSet<E> {
+      
+      private final Comparator<? super E> comparator;
+      
+      SingletonSortedSet(E e, Comparator<? super E> comparator) {
+         super(e);
+         this.comparator = comparator;
+      }
+
+      @Override
+      public Comparator<? super E> comparator() {
+         return comparator;
+      }
+
+      @Override
+      public E first() {
+         return element;
+      }
+
+      @Override
+      public ImmutableSortedSet<E> rest() {
+         @SuppressWarnings("unchecked")
+         ImmutableSortedSet<E> ret = (ImmutableSortedSet<E>) new EmptySortedSet(comparator);
+         return ret;
+      }
+
+      @Override
+      public E last() {
+         return element;
+      }
+
+      @Override
+      public E floor(E e) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public E higher(E e) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public E ceil(E e) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public E lower(E e) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public ImmutableSortedSet<E> subSet(E from, boolean fromInclusive, E to, boolean toInclusive) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public ImmutableSortedSet<E> headSet(E to, boolean inclusive) {
+         // TODO: implement me
+         return null;
+      }
+
+      @Override
+      public ImmutableSortedSet<E> tailSet(E from, boolean inclusive) {
+         // TODO: implement me
+         return null;
+      }
+   }
+
    private static class ImmutableListImpl<E> extends AbstractRandomAccessImmutableList<E> {
       private final Object elements[];
       
