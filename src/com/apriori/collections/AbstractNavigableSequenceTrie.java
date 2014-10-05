@@ -17,6 +17,7 @@ import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTrie.NavigableNode<K, Void, V, N>>
       extends AbstractNavigableTrie<K, Void, V, N> implements NavigableSequenceTrie<K, V> {
@@ -59,7 +60,6 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       N node = get(asIterable(key));
       return node != null ? node.getValue() : null;
    }
-
 
    @Override
    public Entry<List<K>, V> lowerEntry(Iterable<K> key) {
@@ -268,7 +268,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       return new AbstractSet<Entry<List<K>, V>>() {
          @Override
          public Iterator<Entry<List<K>, V>> iterator() {
-            return entryIterator((iter, node) -> new EntryImpl<>(iter.createKeyList(), node));
+            return entryIterator((supplier, node) -> new EntryImpl<>(supplier.get(), node));
          }
 
          @Override
@@ -531,8 +531,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(
-            BiFunction<EntryIterator<T, K, Void, V, N>, N, T> producer) {
+      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Iterables.emptyIterator();
@@ -589,13 +588,13 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       @Override
       public Iterator<List<K>> iterator() {
          return AbstractNavigableSequenceTrie.this.entryIterator(
-               (iter, node) -> iter.createKeyList());
+               (supplier, node) -> supplier.get());
       }
 
       @Override
       public Iterator<List<K>> descendingIterator() {
          return AbstractNavigableSequenceTrie.this.descendingEntryIterator(
-               (iter, node) -> iter.createKeyList());
+               (supplier, node) -> supplier.get());
       }
 
       @Override

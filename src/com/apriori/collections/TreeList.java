@@ -18,7 +18,7 @@ import java.util.RandomAccess;
  * uses a red-black tree to keep the tree roughly height-balanced.
  * 
  * <p>The main advantage this list has over other lists is that it supports removal of an element by
- * list index in logarithmic time whereas most others require linear time. For example {@link
+ * list index in logarithmic time whereas others require linear time. For example {@link
  * java.util.LinkedList} requires a linear seek followed by constant time removal and {@link
  * java.util.ArrayList} requires a constant time random access followed by a linear compaction that
  * shifts subsequent elements back to fill the blank left by the deleted element.

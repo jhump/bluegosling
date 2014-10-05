@@ -14,7 +14,20 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
+/**
+ * An abstract base class for {@link SequenceTrie} implementations. Concrete sub-classes need only
+ * provide a concrete implementation of {@link Node} and override the {@link #newNode} method. This
+ * is ideal for tries where each node uses some sort of map to store the edges (which map key
+ * elements to sub-tries).
+ *
+ * @param <K> the component type of keys in the map (a key will be a sequence of these components)  
+ * @param <V> the type of values in the map
+ * @param <N> the concrete type of trie node
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V, N>>
       extends AbstractTrie<K, Void, V, N> implements SequenceTrie<K, V> {
 
@@ -71,7 +84,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       return new AbstractSet<List<K>>() {
          @Override
          public Iterator<List<K>> iterator() {
-            return entryIterator((iter, node) -> iter.createKeyList());
+            return entryIterator((supplier, node) -> supplier.get());
          }
 
          @Override
@@ -129,7 +142,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       return new AbstractSet<Entry<List<K>, V>>() {
          @Override
          public Iterator<Entry<List<K>, V>> iterator() {
-            return entryIterator((iter, node) -> new EntryImpl<>(iter.createKeyList(), node));
+            return entryIterator((supplier, node) -> new EntryImpl<>(supplier.get(), node));
          }
 
          @Override
@@ -230,14 +243,12 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       }
       
       N getRoot() {
-         N node = this.root;
-         if (node == null || (node.isEmpty() && !node.valuePresent())
+         if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
-            // node needs to be recomputed
-            node = parent.get(prefix);
-            this.root = node;
+            // root needs to be recomputed
+            root = parent.get(prefix);
          }
-         return node;
+         return root;
       }
 
       @Override
@@ -251,13 +262,12 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       @Override
       protected N ensurePath(Iterable<K> path) {
          // make sure we have a path to this prefix trie's root
-         N node = this.root;
-         if (node == null || (node.isEmpty() && !node.valuePresent())
+         if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
-            // node needs to be recomputed
-            this.root = node = parent.ensurePath(prefix);
+            // root needs to be recomputed
+            root = parent.ensurePath(prefix);
          }
-         return ensurePath(node, path);
+         return ensurePath(root, path);
       }
 
       @Override
@@ -304,8 +314,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(
-            BiFunction<EntryIterator<T, K, Void, V, N>, N, T> producer) {
+      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Iterables.emptyIterator();

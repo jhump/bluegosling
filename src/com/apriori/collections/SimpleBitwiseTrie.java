@@ -58,11 +58,12 @@ public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
       }
    };
    
-   static class TrieNode {
-      TrieNode n0, n1;
+   static class TrieNode<K,V> {
+      TrieNode<K, V> n0, n1;
+      ValueNode<K, V> value;
    }
    
-   static class ValueNode<K, V> extends TrieNode {
+   static class ValueNode<K, V> {
       K key;
       V value;
       ValueNode<K, V> next;
@@ -75,7 +76,7 @@ public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
    
    final BitConverter<? super K> bitConverter;
    final Comparator<? super K> tieBreaker;
-   TrieNode root;
+   TrieNode<K, V> root;
    int size;
    int modCount;
    
@@ -89,8 +90,8 @@ public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
    }
 
    public K nearestKey(K key) {
-      // TODO
-      return null;
+      Entry<K, V> entry = nearestEntry(key);
+      return entry != null ? entry.getKey() : null;
    }
 
    public Entry<K, V> nearestEntry(K key) {
@@ -117,26 +118,26 @@ public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
       @SuppressWarnings("unchecked") // okay if cast causes bitConverter to throw ClassCastException
       K k = (K) key;
       BooleanIterator iter = bitConverter.getComponents(k).iterator();
-      TrieNode node = root;
+      TrieNode<K, V> node = root;
       while (iter.hasNext() && node != null) {
          node = iter.nextBoolean() ? node.n1 : node.n0;
       }
-      if (iter.hasNext()) {
+      if (iter.hasNext() || node == null || node.value == null) {
          return false;
       }
-      if (!(node instanceof ValueNode)) {
-         return false;
-      }
-      @SuppressWarnings("unchecked") // see above remark
-      ValueNode<K, V> valueNode = (ValueNode<K, V>) node;
+      ValueNode<K, V> valueNode = node.value;
       if (tieBreaker == null) {
          assert valueNode.next == null;
          return true;
       }
       while (valueNode != null) {
-         if (tieBreaker.compare(k, valueNode.key) == 0) {
+         int c = tieBreaker.compare(k, valueNode.key);
+         if (c == 0) {
             // found it!
             return true;
+         } else if (c < 0) {
+            // passed it, must not be here
+            return false;
          }
          valueNode = valueNode.next;
       }
@@ -213,8 +214,8 @@ public class SimpleBitwiseTrie<K, V> extends AbstractMap<K, V>
 
    @Override
    public K ceilingKey(K key) {
-      // TODO: implement me
-      return null;
+      Entry<K, V> entry = ceilingEntry(key);
+      return entry != null ? entry.getKey() : null;
    }
 
    @Override

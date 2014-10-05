@@ -159,7 +159,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
          // Stream matched part of existing prefix. So we split the existing prefix into two and
          // place new value at the midpoint
          // I.e.
-         //                |                                | (ss)
+         //                |                                | (cp)
          // turns this:    |            into this:          |
          //                | (ep)                           * (sn) 
          //                |                                |
@@ -169,7 +169,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
          // where:
          //  ep === prefix for existing edge (gets split into ss and es)
          //  en === node for existing edge
-         //  ss === supplied stream (aka common prefix)
+         //  cp === common prefix (same as supplied stream)
          //  sn === supplied node
          //  es === existing suffix (existing prefix with common prefix chopped off the top)
          TrieNode<K, V> newNode = new TrieNode<K, V>();
@@ -266,7 +266,7 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       if (c < 0) {
          ValueNode<K, V> tmp = node.value;
          node.value = newValue;
-         node.value.next = tmp;
+         newValue.next = tmp;
          return null;
       } else if (c == 0) {
          ValueNode<K, V> ret = node.value;

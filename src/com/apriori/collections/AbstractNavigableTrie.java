@@ -9,23 +9,122 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NavigableMap;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
+/**
+ * An abstract base class for navigable (e.g. sorted) tries. This extends the basic abstract trie
+ * to provide operations used to implement {@link NavigableMap}s. Navigable tries are based on
+ * nodes that provide additional operations; as {@link NavigableMap} is to {@link Map}, so is
+ * {@link NavigableNode} to {@link Node}.
+ *
+ * @param <K> the type of element in each key
+ * @param <X> represents an entire key, or sequence of {@code K} ({@link Void} if no such
+ *       representation is necessary)
+ * @param <V> the type of value in the trie
+ * @param <N> the concrete type of navigable trie node
+ * 
+ * @see AbstractNavigableCompositeTrie
+ * @see AbstractNavigableSequenceTrie
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: javadoc
 abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.NavigableNode<K, X, V, N>>
       extends AbstractTrie<K, X, V, N> {
    
+   /**
+    * A single node in a navigable trie. Key elements are ordered using on the trie's
+    * {@linkplain AbstractNavigableTrie#componentComparator comparator}.
+    *
+    * @param <K> the type of element in each key
+    * @param <X> represents an entire key, or sequence of {@code K} ({@link Void} if no such
+    *       representation is necessary)
+    * @param <V> the type of value in the trie
+    * @param <N> the concrete type of navigable trie node
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    interface NavigableNode<K, X, V, N extends NavigableNode<K, X, V, N>>
          extends Node<K, X, V, N> {
-      // navigable map operations
+      
+      // Navigable map operations
+      
+      /**
+       * Returns the first child entry. The first entry is the one that corresponds to the smallest
+       * key element.
+       *
+       * @return the first child entry
+       */
       Entry<K, N> firstEntry();
+
+      /**
+       * Returns the last child entry. The last entry is the one that corresponds to the largest
+       * key element.
+       *
+       * @return the last child entry
+       */
       Entry<K, N> lastEntry();
+      
+      /**
+       * Returns the entry whose key is the largest key element present that is less than or equal
+       * to the given key element. If no such key is present then {@code null} is returned.
+       *
+       * @param key a key element
+       * @return the entry whose key is the largest key element present that is less than or equal
+       *       to the given element
+       */
       Entry<K, N> floorEntry(K key);
+      
+      /**
+       * Returns the entry whose key is the smallest key element present that is greater than or
+       * equal to the given key element. If no such key is present then {@code null} is returned.
+       *
+       * @param key a key element
+       * @return the entry whose key is the smallest key element present that is greater than or
+       *       equal to the given element
+       */
       Entry<K, N> ceilingEntry(K key);
+      
+      /**
+       * Returns the entry whose key is the largest key element present that is greater than the
+       * given key element. If no such key is present then {@code null} is returned.
+       *
+       * @param key a key element
+       * @return the entry whose key is the largest key element present that is less than the given
+       *       element
+       */
       Entry<K, N> lowerEntry(K key);
+      
+      /**
+       * Returns the entry whose key is the smallest key element present that is greater than the
+       * given key element. If no such key is present then {@code null} is returned.
+       *
+       * @param key a key element
+       * @return the entry whose key is the smallest key element present that is greater than the
+       *       given element
+       */
       Entry<K, N> higherEntry(K key);
+      
+      // A couple of basic navigation operations
+      
+      /**
+       * Provides an iterator over all children of this node in ascending order.
+       *
+       * @return an iterator over all children / sub-tries, in ascending order
+       */
+      @Override Iterator<N> childIterator();
+
+      /**
+       * Provides an iterator over all children of this node in descending order.
+       *
+       * @return an iterator over all children / sub-tries, in descending order
+       */
       Iterator<N> descendingChildIterator();
    }
    
@@ -231,37 +330,50 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       return ret;
    }
 
-   protected <T> Iterator<T> descendingEntryIterator(
-         BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer) {
+   protected <T> Iterator<T> descendingEntryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
       return new DescendingEntryIterator<>(root, producer);
    }
 
    protected <T> Iterator<T> descendingEntryIteratorFrom(
-         BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer,
-         N startAt) {
+         BiFunction<Supplier<List<K>>, N, T> producer, N startAt) {
       return new DescendingEntryIterator<>(root, producer, startAt);
    }
 
    protected static class DescendingEntryIterator<T, K, X, V, N extends NavigableNode<K, X, V, N>>
          implements Iterator<T> {
       final ArrayDeque<StackFrame<K, X, V, N>> frames = new ArrayDeque<>();
-      final BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer;
+      final BiFunction<Supplier<List<K>>, N, T> producer;
       boolean first = true;
       N lastFetched;
       
-      protected DescendingEntryIterator(N root,
-            BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer) {
+      protected DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer) {
          this(root, producer, findLast(root));
       }
       
-      protected DescendingEntryIterator(N root,
-            BiFunction<DescendingEntryIterator<T, K, X, V, N>, N, T> producer, N startAt) {
+      protected DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer,
+            N startAt) {
+         N prev = null;
          while(true) {
             assert startAt != null;
-            frames.push(newStackFrame(startAt));
+            StackFrame<K, X, V, N> frame = newStackFrame(startAt);
+            if (prev != null) {
+               // advance this frame to the right state
+               Iterator<N> iter = frame.iter;
+               boolean found = false;
+               while (iter.hasNext()) {
+                  N n = iter.next();
+                  if (Objects.equals(n, prev)) {
+                     found = true;
+                     break;
+                  }
+               }
+               assert found;
+            }
+            frames.push(frame);
             if (startAt == root) {
                break;
             }
+            prev = startAt;
             startAt = startAt.getParent();
          }
          this.producer = producer;
@@ -295,7 +407,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
             // have to special case initial conditions
             first = false;
             if (top.node.valuePresent()) {
-               return producer.apply(this, lastFetched = top.node);
+               return producer.apply(this::createKeyList, lastFetched = top.node);
             }
          }
          // Find next node:
@@ -317,7 +429,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
             frames.push(top = newStackFrame(node));
          }
          assert top.node.valuePresent();
-         return producer.apply(this, lastFetched = top.node);
+         return producer.apply(this::createKeyList, lastFetched = top.node);
       }
       
       public List<K> createKeyList() {

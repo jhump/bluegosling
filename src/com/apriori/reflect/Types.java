@@ -5,8 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
+import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -14,6 +16,7 @@ import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,10 +37,23 @@ import java.util.stream.Collectors;
 public final class Types {
    
    static final Type EMPTY_TYPES[] = new Type[0];
-   static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
-   static final Class<?> ARRAY_INTERFACES[] = new Class<?>[] { Cloneable.class, Serializable.class };
-   static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
-   static final WildcardType EXTENDS_ANY = newExtendsWildcardType(Object.class);
+   private static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
+   private static final Class<?> ARRAY_INTERFACES[] = new Class<?>[] { Cloneable.class, Serializable.class };
+   private static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
+   private static final WildcardType EXTENDS_ANY = newExtendsWildcardType(Object.class);
+   private static final Method CLASS_FORNAME0;
+   
+   static {
+      Method m;
+      try {
+         m = Class.class.getDeclaredMethod("forName0", String.class, boolean.class,
+               ClassLoader.class);
+         m.setAccessible(true);
+      } catch (Exception e) {
+         m = null;
+      }
+      CLASS_FORNAME0 = m;
+   }
    
    private Types() {}
 
@@ -815,7 +831,8 @@ public final class Types {
                return true;
             }
          }
-         return false;
+         // they might still be assignable if they refer to the same type variable 
+         return from instanceof TypeVariable && to instanceof TypeVariable && equals(to, from);
       } else if (to instanceof Class) {
          Class<?> toClass = (Class<?>) to;
          if (from instanceof GenericArrayType) {
@@ -825,6 +842,8 @@ public final class Types {
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
             return toClass.isAssignableFrom(fromRaw);
+         } else {
+            return false;
          }
       } else if (to instanceof ParameterizedType) {
          ParameterizedType toParamType = (ParameterizedType) to;
@@ -891,12 +910,9 @@ public final class Types {
          } else if (from instanceof GenericArrayType) {
             return isAssignable(toArrayType.getGenericComponentType(),
                   ((GenericArrayType) from).getGenericComponentType());
+         } else {
+            return false;
          }
-      } else if (to instanceof TypeVariable) {
-         // Type variable value is not known. We can only assign to it from another instance of the
-         // same type variable or some other variable or wildcard that extends it. (Extension case
-         // is handled above in check for `from` being a TypeVariable or WildcardType.)
-         return equals(to, from);
       } else if (to instanceof WildcardType) {
          WildcardType toWildcard = (WildcardType) to;
          Type lowerBounds[] = toWildcard.getLowerBounds();
@@ -907,14 +923,20 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignable(from, bound)) {
+            if (!isAssignable(bound, from)) {
                return false;
             }
          }
          return true;
+      } else if (to instanceof TypeVariable) {
+         // We don't actually know the type bound to this variable. So we can only assign to it from
+         // another instance of the same type variable or some other variable or wildcard that
+         // extends it. Both of those cases are handled above (check for `from` being a TypeVariable
+         // or WildcardType). So if we get here, it's not assignable.
+         return false;
+      } else {
+         throw new UnknownTypeException(to);
       }
-      // no match found; not assignment-compatible
-      return false;
    }
    
    /**
@@ -1244,7 +1266,7 @@ public final class Types {
          // it to ignore generic type information. However, the missing type parameter to X, in this
          // example, shouldn't really matter. We statically know, even without the type arg, that
          // the assignment is safe.
-         // TODO: change this to behave in the more intuitive way instead of mimic'ing javac
+         // TODO: change this to behave in the more intuitive way instead of mimic'ing javac?
          boolean useRawTypes = clazz.getTypeParameters().length > 0; 
          return findGenericSuperType(clazz, superClass, useRawTypes, typeVariables);
           
@@ -1445,31 +1467,84 @@ public final class Types {
     */
    public static <T> Class<T[]> getArrayType(Class<T> componentType) {
       requireNonNull(componentType);
-      StringBuilder arrayClassName = new StringBuilder("[");
       if (componentType == void.class) {
          throw new IllegalArgumentException("Cannot create an array with component type void");
-      } else if (componentType.isPrimitive()) {
-         String symbol = PRIMITIVE_CLASS_SYMBOLS.get(componentType);
-         assert symbol != null;
-         arrayClassName.append(symbol);
-      } else if (componentType.isArray()) {
-         arrayClassName.append(componentType.getName());
-      } else {
-         arrayClassName.append("L").append(componentType.getName()).append(";");
       }
-      String className = arrayClassName.toString();
-      // use the component type's class loader to make sure the array type is correct
-      ClassLoader loader = componentType.getClassLoader();
-      try {
-         @SuppressWarnings("unchecked") // we know the type is right since we just built the name
-         Class<T[]> arrayType = (Class<T[]>)
-               (loader == null ? Class.forName(className)
-                     : loader.loadClass(arrayClassName.toString()));
-         assert arrayType.getComponentType() == componentType;
-         return arrayType;
-      } catch (ClassNotFoundException e) {
-         // uh oh, we must have done something wrong
-         throw new RuntimeException("Failed to construct array type", e);
+      boolean canLoad = canLoad(componentType);
+      if (canLoad || CLASS_FORNAME0 != null) {
+         // We should be able to use Class.forName (or a variant thereof) to load the class, so
+         // build the class name.
+         StringBuilder arrayClassName = new StringBuilder("[");
+         if (componentType.isPrimitive()) {
+            String symbol = PRIMITIVE_CLASS_SYMBOLS.get(componentType);
+            assert symbol != null;
+            arrayClassName.append(symbol);
+         } else if (componentType.isArray()) {
+            arrayClassName.append(componentType.getName());
+         } else {
+            arrayClassName.append("L").append(componentType.getName()).append(";");
+         }
+         String className = arrayClassName.toString();
+         if (canLoad) {
+            try {
+               // Try loading the class using Class.forName(...). This might fail if we have a
+               // misbehaving class loader.
+               @SuppressWarnings("unchecked") // we'll verify the type before returning it
+               Class<T[]> arrayType = (Class<T[]>) Class.forName(className);
+               if (arrayType.getComponentType() == componentType) {
+                  return arrayType;
+               }
+            } catch (Exception e) {
+               // intentional fall-through
+            }
+         }
+         if (CLASS_FORNAME0 != null) {
+            try {
+               // Either we can't load the class due to its class loader not being in our class
+               // loader hierarchy, or we encountered a problem trying to load. Be sneaky and try
+               // using a private native Class.forName0(...), which allows specifying the class
+               // loader.
+               @SuppressWarnings("unchecked") // we'll verify the type before returning it
+               Class<T[]> arrayType = (Class<T[]>)
+                     CLASS_FORNAME0.invoke(null, className, true, componentType.getClassLoader());
+               if (arrayType.getComponentType() == componentType) {
+                  // this test should really always be true
+                  return arrayType;
+               }
+            } catch (Exception e) {
+               // intentional fall-through
+            }
+         }
+      }
+      // Fallback approach requires reflective array creation
+      @SuppressWarnings("unchecked") // if it's not right then Array.newInstance is broken!
+      Class<T[]> arrayType = (Class<T[]>) Array.newInstance(componentType, 0).getClass();
+      return arrayType;
+   }
+   
+   private static boolean canLoad(Class<?> clazz) {
+      // Can we load the given class using Class.forName? We can if its class loader is the same as
+      // or is an ancestor of our class loader.
+      ClassLoader target = clazz.getClassLoader();
+      if (target == null) {
+         // the class was loaded by boot class loader, so we're good
+         return true;
+      }
+      for (ClassLoader current = Types.class.getClassLoader(); current != null;
+            current = current.getParent()) {
+         if (current.equals(target)) {
+            return true;
+         }
+      }
+      return false;
+   }
+   
+   // TODO: doc
+   public static Type arrayTypeOf(Type componentType) {
+      if (componentType instanceof Class) {
+         return getArrayType((Class<?>) componentType);
+      } else {
+         return newGenericArrayType(componentType);
       }
    }
    
@@ -1723,7 +1798,11 @@ public final class Types {
       return newWildcardTypeInternal(bound, true);
    }
    
-   // TODO: javadoc
+   /**
+    * Returns a {@link WildcardType} with an upper bound of {@code Object}, i.e.&nbsp;{@code ?}.
+    *
+    * @return the wildcard type with an open upper bound of {@code Object}
+    */
    public static WildcardType extendsAnyWildcard() {
       return EXTENDS_ANY;
    }
@@ -1792,22 +1871,23 @@ public final class Types {
    /**
     * Implements {@link ParameterizedType}.
     */
-   private static class ParameterizedTypeImpl implements ParameterizedType, Serializable {
+   static class ParameterizedTypeImpl implements ParameterizedType, Serializable {
       private static final long serialVersionUID = -4933098144775956311L;
 
       private final Type ownerType;
       private final Type rawType;
-      private final List<Type> typeArguments;
+      private final Type[] typeArguments;
 
-      ParameterizedTypeImpl(Type ownerType, Type rawType, List<Type> typeArguments) {
+      ParameterizedTypeImpl(Type ownerType, Type rawType,
+            Collection<? extends Type> typeArguments) {
          this.ownerType = ownerType;
          this.rawType = rawType;
-         this.typeArguments = typeArguments;
+         this.typeArguments = typeArguments.toArray(new Type[typeArguments.size()]);
       }
 
       @Override
       public Type[] getActualTypeArguments() {
-         return typeArguments.toArray(new Type[typeArguments.size()]);
+         return typeArguments.clone();
       }
 
       @Override
@@ -1878,7 +1958,8 @@ public final class Types {
    /**
     * Implements {@link WildcardType}.
     */
-   private static class WildcardTypeImpl implements WildcardType, Serializable {
+   // NB: not private so its visible for use from AnnotatedTypes
+   static class WildcardTypeImpl implements WildcardType, Serializable {
       private static final long serialVersionUID = -5371665313248454547L;
       
       private final Type upperBounds[];
@@ -1889,7 +1970,8 @@ public final class Types {
          lowerBounds = isUpperBound ? EMPTY_TYPES : new Type[] { bound };
       }
       
-      WildcardTypeImpl(List<Type> upperBounds, List<Type> lowerBounds) {
+      WildcardTypeImpl(Collection<? extends Type> upperBounds,
+            Collection<? extends Type> lowerBounds) {
          this.upperBounds = upperBounds.toArray(new Type[upperBounds.size()]);
          this.lowerBounds = lowerBounds.isEmpty() ? EMPTY_TYPES
                : lowerBounds.toArray(new Type[lowerBounds.size()]);

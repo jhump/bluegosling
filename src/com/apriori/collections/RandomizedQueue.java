@@ -139,13 +139,13 @@ public class RandomizedQueue<E> extends AbstractCollection<E> implements Queue<E
    private E removeHead() {
       int idx = headIndex();
       peekIndex = -1;
-      int lastIndex = elements.length - 1;
+      size--;
       @SuppressWarnings("unchecked")
       E ret = (E) elements[idx];
-      if (idx != lastIndex) {
-         elements[idx] = elements[lastIndex];
+      if (idx != size) {
+         elements[idx] = elements[size];
       }
-      elements[lastIndex] = null;
+      elements[size] = null;
       modCount++;
       return ret;
    }

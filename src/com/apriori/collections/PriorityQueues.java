@@ -3,14 +3,17 @@ package com.apriori.collections;
 import com.apriori.collections.PriorityQueue.Entry;
 
 import java.util.AbstractQueue;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Queue;
 
 /**
  * Utility methods for working with instances of {@link PriorityQueue} (not to be mistaken for
  * {@link java.util.PriorityQueue}).
+ * 
+ * <p>The meat of this class includes a {@linkplain AutoEntry useful base class} for value types
+ * that are stored into priority queues, and methods for adapting a priority queue to the standard
+ * {@link Queue} interface.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -319,6 +322,18 @@ public final class PriorityQueues {
       }
 
       @Override
+      public boolean contains(Object o) {
+         if (o instanceof Entry) {
+            for (Entry<E, P> entry : this) {
+               if (o.equals(entry)) {
+                  return true;
+               }
+            }
+         }
+         return false;
+      }
+
+      @Override
       public boolean remove(Object o) {
          if (o instanceof Entry) {
             for (Entry<E, P> entry : this) {
@@ -329,38 +344,6 @@ public final class PriorityQueues {
             }
          }
          return false;
-      }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-         return priorityQueue.containsAll(c);
-      }
-
-      @Override
-      public boolean removeAll(Collection<?> c) {
-         boolean ret = false;
-         for (Object o : c) {
-            if (remove(o)) {
-               ret = true;
-            }
-         }
-         return ret;
-      }
-
-      @Override
-      public boolean retainAll(Collection<?> c) {
-         ArrayList<Entry<E, P>> toRemove = new ArrayList<Entry<E, P>>();
-         for (Entry<E, P> entry : this) {
-            if (!c.contains(entry)) {
-               toRemove.add(entry);
-            }
-         }
-         if (toRemove.isEmpty()) {
-            return false;
-         } else {
-            removeAll(toRemove);
-            return true;
-         }
       }
 
       @Override

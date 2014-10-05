@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * 
  * <p>{@link Iterator}s returned by this interface will not throw
  * {@link ConcurrentModificationException}s during traversal. However, this exception can still be
- * thrown from modification operations made through the iterator ({@link Iterator#remove()},
+ * thrown from modification operations made through the iterator: ({@link Iterator#remove()},
  * {@link ListIterator#add(Object)}, and {@link ListIterator#set(Object)}). Whether or not such
  * exceptions are thrown depends on a given implementation of this interface. But the only
  * operations guaranteed to not throw are traversal/query operations.
@@ -27,7 +27,7 @@ public interface ConcurrentList<E> extends List<E> {
    
    /**
     * Replaces the given value at the given index. This atomically sets the value at the given index
-    * but only if its previous value matches the given value to be replaced.
+    * but only if its existing value matches the given value to be replaced.
     *
     * @param index the index of the item to replace
     * @param expectedValue the expected value of the element to replace
@@ -86,7 +86,8 @@ public interface ConcurrentList<E> extends List<E> {
     * if any, are shifted by one. This method is named for readability and can be used in place of
     * {@link #addAfter(int, Object, Object)} when there is no predecessor.
     * 
-    * <p>The default implementation is simply the following:<br> {@link #add(int, Object) add(0, newValue)}.
+    * <p>The default implementation is simply the following:<br>
+    * {@link #add(int, Object) add(0, newValue)}.
     *
     * @param newValue the value to add to the front of the list
     */
@@ -98,7 +99,8 @@ public interface ConcurrentList<E> extends List<E> {
     * Adds an element to the end of the list. This method is named for readability and can be used
     * in place of {@link #addBefore(int, Object, Object)} when there is no successor.
     * 
-    * <p>The default implementation is simply the following:<br> {@link #add(Object) add(newValue)}.
+    * <p>The default implementation is simply the following:<br>
+    * {@link #add(Object) add(newValue)}.
     *
     * @param newValue the value to add to the front of the list
     */

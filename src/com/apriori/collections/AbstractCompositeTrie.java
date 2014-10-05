@@ -16,7 +16,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
+/**
+ * An abstract base class for {@link CompositeTrie} implementations. Concrete sub-classes need only
+ * provide a concrete implementation of {@link Node} and override the {@link #newNode} method. This
+ * is ideal for tries where each node uses some sort of map to store the edges (which map key
+ * components to sub-tries).
+ *
+ * @param <K> the type of keys in the map
+ * @param <C> the component type of keys in the map (each key represents a sequence of components)  
+ * @param <V> the type of values in the map
+ * @param <N> the concrete type of trie node
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, V, N>>
       extends AbstractTrie<C, K, V, N> implements CompositeTrie<K, C, V> {
 
@@ -274,15 +288,13 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       }
       
       protected N getRoot() {
-         N node = this.root;
-         if (node == null || (node.isEmpty() && !node.valuePresent())
+         if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
-            // node needs to be recomputed
-            node = parent.get(prefix);
-            this.root = node;
-            assert this.root != parent.root;
+            // root needs to be recomputed
+            root = parent.get(prefix);
+            assert root != parent.root;
          }
-         return node;
+         return root;
       }
 
       @Override
@@ -296,14 +308,13 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       @Override
       protected N ensurePath(Iterable<C> path) {
          // make sure we have a path to this prefix trie's root
-         N node = this.root;
-         if (node == null || (node.isEmpty() && !node.valuePresent())
+         if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
-            // node needs to be recomputed
-            this.root = node = parent.ensurePath(prefix);
-            assert this.root != parent.root;
+            // root needs to be recomputed
+            root = parent.ensurePath(prefix);
+            assert root != parent.root;
          }
-         return ensurePath(node, path);
+         return ensurePath(root, path);
       }
 
       @Override
@@ -350,8 +361,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(
-            BiFunction<EntryIterator<T, C, K, V, N>, N, T> producer) {
+      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<C>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Iterables.emptyIterator();
