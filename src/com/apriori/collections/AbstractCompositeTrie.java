@@ -364,7 +364,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<C>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
-            return Iterables.emptyIterator();
+            return Collections.emptyIterator();
          }
          return new EntryIterator<T, C, K, V, N>(node, producer) {
             @Override public void remove() {

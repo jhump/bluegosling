@@ -11,7 +11,7 @@ import java.util.NavigableMap;
  * 
  * <p>Since the number of bits in each key is fixed (always 64 bits), insertion and removal
  * operations run in constant time. Inserting keys into this map implicitly sorts the keys,
- * and this results in constant time sort -- effectively a radix sort. Like any sorted map with
+ * and this results in linear-time sort -- effectively a radix sort. Like any sorted map with
  * integer keys, this structure can be used to model sparse arrays or lists. To make this use even
  * simpler, this class provides a {@linkplain #denseValues() list view of the values}. This view
  * has constraints on mutations due to the fact that it is backed by a map, and it treats list

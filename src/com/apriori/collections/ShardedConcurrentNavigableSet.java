@@ -42,10 +42,8 @@ class ShardedConcurrentNavigableSet<E> extends ShardedConcurrentSortedSet<E>
       }
       
       @Override
-      boolean isLessThan(E e1, E e2) {
-         // return the opposite of usual comparison here since
-         // we're iterating backwards
-         return comp.compare(e1, e2) > 0;
+      Comparator<? super E> getComparator() {
+         return comp.reversed();
       }
    }
    
@@ -55,8 +53,8 @@ class ShardedConcurrentNavigableSet<E> extends ShardedConcurrentSortedSet<E>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    class SubSetImpl extends ShardedConcurrentSortedSet<E>.SubSetImpl implements NavigableSet<E> {
-      private boolean fromInclusive;
-      private boolean toInclusive;
+      private final boolean fromInclusive;
+      private final boolean toInclusive;
       
       SubSetImpl(E from, boolean fromInclusive, E to, boolean toInclusive) {
          super(from, to);

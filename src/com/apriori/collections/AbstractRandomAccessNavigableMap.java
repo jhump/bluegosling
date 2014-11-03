@@ -27,10 +27,6 @@ import java.util.NoSuchElementException;
  */
 // TODO: javadoc
 // TODO: tests
-// TODO: sub-maps by indices should always be "enclosed" by the main/outer-most map (so sub-maps of
-//       sub-maps shouldn't be enclosed by a sub-map)
-// TODO: simplify sub-map implementations as much as possible -- we may be able to remove methods
-//       and just let them inherit more impls from AbstractRandomAccessNavigableMap
 public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNavigableMap<K, V>
       implements RandomAccessNavigableMap<K, V> {
 
@@ -98,11 +94,17 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
    
    @Override
    public Entry<K, V> firstEntry() {
+      if (isEmpty()) {
+         return null;
+      }
       return getEntry(0);
    }
 
    @Override
    public Entry<K, V> lastEntry() {
+      if (isEmpty()) {
+         return null;
+      }
       return getEntry(size() - 1);
    }
 
@@ -837,7 +839,7 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
        * Returns the main map's modification count. This allows failing fast when the underlying map
        * is modified, since such operations might invalidate index bounds.
        * 
-       * <p>Since a {@link RandomAccessSubMap} <em>extends</em> {@link AbstractRandomAccessNavigableMap},
+       * <p>Since a {@link SubMapByIndices} <em>extends</em> {@link AbstractRandomAccessNavigableMap},
        * it also inherits a {@link AbstractNavigableMap#modCount} field. For sub-maps, that field is
        * compared to the main maps' value to detect when the sub-map's memo-ized size and index
        * bounds are stale and elements need to be counted.

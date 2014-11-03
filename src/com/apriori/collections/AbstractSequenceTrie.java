@@ -317,7 +317,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
-            return Iterables.emptyIterator();
+            return Collections.emptyIterator();
          }
          return new EntryIterator<T, K, Void, V, N>(node, producer) {
             @Override public void remove() {

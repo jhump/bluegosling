@@ -1,10 +1,28 @@
 package com.apriori.collections;
 
+import java.util.AbstractMap;
 import java.util.Iterator;
+import java.util.Map;
 
-// TODO: javadoc
+/**
+ * An abstract base class for implementing {@link ImmutableMap}s. Sub-classes only need to provide
+ * implementations for {@link #size()} and {@link #iterator()}. However, sub-classes are advised to
+ * also provide implementations for {@link #get(Object)} and {@link #containsKey(Object)} as the
+ * default implementations run in linear time whereas map's are usually expected to be more
+ * efficient than that.
+ *
+ * @param <K> the type of keys in the map
+ * @param <V> the type of values in the map
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
+
+   // Overridden to require sub-classes to implement since the ImmutableMap interface provides a
+   // default implementation in terms of entrySet().iterator()
+   @Override
+   public abstract Iterator<Entry<K, V>> iterator();
 
    @Override
    public boolean isEmpty() {
@@ -135,7 +153,12 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
       return MapUtils.toString(this);
    }
 
-   private class KeySet extends AbstractImmutableSet<K> {
+   /**
+    * A view of the keys for a map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   protected class KeySet extends AbstractImmutableSet<K> {
       KeySet() {
       }
       
@@ -156,7 +179,12 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
       }
    }
 
-   private class EntrySet extends AbstractImmutableSet<Entry<K, V>> {
+   /**
+    * A view of the entries in a map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   protected class EntrySet extends AbstractImmutableSet<Entry<K, V>> {
       EntrySet() {
       }
       
@@ -179,14 +207,19 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
             return value.equals(other.value());
          }
       }
-      
+
       @Override
       public Iterator<Entry<K, V>> iterator() {
          return AbstractImmutableMap.this.iterator();
       }
    }
    
-   private class ValueCollection extends AbstractImmutableCollection<V> {
+   /**
+    * A view of mapped values in a map.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   protected class ValueCollection extends AbstractImmutableCollection<V> {
       ValueCollection() {
       }
       
@@ -207,6 +240,15 @@ public abstract class AbstractImmutableMap<K, V> implements ImmutableMap<K, V> {
       }
    }
    
+   /**
+    * A simple, immutable map entry. This is similar to {@link AbstractMap.SimpleImmutableEntry}
+    * except it implements {@link ImmutableMap.Entry} instead of {@link Map.Entry}.
+    *
+    * @param <K> the type of key in this entry
+    * @param <V> the type of value in this entry
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    public static class SimpleEntry<K, V> implements Entry<K, V> {
       private final K key;
       private final V value;

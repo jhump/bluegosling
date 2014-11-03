@@ -1,8 +1,6 @@
 package com.apriori.collections;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.BlockingDeque;
@@ -29,6 +27,18 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    private transient Condition notEmpty = lock.newCondition();
    private transient Condition notFull = lock.newCondition();
    
+   public RandomAccessArrayBlockingDeque() {
+      super();
+   }
+
+   public RandomAccessArrayBlockingDeque(Collection<? extends E> coll) {
+      super(coll);
+   }
+
+   public RandomAccessArrayBlockingDeque(int initialCapacity, int maximumCapacity) {
+      super(initialCapacity, maximumCapacity);
+   }
+
    @Override
    public int remainingCapacity() {
       lock.lock();
@@ -40,77 +50,110 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    }
 
    @Override
-   public int drainTo(Collection<? super E> c) {
-      int head, tail, size;
-      Object data[];
+   public int drainTo(Collection<? super E> coll) {
       lock.lock();
       try {
-         head = this.head;
-         tail = this.tail;
-         size = this.size;
-         data = this.data;
-         super.clear();
+         Object d[] = data;
+         int h = head, s = size, l = d.length;
+         int i = 0;
+         for (int c = h; i < s; i++) {
+            @SuppressWarnings("unchecked")
+            E e = (E) d[c];
+            coll.add(e);
+            if (++c == l) {
+               c = 0;
+            }
+         }
+         return i;
       } finally {
+         if (size < capacity) {
+            notFull.signalAll();
+         }
          lock.unlock();
       }
-      // TODO: add items to collection
-      return size;
    }
 
    @Override
-   public int drainTo(Collection<? super E> c, int maxElements) {
+   public int drainTo(Collection<? super E> coll, int maxElements) {
       lock.lock();
       try {
-         // TODO Auto-generated method stub
-         return 0;
+         Object d[] = data;
+         int h = head, s = size, l = d.length;
+         int i = 0;
+         for (int c = h; i < s && i < maxElements; i++) {
+            @SuppressWarnings("unchecked")
+            E e = (E) d[c];
+            coll.add(e);
+            if (++c == l) {
+               c = 0;
+            }
+         }
+         return i;
       } finally {
+         if (size < capacity) {
+            notFull.signalAll();
+         }
          lock.unlock();
       }
    }
 
    @Override
    public Object[] toArray() {
-      // make a "close enough" copy using weakly-consistent iterator
-      ArrayList<E> list = new ArrayList<E>(size());
-      for (Iterator<E> iter = iterator(); iter.hasNext();) {
-         list.add(iter.next());
+      lock.lock();
+      try {
+         return super.toArray();
+      } finally {
+         lock.unlock();
       }
-      return list.toArray();
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
-      // make a "close enough" copy using weakly-consistent iterator
-      ArrayList<E> list = new ArrayList<E>(size());
-      for (Iterator<E> iter = iterator(); iter.hasNext();) {
-         list.add(iter.next());
+      lock.lock();
+      try {
+         return super.toArray(a);
+      } finally {
+         lock.unlock();
       }
-      return list.toArray(a);
    }
 
    @Override
    public boolean addAll(Collection<? extends E> c) {
-      for (E e : c) {
-         addLast(e);
+      lock.lock();
+      try {
+         return super.addAll(c);
+      } finally {
+         if (size > 0) {
+            notEmpty.signalAll();
+         }
+         lock.unlock();
       }
-      return true;
    }
 
    @Override
    public boolean removeAll(Collection<?> c) {
-      boolean ret = false;
-      for (Object o : c) {
-         if (removeFirstOccurrence(o)) {
-            ret = true;
+      lock.lock();
+      try {
+         return super.removeAll(c);
+      } finally {
+         if (size < capacity) {
+            notFull.signalAll();
          }
+         lock.unlock();
       }
-      return ret;
    }
 
    @Override
    public boolean retainAll(Collection<?> c) {
-      // TODO Auto-generated method stub
-      return false;
+      lock.lock();
+      try {
+         return super.retainAll(c);
+      } finally {
+         if (size < capacity) {
+            notFull.signalAll();
+         }
+         lock.unlock();
+      }
    }
 
    @Override
@@ -119,6 +162,9 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
       try {
          super.clear();
       } finally {
+         if (size < capacity) {
+            notFull.signalAll();
+         }
          lock.unlock();
       }
    }
@@ -127,6 +173,7 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public E removeFirst() {
       lock.lock();
       try {
+         // calls pollFirst, which signals notFull
          return super.removeFirst();
       } finally {
          lock.unlock();
@@ -137,6 +184,7 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public E removeLast() {
       lock.lock();
       try {
+         // calls pollLast, which signals notFull
          return super.removeLast();
       } finally {
          lock.unlock();
@@ -147,7 +195,9 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public E pollFirst() {
       lock.lock();
       try {
-         return super.pollFirst();
+         E ret = super.pollFirst();
+         notFull.signal();
+         return ret;
       } finally {
          lock.unlock();
       }
@@ -157,7 +207,9 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public E pollLast() {
       lock.lock();
       try {
-         return super.pollLast();
+         E ret = super.pollLast();
+         notFull.signal();
+         return ret;
       } finally {
          lock.unlock();
       }
@@ -204,35 +256,14 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    }
 
    @Override
-   public E pop() {
-      lock.lock();
-      try {
-         return super.pop();
-      } finally {
-         lock.unlock();
-      }
-   }
-
-   @Override
-   public Iterator<E> descendingIterator() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
    public boolean addAll(int index, Collection<? extends E> c) {
       lock.lock();
       try {
-         boolean ret = false;
-         for (E e : c) {
-            if (size == capacity) {
-               throw new IllegalStateException("deque is full");
-            }
-            super.add(index++, e);
-            ret = true;
-         }
-         return ret;
+         return super.addAll(index, c);
       } finally {
+         if (size > 0) {
+            notEmpty.signalAll();
+         }
          lock.unlock();
       }
    }
@@ -262,6 +293,7 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
       lock.lock();
       try {
          super.add(index, element);
+         notEmpty.signal();
       } finally {
          lock.unlock();
       }
@@ -271,7 +303,9 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public E remove(int index) {
       lock.lock();
       try {
-         return super.remove(index);
+         E ret = super.remove(index);
+         notFull.signal();
+         return ret;
       } finally {
          lock.unlock();
       }
@@ -298,12 +332,6 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    }
 
    @Override
-   public ListIterator<E> listIterator() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
    public ListIterator<E> listIterator(int index) {
       // TODO Auto-generated method stub
       return null;
@@ -319,6 +347,7 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public void addFirst(E e) {
       lock.lock();
       try {
+         // calls offerFirst, which signals notEmpty
          super.addFirst(e);
       } finally {
          lock.unlock();
@@ -329,6 +358,7 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public void addLast(E e) {
       lock.lock();
       try {
+         // calls offerLast, which signals notEmpty
          super.addLast(e);
       } finally {
          lock.unlock();
@@ -339,7 +369,11 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public boolean offerFirst(E e) {
       lock.lock();
       try {
-         return super.offerFirst(e);
+         if (super.offerFirst(e)) {
+            notEmpty.signal();
+            return true;
+         }
+         return false;
       } finally {
          lock.unlock();
       }
@@ -349,7 +383,11 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public boolean offerLast(E e) {
       lock.lock();
       try {
-         return super.offerLast(e);
+         if (super.offerLast(e)) {
+            notEmpty.signal();
+            return true;
+         }
+         return false;
       } finally {
          lock.unlock();
       }
@@ -359,8 +397,12 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public void putFirst(E e) throws InterruptedException {
       lock.lock();
       try {
-         notFull.await();
-         super.offerFirst(e);
+         while (size >= capacity) {
+            notFull.await();
+         }
+         boolean result = super.offerFirst(e);
+         assert result;
+         notEmpty.signal();
       } finally {
          lock.unlock();
       }
@@ -370,8 +412,12 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public void putLast(E e) throws InterruptedException {
       lock.lock();
       try {
-         notFull.await();
-         super.offerLast(e);
+         while (size >= capacity) {
+            notFull.await();
+         }
+         boolean result = super.offerLast(e);
+         assert result;
+         notEmpty.signal();
       } finally {
          lock.unlock();
       }
@@ -381,11 +427,16 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public boolean offerFirst(E e, long timeout, TimeUnit unit) throws InterruptedException {
       lock.lock();
       try {
-         if (notFull.await(timeout, unit)) {
-            super.offerFirst(e);
-            return true;
+         long wait = unit.toNanos(timeout);
+         while (size >= capacity) {
+            if ((wait = notFull.awaitNanos(wait)) <= 0) {
+               return false;
+            }
          }
-         return false;
+         boolean result = super.offerFirst(e);
+         assert result;
+         notEmpty.signal();
+         return true;
       } finally {
          lock.unlock();
       }
@@ -395,8 +446,93 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    public boolean offerLast(E e, long timeout, TimeUnit unit) throws InterruptedException {
       lock.lock();
       try {
-         if (notFull.await(timeout, unit)) {
-            super.offerLast(e);
+         long wait = unit.toNanos(timeout);
+         while (size >= capacity) {
+            if ((wait = notFull.awaitNanos(wait)) <= 0) {
+               return false;
+            }
+         }
+         boolean result = super.offerLast(e);
+         assert result;
+         notEmpty.signal();
+         return true;
+      } finally {
+         lock.unlock();
+      }
+   }
+
+   @Override
+   public E takeFirst() throws InterruptedException {
+      lock.lock();
+      try {
+         while (size == 0) {
+            notEmpty.await();
+         }
+         E ret = super.pollFirst();
+         notFull.signal();
+         return ret;
+      } finally {
+         lock.unlock();
+      }
+   }
+
+   @Override
+   public E takeLast() throws InterruptedException {
+      lock.lock();
+      try {
+         while (size == 0) {
+            notEmpty.await();
+         }
+         E ret = super.pollLast();
+         notFull.signal();
+         return ret;
+      } finally {
+         lock.unlock();
+      }
+   }
+
+   @Override
+   public E pollFirst(long timeout, TimeUnit unit) throws InterruptedException {
+      lock.lock();
+      try {
+         long wait = unit.toNanos(timeout);
+         while (size == 0) {
+            if ((wait = notEmpty.awaitNanos(wait)) <= 0) {
+               return null;
+            }
+         }
+         E ret = super.pollFirst();
+         notFull.signal();
+         return ret;
+      } finally {
+         lock.unlock();
+      }
+   }
+
+   @Override
+   public E pollLast(long timeout, TimeUnit unit) throws InterruptedException {
+      lock.lock();
+      try {
+         long wait = unit.toNanos(timeout);
+         while (size == 0) {
+            if ((wait = notEmpty.awaitNanos(wait)) <= 0) {
+               return null;
+            }
+         }
+         E ret = super.pollLast();
+         notFull.signal();
+         return ret;
+      } finally {
+         lock.unlock();
+      }
+   }
+
+   @Override
+   public boolean removeFirstOccurrence(Object o) {
+      lock.lock();
+      try {
+         if (super.removeFirstOccurrence(o)) {
+            notFull.signal();
             return true;
          }
          return false;
@@ -406,129 +542,66 @@ public class RandomAccessArrayBlockingDeque<E> extends RandomAccessArrayDeque<E>
    }
 
    @Override
-   public E takeFirst() throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E takeLast() throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E pollFirst(long timeout, TimeUnit unit) throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E pollLast(long timeout, TimeUnit unit) throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public boolean removeFirstOccurrence(Object o) {
-      // TODO Auto-generated method stub
-      return false;
-   }
-
-   @Override
    public boolean removeLastOccurrence(Object o) {
-      // TODO Auto-generated method stub
-      return false;
-   }
-
-   @Override
-   public boolean add(E e) {
-      // TODO Auto-generated method stub
-      return false;
-   }
-
-   @Override
-   public boolean offer(E e) {
-      // TODO Auto-generated method stub
-      return false;
+      lock.lock();
+      try {
+         if (super.removeLastOccurrence(o)) {
+            notFull.signal();
+            return true;
+         }
+         return false;
+      } finally {
+         lock.unlock();
+      }
    }
 
    @Override
    public void put(E e) throws InterruptedException {
-      // TODO Auto-generated method stub
-      
+      putLast(e);
    }
 
    @Override
    public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
-      // TODO Auto-generated method stub
-      return false;
-   }
-
-   @Override
-   public E remove() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E poll() {
-      // TODO Auto-generated method stub
-      return null;
+      return offerLast(e, timeout, unit);
    }
 
    @Override
    public E take() throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
+      return takeFirst();
    }
 
    @Override
    public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E element() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public E peek() {
-      // TODO Auto-generated method stub
-      return null;
+      return pollFirst(timeout, unit);
    }
 
    @Override
    public boolean remove(Object o) {
-      // TODO Auto-generated method stub
-      return false;
+      lock.lock();
+      try {
+         return remove(o);
+      } finally {
+         lock.unlock();
+      }
    }
 
    @Override
    public boolean contains(Object o) {
-      // TODO Auto-generated method stub
-      return false;
+      lock.lock();
+      try {
+         return contains(o);
+      } finally {
+         lock.unlock();
+      }
    }
 
    @Override
    public int size() {
-      // TODO Auto-generated method stub
-      return 0;
+      lock.lock();
+      try {
+         return size;
+      } finally {
+         lock.unlock();
+      }
    }
-
-   @Override
-   public Iterator<E> iterator() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public void push(E e) {
-      // TODO Auto-generated method stub
-      
-   }
-
 }

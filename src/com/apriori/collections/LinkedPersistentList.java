@@ -5,6 +5,7 @@ import static com.apriori.collections.Immutables.cast;
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -528,7 +529,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
 
       @Override
       public Iterator<E> iterator() {
-         return Iterables.emptyIterator();
+         return Collections.emptyIterator();
       }
 
       @Override

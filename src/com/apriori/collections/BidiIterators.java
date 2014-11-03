@@ -2,6 +2,7 @@ package com.apriori.collections;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * Utility methods related to bi-directional iterators.
@@ -13,6 +14,40 @@ public final class BidiIterators {
    private BidiIterators() {
    }
 
+   public static <E> BidiIterator<E> emptyIterator() {
+      return new BidiIterator<E>() {
+         @Override
+         public boolean hasPrevious() {
+            return false;
+         }
+
+         @Override
+         public E previous() {
+            throw new NoSuchElementException();
+         }
+
+         @Override
+         public boolean hasNext() {
+            return false;
+         }
+
+         @Override
+         public E next() {
+            throw new NoSuchElementException();
+         }
+
+         @Override
+         public void remove() {
+            throw new IllegalStateException();
+         }
+
+         @Override
+         public BidiIterator<E> reverse() {
+            return this;
+         }
+      };
+   }
+   
    /**
     * Adapts a {@link ListIterator} to the {@link BidiIterator} interface.
     *

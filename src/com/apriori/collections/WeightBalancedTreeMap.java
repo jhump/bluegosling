@@ -140,6 +140,36 @@ public class WeightBalancedTreeMap<K, V>
    transient int modCount;
    transient final Comparator<? super K> comparator;
    
+   
+   
+   int numAdds;
+   int numRemoves;
+   int numSeeks;
+   int numSwaps;
+   int numOps;
+   
+   private void incAdds() {
+      numAdds++; numOps++;
+   }
+
+   private void incRemoves() {
+      numRemoves++; numOps++;
+   }
+
+   private void incSeeks() {
+      numSeeks++; numOps++;
+   }
+   
+   private void incSwaps() {
+      numSwaps++; numOps++;
+   }
+   
+   private void resetCounts() {
+      numAdds = numRemoves = numSeeks = numSwaps = numOps = 0;
+   }
+   
+   
+
    public WeightBalancedTreeMap() {
       this((Comparator<? super K>) null);
    }
@@ -278,6 +308,7 @@ public class WeightBalancedTreeMap<K, V>
    private Node<K, V> subtreePredecessor(Node<K, V> entry) {
       Node<K, V> predecessor = entry.left;
       while (predecessor.right != null) {
+         incSeeks();
          predecessor = predecessor.right;
       }
       return predecessor;
@@ -286,12 +317,14 @@ public class WeightBalancedTreeMap<K, V>
    private Node<K, V> subtreeSuccessor(Node<K, V> entry) {
       Node<K, V> successor = entry.right;
       while (successor.left != null) {
+         incSeeks();
          successor = successor.left;
       }
       return successor;
    }
    
    private void swap(Node<K, V> e1, Node<K, V> e2) {
+      incSwaps();
       K tmpKey = e1.key;
       e1.key = e2.key;
       e2.key = tmpKey;
@@ -333,6 +366,7 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    private Node<K, V> addEntry(Node<K, V> current, Node<K, V> newEntry) {
+      incAdds();
       int c = comparator.compare(newEntry.key, current.key);
       Node<K, V> priorEntry;
       if (c == 0) {
@@ -384,6 +418,7 @@ public class WeightBalancedTreeMap<K, V>
    }
 
    Node<K, V> removeEntry(Node<K, V> entry, Object key) {
+      incRemoves();
       if (entry == null) {
          return null;
       }
@@ -2658,10 +2693,24 @@ public class WeightBalancedTreeMap<K, V>
    }
    
    public static void main(String args[]) {
+      
       WeightBalancedTreeMap<String, Integer> weightBalanced = new WeightBalancedTreeMap<String, Integer>();
-      for (int i = 0; i < 1023; i++) {
-         weightBalanced.put(randomString(), i);
+      
+      for (int n = 0; n < 5000; n++) {
+         for (int i = 0; i < 1023; i++) {
+            weightBalanced.resetCounts();
+            weightBalanced.put(randomString(), i);
+         }
       }
+      System.out.println("map size " + weightBalanced.size());
+      System.out.println("  num ops to insert new value: " + weightBalanced.numOps);
+      System.out.println("  (" + weightBalanced.numAdds + " adds, " + weightBalanced.numRemoves + " removes, "
+            + weightBalanced.numSeeks + " seeks, " + weightBalanced.numSwaps + " swaps)");
+      
+      if (true) {
+         return;
+      }
+      
       // check tree for balance
       int size = checkBalance(weightBalanced.root);
       if (size != weightBalanced.size()) {

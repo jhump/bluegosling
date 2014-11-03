@@ -6,6 +6,8 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -403,5 +405,10 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
          node = next;
       }
       return r;
+   }
+   
+   @Override
+   public Spliterator<T> spliterator() {
+      return Spliterators.spliterator(this, 0);
    }
 }

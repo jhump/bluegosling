@@ -79,12 +79,12 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
 
    @Override
    public Object[] toArray() {
-      return CollectionUtils.toArray(this);
+      return Iterables.toArray(this);
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
-      return CollectionUtils.toArray(this, a);
+      return Iterables.toArray(this, a);
    }
 
    /**

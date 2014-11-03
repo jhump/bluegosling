@@ -5,6 +5,7 @@ import com.apriori.tuples.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -1358,7 +1359,7 @@ public final class Immutables {
 
       @Override
       public Iterator<Object> iterator() {
-         return Iterables.emptyIterator();
+         return Collections.emptyIterator();
       }
    }
 
@@ -1934,9 +1935,9 @@ public final class Immutables {
                   keyTable[idx] = k;
                   valueTable[idx] = v;
                   break;
-               } else
-               if (hash == h && (key == k || (key != null && key.equals(k)))) {
+               } else if (hash == h && (key == k || (key != null && key.equals(k)))) {
                   // item already exists in the table
+                  // TODO: throw an exception if values don't match?
                   continue;
                }
                // re-probe

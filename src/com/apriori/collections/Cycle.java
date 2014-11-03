@@ -3,6 +3,7 @@ package com.apriori.collections;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * A cyclically ordered collection. A cycle represents an ordered sequence of objects, similar to a
@@ -44,7 +45,21 @@ public interface Cycle<E> extends Collection<E> {
     * @param e the new element to add
     */
    void addLast(E e);
-   
+
+   /**
+    * Adds an element to the end of the sequence. This behaves as if implemented as follows:<pre>
+    * cycle.addLast(e);
+    * return true;
+    * </pre>
+    *
+    * @param e the new element to add
+    */
+   @Override
+   default boolean add(E e) {
+      this.addLast(e);
+      return true;
+   }
+
    /**
     * Replaces the current element with the specified value. This is equivalent to calling
     * {@link #remove()} and then calling {@link #addFirst(Object)}. The value returned is the
@@ -183,12 +198,14 @@ public interface Cycle<E> extends Collection<E> {
     * @throws NoSuchElementException if there is no current element because the sequence is empty
     * @throws IllegalArgumentException if either {@code b} or {@code c} is not in the sequence
     */
-   boolean isCyclicOrder(E b, E c);
+   default boolean isCyclicOrder(E b, E c) {
+      return isCyclicOrder(current(), b, c);
+   }
    
    /**
     * Returns true if the specified elements are in cyclic order. A cyclic order {@code [a, b, c]}
     * means that, after element {@code a}, one encounters element {@code b} before encountering
-    * element {@code c}.
+    * element {@code c}. The three given elements must be three distinct values.
     *
     * @param a the starting element
     * @param b the item that comes first, if in cyclic order
@@ -196,7 +213,36 @@ public interface Cycle<E> extends Collection<E> {
     * @return true if the specified items are in cyclic order (e.g. after {@code a}, {@code b} comes
     *       before {@code c})
     * @throws IllegalArgumentException if any of {@code a}, {@code b}, or {@code c} is not in the
-    *       sequence
+    *       sequence or if the values are not distinct (e.g. if any two are equal)
     */
-   boolean isCyclicOrder(E a, E b, E c);
+   default boolean isCyclicOrder(E a, E b, E c) {
+      if (Objects.equals(a, b) || Objects.equals(a, c) || Objects.equals(b, c)) {
+         throw new IllegalArgumentException("elements are not distinct");
+      }
+      int aIdx = -1, bIdx = -1, cIdx = -1, encountered = 0;
+      int idx = 0;
+      for (Iterator<E> iter = iterator(); iter.hasNext(); idx++) {
+         E e = iter.next();
+         if (aIdx == -1 && Objects.equals(e, a)) {
+            aIdx = idx;
+            encountered++;
+         } else if (bIdx == -1 && Objects.equals(e, b)) {
+            bIdx = idx;
+            encountered++;
+         } else if (cIdx == -1 && Objects.equals(e, c)) {
+            cIdx = idx;
+            encountered++;
+         }
+         if (encountered == 3) {
+            // found all three; no need to look at any more elements
+            break;
+         }
+      }
+      if (encountered < 3) {
+         throw new IllegalArgumentException("not all three elements present in sequence");
+      }
+      return (aIdx < bIdx && bIdx < cIdx)
+            || (bIdx < cIdx && cIdx < aIdx)
+            || (cIdx < aIdx && aIdx < bIdx);
+   }
 }

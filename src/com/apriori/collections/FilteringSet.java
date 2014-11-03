@@ -1,7 +1,7 @@
 package com.apriori.collections;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -28,13 +28,18 @@ public class FilteringSet<E> extends FilteringCollection<E> implements Set<E> {
     * @param set the wrapped set
     * @param predicate the filtering predicate
     */
-   public FilteringSet(Set<E> set, Predicate<E> predicate) {
+   public FilteringSet(Set<E> set, Predicate<? super E> predicate) {
       super(set, predicate);
    }
 
    @Override
+   protected Set<E> internal() {
+      return (Set<E>) super.internal();
+   }
+   
+   @Override
    public Set<E> capture() {
-      return Collections.unmodifiableSet(new HashSet<>(this));
+      return Collections.unmodifiableSet(new LinkedHashSet<>(this));
    }
    
    @Override

@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,33 +22,34 @@ import java.util.RandomAccess;
 //TODO: use/enforce capacity constraint
 public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<E>, RandomAccess {
 
-   private static final int DEFAULT_SIZE = 16;
+   static final int DEFAULT_SIZE = 16;
    private static final int MINIMUM_SIZE = 2;
    
    transient int head;
-   transient int tail;
-   transient int capacity;
+   final transient int capacity;
    transient int size;
    transient Object data[];
    
    public RandomAccessArrayDeque() {
       data = new Object[DEFAULT_SIZE];
+      capacity = Integer.MAX_VALUE;
    }
 
    public RandomAccessArrayDeque(Collection<? extends E> coll) {
       data = new Object[Math.min(MINIMUM_SIZE, coll.size())];
+      capacity = Integer.MAX_VALUE;
       addAll(coll);
    }
 
    public RandomAccessArrayDeque(int initialCapacity, int maximumCapacity) {
-      if (maximumCapacity < 0) {
+      if (maximumCapacity <= 0) {
          throw new IllegalArgumentException();
       }
       if (initialCapacity < 0) {
          throw new IllegalArgumentException();
       }
-      capacity = maximumCapacity;
       data = new Object[Math.min(MINIMUM_SIZE, initialCapacity)];
+      capacity = maximumCapacity;
    }
 
    @Override
@@ -57,14 +59,35 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public Object[] toArray() {
-      // TODO Auto-generated method stub
-      return null;
+      Object d[] = data;
+      int h = head, s = size, l = d.length;
+      Object ret[] = new Object[s];
+      for (int i = 0, c = h; i < s; i++) {
+         ret[i] = d[c];
+         if (++c == l) {
+            c = 0;
+         }
+      }
+      return ret;
    }
    
+   @SuppressWarnings("unchecked")
    @Override
    public <T> T[] toArray(T[] a) {
-      // TODO Auto-generated method stub
-      return null;
+      Object d[] = data;
+      int h = head, s = size, l = d.length;
+      Object ret[] =
+            a.length >= s ? a : (Object[]) Array.newInstance(a.getClass().getComponentType(), s);
+      for (int i = 0, c = h; i < s; i++) {
+         ret[i] = d[c];
+         if (++c == l) {
+            c = 0;
+         }
+      }
+      if (ret.length > s) {
+         ret[s] = null;
+      }
+      return (T[]) ret;
    }
    
    @Override
@@ -75,8 +98,15 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    public void clear() {
-      head = tail = size = 0;
-      Arrays.fill(data,  null);
+      int h = head, s = size, l = data.length;
+      int end = h + s;
+      if (end > l) {
+         Arrays.fill(data, h, l, null);
+         Arrays.fill(data, 0, end - l, null);
+      } else {
+         Arrays.fill(data, h, end, null);
+      }
+      head = size = 0;
       modCount++;
    }
    
@@ -100,11 +130,17 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       } else if (index >= size) {
          throw new IndexOutOfBoundsException("" + index + " >= " + size);
       }
-      return (head + index) % data.length;
+      int ret = head + index;
+      int len = data.length;
+      if (ret >= len) {
+         ret -= len;
+         assert ret < len;
+      }
+      return ret;
    }
    
    @Override
-   @SuppressWarnings("unchecked") // we know it's a T because we put it there
+   @SuppressWarnings("unchecked") // we know it's an E because we put it there
    public E get(int index) {
       return (E) data[computeIndex(index, false)];
    }
@@ -113,7 +149,7 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    public E set(int index, E element) {
       int arrayIndex = computeIndex(index, false);
       
-      @SuppressWarnings("unchecked") // we know it's a T because we put it there
+      @SuppressWarnings("unchecked") // we know it's an E because we put it there
       E ret = (E) data[arrayIndex];
       
       data[arrayIndex] = element;
@@ -197,16 +233,23 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       return ret;
    }
    
+   private int tail() {
+      int tail = head + size;
+      int len = data.length;
+      if (tail >= len) {
+         tail -= len;
+         assert tail < len;
+      }
+      return tail;
+   }
+   
    @Override
    public E pollLast() {
       if (size == 0) {
          return null;
       }
       @SuppressWarnings("unchecked")
-      E ret = (E) data[tail];
-      if (--tail < 0) {
-         tail += data.length;
-      }
+      E ret = (E) data[tail()];
       modCount++;
       return ret;
    }
@@ -236,7 +279,7 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    @Override
    @SuppressWarnings("unchecked") // we know it's a T because we put it there
    public E peekLast() {
-      return size == 0 ? null : (E) data[tail];
+      return size == 0 ? null : (E) data[tail()];
    }
    
    @Override
@@ -303,6 +346,11 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       return size;
    }
    
+   @Override
+   public Iterator<E> iterator() {
+      return listIterator(0);
+   }
+
    @Override
    public Iterator<E> descendingIterator() {
       ListIterator<E> listIter = listIterator(size());

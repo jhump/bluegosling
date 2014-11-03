@@ -4,10 +4,13 @@ package com.apriori.collections;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -43,93 +46,79 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    class SortedIteratorImpl implements Iterator<E> {
-      private final Iterator<E> iterators[];
-      private final E nextElements[];
-      private boolean haveNext;
+      private final PriorityQueue<IteratorAndHead<E>> queue;
       private E lastElement;
-      private boolean removed;
+      private boolean canRemove;
       
-      @SuppressWarnings("unchecked")
       SortedIteratorImpl(Set<E> stableShards[]) {
          int len = stableShards.length;
-         iterators = new Iterator[len];
-         nextElements = (E[]) new Object[len];
+         List<IteratorAndHead<E>> iterators = new ArrayList<>(len);
          for (int i = 0; i < len; i++) {
             Iterator<E> iter = getIterator(stableShards[i]);
             if (iter.hasNext()) {
-               haveNext = true;
-               nextElements[i] = iter.next();
-            } else {
-               // avoid pinning unused object to the heap by
-               // not keeping references to empty iterators
-               iter = null;
+               iterators.add(new IteratorAndHead<E>(getComparator(), iter));
             }
-            iterators[i] = iter;
          }
+         // we build the values in a list first so we can do O(n) heapify, O(n log n) to insert
+         // each item individually (heapify is only done when the queue is constructed with a
+         // collection of elements)
+         queue = new PriorityQueue<>(iterators);
       }
       
       Iterator<E> getIterator(Set<E> shard) {
          return shard.iterator();
       }
 
-      /** {@inheritDoc} */
-      @Override
-      public synchronized boolean hasNext() {
-         return haveNext;
+      Comparator<? super E> getComparator() {
+         return comp;
       }
 
-      boolean isLessThan(E e1, E e2) {
-         return comp.compare(e1, e2) < 0;
+      /** {@inheritDoc} */
+      @Override
+      public boolean hasNext() {
+         return !queue.isEmpty();
       }
-      
+
       /** {@inheritDoc} */
       @Override
       public synchronized E next() {
-         if (haveNext) {
-            int idx = -1;
-            int nextCount = 0;
-            lastElement = null; // store the element to return in this field
-            // find least element already fetched
-            for (int i = 0, len = nextElements.length; i < len; i++) {
-               E other = nextElements[i];
-               if (other != null) {
-                  nextCount++;
-                  if (lastElement == null || isLessThan(other, lastElement)) {
-                     lastElement = other;
-                     idx = i; // save index
-                  }
-               }
-            }
-            // replace the element we're about to return so subsequent
-            // call has the right set of values to look at
-            if (iterators[idx].hasNext()) {
-               nextElements[idx] = iterators[idx].next();
-            } else {
-               // clear references
-               nextElements[idx] = null;
-               iterators[idx] = null;
-               // decrement this since we just cleared out one of them
-               nextCount--;
-            }
-            haveNext = nextCount > 0;
-            removed = false;
-            return lastElement;
-         } else {
-            throw new NoSuchElementException();
+         IteratorAndHead<E> entry = queue.remove();
+         lastElement = entry.head;
+         Iterator<E> iter = entry.iter;
+         if (iter.hasNext()) {
+            entry.head = iter.next();
+            queue.add(entry);
          }
+         canRemove = true;
+         return lastElement;
       }
 
       /** {@inheritDoc} */
       @Override
       public synchronized void remove() {
-         if (removed) {
+         if (!canRemove) {
             throw new IllegalStateException("element already removed");
-         } else if (lastElement == null) {
-            throw new IllegalStateException("no element to remove");
          } else {
-            removed = true;
+            canRemove = false;
             ShardedConcurrentSortedSet.this.remove(lastElement);
          }
+      }
+   }
+   
+   private static class IteratorAndHead<E> implements Comparable<IteratorAndHead<E>> {
+      final Comparator<? super E> comparator;
+      final Iterator<E> iter;
+      E head;
+      
+      IteratorAndHead(Comparator<? super E> comparator, Iterator<E> iter) {
+         this.comparator = comparator;
+         this.iter = iter;
+         this.head = iter.next();
+      }
+
+      @Override
+      public int compareTo(IteratorAndHead<E> o) {
+         return comparator.compare(head, o.head);
       }
    }
    
@@ -505,6 +494,83 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
       if (comp == null) {
          comp = CollectionUtils.naturalOrder();
       }
+   }
+   
+   @Override
+   public boolean contains(Object o) {
+      // must override since ordering could be inconsistent w/ equals
+      for (int i = 0, len = shards.length; i < len; i++) {
+         acquireReadLock(i);
+         try {
+            if (shards[i].contains(o)) {
+               return true;
+            }
+         } finally {
+            releaseReadLock(i);
+         }
+      }
+      return false;
+   }
+
+   @Override
+   public boolean containsAll(Collection<?> coll) {
+      // must override since ordering could be inconsistent w/ equals
+      for (Object o : coll) {
+         if (!contains(o)) {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   @Override
+   public boolean remove(Object o) {
+      // must override since ordering could be inconsistent w/ equals
+      for (int i = 0, len = shards.length; i < len; i++) {
+         acquireWriteLock(i);
+         try {
+            if (shards[i].remove(o)) {
+               return true;
+            }
+         } finally {
+            releaseWriteLock(i);
+         }
+      }
+      return false;
+   }
+
+   @Override
+   public boolean removeAll(Collection<?> coll) {
+      // must override since ordering could be inconsistent w/ equals
+      boolean ret = false;
+      acquireWriteLocks();
+      try {
+         for (int i = 0, len = shards.length; i < len; i++) {
+            if (shards[i].removeAll(coll)) {
+               ret = true;
+            }
+         }
+      } finally {
+         releaseWriteLocks();
+      }
+      return ret;
+   }
+
+   @Override
+   public boolean retainAll(Collection<?> coll) {
+      // must override since ordering could be inconsistent w/ equals
+      boolean ret = false;
+      acquireWriteLocks();
+      try {
+         for (int i = 0, len = shards.length; i < len; i++) {
+            if (shards[i].retainAll(coll)) {
+               ret = true;
+            }
+         }
+      } finally {
+         releaseWriteLocks();
+      }
+      return ret;
    }
 
    /** {@inheritDoc} */

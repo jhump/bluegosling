@@ -112,7 +112,7 @@ public interface AssociativeList<E, K> extends List<E> {
     * @param key the associative key
     * @return the associated list element or {@code null} if no such associative key exists
     */
-   E getKey(K key);
+   E getByKey(K key);
    
    /**
     * Finds the list index associated with a given key.
@@ -129,7 +129,7 @@ public interface AssociativeList<E, K> extends List<E> {
     * @return both the value and the index at which it was located for the removed element or
     *       {@code null} if no such associative key exists
     */
-   Map.Entry<Integer, E> removeKey(K key);
+   Map.Entry<Integer, E> removeByKey(K key);
    
    /**
     * Removes an associative key but leaves the list and associated element in tact. This just

@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 
 //TODO: javadoc
-//TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
+//TODO: implement me (don't forget serialization and cloning)
 public class ArrayMappedStringTrie<V> extends ArrayMappedBitwiseTrie<CharSequence, V> {
    
    // TODO: extract class and make it serializable

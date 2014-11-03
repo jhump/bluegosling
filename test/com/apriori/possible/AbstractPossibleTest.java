@@ -3,7 +3,6 @@ package com.apriori.possible;
 import static com.apriori.testing.MoreAsserts.assertThrows;
 import static com.apriori.util.Predicates.alwaysAccept;
 import static com.apriori.util.Predicates.alwaysReject;
-import static com.apriori.util.Predicates.isEqualTo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Test cases for the basic functionality of any {@link Possible} implementation.
@@ -77,7 +77,7 @@ public abstract class AbstractPossibleTest {
       assertTrue(flatMapped.isPresent());
       assertEquals(value + "s", flatMapped.get());
 
-      Possible<String> stillPresent = p.filter(isEqualTo(value));
+      Possible<String> stillPresent = p.filter(Predicate.isEqual(value));
       assertTrue(stillPresent.isPresent());
       assertEquals(value, stillPresent.get());
 

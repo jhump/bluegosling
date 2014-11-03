@@ -4,6 +4,7 @@ import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,6 +20,16 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       this.underlying = new AtomicReference<PersistentMap<K, V>>(underlying);
    }
 
+   @Override
+   public int size() {
+      return underlying.get().size();
+   }
+   
+   @Override
+   public boolean isEmpty() {
+      return underlying.get().isEmpty();
+   }
+   
    @Override
    public boolean containsKey(Object o) {
       return underlying.get().containsKey(o);
@@ -82,10 +93,10 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       while (true) {
          PersistentMap<K, V> original = underlying.get();
          V actual = original.get(key);
-         if (actual != null || original.containsKey(key)) {
-            if (value == null ? actual != null : !value.equals(actual)) {
-               return false;
-            }
+         boolean match = value != null ? value.equals(actual)
+               : (actual == null && original.containsKey(key));
+         if (!match) {
+            return false;
          }
          PersistentMap<K, V> modified = original.remove(key);
          if (underlying.compareAndSet(original, modified)) {
@@ -99,10 +110,10 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       while (true) {
          PersistentMap<K, V> original = underlying.get();
          V actual = original.get(key);
-         if (actual != null || original.containsKey(key)) {
-            if (oldValue == null ? actual != null : !oldValue.equals(actual)) {
-               return false;
-            }
+         boolean match = oldValue != null ? oldValue.equals(actual)
+               : (actual == null && original.containsKey(key));
+         if (!match) {
+            return false;
          }
          PersistentMap<K, V> modified = original.put(key, newValue);
          if (underlying.compareAndSet(original, modified)) {
@@ -121,7 +132,8 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          }
          PersistentMap<K, V> modified = original.put(key, value);
          if (original == modified) {
-            return null;
+            assert Objects.equals(value, prior);
+            return value;
          }
          if (underlying.compareAndSet(original, modified)) {
             return prior;
@@ -129,6 +141,11 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       }
    }
 
+   @Override
+   public void clear() {
+      underlying.set(underlying.get().clear());
+   }
+   
    @Override
    public Set<Entry<K, V>> entrySet() {
       return new EntrySet();
@@ -144,6 +161,22 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       return new TransformingCollection<Entry<K, V>, V>(entrySet(), (entry) -> entry.getValue());
    }
    
+   @Override
+   public String toString() {
+      return underlying.get().toString();
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      return MapUtils.equals(this, o);
+   }
+
+
+   @Override
+   public int hashCode() {
+      return underlying.get().hashCode();
+   }
+
    Entry<K, V> asMutableEntry(final ImmutableMap.Entry<K, V> entry) {
       return new Entry<K, V>() {
          V value = entry.value();
@@ -184,6 +217,8 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       };
    }
    
+   // TODO: KeySet, to provide more efficient Set.contains and Set.remove
+   
    private class EntrySet extends AbstractSet<Entry<K, V>> {
       EntrySet() {
       }
@@ -217,10 +252,42 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
             
          };
       }
-
+      
+      @Override
+      public boolean contains(Object o) {
+         if (!(o instanceof Entry)) {
+            return false;
+         }
+         Entry<?, ?> e = (Entry<?, ?>) o;
+         Object v = PersistentMapBackedConcurrentMap.this.get(e.getKey());
+         return v != null
+               ? v.equals(e.getValue())
+               : PersistentMapBackedConcurrentMap.this.containsKey(e.getKey())
+                     && e.getValue() == null;
+      }
+      
+      @Override
+      public boolean remove(Object o) {
+         if (!(o instanceof Entry)) {
+            return false;
+         }
+         Entry<?, ?> e = (Entry<?, ?>) o;
+         return PersistentMapBackedConcurrentMap.this.remove(e.getKey(), e.getValue());
+      }
+      
       @Override
       public int size() {
          return PersistentMapBackedConcurrentMap.this.size();
+      }
+      
+      @Override
+      public boolean isEmpty() {
+         return PersistentMapBackedConcurrentMap.this.isEmpty();
+      }
+      
+      @Override
+      public void clear() {
+         PersistentMapBackedConcurrentMap.this.clear();
       }
    }
 }

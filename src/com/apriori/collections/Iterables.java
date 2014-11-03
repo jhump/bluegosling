@@ -1,5 +1,6 @@
 package com.apriori.collections;
 
+import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.RandomAccess;
+import java.util.function.Function;
+import java.util.function.IntSupplier;
 
 // TODO: javadoc
 // TODO: tests
@@ -60,16 +63,15 @@ public final class Iterables {
       }
    }
    
-   public static <E> Iterator<E> emptyIterator() {
-      @SuppressWarnings("unchecked")
-      Iterator<E> ret = (Iterator<E>) EmptyIterator.INSTANCE;
-      return ret;
-   }
-   
    public static <E> Iterator<E> singletonIterator(E element) {
-      return new SingletonIterator<E>(element);
+      return new SingletonIterator<E>(element, null);
+   }
+
+   public static <E> Iterator<E> singletonIterator(E element, Runnable onRemove) {
+      return new SingletonIterator<E>(element, onRemove);
    }
    
+
    public static <E> Iterator<E> reversed(Iterable<E> iterable) {
       // check for a few special cases where we can reverse the iterable very efficiently
       if (iterable instanceof List) {
@@ -107,7 +109,7 @@ public final class Iterables {
          }
          ArrayDeque<E> deque;
          // try to determine best initial size
-         OptionalInt size = size(iterable);
+         OptionalInt size = trySize(iterable);
          if (size.isPresent()) {
             deque = new ArrayDeque<>(size.getAsInt());
          } else {
@@ -120,7 +122,7 @@ public final class Iterables {
       }
    }
    
-   public static OptionalInt size(Iterable<?> iterable) {
+   public static OptionalInt trySize(Iterable<?> iterable) {
       if (iterable instanceof Collection) {
          return OptionalInt.of(((Collection<?>) iterable).size());
       } else if (iterable instanceof SizedIterable) {
@@ -130,6 +132,25 @@ public final class Iterables {
       }
    }
    
+   public static int size(Iterable<?> iterable) {
+      if (iterable instanceof Collection) {
+         return ((Collection<?>) iterable).size();
+      } else if (iterable instanceof SizedIterable) {
+         return ((SizedIterable<?>) iterable).size();
+      } else {
+         return size(iterable.iterator());
+      }
+   }
+
+   public static int size(Iterator<?> iterator) {
+      int sz = 0;
+      while (iterator.hasNext()) {
+         iterator.next();
+         sz++;
+      }
+      return sz;
+   }
+
    /**
     * Creates a snapshot of the given iterable. This involves exhausting the iterable and returning
     * an unmodifiable collection with all of its contents.
@@ -138,13 +159,32 @@ public final class Iterables {
     * @return a snapshot of the iterable's contents in an unmodifiable collection
     */
    @SuppressWarnings("unchecked")
-   public static <E> Collection<E> snapshot(Iterable<? extends E> iterable) {
-     return Collections.unmodifiableCollection((List<E>) Arrays.asList(toArray(iterable))); 
+   public static <E> List<E> snapshot(Iterable<? extends E> iterable) {
+     return Collections.unmodifiableList((List<E>) Arrays.asList(toArray(iterable))); 
+   }
+   
+   private static class Chunk {
+      final Object contents[];
+      Chunk next;
+      
+      Chunk(Object array[]) {
+         contents = array;
+      }
+      
+      Chunk(int limit) {
+         this(new Object[limit]);
+      }
+      
+      Chunk(int limit, Class<?> elementType) {
+         this(elementType != Object.class
+               ? (Object[]) Array.newInstance(elementType, limit)
+               : new Object[limit]);
+      }
    }
    
    /**
     * Creates a snapshot of the given iterable as an array. Implementations that already have a
-    * {@code toArray} method, like {@link Collection} and {@link ImmutableCollection}, can just use
+    * {@code toArray} method, like {@link Collection} and {@link ImmutableCollection}, will just use
     * that existing implementation.
     * 
     * <p>Iterables that do not provide such a method must resort to a custom mechanism. Instead of
@@ -158,14 +198,6 @@ public final class Iterables {
     * @return a snapshot of the iterable's contents in an array
     */
    public static Object[] toArray(Iterable<?> iterable) {
-      class Chunk {
-         final Object contents[];
-         Chunk next;
-         Chunk(int limit) {
-            contents = new Object[limit];
-         }
-      }
-
       Iterator<?> iter = iterable.iterator();
       if (!iter.hasNext()) {
          return Immutables.EMPTY;
@@ -178,50 +210,140 @@ public final class Iterables {
       } else if (iterable instanceof PriorityQueue) {
          return ((PriorityQueue<?, ?>) iterable).toArray();
       } else {
-         SizedIterable<?> sized = iterable instanceof SizedIterable
-               ? (SizedIterable<?>) iterable : null;
-         int size = 0;
-         int chunkLimit = sized != null ? sized.size() : 16;
-         Chunk head = new Chunk(chunkLimit);
-         Chunk current = head;
-         int currentIndex = 0;
-         while (iter.hasNext()) {
-            if (currentIndex == chunkLimit) {
-               size += currentIndex;
-               int newSize;
-               if (sized != null && (newSize = sized.size()) > size) {
-                  chunkLimit = newSize - size + 1;
-               } else {
-                  // don't know by how much to grow? double capacity
-                  chunkLimit = size;
-               }
-               current.next = new Chunk(chunkLimit);
-               current = current.next;
-               currentIndex = 0;
-            }
-            Object o = iter.next();
-            current.contents[currentIndex++] = o;
+         return toArrayInternal(iter,
+               iterable instanceof SizedIterable ? ((SizedIterable<?>) iterable)::size : null);
+      }
+   }
+      
+   public static <T> T[] toArray(Iterable<?> iterable, T[] array) {
+      Iterator<?> iter = iterable.iterator();
+      if (!iter.hasNext()) {
+         if (array.length > 0) {
+            array[0] = null;
          }
-         size += currentIndex;
-         int lastChunkSize = currentIndex;
-         Object elements[] = new Object[size];
-         currentIndex = 0;
-         for (current = head; current != null; current = current.next) {
-            if (current.next == null) {
-               // last chunk
-               if (lastChunkSize > 0) {
-                  System.arraycopy(current.contents, 0, elements, currentIndex, lastChunkSize);
-               }
-            } else {
-               int chunkLength = current.contents.length;
-               System.arraycopy(current.contents, 0, elements, currentIndex, chunkLength);
-               currentIndex += chunkLength;
-            }
-         }
-         return elements;
+         return array;
+      } else if (iterable instanceof Collection) {
+         return ((Collection<?>) iterable).toArray(array);
+      } else if (iterable instanceof ImmutableCollection) {
+         return ((ImmutableCollection<?>) iterable).toArray(array);
+      } else if (iterable instanceof ImmutableMap) {
+         return ((ImmutableMap<?, ?>) iterable).entrySet().toArray(array);
+      } else {
+         return toArrayInternal(iter, array,
+               iterable instanceof SizedIterable ? ((SizedIterable<?>) iterable)::size : null);
       }
    }
    
+   public static Object[] toArray(Iterator<?> iter) {
+      return toArrayInternal(iter, null);
+   }
+   
+   private static Object[] toArrayInternal(Iterator<?> iter, IntSupplier sized) {
+      int size = 0;
+      int chunkLimit = sized != null ? sized.getAsInt() : 16;
+      Chunk head = new Chunk(chunkLimit);
+      Chunk current = head;
+      int currentIndex = 0;
+      while (iter.hasNext()) {
+         if (currentIndex == chunkLimit) {
+            size += currentIndex;
+            int newSize;
+            if (sized != null && (newSize = sized.getAsInt()) > size) {
+               chunkLimit = newSize - size + 1;
+            } else {
+               // don't know by how much to grow? double capacity
+               chunkLimit = size;
+            }
+            current.next = new Chunk(chunkLimit);
+            current = current.next;
+            currentIndex = 0;
+         }
+         Object o = iter.next();
+         current.contents[currentIndex++] = o;
+      }
+      size += currentIndex;
+      if (head.next == null && head.contents.length == size) {
+         // we captured it perfectly in first chunk, so just return the chunk's contents
+         return head.contents;
+      }
+      int lastChunkSize = currentIndex;
+      Object elements[] = new Object[size];
+      currentIndex = 0;
+      for (current = head; current != null; current = current.next) {
+         if (current.next == null) {
+            // last chunk
+            if (lastChunkSize > 0) {
+               System.arraycopy(current.contents, 0, elements, currentIndex, lastChunkSize);
+            }
+         } else {
+            int chunkLength = current.contents.length;
+            System.arraycopy(current.contents, 0, elements, currentIndex, chunkLength);
+            currentIndex += chunkLength;
+         }
+      }
+      return elements;
+   }
+   
+   public static <T> T[] toArray(Iterator<?> iter, T[] array) {
+      return toArrayInternal(iter, array, null);
+   }
+
+   private static <T> T[] toArrayInternal(Iterator<?> iter, T[] array, IntSupplier sized) {
+      int size = 0;
+      int chunkLimit = sized != null ? sized.getAsInt() : 16;
+      Class<?> elementType = array.getClass().getComponentType();
+      Chunk head = array.length > 0 ? new Chunk(array) : new Chunk(chunkLimit, elementType);
+      Chunk current = head;
+      int currentIndex = 0;
+      while (iter.hasNext()) {
+         if (currentIndex == chunkLimit) {
+            size += currentIndex;
+            int newSize;
+            if (sized != null && (newSize = sized.getAsInt()) > size) {
+               chunkLimit = newSize - size + 1;
+            } else {
+               // don't know by how much to grow? double capacity
+               chunkLimit = size;
+            }
+            current.next = new Chunk(chunkLimit, elementType);
+            current = current.next;
+            currentIndex = 0;
+         }
+         Object o = iter.next();
+         current.contents[currentIndex++] = o;
+      }
+      size += currentIndex;
+      if (head.next == null) {
+         if (head.contents.length == size) {
+            // we captured it perfectly in first chunk, so just return the chunk's contents
+            @SuppressWarnings("unchecked") // we made sure each chunk has right component type
+            T ret[] = (T[]) head.contents;
+            return ret;
+         } else if (head.contents == array) {
+            // never exceeded original array, so just null-terminate and done
+            array[size] = null;
+            return array;
+         }
+      }
+      int lastChunkSize = currentIndex;
+      @SuppressWarnings("unchecked")
+      T elements[] = (T[]) Array.newInstance(elementType, size);
+      currentIndex = 0;
+      for (current = head; current != null; current = current.next) {
+         if (current.next == null) {
+            // last chunk
+            if (lastChunkSize > 0) {
+               System.arraycopy(current.contents, 0, elements, currentIndex, lastChunkSize);
+            }
+         } else {
+            int chunkLength = current.contents.length;
+            System.arraycopy(current.contents, 0, elements, currentIndex, chunkLength);
+            currentIndex += chunkLength;
+         }
+      }
+      return elements;
+   }
+
    @SuppressWarnings("unchecked")
    public static <E> Iterator<E> cast(Iterator<? extends E> iterator) {
       return (Iterator<E>) iterator;
@@ -266,7 +388,7 @@ public final class Iterables {
    public static <E> Iterator<E> concat(Iterator<? extends E>... iterators) {
       switch (iterators.length) {
          case 0:
-            return emptyIterator();
+            return Collections.emptyIterator();
          case 1:
             return cast(iterators[0]);
          case 2:
@@ -287,7 +409,7 @@ public final class Iterables {
    public static <E> Iterator<E> concat(Iterable<Iterator<? extends E>> iterators) {
       Iterator<Iterator<? extends E>> iter = iterators.iterator();
       if (!iter.hasNext()) {
-         return emptyIterator();
+         return Collections.emptyIterator();
       }
       Iterator<? extends E> first = iter.next();
       if (!iter.hasNext()) {
@@ -337,40 +459,45 @@ public final class Iterables {
       };
    }
    
-   private static class EmptyIterator implements Iterator<Object> {
-      static final EmptyIterator INSTANCE = new EmptyIterator();
-      
-      @Override
-      public boolean hasNext() {
-         return false;
-      }
-
-      @Override
-      public Object next() {
-         throw new NoSuchElementException();
-      }
+   public static <T, U> Iterator<U> flatMap(Iterator<T> iterator,
+         Function<? super T, ? extends Iterator<? extends U>> fn) {
+      return new FlatMapIterator<>(iterator, fn);
    }
 
    private static class SingletonIterator<E> implements Iterator<E> {
       private final E e;
-      private boolean used;
+      private final Runnable onRemove;
+      private int state; // 0 zilch, 1 fetched, 2 removed
       
-      SingletonIterator(E e) {
+      SingletonIterator(E e, Runnable onRemove) {
          this.e = e;
+         this.onRemove = onRemove;
       }
       
       @Override
       public boolean hasNext() {
-         return !used;
+         return state == 0;
       }
 
       @Override
       public E next() {
-         if (used) {
+         if (state > 0) {
             throw new NoSuchElementException();
          }
-         used = true;
+         state = 1;
          return e;
+      }
+
+      @Override
+      public void remove() {
+         if (onRemove == null) {
+            throw new UnsupportedOperationException();
+         }
+         if (state != 1) {
+            throw new IllegalStateException();
+         }
+         onRemove.run();
+         state = 2;
       }
    }
    
@@ -509,6 +636,57 @@ public final class Iterables {
          return ret;
       }
       
+      @Override
+      public void remove() {
+         if (lastFetched == null) {
+            throw new IllegalStateException();
+         }
+         lastFetched.remove();
+      }
+   }
+   
+   private static class FlatMapIterator<T, U> implements Iterator<U> {
+      private final Iterator<T> iterator;
+      private final Function<? super T, ? extends Iterator<? extends U>> fn;
+      Iterator<? extends U> current;
+      Iterator<? extends U> lastFetched;
+      
+      FlatMapIterator(Iterator<T> iterator,
+            Function<? super T, ? extends Iterator<? extends U>> fn) {
+         this.iterator = iterator;
+         this.fn = fn;
+         findNext();
+      }
+
+      private void findNext() {
+         while (iterator.hasNext()) {
+            Iterator<? extends U> iter = fn.apply(iterator.next());
+            if (iter.hasNext()) {
+               current = iter;
+               return;
+            }
+         }
+         current = null;
+      }
+
+      @Override
+      public boolean hasNext() {
+         return current != null && current.hasNext();
+      }
+
+      @Override
+      public U next() {
+         if (current == null) {
+            throw new NoSuchElementException();
+         }
+         lastFetched = current;
+         U ret = current.next();
+         if (!current.hasNext()) {
+            findNext();
+         }
+         return ret;
+      }
+
       @Override
       public void remove() {
          if (lastFetched == null) {

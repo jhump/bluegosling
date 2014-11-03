@@ -85,7 +85,7 @@ public class TransformingCollection<I, O> extends TransformingIterable<I, O>
 
    @Override
    public boolean remove(Object o) {
-      return CollectionUtils.removeObject(o,  iterator(), true);
+      return CollectionUtils.removeObject(o, iterator(), true);
    }
 
    @Override

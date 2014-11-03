@@ -47,12 +47,12 @@ class DescendingMap<K, V> implements NavigableMap<K, V> {
    public Collection<V> values() {
       // keySet() is in proper order thanks to NavigableMap.descendingKeySet()
       // so we create a collection that returns items in the correct order based on it
-      return new TransformingCollection<K, V>(keySet(), (k) -> get(k));
+      return new TransformingCollection<K, V>(keySet(), k -> get(k));
    }
 
    @Override
    public Set<Entry<K, V>> entrySet() {
-      return new TransformingSet<K, Map.Entry<K, V>>(keySet(), (k) -> floorEntry(k));
+      return new TransformingSet<K, Map.Entry<K, V>>(keySet(), k -> floorEntry(k));
    }
 
    @Override

@@ -178,7 +178,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
    }
 
    @Override
-   public E getKey(K key) {
+   public E getByKey(K key) {
       Integer index = indexByKey.get(key);
       return index == null ? null : get(index);
    }
@@ -190,7 +190,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
    }
    
    @Override
-   public Map.Entry<Integer, E> removeKey(K key) {
+   public Map.Entry<Integer, E> removeByKey(K key) {
       int index = forgetKey(key);
       if (index == -1) {
          return null;
@@ -1013,7 +1013,7 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       }
 
       @Override
-      public E getKey(K key) {
+      public E getByKey(K key) {
          int index = getKeyIndex(key);
          return index == -1 ? null : get(index);
       }
@@ -1025,12 +1025,12 @@ public class AssociativeArrayList<E, K> extends ArrayList<E> implements Associat
       }
 
       @Override
-      public Map.Entry<Integer, E> removeKey(K key) {
+      public Map.Entry<Integer, E> removeByKey(K key) {
          int index = getKeyIndex(key);
          if (index == -1) {
             return null;
          }
-         Map.Entry<Integer, E> removed = AssociativeArrayList.this.removeKey(key);
+         Map.Entry<Integer, E> removed = AssociativeArrayList.this.removeByKey(key);
          return mapEntry(removed.getKey() - fromIndex, removed.getValue());
       }
 

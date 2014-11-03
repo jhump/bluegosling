@@ -6,6 +6,7 @@ import com.apriori.collections.AbstractNavigableMap.BoundType;
 import com.apriori.possible.Reference;
 
 import java.util.AbstractCollection;
+import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -32,7 +34,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
    }
 
    @Override
-   public Comparator<? super List<K>> comparator() {
+   public Comparator<Iterable<K>> comparator() {
       return Iterables.comparator(componentComparator);
    }
 
@@ -59,6 +61,14 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
       N node = get(asIterable(key));
       return node != null ? node.getValue() : null;
+   }
+   
+   Entry<List<K>, V> getEntry(Object key) {
+      if (!(key instanceof Iterable)) {
+         return null;
+      }
+      N node = get(asIterable(key));
+      return node != null ? new EntryImpl<>(createKeyList(node, root), node) : null;
    }
 
    @Override
@@ -184,13 +194,19 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
    @Override
    public List<K> firstKey() {
       N node = firstNode();
-      return node != null ? createKeyList(node, root) : null;
+      if (node == null) {
+         throw new NoSuchElementException();
+      }
+      return createKeyList(node, root);
    }
 
    @Override
    public List<K> lastKey() {
       N node = lastNode();
-      return node != null ? createKeyList(node, root) : null;
+      if (node == null) {
+         throw new NoSuchElementException();
+      }
+      return createKeyList(node, root);
    }
 
    @Override
@@ -534,17 +550,36 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
-            return Iterables.emptyIterator();
+            return Collections.emptyIterator();
          }
          return new EntryIterator<T, K, Void, V, N>(node, producer) {
             @Override public void remove() {
                super.remove();
                // if this removal caused prefix trie to become empty, we may need to
                // propagate removal up to parent trie to prune dead sub-tries
-               if (!node.valuePresent() && node.isEmpty()) {
-                  for (N n = node, p = node.getParent(); p != null; n = p, p = p.getParent()) {
-                     p.remove(n.getKey());
-                  }
+               for (N n = node, p = node.getParent();
+                     !n.valuePresent() && n.isEmpty() && p != null; n = p, p = p.getParent()) {
+                  p.remove(n.getKey());
+               }
+            }
+         };
+      }
+
+      @Override
+      protected <T> Iterator<T> descendingEntryIterator(
+            BiFunction<Supplier<List<K>>, N, T> producer) {
+         N node = getRoot();
+         if (node == null) {
+            return Collections.emptyIterator();
+         }
+         return new DescendingEntryIterator<T, K, Void, V, N>(node, producer) {
+            @Override public void remove() {
+               super.remove();
+               // if this removal caused prefix trie to become empty, we may need to
+               // propagate removal up to parent trie to prune dead sub-tries
+               for (N n = node, p = node.getParent();
+                     !n.valuePresent() && n.isEmpty() && p != null; n = p, p = p.getParent()) {
+                  p.remove(n.getKey());
                }
             }
          };
@@ -674,15 +709,15 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
    }
    
-   protected static class SubTrie<K, V, N extends AbstractNavigableTrie.NavigableNode<K, Void, V, N>>
-         extends AbstractNavigableMap<List<K>, V> implements NavigableSequenceTrie<K, V> {
-      private final AbstractNavigableSequenceTrie<K, V, N> base;
+   protected static class SubTrie<K, V> extends AbstractNavigableMap<List<K>, V>
+         implements NavigableSequenceTrie<K, V> {
+      private final AbstractNavigableSequenceTrie<K, V, ?> base;
       private final Iterable<K> lowerBound;
       private final BoundType lowerBoundType;
       private final Iterable<K> upperBound;
       private final BoundType upperBoundType;
       
-      SubTrie(AbstractNavigableSequenceTrie<K, V, N> base, Iterable<K> lowerBound,
+      SubTrie(AbstractNavigableSequenceTrie<K, V, ?> base, Iterable<K> lowerBound,
             BoundType lowerBoundType, Iterable<K> upperBound, BoundType upperBoundType) {
          this.base = base;
          this.lowerBound = lowerBound;
@@ -693,20 +728,57 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public int size() {
-         // TODO: implement me
-         return 0;
+         // TODO: make this more efficient?
+         int sz = 0;
+         for (Iterator<?> iter = keySet().iterator(); iter.hasNext(); ) {
+            iter.next();
+            sz++;
+         }
+         return sz;
       }
 
+      // we switch on the ones we care about; intentional fall-through for the rest
+      @SuppressWarnings("incomplete-switch")
+      private boolean isInRange(Iterable<K> key) {
+         Comparator<Iterable<K>> comp = base.comparator();
+         switch (lowerBoundType) {
+            case INCLUSIVE:
+               if (comp.compare(key, lowerBound) < 0) {
+                  return false;
+               }
+            case EXCLUSIVE:
+               if (comp.compare(key, lowerBound) <= 0) {
+                  return false;
+               }
+         }
+         switch (upperBoundType) {
+            case INCLUSIVE:
+               if (comp.compare(key, upperBound) > 0) {
+                  return false;
+               }
+            case EXCLUSIVE:
+               if (comp.compare(key, upperBound) >= 0) {
+                  return false;
+               }
+         }
+         return true;
+      }
+      
+      private void checkArgIsInRange(Iterable<K> key) {
+         if (!isInRange(key)) {
+            throw new IllegalArgumentException("Key " + key + " is outside sub-map range");
+         }
+      }
+      
       @Override
       public V put(Iterable<K> key, V value) {
-         // TODO: implement me
-         return null;
+         checkArgIsInRange(key);
+         return base.put(key, value);
       }
 
       @Override
       public V put(List<K> key, V value) {
-         // TODO: implement me
-         return null;
+         return put((Iterable<K>) key, value);
       }
 
       @Override
@@ -721,20 +793,22 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(K prefix) {
-         // TODO: implement me
-         return null;
+         return prefixMap(Collections.singleton(prefix));
       }
 
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix) {
-         // TODO: implement me
-         return null;
+         checkArgIsInRange(prefix);
+         @SuppressWarnings("unchecked") // this is not actually an unchecked cast, javac!
+         AbstractNavigableSequenceTrie<K, V, ?> prefixMap =
+               (AbstractNavigableSequenceTrie<K, V, ?>) base.prefixMap(prefix);
+         return new SubTrie<K, V>(prefixMap, lowerBound, lowerBoundType, upperBound,
+               upperBoundType);
       }
 
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
-         // TODO: implement me
-         return null;
+         return prefixMap(upToN(prefix, numComponents));
       }
 
       @Override
@@ -745,20 +819,29 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       @Override
       public NavigableSequenceTrie<K, V> subMap(Iterable<K> fromKey, boolean fromInclusive,
             Iterable<K> toKey, boolean toInclusive) {
-         // TODO: implement me
-         return null;
+         Comparator<Iterable<K>> comp = base.comparator();
+         if (comp.compare(fromKey, toKey) > 0) {
+            throw new IllegalArgumentException("From key " + fromKey + " > to key" + toKey);
+         }
+         checkArgIsInRange(fromKey);
+         checkArgIsInRange(toKey);
+         return new SubTrie<>(base,
+               fromKey, fromInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+               toKey, toInclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
       }
 
       @Override
       public NavigableSequenceTrie<K, V> headMap(Iterable<K> toKey, boolean inclusive) {
-         // TODO: implement me
-         return null;
+         checkArgIsInRange(toKey);
+         return new SubTrie<>(base, lowerBound, lowerBoundType,
+               toKey, inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE);
       }
 
       @Override
       public NavigableSequenceTrie<K, V> tailMap(Iterable<K> fromKey, boolean inclusive) {
-         // TODO: implement me
-         return null;
+         checkArgIsInRange(fromKey);
+         return new SubTrie<>(base, fromKey, inclusive ? BoundType.INCLUSIVE : BoundType.EXCLUSIVE,
+               upperBound, upperBoundType);
       }
 
       @Override
@@ -829,20 +912,36 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       
       @Override
       public Entry<List<K>, V> firstEntry() {
-         // TODO: implement me
-         return null;
+         switch (lowerBoundType) {
+            case NO_BOUND:
+               return base.firstEntry();
+            case INCLUSIVE:
+               return base.ceilingEntry(lowerBound);
+            case EXCLUSIVE:
+               return base.higherEntry(lowerBound);
+            default:
+               throw new AssertionError();
+         }
       }
 
       @Override
       public Entry<List<K>, V> lastEntry() {
-         // TODO: implement me
-         return null;
+         switch (upperBoundType) {
+            case NO_BOUND:
+               return base.lastEntry();
+            case INCLUSIVE:
+               return base.floorEntry(upperBound);
+            case EXCLUSIVE:
+               return base.lowerEntry(upperBound);
+            default:
+               throw new AssertionError();
+         }
       }
       
       @Override
       public Entry<List<K>, V> lowerEntry(Iterable<K> keys) {
-         // TODO: implement me
-         return null;
+         Entry<List<K>, V> entry = base.lowerEntry(keys);
+         return entry != null && isInRange(entry.getKey()) ? entry : null;
       }
 
       @Override
@@ -853,8 +952,8 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public Entry<List<K>, V> higherEntry(Iterable<K> keys) {
-         // TODO: implement me
-         return null;
+         Entry<List<K>, V> entry = base.higherEntry(keys);
+         return entry != null && isInRange(entry.getKey()) ? entry : null;
       }
 
       @Override
@@ -865,8 +964,8 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public Entry<List<K>, V> ceilingEntry(Iterable<K> keys) {
-         // TODO: implement me
-         return null;
+         Entry<List<K>, V> entry = base.ceilingEntry(keys);
+         return entry != null && isInRange(entry.getKey()) ? entry : null;
       }
 
       @Override
@@ -877,8 +976,8 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public Entry<List<K>, V> floorEntry(Iterable<K> keys) {
-         // TODO: implement me
-         return null;
+         Entry<List<K>, V> entry = base.floorEntry(keys);
+         return entry != null && isInRange(entry.getKey()) ? entry : null;
       }
 
       @Override
@@ -889,14 +988,20 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       protected Entry<List<K>, V> getEntry(Object key) {
-         // TODO: implement me
-         return null;
+         Entry<List<K>, V> entry = base.getEntry(key);
+         return entry != null && isInRange(entry.getKey()) ? entry : null;
       }
 
       @Override
       protected Entry<List<K>, V> removeEntry(Object key) {
-         // TODO: implement me
-         return null;
+         if (!(key instanceof Iterable)) {
+            return null;
+         }
+         Iterable<K> keyIter = base.asIterable(key);
+         Reference<V> v = base.remove(keyIter);
+         return v.isPresent()
+               ? new AbstractMap.SimpleImmutableEntry<>(Iterables.snapshot(keyIter), v.get())
+               : null;
       }
    }
 }

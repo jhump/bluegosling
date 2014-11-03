@@ -2,7 +2,6 @@ package com.apriori.collections;
 
 import java.util.Collection;
 import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -78,10 +77,5 @@ public interface ImmutableCollection<E> extends SizedIterable<E> {
 
    default Stream<E> parallelStream() {
       return StreamSupport.stream(spliterator(), true);
-   }
-   
-   @Override
-   default Spliterator<E> spliterator() {
-      return Spliterators.spliterator(iterator(), size(), 0);
    }
 }

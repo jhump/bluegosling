@@ -228,7 +228,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       addAll(set);
    }
    
-   private void acquireWriteLock(int shard) {
+   void acquireWriteLock(int shard) {
       shardLocks[shard].writeLock().lock();
       if (shardLatestIteratorModCounts[shard] == shardModCounts[shard]) {
          shards[shard] = makeClone(shards[shard]);
@@ -236,7 +236,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       shardModCounts[shard]++;
    }
    
-   private void releaseWriteLock(int shard) {
+   void releaseWriteLock(int shard) {
       shardLocks[shard].writeLock().unlock();
    }
 
@@ -268,11 +268,11 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       }
    }
    
-   private void acquireReadLock(int shard) {
+   void acquireReadLock(int shard) {
       shardLocks[shard].readLock().lock();
    }
    
-   private void releaseReadLock(int shard) {
+   void releaseReadLock(int shard) {
       shardLocks[shard].readLock().unlock();
    }
    

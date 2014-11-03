@@ -118,7 +118,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
        * <p>For nodes that are implemented by a map, this value will not be the same as the size of
        * the map.
        * 
-       * <p><strong>Note:</strong> implementations need not compute this value from any of the other
+       * <p><strong>Note:</strong> implementations need not update this value from any of the other
        * method implementations. For example, adding or removing a sub-trie need not touch this
        * value. The other methods, to increment and decrement this count, are used by {@link 
        *
@@ -430,10 +430,30 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       return size() == 0;
    }
    
+   /**
+    * Returns an iterator that will visit each mapping in the trie. The given producer is used to
+    * construct the values returned by the iterator.
+    *
+    * @param <T> the type of value returned by the iterator
+    * @param producer produces values returned by the iterator, given a node and a way to construct
+    *       the key list for that node
+    * @return an iterator that will visit each mapping in the trie
+    */
    protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
       return new EntryIterator<>(root, producer);
    }
    
+   /**
+    * Returns an iterator that will visit each mapping in the trie, starting at the given node and
+    * skipping any nodes in the trie that might otherwise have been visited before the given node.
+    * The given producer is used to construct the values returned by the iterator.
+    *
+    * @param <T> the type of value returned by the iterator
+    * @param producer produces values returned by the iterator, given a node and a way to construct
+    *       the key list for that node
+    * @param startAt the initial node visited by the iterator
+    * @return an iterator that will visit each mapping in the trie
+    */
    protected <T> Iterator<T> entryIteratorFrom(BiFunction<Supplier<List<K>>, N, T> producer,
          N startAt) {
       return new EntryIterator<>(root, producer, startAt);

@@ -111,7 +111,11 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     */
    @Override
    public K firstKey() {
-      return key(firstEntry());
+      Entry<K, V> entry = firstEntry();
+      if (entry == null) {
+         throw new NoSuchElementException();
+      }
+      return entry.getKey();
    }
 
    /**
@@ -122,7 +126,11 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
     */
    @Override
    public K lastKey() {
-      return key(lastEntry());
+      Entry<K, V> entry = lastEntry();
+      if (entry == null) {
+         throw new NoSuchElementException();
+      }
+      return entry.getKey();
    }
 
    /**

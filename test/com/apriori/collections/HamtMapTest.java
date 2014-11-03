@@ -42,6 +42,8 @@ public class HamtMapTest extends AbstractTestMap {
    
    @SuppressWarnings("rawtypes")
    public void testHashCollision() {
+      // HamtMap uses a linked list to manage multiple mappings for the same hash code.
+      // So this test case checks that it works.
       resetEmpty();
       putCollidingEntries();
       // remove items w/ colliding hash codes via Map.remove(...)

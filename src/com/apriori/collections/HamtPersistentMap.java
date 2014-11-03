@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 // TODO: javadoc
 // TODO: tests
@@ -127,8 +128,16 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                // no more children, so scrap this empty node 
                return null;
             }
+            TrieNode<K, V> remainingChild;
+            if (numChildren == 1
+                  && (remainingChild = children[index == 0 ? 1 : 0]) instanceof LeafTrieNode) {
+               // one leaf remains? collapse this node and the leaf into an InnerLeafTrieNode
+               LeafTrieNode<K, V> leaf = (LeafTrieNode<K, V>) remainingChild;
+               return leaf instanceof InnerLeafTrieNode
+                     ? leaf
+                     : new InnerLeafTrieNode<K, V>(leaf.key, leaf.value, leaf.next, hash(leaf.key));
+            }
             // create a replacement node without this child entry
-            // TODO: use InnerLeafTrieNode if only one child and it's a LeafTrieNode
             TrieNode<K, V> newChildren[] = createChildren(numChildren);
             if (index > 0) {
                System.arraycopy(children, 0, newChildren, 0, index);
@@ -138,8 +147,14 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             }
             long newPresent = present & ~mask;
             return new IntermediateTrieNode<K, V>(newPresent, newChildren);
+         } else if (numChildren == 1 && newChild instanceof LeafTrieNode) {
+            // collapse this node and the leaf into an InnerLeafTrieNode
+            LeafTrieNode<K, V> leaf = (LeafTrieNode<K, V>) newChild;
+            return leaf instanceof InnerLeafTrieNode
+                  ? leaf
+                  : new InnerLeafTrieNode<K, V>(leaf.key, leaf.value, leaf.next, hash(leaf.key));
          } else {
-            // create a replacement node with this child entry swapped
+            // create a replacement node, replacing old child with this new one
             TrieNode<K, V> newChildren[] = children.clone();
             newChildren[index] = newChild;
             return new IntermediateTrieNode<K, V>(present, newChildren);
@@ -160,7 +175,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                System.arraycopy(children, 0, newChildren, 0, index);
             }
             if (index < length) {
-               System.arraycopy(children, index + 1, newChildren, 0, length - index);
+               System.arraycopy(children, index, newChildren, index + 1, length - index);
             }
             if (currentOffset + 6 >= 32) {
                newChildren[index] = new LeafTrieNode<K, V>(key, value);
@@ -228,60 +243,72 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public TrieNode<K, V> remove(int hash, int currentOffset, Object keyToRemove) {
          assert currentOffset >= 32;
-         return doRemove(keyToRemove);
+         return doRemove(keyToRemove, hash);
       }
       
-      TrieNode<K, V> create(K k, V v, ListNode<K, V> n) {
+      TrieNode<K, V> create(K k, V v, ListNode<K, V> n, @SuppressWarnings("unused") int hash) {
          return new LeafTrieNode<K, V>(k, v, n);
       }
       
-      TrieNode<K, V> doRemove(Object keyToRemove) {
+      TrieNode<K, V> doRemove(Object keyToRemove, int hash) {
          ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
          for (ListNode<K, V> current = this; current != null; current = current.next) {
             if (keyToRemove == null ? current.key == null : keyToRemove.equals(current.key)) {
                if (stack.isEmpty()) {
+                  if (next == null) {
+                     // no other values here, deleting whole node
+                     return null;
+                  }
                   // removing the initial leaf node -- just create a new head ListNode that is
                   // also a TrieNode and keep the rest
-                  return create(next.key, next.value, next.next);
+                  return create(next.key, next.value, next.next, hash);
                }
                // rebuild path from leaf node to here and keep the rest of the list
-               while (stack.isEmpty()) {
+               current = current.next; // skip over the one we're removing
+               while (true) {
                   ListNode<K, V> node = stack.pop();
                   if (stack.isEmpty()) {
-                     return create(node.key, node.value, current.next);
+                     return create(node.key, node.value, current, hash);
                   }
-                  current = new ListNode<K, V>(node.key, node.value, current.next); 
+                  current = new ListNode<K, V>(node.key, node.value, current); 
                }
             }
             stack.push(current);
          }
-         return null;
+         // never found key to remove, so no change
+         return this;
       }
 
       @Override
       public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
          assert currentOffset >= 32;
-         doPut(newKey, newValue, result);
+         doPut(newKey, newValue, hash, result);
          return;
       }
       
-      void doPut(K newKey, V newValue, PutResult<K, V> result) {
+      void doPut(K newKey, V newValue, int hash, PutResult<K, V> result) {
          ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
          for (ListNode<K, V> current = this; current != null; current = current.next) {
             if (newKey == null ? current.key == null : newKey.equals(current.key)) {
+               if (Objects.equals(newValue, current.value)) {
+                  // no change
+                  result.node = this;
+                  result.added = false;
+                  return;
+               }
                if (stack.isEmpty()) {
                   // changing the initial leaf node -- just create a new head ListNode with new
                   // value and keep the rest
-                  result.node = create(newKey, newValue, next);
+                  result.node = create(newKey, newValue, next, hash);
                   result.added = false;
                   return;
                }
                // rebuild path from leaf node to here and keep the rest of the list
                current = new ListNode<K, V>(newKey, newValue, current.next); 
-               while (stack.isEmpty()) {
+               while (true) {
                   ListNode<K, V> node = stack.pop();
                   if (stack.isEmpty()) {
-                     result.node = create(node.key, node.value, current);
+                     result.node = create(node.key, node.value, current, hash);
                      result.added = false;
                      return;
                   }
@@ -291,7 +318,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             stack.push(current);
          }
          // adding new value - push to head of list
-         result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next));
+         result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next), hash);
          result.added = true;
       }
    }
@@ -316,19 +343,24 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
 
       @Override
       public TrieNode<K, V> remove(int hash, int currentOffset, Object keyToRemove) {
-         return hash == hashCode ? doRemove(keyToRemove) : this;
+         return hash == hashCode ? doRemove(keyToRemove, hash) : this;
       }
 
       @Override
       public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
          if (hash == hashCode) {
-            doPut(newKey, newValue, result);
+            doPut(newKey, newValue, hash, result);
          } else {
             result.node = create(hash, currentOffset, newKey, newValue);
             result.added = true;
          }
       }
-      
+
+      @Override
+      TrieNode<K, V> create(K k, V v, ListNode<K, V> n, int hash) {
+         return new InnerLeafTrieNode<K, V>(k, v, n, hash);
+      }
+
       private TrieNode<K, V> create(int hash, int currentOffset, K newKey, V newValue) {
          int significantBits1 = (hashCode >> currentOffset) & 0x3f;
          int significantBits2 = (hash >> currentOffset) & 0x3f;
@@ -339,8 +371,15 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          }
          
          long mask = (1L << significantBits1) | (1L << significantBits2);
-         TrieNode<K, V> current = new InnerLeafTrieNode<K, V>(key, value, next, hashCode);
-         TrieNode<K, V> addition = new InnerLeafTrieNode<K, V>(newKey, newValue, hash);
+         TrieNode<K, V> current, addition;
+         if (currentOffset + 6 >= 32) {
+            // at the end of the chain so use leaf nodes
+            current = new LeafTrieNode<K, V>(this.key, this.value, this.next);
+            addition = new LeafTrieNode<K, V>(newKey, newValue);
+         } else {
+            current = this;
+            addition = new InnerLeafTrieNode<K, V>(newKey, newValue, hash);
+         }
          TrieNode<K, V> children[] = IntermediateTrieNode.createChildren(2);
          if (significantBits1 < significantBits2) {
             children[0] = current;
@@ -384,8 +423,6 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
       return HamtPersistentMap.<K, V>create().merge(map);
    }
-   
-   
 
    private final int size;
    private final TrieNode<K, V> root;
@@ -507,6 +544,11 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       return size;
    }
    
+   @Override
+   public HamtPersistentMap<K, V> clear() {
+      return create();
+   }
+   
    private static class StackFrame<K, V> {
       final IntermediateTrieNode<K, V> node;
       int childIndex;
@@ -562,6 +604,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                      node = inode.children[0];
                   }
                   current = (ListNode<K, V>) node;
+                  break;
                }
             }
             if (stack.isEmpty()) {

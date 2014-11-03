@@ -17,7 +17,7 @@ import java.util.List;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-abstract class ImmutableCollectionWrapper<E, C extends Collection<E>>
+class ImmutableCollectionWrapper<E, C extends Collection<E>>
       implements ImmutableCollection<E> {
    
    static <E> Collection<E> fromIterable(Iterable<E> iter) {

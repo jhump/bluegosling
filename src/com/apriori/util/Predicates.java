@@ -1,6 +1,5 @@
 package com.apriori.util;
 
-import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.BooleanSupplier;
@@ -53,8 +52,8 @@ public final class Predicates {
       return (o) -> o != null;
    }
 
-   public static <T> Predicate<T> isEqualTo(T object) {
-      return curry(Objects::equals, object);
+   public static <T> Predicate<T> isSameAs(T object) {
+      return o -> o == object;
    }
 
    public static <T, U> BiPredicate<T, U> areSameObject() {

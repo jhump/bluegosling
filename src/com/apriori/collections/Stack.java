@@ -8,13 +8,43 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-// TODO: javadoc
+/**
+ * A simple stack interface. This interface is much more targeted for LIFO stacks and thus narrower
+ * than {@link Deque} or {@link List}.
+ *
+ * @param <T> the type of element in the stack
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public interface Stack<T> extends SizedIterable<T> {
 
+   /**
+    * Pushes a value onto the stack.
+    *
+    * @param value the value to push
+    * 
+    * @see Deque#push(Object)
+    */
    void push(T value);
    
+   /**
+    * Returns the element at the top of the stack. The element is not removed.
+    *
+    * @return the element at the top of the stack
+    * @throws NoSuchElementException if the stack is empty
+    * 
+    * @see Deque#element()
+    */
    T element();
    
+   /**
+    * Returns the element at the top of the stack or {@code null} if the stack is empty. The element
+    * is not removed.
+    *
+    * @return the element at the top of the stack or {@code null}
+    * 
+    * @see Deque#peek()
+    */
    default T peek() {
       try {
          return element();
@@ -23,8 +53,24 @@ public interface Stack<T> extends SizedIterable<T> {
       }
    }
    
+   /**
+    * Removes the element from the top of the stack and returns it.
+    *
+    * @return the element at the top of the stack
+    * @throws NoSuchElementException if the stack is empty
+    * 
+    * @see Deque#pop()
+    */
    T pop();
    
+   /**
+    * Removes the element from the top of the stack and returns it or returns {@code null} if the
+    * stack is empty.
+    *
+    * @return the element at the top of the stack or {@code null}
+    * 
+    * @see Deque#poll()
+    */
    default T poll() {
       try {
          return pop();
@@ -33,6 +79,12 @@ public interface Stack<T> extends SizedIterable<T> {
       }
    }
 
+   /**
+    * Drains the stack by popping all elements from the stack and adding them to the given
+    * collection. The top of the stack will be the first item added to the collection. 
+    *
+    * @param coll the collection into which items are drained
+    */
    default void drainTo(Collection<? super T> coll) {
       while (!isEmpty()) {
          try {
@@ -43,12 +95,30 @@ public interface Stack<T> extends SizedIterable<T> {
       }
    }
    
+   /**
+    * Drains the stack and returns its contents in a new instance. This can be interpreted as a
+    * "clone" then "clear" operation, in one.
+    *
+    * @return a new stack that has all of the contents that were held by this stack, in the same
+    *       order
+    */
    Stack<T> removeAll();
-   
+
+   /**
+    * Removes all items from the stack.
+    */
    default void clear() {
       removeAll();
    }
    
+   /**
+    * Adapts the {@link List} interface to this interface. Since lists usually have constant time
+    * append and constant time removal from the end, the end of the list is considered the top of
+    * the stack.
+    *
+    * @param list a list
+    * @return a stack that is backed by the given list
+    */
    static <T> Stack<T> fromList(List<T> list) {
       return new Stack<T>() {
          @Override
@@ -117,6 +187,13 @@ public interface Stack<T> extends SizedIterable<T> {
       };
    }
    
+   /**
+    * Adapts the {@link Deque} interface to this interface. Most operations on the stack just call
+    * through to the method of the same name on the given deque.
+    *
+    * @param deque a deque
+    * @return a stack that is backed by the given deque
+    */
    static <T> Stack<T> fromDeque(Deque<T> deque) {
       return new Stack<T>() {
          @Override
