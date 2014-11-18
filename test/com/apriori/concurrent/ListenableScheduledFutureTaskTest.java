@@ -41,7 +41,7 @@ public class ListenableScheduledFutureTaskTest extends ListenableFutureTaskTest 
       return (ListenableScheduledFutureTask<String>) future;
    }
    
-   @Test public void getDelay() {
+   @Test public void getDelay() throws Exception {
       FakeClock clock = new FakeClock();
       future = makeFuture(TimeUnit.SECONDS.toNanos(3), clock);
       
@@ -69,7 +69,7 @@ public class ListenableScheduledFutureTaskTest extends ListenableFutureTaskTest 
       assertEquals(-5000, future().getDelay(TimeUnit.NANOSECONDS));
    }
    
-   @Test public void compareTo() {
+   @Test public void compareTo() throws Exception {
       // against another Scheduled (no need to use a fake clock for this)
       assertEquals(1, makeFuture(TimeUnit.SECONDS.toNanos(3))
             .compareTo(makeFuture(TimeUnit.SECONDS.toNanos(1))));

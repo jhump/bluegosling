@@ -1,6 +1,8 @@
 package com.apriori.util;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
+
+
 
 // TODO: javadoc
 // TODO: tests
@@ -19,41 +21,18 @@ public enum SystemClock implements Clock {
    }
 
    @Override
-   public void sleep(long duration, TimeUnit unit) {
-      if (duration < 0) {
-         throw new IllegalArgumentException();
-      }
-      sleepUntilNanoTime(nanoTime() + unit.toNanos(duration));
-   }
-
-   @Override
-   public void sleepUntilMillis(long wakeTimeMillis) {
-      long sleepMillis = wakeTimeMillis - currentTimeMillis();
-      if (sleepMillis > 0) {
-         sleep(sleepMillis, TimeUnit.MILLISECONDS);
-      }
-   }
-
-   @Override
-   public void sleepUntilNanoTime(long wakeNanoTime) {
-      boolean interrupted = false;
-      try {
-         while (true) {
-            long sleepNanos = wakeNanoTime - nanoTime();
-            if (sleepNanos <= 0) {
-               break;
-            }
-            try {
-               Thread.sleep(sleepNanos / 1000000, (int) (sleepNanos % 1000000));
-               break;
-            } catch (InterruptedException e) {
-               interrupted = true;
-            }
+   public void sleepUntilNanoTime(long wakeNanoTime) throws InterruptedException {
+      // LockSupport.parkNanos(long) seems to be more precise than Thread.sleep(long,int),
+      // so we use that instead.
+      while (true) {
+         if (Thread.interrupted()) {
+            throw new InterruptedException();
          }
-      } finally {
-         if (interrupted) {
-            Thread.currentThread().interrupt();
+         long sleepNanos = wakeNanoTime - nanoTime();
+         if (sleepNanos <= 0) {
+            return;
          }
+         LockSupport.parkNanos(sleepNanos);
       }
    }
 }
