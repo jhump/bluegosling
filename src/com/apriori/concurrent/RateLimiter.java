@@ -7,7 +7,6 @@ import com.apriori.util.SystemClock;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 // TODO: javadoc
 // TODO: tests
@@ -16,15 +15,13 @@ public class RateLimiter {
    private static final long NANOS_PER_SEC = TimeUnit.SECONDS.toNanos(1);
    private static final long NANOS_PER_MILLI = TimeUnit.MILLISECONDS.toNanos(1);
    
-   private static final int PRE_AS_OF_NANOS_INDEX = 0;
-   private static final int POST_AS_OF_NANOS_INDEX = 1;
-   private static final int PRE_STORED_PERMITS_INDEX = 2;
-   private static final int POST_STORED_PERMITS_INDEX = 3;
+   private static final int AS_OF_NANOS_INDEX = 0;
+   private static final int STORED_PERMITS_INDEX = 1;
    
    private static final ThreadLocal<long[]> computeResults = new ThreadLocal<long[]>() {
       @Override
       public long[] initialValue() {
-         return new long[4];
+         return new long[2];
       }
    };
    
@@ -32,11 +29,11 @@ public class RateLimiter {
 
    long storedPermits;
    long asOfNanos;
-   final AtomicBoolean lock = new AtomicBoolean();
+   final Object lock = new Object();
    
-   volatile double rateNanosPerPermit;
-   volatile long maxStoredPermits;
-   volatile double jitter;
+   double rateNanosPerPermit;
+   long maxStoredPermits;
+   double jitter;
    
    public RateLimiter(double ratePermitsPerSecond) {
       this(ratePermitsPerSecond, (long) Math.max(ratePermitsPerSecond, 1));
@@ -81,11 +78,10 @@ public class RateLimiter {
       }
       long results[] = computeResults.get();
       long acquireCompleteNanos;
-      while (true) {
+      synchronized (lock) {
          acquireCompleteNanos = computePermitsAvailable(permits, results);
-         if (tryUpdate(results)) {
-            break;
-         }
+         this.asOfNanos = results[AS_OF_NANOS_INDEX];
+         this.storedPermits = results[STORED_PERMITS_INDEX];
       }
       clock.uninterruptedSleepUntilNanoTime(acquireCompleteNanos);
    }
@@ -103,11 +99,10 @@ public class RateLimiter {
       }
       long results[] = computeResults.get();
       long acquireCompleteNanos;
-      while (true) {
+      synchronized (lock) {
          acquireCompleteNanos = computePermitsAvailable(permits, results);
-         if (tryUpdate(results)) {
-            break;
-         }
+         this.asOfNanos = results[AS_OF_NANOS_INDEX];
+         this.storedPermits = results[STORED_PERMITS_INDEX];
       }
       clock.sleepUntilNanoTime(acquireCompleteNanos);
    }
@@ -122,14 +117,13 @@ public class RateLimiter {
       }
       long results[] = computeResults.get();
       long acquireCompleteNanos;
-      while (true) {
+      synchronized (lock) {
          acquireCompleteNanos = computePermitsAvailable(permits, results);
          if (acquireCompleteNanos > clock.nanoTime()) {
             return false;
          }
-         if (tryUpdate(results)) {
-            break;
-         }
+         this.asOfNanos = results[AS_OF_NANOS_INDEX];
+         this.storedPermits = results[STORED_PERMITS_INDEX];
       }
       return true;
    }
@@ -147,24 +141,23 @@ public class RateLimiter {
       long maxWaitNanos = unit.toNanos(timeLimit);
       long results[] = computeResults.get();
       long acquireCompleteNanos;
-      while (true) {
+      synchronized (lock) {
          acquireCompleteNanos = computePermitsAvailable(permits, results);
          if (acquireCompleteNanos - clock.nanoTime() > maxWaitNanos) {
             return false;
          }
-         if (tryUpdate(results)) {
-            break;
-         }
+         this.asOfNanos = results[AS_OF_NANOS_INDEX];
+         this.storedPermits = results[STORED_PERMITS_INDEX];
       }
       clock.sleepUntilNanoTime(acquireCompleteNanos);
       return true;
    }
    
-   public double getRate() {
+   public synchronized double getRate() {
       return NANOS_PER_SEC / rateNanosPerPermit;
    }
 
-   public void setRate(double permitsPerSecond) {
+   public synchronized void setRate(double permitsPerSecond) {
       if (permitsPerSecond <= 0) {
          throw new IllegalArgumentException("rate must be > 0 permits per second");
       }
@@ -175,22 +168,22 @@ public class RateLimiter {
       this.rateNanosPerPermit = nanosPerPermit;
    }
 
-   public long getMaxPermits() {
+   public synchronized long getMaxPermits() {
       return maxStoredPermits;
    }
 
-   public void setMaxPermits(long maxStoredPermits) {
+   public synchronized void setMaxPermits(long maxStoredPermits) {
       if (maxStoredPermits <= 0) {
          throw new IllegalArgumentException("max stored permits must be > 0");
       }
       this.maxStoredPermits = maxStoredPermits;
    }
 
-   public double getJitter() {
+   public synchronized double getJitter() {
       return jitter;
    }
 
-   public void setJitter(double jitter) {
+   public synchronized void setJitter(double jitter) {
       if (jitter < 0.0 || jitter > 1.0) {
          throw new IllegalArgumentException("jitter must be between 0.0 and 1.0, inclusive");
       }
@@ -198,14 +191,14 @@ public class RateLimiter {
    }
    
    private long computePermitsAvailable(long permits, long results[]) {
-      assert results.length == 4;
+      assert results.length == 2;
       // Give ourselves an extra millisecond for margin of error. Otherwise, we get weird effects
       // with very high rates but max bucket size of 1 where the permit should have been in the
       // bucket but we missed it due to scheduling inaccuracy.
       long now = clock.nanoTime() - NANOS_PER_MILLI;
       double rate = rateNanosPerPermit;
-      long asOf = results[PRE_AS_OF_NANOS_INDEX] = asOfNanos;
-      long stored = results[PRE_STORED_PERMITS_INDEX] = storedPermits;
+      long asOf = asOfNanos;
+      long stored = storedPermits;
       double jtr = jitter;
       if (asOf <= now) {
          // last time stamp is in the past, so we compute the number of permits as of now
@@ -217,8 +210,8 @@ public class RateLimiter {
          asOf = asOf + (long) (newPermits * jrate);
          if (stored >= permits) {
             // we already have enough permits to satisfy the request!
-            results[POST_AS_OF_NANOS_INDEX] = asOf;
-            results[POST_STORED_PERMITS_INDEX] = stored - permits;
+            results[AS_OF_NANOS_INDEX] = asOf;
+            results[STORED_PERMITS_INDEX] = stored - permits;
             return now;
          }
          // fall through to below to figure out how long to wait
@@ -235,8 +228,8 @@ public class RateLimiter {
          waitTime = (long) (shortage * jrate);
       }
       asOf += waitTime;
-      results[POST_AS_OF_NANOS_INDEX] = asOf;
-      results[POST_STORED_PERMITS_INDEX] = 0;
+      results[AS_OF_NANOS_INDEX] = asOf;
+      results[STORED_PERMITS_INDEX] = 0;
       return asOf;
    }
    
@@ -248,26 +241,5 @@ public class RateLimiter {
          j = -j;
       }
       return rate * (1.0 + j);
-   }
-   
-   private boolean tryUpdate(long values[]) {
-      // spin lock
-      while (true) {
-         if (lock.compareAndSet(false, true)) {
-            break;
-         }
-      }
-      try {
-         if (this.asOfNanos != values[PRE_AS_OF_NANOS_INDEX]
-               || this.storedPermits != values[PRE_STORED_PERMITS_INDEX]) {
-            return false;
-         }
-         this.asOfNanos = values[POST_AS_OF_NANOS_INDEX];
-         this.storedPermits = values[POST_STORED_PERMITS_INDEX];
-         return true;
-      } finally {
-         // unlock
-         lock.set(false);
-      }
    }
 }
