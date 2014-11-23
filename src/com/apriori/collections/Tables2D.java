@@ -674,7 +674,7 @@ final class Tables2D {
          synchronized (lock) {
             return new SynchronizedMap<>(
                   new TransformingMap.ValuesOnly<>(table.columnIndex(),
-                        s -> new SynchronizedSet<>(s, lock)),
+                        (k, s) -> new SynchronizedSet<>(s, lock)),
                   lock);
          }
       }
@@ -828,7 +828,7 @@ final class Tables2D {
       public Map<R, Set<C>> columnIndex() {
          // TODO: add TransformingMap.ReadOnly.ValuesOnly so we don't have to double-wrap
          return Collections.unmodifiableMap(new TransformingMap.ValuesOnly<>(table.columnIndex(),
-               s -> Collections.unmodifiableSet(s)));
+               (k, s) -> Collections.unmodifiableSet(s)));
       }
 
       @Override
@@ -869,7 +869,7 @@ final class Tables2D {
       @Override
       public TableMapView<R, Map<C, VO>> asMap() {
          return new TransformingTableMapView<>(table.asMap(),
-               m -> new TransformingMap.ValuesOnly<>(m, fn));
+               m -> new TransformingMap.ValuesOnly<>(m, (k, v) -> fn.apply(v)));
       }
 
       @Override
@@ -879,12 +879,12 @@ final class Tables2D {
 
       @Override
       public Map<C, VO> getRow(R rowKey) {
-         return new TransformingMap.ValuesOnly<>(table.getRow(rowKey), fn);
+         return new TransformingMap.ValuesOnly<>(table.getRow(rowKey), (k, v) -> fn.apply(v));
       }
 
       @Override
       public Map<R, VO> getColumn(C columnKey) {
-         return new TransformingMap.ValuesOnly<>(table.getColumn(columnKey), fn);
+         return new TransformingMap.ValuesOnly<>(table.getColumn(columnKey), (k, v) -> fn.apply(v));
       }
 
       @Override

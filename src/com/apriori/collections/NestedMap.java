@@ -506,7 +506,7 @@ class NestedMap<K, V> {
          // lowest-level means we have to iterate through every leaf value
          return new FilteringIterator<>(
                entryIterator((k, e) -> e.getKey()),
-               k -> seen.put(k, true) == null);
+               k -> seen.put(k, Boolean.TRUE) == null);
       } else {
          int lowestFilterHeight = getLowestFilteredLevel();
          if (lowestFilterHeight < actualHeight) {
@@ -516,12 +516,12 @@ class NestedMap<K, V> {
             // then doing a deep "containsKey" check to check all filters below that level
             return new FilteringIterator<>(
                   levelIterator((k, e) -> k.getKey(height), lowestFilterHeight),
-                  k -> seen.put(k, true) == null);
+                  k -> seen.put(k, Boolean.TRUE) == null);
          } else {
             // final case: just iterate through keys at the given level
             return new FilteringIterator<>(
                   levelIterator((k, e) -> e.getKey(), actualHeight),
-                  k -> seen.put(k, true) == null);
+                  k -> seen.put(k, Boolean.TRUE) == null);
          }
       }
    }

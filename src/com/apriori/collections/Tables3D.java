@@ -3,6 +3,7 @@ package com.apriori.collections;
 import com.apriori.collections.Table2D.Cell2D;
 import com.apriori.collections.Tables.ImmutableCell2D;
 import com.apriori.collections.Tables.MapWithoutPut;
+import com.apriori.collections.Tables.SynchronizedCollection;
 import com.apriori.collections.Tables.SynchronizedMap;
 import com.apriori.collections.Tables.SynchronizedSet;
 import com.apriori.collections.Tables.SynchronizedTableMapView;
@@ -859,68 +860,79 @@ final class Tables3D {
 
       @Override
       public V remove(Object pageKey, Object rowKey, Object columnKey) {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return table.remove(pageKey, rowKey, columnKey);
+         }
       }
 
       @Override
       public V put(P pageKey, R rowKey, C columnKey, V value) {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return table.put(pageKey, rowKey, columnKey, value);
+         }
       }
 
       @Override
       public void putAll(Table3D<? extends P, ? extends R, ? extends C, ? extends V> tbl) {
-         // TODO: implement me
-         
+         synchronized (lock) {
+            table.putAll(tbl);
+         }
       }
 
       @Override
       public boolean containsCell(Object pageKey, Object rowKey, Object columnKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsCell(pageKey, rowKey, columnKey);
+         }
       }
 
       @Override
       public boolean containsColumn(Object pageKey, Object columnKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsColumn(pageKey, columnKey);
+         }
       }
 
       @Override
       public boolean containsRow(Object pageKey, Object rowKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsRow(pageKey, rowKey);
+         }
       }
 
       @Override
       public boolean containsPage(Object pageKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsPage(pageKey);
+         }
       }
 
       @Override
       public boolean containsColumnKey(Object columnKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsColumnKey(columnKey);
+         }
       }
 
       @Override
       public boolean containsRowKey(Object rowKey) {
-         // TODO: implement me
-         return false;
+         synchronized (lock) {
+            return table.containsRowKey(rowKey);
+         }
       }
 
       @Override
       public Set<P> pageKeySet() {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return new SynchronizedSet<>(table.pageKeySet(), lock);
+         }
       }
 
       @Override
       public Set<R> rowKeySet() {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return new SynchronizedSet<>(table.rowKeySet(), lock);
+         }
       }
 
       @Override
@@ -928,15 +940,16 @@ final class Tables3D {
          synchronized (lock) {
             return new SynchronizedMap<>(
                   new TransformingMap.ValuesOnly<>(table.rowIndex(),
-                        s -> new SynchronizedSet<>(s, lock)),
+                        (k, s) -> new SynchronizedSet<>(s, lock)),
                   lock);
          }
       }
 
       @Override
       public Set<C> columnKeySet() {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return new SynchronizedSet<>(table.columnKeySet(), lock);
+         }
       }
 
       @Override
@@ -951,44 +964,51 @@ final class Tables3D {
 
       @Override
       public Collection<V> values() {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return new SynchronizedCollection<>(table.values(), lock);
+         }
       }
 
       @Override
       public Set<Cell3D<P, R, C, V>> cellSet() {
-         // TODO: implement me
-         return null;
+         synchronized (lock) {
+            return new SynchronizedSet<>(table.cellSet(), lock);
+         }
       }
 
       @Override
       public void clear() {
-         // TODO: implement me
-         
+         synchronized (lock) {
+            table.clear();
+         }
       }
 
       @Override
       public int hashCode() {
-         // TODO: implement me
-         return super.hashCode();
+         synchronized (lock) {
+            return table.hashCode();
+         }
       }
 
       @Override
       public boolean equals(Object obj) {
-         // TODO: implement me
-         return super.equals(obj);
+         synchronized (lock) {
+            return table.equals(obj);
+         }
       }
 
       @Override
       public String toString() {
-         // TODO: implement me
-         return super.toString();
+         synchronized (lock) {
+            return table.toString();
+         }
       }
       
       @Override
       protected Object clone() throws CloneNotSupportedException {
-         // TODO: implement me
-         return super.clone();
+         synchronized (lock) {
+            return super.clone();
+         }
       }
    }
    
@@ -1113,7 +1133,7 @@ final class Tables3D {
       public Map<P, Set<R>> rowIndex() {
          // TODO: add TransformingMap.ReadOnly.ValuesOnly so we don't have to double-wrap
          return Collections.unmodifiableMap(new TransformingMap.ValuesOnly<>(table.rowIndex(),
-               s -> Collections.unmodifiableSet(s)));
+               (k, s) -> Collections.unmodifiableSet(s)));
       }
 
       @Override

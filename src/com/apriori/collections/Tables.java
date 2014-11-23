@@ -554,7 +554,7 @@ final class Tables {
 
       public TransformingTableMapView(TableMapView<K, VI> internal,
             Function<? super VI, ? extends VO> valueFunction) {
-         super(internal, valueFunction);
+         super(internal, (k, v) -> valueFunction.apply(v));
       }
       
       @Override
@@ -564,7 +564,7 @@ final class Tables {
 
       @Override
       public VO getViewForKey(K key) {
-         return valueOnlyFunction().apply(internal().getViewForKey(key));
+         return valueFunction().apply(key, internal().getViewForKey(key));
       }
    }
 
@@ -1334,123 +1334,123 @@ final class Tables {
    }
 
    static class SynchronizedCollection<E> implements Collection<E> {
-      private final Collection<E> set;
+      private final Collection<E> coll;
       private final Object lock;
       
-      SynchronizedCollection(Collection<E> set, Object lock) {
-         this.set = set;
+      SynchronizedCollection(Collection<E> coll, Object lock) {
+         this.coll = coll;
          this.lock = lock;
       }
 
       @Override
       public int size() {
          synchronized (lock) {
-            return set.size();
+            return coll.size();
          }
       }
 
       @Override
       public boolean isEmpty() {
          synchronized (lock) {
-            return set.isEmpty();
+            return coll.isEmpty();
          }
       }
 
       @Override
       public boolean contains(Object o) {
          synchronized (lock) {
-            return set.contains(o);
+            return coll.contains(o);
          }
       }
 
       @Override
       public Iterator<E> iterator() {
          synchronized (lock) {
-            return new SynchronizedIterator<>(set.iterator(), lock);
+            return new SynchronizedIterator<>(coll.iterator(), lock);
          }
       }
 
       @Override
       public Object[] toArray() {
          synchronized (lock) {
-            return set.toArray();
+            return coll.toArray();
          }
       }
 
       @Override
       public <T> T[] toArray(T[] a) {
          synchronized (lock) {
-            return set.toArray(a);
+            return coll.toArray(a);
          }
       }
 
       @Override
       public boolean add(E e) {
          synchronized (lock) {
-            return set.add(e);
+            return coll.add(e);
          }
       }
 
       @Override
       public boolean remove(Object o) {
          synchronized (lock) {
-            return set.remove(o);
+            return coll.remove(o);
          }
       }
 
       @Override
       public boolean containsAll(Collection<?> c) {
          synchronized (lock) {
-            return set.containsAll(c);
+            return coll.containsAll(c);
          }
       }
 
       @Override
       public boolean addAll(Collection<? extends E> c) {
          synchronized (lock) {
-            return set.addAll(c);
+            return coll.addAll(c);
          }
       }
 
       @Override
       public boolean retainAll(Collection<?> c) {
          synchronized (lock) {
-            return set.retainAll(c);
+            return coll.retainAll(c);
          }
       }
 
       @Override
       public boolean removeAll(Collection<?> c) {
          synchronized (lock) {
-            return set.removeAll(c);
+            return coll.removeAll(c);
          }
       }
 
       @Override
       public void clear() {
          synchronized (lock) {
-            set.clear();
+            coll.clear();
          }
       }
       
       @Override
       public boolean equals(Object o) {
          synchronized (lock) {
-            return set.equals(o);
+            return coll.equals(o);
          }
       }
       
       @Override
       public int hashCode() {
          synchronized (lock) {
-            return set.hashCode();
+            return coll.hashCode();
          }
       }
 
       @Override
       public String toString() {
          synchronized (lock) {
-            return set.toString();
+            return coll.toString();
          }
       }
       
