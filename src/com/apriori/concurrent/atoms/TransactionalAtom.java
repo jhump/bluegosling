@@ -333,21 +333,21 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
    }
 
    /**
-    * Enqueues a commutative transform operation. This differs from {@link #apply(Function)} in that
-    * commutes do not eagerly acquire an exclusive lock on the atom. This allows for concurrent
-    * transactions to also be modifying the same atom. But since the function must be commutative,
-    * the order of applying functions does not matter. Using this method can lead to greater
-    * throughput than using {@link #apply(Function)} but is more restrictive since the applied
-    * operation must be commutative.
+    * Enqueues a commutative transform operation. This differs from {@link #updateAndGet(Function)}
+    * in that commutes do not eagerly acquire an exclusive lock on the atom. This allows for
+    * concurrent transactions to also be modifying the same atom. But since the function must be
+    * commutative, the order of applying functions does not matter. Using this method can lead to
+    * greater throughput than using {@link #updateAndGet(Function)} but is more restrictive since
+    * the applied operation must be commutative.
     * 
     * <p>Note that if other operations are performed on this atom (like {@link #set} or
-    * {@link #apply}), commutes are always applied <strong>last</strong>, regardless of whether the
-    * commute was enqueued after the other operations were performed or not.
+    * {@link #updateAndGet}), commutes are always applied <strong>last</strong>, regardless of
+    * whether the commute was enqueued after the other operations were performed or not.
     * 
     * <p>If no transaction is in progress on the current thread, this will effectively create one
     * that does nothing but transform this atom. If a serializable transaction is in progress, then
     * an exclusive lock is acquired. So, with serializable isolation level, the only difference
-    * between this operation and {@link #apply(Function)} is that the commute functions won't
+    * between this operation and {@link #updateAndGet(Function)} is that the commute functions won't
     * actually be evaluated until the transaction is committed.
     * 
     * <p>Watchers are only notified when this operation is committed. If there are other operations

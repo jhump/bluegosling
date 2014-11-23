@@ -39,7 +39,7 @@ public class VariableByte extends Number implements Cloneable {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
    public byte getAndSet(byte v) {
@@ -51,7 +51,7 @@ public class VariableByte extends Number implements Cloneable {
    /**
     * Sets this variable's value.
     * 
-    * @param value the new value
+    * @param v the new value
     */
    public void set(byte v) {
       this.value = v;
@@ -113,7 +113,6 @@ public class VariableByte extends Number implements Cloneable {
     * Increments the variable by one. After this method returns, the variable's value is its
     * previous value plus one.
     *
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public byte incrementAndGet() {
@@ -124,7 +123,6 @@ public class VariableByte extends Number implements Cloneable {
     * Increments the variable by one. After this method returns, the variable's value is its
     * previous value plus one.
     *
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public byte getAndIncrement() {
@@ -135,7 +133,6 @@ public class VariableByte extends Number implements Cloneable {
     * Decrements the variable by one. After this method returns, the variable's value is its
     * previous value minus one.
     *
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public byte decrementAndGet() {
@@ -146,7 +143,6 @@ public class VariableByte extends Number implements Cloneable {
     * Decrements the variable by one. After this method returns, the variable's value is its
     * previous value minus one.
     *
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public byte getAndDecrement() {
@@ -158,7 +154,6 @@ public class VariableByte extends Number implements Cloneable {
     * previous value plus the specified one.
     *
     * @param a the other addend
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public byte addAndGet(byte a) {
@@ -170,7 +165,6 @@ public class VariableByte extends Number implements Cloneable {
     * previous value plus the specified one.
     *
     * @param a the other addend
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public byte getAndAdd(byte a) {

@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":18,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":18,"i12":18,"i13":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -103,14 +103,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;, java.lang.Iterable&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ImmutableSortedSet&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="interface in com.apriori.collections">ImmutableSet</a>&lt;E&gt;</pre>
 <div class="block">An immutable, read-only set that maintains a total ordering over its elements. This is analogous
- to a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a> except that it provides no mutation operations.</div>
+ to a <code>NavigableSet</code> except that it provides no mutation operations.</div>
 </li>
 </ul>
 </div>
@@ -124,7 +124,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -134,7 +134,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#ceil-E-">ceil</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#comparator--">comparator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
@@ -146,7 +146,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#floor-E-">floor</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;e)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#headSet-E-">headSet</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -178,12 +178,12 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
       boolean&nbsp;toInclusive)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#subSet-E-E-">subSet</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from,
       <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedSet.html#tailSet-E-">tailSet</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -204,21 +204,21 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
-<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a>, <a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, iterator</code></li>
 </ul>
 </li>
 </ul>
@@ -240,7 +240,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;comparator()</pre>
+<pre>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;comparator()</pre>
 </li>
 </ul>
 <a name="first--">
@@ -322,8 +322,8 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>subSet</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from,
-                             <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from,
+                                     <a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</pre>
 </li>
 </ul>
 <a name="subSet-java.lang.Object-boolean-java.lang.Object-boolean-">
@@ -348,7 +348,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>headSet</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;to)</pre>
 </li>
 </ul>
 <a name="headSet-java.lang.Object-boolean-">
@@ -371,7 +371,7 @@ extends <a href="../../../com/apriori/collections/ImmutableSet.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>tailSet</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="type parameter in ImmutableSortedSet">E</a>&nbsp;from)</pre>
 </li>
 </ul>
 <a name="tailSet-java.lang.Object-boolean-">

@@ -24,7 +24,7 @@ public interface PartialTriFunction<T, U, V, R> extends TriFunction<T, U, V, Opt
     * If evaluation of either function throws an exception, it is relayed to
     * the caller of the composed function.
     *
-    * @param <V> the type of output of the {@code after} function, and of the
+    * @param <W> the type of output of the {@code after} function, and of the
     *           composed function
     * @param after the function to apply after this function is applied
     * @return a composed function that first applies this function and then
@@ -45,7 +45,7 @@ public interface PartialTriFunction<T, U, V, R> extends TriFunction<T, U, V, Opt
     * If evaluation of either function throws an exception, it is relayed to
     * the caller of the composed function.
     *
-    * @param <V> the type of output of the {@code after} function, and of the
+    * @param <W> the type of output of the {@code after} function, and of the
     *           composed function
     * @param after the function to apply after this function is applied
     * @return a composed function that first applies this function and then

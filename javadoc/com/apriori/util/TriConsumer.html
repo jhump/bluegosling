@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":18};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/ToDos.html" title="annotation in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/util/TriFunction.html" title="interface in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface TriConsumer" class="title">Interface TriConsumer&lt;I1,I2,I3&gt;</h2>
+<h2 title="Interface TriConsumer" class="title">Interface TriConsumer&lt;T,U,V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -103,8 +103,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
-public interface <span class="typeNameLabel">TriConsumer&lt;I1,I2,I3&gt;</span></pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">TriConsumer&lt;T,U,V&gt;</span></pre>
 </li>
 </ul>
 </div>
@@ -118,16 +118,20 @@ public interface <span class="typeNameLabel">TriConsumer&lt;I1,I2,I3&gt;</span><
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriConsumer.html#accept-I1-I2-I3-">accept</a></span>(<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I1</a>&nbsp;input1,
-      <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I2</a>&nbsp;input2,
-      <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I3</a>&nbsp;input3)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriConsumer.html#accept-T-U-V-">accept</a></span>(<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>&nbsp;input1,
+      <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>&nbsp;input2,
+      <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&nbsp;input3)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/util/TriConsumer.html" title="interface in com.apriori.util">TriConsumer</a>&lt;<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriConsumer.html#andThen-com.apriori.util.TriConsumer-">andThen</a></span>(<a href="../../../com/apriori/util/TriConsumer.html" title="interface in com.apriori.util">TriConsumer</a>&lt;<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&gt;&nbsp;after)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -146,15 +150,24 @@ public interface <span class="typeNameLabel">TriConsumer&lt;I1,I2,I3&gt;</span><
 <h3>Method Detail</h3>
 <a name="accept-java.lang.Object-java.lang.Object-java.lang.Object-">
 <!--   -->
-</a><a name="accept-I1-I2-I3-">
+</a><a name="accept-T-U-V-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>accept</h4>
+<pre>void&nbsp;accept(<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>&nbsp;input1,
+            <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>&nbsp;input2,
+            <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&nbsp;input3)</pre>
+</li>
+</ul>
+<a name="andThen-com.apriori.util.TriConsumer-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>accept</h4>
-<pre>void&nbsp;accept(<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I1</a>&nbsp;input1,
-            <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I2</a>&nbsp;input2,
-            <a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">I3</a>&nbsp;input3)</pre>
+<h4>andThen</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/util/TriConsumer.html" title="interface in com.apriori.util">TriConsumer</a>&lt;<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&gt;&nbsp;andThen(<a href="../../../com/apriori/util/TriConsumer.html" title="interface in com.apriori.util">TriConsumer</a>&lt;<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">T</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">U</a>,<a href="../../../com/apriori/util/TriConsumer.html" title="type parameter in TriConsumer">V</a>&gt;&nbsp;after)</pre>
 </li>
 </ul>
 </li>
@@ -184,7 +197,7 @@ public interface <span class="typeNameLabel">TriConsumer&lt;I1,I2,I3&gt;</span><
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/ToDos.html" title="annotation in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/util/TriFunction.html" title="interface in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

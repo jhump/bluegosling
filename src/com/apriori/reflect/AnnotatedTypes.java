@@ -85,11 +85,6 @@ public final class AnnotatedTypes {
     * 
     * <p>If the given type is a wildcard or type variable (and is not an interface) then its first
     * upper bound is its superclass.
-    * 
-    * <p>This differs from {@link #getSuperclass(Type)} in that it can return a non-raw type. For
-    * example if a wildcard's bound is a parameterized type or if a class extends a parameterized
-    * type (e.g. {@code class MyClass extends ArrayList<String>}) then a parameterized type is
-    * returned. 
     *
     * @param type a generic type
     * @return the superclass of the given type
@@ -131,11 +126,6 @@ public final class AnnotatedTypes {
     * 
     * <p>If the given type is a wildcard or type variable, then this returns an array containing any
     * upper bounds that are interfaces.
-    * 
-    * <p>This differs from {@link #getSuperclass(Type)} in that it can return a non-raw type. For
-    * example if a wildcard type has an interface bound that is a parameterized type or if a class
-    * implements a parameterized type (e.g. {@code class MyClass implements List<String>}) then a
-    * parameterized type is returned. 
     *
     * @param type a generic type
     * @return the interfaces directly implemented by the given type
@@ -385,7 +375,7 @@ public final class AnnotatedTypes {
     * {@code List<Optional<String>>}, then this will return {@code Optional<String>}.
     * 
     * <p>If the given type variable cannot be resolved then {@code null} is returned. For example,
-    * if the type variable given is {@code Map.<K>} and the given type is {@link List<Number>}, then
+    * if the type variable given is {@code Map.<K>} and the given type is {@code List<Number>}, then
     * the variable cannot be resolved.
     *
     * @param context the generic type whose context is used to resolve the given variable

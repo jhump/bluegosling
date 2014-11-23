@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":17,"i2":18,"i3":6};
+var methods = {"i0":18,"i1":18,"i2":17,"i3":18,"i4":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/CanonicalSet.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/CircularBuffer.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -99,13 +99,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</dd>
+<dd>java.util.Iterator&lt;java.lang.Character&gt;, java.util.PrimitiveIterator&lt;java.lang.Character,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</dd>
+</dl>
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../com/apriori/collections/PrimitiveListIterator.OfChar.html" title="interface in com.apriori.collections">PrimitiveListIterator.OfChar</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">CharIterator</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</pre>
-<div class="block">An <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a> that can provide primitive (un-boxed) characters.</div>
+extends java.util.PrimitiveIterator&lt;java.lang.Character,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</pre>
+<div class="block">An <code>Iterator</code> that can provide primitive (un-boxed) characters.</div>
 </li>
 </ul>
 </div>
@@ -122,8 +126,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.PrimitiveIterator">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfDouble.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfDouble</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfInt.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfInt</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.PrimitiveIterator</h3>
+<code>java.util.PrimitiveIterator.OfDouble, java.util.PrimitiveIterator.OfInt, java.util.PrimitiveIterator.OfLong</code></li>
 </ul>
 </li>
 </ul>
@@ -140,18 +144,22 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>default java.util.PrimitiveIterator.OfInt</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#asIteratorOfInt--">asIteratorOfInt</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#forEachRemaining-com.apriori.util.CharConsumer-">forEachRemaining</a></span>(<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&nbsp;action)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/collections/CharIterator.html" title="interface in com.apriori.collections">CharIterator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#from-java.lang.CharSequence-">from</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;str)</code>&nbsp;</td>
-</tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#next--">next</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../com/apriori/collections/CharIterator.html" title="interface in com.apriori.collections">CharIterator</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#from-java.lang.CharSequence-">from</a></span>(java.lang.CharSequence&nbsp;str)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>default java.lang.Character</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#next--">next</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>char</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/CharIterator.html#nextChar--">nextChar</a></span>()</code>
 <div class="block">Returns the next character in the iteration.</div>
@@ -162,8 +170,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Iterator">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#forEachRemaining-java.util.function.Consumer-" title="class or interface in java.util">forEachRemaining</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#hasNext--" title="class or interface in java.util">hasNext</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Iterator</h3>
+<code>forEachRemaining, hasNext, remove</code></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +200,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the next character in the iteration</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if there are no more elements in the iteration</dd>
+<dd><code>java.util.NoSuchElementException</code> - if there are no more elements in the iteration</dd>
 </dl>
 </li>
 </ul>
@@ -202,10 +210,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <ul class="blockList">
 <li class="blockList">
 <h4>next</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&nbsp;next()</pre>
+<pre>default&nbsp;java.lang.Character&nbsp;next()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#next--" title="class or interface in java.util">next</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>&gt;</code></dd>
+<dd><code>next</code>&nbsp;in interface&nbsp;<code>java.util.Iterator&lt;java.lang.Character&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -218,8 +226,17 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <pre>default&nbsp;void&nbsp;forEachRemaining(<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&nbsp;action)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true#forEachRemaining-T_CONS-" title="class or interface in java.util">forEachRemaining</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a>,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</code></dd>
+<dd><code>forEachRemaining</code>&nbsp;in interface&nbsp;<code>java.util.PrimitiveIterator&lt;java.lang.Character,<a href="../../../com/apriori/util/CharConsumer.html" title="interface in com.apriori.util">CharConsumer</a>&gt;</code></dd>
 </dl>
+</li>
+</ul>
+<a name="asIteratorOfInt--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>asIteratorOfInt</h4>
+<pre>default&nbsp;java.util.PrimitiveIterator.OfInt&nbsp;asIteratorOfInt()</pre>
 </li>
 </ul>
 <a name="from-java.lang.CharSequence-">
@@ -228,7 +245,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 <ul class="blockListLast">
 <li class="blockList">
 <h4>from</h4>
-<pre>static&nbsp;<a href="../../../com/apriori/collections/CharIterator.html" title="interface in com.apriori.collections">CharIterator</a>&nbsp;from(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;str)</pre>
+<pre>static&nbsp;<a href="../../../com/apriori/collections/CharIterator.html" title="interface in com.apriori.collections">CharIterator</a>&nbsp;from(java.lang.CharSequence&nbsp;str)</pre>
 </li>
 </ul>
 </li>
@@ -258,7 +275,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/CanonicalSet.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/CircularBuffer.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

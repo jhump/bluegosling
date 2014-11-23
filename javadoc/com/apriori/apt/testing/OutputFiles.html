@@ -91,7 +91,7 @@
 <li class="blockList">
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={})
+<pre>@Target(value={})
 public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <div class="block">A set of "golden" output files that are loaded from resources. These are used to verify the
  outputs of an annotation processor.
@@ -121,7 +121,7 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <th class="colLast" scope="col">Required Element and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colFirst"><code>java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/OutputFiles.html#value--">value</a></span></code>
 <div class="block">The names of the files/resources, relative to <a href="../../../../com/apriori/apt/testing/OutputFiles.html#folder--"><code>folder()</code></a>.</div>
 </td>
@@ -142,13 +142,13 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <th class="colLast" scope="col">Optional Element and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/OutputFiles.html#folder--">folder</a></span></code>
 <div class="block">The name of a folder that contains the files to load.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/StandardLocation.html?is-external=true" title="class or interface in javax.tools">StandardLocation</a></code></td>
+<td class="colFirst"><code>javax.tools.StandardLocation</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/OutputFiles.html#location--">location</a></span></code>
 <div class="block">The location in the in-memory file system where the file will exist.</div>
 </td>
@@ -174,7 +174,7 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
+<pre>public abstract&nbsp;java.lang.String[]&nbsp;value</pre>
 <div class="block">The names of the files/resources, relative to <a href="../../../../com/apriori/apt/testing/OutputFiles.html#folder--"><code>folder()</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -192,7 +192,7 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>folder</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;folder</pre>
+<pre>public abstract&nbsp;java.lang.String&nbsp;folder</pre>
 <div class="block">The name of a folder that contains the files to load. For a given file name
  (the <code>i</code><sup>th</sup> file in the array returned by <a href="../../../../com/apriori/apt/testing/OutputFiles.html#value--"><code>value()</code></a>,
  for example), the following is the path used when trying to load the file
@@ -217,7 +217,7 @@ public @interface <span class="memberNameLabel">OutputFiles</span></pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>location</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/StandardLocation.html?is-external=true" title="class or interface in javax.tools">StandardLocation</a>&nbsp;location</pre>
+<pre>public abstract&nbsp;javax.tools.StandardLocation&nbsp;location</pre>
 <div class="block">The location in the in-memory file system where the file will exist.
  The <a href="../../../../com/apriori/apt/testing/OutputFiles.html#folder--">folder name</a> is not used when determining file paths in
  the in-memory file system. So the resulting path in the file system for a

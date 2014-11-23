@@ -17,6 +17,12 @@
     catch(err) {
     }
 //-->
+var methods = {"i0":18,"i1":18};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -69,13 +75,13 @@
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a name="skip.navbar.top">
@@ -85,7 +91,7 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface PartialBiFunction" class="title">Interface PartialBiFunction&lt;I1,I2,O&gt;</h2>
+<h2 title="Interface PartialBiFunction" class="title">Interface PartialBiFunction&lt;T,U,R&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -93,13 +99,13 @@
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>I1</code> - the type of the first input</dd>
-<dd><code>I2</code> - the type of the second input</dd>
-<dd><code>O</code> - the output type</dd>
+<dd><code>T</code> - the type of the first input</dd>
+<dd><code>U</code> - the type of the second input</dd>
+<dd><code>R</code> - the result type</dd>
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;I1,I2,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;O&gt;&gt;</dd>
+<dd>java.util.function.BiFunction&lt;T,U,java.util.Optional&lt;R&gt;&gt;</dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -107,9 +113,9 @@
 </dl>
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
-public interface <span class="typeNameLabel">PartialBiFunction&lt;I1,I2,O&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;I1,I2,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;O&gt;&gt;</pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">PartialBiFunction&lt;T,U,R&gt;</span>
+extends java.util.function.BiFunction&lt;T,U,java.util.Optional&lt;R&gt;&gt;</pre>
 <div class="block">A partial function that computes a value from two inputs.</div>
 </li>
 </ul>
@@ -123,12 +129,101 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiF
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code>default &lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialBiFunction.html" title="interface in com.apriori.util">PartialBiFunction</a>&lt;<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">T</a>,<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">U</a>,V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialBiFunction.html#maybeThen-java.util.function.Function-">maybeThen</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">R</a>,? extends V&gt;&nbsp;after)</code>
+<div class="block">Returns a composed function that first applies this function to
+ its input, and then applies the <code>after</code> function to the result.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default &lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialBiFunction.html" title="interface in com.apriori.util">PartialBiFunction</a>&lt;<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">T</a>,<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">U</a>,V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialBiFunction.html#maybeThen-com.apriori.util.PartialFunction-">maybeThen</a></span>(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super <a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">R</a>,? extends V&gt;&nbsp;after)</code>
+<div class="block">Returns a composed function that first applies this function to
+ its input, and then applies the <code>after</code> function to the result.</div>
+</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.function.BiFunction">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.function.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true#andThen-java.util.function.Function-" title="class or interface in java.util.function">andThen</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true#apply-T-U-" title="class or interface in java.util.function">apply</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.function.BiFunction</h3>
+<code>andThen, apply</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="maybeThen-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>maybeThen</h4>
+<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialBiFunction.html" title="interface in com.apriori.util">PartialBiFunction</a>&lt;<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">T</a>,<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">U</a>,V&gt;&nbsp;maybeThen(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">R</a>,? extends V&gt;&nbsp;after)</pre>
+<div class="block">Returns a composed function that first applies this function to
+ its input, and then applies the <code>after</code> function to the result.
+ If evaluation of either function throws an exception, it is relayed to
+ the caller of the composed function.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>V</code> - the type of output of the <code>after</code> function, and of the
+           composed function</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>after</code> - the function to apply after this function is applied</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a composed function that first applies this function and then
+ applies the <code>after</code> function</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code> - if after is null</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>BiFunction.andThen(Function)</code></dd>
+</dl>
+</li>
+</ul>
+<a name="maybeThen-com.apriori.util.PartialFunction-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>maybeThen</h4>
+<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialBiFunction.html" title="interface in com.apriori.util">PartialBiFunction</a>&lt;<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">T</a>,<a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">U</a>,V&gt;&nbsp;maybeThen(<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;? super <a href="../../../com/apriori/util/PartialBiFunction.html" title="type parameter in PartialBiFunction">R</a>,? extends V&gt;&nbsp;after)</pre>
+<div class="block">Returns a composed function that first applies this function to
+ its input, and then applies the <code>after</code> function to the result.
+ If evaluation of either function throws an exception, it is relayed to
+ the caller of the composed function.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>V</code> - the type of output of the <code>after</code> function, and of the
+           composed function</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>after</code> - the function to apply after this function is applied</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a composed function that first applies this function and then
+ applies the <code>after</code> function</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code> - if after is null</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>BiFunction.andThen(Function)</code></dd>
+</dl>
+</li>
 </ul>
 </li>
 </ul>
@@ -185,13 +280,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiF
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a name="skip.navbar.bottom">

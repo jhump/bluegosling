@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -72,7 +72,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.classes.inherited.from.class.com.apriori.collections.AbstractRandomAccessImmutableList">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -95,10 +95,20 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">com.apriori.collections.AbstractImmutableCollection</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">com.apriori.collections.AbstractRandomAccessImmutableList</a>&lt;E&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.AmtPersistentList&lt;E&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -111,12 +121,12 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;E&gt;, <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;, java.lang.Iterable&lt;E&gt;, java.util.RandomAccess</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">AmtPersistentList&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+extends <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>&lt;E&gt;
 implements <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;E&gt;, <a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;E&gt;</pre>
 <div class="block">A fully persistent list backed by an array-mapped trie. This structure supports inexpensive
  insertions both at the beginning and end of the list. Inexpensive means that only the path to the
@@ -129,6 +139,21 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested.classes.inherited.from.class.com.apriori.collections.AbstractRandomAccessImmutableList">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>&lt;<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="type parameter in AbstractRandomAccessImmutableList.SubList">E</a>&gt;</code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -142,201 +167,175 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#add-E-">add</a></span>(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</code>
 <div class="block">Adds an element to the collection.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#add-int-E-">add</a></span>(int&nbsp;i,
    <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</code>
 <div class="block">Adds an element at the specified index.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#addAll-int-java.lang.Iterable-">addAll</a></span>(int&nbsp;i,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</code>
+      java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</code>
 <div class="block">Adds all of the specified elements at the specified index.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#addAll-java.lang.Iterable-">addAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</code>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#addAll-java.lang.Iterable-">addAll</a></span>(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</code>
 <div class="block">Adds multiple elements to the collection.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#addFirst-E-">addFirst</a></span>(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</code>
 <div class="block">Adds the specified element to the front of the list.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#addLast-E-">addLast</a></span>(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</code>
 <div class="block">Adds the specified element to the end of the list.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#contains-java.lang.Object-">contains</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
-<div class="block">Determines if the specified object is a member of this collection.</div>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#clear--">clear</a></span>()</code>
+<div class="block">Returns an empty list.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#containsAll-java.lang.Iterable-">containsAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
-<div class="block">Determines if this collection contains all of the specified items.</div>
-</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#create--">create</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#containsAny-java.lang.Iterable-">containsAny</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
-<div class="block">Determines if this collection contains any one of the specified items.</div>
-</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#create-java.lang.Iterable-">create</a></span>(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#first--">first</a></span>()</code>
-<div class="block">Returns the first element in this list.</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#get-int-">get</a></span>(int&nbsp;i)</code>
 <div class="block">Retrieves the element at the specified zero-based index.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#indexOf-java.lang.Object-">indexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
-<div class="block">Finds the first occurrence of the specified element in the list and returns the corresponding
- index.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#isEmpty--">isEmpty</a></span>()</code>
-<div class="block">Determines if the sequence has any elements at all.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/BidiListIterator.html" title="interface in com.apriori.collections">BidiListIterator</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#iterator--">iterator</a></span>()</code></td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
-<div class="block">Finds the last occurrence of the specified element in the list and returns the corresponding
- index.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#remove-int-">remove</a></span>(int&nbsp;i)</code>
 <div class="block">Removes the element at the given index.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Removes an element from the collection.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#removeAll-java.lang.Iterable-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#removeAll-java.lang.Iterable-">removeAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
 <div class="block">Removes multiple items from the collection.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#removeAll-java.lang.Object-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#removeAll-java.lang.Object-">removeAll</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Removes all occurrences of an object from the collection.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#rest--">rest</a></span>()</code>
 <div class="block">Returns a sublist that contains the same items as this list except for the first item.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#retainAll-java.lang.Iterable-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#retainAll-java.lang.Iterable-">retainAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
 <div class="block">Retains only the specified items in the collection.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#set-int-E-">set</a></span>(int&nbsp;i,
    <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</code>
 <div class="block">Sets the element at the given index to the specified new value.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#size--">size</a></span>()</code>
 <div class="block">Determines the size of the sequence.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#subList-int-int-">subList</a></span>(int&nbsp;from,
        int&nbsp;to)</code>
 <div class="block">Returns a portion of this list as another immutable list.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#toArray--">toArray</a></span>()</code>
-<div class="block">Returns an array with the same elements as this collection.</div>
-</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AmtPersistentList.html#toArray-T:A-">toArray</a></span>(T[]&nbsp;array)</code>
-<div class="block">Returns an array with the same elements as this collection and the same component type as the
- specified array.</div>
-</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.AbstractRandomAccessImmutableList">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#first--">first</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#indexOf-java.lang.Object-">indexOf</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheck-int-">rangeCheck</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rangeCheckWide-int-">rangeCheckWide</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.AbstractImmutableCollection">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a></h3>
+<code><a href="../../../com/apriori/collections/AbstractImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toArray-T:A-">toArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html#toString--">toString</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.ImmutableList">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableList.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableList.html#hashCode--">hashCode</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableList.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableList.html#first--">first</a>, <a href="../../../com/apriori/collections/ImmutableList.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableList.html#indexOf-java.lang.Object-">indexOf</a>, <a href="../../../com/apriori/collections/ImmutableList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.ImmutableCollection">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a>, <a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
-<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, iterator</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.BidiIterable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a></h3>
+<code><a href="../../../com/apriori/collections/BidiIterable.html#iterator--">iterator</a></code></li>
 </ul>
 </li>
 </ul>
@@ -352,6 +351,24 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="create--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;create()</pre>
+</li>
+</ul>
+<a name="create-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;create(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</pre>
+</li>
+</ul>
 <a name="get-int-">
 <!--   -->
 </a>
@@ -373,70 +390,6 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 </dl>
 </li>
 </ul>
-<a name="indexOf-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#indexOf-java.lang.Object-">ImmutableList</a></code></span></div>
-<div class="block">Finds the first occurrence of the specified element in the list and returns the corresponding
- index. The search starts at the beginning of the list, and the index of the first matching
- element is returned. If no match is found then -1 is returned. A matching item is one that is
- equal to the specified item. If the specified item is <code>null</code> then a <code>null</code> in the
- list is a match. Otherwise, an item in the list that <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>
- the specified object is a match.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableList.html#indexOf-java.lang.Object-">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - the element to find</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the index of the first occurrence of the specified item or -1 if it is not found.</dd>
-</dl>
-</li>
-</ul>
-<a name="lastIndexOf-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>lastIndexOf</h4>
-<pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#lastIndexOf-java.lang.Object-">ImmutableList</a></code></span></div>
-<div class="block">Finds the last occurrence of the specified element in the list and returns the corresponding
- index. The search starts at the end of the list, and the index of the first matching element
- found is returned. If no match is found then -1 is returned.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - the element to find</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the index of the last occurrence of the specified item or -1 if it is not found.</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/collections/ImmutableList.html#indexOf-java.lang.Object-"><code>ImmutableList.indexOf(Object)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="first--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>first</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;first()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#first--">ImmutableList</a></code></span></div>
-<div class="block">Returns the first element in this list.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableList.html#first--">first</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the first element in this list</dd>
-</dl>
-</li>
-</ul>
 <a name="size--">
 <!--   -->
 </a>
@@ -454,167 +407,25 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 </dl>
 </li>
 </ul>
-<a name="isEmpty--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isEmpty</h4>
-<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">SizedIterable</a></code></span></div>
-<div class="block">Determines if the sequence has any elements at all.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the sequence is empty, false otherwise</dd>
-</dl>
-</li>
-</ul>
-<a name="toArray--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toArray</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">ImmutableCollection</a></code></span></div>
-<div class="block">Returns an array with the same elements as this collection. The order of elements in the
- returned array is the same as the order that elements are returned by the collection's
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>an array with the same elements as this collection</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util"><code>Collection.toArray()</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="toArray-java.lang.Object:A-">
-<!--   -->
-</a><a name="toArray-T:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toArray</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T[]&nbsp;toArray(T[]&nbsp;array)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">ImmutableCollection</a></code></span></div>
-<div class="block">Returns an array with the same elements as this collection and the same component type as the
- specified array. If the elements will fit in the specified array, they are copied there and
- a <code>null</code> terminator is stored after the elements if the array can hold more. Otherwise,
- a new array with the same element type is allocated, and the elements are copied into it.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray-T:A-">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>array</code> - an array</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>an array with the same elements as this collection and the same component type as
-       the specified array (possibly the same instance as the one specified)</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util"><code>Collection.toArray(Object[])</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="contains-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">ImmutableCollection</a></code></span></div>
-<div class="block">Determines if the specified object is a member of this collection.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - an object</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the specified object is a member of this collection, false otherwise</dd>
-</dl>
-</li>
-</ul>
-<a name="containsAll-java.lang.Iterable-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>containsAll</h4>
-<pre>public&nbsp;boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">ImmutableCollection</a></code></span></div>
-<div class="block">Determines if this collection contains all of the specified items.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>items</code> - a sequence of items</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this collection contains all of the specified items</dd>
-</dl>
-</li>
-</ul>
-<a name="containsAny-java.lang.Iterable-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>containsAny</h4>
-<pre>public&nbsp;boolean&nbsp;containsAny(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">ImmutableCollection</a></code></span></div>
-<div class="block">Determines if this collection contains any one of the specified items.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections">ImmutableCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>items</code> - a sequence of items</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this collection contains at least one of the specified items</dd>
-</dl>
-</li>
-</ul>
-<a name="iterator--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>iterator</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/BidiListIterator.html" title="interface in com.apriori.collections">BidiListIterator</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;iterator()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/BidiIterable.html#iterator--">BidiIterable</a></code></span></div>
-<div class="block">
- 
- <p>The returned iterator supports iteration both forwards and backwards through the sequence.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/BidiIterable.html#iterator--">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections">BidiIterable</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a name="subList-int-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>subList</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;subList(int&nbsp;from,
-                                 int&nbsp;to)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#subList-int-int-">PersistentList</a></code></span></div>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;subList(int&nbsp;from,
+                                    int&nbsp;to)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#subList-int-int-">ImmutableList</a></code></span></div>
 <div class="block">Returns a portion of this list as another immutable list. The returned list may be just a view
  into this list or may represent a separate list with the same elements as the specified
- sub-list.
- 
- <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections"><code>PersistentList</code></a> instead of just
- an <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a>.</div>
+ sub-list.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#subList-int-int-">subList</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentList.html#subList-int-int-">subList</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#subList-int-int-">subList</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the starting index, inclusive, of the sub-list</dd>
 <dd><code>to</code> - the end index, exclusive, of the sub-list</dd>
@@ -631,8 +442,8 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;add(int&nbsp;i,
-                             <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;add(int&nbsp;i,
+                                <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#add-int-E-">PersistentList</a></code></span></div>
 <div class="block">Adds an element at the specified index. The persistent list will copy as little as possible
  to construct the new version of the list with the new node. Some implementations may benefit
@@ -654,8 +465,8 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addAll(int&nbsp;i,
-                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addAll(int&nbsp;i,
+                                   java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#addAll-int-java.lang.Iterable-">PersistentList</a></code></span></div>
 <div class="block">Adds all of the specified elements at the specified index. The first element fetched from the
  specified collection will be at the specified index. The second element fetched will be at the
@@ -679,7 +490,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>addFirst</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addFirst(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addFirst(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#addFirst-E-">PersistentList</a></code></span></div>
 <div class="block">Adds the specified element to the front of the list. For some implementations, this may be
  a constant time operation. For others, it may be linear, <em>O(n)</em>.</div>
@@ -701,7 +512,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>addLast</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addLast(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addLast(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#addLast-E-">PersistentList</a></code></span></div>
 <div class="block">Adds the specified element to the end of the list. For some implementations, this may be
  a constant time operation. For others, it may be linear, <em>O(n)</em>.</div>
@@ -723,8 +534,8 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;set(int&nbsp;i,
-                             <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;set(int&nbsp;i,
+                                <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#set-int-E-">PersistentList</a></code></span></div>
 <div class="block">Sets the element at the given index to the specified new value. The persistent list will copy
  as little as possible to construct the new version of the list with the updated value. Some
@@ -747,7 +558,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;remove(int&nbsp;i)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;remove(int&nbsp;i)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#remove-int-">PersistentList</a></code></span></div>
 <div class="block">Removes the element at the given index. The persistent list will copy as little as possible to
  construct the new version of the list with the element removed. Some implementations may
@@ -769,19 +580,18 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>rest</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;rest()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#rest--">PersistentList</a></code></span></div>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;rest()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html#rest--">ImmutableList</a></code></span></div>
 <div class="block">Returns a sublist that contains the same items as this list except for the first item. The
  returned list may be just a view into this list or may represent list with the same elements.
- If this list is empty, an empty list is also returned.
- 
- <p>This method is overridden to covariantly return a <a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections"><code>PersistentList</code></a> instead of just
- an <a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections"><code>ImmutableList</code></a>.</div>
+ If this list is empty, an empty list is also returned.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableList.html#rest--">rest</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableList.html" title="interface in com.apriori.collections">ImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentList.html#rest--">rest</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html#rest--">rest</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a sublist that contains the same items as this list except for the first one</dd>
 </dl>
@@ -795,7 +605,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;add(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;add(<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&nbsp;e)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#add-E-">PersistentList</a></code></span></div>
 <div class="block">Adds an element to the collection.
  
@@ -827,7 +637,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;remove(java.lang.Object&nbsp;o)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#remove-java.lang.Object-">PersistentList</a></code></span></div>
 <div class="block">Removes an element from the collection.
  
@@ -852,7 +662,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;removeAll(java.lang.Object&nbsp;o)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#removeAll-java.lang.Object-">PersistentList</a></code></span></div>
 <div class="block">Removes all occurrences of an object from the collection.
 ]   *
@@ -878,7 +688,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;removeAll(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#removeAll-java.lang.Iterable-">PersistentList</a></code></span></div>
 <div class="block">Removes multiple items from the collection.
  
@@ -902,7 +712,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;retainAll(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#retainAll-java.lang.Iterable-">PersistentList</a></code></span></div>
 <div class="block">Retains only the specified items in the collection.
  
@@ -923,10 +733,10 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <a name="addAll-java.lang.Iterable-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;addAll(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;items)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#addAll-java.lang.Iterable-">PersistentList</a></code></span></div>
 <div class="block">Adds multiple elements to the collection.
  
@@ -948,6 +758,25 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <dd><code>items</code> - a sequence of items to add</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a new version of the collection that includes all of the specified items</dd>
+</dl>
+</li>
+</ul>
+<a name="clear--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;&nbsp;clear()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html#clear--">PersistentList</a></code></span></div>
+<div class="block">Returns an empty list.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/PersistentCollection.html#clear--">clear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentCollection.html" title="interface in com.apriori.collections">PersistentCollection</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/PersistentList.html#clear--">clear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentList.html" title="interface in com.apriori.collections">PersistentList</a>&lt;<a href="../../../com/apriori/collections/AmtPersistentList.html" title="type parameter in AmtPersistentList">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an empty persistent list</dd>
 </dl>
 </li>
 </ul>
@@ -1003,7 +832,7 @@ implements <a href="../../../com/apriori/collections/PersistentList.html" title=
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.classes.inherited.from.class.com.apriori.collections.AbstractRandomAccessImmutableList">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

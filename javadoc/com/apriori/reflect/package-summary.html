@@ -85,18 +85,12 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect">ClassVisitor</a>&lt;R,P&gt;</td>
-<td class="colLast">
-<div class="block">An interface for implementing visitor pattern over class tokens.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/reflect/Converter.html" title="interface in com.apriori.reflect">Converter</a>&lt;I,O&gt;</td>
 <td class="colLast">
 <div class="block">Converts a value from one form to another, possibly with the aid of a <a href="../../../com/apriori/reflect/Caster.html" title="class in com.apriori.reflect"><code>Caster</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/reflect/TypeVisitor.html" title="interface in com.apriori.reflect">TypeVisitor</a>&lt;R,P&gt;</td>
 <td class="colLast">
 <div class="block">A visitor for generic types.</div>
@@ -114,14 +108,26 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/reflect/AnnotatedTypeRef.html" title="class in com.apriori.reflect">AnnotatedTypeRef</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></td>
+<td class="colLast">
+<div class="block">Numerous utility methods for using, constructing, and inspecting annotated types.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">Annotations</a></td>
 <td class="colLast">
-<div class="block">Utility methods for working with instances of <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>.</div>
+<div class="block">Utility methods for working with instances of <code>Annotation</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/reflect/ArrayUtils.html" title="class in com.apriori.reflect">ArrayUtils</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Utility methods for dealing with arrays, including primitive arrays.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/reflect/Blaster.html" title="class in com.apriori.reflect">Blaster</a>&lt;T&gt;</td>
@@ -152,15 +158,15 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect">ClassHierarchyCrawler</a>&lt;R,P&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/reflect/ClassHierarchyScanner.html" title="class in com.apriori.reflect">ClassHierarchyScanner</a>&lt;R,P&gt;</td>
 <td class="colLast">
-<div class="block">A <a href="../../../com/apriori/reflect/ClassVisitor.html" title="interface in com.apriori.reflect"><code>ClassVisitor</code></a> that crawls an entire type hierarchy.</div>
+<div class="block">An object that scans an entire type hierarchy.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/reflect/ClassHierarchyCrawler.Builder.html" title="class in com.apriori.reflect">ClassHierarchyCrawler.Builder</a>&lt;R,P&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/reflect/ClassHierarchyScanner.Builder.html" title="class in com.apriori.reflect">ClassHierarchyScanner.Builder</a>&lt;R,P&gt;</td>
 <td class="colLast">
-<div class="block">Builder pattern for constructing <a href="../../../com/apriori/reflect/ClassHierarchyCrawler.html" title="class in com.apriori.reflect"><code>ClassHierarchyCrawler</code></a> instances.</div>
+<div class="block">Builder pattern for constructing <a href="../../../com/apriori/reflect/ClassHierarchyScanner.html" title="class in com.apriori.reflect"><code>ClassHierarchyScanner</code></a> instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -251,6 +257,12 @@
 <td class="colFirst"><a href="../../../com/apriori/reflect/BlasterException.html" title="class in com.apriori.reflect">BlasterException</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/reflect/UnknownTypeException.html" title="class in com.apriori.reflect">UnknownTypeException</a></td>
+<td class="colLast">
+<div class="block">An exception that may be thrown when an unsupported sub-type of <code>Type</code> is encountered.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -259,7 +271,10 @@
 <!--   -->
 </a>
 <h2 title="Package com.apriori.reflect Description">Package com.apriori.reflect Description</h2>
-<div class="block">Utilities to aid in runtime type reflection code, including the use of proxies.</div>
+<div class="block">Utilities to aid in runtime type reflection code, including the use of proxies. This includes
+ numerous useful tools for working with <a href="../../../com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">annotations</a>
+ and generic <a href="../../../com/apriori/reflect/Types.html" title="class in com.apriori.reflect">types</a>. It also includes a few interesting
+ tools that rely on reflection and proxies, like a <a href="../../../com/apriori/reflect/Caster.html" title="class in com.apriori.reflect">dynamic-cast proxy</a> or a <a href="../../../com/apriori/reflect/Blaster.html" title="class in com.apriori.reflect">broadcasting proxy</a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/apt/reflect/package-summary.html"><code>com.apriori.apt.reflect</code></a></dd>

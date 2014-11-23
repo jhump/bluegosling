@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.atoms.SimpleAtom&lt;T&gt;</li>
@@ -116,8 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">SimpleAtom&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;</pre>
+extends java.lang.Object</pre>
 <div class="block">An atom with a volatile value. Atomic updates are made using atomic compare-and-set operations
  on the value.</div>
 </li>
@@ -164,7 +163,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#SimpleAtom-T-java.util.function.Predicate-">SimpleAtom</a></span>(<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;value,
-          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;validator)</code>
+          java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;validator)</code>
 <div class="block">Constructs a new atom with the specified value and the specified validator.</div>
 </td>
 </tr>
@@ -191,18 +190,18 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#apply-java.util.function.Function-">apply</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;function)</code>
-<div class="block">Applies a function to the atom's value.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#get--">get</a></span>()</code>
 <div class="block">Retrieves the current value for this atom.</div>
 </td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></span>(java.util.function.Function&lt;? super T,? extends T&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
+</td>
+</tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;</code></td>
+<td class="colFirst"><code>java.util.function.Predicate&lt;? super T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#getValidator--">getValidator</a></span>()</code>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator.</div>
 </td>
@@ -223,10 +222,16 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#set-T-">set</a></span>(<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;newValue)</code>
-<div class="block">Updates the atom's value to the one specified.</div>
+<div class="block">Sets the atom's value to the one specified and returns the previous value.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></span>(java.util.function.Function&lt;? super T,? extends T&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html#validate-T-">validate</a></span>(T&nbsp;value)</code>
 <div class="block">Validates the specified value.</div>
@@ -237,8 +242,15 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.atoms.SynchronousAtom">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a></h3>
+<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet</a>, <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.atoms.Atom">
@@ -292,7 +304,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>SimpleAtom</h4>
 <pre>public&nbsp;SimpleAtom(<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;value,
-                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;validator)</pre>
+                  java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;validator)</pre>
 <div class="block">Constructs a new atom with the specified value and the specified validator.</div>
 </li>
 </ul>
@@ -314,8 +326,6 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get--">Atom</a></code></span></div>
 <div class="block">Retrieves the current value for this atom.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get--">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current value for the atom</dd>
 </dl>
@@ -331,11 +341,9 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <h4>set</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;set(<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;newValue)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set-T-">SynchronousAtom</a></code></span></div>
-<div class="block">Updates the atom's value to the one specified. Upon changing the value, watchers will be
- notified.</div>
+<div class="block">Sets the atom's value to the one specified and returns the previous value. Upon changing the
+ value, watchers will be notified.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set-T-">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newValue</code> - the atom's new value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -343,24 +351,45 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </dl>
 </li>
 </ul>
-<a name="apply-java.util.function.Function-">
+<a name="updateAndGet-java.util.function.Function-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>apply</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&nbsp;apply(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;&nbsp;function)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply-java.util.function.Function-">SynchronousAtom</a></code></span></div>
+<h4>updateAndGet</h4>
+<pre>public&nbsp;T&nbsp;updateAndGet(java.util.function.Function&lt;? super T,? extends T&gt;&nbsp;function)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#updateAndGet-java.util.function.Function-">SynchronousAtom</a></code></span></div>
 <div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
  specified function to the atom's current value. Watchers are notified when the value is
  changed.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply-java.util.function.Function-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt;</code></dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>function</code> - the function to apply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the atom's new value</dd>
+</dl>
+</li>
+</ul>
+<a name="getAndUpdate-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAndUpdate</h4>
+<pre>public&nbsp;T&nbsp;getAndUpdate(java.util.function.Function&lt;? super T,? extends T&gt;&nbsp;function)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndUpdate-java.util.function.Function-">SynchronousAtom</a></code></span></div>
+<div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
+ specified function to the atom's current value. Watchers are notified when the value is
+ changed.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the atom's previous value</dd>
 </dl>
 </li>
 </ul>
@@ -379,7 +408,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the value to validate</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified value is invalid</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified value is invalid</dd>
 </dl>
 </li>
 </ul>
@@ -389,7 +418,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getValidator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;&nbsp;getValidator()</pre>
+<pre>public&nbsp;java.util.function.Predicate&lt;? super T&gt;&nbsp;getValidator()</pre>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator. The validator is a
  predicate that returns true when invoked on valid values for the item and false otherwise.</div>
 <dl>

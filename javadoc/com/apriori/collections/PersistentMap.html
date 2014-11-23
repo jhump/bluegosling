@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":18,"i2":18,"i3":18,"i4":18,"i5":6,"i6":6,"i7":6,"i8":18,"i9":6,"i10":18,"i11":6,"i12":18,"i13":18,"i14":18,"i15":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -137,35 +137,85 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#put-K-V-">put</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
-   <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#clear--">clear</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#putAll-com.apriori.collections.ImmutableMap-">putAll</a></span>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#compute-K-java.util.function.BiFunction-">compute</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+       java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#putAll-java.util.Map-">putAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#computeIfAbsent-K-java.util.function.Function-">computeIfAbsent</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+               java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#computeIfPresent-K-java.util.function.BiFunction-">computeIfPresent</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#removeAll-java.lang.Iterable-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#merge-K-V-java.util.function.BiFunction-">merge</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+     <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;value,
+     java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#retainAll-java.lang.Iterable-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#put-K-V-">put</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+   <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#putAll-com.apriori.collections.ImmutableMap-">putAll</a></span>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#putAll-java.util.Map-">putAll</a></span>(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#putIfAbsent-K-V-">putIfAbsent</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+           <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#remove-java.lang.Object-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key,
+      java.lang.Object&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#removeAll-java.lang.Iterable-">removeAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#replace-K-V-">replace</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+       <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#replace-K-V-V-">replace</a></span>(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+       <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;oldValue,
+       <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#replaceAll-java.util.function.BiFunction-">replaceAll</a></span>(java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMap.html#retainAll-java.lang.Iterable-">retainAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -173,7 +223,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">containsValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">containsValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#forEach-java.util.function.BiConsumer-">forEach</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#getOrDefault-java.lang.Object-V-">getOrDefault</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
@@ -186,8 +236,8 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -221,7 +271,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;remove(java.lang.Object&nbsp;o)</pre>
 </li>
 </ul>
 <a name="removeAll-java.lang.Iterable-">
@@ -230,7 +280,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;removeAll(java.lang.Iterable&lt;?&gt;&nbsp;keys)</pre>
 </li>
 </ul>
 <a name="retainAll-java.lang.Iterable-">
@@ -239,7 +289,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;retainAll(java.lang.Iterable&lt;?&gt;&nbsp;keys)</pre>
 </li>
 </ul>
 <a name="putAll-java.util.Map-">
@@ -248,16 +298,130 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>putAll</h4>
-<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;putAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</pre>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;putAll(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</pre>
 </li>
 </ul>
 <a name="putAll-com.apriori.collections.ImmutableMap-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>putAll</h4>
 <pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;putAll(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;items)</pre>
+</li>
+</ul>
+<a name="clear--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;clear()</pre>
+</li>
+</ul>
+<a name="remove-java.lang.Object-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;remove(java.lang.Object&nbsp;key,
+                                  java.lang.Object&nbsp;value)</pre>
+</li>
+</ul>
+<a name="putIfAbsent-java.lang.Object-java.lang.Object-">
+<!--   -->
+</a><a name="putIfAbsent-K-V-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>putIfAbsent</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;putIfAbsent(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                       <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</pre>
+</li>
+</ul>
+<a name="replace-java.lang.Object-java.lang.Object-">
+<!--   -->
+</a><a name="replace-K-V-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replace</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;replace(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                   <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</pre>
+</li>
+</ul>
+<a name="replace-java.lang.Object-java.lang.Object-java.lang.Object-">
+<!--   -->
+</a><a name="replace-K-V-V-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replace</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;replace(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                   <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;oldValue,
+                                   <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;newValue)</pre>
+</li>
+</ul>
+<a name="replaceAll-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replaceAll</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;replaceAll(java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</pre>
+</li>
+</ul>
+<a name="compute-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="compute-K-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compute</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;compute(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                   java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</pre>
+</li>
+</ul>
+<a name="computeIfAbsent-java.lang.Object-java.util.function.Function-">
+<!--   -->
+</a><a name="computeIfAbsent-K-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>computeIfAbsent</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;computeIfAbsent(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                           java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</pre>
+</li>
+</ul>
+<a name="computeIfPresent-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="computeIfPresent-K-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>computeIfPresent</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;computeIfPresent(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                            java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</pre>
+</li>
+</ul>
+<a name="merge-java.lang.Object-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="merge-K-V-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>merge</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;merge(<a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">K</a>&nbsp;key,
+                                 <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&nbsp;value,
+                                 java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? super <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>,? extends <a href="../../../com/apriori/collections/PersistentMap.html" title="type parameter in PersistentMap">V</a>&gt;&nbsp;fn)</pre>
 </li>
 </ul>
 </li>

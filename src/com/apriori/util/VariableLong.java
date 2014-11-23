@@ -44,7 +44,7 @@ public class VariableLong extends Number implements Cloneable {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
    public long getAndSet(long v) {
@@ -56,7 +56,7 @@ public class VariableLong extends Number implements Cloneable {
    /**
     * Sets this variable's value.
     * 
-    * @param value the new value
+    * @param v the new value
     */
    public void set(long v) {
       this.value = v;
@@ -118,7 +118,6 @@ public class VariableLong extends Number implements Cloneable {
     * Increments the variable by one. After this method returns, the variable's value is its
     * previous value plus one.
     *
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public long incrementAndGet() {
@@ -129,7 +128,6 @@ public class VariableLong extends Number implements Cloneable {
     * Increments the variable by one. After this method returns, the variable's value is its
     * previous value plus one.
     *
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public long getAndIncrement() {
@@ -140,7 +138,6 @@ public class VariableLong extends Number implements Cloneable {
     * Decrements the variable by one. After this method returns, the variable's value is its
     * previous value minus one.
     *
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public long decrementAndGet() {
@@ -151,7 +148,6 @@ public class VariableLong extends Number implements Cloneable {
     * Decrements the variable by one. After this method returns, the variable's value is its
     * previous value minus one.
     *
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public long getAndDecrement() {
@@ -163,7 +159,6 @@ public class VariableLong extends Number implements Cloneable {
     * previous value plus the specified one.
     *
     * @param a the other addend
-    * @param fn the function to apply
     * @return the variable's new value
     */
    public long addAndGet(long a) {
@@ -175,7 +170,6 @@ public class VariableLong extends Number implements Cloneable {
     * previous value plus the specified one.
     *
     * @param a the other addend
-    * @param fn the function to apply
     * @return the variable's previous value
     */
    public long getAndAdd(long a) {

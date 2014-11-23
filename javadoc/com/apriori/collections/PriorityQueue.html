@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PrimitiveListIterator.OfShort.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -104,7 +104,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;</dd>
+<dd>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -115,26 +115,26 @@ var activeTableTab = "activeTableTab";
 <pre>public interface <span class="typeNameLabel">PriorityQueue&lt;E,P&gt;</span>
 extends <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;</pre>
 <div class="block">A priority queue abstract data structure. Conceptually this is like a cross between a normal
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> and a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a>. Each element in the queue also has a priority, which determines
+ <code>Queue</code> and a <code>Map</code>. Each element in the queue also has a priority, which determines
  the order of removal of items. It is similar to a map in that the priority of each element can be
  considered like a key. Unlike a map, multiple elements with the same priority are permitted
  (expected, actually). This type of data structure is usually backed by a
  <a href="http://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a>.
  
- <p>This interface varies considerably from <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util"><code>PriorityQueue</code></a> since that class does
+ <p>This interface varies considerably from <code>PriorityQueue</code> since that class does
  not (in fact, cannot) provide the <code>decrease-key</code> operation, which is a key part of the
  abstract data type and required by many graph traversal algorithms. For most implementations,
  removing an element and re-inserting with the new priority would be much much slower than just
  changing an element's priority using this operation.
  
- <p>This class does not extend the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a> interface due to incompatibilities
+ <p>This class does not extend the <code>Collection</code> interface due to incompatibilities
  with the <a href="../../../com/apriori/collections/PriorityQueue.html#add-E-P-"><code>add(E, P)</code></a> method's signature. Also, this container class has some API for treating
  it as a container of elements and other APIs for treating it as a container of entries (element
  + priority), a dichotomy that is not had with standard collections. If you really need a standard
  collection backed by a priority queue, use <a href="../../../com/apriori/collections/PriorityQueues.html#asQueue-com.apriori.collections.PriorityQueue-"><code>PriorityQueues.asQueue(PriorityQueue)</code></a>. 
  
  <p>Generally, implementations of this interface do not provide iterators that support
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>Iterator.remove()</code></a>. This is because removal of an element often has significant impact on
+ <code>Iterator.remove()</code>. This is because removal of an element often has significant impact on
  the structure of the queue, so proceeding to iterate through subsequent items after a removal is
  not feasible.
  
@@ -188,7 +188,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#addAll-java.lang.Iterable-">addAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;entries)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#addAll-java.lang.Iterable-">addAll</a></span>(java.lang.Iterable&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;entries)</code>
 <div class="block">Adds all of the specified entries to the this queue.</div>
 </td>
 </tr>
@@ -199,26 +199,26 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#comparator--">comparator</a></span>()</code>
 <div class="block">Gets the comparator for this queue.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsAll-java.lang.Iterable-">containsAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsAll-java.lang.Iterable-">containsAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
 <div class="block">Determines if this queue contains all of the specified items.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsAny-java.lang.Iterable-">containsAny</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsAny-java.lang.Iterable-">containsAny</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
 <div class="block">Determines if this queue contains any one of the specified items.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsElement-java.lang.Object-">containsElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#containsElement-java.lang.Object-">containsElement</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Determines if the specified object is an element in this queue.</div>
 </td>
 </tr>
@@ -229,7 +229,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#getAll-P-">getAll</a></span>(<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&nbsp;priority)</code>
 <div class="block">Finds all entries with the given priority.</div>
 </td>
@@ -267,7 +267,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#removeAll-java.lang.Iterable-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;objects)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#removeAll-java.lang.Iterable-">removeAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;objects)</code>
 <div class="block">Finds and removes all entries from this queue whose elements match the given elements.</div>
 </td>
 </tr>
@@ -279,7 +279,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#retainAll-java.lang.Iterable-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;objects)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PriorityQueue.html#retainAll-java.lang.Iterable-">retainAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;objects)</code>
 <div class="block">Removes all entries from this queue whose elements do not match the given objects.</div>
 </td>
 </tr>
@@ -302,14 +302,14 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></h3>
-<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
+<code><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a>, <a href="../../../com/apriori/collections/SizedIterable.html#isEmpty--">isEmpty</a>, <a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a>, <a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, iterator</code></li>
 </ul>
 </li>
 </ul>
@@ -331,14 +331,14 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&nbsp;comparator()</pre>
+<pre>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&nbsp;comparator()</pre>
 <div class="block">Gets the comparator for this queue. This determines the order of extracting elements from the
- queue. If priorities are compared using their <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a> then
+ queue. If priorities are compared using their natural ordering then
  this method may return <code>null</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the comparator for this queue, or null if priorities are compared using their
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a></dd>
+       natural ordering</dd>
 </dl>
 </li>
 </ul>
@@ -350,12 +350,12 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <h4>toArray</h4>
 <pre><a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;[]&nbsp;toArray()</pre>
 <div class="block">Returns an array with the same entries as this queue. The order of entries in the returned
- array is the same as the order that entries are returned by the queue's <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.</div>
+ array is the same as the order that entries are returned by the queue's <code>Iterable.iterator()</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an array with the same entries as this queue</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util"><code>Collection.toArray()</code></a></dd>
+<dd><code>Collection.toArray()</code></dd>
 </dl>
 </li>
 </ul>
@@ -377,10 +377,10 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dd>an array with the same entries as this queue (possibly the same instance as the one
        specified)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ArrayStoreException.html?is-external=true" title="class or interface in java.lang">ArrayStoreException</a></code> - if any of the entries are not assignable to the runtime component
+<dd><code>java.lang.ArrayStoreException</code> - if any of the entries are not assignable to the runtime component
        type of the specified array</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util"><code>Collection.toArray(Object[])</code></a></dd>
+<dd><code>Collection.toArray(Object[])</code></dd>
 </dl>
 </li>
 </ul>
@@ -390,7 +390,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>containsElement</h4>
-<pre>boolean&nbsp;containsElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>boolean&nbsp;containsElement(java.lang.Object&nbsp;o)</pre>
 <div class="block">Determines if the specified object is an element in this queue.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -406,7 +406,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAll</h4>
-<pre>boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre>boolean&nbsp;containsAll(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
 <div class="block">Determines if this queue contains all of the specified items.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -422,7 +422,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAny</h4>
-<pre>boolean&nbsp;containsAny(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
+<pre>boolean&nbsp;containsAny(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
 <div class="block">Determines if this queue contains any one of the specified items.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -451,7 +451,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dd>the entry that corresponds to the newly added element or <code>null</code> if an entry
        could not be added (like due to capacity constraints)</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#offer-E-" title="class or interface in java.util"><code>Queue.offer(Object)</code></a></dd>
+<dd><code>Queue.offer(Object)</code></dd>
 </dl>
 </li>
 </ul>
@@ -473,10 +473,10 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the entry that corresponds to the newly added element</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if an entry could not be added to the queue (like due to
+<dd><code>java.lang.IllegalStateException</code> - if an entry could not be added to the queue (like due to
        capacity constraints)</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#add-E-" title="class or interface in java.util"><code>Queue.add(Object)</code></a></dd>
+<dd><code>Queue.add(Object)</code></dd>
 </dl>
 </li>
 </ul>
@@ -486,7 +486,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>void&nbsp;addAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;entries)</pre>
+<pre>void&nbsp;addAll(java.lang.Iterable&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;entries)</pre>
 <div class="block">Adds all of the specified entries to the this queue. The entry instances themselves will not
  be associated with this queue. Instead, new entries will be created and added to this queue
  that have the same elements and corresponding priorities.</div>
@@ -528,7 +528,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimum entry in the queue or <code>null</code> if the queue is empty</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#peek--" title="class or interface in java.util"><code>Queue.peek()</code></a></dd>
+<dd><code>Queue.peek()</code></dd>
 </dl>
 </li>
 </ul>
@@ -545,9 +545,9 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimum entry in the queue</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the queue is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the queue is empty</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#element--" title="class or interface in java.util"><code>Queue.element()</code></a></dd>
+<dd><code>Queue.element()</code></dd>
 </dl>
 </li>
 </ul>
@@ -564,7 +564,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimum entry in the queue or <code>null</code> if the queue is empty</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util"><code>Queue.poll()</code></a></dd>
+<dd><code>Queue.poll()</code></dd>
 </dl>
 </li>
 </ul>
@@ -581,9 +581,9 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimum entry in the queue</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the queue is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the queue is empty</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#remove--" title="class or interface in java.util"><code>Queue.remove()</code></a></dd>
+<dd><code>Queue.remove()</code></dd>
 </dl>
 </li>
 </ul>
@@ -612,7 +612,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;objects)</pre>
+<pre>boolean&nbsp;removeAll(java.lang.Iterable&lt;?&gt;&nbsp;objects)</pre>
 <div class="block">Finds and removes all entries from this queue whose elements match the given elements.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -628,7 +628,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>boolean&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;objects)</pre>
+<pre>boolean&nbsp;retainAll(java.lang.Iterable&lt;?&gt;&nbsp;objects)</pre>
 <div class="block">Removes all entries from this queue whose elements do not match the given objects. This
  mutates this queue into the intersection of its current contents and the specified objects.</div>
 <dl>
@@ -657,7 +657,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getAll</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;getAll(<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&nbsp;priority)</pre>
+<pre>java.util.Collection&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt;&gt;&nbsp;getAll(<a href="../../../com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&nbsp;priority)</pre>
 <div class="block">Finds all entries with the given priority.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -695,7 +695,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/PersistentSet.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/PrimitiveListIterator.OfShort.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

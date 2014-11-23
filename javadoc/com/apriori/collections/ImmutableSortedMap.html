@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":18,"i2":6,"i3":6,"i4":18,"i5":6,"i6":18,"i7":18,"i8":6,"i9":6,"i10":18,"i11":6,"i12":6,"i13":18,"i14":6,"i15":18,"i16":6,"i17":18,"i18":18,"i19":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -133,7 +133,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -143,59 +143,85 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#ceilEntry-K-">ceilEntry</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#comparator--">comparator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#ceilKey-K-">ceilKey</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#firstEntry--">firstEntry</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#comparator--">comparator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#floorEntry-K-">floorEntry</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#firstEntry--">firstEntry</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#headMap-K-">headMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#firstKey--">firstKey</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#floorEntry-K-">floorEntry</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#floorKey-K-">floorKey</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#headMap-K-">headMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#headMap-K-boolean-">headMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#higherEntry-K-">higherEntry</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#higherKey-K-">higherKey</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#keySet--">keySet</a></span>()</code>
+<div class="block">Returns a view of this map's keys as an immutable set.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#lastEntry--">lastEntry</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#lastKey--">lastKey</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#lowerEntry-K-">lowerEntry</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#lowerKey-K-">lowerKey</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#subMap-K-boolean-K-boolean-">subMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from,
       boolean&nbsp;fromInclusive,
       <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to,
       boolean&nbsp;toInclusive)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#subMap-K-K-">subMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from,
       <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#tailMap-K-">tailMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableSortedMap.html#tailMap-K-boolean-">tailMap</a></span>(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
@@ -206,7 +232,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">containsValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">containsValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#forEach-java.util.function.BiConsumer-">forEach</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#getOrDefault-java.lang.Object-V-">getOrDefault</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
@@ -219,8 +245,8 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -242,7 +268,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;&nbsp;comparator()</pre>
+<pre>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;&nbsp;comparator()</pre>
 </li>
 </ul>
 <a name="firstEntry--">
@@ -254,6 +280,15 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;firstEntry()</pre>
 </li>
 </ul>
+<a name="firstKey--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>firstKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;firstKey()</pre>
+</li>
+</ul>
 <a name="lastEntry--">
 <!--   -->
 </a>
@@ -261,6 +296,15 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <li class="blockList">
 <h4>lastEntry</h4>
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;lastEntry()</pre>
+</li>
+</ul>
+<a name="lastKey--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;lastKey()</pre>
 </li>
 </ul>
 <a name="floorEntry-java.lang.Object-">
@@ -274,6 +318,17 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;floorEntry(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
 </li>
 </ul>
+<a name="floorKey-java.lang.Object-">
+<!--   -->
+</a><a name="floorKey-K-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>floorKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;floorKey(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
+</li>
+</ul>
 <a name="higherEntry-java.lang.Object-">
 <!--   -->
 </a><a name="higherEntry-K-">
@@ -283,6 +338,17 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <li class="blockList">
 <h4>higherEntry</h4>
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;higherEntry(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
+</li>
+</ul>
+<a name="higherKey-java.lang.Object-">
+<!--   -->
+</a><a name="higherKey-K-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>higherKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;higherKey(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
 </li>
 </ul>
 <a name="ceilEntry-java.lang.Object-">
@@ -296,6 +362,17 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;ceilEntry(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
 </li>
 </ul>
+<a name="ceilKey-java.lang.Object-">
+<!--   -->
+</a><a name="ceilKey-K-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ceilKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;ceilKey(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
+</li>
+</ul>
 <a name="lowerEntry-java.lang.Object-">
 <!--   -->
 </a><a name="lowerEntry-K-">
@@ -307,6 +384,17 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <pre><a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;lowerEntry(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
 </li>
 </ul>
+<a name="lowerKey-java.lang.Object-">
+<!--   -->
+</a><a name="lowerKey-K-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lowerKey</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;lowerKey(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;k)</pre>
+</li>
+</ul>
 <a name="subMap-java.lang.Object-java.lang.Object-">
 <!--   -->
 </a><a name="subMap-K-K-">
@@ -315,8 +403,8 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>subMap</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from,
-                               <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from,
+                                       <a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</pre>
 </li>
 </ul>
 <a name="subMap-java.lang.Object-boolean-java.lang.Object-boolean-">
@@ -341,7 +429,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>headMap</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;to)</pre>
 </li>
 </ul>
 <a name="headMap-java.lang.Object-boolean-">
@@ -364,7 +452,7 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>tailMap</h4>
-<pre><a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from)</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="interface in com.apriori.collections">ImmutableSortedMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&nbsp;from)</pre>
 </li>
 </ul>
 <a name="tailMap-java.lang.Object-boolean-">
@@ -386,9 +474,13 @@ extends <a href="../../../com/apriori/collections/ImmutableMap.html" title="inte
 <li class="blockList">
 <h4>keySet</h4>
 <pre><a href="../../../com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>&gt;&nbsp;keySet()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">ImmutableMap</a></code></span></div>
+<div class="block">Returns a view of this map's keys as an immutable set.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">K</a>,<a href="../../../com/apriori/collections/ImmutableSortedMap.html" title="type parameter in ImmutableSortedMap">V</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of this map's keys as an immutable set</dd>
 </dl>
 </li>
 </ul>

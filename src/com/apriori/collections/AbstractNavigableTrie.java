@@ -29,11 +29,11 @@ import java.util.function.Supplier;
  * @param <V> the type of value in the trie
  * @param <N> the concrete type of navigable trie node
  * 
- * @see AbstractNavigableCompositeTrie
  * @see AbstractNavigableSequenceTrie
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+//TODO: AbstractNavigableCompositeTrie
 abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.NavigableNode<K, X, V, N>>
       extends AbstractTrie<K, X, V, N> {
    

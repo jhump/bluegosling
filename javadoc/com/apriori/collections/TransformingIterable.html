@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.TransformingIterable&lt;I,O&gt;</li>
@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;O&gt;</dd>
+<dd>java.lang.Iterable&lt;O&gt;</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -121,8 +121,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">TransformingIterable&lt;I,O&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;O&gt;</pre>
+extends java.lang.Object
+implements java.lang.Iterable&lt;O&gt;</pre>
 <div class="block">An iterable whose elements are the results of applying a function to another iterable. This
  iterable is simply a wrapper. Changes to the underlying iterable are visible in the
  transformed iterable. Accessing elements incurs calls to the transforming function.
@@ -169,8 +169,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TransformingIterable.html#TransformingIterable-java.lang.Iterable-java.util.function.Function-">TransformingIterable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;iterable,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TransformingIterable.html#TransformingIterable-java.lang.Iterable-java.util.function.Function-">TransformingIterable</a></span>(java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;iterable,
+                    java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function)</code>
 <div class="block">Constructs a new transforming iterable.</div>
 </td>
 </tr>
@@ -196,19 +196,19 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></td>
+<td class="colFirst"><code>protected java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TransformingIterable.html#function--">function</a></span>()</code>
 <div class="block">Gets the function used to transform elements.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;</code></td>
+<td class="colFirst"><code>protected java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TransformingIterable.html#internal--">internal</a></span>()</code>
 <div class="block">Gets the wrapped iterable.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TransformingIterable.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
@@ -216,15 +216,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, spliterator</code></li>
 </ul>
 </li>
 </ul>
@@ -246,8 +246,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TransformingIterable</h4>
-<pre>public&nbsp;TransformingIterable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;iterable,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;TransformingIterable(java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;iterable,
+                            java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function)</pre>
 <div class="block">Constructs a new transforming iterable.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -270,7 +270,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <ul class="blockList">
 <li class="blockList">
 <h4>internal</h4>
-<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;internal()</pre>
+<pre>protected&nbsp;java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>&gt;&nbsp;internal()</pre>
 <div class="block">Gets the wrapped iterable.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -284,7 +284,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <ul class="blockList">
 <li class="blockList">
 <h4>function</h4>
-<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function()</pre>
+<pre>protected&nbsp;java.util.function.Function&lt;? super <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">I</a>,? extends <a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;function()</pre>
 <div class="block">Gets the function used to transform elements.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -316,10 +316,10 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.
 <ul class="blockListLast">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TransformingIterable.html" title="type parameter in TransformingIterable">O</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

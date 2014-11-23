@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.HierarchicalLock</li>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">HierarchicalLock</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends java.lang.Object</pre>
 <div class="block">A hierarchical lock that supports shared and exclusive locking modes and supports lock
  promotion and demotion. Locks can be promoted from child to parent or from shared to exclusive,
  and they can be demoted from parent to child or from exclusive to shared.
@@ -137,7 +137,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p>This lock places a limit on the number of simultaneously held locks. Up to 32,767 (2^15 - 1)
  exclusive locks can be held simultaneously. Since only one thread can hold the lock exclusively,
  this allows for that thread to acquire/re-enter the lock 32k times before an error occurs. And
- up to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Integer.MAX_VALUE</code></a> (2^31 - 1) shared locks can be held simultaneously. This limit
+ up to <code>Integer.MAX_VALUE</code> (2^31 - 1) shared locks can be held simultaneously. This limit
  is the total of acquisitions, be it in the form of one thread acquiring/re-entering the lock 2
  billion times, or 2 billion threads each acquiring it once. (These limits are intentionally very
  high such that no practical use of the lock will ever bump into them.)
@@ -205,13 +205,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#callWithExclusiveLock-java.util.concurrent.Callable-">callWithExclusiveLock</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;callable)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#callWithExclusiveLock-java.util.concurrent.Callable-">callWithExclusiveLock</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable)</code>
 <div class="block">Invokes the specified callable while holding this lock in exclusive mode.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#callWithSharedLock-java.util.concurrent.Callable-">callWithSharedLock</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;callable)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#callWithSharedLock-java.util.concurrent.Callable-">callWithSharedLock</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable)</code>
 <div class="block">Invokes the specified callable while holding this lock in shared mode.</div>
 </td>
 </tr>
@@ -241,13 +241,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a></code></td>
+<td class="colFirst"><code>java.lang.Thread</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#getExclusiveHolder--">getExclusiveHolder</a></span>()</code>
 <div class="block">Gets the thread that holds this lock in exclusive mode.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a></code></td>
+<td class="colFirst"><code>java.lang.Thread</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#getFirstQueuedThread--">getFirstQueuedThread</a></span>()</code>
 <div class="block">Gets the first queued thread.</div>
 </td>
@@ -259,13 +259,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;java.lang.Thread&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#getQueuedThreads--">getQueuedThreads</a></span>()</code>
 <div class="block">Gets the collection of all queued threads.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;java.lang.Thread&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#getSharedHolders--">getSharedHolders</a></span>()</code>
 <div class="block">Gets the set of threads that hold this lock in shared mode.</div>
 </td>
@@ -278,13 +278,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#runWithExclusiveLock-java.lang.Runnable-">runWithExclusiveLock</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#runWithExclusiveLock-java.lang.Runnable-">runWithExclusiveLock</a></span>(java.lang.Runnable&nbsp;runnable)</code>
 <div class="block">Invokes the specified runnable while holding this lock in exclusive mode.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#runWithSharedLock-java.lang.Runnable-">runWithSharedLock</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#runWithSharedLock-java.lang.Runnable-">runWithSharedLock</a></span>(java.lang.Runnable&nbsp;runnable)</code>
 <div class="block">Invokes the specified runnable while holding this lock in shared mode.</div>
 </td>
 </tr>
@@ -309,7 +309,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#tryExclusiveLock-long-java.util.concurrent.TimeUnit-">tryExclusiveLock</a></span>(long&nbsp;timeLimit,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+                java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Tries to acquire this lock in exclusive mode and waits up to the specified amount of time if
  the lock is unavailable.</div>
 </td>
@@ -323,7 +323,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.html#trySharedLock-long-java.util.concurrent.TimeUnit-">trySharedLock</a></span>(long&nbsp;timeLimit,
-             <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+             java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Tries to acquire this lock in shared mode and waits up to the specified amount of time if the
  lock is unavailable.</div>
 </td>
@@ -333,8 +333,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -427,7 +427,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>getExclusiveHolder</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&nbsp;getExclusiveHolder()</pre>
+<pre>public&nbsp;java.lang.Thread&nbsp;getExclusiveHolder()</pre>
 <div class="block">Gets the thread that holds this lock in exclusive mode. Unless it is the current thread that
  holds the lock, this method is best effort as it is possible that the other thread actually
  releases the lock before this method can return. Similarly, it is possible that this method
@@ -447,7 +447,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>getSharedHolders</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&gt;&nbsp;getSharedHolders()</pre>
+<pre>public&nbsp;java.util.Collection&lt;java.lang.Thread&gt;&nbsp;getSharedHolders()</pre>
 <div class="block">Gets the set of threads that hold this lock in shared mode. This method is best effort as it
  is possible for the set of lock-holders to change before this method returns its answer.</div>
 <dl>
@@ -464,14 +464,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>getFirstQueuedThread</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&nbsp;getFirstQueuedThread()</pre>
+<pre>public&nbsp;java.lang.Thread&nbsp;getFirstQueuedThread()</pre>
 <div class="block">Gets the first queued thread. This is the thread that has been waiting the longest to acquire
  the lock.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the first queued thread</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/AbstractQueuedSynchronizer.html?is-external=true#getFirstQueuedThread--" title="class or interface in java.util.concurrent.locks"><code>AbstractQueuedSynchronizer.getFirstQueuedThread()</code></a></dd>
+<dd><code>AbstractQueuedSynchronizer.getFirstQueuedThread()</code></dd>
 </dl>
 </li>
 </ul>
@@ -481,13 +481,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>getQueuedThreads</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang">Thread</a>&gt;&nbsp;getQueuedThreads()</pre>
+<pre>public&nbsp;java.util.Collection&lt;java.lang.Thread&gt;&nbsp;getQueuedThreads()</pre>
 <div class="block">Gets the collection of all queued threads.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the collection of all queued threads</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/AbstractQueuedSynchronizer.html?is-external=true#getQueuedThreads--" title="class or interface in java.util.concurrent.locks"><code>AbstractQueuedSynchronizer.getQueuedThreads()</code></a></dd>
+<dd><code>AbstractQueuedSynchronizer.getQueuedThreads()</code></dd>
 </dl>
 </li>
 </ul>
@@ -512,8 +512,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>trySharedLock</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;trySharedLock(long&nbsp;timeLimit,
-                                                 <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
-                                          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+                                                 java.util.concurrent.TimeUnit&nbsp;unit)
+                                          throws java.lang.InterruptedException</pre>
 <div class="block">Tries to acquire this lock in shared mode and waits up to the specified amount of time if the
  lock is unavailable.</div>
 <dl>
@@ -523,7 +523,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a> on success or <code>null</code> if it is unavailable</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the lock</dd>
+<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the lock</dd>
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for this lock would result in a deadlock (e.g. this
     thread holds a lock for which another thread is waiting, and that thread, or some other
     thread that directly or indirectly is waiting on it, is holding this lock)</dd>
@@ -558,13 +558,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>sharedLockInterruptibly</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent">HierarchicalLock.SharedLock</a>&nbsp;sharedLockInterruptibly()
-                                                    throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+                                                    throws java.lang.InterruptedException</pre>
 <div class="block">Acquires the lock in shared mode, waiting interruptibly if necessary for it to be available.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a <a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the lock</dd>
+<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the lock</dd>
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for this lock would result in a deadlock (e.g. this
     thread holds a lock for which another thread is waiting, and that thread, or some other
     thread that directly or indirectly is waiting on it, is holding this lock)</dd>
@@ -577,8 +577,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>callWithSharedLock</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;callWithSharedLock(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;callable)
-                         throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;callWithSharedLock(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable)
+                         throws java.lang.Exception</pre>
 <div class="block">Invokes the specified callable while holding this lock in shared mode. This first <a href="../../../com/apriori/concurrent/HierarchicalLock.html#sharedLock--">acquires the lock</a>, then executes the callable, and then finally releases the
  lock.</div>
 <dl>
@@ -590,7 +590,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting to acquire this lock would result in a deadlock (e.g.
     this thread holds a lock for which another thread is waiting, and that thread, or some
     other thread that directly or indirectly is waiting on it, is holding this lock)</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code> - if the task throws an exception during its execution</dd>
+<dd><code>java.lang.Exception</code> - if the task throws an exception during its execution</dd>
 </dl>
 </li>
 </ul>
@@ -600,7 +600,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>runWithSharedLock</h4>
-<pre>public&nbsp;void&nbsp;runWithSharedLock(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<pre>public&nbsp;void&nbsp;runWithSharedLock(java.lang.Runnable&nbsp;runnable)</pre>
 <div class="block">Invokes the specified runnable while holding this lock in shared mode. This first <a href="../../../com/apriori/concurrent/HierarchicalLock.html#sharedLock--">acquires the lock</a>, then executes the runnable, and then finally releases the
  lock.</div>
 <dl>
@@ -634,8 +634,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>tryExclusiveLock</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;tryExclusiveLock(long&nbsp;timeLimit,
-                                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
-                                                throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+                                                       java.util.concurrent.TimeUnit&nbsp;unit)
+                                                throws java.lang.InterruptedException</pre>
 <div class="block">Tries to acquire this lock in exclusive mode and waits up to the specified amount of time if
  the lock is unavailable.</div>
 <dl>
@@ -645,7 +645,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> on success or <code>null</code> if it is unavailable</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the lock</dd>
+<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the lock</dd>
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for this lock would result in a deadlock (e.g. this
     thread holds a lock for which another thread is waiting, and that thread, or some other
     thread that directly or indirectly is waiting on it, is holding this lock)</dd>
@@ -680,14 +680,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>exclusiveLockInterruptibly</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;exclusiveLockInterruptibly()
-                                                          throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+                                                          throws java.lang.InterruptedException</pre>
 <div class="block">Acquires the lock in exclusive mode, waiting interruptibly if necessary for it to be
  available.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the lock</dd>
+<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the lock</dd>
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting for this lock would result in a deadlock (e.g. this
     thread holds a lock for which another thread is waiting, and that thread, or some other
     thread that directly or indirectly is waiting on it, is holding this lock)</dd>
@@ -700,8 +700,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>callWithExclusiveLock</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;callWithExclusiveLock(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;callable)
-                            throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;callWithExclusiveLock(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable)
+                            throws java.lang.Exception</pre>
 <div class="block">Invokes the specified callable while holding this lock in exclusive mode. This first
  <a href="../../../com/apriori/concurrent/HierarchicalLock.html#exclusiveLock--">acquires the lock</a>, then executes the callable, and then finally
  releases the lock.</div>
@@ -714,7 +714,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if waiting to acquire this lock would result in a deadlock (e.g.
     this thread holds a lock for which another thread is waiting, and that thread, or some
     other thread that directly or indirectly is waiting on it, is holding this lock)</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code> - if the task throws an exception during its execution</dd>
+<dd><code>java.lang.Exception</code> - if the task throws an exception during its execution</dd>
 </dl>
 </li>
 </ul>
@@ -724,7 +724,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>runWithExclusiveLock</h4>
-<pre>public&nbsp;void&nbsp;runWithExclusiveLock(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<pre>public&nbsp;void&nbsp;runWithExclusiveLock(java.lang.Runnable&nbsp;runnable)</pre>
 <div class="block">Invokes the specified runnable while holding this lock in exclusive mode. This first
  <a href="../../../com/apriori/concurrent/HierarchicalLock.html#exclusiveLock--">acquires the lock</a>, then executes the runnable, and then finally
  releases the lock.</div>

@@ -162,7 +162,6 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     *
     * @param obj An object whose field to set
     * @param newValue the new value
-    * @since 1.6
     */
    public abstract void lazySet(T obj, boolean newValue);
 
@@ -199,7 +198,6 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     * @param obj An object whose field to get and set
     * @param updateFunction a side-effect-free function
     * @return the previous value
-    * @since 1.8
     */
    public final boolean getAndUpdate(T obj, BooleanUnaryOperator updateFunction) {
       boolean prev, next;
@@ -219,7 +217,6 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     * @param obj An object whose field to get and set
     * @param updateFunction a side-effect-free function
     * @return the updated value
-    * @since 1.8
     */
    public final boolean updateAndGet(T obj, BooleanUnaryOperator updateFunction) {
       boolean prev, next;
@@ -239,15 +236,15 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     *
     * @param obj An object whose field to get and set
     * @param x the update value
-    * @param accumulatorFunction a side-effect-free function of two arguments
+    * @param accumulateFunction a side-effect-free function of two arguments
     * @return the previous value
-    * @since 1.8
     */
-   public final boolean getAndCombine(T obj, boolean x, BooleanBinaryOperator combineFunction) {
+   public final boolean getAndAccumulate(T obj, boolean x,
+         BooleanBinaryOperator accumulateFunction) {
       boolean prev, next;
       do {
          prev = get(obj);
-         next = combineFunction.applyAsBoolean(prev, x);
+         next = accumulateFunction.applyAsBoolean(prev, x);
       } while (!compareAndSet(obj, prev, next));
       return prev;
    }
@@ -261,15 +258,15 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     *
     * @param obj An object whose field to get and set
     * @param x the update value
-    * @param accumulatorFunction a side-effect-free function of two arguments
+    * @param accumulateFunction a side-effect-free function of two arguments
     * @return the updated value
-    * @since 1.8
     */
-   public final boolean combineAndGet(T obj, boolean x, BooleanBinaryOperator combineFunction) {
+   public final boolean accumulateAndGet(T obj, boolean x,
+         BooleanBinaryOperator accumulateFunction) {
       boolean prev, next;
       do {
          prev = get(obj);
-         next = combineFunction.applyAsBoolean(prev, x);
+         next = accumulateFunction.applyAsBoolean(prev, x);
       } while (!compareAndSet(obj, prev, next));
       return next;
    }

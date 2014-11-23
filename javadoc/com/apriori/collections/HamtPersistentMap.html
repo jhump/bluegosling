@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/HamtPersistentMap.html" target="_top">Frames</a></li>
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">com.apriori.collections.AbstractImmutableMap</a>&lt;K,V&gt;</li>
@@ -111,14 +111,25 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>K</code> - the type of keys in the map</dd>
+<dd><code>V</code> - the type of value in the map</dd>
+</dl>
+<dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;K,V&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;K,V&gt;, <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;K,V&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;, java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;K,V&gt;&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">HamtPersistentMap&lt;K,V&gt;</span>
 extends <a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;K,V&gt;
 implements <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;K,V&gt;</pre>
+<div class="block">An implementation of <a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections"><code>PersistentMap</code></a> that uses an immutable hash array-mapped trie (HAMT)
+ plus path copying on updates. This is an immutable and persistent version of <a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><code>HamtMap</code></a>.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><code>HamtMap</code></a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -136,7 +147,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a></h3>
-<code><a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="class in com.apriori.collections">AbstractImmutableMap.SimpleEntry</a>&lt;<a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="type parameter in AbstractImmutableMap.SimpleEntry">K</a>,<a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="type parameter in AbstractImmutableMap.SimpleEntry">V</a>&gt;</code></li>
+<code><a href="../../../com/apriori/collections/AbstractImmutableMap.EntrySet.html" title="class in com.apriori.collections">AbstractImmutableMap.EntrySet</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.KeySet.html" title="class in com.apriori.collections">AbstractImmutableMap.KeySet</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="class in com.apriori.collections">AbstractImmutableMap.SimpleEntry</a>&lt;<a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="type parameter in AbstractImmutableMap.SimpleEntry">K</a>,<a href="../../../com/apriori/collections/AbstractImmutableMap.SimpleEntry.html" title="type parameter in AbstractImmutableMap.SimpleEntry">V</a>&gt;, <a href="../../../com/apriori/collections/AbstractImmutableMap.ValueCollection.html" title="class in com.apriori.collections">AbstractImmutableMap.ValueCollection</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.com.apriori.collections.ImmutableMap">
@@ -160,59 +171,69 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#clear--">clear</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;o)</code>
+<div class="block">Determines if this map contains a mapping for the given key.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create--">create</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#containsValue-java.lang.Object-">containsValue</a></span>(java.lang.Object&nbsp;o)</code>
+<div class="block">Determines if this map contains the given value in any of its mappings.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create-com.apriori.collections.ImmutableMap-">create</a></span>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create--">create</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create-java.util.Map-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create-com.apriori.collections.ImmutableMap-">create</a></span>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#get-java.lang.Object-">get</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#create-java.util.Map-">create</a></span>(java.util.Map&lt;? extends K,? extends V&gt;&nbsp;map)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>
+<div class="block">Retrieves the value associated with the given key.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#put-K-V-">put</a></span>(<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>&nbsp;key,
    <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#putAll-com.apriori.collections.ImmutableMap-">putAll</a></span>(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#putAll-java.util.Map-">putAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
-</tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#putAll-java.util.Map-">putAll</a></span>(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#removeAll-java.lang.Iterable-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#retainAll-java.lang.Iterable-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#removeAll-java.lang.Iterable-">removeAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#retainAll-java.lang.Iterable-">retainAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;keys)</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtPersistentMap.html#size--">size</a></span>()</code>
 <div class="block">Determines the size of the sequence.</div>
@@ -230,15 +251,22 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.PersistentMap">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a></h3>
+<code><a href="../../../com/apriori/collections/PersistentMap.html#compute-K-java.util.function.BiFunction-">compute</a>, <a href="../../../com/apriori/collections/PersistentMap.html#computeIfAbsent-K-java.util.function.Function-">computeIfAbsent</a>, <a href="../../../com/apriori/collections/PersistentMap.html#computeIfPresent-K-java.util.function.BiFunction-">computeIfPresent</a>, <a href="../../../com/apriori/collections/PersistentMap.html#merge-K-V-java.util.function.BiFunction-">merge</a>, <a href="../../../com/apriori/collections/PersistentMap.html#putIfAbsent-K-V-">putIfAbsent</a>, <a href="../../../com/apriori/collections/PersistentMap.html#remove-java.lang.Object-java.lang.Object-">remove</a>, <a href="../../../com/apriori/collections/PersistentMap.html#replace-K-V-">replace</a>, <a href="../../../com/apriori/collections/PersistentMap.html#replace-K-V-V-">replace</a>, <a href="../../../com/apriori/collections/PersistentMap.html#replaceAll-java.util.function.BiFunction-">replaceAll</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.ImmutableMap">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a></h3>
-<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
+<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsAllKeys-java.lang.Iterable-">containsAllKeys</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAllValues-java.lang.Iterable-">containsAllValues</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyKey-java.lang.Iterable-">containsAnyKey</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#containsAnyValue-java.lang.Iterable-">containsAnyValue</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#entrySet--">entrySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#equals-java.lang.Object-">equals</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#forEach-java.util.function.BiConsumer-">forEach</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#getOrDefault-java.lang.Object-V-">getOrDefault</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#hashCode--">hashCode</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#keySet--">keySet</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#parallelStream--">parallelStream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#spliterator--">spliterator</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#stream--">stream</a>, <a href="../../../com/apriori/collections/ImmutableMap.html#values--">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.SizedIterable">
@@ -251,8 +279,8 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -283,7 +311,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
+<pre>public static&nbsp;&lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;K,V&gt;&nbsp;create(java.util.Map&lt;? extends K,? extends V&gt;&nbsp;map)</pre>
 </li>
 </ul>
 <a name="create-com.apriori.collections.ImmutableMap-">
@@ -301,12 +329,14 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableMap.html#iterator--">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/AbstractImmutableMap.html#iterator--">iterator</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -316,12 +346,18 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;o)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">ImmutableMap</a></code></span></div>
+<div class="block">Determines if this map contains a mapping for the given key.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableMap.html#containsKey-java.lang.Object-">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractImmutableMap.html#containsKey-java.lang.Object-">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - a key</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if this map contains a mapping for the given key</dd>
 </dl>
 </li>
 </ul>
@@ -331,12 +367,18 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;containsValue(java.lang.Object&nbsp;o)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">ImmutableMap</a></code></span></div>
+<div class="block">Determines if this map contains the given value in any of its mappings.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableMap.html#containsValue-java.lang.Object-">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractImmutableMap.html#containsValue-java.lang.Object-">containsValue</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - a value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the given value is present in any of the contained mappings</dd>
 </dl>
 </li>
 </ul>
@@ -346,12 +388,19 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&nbsp;get(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&nbsp;get(java.lang.Object&nbsp;key)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">ImmutableMap</a></code></span></div>
+<div class="block">Retrieves the value associated with the given key.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ImmutableMap.html#get-java.lang.Object-">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractImmutableMap.html#get-java.lang.Object-">get</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - a key</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the value associated with the given key or <code>null</code> if no mapping exists for the
+       given key</dd>
 </dl>
 </li>
 </ul>
@@ -363,8 +412,8 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>put</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;put(<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>&nbsp;key,
-                              <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&nbsp;value)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;put(<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>&nbsp;key,
+                                  <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#put-K-V-">put</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -377,7 +426,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;remove(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#remove-java.lang.Object-">remove</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -390,7 +439,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;removeAll(java.lang.Iterable&lt;?&gt;&nbsp;keys)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#removeAll-java.lang.Iterable-">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -403,7 +452,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;keys)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;retainAll(java.lang.Iterable&lt;?&gt;&nbsp;keys)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#retainAll-java.lang.Iterable-">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -416,7 +465,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>putAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;putAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;putAll(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#putAll-java.util.Map-">putAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -429,7 +478,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>putAll</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;putAll(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;putAll(<a href="../../../com/apriori/collections/ImmutableMap.html" title="interface in com.apriori.collections">ImmutableMap</a>&lt;? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;items)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/PersistentMap.html#putAll-com.apriori.collections.ImmutableMap-">putAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
@@ -439,7 +488,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <a name="size--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>size</h4>
 <pre>public&nbsp;int&nbsp;size()</pre>
@@ -450,6 +499,19 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <dd><code><a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ImmutableMap.Entry.html" title="interface in com.apriori.collections">ImmutableMap.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the number of elements in this sequence</dd>
+</dl>
+</li>
+</ul>
+<a name="clear--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;&nbsp;clear()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/PersistentMap.html#clear--">clear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/PersistentMap.html" title="interface in com.apriori.collections">PersistentMap</a>&lt;<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">K</a>,<a href="../../../com/apriori/collections/HamtPersistentMap.html" title="type parameter in HamtPersistentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -481,7 +543,7 @@ implements <a href="../../../com/apriori/collections/PersistentMap.html" title="
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/HamtPersistentMap.html" target="_top">Frames</a></li>

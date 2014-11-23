@@ -18,10 +18,9 @@ public interface TableMapView<K, V> extends Map<K, V> {
     * returned view is modifiable. Changes to the returned view are visible via other operations on
     * the map and vice versa.
     * 
-    * <p>Note that if this map is a view that does not allow adding elements (e.g. returned from a
-    * higher-level {@link TableMapView#get(Object)} operation) then the returned view will also not
-    * allow adding elements. In such a case this method and {@case #get(key)} will not actually
-    * behave differently.
+    * <p>Note that if this map is a view that does not allow adding elements then the returned view
+    * will also not allow adding elements. In such a case this method and {@link #get(Object)} will
+    * not actually behave differently.
     *
     * @param key the key
     * @return a modifiable view of the value for the given key, an empty map or table if no such key

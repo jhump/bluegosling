@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.Duration</li>
@@ -107,26 +107,30 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</dd>
+<dd>java.lang.Comparable&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Duration</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</pre>
+extends java.lang.Object
+implements java.lang.Comparable&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</pre>
 <div class="block">Represents a duration of time that is backed by an integral length and a unit.
 
  <p>When two durations are added or subtracted, the result will convert to the finest common unit
- that won't result in overflow or underflow. If a result unit is <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true#DAYS" title="class or interface in java.util.concurrent"><code>TimeUnit.DAYS</code></a> but still
- overflows or underflows, the result will be clipped to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a>, which mirrors the behavior of converting between units using
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true#convert-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent"><code>TimeUnit.convert(long, TimeUnit)</code></a>.
+ that won't result in overflow or underflow. If a result unit is <code>TimeUnit.DAYS</code> but still
+ overflows or underflows, the result will be clipped to <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code>, which mirrors the behavior of converting between units using
+ <code>TimeUnit.convert(long, TimeUnit)</code>.
 
  <p>This provides a sane way to compare and use durations of varying units. To provide the
  duration to APIs that accept a <code>long</code> and a <code>TimeUnit</code>, simply pass
  <code>duration.length()</code> and <code>duration.unit()</code>.
 
- <p>Note: this class has a natural ordering that is inconsistent with equals.</div>
+ <p><strong>Note</strong>: this class has a natural ordering that is inconsistent with equals. In
+ particular, two objects that represent the same amount of time are "equal" according to their
+ natural ordering but unequal according to the <code>equals</code> method if they have different units.
+ For example, a duration 2 seconds and one of 2,000 milliseconds are unequal but considered equal
+ per the natural ordering.</div>
 </li>
 </ul>
 </div>
@@ -166,7 +170,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Returns true if the specified object is a <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent"><code>Duration</code></a> with the same length and unit.</div>
 </td>
 </tr>
@@ -207,7 +211,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#minus-long-java.util.concurrent.TimeUnit-">minus</a></span>(long&nbsp;other,
-     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</code>
+     java.util.concurrent.TimeUnit&nbsp;otherUnit)</code>
 <div class="block">Returns the difference of this duration minus the specified duration.</div>
 </td>
 </tr>
@@ -226,7 +230,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#of-long-java.util.concurrent.TimeUnit-">of</a></span>(long&nbsp;length,
-  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+  java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Constructs a new duration of the specified length and unit.</div>
 </td>
 </tr>
@@ -239,7 +243,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#plus-long-java.util.concurrent.TimeUnit-">plus</a></span>(long&nbsp;other,
-    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</code>
+    java.util.concurrent.TimeUnit&nbsp;otherUnit)</code>
 <div class="block">Returns the sum of this duration and the specified duration.</div>
 </td>
 </tr>
@@ -257,7 +261,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#to-java.util.concurrent.TimeUnit-">to</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;desiredUnit)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#to-java.util.concurrent.TimeUnit-">to</a></span>(java.util.concurrent.TimeUnit&nbsp;desiredUnit)</code>
 <div class="block">Returns the length of this duration in the specified unit.</div>
 </td>
 </tr>
@@ -304,11 +308,11 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 </td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a></code></td>
+<td class="colFirst"><code>java.util.concurrent.TimeUnit</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#unit--">unit</a></span>()</code>
 <div class="block">Returns the unit of this object's <a href="../../../com/apriori/concurrent/Duration.html#length"><code>length</code></a>.</div>
 </td>
@@ -318,8 +322,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -342,7 +346,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>of</h4>
 <pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;of(long&nbsp;length,
-                          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+                          java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block">Constructs a new duration of the specified length and unit.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -430,8 +434,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toNanos</h4>
 <pre>public&nbsp;long&nbsp;toNanos()</pre>
-<div class="block">Returns the length of this duration in nanoseconds. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in nanoseconds. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in nanoseconds</dd>
@@ -445,8 +449,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toMicros</h4>
 <pre>public&nbsp;long&nbsp;toMicros()</pre>
-<div class="block">Returns the length of this duration in microseconds. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in microseconds. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in microseconds</dd>
@@ -460,8 +464,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toMillis</h4>
 <pre>public&nbsp;long&nbsp;toMillis()</pre>
-<div class="block">Returns the length of this duration in milliseconds. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in milliseconds. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in milliseconds</dd>
@@ -475,8 +479,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toSeconds</h4>
 <pre>public&nbsp;long&nbsp;toSeconds()</pre>
-<div class="block">Returns the length of this duration in seconds. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in seconds. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in seconds</dd>
@@ -490,8 +494,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toMinutes</h4>
 <pre>public&nbsp;long&nbsp;toMinutes()</pre>
-<div class="block">Returns the length of this duration in minutes. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in minutes. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in minutes</dd>
@@ -505,8 +509,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>toHours</h4>
 <pre>public&nbsp;long&nbsp;toHours()</pre>
-<div class="block">Returns the length of this duration in hours. This will return <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> if the conversion overflows or underflows.</div>
+<div class="block">Returns the length of this duration in hours. This will return <code>Long.MAX_VALUE</code> or
+ <code>Long.MIN_VALUE</code> if the conversion overflows or underflows.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of this duration in hours</dd>
@@ -533,7 +537,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <ul class="blockList">
 <li class="blockList">
 <h4>to</h4>
-<pre>public&nbsp;long&nbsp;to(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;desiredUnit)</pre>
+<pre>public&nbsp;long&nbsp;to(java.util.concurrent.TimeUnit&nbsp;desiredUnit)</pre>
 <div class="block">Returns the length of this duration in the specified unit.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -563,7 +567,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <ul class="blockList">
 <li class="blockList">
 <h4>unit</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit()</pre>
+<pre>public&nbsp;java.util.concurrent.TimeUnit&nbsp;unit()</pre>
 <div class="block">Returns the unit of this object's <a href="../../../com/apriori/concurrent/Duration.html#length"><code>length</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -598,15 +602,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>plus</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;plus(long&nbsp;other,
-                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</pre>
+                     java.util.concurrent.TimeUnit&nbsp;otherUnit)</pre>
 <div class="block">Returns the sum of this duration and the specified duration. The unit of the returned sum will
  be the finer of this or the specified duration's <a href="../../../com/apriori/concurrent/Duration.html#unit--"><code>unit()</code></a> unless that would result in
  overflow or underflow. In such case, a coarser unit is chosen, the finest unit that can
  represent the sum without overflow or underflow.
 
- <p>If the result would be greater than <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> days then the result is clipped
- to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a>. Similarly, if the result would be less than <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a>
- days, the result is clipped to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a>.</div>
+ <p>If the result would be greater than <code>Long.MAX_VALUE</code> days then the result is clipped
+ to <code>Long.MAX_VALUE</code>. Similarly, if the result would be less than <code>Long.MIN_VALUE</code>
+ days, the result is clipped to <code>Long.MIN_VALUE</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>other</code> - the other addend</dd>
@@ -629,7 +633,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
  this.plus(-duration.length(), duration.unit())
  </pre>
  This method's implementation varies from the sample code above to properly handle without
- overflow the case where the given duration's length is <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a>.</div>
+ overflow the case where the given duration's length is <code>Long.MIN_VALUE</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>duration</code> - the subtrahend</dd>
@@ -648,14 +652,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>minus</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;minus(long&nbsp;other,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</pre>
+                      java.util.concurrent.TimeUnit&nbsp;otherUnit)</pre>
 <div class="block">Returns the difference of this duration minus the specified duration. This is logically
  equivalent to the following:
  <pre>
  this.plus(-other, otherUnit)
  </pre>
  This method's implementation varies from the sample code above to properly handle without
- overflow the case where the given subtrahend is <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a>.</div>
+ overflow the case where the given subtrahend is <code>Long.MIN_VALUE</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>other</code> - the subtrahend</dd>
@@ -676,8 +680,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;times(int&nbsp;multiplicand)</pre>
 <div class="block">Returns this duration multiplied by the specified number of times. The unit of the returned
  duration will be the same as this duration except on overflow/underflow, in which case it will
- be a more coarse unit. If the product is larger than <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MAX_VALUE" title="class or interface in java.lang"><code>Long.MAX_VALUE</code></a> days or less than
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true#MIN_VALUE" title="class or interface in java.lang"><code>Long.MIN_VALUE</code></a> days, it will be clipped.</div>
+ be a more coarse unit. If the product is larger than <code>Long.MAX_VALUE</code> days or less than
+ <code>Long.MIN_VALUE</code> days, it will be clipped.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>multiplicand</code> - the multiplicand</dd>
@@ -704,7 +708,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the quotient of this duration divided by the specified divisor</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the specified divisor is zero</dd>
+<dd><code>java.lang.ArithmeticException</code> - if the specified divisor is zero</dd>
 </dl>
 </li>
 </ul>
@@ -719,7 +723,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
  than, equal to, or longer than the specified duration.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</code></dd>
+<dd><code>compareTo</code>&nbsp;in interface&nbsp;<code>java.lang.Comparable&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>o</code> - another duration</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -732,10 +736,10 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
@@ -748,7 +752,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
@@ -758,11 +762,11 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <ul class="blockListLast">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
 <div class="block">Returns true if the specified object is a <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent"><code>Duration</code></a> with the same length and unit.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
@@ -793,7 +797,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

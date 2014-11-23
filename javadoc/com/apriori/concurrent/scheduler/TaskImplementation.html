@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.scheduler.TaskImplementation&lt;V&gt;</li>
@@ -111,19 +111,19 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;</dd>
+<dd>java.util.concurrent.Callable&lt;V&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">TaskImplementation&lt;V&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;</pre>
+extends java.lang.Object
+implements java.util.concurrent.Callable&lt;V&gt;</pre>
 <div class="block">The implementation for a task that is executed using a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a>. The task
- can be implemented by either a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>, a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>, or a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a>.
+ can be implemented by either a <code>Callable</code>, a <code>Runnable</code>, or a <code>Consumer</code>.
  
- <p>This class implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>. Calling this task will forward to the underlying
+ <p>This class implements <code>Callable</code>. Calling this task will forward to the underlying
  implementation, so this object also serves as an adapter from any type of implementation to
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
+ <code>Callable</code>.</div>
 </li>
 </ul>
 </div>
@@ -165,26 +165,26 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forCallable-java.util.concurrent.Callable-">forCallable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forCallable-java.util.concurrent.Callable-">forCallable</a></span>(java.util.concurrent.Callable&lt;V&gt;&nbsp;callable)</code>
 <div class="block">Returns a task for the specified callable implementation.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forRunnable-java.lang.Runnable-">forRunnable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<td class="colFirst"><code>static <a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;java.lang.Void&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forRunnable-java.lang.Runnable-">forRunnable</a></span>(java.lang.Runnable&nbsp;runnable)</code>
 <div class="block">Returns a task for the specified runnable implementation.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forRunnable-java.lang.Runnable-V-">forRunnable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forRunnable-java.lang.Runnable-V-">forRunnable</a></span>(java.lang.Runnable&nbsp;runnable,
            V&nbsp;result)</code>
 <div class="block">Returns a task for the specified runnable implementation.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forSource-java.util.function.Supplier-">forSource</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;V&gt;&nbsp;source)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html#forSource-java.util.function.Supplier-">forSource</a></span>(java.util.function.Supplier&lt;V&gt;&nbsp;source)</code>
 <div class="block">Returns a task for the specified source implementation.</div>
 </td>
 </tr>
@@ -199,15 +199,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.concurrent.Callable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true#call--" title="class or interface in java.util.concurrent">call</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.concurrent.Callable</h3>
+<code>call</code></li>
 </ul>
 </li>
 </ul>
@@ -246,7 +246,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>forCallable</h4>
-<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forCallable(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</pre>
+<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forCallable(java.util.concurrent.Callable&lt;V&gt;&nbsp;callable)</pre>
 <div class="block">Returns a task for the specified callable implementation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -262,7 +262,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>forRunnable</h4>
-<pre>public static&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<pre>public static&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;java.lang.Void&gt;&nbsp;forRunnable(java.lang.Runnable&nbsp;runnable)</pre>
 <div class="block">Returns a task for the specified runnable implementation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -280,7 +280,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>forRunnable</h4>
-<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forRunnable(java.lang.Runnable&nbsp;runnable,
                                                     V&nbsp;result)</pre>
 <div class="block">Returns a task for the specified runnable implementation.</div>
 <dl>
@@ -298,7 +298,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockListLast">
 <li class="blockList">
 <h4>forSource</h4>
-<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forSource(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;V&gt;&nbsp;source)</pre>
+<pre>public static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;V&gt;&nbsp;forSource(java.util.function.Supplier&lt;V&gt;&nbsp;source)</pre>
 <div class="block">Returns a task for the specified source implementation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

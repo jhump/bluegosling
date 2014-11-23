@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SetFromCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.ShardedConcurrentSets</li>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">ShardedConcurrentSets</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends java.lang.Object</pre>
 <div class="block">This utility class provides concurrent set implementations that wrap
  normal (non-concurrent) sets to provide thread-safe access.
  
@@ -139,12 +139,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p>Example usage:
  <pre>
  <em>// return a concurrent set that is based on a
- // <a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html?is-external=true" title="class or interface in java.util"><code>HashSet</code></a> and uses default parameters of 10
+ // <code>HashSet</code> and uses default parameters of 10
  // concurrent writer threads and unfair locks.</em>
  return ConcurrentSets.withSet(new HashSet()).create();
  
  <em>// return a concurrent sorted set that is based on a
- // <a href="http://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html?is-external=true" title="class or interface in java.util"><code>TreeSet</code></a>, expects 5 concurrent writer threads,
+ // <code>TreeSet</code>, expects 5 concurrent writer threads,
  // and uses fair locks.</em>
  return ConcurrentSets.withSet(new TreeSet())
                       .concurrency(5)
@@ -171,7 +171,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">E</a>,<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">T</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">E</a>&gt;&gt;</span></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">E</a>,<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">T</a> extends java.util.Set&lt;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="type parameter in ShardedConcurrentSets.Builder">E</a>&gt;&gt;</span></code>
 <div class="block">Creates concurrent set objects using the builder pattern.</div>
 </td>
 </tr>
@@ -212,24 +212,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static &lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;&gt;</code></td>
+<td class="colFirst"><code>static &lt;E,S extends java.util.NavigableSet&lt;E&gt; &amp; java.lang.Cloneable&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.NavigableSet&lt;E&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShardedConcurrentSets.html#withNavigableSet-S-">withNavigableSet</a></span>(S&nbsp;set)</code>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a>.</div>
+ backed by the specified <code>NavigableSet</code>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static &lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;&gt;</code></td>
+<td class="colFirst"><code>static &lt;E,S extends java.util.Set&lt;E&gt; &amp; java.lang.Cloneable&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.Set&lt;E&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShardedConcurrentSets.html#withSet-S-">withSet</a></span>(S&nbsp;set)</code>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a>.</div>
+ backed by the specified <code>Set</code>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static &lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;E&gt;&gt;</code></td>
+<td class="colFirst"><code>static &lt;E,S extends java.util.SortedSet&lt;E&gt; &amp; java.lang.Cloneable&gt;<br><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.SortedSet&lt;E&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShardedConcurrentSets.html#withSortedSet-S-">withSortedSet</a></span>(S&nbsp;set)</code>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util"><code>SortedSet</code></a>.</div>
+ backed by the specified <code>SortedSet</code>.</div>
 </td>
 </tr>
 </table>
@@ -237,8 +237,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -286,13 +286,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withSet</h4>
-<pre>public static&nbsp;&lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;&gt;&nbsp;withSet(S&nbsp;set)</pre>
+<pre>public static&nbsp;&lt;E,S extends java.util.Set&lt;E&gt; &amp; java.lang.Cloneable&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.Set&lt;E&gt;&gt;&nbsp;withSet(S&nbsp;set)</pre>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><code>Set</code></a>.
+ backed by the specified <code>Set</code>.
  
  <p>The specified set provides the implementation of the underlying set
  and its initial contents. The actual instance specified will be
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">cloned</a> to create the new set's shards. So the
+ cloned to create the new set's shards. So the
  resulting concurrent set will actually be independent of the specified
  set; mutations to one will not be reflected in the other.</div>
 <dl>
@@ -314,13 +314,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>withSortedSet</h4>
-<pre>public static&nbsp;&lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;E&gt;&gt;&nbsp;withSortedSet(S&nbsp;set)</pre>
+<pre>public static&nbsp;&lt;E,S extends java.util.SortedSet&lt;E&gt; &amp; java.lang.Cloneable&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.SortedSet&lt;E&gt;&gt;&nbsp;withSortedSet(S&nbsp;set)</pre>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util"><code>SortedSet</code></a>.
+ backed by the specified <code>SortedSet</code>.
  
  <p>The specified set provides the implementation of the underlying set
  and its initial contents. The actual instance specified will be
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">cloned</a> to create the new set's shards. So the
+ cloned to create the new set's shards. So the
  resulting concurrent set will actually be independent of the specified
  set; mutations to one will not be reflected in the other.</div>
 <dl>
@@ -342,13 +342,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>withNavigableSet</h4>
-<pre>public static&nbsp;&lt;E,S extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt; &amp; <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;&gt;&nbsp;withNavigableSet(S&nbsp;set)</pre>
+<pre>public static&nbsp;&lt;E,S extends java.util.NavigableSet&lt;E&gt; &amp; java.lang.Cloneable&gt;&nbsp;<a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections">ShardedConcurrentSets.Builder</a>&lt;E,java.util.NavigableSet&lt;E&gt;&gt;&nbsp;withNavigableSet(S&nbsp;set)</pre>
 <div class="block">Returns a builder for creating a concurrent set implementation that is
- backed by the specified <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a>.
+ backed by the specified <code>NavigableSet</code>.
  
  <p>The specified set provides the implementation of the underlying set
  and its initial contents. The actual instance specified will be
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">cloned</a> to create the new set's shards. So the
+ cloned to create the new set's shards. So the
  resulting concurrent set will actually be independent of the specified
  set; mutations to one will not be reflected in the other.</div>
 <dl>
@@ -389,7 +389,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/SequenceTrie.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/SetFromCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/ShardedConcurrentSets.Builder.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

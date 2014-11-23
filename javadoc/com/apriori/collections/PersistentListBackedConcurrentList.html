@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.PersistentListBackedConcurrentList&lt;E&gt;</li>
@@ -107,12 +107,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;E&gt;, java.lang.Iterable&lt;E&gt;, java.util.Collection&lt;E&gt;, java.util.List&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">PersistentListBackedConcurrentList&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+extends java.lang.Object
 implements <a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;E&gt;</pre>
 </li>
 </ul>
@@ -162,22 +162,26 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#addAfter-int-E-E-">addAfter</a></span>(int&nbsp;index,
         <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;expectedPriorValue,
-        <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</code>&nbsp;</td>
+        <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</code>
+<div class="block">Adds the given value at the given index, after the given value.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#addAll-java.util.Collection-">addAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#addAll-java.util.Collection-">addAll</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#addAll-int-java.util.Collection-">addAll</a></span>(int&nbsp;index,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
+      java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#addBefore-int-E-E-">addBefore</a></span>(int&nbsp;index,
          <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;expectedNextValue,
-         <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</code>&nbsp;</td>
+         <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</code>
+<div class="block">Adds the given value at the given index, before the given value.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -185,11 +189,11 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#contains-java.lang.Object-">contains</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#contains-java.lang.Object-">contains</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#containsAll-java.util.Collection-">containsAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#containsAll-java.util.Collection-">containsAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a></code></td>
@@ -197,26 +201,26 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#indexOf-java.lang.Object-">indexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#indexOf-java.lang.Object-">indexOf</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.ListIterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#listIterator--">listIterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.ListIterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#listIterator-int-">listIterator</a></span>(int&nbsp;index)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
@@ -226,25 +230,29 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#remove-int-java.lang.Object-">remove</a></span>(int&nbsp;index,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+      java.lang.Object&nbsp;o)</code>
+<div class="block">Removes the given value at the given index.</div>
+</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#removeAll-java.util.Collection-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#removeAll-java.util.Collection-">removeAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#replace-int-E-E-">replace</a></span>(int&nbsp;index,
        <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;existing,
-       <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;replacement)</code>&nbsp;</td>
+       <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;replacement)</code>
+<div class="block">Replaces the given value at the given index.</div>
+</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#retainAll-java.util.Collection-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#retainAll-java.util.Collection-">retainAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a></code></td>
@@ -258,10 +266,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#subList-int-int-">subList</a></span>(int&nbsp;fromIndex,
-       int&nbsp;toIndex)</code>&nbsp;</td>
+       int&nbsp;toIndex)</code>
+<div class="block">Returns a view of the portion of this list between the specified indices.</div>
+</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
+<td class="colFirst"><code>java.lang.Object[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html#toArray--">toArray</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
@@ -273,29 +283,36 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.ConcurrentList">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a></h3>
+<code><a href="../../../com/apriori/collections/ConcurrentList.html#addFirst-E-">addFirst</a>, <a href="../../../com/apriori/collections/ConcurrentList.html#addLast-E-">addLast</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#replaceAll-java.util.function.UnaryOperator-" title="class or interface in java.util">replaceAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#sort-java.util.Comparator-" title="class or interface in java.util">sort</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.List</h3>
+<code>equals, hashCode, replaceAll, sort, spliterator</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>parallelStream, removeIf, stream</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -337,9 +354,9 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -352,9 +369,9 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -364,12 +381,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;contains(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>contains</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>contains</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -379,14 +396,14 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -396,12 +413,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>toArray</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
+<pre>public&nbsp;java.lang.Object[]&nbsp;toArray()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -416,9 +433,9 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;&lt;T&gt;&nbsp;T[]&nbsp;toArray(T[]&nbsp;a)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -433,9 +450,9 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -445,12 +462,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -460,12 +477,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAll</h4>
-<pre>public&nbsp;boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
+<pre>public&nbsp;boolean&nbsp;containsAll(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>containsAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>containsAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -475,12 +492,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>public&nbsp;boolean&nbsp;addAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</pre>
+<pre>public&nbsp;boolean&nbsp;addAll(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -491,10 +508,10 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <li class="blockList">
 <h4>addAll</h4>
 <pre>public&nbsp;boolean&nbsp;addAll(int&nbsp;index,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</pre>
+                      java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-int-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -504,12 +521,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
+<pre>public&nbsp;boolean&nbsp;removeAll(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -519,12 +536,12 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>public&nbsp;boolean&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
+<pre>public&nbsp;boolean&nbsp;retainAll(java.util.Collection&lt;?&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -537,9 +554,9 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -552,7 +569,7 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;get(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#get-int-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -568,7 +585,7 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
              <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#set-int-E-" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>set</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -583,9 +600,19 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;boolean&nbsp;replace(int&nbsp;index,
                        <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;existing,
                        <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;replacement)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html#replace-int-E-E-">ConcurrentList</a></code></span></div>
+<div class="block">Replaces the given value at the given index. This atomically sets the value at the given index
+ but only if its existing value matches the given value to be replaced.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ConcurrentList.html#replace-int-E-E-">replace</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the item to replace</dd>
+<dd><code>existing</code> - the expected value of the element to replace</dd>
+<dd><code>replacement</code> - the replacement value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was replaced or false if the element at the given index differed
+       from the expected value and was thus not replaced</dd>
 </dl>
 </li>
 </ul>
@@ -601,7 +628,7 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
                 <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -616,9 +643,23 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;boolean&nbsp;addAfter(int&nbsp;index,
                         <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;expectedPriorValue,
                         <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html#addAfter-int-E-E-">ConcurrentList</a></code></span></div>
+<div class="block">Adds the given value at the given index, after the given value. This atomically adds the value
+ at the given index but only if its predecessor would match the given value.
+ 
+ <p>The given index will be the index of the newly added item. Any items at that index or after
+ will be shifted by one. The expected prior value is compared against the item at
+ <code>index - 1</code> and the operation is aborted if the actual value doesn't match.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ConcurrentList.html#addAfter-int-E-E-">addAfter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the newly added item</dd>
+<dd><code>expectedPriorValue</code> - the expected value of the new element's predecessor</dd>
+<dd><code>addition</code> - the value to add at the given index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was added or false if the element's predecessor differed from the
+       expected value</dd>
 </dl>
 </li>
 </ul>
@@ -633,9 +674,24 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;boolean&nbsp;addBefore(int&nbsp;index,
                          <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;expectedNextValue,
                          <a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;addition)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-">ConcurrentList</a></code></span></div>
+<div class="block">Adds the given value at the given index, before the given value. This atomically adds the
+ value at the given index but only if its successor would match the given value.
+ 
+ <p>The given index will be the index of the newly added item. Any items at that index or after
+ will be shifted by one. The expected next value is compared against the item already at the
+ given index (which will be shifted to <code>index + 1</code> after the operation completes). The
+ operation is aborted if the actual value doesn't match.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-">addBefore</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the newly added item</dd>
+<dd><code>expectedNextValue</code> - the expected value of the new element's successor</dd>
+<dd><code>addition</code> - the value to add at the given index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was added or false if the element's succcessor differed from the
+       expected value</dd>
 </dl>
 </li>
 </ul>
@@ -648,7 +704,7 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&nbsp;remove(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-int-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -659,10 +715,19 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <li class="blockList">
 <h4>remove</h4>
 <pre>public&nbsp;boolean&nbsp;remove(int&nbsp;index,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+                      java.lang.Object&nbsp;o)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html#remove-int-E-">ConcurrentList</a></code></span></div>
+<div class="block">Removes the given value at the given index. This atomically removes the value at the given
+ index if and only if it matches the given value.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ConcurrentList.html#remove-int-E-">remove</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the item to remove</dd>
+<dd><code>o</code> - the expected value of the element to remove</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was removed or false if the element at the given index differed from
+       the expected value and was thus not removed</dd>
 </dl>
 </li>
 </ul>
@@ -672,10 +737,10 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;int&nbsp;indexOf(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#indexOf-java.lang.Object-" title="class or interface in java.util">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>indexOf</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -685,10 +750,10 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>lastIndexOf</h4>
-<pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;int&nbsp;lastIndexOf(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#lastIndexOf-java.lang.Object-" title="class or interface in java.util">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>lastIndexOf</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -698,10 +763,10 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>listIterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;listIterator()</pre>
+<pre>public&nbsp;java.util.ListIterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;listIterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator--" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>listIterator</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -711,10 +776,10 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <ul class="blockList">
 <li class="blockList">
 <h4>listIterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;listIterator(int&nbsp;index)</pre>
+<pre>public&nbsp;java.util.ListIterator&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;listIterator(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator-int-" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>listIterator</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -726,11 +791,28 @@ implements <a href="../../../com/apriori/collections/ConcurrentList.html" title=
 <h4>subList</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;&nbsp;subList(int&nbsp;fromIndex,
                                  int&nbsp;toIndex)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-">ConcurrentList</a></code></span></div>
+<div class="block">Returns a view of the portion of this list between the specified indices. Changes to this
+ list are visible through the returned view, and vice versa.
+ 
+ <p>The returned list is also a concurrent list. Structural changes made to the underlying
+ list can impact the returned list. For example, if an element is added in the given index
+ range in the underlying list, it will effectively displace the last element of the sub-list
+ (since that last item has now been pushed beyond the end of the index range). Similarly,
+ removing an element in the given index range from the underlying list will cause the sub-list
+ to get a new last element (the item that was after the given range that has now been pulled
+ into the range due to an element removal).
+ 
+ <p>The returned sub-list should never throw <code>ConcurrentModificationException</code> from any
+ of its operations (although its iterators may throw this exception if concurrent modifications
+ conflict with attempts to modify the list via the iterator).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-">subList</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dd><code>subList</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="type parameter in PersistentListBackedConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>List.subList(int, int)</code></dd>
 </dl>
 </li>
 </ul>

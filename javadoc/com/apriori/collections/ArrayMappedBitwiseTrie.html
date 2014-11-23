@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.ArrayMappedBitwiseTrie&lt;K,V&gt;</li>
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;K,V&gt;</dd>
+<dd><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;K,java.lang.Boolean,V&gt;, <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,java.lang.Boolean,V&gt;, java.util.Map&lt;K,V&gt;, java.util.NavigableMap&lt;K,V&gt;, java.util.SortedMap&lt;K,V&gt;</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -116,8 +116,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">ArrayMappedBitwiseTrie&lt;K,V&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,V&gt;</pre>
+extends java.lang.Object
+implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;K,java.lang.Boolean,V&gt;</pre>
 </li>
 </ul>
 </div>
@@ -134,8 +134,8 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.Map</h3>
+<code>java.util.Map.Entry&lt;K,V&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -155,7 +155,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#ArrayMappedBitwiseTrie-com.apriori.collections.BitConverter-java.util.Comparator-">ArrayMappedBitwiseTrie</a></span>(<a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections">BitConverter</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;bitConverter,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator)</code>&nbsp;</td>
+                      java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -173,7 +173,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#ceilingEntry-K-">ceilingEntry</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -185,11 +185,11 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#clear--">clear</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#comparator--">comparator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Comparator&lt;java.lang.Boolean&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#componentComparator--">componentComparator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -200,26 +200,26 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#containsValue-java.lang.Object-">containsValue</a></span>(java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#descendingKeySet--">descendingKeySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#descendingMap--">descendingMap</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#firstEntry--">firstEntry</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
@@ -227,7 +227,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#firstKey--">firstKey</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#floorEntry-K-">floorEntry</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
@@ -236,19 +236,19 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#get-java.lang.Object-">get</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#headMap-K-">headMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#headMap-K-boolean-">headMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#higherEntry-K-">higherEntry</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
@@ -260,11 +260,11 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#lastEntry--">lastEntry</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -272,7 +272,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#lastKey--">lastKey</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#lowerEntry-K-">lowerEntry</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -280,44 +280,44 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#lowerKey-K-">lowerKey</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#navigableKeySet--">navigableKeySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#pollFirstEntry--">pollFirstEntry</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#pollLastEntry--">pollLastEntry</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Boolean-">prefixMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;prefix)</code>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Boolean-">prefixMap</a></span>(java.lang.Boolean&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;prefix)</code>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></span>(java.lang.Iterable&lt;java.lang.Boolean&gt;&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;prefix,
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></span>(java.lang.Iterable&lt;java.lang.Boolean&gt;&nbsp;prefix,
          int&nbsp;numComponents)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMapByKey-K-">prefixMapByKey</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix,
               int&nbsp;numComponents)</code>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.</div>
@@ -330,39 +330,39 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#putAll-java.util.Map-">putAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;m)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#putAll-java.util.Map-">putAll</a></span>(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;m)</code>&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#size--">size</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i38" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#subMap-K-boolean-K-boolean-">subMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
       boolean&nbsp;fromInclusive,
       <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
       boolean&nbsp;toInclusive)</code>&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#subMap-K-K-">subMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
       <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</code>&nbsp;</td>
 </tr>
 <tr id="i40" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#tailMap-K-">tailMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey)</code>&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#tailMap-K-boolean-">tailMap</a></span>(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
        boolean&nbsp;inclusive)</code>&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html#values--">values</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
@@ -370,15 +370,15 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#compute-K-java.util.function.BiFunction-" title="class or interface in java.util">compute</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfAbsent-K-java.util.function.Function-" title="class or interface in java.util">computeIfAbsent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfPresent-K-java.util.function.BiFunction-" title="class or interface in java.util">computeIfPresent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#forEach-java.util.function.BiConsumer-" title="class or interface in java.util">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#getOrDefault-java.lang.Object-V-" title="class or interface in java.util">getOrDefault</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#merge-K-V-java.util.function.BiFunction-" title="class or interface in java.util">merge</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util">putIfAbsent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-" title="class or interface in java.util">replace</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-V-" title="class or interface in java.util">replace</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replaceAll-java.util.function.BiFunction-" title="class or interface in java.util">replaceAll</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Map</h3>
+<code>compute, computeIfAbsent, computeIfPresent, equals, forEach, getOrDefault, hashCode, merge, putIfAbsent, remove, replace, replace, replaceAll</code></li>
 </ul>
 </li>
 </ul>
@@ -410,7 +410,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <li class="blockList">
 <h4>ArrayMappedBitwiseTrie</h4>
 <pre>public&nbsp;ArrayMappedBitwiseTrie(<a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections">BitConverter</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;bitConverter,
-                              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator)</pre>
+                              java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator)</pre>
 </li>
 </ul>
 </li>
@@ -432,7 +432,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <div class="block">The object used to break up single key values into a sequence of components.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer--">componentizer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#componentizer--">componentizer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the object used to break up keys into sequences</dd>
 </dl>
@@ -444,10 +444,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>componentComparator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;componentComparator()</pre>
+<pre>public&nbsp;java.util.Comparator&lt;java.lang.Boolean&gt;&nbsp;componentComparator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#componentComparator--">componentComparator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#componentComparator--">componentComparator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -457,10 +457,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator()</pre>
+<pre>public&nbsp;java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;comparator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#comparator--" title="class or interface in java.util">comparator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>comparator</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -473,7 +473,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -486,7 +486,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -496,10 +496,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -509,10 +509,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre>public&nbsp;boolean&nbsp;containsValue(java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -522,10 +522,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&nbsp;get(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&nbsp;get(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -541,7 +541,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
              <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -551,10 +551,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&nbsp;remove(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -564,10 +564,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>putAll</h4>
-<pre>public&nbsp;void&nbsp;putAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;m)</pre>
+<pre>public&nbsp;void&nbsp;putAll(java.util.Map&lt;? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,? extends <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;m)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>putAll</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -580,7 +580,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -590,12 +590,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>keySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;keySet()</pre>
+<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;keySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>keySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>keySet</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -605,12 +605,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>values</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;values()</pre>
+<pre>public&nbsp;java.util.Collection&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;values()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#values--" title="class or interface in java.util">values</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>values</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>values</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -620,12 +620,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>entrySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<pre>public&nbsp;java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&gt;&nbsp;entrySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -637,10 +637,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>lowerEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;lowerEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;lowerEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#lowerEntry-K-" title="class or interface in java.util">lowerEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>lowerEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -655,7 +655,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;lowerKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#lowerKey-K-" title="class or interface in java.util">lowerKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>lowerKey</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -667,10 +667,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>floorEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;floorEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;floorEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#floorEntry-K-" title="class or interface in java.util">floorEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>floorEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -685,7 +685,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;floorKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#floorKey-K-" title="class or interface in java.util">floorKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>floorKey</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -697,10 +697,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>ceilingEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;ceilingEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;ceilingEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#ceilingEntry-K-" title="class or interface in java.util">ceilingEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>ceilingEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -715,7 +715,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;ceilingKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#ceilingKey-K-" title="class or interface in java.util">ceilingKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>ceilingKey</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -727,10 +727,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>higherEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;higherEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;higherEntry(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#higherEntry-K-" title="class or interface in java.util">higherEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>higherEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -745,7 +745,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;higherKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#higherKey-K-" title="class or interface in java.util">higherKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>higherKey</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -755,10 +755,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>firstEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;firstEntry()</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;firstEntry()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#firstEntry--" title="class or interface in java.util">firstEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>firstEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -768,10 +768,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>lastEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;lastEntry()</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;lastEntry()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#lastEntry--" title="class or interface in java.util">lastEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>lastEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -781,10 +781,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>pollFirstEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;pollFirstEntry()</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;pollFirstEntry()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#pollFirstEntry--" title="class or interface in java.util">pollFirstEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>pollFirstEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -794,10 +794,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>pollLastEntry</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;pollLastEntry()</pre>
+<pre>public&nbsp;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;pollLastEntry()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#pollLastEntry--" title="class or interface in java.util">pollLastEntry</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>pollLastEntry</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -807,10 +807,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>navigableKeySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;navigableKeySet()</pre>
+<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;navigableKeySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#navigableKeySet--" title="class or interface in java.util">navigableKeySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>navigableKeySet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -820,10 +820,10 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>descendingKeySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;descendingKeySet()</pre>
+<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&gt;&nbsp;descendingKeySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#descendingKeySet--" title="class or interface in java.util">descendingKeySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>descendingKeySet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -836,7 +836,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;firstKey()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#firstKey--" title="class or interface in java.util">firstKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>firstKey</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -849,7 +849,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;lastKey()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#lastKey--" title="class or interface in java.util">lastKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>lastKey</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -861,7 +861,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMapByKey</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMapByKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMapByKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-">CompositeTrie</a></code></span></div>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. The specified key
  is broken up into components, and the resulting sequence is used as a prefix.
@@ -872,9 +872,9 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  </pre></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - a key prefix</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -892,8 +892,8 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMapByKey</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMapByKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix,
-                                                          int&nbsp;numComponents)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMapByKey(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;prefix,
+                                                                    int&nbsp;numComponents)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-int-">CompositeTrie</a></code></span></div>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. The specified key
  is broken up into components, and up to the specified number of elements of the resulting
@@ -905,9 +905,9 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  </pre></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMapByKey-K-int-">prefixMapByKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - a key prefix</dd>
 <dd><code>numComponents</code> - the maximum number of components of the prefix</dd>
@@ -924,11 +924,11 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&nbsp;prefix)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(java.lang.Boolean&nbsp;prefix)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-C-">CompositeTrie</a></code></span></div>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. The returned map is a
  constrained sub-map. Attempts to add mappings to the returned map with keys that do not begin
- with the prefix will generate <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a>s.
+ with the prefix will generate <code>IllegalArgumentException</code>s.
  
  <p>For example, suppose we have a trie that uses strings as keys. The strings are broken into
  character components. The trie has the following mappings:
@@ -943,7 +943,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  { "abxyz" } -&gt; 456,
  </pre>
  If the mapping <tt>{ "mno" } -&gt; 1001</tt> were added to the prefix map, an
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a> would be thrown since it does not begin with the correct
+ <code>IllegalArgumentException</code> would be thrown since it does not begin with the correct
  prefix. But adding <tt>{ "amno" } -&gt; 1001</tt> would succeed, and the resulting prefix map
  would then look like the following:
  <pre>
@@ -960,9 +960,9 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  </pre></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-C-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-C-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-C-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-C-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - a key prefix</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -976,7 +976,7 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;prefix)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(java.lang.Iterable&lt;java.lang.Boolean&gt;&nbsp;prefix)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-">CompositeTrie</a></code></span></div>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix.
  
@@ -989,9 +989,9 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
  </pre></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - a key prefix</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -1007,17 +1007,17 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>prefixMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;prefix,
-                                                     int&nbsp;numComponents)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;prefixMap(java.lang.Iterable&lt;java.lang.Boolean&gt;&nbsp;prefix,
+                                                               int&nbsp;numComponents)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-int-">CompositeTrie</a></code></span></div>
 <div class="block">Generates a view of all mappings whose keys have the specified prefix. A maximum number of
  components of the specified prefix are considered. So the effective prefix is the specified
  sequence but truncated to no more than the specified number of elements.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/CompositeTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections">CompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#prefixMap-java.lang.Iterable-int-">prefixMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - a key prefix</dd>
 <dd><code>numComponents</code> - the maximum number of components of the prefix</dd>
@@ -1034,12 +1034,12 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>descendingMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;descendingMap()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;descendingMap()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#descendingMap--">descendingMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#descendingMap--">descendingMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#descendingMap--" title="class or interface in java.util">descendingMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>descendingMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1051,15 +1051,15 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>subMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
-                                                  boolean&nbsp;fromInclusive,
-                                                  <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
-                                                  boolean&nbsp;toInclusive)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
+                                                            boolean&nbsp;fromInclusive,
+                                                            <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
+                                                            boolean&nbsp;toInclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-boolean-K-boolean-">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-boolean-K-boolean-">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#subMap-K-boolean-K-boolean-" title="class or interface in java.util">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>subMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1071,13 +1071,13 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>headMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
-                                                   boolean&nbsp;inclusive)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey,
+                                                             boolean&nbsp;inclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-boolean-">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-boolean-">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#headMap-K-boolean-" title="class or interface in java.util">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>headMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1089,13 +1089,13 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>tailMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
-                                                   boolean&nbsp;inclusive)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
+                                                             boolean&nbsp;inclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-boolean-">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-boolean-">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#tailMap-K-boolean-" title="class or interface in java.util">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>tailMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1107,15 +1107,15 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>subMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
-                                                  <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;subMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey,
+                                                            <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-K-">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#subMap-K-K-">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#subMap-K-K-" title="class or interface in java.util">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>subMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#subMap-K-K-" title="class or interface in java.util">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>subMap</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1127,14 +1127,14 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockList">
 <li class="blockList">
 <h4>headMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;headMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;toKey)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#headMap-K-">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#headMap-K-" title="class or interface in java.util">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>headMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#headMap-K-" title="class or interface in java.util">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>headMap</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1146,14 +1146,14 @@ implements <a href="../../../com/apriori/collections/NavigableCompositeTrie.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>tailMap</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;&nbsp;tailMap(<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>&nbsp;fromKey)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html#tailMap-K-">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/NavigableCompositeTrie.html" title="interface in com.apriori.collections">NavigableCompositeTrie</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,java.lang.Boolean,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true#tailMap-K-" title="class or interface in java.util">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>tailMap</code>&nbsp;in interface&nbsp;<code>java.util.NavigableMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true#tailMap-K-" title="class or interface in java.util">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html?is-external=true" title="class or interface in java.util">SortedMap</a>&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
+<dd><code>tailMap</code>&nbsp;in interface&nbsp;<code>java.util.SortedMap&lt;<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">K</a>,<a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="type parameter in ArrayMappedBitwiseTrie">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

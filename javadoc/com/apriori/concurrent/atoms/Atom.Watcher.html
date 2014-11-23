@@ -105,9 +105,14 @@ var activeTableTab = "activeTableTab";
 <dt>Enclosing interface:</dt>
 <dd><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="type parameter in Atom">T</a>&gt;</dd>
 </dl>
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
 <br>
-<pre>public static interface <span class="typeNameLabel">Atom.Watcher&lt;T&gt;</span></pre>
+<pre>@FunctionalInterface
+public static interface <span class="typeNameLabel">Atom.Watcher&lt;T&gt;</span></pre>
 <div class="block">Watches an atom for changes to its value. Implementations of this interface must be
  thread-safe since they may be called concurrently from multiple threads.</div>
 </li>

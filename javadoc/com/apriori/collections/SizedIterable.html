@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":17,"i1":18,"i2":6,"i3":17};
+var methods = {"i0":17,"i1":18,"i2":6,"i3":18,"i4":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -98,8 +98,12 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>E</code> - the type of elements described by this iterable</dd>
+</dl>
+<dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd>java.lang.Iterable&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -107,12 +111,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>, <a href="../../../com/apriori/collections/AbstractImmutableSet.html" title="class in com.apriori.collections">AbstractImmutableSet</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>, <a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>, <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a>, <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>, <a href="../../../com/apriori/collections/HamtPersistentSet.html" title="class in com.apriori.collections">HamtPersistentSet</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a>, <a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a>, <a href="../../../com/apriori/collections/SimpleTreiberStack.html" title="class in com.apriori.collections">SimpleTreiberStack</a>, <a href="../../../com/apriori/collections/TreiberStack.html" title="class in com.apriori.collections">TreiberStack</a></dd>
+<dd><a href="../../../com/apriori/collections/AbstractGrowableArray.html" title="class in com.apriori.collections">AbstractGrowableArray</a>, <a href="../../../com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.EntrySet.html" title="class in com.apriori.collections">AbstractImmutableMap.EntrySet</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.KeySet.html" title="class in com.apriori.collections">AbstractImmutableMap.KeySet</a>, <a href="../../../com/apriori/collections/AbstractImmutableMap.ValueCollection.html" title="class in com.apriori.collections">AbstractImmutableMap.ValueCollection</a>, <a href="../../../com/apriori/collections/AbstractImmutableSet.html" title="class in com.apriori.collections">AbstractImmutableSet</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList</a>, <a href="../../../com/apriori/collections/AbstractLinkedImmutableList.LinkedSubList.html" title="class in com.apriori.collections">AbstractLinkedImmutableList.LinkedSubList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList</a>, <a href="../../../com/apriori/collections/AbstractRandomAccessImmutableList.SubList.html" title="class in com.apriori.collections">AbstractRandomAccessImmutableList.SubList</a>, <a href="../../../com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a>, <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a>, <a href="../../../com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a>, <a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a>, <a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a>, <a href="../../../com/apriori/collections/SimpleTreiberStack.html" title="class in com.apriori.collections">SimpleTreiberStack</a>, <a href="../../../com/apriori/collections/TreiberStack.html" title="class in com.apriori.collections">TreiberStack</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">SizedIterable&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</pre>
+extends java.lang.Iterable&lt;E&gt;</pre>
+<div class="block">An iterable that described a fixed number of elements. In addition to providing an iterator or
+ spliterator over the elements, this object also has methods for querying the count of elements.</div>
 </li>
 </ul>
 </div>
@@ -133,7 +139,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends E&gt;&nbsp;coll)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SizedIterable.html#fromCollection-java.util.Collection-">fromCollection</a></span>(java.util.Collection&lt;? extends E&gt;&nbsp;coll)</code>
+<div class="block">Adapts a <code>Collection</code> to this <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
@@ -148,16 +156,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static &lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></span>(<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;? extends E&gt;&nbsp;iter)</code>&nbsp;</td>
+<td class="colFirst"><code>default java.util.Spliterator&lt;<a href="../../../com/apriori/collections/SizedIterable.html" title="type parameter in SizedIterable">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a></span>()</code>
+<div class="block">Creates a spliterator over the elements described by this iterable.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static &lt;E&gt;&nbsp;java.util.Collection&lt;E&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection</a></span>(<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;? extends E&gt;&nbsp;iter)</code>
+<div class="block">Adapts this <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface to the standard <code>Collection</code> interface.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, iterator</code></li>
 </ul>
 </li>
 </ul>
@@ -201,13 +217,40 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </dl>
 </li>
 </ul>
+<a name="spliterator--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>spliterator</h4>
+<pre>default&nbsp;java.util.Spliterator&lt;<a href="../../../com/apriori/collections/SizedIterable.html" title="type parameter in SizedIterable">E</a>&gt;&nbsp;spliterator()</pre>
+<div class="block">Creates a spliterator over the elements described by this iterable. Since this iterable has
+ information about the number of elements, it returns a spliterator with the
+ <code>Spliterator.SIZED</code> and <code>Spliterator.SUBSIZED</code> characteristics (but no others).</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>spliterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/SizedIterable.html" title="type parameter in SizedIterable">E</a>&gt;</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Iterable.spliterator()</code></dd>
+</dl>
+</li>
+</ul>
 <a name="fromCollection-java.util.Collection-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>fromCollection</h4>
-<pre>static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;&nbsp;fromCollection(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends E&gt;&nbsp;coll)</pre>
+<pre>static&nbsp;&lt;E&gt;&nbsp;<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;&nbsp;fromCollection(java.util.Collection&lt;? extends E&gt;&nbsp;coll)</pre>
+<div class="block">Adapts a <code>Collection</code> to this <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface. This interface contains a
+ subset of methods of the collection interface, so each method can simply call through to the
+ collection.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>coll</code> - a collection</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a sized iterable that merely wraps the given collection</dd>
+</dl>
 </li>
 </ul>
 <a name="toCollection-com.apriori.collections.SizedIterable-">
@@ -216,7 +259,25 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toCollection</h4>
-<pre>static&nbsp;&lt;E&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;&nbsp;toCollection(<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;? extends E&gt;&nbsp;iter)</pre>
+<pre>static&nbsp;&lt;E&gt;&nbsp;java.util.Collection&lt;E&gt;&nbsp;toCollection(<a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;? extends E&gt;&nbsp;iter)</pre>
+<div class="block">Adapts this <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface to the standard <code>Collection</code> interface.
+ Since the collection interface is a super-set of this interface, this returns an
+ <code>AbstractCollection</code>, which provides the broader collection interface implemented almost
+ entirely in terms of iterators.
+ 
+ <p>Note that collection operations, like <code>contains</code> and
+ <code>remove</code>, use the <code>Iterable.iterator()</code> to find and remove
+ elements, so they run in linear time. Many <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> implementors could provide
+ more efficient implementations of these methods, and will often provide different adaptations
+ to the standard <code>Collection</code> interface. For example, you can use
+ <a href="../../../com/apriori/collections/Immutables.html#asIfMutable-com.apriori.collections.ImmutableCollection-"><code>Immutables.asIfMutable(ImmutableCollection)</code></a> to provide a more efficient collection
+ implementation that adapts the <a href="../../../com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><code>ImmutableCollection</code></a> interface.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>iter</code> - a sized iterable</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a collection that wraps the given sized iterable</dd>
+</dl>
 </li>
 </ul>
 </li>

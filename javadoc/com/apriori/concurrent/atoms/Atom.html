@@ -119,7 +119,9 @@ var activeTableTab = "activeTableTab";
  <ul>
    <li><strong>Synchronous</strong>: Mutation events are made immediately, in the current thread.
    When a synchronous mutation method has returned, the change has been made and watchers have
-   been notified.</li>
+   been notified. One subtle exception is the <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms"><code>TransactionalAtom</code></a>, in which case the
+   mutation is visible in the current transaction but not visible to other threads until the
+   transaction commits, and watchers are not notified until the change is committed.</li>
    <li><strong>Asynchronous</strong>: Mutation events are queued immediately but may execute at
    some point in the future, in a different thread. Asynchronous mutations return futures that
    are completed when the changes have been made and watchers have been notified.</li>
@@ -127,7 +129,7 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms"><code>SynchronousAtom</code></a>, 
-<code>AsynchronousAtomTest</code></dd>
+<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a></dd>
 </dl>
 </li>
 </ul>

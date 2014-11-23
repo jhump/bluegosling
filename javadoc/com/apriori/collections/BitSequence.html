@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6,"i2":18,"i3":18,"i4":18,"i5":6,"i6":18,"i7":18,"i8":6,"i9":6,"i10":18,"i11":6,"i12":6};
+var methods = {"i0":18,"i1":6,"i2":18,"i3":18,"i4":18,"i5":6,"i6":18,"i7":18,"i8":6,"i9":6,"i10":18,"i11":6,"i12":6,"i13":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -99,18 +99,18 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</dd>
+<dd>java.lang.Iterable&lt;java.lang.Boolean&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">BitSequence</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</pre>
-<div class="block">A sequence of bits. This is very similar to a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html?is-external=true" title="class or interface in java.util"><code>BitSet</code></a> except it provides
+extends java.lang.Iterable&lt;java.lang.Boolean&gt;</pre>
+<div class="block">A sequence of bits. This is very similar to a <code>BitSet</code> except it provides
  better API for navigating the bits like a stream (of arbitrarily sized chunks) and less API for
- general bit-fiddling. Unlike <a href="http://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html?is-external=true" title="class or interface in java.util"><code>BitSet</code></a>, a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> is immutable.
+ general bit-fiddling. Unlike <code>BitSet</code>, a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> is immutable.
  
  <p>Since the sequence is immutable, all attempts to remove elements using
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>s will result in an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> being thrown.</div>
+ <code>Iterator</code>s will result in an <code>UnsupportedOperationException</code> being thrown.</div>
 </li>
 </ul>
 </div>
@@ -163,27 +163,27 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a></code></td>
+<td class="colFirst"><code>default java.util.PrimitiveIterator.OfLong</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-">bitTupleIterator</a></span>(int&nbsp;tupleSize)</code>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a></code></td>
+<td class="colFirst"><code>default java.util.PrimitiveIterator.OfLong</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-">bitTupleIterator</a></span>(int&nbsp;tupleSize,
                 <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</code>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a></code></td>
+<td class="colFirst"><code>default java.util.PrimitiveIterator.OfLong</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-int-">bitTupleIterator</a></span>(int&nbsp;tupleSize,
                 int&nbsp;startIndex)</code>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a></code></td>
+<td class="colFirst"><code>java.util.PrimitiveIterator.OfLong</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-int-com.apriori.collections.BitSequence.BitOrder-">bitTupleIterator</a></span>(int&nbsp;tupleSize,
                 int&nbsp;startIndex,
                 <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</code>
@@ -191,17 +191,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/LongStream.html?is-external=true" title="class or interface in java.util.stream">LongStream</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleStream-int-">bitTupleStream</a></span>(int&nbsp;tupleSize)</code>&nbsp;</td>
+<td class="colFirst"><code>default java.util.stream.LongStream</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleStream-int-">bitTupleStream</a></span>(int&nbsp;tupleSize)</code>
+<div class="block">Creates a <code>LongStream</code> over arbitrarily-sized chunks of bits.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/LongStream.html?is-external=true" title="class or interface in java.util.stream">LongStream</a></code></td>
+<td class="colFirst"><code>default java.util.stream.LongStream</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#bitTupleStream-int-com.apriori.collections.BitSequence.BitOrder-">bitTupleStream</a></span>(int&nbsp;tupleSize,
-              <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;bitOrder)</code>&nbsp;</td>
+              <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;bitOrder)</code>
+<div class="block">Creates a <code>LongStream</code> over arbitrarily-sized chunks of bits.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents and in
  the same order as this sequence.</div>
 </td>
@@ -230,13 +234,20 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <div class="block">Gets the length of the sequence.</div>
 </td>
 </tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/BitSequence.html#subSequence-int-int-">subSequence</a></span>(int&nbsp;start,
+           int&nbsp;end)</code>
+<div class="block">Returns a view of a portion of this sequence.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, spliterator</code></li>
 </ul>
 </li>
 </ul>
@@ -274,10 +285,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <h4>iterator</h4>
 <pre>default&nbsp;<a href="../../../com/apriori/collections/BooleanIterator.html" title="interface in com.apriori.collections">BooleanIterator</a>&nbsp;iterator()</pre>
 <div class="block">Returns an iterator over the values in the sequence. The return type is more constrained
- than <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> so that iteration can be done over un-boxed primitives.</div>
+ than <code>Iterable.iterator()</code> so that iteration can be done over un-boxed primitives.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;java.lang.Boolean&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -295,7 +306,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the specified index is negative or is greater than the
+<dd><code>java.lang.IndexOutOfBoundsException</code> - if the specified index is negative or is greater than the
        length of the sequence</dd>
 </dl>
 </li>
@@ -306,15 +317,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleIterator</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a>&nbsp;bitTupleIterator(int&nbsp;tupleSize,
-                                                  <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
+<pre>default&nbsp;java.util.PrimitiveIterator.OfLong&nbsp;bitTupleIterator(int&nbsp;tupleSize,
+                                                            <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence. Numeric values are returned
  that represent the next <em>n</em> bits of the sequence where <em>n</em> is the "tuple size".
  If the sequence length isn't a multiple of the specified tuple size then the last value
  returned from the iterator may have 0 bits padded to it. For <a href="../../../com/apriori/collections/BitSequence.BitOrder.html#LSB"><code>LSB</code></a> order,
  the zero bits are on the more significant end of the value. But for <a href="../../../com/apriori/collections/BitSequence.BitOrder.html#MSB"><code>MSB</code></a>
- order, the zero bits are on the less signifcant end, which means the last value is effectively
- shifted left by the number of bits absent from the sequence.</div>
+ order, the zero bits are on the less significant end, which means the last value is
+ effectively shifted left by the number of bits absent from the sequence.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>tupleSize</code> - the number of bits of each chunk</dd>
@@ -322,7 +333,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified tuple size is less than one or greater than
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified tuple size is less than one or greater than
        sixty-four.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/collections/BitStream.html#next-int-com.apriori.collections.BitSequence.BitOrder-"><code>BitStream.next(int, BitSequence.BitOrder)</code></a></dd>
@@ -335,7 +346,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleIterator</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a>&nbsp;bitTupleIterator(int&nbsp;tupleSize)</pre>
+<pre>default&nbsp;java.util.PrimitiveIterator.OfLong&nbsp;bitTupleIterator(int&nbsp;tupleSize)</pre>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence. This method is equivalent
  to the following:
  <pre>bitSequence.bitTupleIterator(tupleSize, BitOrder.LSB);</pre></div>
@@ -345,7 +356,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified tuple size is less than one or greater than
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified tuple size is less than one or greater than
        sixty-four.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-"><code>bitTupleIterator(int, BitOrder)</code></a></dd>
@@ -358,18 +369,20 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleIterator</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a>&nbsp;bitTupleIterator(int&nbsp;tupleSize,
-                                          int&nbsp;startIndex,
-                                          <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
+<pre>java.util.PrimitiveIterator.OfLong&nbsp;bitTupleIterator(int&nbsp;tupleSize,
+                                                    int&nbsp;startIndex,
+                                                    <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;order)</pre>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence. The fetching of values will
  start at the specified index (zero-based) instead of starting with the first bit.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>tupleSize</code> - the number of bits of each chunk</dd>
+<dd><code>startIndex</code> - an offset into the sequence from which the tuples will start</dd>
+<dd><code>order</code> - the order of bits in the returned value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified tuple size is less than one or greater than
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified tuple size is less than one or greater than
        sixty-four.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-"><code>bitTupleIterator(int, BitOrder)</code></a></dd>
@@ -382,19 +395,40 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleIterator</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.OfLong.html?is-external=true" title="class or interface in java.util">PrimitiveIterator.OfLong</a>&nbsp;bitTupleIterator(int&nbsp;tupleSize,
-                                                  int&nbsp;startIndex)</pre>
+<pre>default&nbsp;java.util.PrimitiveIterator.OfLong&nbsp;bitTupleIterator(int&nbsp;tupleSize,
+                                                            int&nbsp;startIndex)</pre>
 <div class="block">Returns an iterator over arbitrarily-sized chunks in the sequence. This method is equivalent
  to the following:
  <pre>bitSequence.bitTupleIterator(tupleSize, startIndex, BitOrder.LSB);</pre></div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tupleSize</code> - the number of bits of each chunk</dd>
+<dd><code>startIndex</code> - an offset into the sequence from which the tuples will start</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified tuple size is less than one or greater than
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified tuple size is less than one or greater than
        sixty-four.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-int-com.apriori.collections.BitSequence.BitOrder-"><code>bitTupleIterator(int, int, BitOrder)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="subSequence-int-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subSequence</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a>&nbsp;subSequence(int&nbsp;start,
+                                int&nbsp;end)</pre>
+<div class="block">Returns a view of a portion of this sequence.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>start</code> - the starting position of the portion of interest, inclusive</dd>
+<dd><code>end</code> - the end position of the portion of interest, exclusive</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of a portion of this sequence, as another <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -422,6 +456,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <div class="block">Returns a stream, for consuming bits in arbitrary amounts with each fetch. The stream will
  begin with the specified index (zero-based) instead of beginning with the first bit.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>startIndex</code> - an offset into the sequence from which the stream will start</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a stream</dd>
 </dl>
@@ -433,7 +469,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleStream</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/LongStream.html?is-external=true" title="class or interface in java.util.stream">LongStream</a>&nbsp;bitTupleStream(int&nbsp;tupleSize)</pre>
+<pre>default&nbsp;java.util.stream.LongStream&nbsp;bitTupleStream(int&nbsp;tupleSize)</pre>
+<div class="block">Creates a <code>LongStream</code> over arbitrarily-sized chunks of bits. This is similar to
+ <a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-"><code>bitTupleIterator(int)</code></a> but allowing functional operations on the stream of values.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tupleSize</code> - the number of bits of each chunk</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a stream of long values, each value being a chunk of bits</dd>
+</dl>
 </li>
 </ul>
 <a name="bitTupleStream-int-com.apriori.collections.BitSequence.BitOrder-">
@@ -442,8 +486,20 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>bitTupleStream</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/LongStream.html?is-external=true" title="class or interface in java.util.stream">LongStream</a>&nbsp;bitTupleStream(int&nbsp;tupleSize,
-                                  <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;bitOrder)</pre>
+<pre>default&nbsp;java.util.stream.LongStream&nbsp;bitTupleStream(int&nbsp;tupleSize,
+                                                   <a href="../../../com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a>&nbsp;bitOrder)</pre>
+<div class="block">Creates a <code>LongStream</code> over arbitrarily-sized chunks of bits. This is similar to
+ <a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-"><code>bitTupleIterator(int, BitOrder)</code></a> but allowing functional operations on the stream of
+ values.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tupleSize</code> - the number of bits of each chunk</dd>
+<dd><code>bitOrder</code> - the order of bits in the returned value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a stream of long values, each value being a chunk of bits</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/collections/BitSequence.html#bitTupleIterator-int-com.apriori.collections.BitSequence.BitOrder-"><code>bitTupleIterator(int, BitOrder)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="hashCode--">
@@ -458,18 +514,18 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
  <pre>
  hash code = length of the sequence XOR hash code of corresponding list of longs
  </pre>
- The corresponding list of longs means a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> of <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang"><code>Long</code></a>s whose length
+ The corresponding list of longs means a <code>List</code> of <code>Long</code>s whose length
  is exactly enough to contain all of the bits in the sequence, whose first element represents
  the first 64 bits of the sequence (least significant bit first), and whose last element
  represents the last 1 to 64 bits (least significant bit first) with any superfluous (most
  significant) bits zeroed out when the sequence length is not a multiple of 64.
  
  <p>The second term in the hash code happens to be the same as calculated by
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html?is-external=true#hashCode-long:A-" title="class or interface in java.util"><code>Arrays.hashCode(long[])</code></a> with an array whose contents correspond to the bits 
+ <code>Arrays.hashCode(long[])</code> with an array whose contents correspond to the bits 
  in the sequence (in the same manner described above).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a hash code for the sequence, calculated as described above</dd>
 </dl>
@@ -481,12 +537,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.htm
 <ul class="blockListLast">
 <li class="blockList">
 <h4>equals</h4>
-<pre>boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
 <div class="block">Returns true if the specified object is a <a href="../../../com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections"><code>BitSequence</code></a> with the same contents and in
  the same order as this sequence.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>o</code> - an object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

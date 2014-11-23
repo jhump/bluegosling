@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":18,"i8":18,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;</dd>
+<dd>java.util.Collection&lt;E&gt;, java.lang.Iterable&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">Cycle&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;</pre>
+extends java.util.Collection&lt;E&gt;</pre>
 <div class="block">A cyclically ordered collection. A cycle represents an ordered sequence of objects, similar to a
  list, but it does not necessarily have a fixed start or fixed end. The sequence is cyclical and
  thus infinite. At any given time, there is a "current" element which can be thought of as the
@@ -144,100 +144,106 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#add-E-">add</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the end of the sequence.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#addFirst-E-">addFirst</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;e)</code>
 <div class="block">Adds an element to the front of the sequence.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#addLast-E-">addLast</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;e)</code>
 <div class="block">Adds an element to the end of the sequence.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#advance--">advance</a></span>()</code>
 <div class="block">Advances the current element to the next item in the sequence.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#advanceBy-int-">advanceBy</a></span>(int&nbsp;distance)</code>
 <div class="block">Advances the current element by the specified distance.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#current--">current</a></span>()</code>
 <div class="block">Retrieves the current element.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/BidiIterator.html" title="interface in com.apriori.collections">BidiIterator</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#cycle--">cycle</a></span>()</code>
 <div class="block">Returns an unending iterator that repeats through the sequence, cyclically.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#isCyclicOrder-E-E-">isCyclicOrder</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</code>
 <div class="block">Returns true if the specified elements are in cyclic order with respect to the current
  element.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#isCyclicOrder-E-E-E-">isCyclicOrder</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;a,
              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</code>
 <div class="block">Returns true if the specified elements are in cyclic order.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#iterator--">iterator</a></span>()</code>
 <div class="block">Returns an iterator that moves through the sequence exactly once.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#remove--">remove</a></span>()</code>
 <div class="block">Removes the current element.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#reset--">reset</a></span>()</code>
 <div class="block">Resets the current element to the first element in the sequence.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#retreat--">retreat</a></span>()</code>
 <div class="block">Retreats the current element to the previous item in the sequence.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#retreatBy-int-">retreatBy</a></span>(int&nbsp;distance)</code>
 <div class="block">Retreats the current element by the specified distance.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/Cycle.html" title="interface in com.apriori.collections">Cycle</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#reverse--">reverse</a></span>()</code>
 <div class="block">Returns a view of this sequence in reverse order.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/Cycle.html#set-E-">set</a></span>(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;e)</code>
 <div class="block">Replaces the current element with the specified value.</div>
@@ -248,15 +254,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>addAll, clear, contains, containsAll, equals, hashCode, isEmpty, parallelStream, remove, removeAll, removeIf, retainAll, size, spliterator, stream, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -307,6 +313,27 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 </dl>
 </li>
 </ul>
+<a name="add-java.lang.Object-">
+<!--   -->
+</a><a name="add-E-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre>default&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;e)</pre>
+<div class="block">Adds an element to the end of the sequence. This behaves as if implemented as follows:<pre>
+ cycle.addLast(e);
+ return true;
+ </pre></div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>e</code> - the new element to add</dd>
+</dl>
+</li>
+</ul>
 <a name="set-java.lang.Object-">
 <!--   -->
 </a><a name="set-E-">
@@ -325,7 +352,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value that was replaced</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the sequence is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -341,7 +368,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current element</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the sequence is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -362,7 +389,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the effective distance by which the current element was advanced</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the sequence is empty</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -385,8 +412,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the effective distance by which the current element was advanced</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified distance is negative</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the sequence is empty</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified distance is negative</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -407,7 +434,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the effective distance by which the current element was retreated</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the sequence is empty</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -430,8 +457,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the effective distance by which the current element was retreated</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified distance is negative</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the sequence is empty</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified distance is negative</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the sequence is empty</dd>
 </dl>
 </li>
 </ul>
@@ -471,15 +498,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;&nbsp;iterator()</pre>
+<pre>java.util.Iterator&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;&nbsp;iterator()</pre>
 <div class="block">Returns an iterator that moves through the sequence exactly once. The first item returned by
  this iterator will be the "current" element. The number of items returned by this iterator
- will be the number of items in the sequence (see <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util"><code>Collection.size()</code></a>).</div>
+ will be the number of items in the sequence (see <code>Collection.size()</code>).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator over a single pass of this sequence</dd>
 </dl>
@@ -493,7 +520,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <h4>cycle</h4>
 <pre><a href="../../../com/apriori/collections/BidiIterator.html" title="interface in com.apriori.collections">BidiIterator</a>&lt;<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&gt;&nbsp;cycle()</pre>
 <div class="block">Returns an unending iterator that repeats through the sequence, cyclically. The first item
- returned by <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#next--" title="class or interface in java.util"><code>Iterator.next()</code></a> will be the "current" element.</div>
+ returned by <code>Iterator.next()</code> will be the "current" element.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an unending iterator</dd>
@@ -531,8 +558,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <ul class="blockList">
 <li class="blockList">
 <h4>isCyclicOrder</h4>
-<pre>boolean&nbsp;isCyclicOrder(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
-                      <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</pre>
+<pre>default&nbsp;boolean&nbsp;isCyclicOrder(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
+                              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</pre>
 <div class="block">Returns true if the specified elements are in cyclic order with respect to the current
  element. This is equivalent to calling <a href="../../../com/apriori/collections/Cycle.html#isCyclicOrder-E-E-E-"><code>isCyclicOrder(current(), b, c)</code></a>.</div>
 <dl>
@@ -543,8 +570,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dd>true if the specified items are in cyclic order (e.g. <code>b</code> comes before
        <code>c</code>)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if there is no current element because the sequence is empty</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either <code>b</code> or <code>c</code> is not in the sequence</dd>
+<dd><code>java.util.NoSuchElementException</code> - if there is no current element because the sequence is empty</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if either <code>b</code> or <code>c</code> is not in the sequence</dd>
 </dl>
 </li>
 </ul>
@@ -556,12 +583,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isCyclicOrder</h4>
-<pre>boolean&nbsp;isCyclicOrder(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;a,
-                      <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
-                      <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</pre>
+<pre>default&nbsp;boolean&nbsp;isCyclicOrder(<a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;a,
+                              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;b,
+                              <a href="../../../com/apriori/collections/Cycle.html" title="type parameter in Cycle">E</a>&nbsp;c)</pre>
 <div class="block">Returns true if the specified elements are in cyclic order. A cyclic order <code>[a, b, c]</code>
  means that, after element <code>a</code>, one encounters element <code>b</code> before encountering
- element <code>c</code>.</div>
+ element <code>c</code>. The three given elements must be three distinct values.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>a</code> - the starting element</dd>
@@ -571,8 +598,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.h
 <dd>true if the specified items are in cyclic order (e.g. after <code>a</code>, <code>b</code> comes
        before <code>c</code>)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any of <code>a</code>, <code>b</code>, or <code>c</code> is not in the
-       sequence</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if any of <code>a</code>, <code>b</code>, or <code>c</code> is not in the
+       sequence or if the values are not distinct (e.g. if any two are equal)</dd>
 </dl>
 </li>
 </ul>

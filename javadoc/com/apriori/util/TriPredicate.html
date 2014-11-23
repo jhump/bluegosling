@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":18,"i1":18,"i2":18,"i3":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface TriPredicate" class="title">Interface TriPredicate&lt;T1,T2,T3&gt;</h2>
+<h2 title="Interface TriPredicate" class="title">Interface TriPredicate&lt;T,U,V&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,9 +99,9 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T1</code> - the first argument type</dd>
-<dd><code>T2</code> - the second argument type</dd>
-<dd><code>T3</code> - the third argument type</dd>
+<dd><code>T</code> - the first argument type</dd>
+<dd><code>U</code> - the second argument type</dd>
+<dd><code>V</code> - the third argument type</dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -109,8 +109,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
-public interface <span class="typeNameLabel">TriPredicate&lt;T1,T2,T3&gt;</span></pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">TriPredicate&lt;T,U,V&gt;</span></pre>
 <div class="block">Like a <a href="../../../com/apriori/util/TriFunction.html" title="interface in com.apriori.util"><code>TriFunction</code></a>, but returns a primitive boolean value.</div>
 </li>
 </ul>
@@ -125,16 +125,36 @@ public interface <span class="typeNameLabel">TriPredicate&lt;T1,T2,T3&gt;</span>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriPredicate.html#and-com.apriori.util.TriPredicate-">and</a></span>(<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;other)</code>
+<div class="block">Returns a composed predicate that represents a short-circuiting logical AND of this predicate
+ and another.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriPredicate.html#negate--">negate</a></span>()</code>
+<div class="block">Returns a predicate that represents the logical negation of this predicate.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriPredicate.html#or-com.apriori.util.TriPredicate-">or</a></span>(<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;other)</code>
+<div class="block">Returns a composed predicate that represents a short-circuiting logical OR of this predicate
+ and another.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriPredicate.html#test-T1-T2-T3-">test</a></span>(<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T1</a>&nbsp;input1,
-    <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T2</a>&nbsp;input2,
-    <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T3</a>&nbsp;input3)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriPredicate.html#test-T-U-V-">test</a></span>(<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>&nbsp;input1,
+    <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>&nbsp;input2,
+    <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&nbsp;input3)</code>
 <div class="block">Tests three objects.</div>
 </td>
 </tr>
@@ -155,15 +175,15 @@ public interface <span class="typeNameLabel">TriPredicate&lt;T1,T2,T3&gt;</span>
 <h3>Method Detail</h3>
 <a name="test-java.lang.Object-java.lang.Object-java.lang.Object-">
 <!--   -->
-</a><a name="test-T1-T2-T3-">
+</a><a name="test-T-U-V-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>test</h4>
-<pre>boolean&nbsp;test(<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T1</a>&nbsp;input1,
-             <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T2</a>&nbsp;input2,
-             <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T3</a>&nbsp;input3)</pre>
+<pre>boolean&nbsp;test(<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>&nbsp;input1,
+             <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>&nbsp;input2,
+             <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&nbsp;input3)</pre>
 <div class="block">Tests three objects.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -172,6 +192,72 @@ public interface <span class="typeNameLabel">TriPredicate&lt;T1,T2,T3&gt;</span>
 <dd><code>input3</code> - the third argument</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the predicate's result</dd>
+</dl>
+</li>
+</ul>
+<a name="and-com.apriori.util.TriPredicate-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>and</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;and(<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;other)</pre>
+<div class="block">Returns a composed predicate that represents a short-circuiting logical AND of this predicate
+ and another. When evaluating the composed predicate, if this predicate is <code>false</code>, then
+ the <code>other</code> predicate is not evaluated.
+
+ <p>
+ Any exceptions thrown during evaluation of either predicate are relayed to the caller; if
+ evaluation of this predicate throws an exception, the <code>other</code> predicate will not be
+ evaluated.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>other</code> - a predicate that will be logically-ANDed with this predicate</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a composed predicate that represents the short-circuiting logical AND of this
+         predicate and the <code>other</code> predicate</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code> - if other is null</dd>
+</dl>
+</li>
+</ul>
+<a name="negate--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>negate</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;negate()</pre>
+<div class="block">Returns a predicate that represents the logical negation of this predicate.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a predicate that represents the logical negation of this predicate</dd>
+</dl>
+</li>
+</ul>
+<a name="or-com.apriori.util.TriPredicate-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>or</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,<a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;or(<a href="../../../com/apriori/util/TriPredicate.html" title="interface in com.apriori.util">TriPredicate</a>&lt;? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">T</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">U</a>,? super <a href="../../../com/apriori/util/TriPredicate.html" title="type parameter in TriPredicate">V</a>&gt;&nbsp;other)</pre>
+<div class="block">Returns a composed predicate that represents a short-circuiting logical OR of this predicate
+ and another. When evaluating the composed predicate, if this predicate is <code>true</code>, then
+ the <code>other</code> predicate is not evaluated.
+
+ <p>
+ Any exceptions thrown during evaluation of either predicate are relayed to the caller; if
+ evaluation of this predicate throws an exception, the <code>other</code> predicate will not be
+ evaluated.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>other</code> - a predicate that will be logically-ORed with this predicate</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a composed predicate that represents the short-circuiting logical OR of this predicate
+         and the <code>other</code> predicate</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code> - if other is null</dd>
 </dl>
 </li>
 </ul>

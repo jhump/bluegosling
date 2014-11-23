@@ -178,7 +178,7 @@ var activeTableTab = "activeTableTab";
 <div class="block">Releases the held lock.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
        released it</dd>
 </dl>
 </li>
@@ -200,7 +200,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired lock on the given child</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
     released it; if the given lock is not actually a child of the <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>
     which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a>; or if the lock could not be demoted because
     this thread holds the lock more than once (from re-entrance)</dd>
@@ -225,7 +225,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired lock on the parent</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
+<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
     released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent"><code>HierarchicalLock.AcquiredLock</code></a> is a root lock and does
     not have a parent; or if this operation involved promoting the implicit parent lock, and
     that could not be done because this thread already holds the parent lock more than once

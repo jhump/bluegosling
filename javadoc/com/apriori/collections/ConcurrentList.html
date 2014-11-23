@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":18,"i3":18,"i4":6,"i5":6,"i6":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -98,8 +98,12 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>E</code> - the type of element in the list</dd>
+</dl>
+<dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</dd>
+<dd>java.util.Collection&lt;E&gt;, java.lang.Iterable&lt;E&gt;, java.util.List&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -108,7 +112,20 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ConcurrentList&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</pre>
+extends java.util.List&lt;E&gt;</pre>
+<div class="block">A list that is thread-safe and supports concurrent mutations. In addition to standard list
+ operations, several atomic operations are provided to enable concurrent updates.
+ 
+ <p><code>Iterator</code>s returned by this interface will not throw
+ <code>ConcurrentModificationException</code>s during traversal. However, this exception can still be
+ thrown from modification operations made through the iterator: (<code>Iterator.remove()</code>,
+ <code>ListIterator.add(Object)</code>, and <code>ListIterator.set(Object)</code>). Whether or not such
+ exceptions are thrown depends on a given implementation of this interface. But the only
+ operations guaranteed to not throw are traversal/query operations.
+ 
+ <p>This interface does not specify whether <code>Iterator</code>s are weakly consistent or are
+ strongly consistent snaphots. That detail, as well as the conditions which are considered
+ "conflicting concurrent modifications", should be documented by concrete sub-classes.</div>
 </li>
 </ul>
 </div>
@@ -122,7 +139,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -131,51 +148,73 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#addAfter-int-E-E-">addAfter</a></span>(int&nbsp;index,
         <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedPriorValue,
-        <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</code>&nbsp;</td>
+        <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</code>
+<div class="block">Adds the given value at the given index, after the given value.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-">addBefore</a></span>(int&nbsp;index,
          <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedNextValue,
-         <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</code>&nbsp;</td>
+         <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</code>
+<div class="block">Adds the given value at the given index, before the given value.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#remove-int-E-">remove</a></span>(int&nbsp;index,
-      <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedValue)</code>&nbsp;</td>
+<td class="colFirst"><code>default void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#addFirst-E-">addFirst</a></span>(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</code>
+<div class="block">Adds an element to the beginning of the list.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>default void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#addLast-E-">addLast</a></span>(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</code>
+<div class="block">Adds an element to the end of the list.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#remove-int-E-">remove</a></span>(int&nbsp;index,
+      <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedValue)</code>
+<div class="block">Removes the given value at the given index.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#replace-int-E-E-">replace</a></span>(int&nbsp;index,
        <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedValue,
-       <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</code>&nbsp;</td>
+       <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</code>
+<div class="block">Replaces the given value at the given index.</div>
+</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-">subList</a></span>(int&nbsp;fromIndex,
-       int&nbsp;toIndex)</code>&nbsp;</td>
+       int&nbsp;toIndex)</code>
+<div class="block">Returns a view of the portion of this list between the specified indices.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-int-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#get-int-" title="class or interface in java.util">get</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#indexOf-java.lang.Object-" title="class or interface in java.util">indexOf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#lastIndexOf-java.lang.Object-" title="class or interface in java.util">lastIndexOf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator--" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator-int-" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-int-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#replaceAll-java.util.function.UnaryOperator-" title="class or interface in java.util">replaceAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#set-int-E-" title="class or interface in java.util">set</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#sort-java.util.Comparator-" title="class or interface in java.util">sort</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.List</h3>
+<code>add, add, addAll, addAll, clear, contains, containsAll, equals, get, hashCode, indexOf, isEmpty, iterator, lastIndexOf, listIterator, listIterator, remove, remove, removeAll, replaceAll, retainAll, set, size, sort, spliterator, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>parallelStream, removeIf, stream</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -202,6 +241,17 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <pre>boolean&nbsp;replace(int&nbsp;index,
                 <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedValue,
                 <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</pre>
+<div class="block">Replaces the given value at the given index. This atomically sets the value at the given index
+ but only if its existing value matches the given value to be replaced.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the item to replace</dd>
+<dd><code>expectedValue</code> - the expected value of the element to replace</dd>
+<dd><code>newValue</code> - the replacement value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was replaced or false if the element at the given index differed
+       from the expected value and was thus not replaced</dd>
+</dl>
 </li>
 </ul>
 <a name="remove-int-java.lang.Object-">
@@ -214,6 +264,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <h4>remove</h4>
 <pre>boolean&nbsp;remove(int&nbsp;index,
                <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedValue)</pre>
+<div class="block">Removes the given value at the given index. This atomically removes the value at the given
+ index if and only if it matches the given value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the item to remove</dd>
+<dd><code>expectedValue</code> - the expected value of the element to remove</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was removed or false if the element at the given index differed from
+       the expected value and was thus not removed</dd>
+</dl>
 </li>
 </ul>
 <a name="addAfter-int-java.lang.Object-java.lang.Object-">
@@ -227,6 +287,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <pre>boolean&nbsp;addAfter(int&nbsp;index,
                  <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedPriorValue,
                  <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</pre>
+<div class="block">Adds the given value at the given index, after the given value. This atomically adds the value
+ at the given index but only if its predecessor would match the given value.
+ 
+ <p>The given index will be the index of the newly added item. Any items at that index or after
+ will be shifted by one. The expected prior value is compared against the item at
+ <code>index - 1</code> and the operation is aborted if the actual value doesn't match.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the newly added item</dd>
+<dd><code>expectedPriorValue</code> - the expected value of the new element's predecessor</dd>
+<dd><code>addition</code> - the value to add at the given index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was added or false if the element's predecessor differed from the
+       expected value</dd>
+</dl>
 </li>
 </ul>
 <a name="addBefore-int-java.lang.Object-java.lang.Object-">
@@ -240,6 +315,63 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <pre>boolean&nbsp;addBefore(int&nbsp;index,
                   <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;expectedNextValue,
                   <a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;addition)</pre>
+<div class="block">Adds the given value at the given index, before the given value. This atomically adds the
+ value at the given index but only if its successor would match the given value.
+ 
+ <p>The given index will be the index of the newly added item. Any items at that index or after
+ will be shifted by one. The expected next value is compared against the item already at the
+ given index (which will be shifted to <code>index + 1</code> after the operation completes). The
+ operation is aborted if the actual value doesn't match.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the index of the newly added item</dd>
+<dd><code>expectedNextValue</code> - the expected value of the new element's successor</dd>
+<dd><code>addition</code> - the value to add at the given index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the value was added or false if the element's succcessor differed from the
+       expected value</dd>
+</dl>
+</li>
+</ul>
+<a name="addFirst-java.lang.Object-">
+<!--   -->
+</a><a name="addFirst-E-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addFirst</h4>
+<pre>default&nbsp;void&nbsp;addFirst(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</pre>
+<div class="block">Adds an element to the beginning of the list. The indices for all other elements in the list,
+ if any, are shifted by one. This method is named for readability and can be used in place of
+ <a href="../../../com/apriori/collections/ConcurrentList.html#addAfter-int-E-E-"><code>addAfter(int, Object, Object)</code></a> when there is no predecessor.
+ 
+ <p>The default implementation is simply the following:<br>
+ <code>add(0, newValue)</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>newValue</code> - the value to add to the front of the list</dd>
+</dl>
+</li>
+</ul>
+<a name="addLast-java.lang.Object-">
+<!--   -->
+</a><a name="addLast-E-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addLast</h4>
+<pre>default&nbsp;void&nbsp;addLast(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</pre>
+<div class="block">Adds an element to the end of the list. This method is named for readability and can be used
+ in place of <a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-"><code>addBefore(int, Object, Object)</code></a> when there is no successor.
+ 
+ <p>The default implementation is simply the following:<br>
+ <code>add(newValue)</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>newValue</code> - the value to add to the front of the list</dd>
+</dl>
 </li>
 </ul>
 <a name="subList-int-int-">
@@ -250,9 +382,25 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <h4>subList</h4>
 <pre><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;&nbsp;subList(int&nbsp;fromIndex,
                           int&nbsp;toIndex)</pre>
+<div class="block">Returns a view of the portion of this list between the specified indices. Changes to this
+ list are visible through the returned view, and vice versa.
+ 
+ <p>The returned list is also a concurrent list. Structural changes made to the underlying
+ list can impact the returned list. For example, if an element is added in the given index
+ range in the underlying list, it will effectively displace the last element of the sub-list
+ (since that last item has now been pushed beyond the end of the index range). Similarly,
+ removing an element in the given index range from the underlying list will cause the sub-list
+ to get a new last element (the item that was after the given range that has now been pulled
+ into the range due to an element removal).
+ 
+ <p>The returned sub-list should never throw <code>ConcurrentModificationException</code> from any
+ of its operations (although its iterators may throw this exception if concurrent modifications
+ conflict with attempts to modify the list via the iterator).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></dd>
+<dd><code>subList</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>List.subList(int, int)</code></dd>
 </dl>
 </li>
 </ul>

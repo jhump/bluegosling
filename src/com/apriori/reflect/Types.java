@@ -378,7 +378,7 @@ public final class Types {
     * <p>If the given type is a wildcard or type variable, then this returns an array containing any
     * upper bounds that are interfaces.
     * 
-    * <p>This differs from {@link #getSuperclass(Type)} in that it can return a non-raw type. For
+    * <p>This differs from {@link #getInterfaces(Type)} in that it can return a non-raw type. For
     * example if a wildcard type has an interface bound that is a parameterized type or if a class
     * implements a parameterized type (e.g. {@code class MyClass implements List<String>}) then a
     * parameterized type is returned. 
@@ -945,7 +945,7 @@ public final class Types {
     * {@code List<Optional<String>>}, then this will return {@code Optional<String>}.
     * 
     * <p>If the given type variable cannot be resolved then {@code null} is returned. For example,
-    * if the type variable given is {@code Map.<K>} and the given type is {@link List<Number>}, then
+    * if the type variable given is {@code Map.<K>} and the given type is {@code List<Number>}, then
     * the variable cannot be resolved.
     *
     * @param context the generic type whose context is used to resolve the given variable

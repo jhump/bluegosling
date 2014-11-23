@@ -43,7 +43,7 @@ public class VariableBoolean implements Serializable, Cloneable {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
    public boolean getAndSet(boolean v) {

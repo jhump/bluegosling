@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.atoms.AsynchronousAtom&lt;T&gt;</li>
@@ -116,14 +116,15 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">AsynchronousAtom&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends java.lang.Object</pre>
 <div class="block">An atom that is mutated asynchronously using a thread pool. For a given atom, all mutations are
  applied sequentially. Multiple threads in a pool are used to process mutations on multiple such
  atoms. Since the actual update is applied asynchronously, mutation methods return future values,
  not immediate values.
  
  <p>If an error occurs while applying a change, the future that represents that change fails.
- Additionally, the atom will consult an error handler to decide what to do. There are two options:
+ Additionally, the atom will consult an error handler to decide what to do. There are three
+ options:
  <ol>
     <li><strong>Ignore:</strong> Processing continues. The failed mutation is ignored and
     subsequent mutations continue to be processed.</li>
@@ -207,7 +208,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#AsynchronousAtom-T-java.util.function.Predicate-">AsynchronousAtom</a></span>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;value,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;validator)</code>
+                java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;validator)</code>
 <div class="block">Constructs a new asynchronous atom with the specified value and the specified validator.</div>
 </td>
 </tr>
@@ -234,93 +235,101 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#apply-java.util.function.Function-">apply</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#apply-java.util.function.Function-">apply</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Submits a mutation that will apply the specified function and set the atom's value to its
  result.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#combineWith-T-java.util.function.BiFunction-">combineWith</a></span>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
+           java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Submits a mutation that will combine the atom's value with the given value, using the given
+ function, and set the atom's value to the result.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#get--">get</a></span>()</code>
 <div class="block">Retrieves the current value for this atom.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorHandler.html" title="interface in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorHandler</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--">getErrorHandler</a></span>()</code>
 <div class="block">Returns the atom's error handler.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending--">getPending</a></span>()</code>
 <div class="block">Returns a future that completes with the atom's value once all currently pending operations
  complete.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getQueueLength--">getQueueLength</a></span>()</code>
 <div class="block">Returns the number of queued mutation operations.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;</code></td>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.util.function.Predicate&lt;? super T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getValidator--">getValidator</a></span>()</code>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#isBlocked--">isBlocked</a></span>()</code>
 <div class="block">Returns true if the atom is blocked due to an earlier failure.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#notify-T-T-">notify</a></span>(T&nbsp;oldValue,
       T&nbsp;newValue)</code>
 <div class="block">Notifies the atom's watchers that the value has changed.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#removeWatcher-com.apriori.concurrent.atoms.Atom.Watcher-">removeWatcher</a></span>(<a href="../../../../com/apriori/concurrent/atoms/Atom.Watcher.html" title="interface in com.apriori.concurrent.atoms">Atom.Watcher</a>&lt;? super T&gt;&nbsp;watcher)</code>
 <div class="block">Unregisters a watcher.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart--">restart</a></span>()</code>
 <div class="block">Restarts mutation operations in a blocked atom.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#restart-T-boolean-">restart</a></span>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newSeed,
        boolean&nbsp;cancelPending)</code>
 <div class="block">Restarts mutation operations in a blocked atom with the given new seed value.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#resume--">resume</a></span>()</code>
 <div class="block">Resumes mutation operations in a blocked atom.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#set-T-">set</a></span>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newValue)</code>
 <div class="block">Submits a mutation that will set the atom to the specified value.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#setErrorHandler-com.apriori.concurrent.atoms.AsynchronousAtom.ErrorHandler-">setErrorHandler</a></span>(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.ErrorHandler.html" title="interface in com.apriori.concurrent.atoms">AsynchronousAtom.ErrorHandler</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;errorHandler)</code>
 <div class="block">Sets the atom's error handler.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#validate-T-">validate</a></span>(T&nbsp;value)</code>
 <div class="block">Validates the specified value.</div>
@@ -331,8 +340,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -379,7 +388,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>AsynchronousAtom</h4>
 <pre>public&nbsp;AsynchronousAtom(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;value,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;validator)</pre>
+                        java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;validator)</pre>
 <div class="block">Constructs a new asynchronous atom with the specified value and the specified validator.</div>
 </li>
 </ul>
@@ -417,7 +426,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>errorHandler</code> - the error handler that this atom should use</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified handler is <code>null</code></dd>
+<dd><code>java.lang.NullPointerException</code> - if the specified handler is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -487,7 +496,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd>true if the atom was restarted or false if it was not because the atom wasn't
        actually blocked</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given restart value is invalid according to the atom's
+<dd><code>java.lang.IllegalArgumentException</code> - if the given restart value is invalid according to the atom's
        current validator</dd>
 </dl>
 </li>
@@ -563,7 +572,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd>a future result that will be the atom's previous value at the time this mutation is
        applied</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified value is not valid for this atom</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified value is not valid for this atom</dd>
 </dl>
 </li>
 </ul>
@@ -573,15 +582,38 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;apply(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;apply(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Submits a mutation that will apply the specified function and set the atom's value to its
  result. Validation cannot be done immediately, so a validation failure manifests as a failed
- future result. Depending on the atom's <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--"><code>error handler</code></a>, a validation
- failure could block subsequent mutations.</div>
+ future. Depending on the atom's <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--"><code>error handler</code></a>, a validation failure
+ could block subsequent mutations.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>function</code> - the function to apply; the atom's new value will be the result of applying
-       this function to the atom's previous value</dd>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a future result that will be the atom's new value after the function is applied</dd>
+</dl>
+</li>
+</ul>
+<a name="combineWith-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="combineWith-T-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>combineWith</h4>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;combineWith(<a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
+                                       java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Submits a mutation that will combine the atom's value with the given value, using the given
+ function, and set the atom's value to the result. Validation cannot be done immediately, so a
+ validation failure manifests as a failed future. Depending on the atom's
+ <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--"><code>error handler</code></a>, a validation failure could block subsequent
+ mutations.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>t</code> - the value to combine</dd>
+<dd><code>function</code> - the function to apply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a future result that will be the atom's new value after the function is applied</dd>
 </dl>
@@ -602,7 +634,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the value to validate</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified value is invalid</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified value is invalid</dd>
 </dl>
 </li>
 </ul>
@@ -612,7 +644,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>getValidator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;&nbsp;getValidator()</pre>
+<pre>public&nbsp;java.util.function.Predicate&lt;? super T&gt;&nbsp;getValidator()</pre>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator. The validator is a
  predicate that returns true when invoked on valid values for the item and false otherwise.</div>
 <dl>

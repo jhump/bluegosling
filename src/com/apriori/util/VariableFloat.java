@@ -40,7 +40,7 @@ public class VariableFloat extends Number implements Cloneable {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
    public float getAndSet(float v) {
@@ -52,7 +52,7 @@ public class VariableFloat extends Number implements Cloneable {
    /**
     * Sets this variable's value.
     * 
-    * @param value the new value
+    * @param v the new value
     */
    public void set(float v) {
       this.value = v;

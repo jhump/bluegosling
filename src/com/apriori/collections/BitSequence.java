@@ -65,7 +65,7 @@ public interface BitSequence extends Iterable<Boolean> {
     * @return an iterator
     * @throws IllegalArgumentException if the specified tuple size is less than one or greater than
     *       sixty-four.
-    * @see BitStream#next(int, BitOrder)
+    * @see BitStream#next(int, BitSequence.BitOrder)
     */
    default PrimitiveIterator.OfLong bitTupleIterator(int tupleSize, BitOrder order) {
       return bitTupleIterator(tupleSize, 0, order);
@@ -119,8 +119,8 @@ public interface BitSequence extends Iterable<Boolean> {
    /**
     * Returns a view of a portion of this sequence.
     *
-    * @param offset the starting position of the portion of interest
-    * @param length the number of bits in the portion of interest
+    * @param start the starting position of the portion of interest, inclusive
+    * @param end the end position of the portion of interest, exclusive
     * @return a view of a portion of this sequence, as another {@link BitSequence}
     */
    default BitSequence subSequence(int start, int end) {
@@ -164,7 +164,7 @@ public interface BitSequence extends Iterable<Boolean> {
     * values.
     *
     * @param tupleSize the number of bits of each chunk
-    * @param order the order of bits in the returned value
+    * @param bitOrder the order of bits in the returned value
     * @return a stream of long values, each value being a chunk of bits
     * 
     * @see #bitTupleIterator(int, BitOrder)

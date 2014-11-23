@@ -99,7 +99,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></td>
 <td class="colLast">
-<div class="block">An executor service that returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a>s.</div>
+<div class="block">An executor service that returns <code>CompletableFuture</code>s.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -147,13 +147,13 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent">ListenableScheduledFuture</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A future that is both <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">scheduled</a> and <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">listenable</a>.</div>
+<div class="block">A future that is both scheduled and <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">listenable</a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></td>
 <td class="colLast">
-<div class="block">A specialization of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent"><code>Delayed</code></a> that allows for more accurate comparisons between the time
+<div class="block">A specialization of <code>Delayed</code> that allows for more accurate comparisons between the time
  at which instances are scheduled.</div>
 </td>
 </tr>
@@ -179,6 +179,19 @@
 <td class="colLast">
 <div class="block">Provides a framework for implementing blocking locks and related synchronizer that rely on FIFO
  wait queues.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A reflection-based utility that enables atomic updates to designated <code>volatile boolean</code>
+ fields of designated classes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A concurrency mechanism allowing concurrent readers and an exclusive writer.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -213,10 +226,20 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/NonReentrantLock.html" title="class in com.apriori.concurrent">NonReentrantLock</a></td>
+<td class="colLast">
+<div class="block">A non-reentrant lock.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent">PipeliningExecutorService</a>&lt;K&gt;</td>
 <td class="colLast">
 <div class="block">An executor that runs multiple sequential pipelines.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/RateLimiter.html" title="class in com.apriori.concurrent">RateLimiter</a></td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/SameThreadExecutor.html" title="class in com.apriori.concurrent">SameThreadExecutor</a></td>
@@ -245,10 +268,16 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/SimpleFutureVisitor.Builder.html" title="class in com.apriori.concurrent">SimpleFutureVisitor.Builder</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A builder for constructing visitors from <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a>s and <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>s.</div>
+<div class="block">A builder for constructing visitors from <code>Consumer</code>s and <code>Runnable</code>s.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/SpinLock.html" title="class in com.apriori.concurrent">SpinLock</a></td>
+<td class="colLast">
+<div class="block">A non-reentrant and unfair lock that "spins" while waiting to lock.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/concurrent/ThreadLimitingExecutorService.html" title="class in com.apriori.concurrent">ThreadLimitingExecutorService</a></td>
 <td class="colLast">
 <div class="block">An executor service that uses threads from another executor but imposes limits on parallelism
@@ -271,6 +300,12 @@
 <td class="colLast">
 <div class="block">An unchecked exception that is thrown when a lock acquisition is attempted that would result in
  deadlock.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent">ReentranceException</a></td>
+<td class="colLast">
+<div class="block">An exception indicating that a reentrant lock acquisition was attempted but is not unsupported.</div>
 </td>
 </tr>
 </tbody>

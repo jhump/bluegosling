@@ -78,14 +78,14 @@
 <li class="blockList"><a name="com.apriori.apt.testing.CompilationFailedException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/apt/testing/CompilationFailedException.html" title="class in com.apriori.apt.testing">com.apriori.apt.testing.CompilationFailedException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/apt/testing/CompilationFailedException.html" title="class in com.apriori.apt.testing">com.apriori.apt.testing.CompilationFailedException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <ul class="blockList">
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockListLast">
 <h4>diagnostics</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">E</a>&gt; diagnostics</pre>
+<pre>java.util.Collection&lt;E&gt; diagnostics</pre>
 </li>
 </ul>
 </li>
@@ -99,7 +99,7 @@
 <li class="blockList"><a name="com.apriori.collections.ArrayBackedLinkedList">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections">com.apriori.collections.ArrayBackedLinkedList</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections">com.apriori.collections.ArrayBackedLinkedList</a> extends java.util.AbstractList&lt;<a href="com/apriori/collections/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-4604439572205925230L</dd>
@@ -110,26 +110,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read list of elements same way as written by
  <a href="com/apriori/collections/ArrayBackedLinkedList.html#writeObject-java.io.ObjectOutputStream-"><code>ArrayBackedLinkedList.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the list contents in order.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -149,7 +149,7 @@
 <li class="blockList"><a name="com.apriori.collections.ArrayListGrowableArray">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">com.apriori.collections.ArrayListGrowableArray</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">com.apriori.collections.ArrayListGrowableArray</a> extends java.lang.Object implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>7834555062989870534L</dd>
@@ -169,7 +169,7 @@
 <li class="blockList"><a name="com.apriori.collections.AssociativeArrayList">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/AssociativeArrayList.html" title="class in com.apriori.collections">com.apriori.collections.AssociativeArrayList</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</a>&lt;<a href="com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/AssociativeArrayList.html" title="class in com.apriori.collections">com.apriori.collections.AssociativeArrayList</a> extends java.util.ArrayList&lt;<a href="com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>324645810355942807L</dd>
@@ -180,22 +180,22 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code></dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -205,11 +205,11 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>indexByKey</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">HashMap</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">V</a>&gt; indexByKey</pre>
+<pre>java.util.HashMap&lt;K,V&gt; indexByKey</pre>
 </li>
 <li class="blockListLast">
 <h4>keyByIndex</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util">TreeMap</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util">V</a>&gt; keyByIndex</pre>
+<pre>java.util.TreeMap&lt;K,V&gt; keyByIndex</pre>
 </li>
 </ul>
 </li>
@@ -218,7 +218,7 @@
 <li class="blockList"><a name="com.apriori.collections.ConcurrentSortedArraySet">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections">com.apriori.collections.ConcurrentSortedArraySet</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections">com.apriori.collections.ConcurrentSortedArraySet</a> extends java.lang.Object implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-5784539573506639261L</dd>
@@ -229,22 +229,22 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.lang.ClassNotFoundException,
+                        java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.lang.ClassNotFoundException</code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -254,7 +254,7 @@
 <li class="blockList"><a name="com.apriori.collections.FibonacciHeapOrderedQueue">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">com.apriori.collections.FibonacciHeapOrderedQueue</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">com.apriori.collections.FibonacciHeapOrderedQueue</a> extends java.util.AbstractCollection&lt;<a href="com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-7500815513249839345L</dd>
@@ -265,26 +265,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read elements the same way as written by
  <a href="com/apriori/collections/FibonacciHeapOrderedQueue.html#writeObject-java.io.ObjectOutputStream-"><code>FibonacciHeapOrderedQueue.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the queue contents.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -294,7 +294,7 @@
 <li class="blockList"><a name="com.apriori.collections.HamtMap">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">com.apriori.collections.HamtMap</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">com.apriori.collections.HamtMap</a> extends java.util.AbstractMap&lt;<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-9064441005458513893L</dd>
@@ -305,27 +305,27 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read list of mappings the same way as written by
  <a href="com/apriori/collections/HamtMap.html#writeObject-java.io.ObjectOutputStream-"><code>HamtMap.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the mappings as a sequence of key, value, key, value,
  etc.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -335,7 +335,7 @@
 <li class="blockList"><a name="com.apriori.collections.LinearHashingMap">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">com.apriori.collections.LinearHashingMap</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">K</a>,<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">V</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">com.apriori.collections.LinearHashingMap</a> extends java.util.AbstractMap&lt;<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">K</a>,<a href="com/apriori/collections/LinearHashingMap.html" title="type parameter in LinearHashingMap">V</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1840670418748277196L</dd>
@@ -355,7 +355,7 @@
 <li class="blockList"><a name="com.apriori.collections.LinkedPersistentList">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">com.apriori.collections.LinkedPersistentList</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">com.apriori.collections.LinkedPersistentList</a> extends java.lang.Object implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-4079904855716212892L</dd>
@@ -366,7 +366,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> value</pre>
+<pre>java.lang.Object value</pre>
 </li>
 <li class="blockList">
 <h4>next</h4>
@@ -394,7 +394,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>indexBlock</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[][] indexBlock</pre>
+<pre>java.lang.Object[][] indexBlock</pre>
 </li>
 <li class="blockList">
 <h4>numSuperBlocks</h4>
@@ -446,26 +446,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read the set of mappings the same way as written by
  <a href="com/apriori/collections/SortedArrayMap.html#writeObject-java.io.ObjectOutputStream-"><code>SortedArrayMap.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the mappings, key then value, in order.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -484,7 +484,7 @@
 <li class="blockList"><a name="com.apriori.collections.SortedArraySet">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">com.apriori.collections.SortedArraySet</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">com.apriori.collections.SortedArraySet</a> extends java.lang.Object implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>576094990615323839L</dd>
@@ -495,26 +495,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read set of elements same way as written by
  <a href="com/apriori/collections/SortedArraySet.html#writeObject-java.io.ObjectOutputStream-"><code>SortedArraySet.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the set contents in order.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -524,7 +524,7 @@
 <li class="blockList"><a name="com.apriori.collections.TreeList">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/TreeList.html" title="class in com.apriori.collections">com.apriori.collections.TreeList</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="com/apriori/collections/TreeList.html" title="type parameter in TreeList">E</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/TreeList.html" title="class in com.apriori.collections">com.apriori.collections.TreeList</a> extends java.util.AbstractList&lt;<a href="com/apriori/collections/TreeList.html" title="type parameter in TreeList">E</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>7578331319603545754L</dd>
@@ -535,26 +535,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read list of elements same way as written by
  <a href="com/apriori/collections/TreeList.html#writeObject-java.io.ObjectOutputStream-"><code>TreeList.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the list contents in order.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -564,7 +564,7 @@
 <li class="blockList"><a name="com.apriori.collections.UnrolledLinkedList">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">com.apriori.collections.UnrolledLinkedList</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractSequentialList.html?is-external=true" title="class or interface in java.util">AbstractSequentialList</a>&lt;<a href="com/apriori/collections/UnrolledLinkedList.html" title="type parameter in UnrolledLinkedList">E</a>&gt; implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">com.apriori.collections.UnrolledLinkedList</a> extends java.util.AbstractSequentialList&lt;<a href="com/apriori/collections/UnrolledLinkedList.html" title="type parameter in UnrolledLinkedList">E</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>2966626995282831346L</dd>
@@ -575,26 +575,26 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to read list of elements same way as written by
  <a href="com/apriori/collections/UnrolledLinkedList.html#writeObject-java.io.ObjectOutputStream-"><code>UnrolledLinkedList.writeObject(ObjectOutputStream)</code></a>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
 <li class="blockListLast">
 <h4>writeObject</h4>
-<pre>private&nbsp;void&nbsp;writeObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html?is-external=true" title="class or interface in java.io">ObjectOutputStream</a>&nbsp;out)
-                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>private&nbsp;void&nbsp;writeObject(java.io.ObjectOutputStream&nbsp;out)
+                  throws java.io.IOException</pre>
 <div class="block">Customizes serialization by just writing the list contents in order.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when writing to <code>out</code></dd>
+<dd><code>java.io.IOException</code> - if an exception is raised when writing to <code>out</code></dd>
 </dl>
 </li>
 </ul>
@@ -617,11 +617,38 @@
 <li class="blockList"><a name="com.apriori.collections.WeightBalancedTreeMap">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">com.apriori.collections.WeightBalancedTreeMap</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">com.apriori.collections.WeightBalancedTreeMap</a> extends java.lang.Object implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-3252472174080097845L</dd>
 </dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>numAdds</h4>
+<pre>int numAdds</pre>
+</li>
+<li class="blockList">
+<h4>numRemoves</h4>
+<pre>int numRemoves</pre>
+</li>
+<li class="blockList">
+<h4>numSeeks</h4>
+<pre>int numSeeks</pre>
+</li>
+<li class="blockList">
+<h4>numSwaps</h4>
+<pre>int numSwaps</pre>
+</li>
+<li class="blockListLast">
+<h4>numOps</h4>
+<pre>int numOps</pre>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -631,7 +658,7 @@
 <li class="blockList"><a name="com.apriori.concurrent.AbstractQueuedReferenceSynchronizer">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/concurrent/AbstractQueuedReferenceSynchronizer.html" title="class in com.apriori.concurrent">com.apriori.concurrent.AbstractQueuedReferenceSynchronizer</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/AbstractOwnableSynchronizer.html?is-external=true" title="class or interface in java.util.concurrent.locks">AbstractOwnableSynchronizer</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/concurrent/AbstractQueuedReferenceSynchronizer.html" title="class in com.apriori.concurrent">com.apriori.concurrent.AbstractQueuedReferenceSynchronizer</a> extends java.util.concurrent.locks.AbstractOwnableSynchronizer implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>2087545583039578782L</dd>
@@ -642,7 +669,7 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>state</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> state</pre>
+<pre>java.lang.Object state</pre>
 <div class="block">The synchronization state.</div>
 </li>
 </ul>
@@ -652,10 +679,19 @@
 <li class="blockList"><a name="com.apriori.concurrent.DeadlockException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">com.apriori.concurrent.DeadlockException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">com.apriori.concurrent.DeadlockException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>810179938753238669L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="com.apriori.concurrent.ReentranceException">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent">com.apriori.concurrent.ReentranceException</a> extends java.lang.RuntimeException implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>6514106228938676699L</dd>
 </dl>
 </li>
 </ul>
@@ -666,7 +702,7 @@
 <li class="blockList"><a name="com.apriori.concurrent.atoms.TransactionIsolationException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">com.apriori.concurrent.atoms.TransactionIsolationException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">com.apriori.concurrent.atoms.TransactionIsolationException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>3957146576789743305L</dd>
@@ -691,7 +727,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> value</pre>
+<pre>java.lang.Object value</pre>
 </li>
 <li class="blockListLast">
 <h4>isPresent</h4>
@@ -709,7 +745,7 @@
 <li class="blockList"><a name="com.apriori.reflect.AmbiguousMethodException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect">com.apriori.reflect.AmbiguousMethodException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect">com.apriori.reflect.AmbiguousMethodException</a> extends java.lang.Exception implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-5266540302753855254L</dd>
@@ -720,11 +756,11 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>targetMethod</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a> targetMethod</pre>
+<pre>java.lang.reflect.Method targetMethod</pre>
 </li>
 <li class="blockListLast">
 <h4>ambiguousMethods</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">E</a>&gt; ambiguousMethods</pre>
+<pre>java.util.Collection&lt;E&gt; ambiguousMethods</pre>
 </li>
 </ul>
 </li>
@@ -733,7 +769,7 @@
 <li class="blockList"><a name="com.apriori.reflect.BlasterException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/reflect/BlasterException.html" title="class in com.apriori.reflect">com.apriori.reflect.BlasterException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/reflect/BlasterException.html" title="class in com.apriori.reflect">com.apriori.reflect.BlasterException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-4332616623477889374L</dd>
@@ -744,11 +780,20 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>causes</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">E</a>&gt; causes</pre>
+<pre>java.util.Collection&lt;E&gt; causes</pre>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="blockList"><a name="com.apriori.reflect.UnknownTypeException">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/reflect/UnknownTypeException.html" title="class in com.apriori.reflect">com.apriori.reflect.UnknownTypeException</a> extends java.lang.RuntimeException implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-8130625109889432666L</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -758,7 +803,7 @@
 <li class="blockList"><a name="com.apriori.testing.TooManyMatchesException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/testing/TooManyMatchesException.html" title="class in com.apriori.testing">com.apriori.testing.TooManyMatchesException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/testing/TooManyMatchesException.html" title="class in com.apriori.testing">com.apriori.testing.TooManyMatchesException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>8364311247452248384L</dd>
@@ -783,7 +828,7 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>readResolve</h4>
-<pre>private&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;readResolve()</pre>
+<pre>private&nbsp;java.lang.Object&nbsp;readResolve()</pre>
 <div class="block">Enforces that there exists only one instance of this class.</div>
 </li>
 </ul>
@@ -804,15 +849,15 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>readObject</h4>
-<pre>private&nbsp;void&nbsp;readObject(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html?is-external=true" title="class or interface in java.io">ObjectInputStream</a>&nbsp;in)
-                 throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
+<pre>private&nbsp;void&nbsp;readObject(java.io.ObjectInputStream&nbsp;in)
+                 throws java.io.IOException,
+                        java.lang.ClassNotFoundException</pre>
 <div class="block">Customizes de-serialization to populate the typed (but transient) fields representing the
  first five members of the tuple.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception is raised when reading from <code>in</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if de-serializing an element fails to locate the element's
+<dd><code>java.io.IOException</code> - if an exception is raised when reading from <code>in</code></dd>
+<dd><code>java.lang.ClassNotFoundException</code> - if de-serializing an element fails to locate the element's
             class</dd>
 </dl>
 </li>
@@ -823,7 +868,7 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>array</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[] array</pre>
+<pre>java.lang.Object[] array</pre>
 </li>
 </ul>
 </li>
@@ -843,11 +888,11 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>a</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> a</pre>
+<pre>java.lang.Object a</pre>
 </li>
 <li class="blockListLast">
 <h4>b</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> b</pre>
+<pre>java.lang.Object b</pre>
 </li>
 </ul>
 </li>
@@ -867,19 +912,19 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>a</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> a</pre>
+<pre>java.lang.Object a</pre>
 </li>
 <li class="blockList">
 <h4>b</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> b</pre>
+<pre>java.lang.Object b</pre>
 </li>
 <li class="blockList">
 <h4>c</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> c</pre>
+<pre>java.lang.Object c</pre>
 </li>
 <li class="blockListLast">
 <h4>d</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> d</pre>
+<pre>java.lang.Object d</pre>
 </li>
 </ul>
 </li>
@@ -899,23 +944,23 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>a</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> a</pre>
+<pre>java.lang.Object a</pre>
 </li>
 <li class="blockList">
 <h4>b</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> b</pre>
+<pre>java.lang.Object b</pre>
 </li>
 <li class="blockList">
 <h4>c</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> c</pre>
+<pre>java.lang.Object c</pre>
 </li>
 <li class="blockList">
 <h4>d</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> d</pre>
+<pre>java.lang.Object d</pre>
 </li>
 <li class="blockListLast">
 <h4>e</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> e</pre>
+<pre>java.lang.Object e</pre>
 </li>
 </ul>
 </li>
@@ -935,15 +980,15 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>a</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> a</pre>
+<pre>java.lang.Object a</pre>
 </li>
 <li class="blockList">
 <h4>b</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> b</pre>
+<pre>java.lang.Object b</pre>
 </li>
 <li class="blockListLast">
 <h4>c</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> c</pre>
+<pre>java.lang.Object c</pre>
 </li>
 </ul>
 </li>
@@ -963,7 +1008,7 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>a</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> a</pre>
+<pre>java.lang.Object a</pre>
 </li>
 </ul>
 </li>
@@ -977,7 +1022,7 @@
 <li class="blockList"><a name="com.apriori.util.CloningException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/util/CloningException.html" title="class in com.apriori.util">com.apriori.util.CloningException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/util/CloningException.html" title="class in com.apriori.util">com.apriori.util.CloningException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-3746546051862930866L</dd>
@@ -986,11 +1031,191 @@
 <li class="blockList"><a name="com.apriori.util.SequenceFinishedException">
 <!--   -->
 </a>
-<h3>Class <a href="com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">com.apriori.util.SequenceFinishedException</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<h3>Class <a href="com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">com.apriori.util.SequenceFinishedException</a> extends java.lang.RuntimeException implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>1224425258285484624L</dd>
 </dl>
+</li>
+<li class="blockList"><a name="com.apriori.util.Variable">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/Variable.html" title="class in com.apriori.util">com.apriori.util.Variable</a> extends java.lang.Object implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>7879572538527054255L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>java.lang.Object value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableBoolean">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableBoolean.html" title="class in com.apriori.util">com.apriori.util.VariableBoolean</a> extends java.lang.Object implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-6625609901250555921L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>boolean value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableByte">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableByte.html" title="class in com.apriori.util">com.apriori.util.VariableByte</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-9061697113254534341L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>byte value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableChar">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableChar.html" title="class in com.apriori.util">com.apriori.util.VariableChar</a> extends java.lang.Object implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>4652666838087015320L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>char value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableDouble">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableDouble.html" title="class in com.apriori.util">com.apriori.util.VariableDouble</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>5600611853384563871L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>double value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableFloat">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableFloat.html" title="class in com.apriori.util">com.apriori.util.VariableFloat</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-8164641785412683342L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>float value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableInt">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableInt.html" title="class in com.apriori.util">com.apriori.util.VariableInt</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>4022947442065262818L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>int value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableLong">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableLong.html" title="class in com.apriori.util">com.apriori.util.VariableLong</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-8333227033380651229L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>long value</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="com.apriori.util.VariableShort">
+<!--   -->
+</a>
+<h3>Class <a href="com/apriori/util/VariableShort.html" title="class in com.apriori.util">com.apriori.util.VariableShort</a> extends java.lang.Number implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-8948943243479719520L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>value</h4>
+<pre>short value</pre>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </li>

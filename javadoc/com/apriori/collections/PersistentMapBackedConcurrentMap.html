@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,10 +95,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">java.util.AbstractMap</a>&lt;K,V&gt;</li>
+<li>java.util.AbstractMap&lt;K,V&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.PersistentMapBackedConcurrentMap&lt;K,V&gt;</li>
@@ -112,13 +112,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;K,V&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</dd>
+<dd>java.util.concurrent.ConcurrentMap&lt;K,V&gt;, java.util.Map&lt;K,V&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">PersistentMapBackedConcurrentMap&lt;K,V&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;K,V&gt;
-implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;K,V&gt;</pre>
+extends java.util.AbstractMap&lt;K,V&gt;
+implements java.util.concurrent.ConcurrentMap&lt;K,V&gt;</pre>
 </li>
 </ul>
 </div>
@@ -135,15 +135,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleEntry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleImmutableEntry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;java.util.AbstractMap</h3>
+<code>java.util.AbstractMap.SimpleEntry&lt;K,V&gt;, java.util.AbstractMap.SimpleImmutableEntry&lt;K,V&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.Map</h3>
+<code>java.util.Map.Entry&lt;K,V&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -177,57 +177,81 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#clear--">clear</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#containsValue-java.lang.Object-">containsValue</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#get-java.lang.Object-">get</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#put-K-V-">put</a></span>(<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&nbsp;key,
    <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#putIfAbsent-K-V-">putIfAbsent</a></span>(<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&nbsp;key,
            <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#remove-java.lang.Object-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#remove-java.lang.Object-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key,
+      java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#replace-K-V-">replace</a></span>(<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&nbsp;key,
        <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#replace-K-V-V-">replace</a></span>(<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&nbsp;key,
        <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;oldValue,
        <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;newValue)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></td>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#size--">size</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#toString--">toString</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html#values--">values</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
@@ -235,29 +259,29 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clone--" title="class or interface in java.util">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractMap</h3>
+<code>clone, putAll</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.concurrent.ConcurrentMap">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#compute-K-java.util.function.BiFunction-" title="class or interface in java.util.concurrent">compute</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#computeIfAbsent-K-java.util.function.Function-" title="class or interface in java.util.concurrent">computeIfAbsent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#computeIfPresent-K-java.util.function.BiFunction-" title="class or interface in java.util.concurrent">computeIfPresent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#forEach-java.util.function.BiConsumer-" title="class or interface in java.util.concurrent">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#getOrDefault-java.lang.Object-V-" title="class or interface in java.util.concurrent">getOrDefault</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#merge-K-V-java.util.function.BiFunction-" title="class or interface in java.util.concurrent">merge</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#replaceAll-java.util.function.BiFunction-" title="class or interface in java.util.concurrent">replaceAll</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.concurrent.ConcurrentMap</h3>
+<code>compute, computeIfAbsent, computeIfPresent, forEach, getOrDefault, merge, replaceAll</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#size--" title="class or interface in java.util">size</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Map</h3>
+<code>putAll</code></li>
 </ul>
 </li>
 </ul>
@@ -290,18 +314,48 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="size--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>public&nbsp;int&nbsp;size()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="isEmpty--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEmpty</h4>
+<pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>isEmpty</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a name="containsKey-java.lang.Object-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -311,12 +365,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;containsValue(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -326,12 +380,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;get(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;get(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -347,9 +401,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
              <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -365,9 +419,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
                      <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util.concurrent">putIfAbsent</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>putIfAbsent</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ConcurrentMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util">putIfAbsent</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>putIfAbsent</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -377,12 +431,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;remove(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -392,13 +446,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;key,
+                      java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util.concurrent">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ConcurrentMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -415,9 +469,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
                        <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;newValue)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#replace-K-V-V-" title="class or interface in java.util.concurrent">replace</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>replace</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ConcurrentMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-V-" title="class or interface in java.util">replace</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>replace</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -433,9 +487,24 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
                  <a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#replace-K-V-" title="class or interface in java.util.concurrent">replace</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>replace</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ConcurrentMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-" title="class or interface in java.util">replace</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>replace</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="clear--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;void&nbsp;clear()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -445,12 +514,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>entrySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<pre>public&nbsp;java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -460,27 +529,70 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <ul class="blockList">
 <li class="blockList">
 <h4>keySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&gt;&nbsp;keySet()</pre>
+<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>&gt;&nbsp;keySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>keySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>keySet</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
 <a name="values--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>values</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&nbsp;values()</pre>
+<pre>public&nbsp;java.util.Collection&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;&nbsp;values()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#values--" title="class or interface in java.util">values</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>values</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dd><code>values</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="toString--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="equals-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>equals</h4>
+<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>equals</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="hashCode--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>public&nbsp;int&nbsp;hashCode()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>hashCode</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">K</a>,<a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="type parameter in PersistentMapBackedConcurrentMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

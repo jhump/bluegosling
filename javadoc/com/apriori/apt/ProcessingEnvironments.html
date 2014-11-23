@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.apt.ProcessingEnvironments</li>
@@ -108,12 +108,12 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">ProcessingEnvironments</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends java.lang.Object</pre>
 <div class="block">Static helper methods related to the current processing environment.
  
  <p>The current environment must be <a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-">setup</a> for the
  current thread. After that, processing code running on that same thread can conveniently
- access the environment and the <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Elements</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Types</code></a> utility interfaces using static
+ access the environment and the <code>Elements</code> and <code>Types</code> utility interfaces using static
  methods on this class.</div>
 </li>
 </ul>
@@ -134,13 +134,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></code></td>
+<td class="colFirst"><code>static javax.lang.model.util.Elements</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/apt/ProcessingEnvironments.html#elements--">elements</a></span>()</code>
 <div class="block">Gets the current implementation of utility methods relating to elements.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a></code></td>
+<td class="colFirst"><code>static javax.annotation.processing.ProcessingEnvironment</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/apt/ProcessingEnvironments.html#get--">get</a></span>()</code>
 <div class="block">Gets the environment for the current thread.</div>
 </td>
@@ -153,12 +153,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-">setup</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-">setup</a></span>(javax.annotation.processing.ProcessingEnvironment&nbsp;env)</code>
 <div class="block">Sets up the environment for the current thread.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util">Types</a></code></td>
+<td class="colFirst"><code>static javax.lang.model.util.Types</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/apt/ProcessingEnvironments.html#types--">types</a></span>()</code>
 <div class="block">Gets the current implementation of utility methods relating to types.</div>
 </td>
@@ -168,8 +168,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -196,7 +196,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  This can only be called after the state has been <a href="../../../com/apriori/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-"><code>setup(javax.annotation.processing.ProcessingEnvironment)</code></a> on this thread.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the environment has not been setup on this thread</dd>
 </dl>
 </li>
 </ul>
@@ -206,14 +206,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>setup</h4>
-<pre>public static&nbsp;void&nbsp;setup(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</pre>
+<pre>public static&nbsp;void&nbsp;setup(javax.annotation.processing.ProcessingEnvironment&nbsp;env)</pre>
 <div class="block">Sets up the environment for the current thread. This initializes thread-local state so that
  the environment can be conveniently accessed from other static methods.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>env</code> - the current processing environment</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has already been setup on this thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the environment has already been setup on this thread</dd>
 </dl>
 </li>
 </ul>
@@ -223,13 +223,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;get()</pre>
+<pre>public static&nbsp;javax.annotation.processing.ProcessingEnvironment&nbsp;get()</pre>
 <div class="block">Gets the environment for the current thread.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the processing environment for the current thread</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the environment has not been setup on this thread</dd>
 </dl>
 </li>
 </ul>
@@ -239,14 +239,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>elements</h4>
-<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a>&nbsp;elements()</pre>
+<pre>public static&nbsp;javax.lang.model.util.Elements&nbsp;elements()</pre>
 <div class="block">Gets the current implementation of utility methods relating to elements. This convenience
  method is short for <code>ProcessingEnvironments.get().getElementUtils()</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the implementation of element utility methods for the current thread</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the environment has not been setup on this thread</dd>
 </dl>
 </li>
 </ul>
@@ -256,14 +256,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>types</h4>
-<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util">Types</a>&nbsp;types()</pre>
+<pre>public static&nbsp;javax.lang.model.util.Types&nbsp;types()</pre>
 <div class="block">Gets the current implementation of utility methods relating to types. This convenience
  method is short for <code>ProcessingEnvironments.get().getTypeUtils()</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the implementation of type utility methods for the current thread</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if the environment has not been setup on this thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if the environment has not been setup on this thread</dd>
 </dl>
 </li>
 </ul>

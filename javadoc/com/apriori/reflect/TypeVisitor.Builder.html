@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/reflect/TypeVisitor.html" title="interface in com.apriori.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../com/apriori/reflect/UnknownTypeException.html" title="class in com.apriori.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/reflect/TypeVisitor.Builder.html" target="_top">Frames</a></li>
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.reflect.TypeVisitor.Builder&lt;R,P&gt;</li>
@@ -117,7 +117,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static class <span class="typeNameLabel">TypeVisitor.Builder&lt;R,P&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends java.lang.Object</pre>
 <div class="block">A builder of visitors, using functional interfaces as the building blocks.</div>
 </li>
 </ul>
@@ -162,44 +162,44 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#defaultAction-java.util.function.BiFunction-">defaultAction</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#defaultAction-java.util.function.BiFunction-">defaultAction</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.Type,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the default action, invoked for types where no other, more specific action has been
  configured.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onClass-java.util.function.BiFunction-">onClass</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onClass-java.util.function.BiFunction-">onClass</a></span>(java.util.function.BiFunction&lt;? super java.lang.Class&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting a class token.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onGenericArrayType-java.util.function.BiFunction-">onGenericArrayType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onGenericArrayType-java.util.function.BiFunction-">onGenericArrayType</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.GenericArrayType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting a generic array type.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onParameterizedType-java.util.function.BiFunction-">onParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onParameterizedType-java.util.function.BiFunction-">onParameterizedType</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.ParameterizedType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting a parameterized type.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onTypeVariable-java.util.function.BiFunction-">onTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onTypeVariable-java.util.function.BiFunction-">onTypeVariable</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.TypeVariable&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting a type variable.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onUnknownType-java.util.function.BiFunction-">onUnknownType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onUnknownType-java.util.function.BiFunction-">onUnknownType</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.Type,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting an unrecognized type.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onWildcardType-java.util.function.BiFunction-">onWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeVisitor.Builder.html#onWildcardType-java.util.function.BiFunction-">onWildcardType</a></span>(java.util.function.BiFunction&lt;? super java.lang.reflect.WildcardType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</code>
 <div class="block">Defines the action taken when visiting a wildcard type.</div>
 </td>
 </tr>
@@ -208,8 +208,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -248,7 +248,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>defaultAction</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;defaultAction(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;defaultAction(java.util.function.BiFunction&lt;? super java.lang.reflect.Type,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the default action, invoked for types where no other, more specific action has been
  configured.</div>
 <dl>
@@ -265,7 +265,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onClass</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onClass(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onClass(java.util.function.BiFunction&lt;? super java.lang.Class&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting a class token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -281,7 +281,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onParameterizedType</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onParameterizedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onParameterizedType(java.util.function.BiFunction&lt;? super java.lang.reflect.ParameterizedType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting a parameterized type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -297,7 +297,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onGenericArrayType</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onGenericArrayType(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onGenericArrayType(java.util.function.BiFunction&lt;? super java.lang.reflect.GenericArrayType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting a generic array type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -313,7 +313,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onWildcardType</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onWildcardType(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onWildcardType(java.util.function.BiFunction&lt;? super java.lang.reflect.WildcardType,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting a wildcard type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -329,7 +329,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onTypeVariable</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onTypeVariable(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onTypeVariable(java.util.function.BiFunction&lt;? super java.lang.reflect.TypeVariable&lt;?&gt;,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting a type variable.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -345,7 +345,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>onUnknownType</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onUnknownType(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="class in com.apriori.reflect">TypeVisitor.Builder</a>&lt;<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>,<a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>&gt;&nbsp;onUnknownType(java.util.function.BiFunction&lt;? super java.lang.reflect.Type,? super <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">P</a>,? extends <a href="../../../com/apriori/reflect/TypeVisitor.Builder.html" title="type parameter in TypeVisitor.Builder">R</a>&gt;&nbsp;action)</pre>
 <div class="block">Defines the action taken when visiting an unrecognized type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -398,7 +398,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/reflect/TypeVisitor.html" title="interface in com.apriori.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../com/apriori/reflect/UnknownTypeException.html" title="class in com.apriori.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/reflect/TypeVisitor.Builder.html" target="_top">Frames</a></li>

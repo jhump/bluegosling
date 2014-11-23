@@ -31,7 +31,7 @@ public interface PartialBiFunction<T, U, R> extends BiFunction<T, U, Optional<R>
     * applies the {@code after} function
     * @throws NullPointerException if after is null
     *
-    * @see #compose(Function)
+    * @see #andThen(Function)
     */
    default <V> PartialBiFunction<T, U, V> maybeThen(Function<? super R, ? extends V> after) {
        Objects.requireNonNull(after);
@@ -54,7 +54,7 @@ public interface PartialBiFunction<T, U, R> extends BiFunction<T, U, Optional<R>
     * applies the {@code after} function
     * @throws NullPointerException if after is null
     *
-    * @see #compose(Function)
+    * @see #andThen(Function)
     */
    default <V> PartialBiFunction<T, U, V> maybeThen(PartialFunction<? super R, ? extends V> after) {
        Objects.requireNonNull(after);

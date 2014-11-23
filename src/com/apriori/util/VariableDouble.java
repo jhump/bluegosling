@@ -42,7 +42,7 @@ public class VariableDouble extends Number implements Cloneable {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
    public double getAndSet(double v) {
@@ -54,7 +54,7 @@ public class VariableDouble extends Number implements Cloneable {
    /**
     * Sets this variable's value.
     * 
-    * @param value the new value
+    * @param v the new value
     */
    public void set(double v) {
       this.value = v;

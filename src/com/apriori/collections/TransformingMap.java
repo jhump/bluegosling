@@ -76,7 +76,7 @@ public class TransformingMap<KI, VI, KO, VO> implements Map<KO, VO> {
     * result using the given object as the key. This could result in {@link ClassCastException}
     * being thrown in some cases. For example, if a map contained keys of type {@code HashSet<T>},
     * and the given function requires input keys to also be {@code HashSet<T>}. In this case, if the
-    * map is queried using a {@link TreeSet<T>}, a mapping could be found even though the key is the
+    * map is queried using a {@code TreeSet<T>}, a mapping could be found even though the key is the
     * wrong type due to the specification for {@link Set#equals(Object)}, and an exception could
     * result.
     * 

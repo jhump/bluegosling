@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,10 +95,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;T&gt;</li>
+<li>java.util.AbstractCollection&lt;T&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.TreiberStack&lt;T&gt;</li>
@@ -116,12 +116,12 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;T&gt;, <a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;T&gt;, <a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;T&gt;, java.lang.Iterable&lt;T&gt;, java.util.Collection&lt;T&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">TreiberStack&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;T&gt;
+extends java.util.AbstractCollection&lt;T&gt;
 implements <a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;T&gt;</pre>
 <div class="block">A thread-safe stack. New elements are CAS'ed onto the head of a linked list. Elements are removed
  similarly: CAS'ing their predecessor to point at their successor.
@@ -131,7 +131,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
  used for waiter queues, where each element added is a parked thread.
  
  <p>This structure is safe to use concurrently from multiple threads. Iterators will never throw
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>s. However, a single iterator is not meant to be used by
+ <code>ConcurrentModificationException</code>s. However, a single iterator is not meant to be used by
  multiple concurrent threads and is thus not thread-safe. This collection supports all optional
  operations.
  
@@ -164,7 +164,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#TreiberStack-java.util.Collection-">TreiberStack</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#TreiberStack-java.util.Collection-">TreiberStack</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</code>
 <div class="block">Constructs a new collection with the specified initial contents.</div>
 </td>
 </tr>
@@ -189,11 +189,13 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#clear--">clear</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#clear--">clear</a></span>()</code>
+<div class="block">Removes all items from the stack.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#drainTo-java.util.Collection-">drainTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? super <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#drainTo-java.util.Collection-">drainTo</a></span>(java.util.Collection&lt;? super <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</code>
 <div class="block">Drains all elements from the stack and adds them to the given collection.</div>
 </td>
 </tr>
@@ -204,7 +206,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -233,7 +235,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/TreiberStack.html" title="class in com.apriori.collections">TreiberStack</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></td>
@@ -247,20 +249,26 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <div class="block">Determines the size of the sequence.</div>
 </td>
 </tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>java.util.Spliterator&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/TreiberStack.html#spliterator--">spliterator</a></span>()</code>
+<div class="block">Creates a spliterator over the elements described by this iterable.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractCollection">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractCollection</h3>
+<code>addAll, contains, containsAll, isEmpty, removeAll, retainAll, toArray, toArray, toString</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.Stack">
@@ -280,15 +288,15 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>equals, hashCode, parallelStream, removeIf, stream</code></li>
 </ul>
 </li>
 </ul>
@@ -320,7 +328,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TreiberStack</h4>
-<pre>public&nbsp;TreiberStack(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</pre>
+<pre>public&nbsp;TreiberStack(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</pre>
 <div class="block">Constructs a new collection with the specified initial contents.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -342,14 +350,14 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -364,9 +372,9 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <pre>public&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -376,12 +384,12 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -398,9 +406,9 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/SizedIterable.html#size--">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the number of elements in this sequence</dd>
 </dl>
@@ -422,6 +430,8 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dd><code><a href="../../../com/apriori/collections/Stack.html#push-T-">push</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the value to push</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Deque.push(Object)</code></dd>
 </dl>
 </li>
 </ul>
@@ -439,6 +449,8 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dd><code><a href="../../../com/apriori/collections/Stack.html#peek--">peek</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the most recently added item, or null if the stack is empty</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Deque.peek()</code></dd>
 </dl>
 </li>
 </ul>
@@ -456,7 +468,9 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the most recently added item</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the stack is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the stack is empty</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Deque.element()</code></dd>
 </dl>
 </li>
 </ul>
@@ -474,7 +488,9 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the most recently added item, removed from the stack</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if the stack is empty</dd>
+<dd><code>java.util.NoSuchElementException</code> - if the stack is empty</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Deque.pop()</code></dd>
 </dl>
 </li>
 </ul>
@@ -492,6 +508,8 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <dd><code><a href="../../../com/apriori/collections/Stack.html#poll--">poll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the most recently added item, removed from the stack; or null if the stack is empty</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Deque.poll()</code></dd>
 </dl>
 </li>
 </ul>
@@ -501,7 +519,7 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>drainTo</h4>
-<pre>public&nbsp;void&nbsp;drainTo(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? super <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</pre>
+<pre>public&nbsp;void&nbsp;drainTo(java.util.Collection&lt;? super <a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;coll)</pre>
 <div class="block">Drains all elements from the stack and adds them to the given collection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -530,17 +548,42 @@ implements <a href="../../../com/apriori/collections/Stack.html" title="interfac
 <a name="clear--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>clear</h4>
 <pre>public&nbsp;void&nbsp;clear()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/Stack.html#clear--">Stack</a></code></span></div>
+<div class="block">Removes all items from the stack.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/Stack.html#clear--">clear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/Stack.html" title="interface in com.apriori.collections">Stack</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="spliterator--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>spliterator</h4>
+<pre>public&nbsp;java.util.Spliterator&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;&nbsp;spliterator()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">SizedIterable</a></code></span></div>
+<div class="block">Creates a spliterator over the elements described by this iterable. Since this iterable has
+ information about the number of elements, it returns a spliterator with the
+ <code>Spliterator.SIZED</code> and <code>Spliterator.SUBSIZED</code> characteristics (but no others).</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>spliterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>spliterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/TreiberStack.html" title="type parameter in TreiberStack">T</a>&gt;</code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>Iterable.spliterator()</code></dd>
 </dl>
 </li>
 </ul>

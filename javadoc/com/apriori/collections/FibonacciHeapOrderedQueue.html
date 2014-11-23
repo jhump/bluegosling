@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/Cycles.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/DoubleInstanceLockedTreeMap.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -95,10 +95,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
+<li>java.util.AbstractCollection&lt;E&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.FibonacciHeapOrderedQueue&lt;E&gt;</li>
@@ -116,13 +116,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">FibonacciHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">FibonacciHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;E&gt;, java.io.Serializable, java.lang.Cloneable, java.lang.Iterable&lt;E&gt;, java.util.Collection&lt;E&gt;, java.util.Queue&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">FibonacciHeapOrderedQueue&lt;E&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;E&gt;
-implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">FibonacciHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
+extends java.util.AbstractCollection&lt;E&gt;
+implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">FibonacciHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, java.io.Serializable, java.lang.Cloneable</pre>
 <div class="block">A priority queue that supports merging of two queues and is backed by a Fibonacci heap.
  Insertion, merging, and finding the minimum (or maximum) value all run in constant time. Removing
  the minimum element runs in amortized logarithmic time (amortized because remove operations incur
@@ -130,7 +130,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
  operations but can cause worst case linear performance for a single operation). Other operations,
  like finding or removing arbitrary elements run in linear time.
  
- <p>This collection supports all optional operations of the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> interface. Removal of
+ <p>This collection supports all optional operations of the <code>Queue</code> interface. Removal of
  an element fetched by an iterator runs in logarithmic time worst case, constant time best case.
  
  <p>Iteration order for this collection is not defined other than the minimum element in the queue
@@ -182,17 +182,17 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Collection-">FibonacciHeapOrderedQueue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Collection-">FibonacciHeapOrderedQueue</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll)</code>
 <div class="block">Constructs a new queue whose contents are initialized to the elements in the specified
  collection.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Collection-java.util.Comparator-">FibonacciHeapOrderedQueue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll,
-                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Collection-java.util.Comparator-">FibonacciHeapOrderedQueue</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll,
+                         java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Comparator-">FibonacciHeapOrderedQueue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.Comparator-">FibonacciHeapOrderedQueue</a></span>(java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>
 <div class="block">Constructs a new empty queue.</div>
 </td>
 </tr>
@@ -203,13 +203,13 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.PriorityQueue-">FibonacciHeapOrderedQueue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util">PriorityQueue</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;queue)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.PriorityQueue-">FibonacciHeapOrderedQueue</a></span>(java.util.PriorityQueue&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;queue)</code>
 <div class="block">Constructs a new queue whose contents and comparator are initialized to those of the specified
  queue.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.SortedSet-">FibonacciHeapOrderedQueue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;set)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#FibonacciHeapOrderedQueue-java.util.SortedSet-">FibonacciHeapOrderedQueue</a></span>(java.util.SortedSet&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;set)</code>
 <div class="block">Constructs a new queue whose contents and comparator are initialized to those of the specified
  set.</div>
 </td>
@@ -242,7 +242,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#clone--">clone</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#comparator--">comparator</a></span>()</code>
 <div class="block">Returns the comparator used to sort elements in the queue.</div>
 </td>
@@ -252,7 +252,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#element--">element</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
@@ -286,15 +286,15 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractCollection">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractCollection</h3>
+<code>addAll, contains, containsAll, isEmpty, remove, removeAll, retainAll, toArray, toArray, toString</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.OrderedQueue">
@@ -307,15 +307,15 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>addAll, contains, containsAll, equals, hashCode, isEmpty, parallelStream, remove, removeAll, removeIf, retainAll, spliterator, stream, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -338,7 +338,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
 <pre>public&nbsp;FibonacciHeapOrderedQueue()</pre>
-<div class="block">Constructs a new empty queue. Elements will be compared using their <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.</div>
+<div class="block">Constructs a new empty queue. Elements will be compared using their natural ordering.</div>
 </li>
 </ul>
 <a name="FibonacciHeapOrderedQueue-java.util.Comparator-">
@@ -347,7 +347,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
-<pre>public&nbsp;FibonacciHeapOrderedQueue(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
+<pre>public&nbsp;FibonacciHeapOrderedQueue(java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
 <div class="block">Constructs a new empty queue. Elements will be compared using the specified comparator.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -361,9 +361,9 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
-<pre>public&nbsp;FibonacciHeapOrderedQueue(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll)</pre>
+<pre>public&nbsp;FibonacciHeapOrderedQueue(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll)</pre>
 <div class="block">Constructs a new queue whose contents are initialized to the elements in the specified
- collection. The elements will be compared using their <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a>.</div>
+ collection. The elements will be compared using their natural ordering.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>coll</code> - a collection of elements that will be in the constructed queue</dd>
@@ -376,8 +376,8 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
-<pre>public&nbsp;FibonacciHeapOrderedQueue(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll,
-                                 <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
+<pre>public&nbsp;FibonacciHeapOrderedQueue(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;coll,
+                                 java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
 </li>
 </ul>
 <a name="FibonacciHeapOrderedQueue-com.apriori.collections.FibonacciHeapOrderedQueue-">
@@ -401,7 +401,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
-<pre>public&nbsp;FibonacciHeapOrderedQueue(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util">PriorityQueue</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;queue)</pre>
+<pre>public&nbsp;FibonacciHeapOrderedQueue(java.util.PriorityQueue&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;queue)</pre>
 <div class="block">Constructs a new queue whose contents and comparator are initialized to those of the specified
  queue.</div>
 <dl>
@@ -416,7 +416,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FibonacciHeapOrderedQueue</h4>
-<pre>public&nbsp;FibonacciHeapOrderedQueue(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;set)</pre>
+<pre>public&nbsp;FibonacciHeapOrderedQueue(java.util.SortedSet&lt;? extends <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;set)</pre>
 <div class="block">Constructs a new queue whose contents and comparator are initialized to those of the specified
  set.</div>
 <dl>
@@ -439,9 +439,9 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comparator()</pre>
+<pre>public&nbsp;java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;comparator()</pre>
 <div class="block">Returns the comparator used to sort elements in the queue. If no comparator is used and
- elements are sorted according to their <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural ordering</a> then
+ elements are sorted according to their natural ordering then
  <code>null</code> is returned.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -460,9 +460,9 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -472,14 +472,14 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -492,9 +492,9 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -509,11 +509,11 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.AbstractCollection&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -528,7 +528,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;boolean&nbsp;offer(<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#offer-E-" title="class or interface in java.util">offer</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>offer</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -541,7 +541,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;remove()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -554,7 +554,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;poll()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util">poll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>poll</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -567,7 +567,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;element()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#element--" title="class or interface in java.util">element</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>element</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -580,7 +580,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&nbsp;peek()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#peek--" title="class or interface in java.util">peek</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code>peek</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -624,7 +624,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="class in com.apriori.collections">FibonacciHeapOrderedQueue</a>&lt;<a href="../../../com/apriori/collections/FibonacciHeapOrderedQueue.html" title="type parameter in FibonacciHeapOrderedQueue">E</a>&gt;&nbsp;clone()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>clone</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
@@ -655,7 +655,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/collections/Cycles.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/DoubleInstanceLockedTreeMap.html" title="class in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

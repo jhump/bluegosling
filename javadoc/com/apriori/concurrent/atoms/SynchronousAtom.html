@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":18,"i1":18,"i2":6,"i3":6,"i4":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -142,21 +142,41 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="inte
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply-java.util.function.Function-">apply</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</code>
-<div class="block">Applies a function to the atom's value.</div>
+<td class="colFirst"><code>default <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet</a></span>(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;t,
+                java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Combines the atom's value with the given value, using the given function.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate</a></span>(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;t,
+                java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Combines the atom's value with the given value, using the given function.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set-T-">set</a></span>(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;value)</code>
-<div class="block">Updates the atom's value to the one specified.</div>
+<div class="block">Sets the atom's value to the one specified and returns the previous value.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
 </td>
 </tr>
 </table>
@@ -190,8 +210,8 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="inte
 <li class="blockList">
 <h4>set</h4>
 <pre><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;set(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;value)</pre>
-<div class="block">Updates the atom's value to the one specified. Upon changing the value, watchers will be
- notified.</div>
+<div class="block">Sets the atom's value to the one specified and returns the previous value. Upon changing the
+ value, watchers will be notified.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the atom's new value</dd>
@@ -200,13 +220,13 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="inte
 </dl>
 </li>
 </ul>
-<a name="apply-java.util.function.Function-">
+<a name="updateAndGet-java.util.function.Function-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
-<h4>apply</h4>
-<pre><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;apply(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<h4>updateAndGet</h4>
+<pre><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;updateAndGet(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
  specified function to the atom's current value. Watchers are notified when the value is
  changed.</div>
@@ -215,6 +235,66 @@ extends <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="inte
 <dd><code>function</code> - the function to apply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the atom's new value</dd>
+</dl>
+</li>
+</ul>
+<a name="getAndUpdate-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAndUpdate</h4>
+<pre><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;getAndUpdate(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
+ specified function to the atom's current value. Watchers are notified when the value is
+ changed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the atom's previous value</dd>
+</dl>
+</li>
+</ul>
+<a name="accumulateAndGet-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="accumulateAndGet-T-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>accumulateAndGet</h4>
+<pre>default&nbsp;<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;accumulateAndGet(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;t,
+                           java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Combines the atom's value with the given value, using the given function. The atom's new value
+ is the result of applying the function. Watchers are notified when the value is changed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>t</code> - the value to combine</dd>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the atom's new value</dd>
+</dl>
+</li>
+</ul>
+<a name="getAndAccumulate-java.lang.Object-java.util.function.BiFunction-">
+<!--   -->
+</a><a name="getAndAccumulate-T-java.util.function.BiFunction-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getAndAccumulate</h4>
+<pre>default&nbsp;<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;getAndAccumulate(<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&nbsp;t,
+                           java.util.function.BiFunction&lt;? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? super <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="type parameter in SynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Combines the atom's value with the given value, using the given function. The atom's new value
+ is the result of applying the function. Watchers are notified when the value is changed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>t</code> - the value to combine</dd>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the atom's previous value</dd>
 </dl>
 </li>
 </ul>

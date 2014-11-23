@@ -97,7 +97,7 @@
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;T&gt;, <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;</dd>
+<dd>java.util.concurrent.BlockingQueue&lt;T&gt;, java.util.Collection&lt;T&gt;, java.lang.Iterable&lt;T&gt;, java.util.Queue&lt;T&gt;, <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;</dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -106,8 +106,8 @@
 <hr>
 <br>
 <pre>public static interface <span class="typeNameLabel">SharedCapacityDequeFactory.CloseableBlockingQueue&lt;T&gt;</span>
-extends <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;T&gt;</pre>
-<div class="block">A <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingQueue</code></a> that can be closed.</div>
+extends <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections">SharedCapacityDequeFactory.CloseableQueue</a>&lt;T&gt;, java.util.concurrent.BlockingQueue&lt;T&gt;</pre>
+<div class="block">A <code>BlockingQueue</code> that can be closed.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/collections/SharedCapacityDequeFactory.CloseableQueue.html" title="interface in com.apriori.collections"><code>SharedCapacityDequeFactory.CloseableQueue</code></a></dd>
@@ -135,29 +135,29 @@ extends <a href="../../../com/apriori/collections/SharedCapacityDequeFactory.Clo
 <li class="blockList"><a name="methods.inherited.from.class.java.util.concurrent.BlockingQueue">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.concurrent.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#add-E-" title="class or interface in java.util.concurrent">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util.concurrent">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#drainTo-java.util.Collection-" title="class or interface in java.util.concurrent">drainTo</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#drainTo-java.util.Collection-int-" title="class or interface in java.util.concurrent">drainTo</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#offer-E-" title="class or interface in java.util.concurrent">offer</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#offer-E-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">offer</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#poll-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">poll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#put-E-" title="class or interface in java.util.concurrent">put</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#remainingCapacity--" title="class or interface in java.util.concurrent">remainingCapacity</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util.concurrent">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#take--" title="class or interface in java.util.concurrent">take</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.concurrent.BlockingQueue</h3>
+<code>add, contains, drainTo, drainTo, offer, offer, poll, put, remainingCapacity, remove, take</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Queue">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#element--" title="class or interface in java.util">element</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#peek--" title="class or interface in java.util">peek</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util">poll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Queue</h3>
+<code>element, peek, poll, remove</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>addAll, clear, containsAll, equals, hashCode, isEmpty, iterator, parallelStream, removeAll, removeIf, retainAll, size, spliterator, stream, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>

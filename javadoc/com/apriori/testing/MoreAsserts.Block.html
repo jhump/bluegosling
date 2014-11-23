@@ -101,9 +101,15 @@ var activeTableTab = "activeTableTab";
 <dt>Enclosing class:</dt>
 <dd><a href="../../../com/apriori/testing/MoreAsserts.html" title="class in com.apriori.testing">MoreAsserts</a></dd>
 </dl>
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
 <br>
-<pre>public static interface <span class="typeNameLabel">MoreAsserts.Block</span></pre>
+<pre>@FunctionalInterface
+public static interface <span class="typeNameLabel">MoreAsserts.Block</span></pre>
+<div class="block">Like a <code>Runnable</code>, except it's allowed to throw anything.</div>
 </li>
 </ul>
 </div>
@@ -148,10 +154,10 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>run</h4>
 <pre>void&nbsp;run()
-  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+  throws java.lang.Throwable</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+<dd><code>java.lang.Throwable</code></dd>
 </dl>
 </li>
 </ul>

@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.tuples.Pair&lt;A,B&gt;</li>
@@ -112,13 +112,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>, <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;A&gt;, <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;A,B&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</dd>
+<dd><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a>, <a href="../../../com/apriori/tuples/Tuple.Ops1.html" title="interface in com.apriori.tuples">Tuple.Ops1</a>&lt;A&gt;, <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;A,B&gt;, java.io.Serializable, java.lang.Iterable&lt;java.lang.Object&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Pair&lt;A,B&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;A,B&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+extends java.lang.Object
+implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interface in com.apriori.tuples">Tuple.Ops2</a>&lt;A,B&gt;, java.io.Serializable</pre>
 <div class="block">A tuple with two items.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -164,39 +164,39 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;?&gt;</code></td>
+<td class="colFirst"><code>java.util.List&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#asList--">asList</a></span>()</code>
 <div class="block">Returns a view of this tuple as a list.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;java.util.List&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#asTypedList-com.apriori.tuples.Pair-">asTypedList</a></span>(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends T,? extends T&gt;&nbsp;pair)</code>
 <div class="block">Returns a list with a tighter upper bound than <a href="../../../com/apriori/tuples/Tuple.html#asList--"><code>Tuple.asList()</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>&lt;C&gt;&nbsp;C</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-java.util.function.BiFunction-">combine</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends C&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-java.util.function.BiFunction-">combine</a></span>(java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends C&gt;&nbsp;function)</code>
 <div class="block">Combines the two values in this pair into a single result using the specified function.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-java.util.Collection-java.util.Collection-">combine</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;&nbsp;t,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;U&gt;&nbsp;u)</code>
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;java.util.List&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-java.util.Collection-java.util.Collection-">combine</a></span>(java.util.Collection&lt;T&gt;&nbsp;t,
+       java.util.Collection&lt;U&gt;&nbsp;u)</code>
 <div class="block">Combines two collections into a collection of pairs.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-com.apriori.tuples.Pair-">combine</a></span>(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;U&gt;&gt;&nbsp;pair)</code>
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;java.util.List&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#combine-com.apriori.tuples.Pair-">combine</a></span>(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends java.util.Collection&lt;T&gt;,? extends java.util.Collection&lt;U&gt;&gt;&nbsp;pair)</code>
 <div class="block">Combines a pair of collections into a collection of pairs.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#contains-java.lang.Object-">contains</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#contains-java.lang.Object-">contains</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Determines if this tuple contains the specified object.</div>
 </td>
 </tr>
@@ -209,7 +209,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>
 <div class="block">Compares this tuple with the specified object.</div>
 </td>
 </tr>
@@ -256,7 +256,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Iterator&lt;java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -272,8 +272,8 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;U&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#separate-java.util.Collection-">separate</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;pairs)</code>
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;java.util.List&lt;T&gt;,java.util.List&lt;U&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#separate-java.util.Collection-">separate</a></span>(java.util.Collection&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;pairs)</code>
 <div class="block">Separates the values in a collection of pairs to produce a pair of collections.</div>
 </td>
 </tr>
@@ -297,12 +297,12 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#test-java.util.function.BiPredicate-">test</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiPredicate.html?is-external=true" title="class or interface in java.util.function">BiPredicate</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#test-java.util.function.BiPredicate-">test</a></span>(java.util.function.BiPredicate&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;predicate)</code>
 <div class="block">Tests the pair of values using the specified predicate.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
+<td class="colFirst"><code>java.lang.Object[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#toArray--">toArray</a></span>()</code>
 <div class="block">Returns an array of the items in this tuple.</div>
 </td>
@@ -314,24 +314,24 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 </td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformAll-java.util.function.Function-">transformAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformAll-java.util.function.Function-">transformAll</a></span>(java.util.function.Function&lt;java.lang.Object,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformFirst-java.util.function.Function-">transformFirst</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? extends T&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformFirst-java.util.function.Function-">transformFirst</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the first item in the tuple using the specified function.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformSecond-java.util.function.Function-">transformSecond</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends T&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/tuples/Pair.html#transformSecond-java.util.function.Function-">transformSecond</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends T&gt;&nbsp;function)</code>
 <div class="block">Transforms the second item in the tuple using the specified function.</div>
 </td>
 </tr>
@@ -340,8 +340,8 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.tuples.Tuple">
@@ -354,8 +354,8 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach, iterator, spliterator</code></li>
 </ul>
 </li>
 </ul>
@@ -377,7 +377,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>asTypedList</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;asTypedList(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends T,? extends T&gt;&nbsp;pair)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;asTypedList(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends T,? extends T&gt;&nbsp;pair)</pre>
 <div class="block">Returns a list with a tighter upper bound than <a href="../../../com/apriori/tuples/Tuple.html#asList--"><code>Tuple.asList()</code></a>.
  
  <p>Due to limitations in expressiveness of lower bounds and wildcards in Java's generic type
@@ -396,7 +396,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>separate</h4>
-<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;U&gt;&gt;&nbsp;separate(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;pairs)</pre>
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;java.util.List&lt;T&gt;,java.util.List&lt;U&gt;&gt;&nbsp;separate(java.util.Collection&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;pairs)</pre>
 <div class="block">Separates the values in a collection of pairs to produce a pair of collections. The returned
  lists will have the same size as the specified collection and items will be in the same order
  as returned by iteration over the specified collection (e.g. the first items in the returned
@@ -415,7 +415,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>combine</h4>
-<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;combine(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;U&gt;&gt;&nbsp;pair)</pre>
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;java.util.List&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;combine(<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;? extends java.util.Collection&lt;T&gt;,? extends java.util.Collection&lt;U&gt;&gt;&nbsp;pair)</pre>
 <div class="block">Combines a pair of collections into a collection of pairs. The returned list will have the
  same size as the specified collections and items will be in the same order as returned by
  iteration over the specified collections (e.g. the first pair in the returned list is a pair
@@ -426,7 +426,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a list of pairs, each one representing corresponding values from the collections</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two collections have different sizes</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the two collections have different sizes</dd>
 </dl>
 </li>
 </ul>
@@ -436,8 +436,8 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>combine</h4>
-<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;combine(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;T&gt;&nbsp;t,
-                                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;U&gt;&nbsp;u)</pre>
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;java.util.List&lt;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,U&gt;&gt;&nbsp;combine(java.util.Collection&lt;T&gt;&nbsp;t,
+                                                      java.util.Collection&lt;U&gt;&nbsp;u)</pre>
 <div class="block">Combines two collections into a collection of pairs. The returned list will have the
  same size as the specified collections and items will be in the same order as returned by
  iteration over the specified collections (e.g. the first pair in the returned list is a pair
@@ -449,7 +449,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a list of pairs, each one representing corresponding values from the collections</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two collections have different sizes</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the two collections have different sizes</dd>
 </dl>
 </li>
 </ul>
@@ -479,7 +479,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;contains(java.lang.Object&nbsp;o)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#contains-java.lang.Object-">Tuple</a></code></span></div>
 <div class="block">Determines if this tuple contains the specified object. The tuple contains the object if any
  of the tuple's items is equal to the object. (An item <code>e1</code> is <em>equal</em> to an
@@ -568,7 +568,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>toArray</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
+<pre>public&nbsp;java.lang.Object[]&nbsp;toArray()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#toArray--">Tuple</a></code></span></div>
 <div class="block">Returns an array of the items in this tuple. The first item in the array is the first item in
  the tuple, and so on.</div>
@@ -780,7 +780,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transformAll</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,T&gt;&nbsp;transformAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends T&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,T&gt;&nbsp;transformAll(java.util.function.Function&lt;java.lang.Object,? extends T&gt;&nbsp;function)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#transformAll-java.util.function.Function-">Tuple</a></code></span></div>
 <div class="block">Transforms every item in this tuple by applying the specified function to each one. Since
  tuples are immutable, a new tuple is returned. The returned tuple will have the same number of
@@ -806,7 +806,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transformFirst</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;transformFirst(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? extends T&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;T,<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;transformFirst(java.util.function.Function&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? extends T&gt;&nbsp;function)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.Ops1.html#transformFirst-java.util.function.Function-">Tuple.Ops1</a></code></span></div>
 <div class="block">Transforms the first item in the tuple using the specified function. Other items in the
  tuple are unchanged. Since tuples are immutable, this returns a new tuple.</div>
@@ -829,7 +829,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>transformSecond</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,T&gt;&nbsp;transformSecond(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends T&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a>&lt;<a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,T&gt;&nbsp;transformSecond(java.util.function.Function&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends T&gt;&nbsp;function)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.Ops2.html#transformSecond-java.util.function.Function-">Tuple.Ops2</a></code></span></div>
 <div class="block">Transforms the second item in the tuple using the specified function. Other items in the
  tuple are unchanged. Since tuples are immutable, this returns a new tuple.</div>
@@ -850,7 +850,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>combine</h4>
-<pre>public&nbsp;&lt;C&gt;&nbsp;C&nbsp;combine(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends C&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;C&gt;&nbsp;C&nbsp;combine(java.util.function.BiFunction&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>,? extends C&gt;&nbsp;function)</pre>
 <div class="block">Combines the two values in this pair into a single result using the specified function.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -866,7 +866,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>test</h4>
-<pre>public&nbsp;boolean&nbsp;test(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiPredicate.html?is-external=true" title="class or interface in java.util.function">BiPredicate</a>&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;predicate)</pre>
+<pre>public&nbsp;boolean&nbsp;test(java.util.function.BiPredicate&lt;? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">A</a>,? super <a href="../../../com/apriori/tuples/Pair.html" title="type parameter in Pair">B</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Tests the pair of values using the specified predicate.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -882,10 +882,10 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;java.util.Iterator&lt;java.lang.Object&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></dd>
+<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;java.lang.Object&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -895,7 +895,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>asList</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;?&gt;&nbsp;asList()</pre>
+<pre>public&nbsp;java.util.List&lt;?&gt;&nbsp;asList()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#asList--">Tuple</a></code></span></div>
 <div class="block">Returns a view of this tuple as a list.</div>
 <dl>
@@ -933,7 +933,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an array of the items in this tuple</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util"><code>Collection.toArray(Object[])</code></a></dd>
+<dd><code>Collection.toArray(Object[])</code></dd>
 </dl>
 </li>
 </ul>
@@ -943,7 +943,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#equals-java.lang.Object-">Tuple</a></code></span></div>
 <div class="block">Compares this tuple with the specified object. If the specified object is also a <a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples"><code>Tuple</code></a>
  and has the same items as this tuple in the same order, then this tuple is equal to the
@@ -953,7 +953,7 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/tuples/Tuple.html#equals-java.lang.Object-">equals</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>o</code> - the object to which this tuple is compared</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -971,12 +971,12 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html#hashCode--">Tuple</a></code></span></div>
 <div class="block">Returns the hash code value for this tuple. The hash code should be computed like so:
  <code>Arrays.hashCode(tuple.toArray())</code>. This is effectively the same as
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util"><code>List.hashCode()</code></a> for a list with the same items and in the same order as this tuple.</div>
+ <code>List.hashCode()</code> for a list with the same items and in the same order as this tuple.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/tuples/Tuple.html#hashCode--">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the hash code for this tuple</dd>
 </dl>
@@ -988,10 +988,10 @@ implements <a href="../../../com/apriori/tuples/Tuple.Ops2.html" title="interfac
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>

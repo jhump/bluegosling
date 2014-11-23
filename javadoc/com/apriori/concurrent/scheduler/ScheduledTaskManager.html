@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.scheduler.ScheduledTaskManager</li>
@@ -107,18 +107,18 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>, <a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></dd>
+<dd><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>, <a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>, java.util.concurrent.Executor, java.util.concurrent.ExecutorService, java.util.concurrent.ScheduledExecutorService</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">ScheduledTaskManager</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+extends java.lang.Object
 implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></pre>
-<div class="block">An extension and enhancement to the API provided by <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>.
+<div class="block">An extension and enhancement to the API provided by <code>ScheduledExecutorService</code>.
  
  <p>This implementation provides greater configurability over scheduled tasks and greater
  optics into the results of executions of the tasks. It is API-compatible with the standard
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>, so it should behave the same if using only the standard API
+ <code>ScheduledExecutorService</code>, so it should behave the same if using only the standard API
  and not any of the extensions herein.
  
  <h3>Key Interfaces</h3>
@@ -134,13 +134,13 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
   <dt><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a></dt>
     <dd>A single invocation of a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTaskDefinition</code></a>. If the task is defined as a
     repeating task, there will be multiple such invocations of this task over time. This interface
-    is also a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> and is returned when submitting scheduled tasks to the
+    is also a <code>ScheduledFuture</code> and is returned when submitting scheduled tasks to the
     executor service.</dd>
   <dt><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>RepeatingScheduledTask</code></a></dt>
     <dd>Represents all invocations of a repeating <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTaskDefinition</code></a>. This is for
-    API and behavioral compatibility with the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a>s returned by the standard
-    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService.scheduleAtFixedRate(Runnable, long, long, TimeUnit)</code></a> and
-    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService.scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</code></a>
+    API and behavioral compatibility with the <code>ScheduledFuture</code>s returned by the standard
+    <code>ScheduledExecutorService.scheduleAtFixedRate(Runnable, long, long, TimeUnit)</code> and
+    <code>ScheduledExecutorService.scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</code>
     methods.</dd>
  </dl>
  
@@ -154,7 +154,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
  <ul>
     <li>Asynchronous processing using <a href="../../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a>s. All of the futures returned by
     this service are instances of <a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>, which has a broader and more usable
-    API than the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a>, including the ability to add listeners to process
+    API than the standard <code>Future</code>, including the ability to add listeners to process
     results asynchronously.</li>
     <li>Greater control over repeated occurrences and how they are scheduled. Instead of a task
     either always repeating (unless an invocation fails) or never repeating (unless the logic
@@ -166,12 +166,12 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
     wait for all invocations to finish (which generally only happens after an invocation fails)
     or cancel all subsequent invocations, this API provides granularity at individual task level.
     You can <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#addListener-com.apriori.concurrent.scheduler.ScheduledTaskListener-">listen</a> for
-    completions of any and all invocations. You can also <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#cancel-boolean-" title="class or interface in java.util.concurrent">cancel</a> individual invocations of a task.</li>
+    completions of any and all invocations. You can also cancel individual invocations of a task.</li>
     <li>Greater job control. As mentioned above, you can cancel individual occurrences of a task
     instead of canceling the entire job. You can also <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#pause--">pause</a> execution of a task temporarily. This does not attempt to suspend any thread currently
     executing the task, but simply stops scheduling future instances of the job until the task
     is <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#resume--">resumed</a>.</li>
-    <li>Exception handling. You can specify an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for each task to
+    <li>Exception handling. You can specify an <code>Thread.UncaughtExceptionHandler</code> for each task to
     handle job failures. This, combined with a <a href="../../../../com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduleNextTaskPolicy</code></a>, provides much more
     flexibility in handling exceptions thrown by task invocations.</li>
     <li>Job History. In addition to listening for task completions, you can access the results of
@@ -202,22 +202,22 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#ScheduledTaskManager-int-java.util.concurrent.RejectedExecutionHandler-">ScheduledTaskManager</a></span>(int&nbsp;numThreads,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionHandler.html?is-external=true" title="class or interface in java.util.concurrent">RejectedExecutionHandler</a>&nbsp;rejectedHandler)</code>
+                    java.util.concurrent.RejectedExecutionHandler&nbsp;rejectedHandler)</code>
 <div class="block">Constructs a new task manager with the specified number of threads and specified rejection
  handler.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#ScheduledTaskManager-int-java.util.concurrent.ThreadFactory-">ScheduledTaskManager</a></span>(int&nbsp;numThreads,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory)</code>
+                    java.util.concurrent.ThreadFactory&nbsp;threadFactory)</code>
 <div class="block">Constructs a new task manager with the specified number of threads and specified thread
  factory.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#ScheduledTaskManager-int-java.util.concurrent.ThreadFactory-java.util.concurrent.RejectedExecutionHandler-">ScheduledTaskManager</a></span>(int&nbsp;numThreads,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionHandler.html?is-external=true" title="class or interface in java.util.concurrent">RejectedExecutionHandler</a>&nbsp;rejectedHandler)</code>
+                    java.util.concurrent.ThreadFactory&nbsp;threadFactory,
+                    java.util.concurrent.RejectedExecutionHandler&nbsp;rejectedHandler)</code>
 <div class="block">Constructs a new task manager with the specified number of threads, specified thread factory,
  and specified rejection handler.</div>
 </td>
@@ -240,31 +240,31 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#awaitTermination-long-java.util.concurrent.TimeUnit-">awaitTermination</a></span>(long&nbsp;timeout,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                java.util.concurrent.TimeUnit&nbsp;unit)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#execute-java.lang.Runnable-">execute</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#execute-java.lang.Runnable-">execute</a></span>(java.lang.Runnable&nbsp;task)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAll-java.util.Collection-">invokeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks)</code></td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;java.util.List&lt;java.util.concurrent.Future&lt;T&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAll-java.util.Collection-">invokeAll</a></span>(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks)</code></td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks,
+<td class="colFirst"><code>&lt;T&gt;&nbsp;java.util.List&lt;java.util.concurrent.Future&lt;T&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</a></span>(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks,
          long&nbsp;timeout,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
+         java.util.concurrent.TimeUnit&nbsp;unit)</code></td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAny-java.util.Collection-">invokeAny</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAny-java.util.Collection-">invokeAny</a></span>(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAny-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAny</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#invokeAny-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAny</a></span>(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks,
          long&nbsp;timeout,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+         java.util.concurrent.TimeUnit&nbsp;unit)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -276,17 +276,17 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></span>(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
         long&nbsp;delay,
-        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+        java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Schedules the specified task for execution.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;java.lang.Void&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></span>(java.lang.Runnable&nbsp;task,
         long&nbsp;delay,
-        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+        java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Schedules the specified task for execution.</div>
 </td>
 </tr>
@@ -298,55 +298,55 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></span>(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
                    long&nbsp;initialDelay,
                    long&nbsp;period,
-                   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+                   java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Schedules the specified task for periodic execution.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;java.lang.Void&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></span>(java.lang.Runnable&nbsp;task,
                    long&nbsp;initialDelay,
                    long&nbsp;period,
-                   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
+                   java.util.concurrent.TimeUnit&nbsp;unit)</code></td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></span>(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
                       long&nbsp;initialDelay,
                       long&nbsp;delay,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+                      java.util.concurrent.TimeUnit&nbsp;unit)</code>
 <div class="block">Schedules the specified task for repeated execution.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;java.lang.Void&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></span>(java.lang.Runnable&nbsp;task,
                       long&nbsp;initialDelay,
                       long&nbsp;delay,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code></td>
+                      java.util.concurrent.TimeUnit&nbsp;unit)</code></td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#shutdown--">shutdown</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.List&lt;java.lang.Runnable&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#shutdownNow--">shutdownNow</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.util.concurrent.Callable-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.util.concurrent.Callable-">submit</a></span>(java.util.concurrent.Callable&lt;V&gt;&nbsp;task)</code></td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code></td>
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;java.lang.Void&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-">submit</a></span>(java.lang.Runnable&nbsp;task)</code></td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-V-">submit</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-V-">submit</a></span>(java.lang.Runnable&nbsp;task,
       V&nbsp;result)</code></td>
 </tr>
 </table>
@@ -354,8 +354,8 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.ListenableExecutorService">
@@ -399,7 +399,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <li class="blockList">
 <h4>ScheduledTaskManager</h4>
 <pre>public&nbsp;ScheduledTaskManager(int&nbsp;numThreads,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory)</pre>
+                            java.util.concurrent.ThreadFactory&nbsp;threadFactory)</pre>
 <div class="block">Constructs a new task manager with the specified number of threads and specified thread
  factory.</div>
 <dl>
@@ -416,8 +416,8 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <li class="blockList">
 <h4>ScheduledTaskManager</h4>
 <pre>public&nbsp;ScheduledTaskManager(int&nbsp;numThreads,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadFactory.html?is-external=true" title="class or interface in java.util.concurrent">ThreadFactory</a>&nbsp;threadFactory,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionHandler.html?is-external=true" title="class or interface in java.util.concurrent">RejectedExecutionHandler</a>&nbsp;rejectedHandler)</pre>
+                            java.util.concurrent.ThreadFactory&nbsp;threadFactory,
+                            java.util.concurrent.RejectedExecutionHandler&nbsp;rejectedHandler)</pre>
 <div class="block">Constructs a new task manager with the specified number of threads, specified thread factory,
  and specified rejection handler.</div>
 <dl>
@@ -436,7 +436,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <li class="blockList">
 <h4>ScheduledTaskManager</h4>
 <pre>public&nbsp;ScheduledTaskManager(int&nbsp;numThreads,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionHandler.html?is-external=true" title="class or interface in java.util.concurrent">RejectedExecutionHandler</a>&nbsp;rejectedHandler)</pre>
+                            java.util.concurrent.RejectedExecutionHandler&nbsp;rejectedHandler)</pre>
 <div class="block">Constructs a new task manager with the specified number of threads and specified rejection
  handler.</div>
 <dl>
@@ -461,9 +461,9 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>schedule</h4>
-<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;schedule(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;schedule(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
                                      long&nbsp;delay,
-                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+                                     java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for execution. If the specified delay is zero or negative, it is
  scheduled for immediate execution. The returned object will not only be a listenable future,
  it will be a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
@@ -471,7 +471,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
+<dd><code>schedule</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ScheduledExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -481,9 +481,9 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>schedule</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;schedule(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                    long&nbsp;delay,
-                                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;java.lang.Void&gt;&nbsp;schedule(java.lang.Runnable&nbsp;task,
+                                              long&nbsp;delay,
+                                              java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for execution. If the specified delay is zero or negative, it is
  scheduled for immediate execution. The returned object will not only be a listenable future,
  it will be a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
@@ -491,7 +491,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
+<dd><code>schedule</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ScheduledExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -501,10 +501,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>scheduleAtFixedRate</h4>
-<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;&nbsp;scheduleAtFixedRate(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;&nbsp;scheduleAtFixedRate(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
                                                          long&nbsp;initialDelay,
                                                          long&nbsp;period,
-                                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+                                                         java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for periodic execution. If the specified initial delay is zero or
  negative, it is scheduled for immediate execution. The task will execute at a fixed rate per
  the specified period, but never more than a single instance will be executing at a given time.
@@ -513,7 +513,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
  completes.
  
  <p>This is very similar to <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-"><code>scheduleAtFixedRate(Runnable, long, long, TimeUnit)</code></a>, which
- is API provided by <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>. But this version can run a callable that
+ is API provided by <code>ScheduledExecutorService</code>. But this version can run a callable that
  produces a value. The returned future has additional methods for inspecting the results
  produced by past executions.</div>
 <dl>
@@ -526,8 +526,8 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dd>a listenable scheduled future that can be used to inspect the task's state and past
        results</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>period</code> is non-positive</dd>
+<dd><code>java.lang.NullPointerException</code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if <code>period</code> is non-positive</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-"><code>scheduleAtFixedRate(Runnable, long, long, TimeUnit)</code></a></dd>
 </dl>
@@ -539,10 +539,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>scheduleAtFixedRate</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;scheduleAtFixedRate(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                                        long&nbsp;initialDelay,
-                                                        long&nbsp;period,
-                                                        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;java.lang.Void&gt;&nbsp;scheduleAtFixedRate(java.lang.Runnable&nbsp;task,
+                                                                  long&nbsp;initialDelay,
+                                                                  long&nbsp;period,
+                                                                  java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ListenableScheduledExecutorService</a></code></span></div>
 <div class="block">
  
@@ -551,7 +551,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
+<dd><code>scheduleAtFixedRate</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ScheduledExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -561,16 +561,16 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>scheduleWithFixedDelay</h4>
-<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;&nbsp;scheduleWithFixedDelay(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task,
+<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;V&gt;&nbsp;scheduleWithFixedDelay(java.util.concurrent.Callable&lt;V&gt;&nbsp;task,
                                                             long&nbsp;initialDelay,
                                                             long&nbsp;delay,
-                                                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+                                                            java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for repeated execution. If the specified initial delay is zero or
  negative, it is scheduled for immediate execution. The task will execute with a fixed delay
  between invocations.
  
  <p>This is very similar to <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-"><code>scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</code></a>,
- which is API provided by <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>. But this version can run a callable
+ which is API provided by <code>ScheduledExecutorService</code>. But this version can run a callable
  that produces a value. The returned future has additional methods for inspecting the results
  produced by past executions.</div>
 <dl>
@@ -583,8 +583,8 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dd>a listenable scheduled future that can be used to inspect the task's state and past
        results</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>delay</code> is non-positive</dd>
+<dd><code>java.lang.NullPointerException</code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if <code>delay</code> is non-positive</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-"><code>scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</code></a></dd>
 </dl>
@@ -596,10 +596,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>scheduleWithFixedDelay</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;scheduleWithFixedDelay(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                                           long&nbsp;initialDelay,
-                                                           long&nbsp;delay,
-                                                           <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">RepeatingScheduledTask</a>&lt;java.lang.Void&gt;&nbsp;scheduleWithFixedDelay(java.lang.Runnable&nbsp;task,
+                                                                     long&nbsp;initialDelay,
+                                                                     long&nbsp;delay,
+                                                                     java.util.concurrent.TimeUnit&nbsp;unit)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ListenableScheduledExecutorService</a></code></span></div>
 <div class="block">
  
@@ -608,7 +608,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
+<dd><code>scheduleWithFixedDelay</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ScheduledExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -621,7 +621,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <pre>public&nbsp;void&nbsp;shutdown()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#shutdown--" title="class or interface in java.util.concurrent">shutdown</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>shutdown</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -631,10 +631,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>shutdownNow</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;&nbsp;shutdownNow()</pre>
+<pre>public&nbsp;java.util.List&lt;java.lang.Runnable&gt;&nbsp;shutdownNow()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#shutdownNow--" title="class or interface in java.util.concurrent">shutdownNow</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>shutdownNow</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -644,7 +644,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>submit</h4>
-<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;submit(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task)</pre>
+<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;submit(java.util.concurrent.Callable&lt;V&gt;&nbsp;task)</pre>
 <div class="block">
  
  <p>Overrides the return type to be listenable.
@@ -656,7 +656,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.util.concurrent.Callable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.util.concurrent.Callable-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>submit</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -666,7 +666,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>submit</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;submit(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;java.lang.Void&gt;&nbsp;submit(java.lang.Runnable&nbsp;task)</pre>
 <div class="block">
  
  <p>Overrides the return type to be listenable.
@@ -678,7 +678,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.lang.Runnable-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>submit</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -690,7 +690,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>submit</h4>
-<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;submit(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+<pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;submit(java.lang.Runnable&nbsp;task,
                                    V&nbsp;result)</pre>
 <div class="block">
  
@@ -704,7 +704,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-T-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.lang.Runnable-T-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>submit</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -714,10 +714,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>execute</h4>
-<pre>public&nbsp;void&nbsp;execute(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public&nbsp;void&nbsp;execute(java.lang.Runnable&nbsp;task)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true#execute-java.lang.Runnable-" title="class or interface in java.util.concurrent">execute</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a></code></dd>
+<dd><code>execute</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.Executor</code></dd>
 </dl>
 </li>
 </ul>
@@ -744,8 +744,8 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>invokeAll</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;&nbsp;invokeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks)
-                              throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;java.util.List&lt;java.util.concurrent.Future&lt;T&gt;&gt;&nbsp;invokeAll(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks)
+                                                             throws java.lang.InterruptedException</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-">ListenableExecutorService</a></code></span></div>
 <div class="block">
  
@@ -754,9 +754,9 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAll-java.util.Collection-" title="class or interface in java.util.concurrent">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>invokeAll</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
 </ul>
@@ -766,10 +766,10 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>invokeAll</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;&nbsp;invokeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks,
-                                     long&nbsp;timeout,
-                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
-                              throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;java.util.List&lt;java.util.concurrent.Future&lt;T&gt;&gt;&nbsp;invokeAll(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks,
+                                                                    long&nbsp;timeout,
+                                                                    java.util.concurrent.TimeUnit&nbsp;unit)
+                                                             throws java.lang.InterruptedException</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">ListenableExecutorService</a></code></span></div>
 <div class="block">
  
@@ -778,9 +778,9 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>invokeAll</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
 </ul>
@@ -793,7 +793,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <pre>public&nbsp;boolean&nbsp;isShutdown()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#isShutdown--" title="class or interface in java.util.concurrent">isShutdown</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>isShutdown</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -806,7 +806,7 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <pre>public&nbsp;boolean&nbsp;isTerminated()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#isTerminated--" title="class or interface in java.util.concurrent">isTerminated</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>isTerminated</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 </dl>
 </li>
 </ul>
@@ -817,13 +817,13 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <li class="blockList">
 <h4>awaitTermination</h4>
 <pre>public&nbsp;boolean&nbsp;awaitTermination(long&nbsp;timeout,
-                                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
-                         throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+                                java.util.concurrent.TimeUnit&nbsp;unit)
+                         throws java.lang.InterruptedException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#awaitTermination-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">awaitTermination</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>awaitTermination</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
 </ul>
@@ -833,15 +833,15 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockList">
 <li class="blockList">
 <h4>invokeAny</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;invokeAny(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks)
-                throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a>,
-                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;invokeAny(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks)
+                throws java.lang.InterruptedException,
+                       java.util.concurrent.ExecutionException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAny-java.util.Collection-" title="class or interface in java.util.concurrent">invokeAny</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>invokeAny</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code>java.util.concurrent.ExecutionException</code></dd>
 </dl>
 </li>
 </ul>
@@ -851,19 +851,19 @@ implements <a href="../../../../com/apriori/concurrent/ListenableScheduledExecut
 <ul class="blockListLast">
 <li class="blockList">
 <h4>invokeAny</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;invokeAny(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks,
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;invokeAny(java.util.Collection&lt;? extends java.util.concurrent.Callable&lt;T&gt;&gt;&nbsp;tasks,
                        long&nbsp;timeout,
-                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
-                throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a>,
-                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a>,
-                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent">TimeoutException</a></pre>
+                       java.util.concurrent.TimeUnit&nbsp;unit)
+                throws java.lang.InterruptedException,
+                       java.util.concurrent.ExecutionException,
+                       java.util.concurrent.TimeoutException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAny-java.util.Collection-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">invokeAny</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
+<dd><code>invokeAny</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.ExecutorService</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent">TimeoutException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code>java.util.concurrent.ExecutionException</code></dd>
+<dd><code>java.util.concurrent.TimeoutException</code></dd>
 </dl>
 </li>
 </ul>

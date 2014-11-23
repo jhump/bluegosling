@@ -144,8 +144,7 @@
  *    there are bits set in the bitmask. To determine the index of a child in that array, just count
  *    the number of set bits in the bitmask that are less significant than the one of interest.
  *    (Also see {@link com.apriori.collections.AmtPersistentList}, {@link
- *    com.apriori.collections.HamtMap}, {@link com.apriori.collections.HamtPersistentMap}, and
- *    {@link com.apriori.collections.HamtPersistentSet}.)</li>
+ *    com.apriori.collections.HamtMap}, and {@link com.apriori.collections.HamtPersistentMap}.)</li>
  * </ol>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)

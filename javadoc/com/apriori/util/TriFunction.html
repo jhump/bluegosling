@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":18,"i1":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface TriFunction" class="title">Interface TriFunction&lt;I1,I2,I3,O&gt;</h2>
+<h2 title="Interface TriFunction" class="title">Interface TriFunction&lt;T,U,V,R&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -99,14 +99,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>I1</code> - the type of the first argument</dd>
-<dd><code>I2</code> - the type of the second argument</dd>
-<dd><code>I3</code> - the type of the third argument</dd>
-<dd><code>O</code> - the result type</dd>
+<dd><code>T</code> - the type of the first argument</dd>
+<dd><code>U</code> - the type of the second argument</dd>
+<dd><code>V</code> - the type of the third argument</dd>
+<dd><code>R</code> - the result type</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/util/PartialTriFunction.html" title="interface in com.apriori.util">PartialTriFunction</a>&lt;I1,I2,I3,O&gt;</dd>
+<dd><a href="../../../com/apriori/util/PartialTriFunction.html" title="interface in com.apriori.util">PartialTriFunction</a>&lt;T,U,V,R&gt;</dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -114,8 +114,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
-public interface <span class="typeNameLabel">TriFunction&lt;I1,I2,I3,O&gt;</span></pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">TriFunction&lt;T,U,V,R&gt;</span></pre>
 <div class="block">A functional interface that accepts three arguments and returns a value.</div>
 </li>
 </ul>
@@ -130,16 +130,23 @@ public interface <span class="typeNameLabel">TriFunction&lt;I1,I2,I3,O&gt;</span
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">O</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriFunction.html#apply-I1-I2-I3-">apply</a></span>(<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I1</a>&nbsp;input1,
-     <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I2</a>&nbsp;input2,
-     <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I3</a>&nbsp;input3)</code>
+<td class="colFirst"><code>default &lt;W&gt;&nbsp;<a href="../../../com/apriori/util/TriFunction.html" title="interface in com.apriori.util">TriFunction</a>&lt;<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">T</a>,<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">U</a>,<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">V</a>,W&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriFunction.html#andThen-java.util.function.Function-">andThen</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">R</a>,? extends W&gt;&nbsp;after)</code>
+<div class="block">Returns a composed function that first applies this function to its input, and then applies
+ the <code>after</code> function to the result.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">R</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/TriFunction.html#apply-T-U-V-">apply</a></span>(<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">T</a>&nbsp;input1,
+     <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">U</a>&nbsp;input2,
+     <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">V</a>&nbsp;input3)</code>
 <div class="block">Invokes the function with the specified arguments and returns the result.</div>
 </td>
 </tr>
@@ -160,15 +167,15 @@ public interface <span class="typeNameLabel">TriFunction&lt;I1,I2,I3,O&gt;</span
 <h3>Method Detail</h3>
 <a name="apply-java.lang.Object-java.lang.Object-java.lang.Object-">
 <!--   -->
-</a><a name="apply-I1-I2-I3-">
+</a><a name="apply-T-U-V-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
-<pre><a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">O</a>&nbsp;apply(<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I1</a>&nbsp;input1,
-        <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I2</a>&nbsp;input2,
-        <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">I3</a>&nbsp;input3)</pre>
+<pre><a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">R</a>&nbsp;apply(<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">T</a>&nbsp;input1,
+        <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">U</a>&nbsp;input2,
+        <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">V</a>&nbsp;input3)</pre>
 <div class="block">Invokes the function with the specified arguments and returns the result.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -177,6 +184,29 @@ public interface <span class="typeNameLabel">TriFunction&lt;I1,I2,I3,O&gt;</span
 <dd><code>input3</code> - the third argument</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the function's result</dd>
+</dl>
+</li>
+</ul>
+<a name="andThen-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>andThen</h4>
+<pre>default&nbsp;&lt;W&gt;&nbsp;<a href="../../../com/apriori/util/TriFunction.html" title="interface in com.apriori.util">TriFunction</a>&lt;<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">T</a>,<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">U</a>,<a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">V</a>,W&gt;&nbsp;andThen(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/TriFunction.html" title="type parameter in TriFunction">R</a>,? extends W&gt;&nbsp;after)</pre>
+<div class="block">Returns a composed function that first applies this function to its input, and then applies
+ the <code>after</code> function to the result. If evaluation of either function throws an
+ exception, it is relayed to the caller of the composed function.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>W</code> - the type of output of the <code>after</code> function, and of the composed function</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>after</code> - the function to apply after this function is applied</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a composed function that first applies this function and then applies the
+         <code>after</code> function</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code> - if after is null</dd>
 </dl>
 </li>
 </ul>

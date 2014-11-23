@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.atoms.TransactionalAtom&lt;T&gt;</li>
@@ -112,8 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">TransactionalAtom&lt;T&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;T&gt;</pre>
+extends java.lang.Object</pre>
 <div class="block">An atom whose updates are coordinated in a <a href="../../../../com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms"><code>Transaction</code></a>. Transactions allow updates to
  multiple atoms to be done atomically.
  
@@ -122,7 +121,12 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
  the intermediate values.
  
  <p>When a transaction is rolled back, all futures corresponding to rolled back commute operations
- are cancelled.</div>
+ are cancelled.
+ 
+ <p>Every transactional atom uses a <a href="../../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a> for synchronizing access from
+ potentially multiple concurrent transactions. Transactions that pin the atom's value acquire
+ shared locks; those that modify atom's value acquire exclusive locks. Transactions are restarted
+ if a deadlock is detected when acquiring atoms' locks.</div>
 </li>
 </ul>
 </div>
@@ -167,7 +171,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#TransactionalAtom-T-java.util.function.Predicate-">TransactionalAtom</a></span>(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value,
-                 <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</code>
+                 java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</code>
 <div class="block">Constructs a new atom with the specified value and the specified validator.</div>
 </td>
 </tr>
@@ -193,25 +197,25 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-">apply</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
-<div class="block">Applies a function to the atom's value.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute-java.util.function.Function-">commute</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute-java.util.function.Function-">commute</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Enqueues a commutative transform operation.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#get--">get</a></span>()</code>
 <div class="block">Retrieves the current value for this atom.</div>
 </td>
 </tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
+</td>
+</tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;</code></td>
+<td class="colFirst"><code>java.util.function.Predicate&lt;? super T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#getValidator--">getValidator</a></span>()</code>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator.</div>
 </td>
@@ -231,7 +235,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#newComponent-U-java.util.function.Predicate-">newComponent</a></span>(U&nbsp;value,
-            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super U&gt;&nbsp;validator)</code>
+            java.util.function.Predicate&lt;? super U&gt;&nbsp;validator)</code>
 <div class="block">Creates a new atom with the specified initial value and the specified validator.</div>
 </td>
 </tr>
@@ -257,10 +261,16 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#set-T-">set</a></span>(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;newValue)</code>
-<div class="block">Updates the atom's value to the one specified.</div>
+<div class="block">Sets the atom's value to the one specified and returns the previous value.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></span>(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
+<div class="block">Applies a function to the atom's value.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#validate-T-">validate</a></span>(T&nbsp;value)</code>
 <div class="block">Validates the specified value.</div>
@@ -271,8 +281,15 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.atoms.SynchronousAtom">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.apriori.concurrent.atoms.<a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a></h3>
+<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet</a>, <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.atoms.Atom">
@@ -326,7 +343,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>TransactionalAtom</h4>
 <pre>public&nbsp;TransactionalAtom(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;value,
-                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</pre>
+                         java.util.function.Predicate&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;validator)</pre>
 <div class="block">Constructs a new atom with the specified value and the specified validator.</div>
 </li>
 </ul>
@@ -385,7 +402,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>newComponent</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a>&lt;U&gt;&nbsp;newComponent(U&nbsp;value,
-                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super U&gt;&nbsp;validator)</pre>
+                                             java.util.function.Predicate&lt;? super U&gt;&nbsp;validator)</pre>
 <div class="block">Creates a new atom with the specified initial value and the specified validator.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -410,8 +427,6 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
  getting the atom's value in the transaction is repeatable, regardless of concurrent
  modifications being made by other transactions.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/Atom.html#get--">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current value for the atom</dd>
 </dl>
@@ -431,20 +446,20 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value of the atom in the current transaction</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no transaction is in progress on the current thread</dd>
+<dd><code>java.lang.IllegalStateException</code> - if no transaction is in progress on the current thread</dd>
 <dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom</dd>
 <dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a concurrent transaction has already updated the atom
        since the current transaction's version was established</dd>
 </dl>
 </li>
 </ul>
-<a name="apply-java.util.function.Function-">
+<a name="getAndUpdate-java.util.function.Function-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>apply</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;apply(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
+<h4>getAndUpdate</h4>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;getAndUpdate(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
  specified function to the atom's current value. Watchers are notified when the value is
  changed.
@@ -459,7 +474,40 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
  transaction began and its final value upon the transaction being committed.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#apply-java.util.function.Function-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>function</code> - the function to apply</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the atom's previous value</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent">DeadlockException</a></code> - if a deadlock is detected when trying to acquire a lock for the atom</dd>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms">TransactionIsolationException</a></code> - if a transaction is in progress, and a concurrent
+       transaction has updated the atom since the current transaction's version was established</dd>
+</dl>
+</li>
+</ul>
+<a name="updateAndGet-java.util.function.Function-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateAndGet</h4>
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;updateAndGet(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Applies a function to the atom's value. The atom's new value is the result of applying the
+ specified function to the atom's current value. Watchers are notified when the value is
+ changed.
+ 
+ <p>If no transaction is in progress on the current thread, this will effectively create one
+ that does nothing but transform this atom. If one is in progress, the transaction will acquire
+ an exclusive lock on the atom to prevent concurrent writers and will hold the lock until it is
+ rolled back or committed.
+ 
+ <p>Watchers are only notified when this operation is committed. If there are other operations
+ on this same atom, watchers will only be notified once with the value of this atom before the
+ transaction began and its final value upon the transaction being committed.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>function</code> - the function to apply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -477,22 +525,22 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>commute</h4>
-<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;commute(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
-<div class="block">Enqueues a commutative transform operation. This differs from <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(Function)</code></a> in that
- commutes do not eagerly acquire an exclusive lock on the atom. This allows for concurrent
- transactions to also be modifying the same atom. But since the function must be commutative,
- the order of applying functions does not matter. Using this method can lead to greater
- throughput than using <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(Function)</code></a> but is more restrictive since the applied
- operation must be commutative.
+<pre>public&nbsp;<a href="../../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;commute(java.util.function.Function&lt;? super <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
+<div class="block">Enqueues a commutative transform operation. This differs from <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-"><code>updateAndGet(Function)</code></a>
+ in that commutes do not eagerly acquire an exclusive lock on the atom. This allows for
+ concurrent transactions to also be modifying the same atom. But since the function must be
+ commutative, the order of applying functions does not matter. Using this method can lead to
+ greater throughput than using <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-"><code>updateAndGet(Function)</code></a> but is more restrictive since
+ the applied operation must be commutative.
  
  <p>Note that if other operations are performed on this atom (like <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#set-T-"><code>set(T)</code></a> or
- <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(java.util.function.Function&lt;? super T, ? extends T&gt;)</code></a>), commutes are always applied <strong>last</strong>, regardless of whether the
- commute was enqueued after the other operations were performed or not.
+ <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-"><code>updateAndGet(java.util.function.Function&lt;? super T, ? extends T&gt;)</code></a>), commutes are always applied <strong>last</strong>, regardless of
+ whether the commute was enqueued after the other operations were performed or not.
  
  <p>If no transaction is in progress on the current thread, this will effectively create one
  that does nothing but transform this atom. If a serializable transaction is in progress, then
  an exclusive lock is acquired. So, with serializable isolation level, the only difference
- between this operation and <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#apply-java.util.function.Function-"><code>apply(Function)</code></a> is that the commute functions won't
+ between this operation and <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-"><code>updateAndGet(Function)</code></a> is that the commute functions won't
  actually be evaluated until the transaction is committed.
  
  <p>Watchers are only notified when this operation is committed. If there are other operations
@@ -522,8 +570,8 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <li class="blockList">
 <h4>set</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;set(<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&nbsp;newValue)</pre>
-<div class="block">Updates the atom's value to the one specified. Upon changing the value, watchers will be
- notified.
+<div class="block">Sets the atom's value to the one specified and returns the previous value. Upon changing the
+ value, watchers will be notified.
  
  <p>If no transaction is in progress on the current thread, this will effectively create one
  that does nothing but set this atom's value. If one is in progress, the transaction will
@@ -534,8 +582,6 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
  on this same atom, watchers will only be notified once with the value of this atom before the
  transaction began and its final value upon the transaction being committed.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html#set-T-">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a>&lt;<a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newValue</code> - the atom's new value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -562,7 +608,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the value to validate</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified value is invalid</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if the specified value is invalid</dd>
 </dl>
 </li>
 </ul>
@@ -572,7 +618,7 @@ implements <a href="../../../../com/apriori/concurrent/atoms/SynchronousAtom.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getValidator</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super T&gt;&nbsp;getValidator()</pre>
+<pre>public&nbsp;java.util.function.Predicate&lt;? super T&gt;&nbsp;getValidator()</pre>
 <div class="block">Return the atom's validator, or <code>null</code> if there is no validator. The validator is a
  predicate that returns true when invoked on valid values for the item and false otherwise.</div>
 <dl>

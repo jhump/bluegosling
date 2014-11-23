@@ -42,7 +42,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Throwables.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/ToDos.html" title="annotation in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/ToDo.html" target="_top">Frames</a></li>
@@ -67,7 +67,7 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation.type.required.element.summary">Required</a>&nbsp;|&nbsp;</li>
 <li><a href="#annotation.type.optional.element.summary">Optional</a></li>
 </ul>
 <ul class="subNavList">
@@ -91,12 +91,13 @@
 <li class="blockList">
 <hr>
 <br>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
- <a href="../../../com/apriori/util/ToDo.html" title="annotation in com.apriori.util">@ToDo</a>(<a href="../../../com/apriori/util/ToDo.html#value--">value</a>="Implement annotation processor that can emit TODOs during compilation, possibly as\nwarnings. That processor should also emit errors on malformed ToDo annotations. An\nannotation is malformed if it has neither a value nor a tasks attribute, if it has both,\nor if it has ambiguous who attributes (e.g. at both ToDo level and at Task level)")
+<pre>@Retention(value=RUNTIME)
+ @Target(value={ANNOTATION_TYPE,TYPE,PACKAGE,CONSTRUCTOR,METHOD,FIELD})
+ @Documented
+ @Repeatable(value=<a href="../../../com/apriori/util/ToDos.html" title="annotation in com.apriori.util">ToDos.class</a>)
+ <a href="../../../com/apriori/util/ToDo.html" title="annotation in com.apriori.util">@ToDo</a>(<a href="../../../com/apriori/util/ToDo.html#value--">value</a>="Implement annotation processor that emits TODOs during compile, possibly as warnings.")
 public @interface <span class="memberNameLabel">ToDo</span></pre>
-<div class="block">Describes a "TODO" task for the annotated element. Usages should either specify the
- <a href="../../../com/apriori/util/ToDo.html#value--"><code>value()</code></a> attribute or the <a href="../../../com/apriori/util/ToDo.html#tasks--"><code>tasks()</code></a> attribute. The latter is used when a single
- element has more than one associated "TODO" task.
+<div class="block">Describes a "TODO" task for the annotated element.
  
  <p>
  Examples:<pre>
@@ -104,11 +105,9 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
  class MyCoolClazz {
  }
  
-  @ToDo(tasks = {
-     @Task("add tests!"),
-     @Task("reconcile method names so API is more consistent"),
-     @Task("add static helper methods for x, y, and z")
- })
+  @ToDo("add tests!"),
+  @ToDo("reconcile method names so API is more consistent"),
+  @ToDo("add static helper methods for x, y, and z")
  class MyCoolerClazz {
  }
  </pre></div>
@@ -118,6 +117,27 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== ANNOTATION TYPE REQUIRED MEMBER SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="annotation.type.required.element.summary">
+<!--   -->
+</a>
+<h3>Required Element Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Required Element Summary table, listing required elements, and an explanation">
+<caption><span>Required Elements</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Required Element and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/ToDo.html#value--">value</a></span></code>
+<div class="block">A description of the task that needs to be done.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="annotation.type.optional.element.summary">
@@ -131,19 +151,7 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
 <th class="colLast" scope="col">Optional Element and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util">ToDo.Task</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/ToDo.html#tasks--">tasks</a></span></code>
-<div class="block">Multiple "TODO" tasks.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/ToDo.html#value--">value</a></span></code>
-<div class="block">A description of the task that needs to be done.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/ToDo.html#who--">who</a></span></code>
 <div class="block">An optional name of a person responsible for this task.</div>
 </td>
@@ -166,53 +174,28 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
 <a name="value--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
+<pre>public abstract&nbsp;java.lang.String&nbsp;value</pre>
 <div class="block">A description of the task that needs to be done.</div>
-<dl>
-<dt>Default:</dt>
-<dd>""</dd>
-</dl>
 </li>
 </ul>
 </li>
 </ul>
+<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="who--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>who</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;who</pre>
-<div class="block">An optional name of a person responsible for this task. If the <a href="../../../com/apriori/util/ToDo.html#tasks--"><code>tasks()</code></a> attribute is
- present (indicating multiple tasks) then this can indicate the name of a single individual
- responsible for all. If tasks have different responsible individuals, then this should be
- omitted and <a href="../../../com/apriori/util/ToDo.Task.html#who--"><code>ToDo.Task.who()</code></a> attributes should be used instead.</div>
+<pre>public abstract&nbsp;java.lang.String&nbsp;who</pre>
+<div class="block">An optional name of a person responsible for this task.</div>
 <dl>
 <dt>Default:</dt>
 <dd>""</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="tasks--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>tasks</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util">ToDo.Task</a>[]&nbsp;tasks</pre>
-<div class="block">Multiple "TODO" tasks. When a single annotated element has multiple associated "TODO" tasks,
- this attribute should be used to define all of them instead of using <a href="../../../com/apriori/util/ToDo.html#value--"><code>value()</code></a> and
- <a href="../../../com/apriori/util/ToDo.html#who--"><code>who()</code></a>, which are suitable for describing a single task.</div>
-<dl>
-<dt>Default:</dt>
-<dd>{}</dd>
 </dl>
 </li>
 </ul>
@@ -244,7 +227,7 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/Throwables.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/ToDo.Task.html" title="annotation in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/ToDos.html" title="annotation in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/ToDo.html" target="_top">Frames</a></li>
@@ -269,7 +252,7 @@ public @interface <span class="memberNameLabel">ToDo</span></pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation.type.required.element.summary">Required</a>&nbsp;|&nbsp;</li>
 <li><a href="#annotation.type.optional.element.summary">Optional</a></li>
 </ul>
 <ul class="subNavList">
