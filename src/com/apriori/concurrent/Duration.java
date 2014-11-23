@@ -1,5 +1,7 @@
 package com.apriori.concurrent;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +17,11 @@ import java.util.concurrent.TimeUnit;
  * duration to APIs that accept a {@code long} and a {@code TimeUnit}, simply pass
  * {@code duration.length()} and {@code duration.unit()}.
  *
- * <p>Note: this class has a natural ordering that is inconsistent with equals.
+ * <p><strong>Note</strong>: this class has a natural ordering that is inconsistent with equals. In
+ * particular, two objects that represent the same amount of time are "equal" according to their
+ * natural ordering but unequal according to the {@code equals} method if they have different units.
+ * For example, a duration 2 seconds and one of 2,000 milliseconds are unequal but considered equal
+ * per the natural ordering.
  */
 public class Duration implements Comparable<Duration> {
 
@@ -74,10 +80,7 @@ public class Duration implements Comparable<Duration> {
    * @return a new duration object
    */
   public static Duration of(long length, TimeUnit unit) {
-     if (unit == null) {
-        throw new NullPointerException();
-     }
-     return new Duration(length, unit);
+     return new Duration(length, requireNonNull(unit));
   }
 
   /** Returns a new duration whose length is the specified number of nanoseconds. */
@@ -480,7 +483,7 @@ public class Duration implements Comparable<Duration> {
   }
 
   @Override public int hashCode() {
-    return (int) length * 31 ^ unit.hashCode();
+    return Long.hashCode(length) ^ unit.hashCode();
   }
 
   /**

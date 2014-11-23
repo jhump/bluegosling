@@ -27,7 +27,7 @@ public interface Cancellable {
       if (future instanceof Cancellable) {
          return (Cancellable) future;
       }
-      return (mayInterrupt) -> future.cancel(mayInterrupt);
+      return mayInterrupt -> future.cancel(mayInterrupt);
    }
    
    static Cancellable fromFutures(Future<?>... futures) {
@@ -51,7 +51,7 @@ public interface Cancellable {
    }
    
    static Cancellable group(final Iterable<? extends Cancellable> cancellables) {
-      return (mayInterrupt) -> {
+      return mayInterrupt -> {
          boolean ret = false;
          for (Cancellable c : cancellables) {
             if (c.cancel(mayInterrupt)) {

@@ -230,8 +230,8 @@ public final class Annotations {
       }
       Class<?> classValue = (Class<?>) value;
       // Using int.class as the value for an annotation method that returns List<Integer>, or
-      // even List<? extends Number>, is totally legit since int.class is actually a List<Integer>.
-      // So we box the types before checking assignability.
+      // even List<? extends Number>, is (surprisingly?) legit since int.class is actually a
+      // List<Integer>. So we box the types before checking assignability.
       Type actualTypeArg = Types.box(classValue);
       if (returnType instanceof Class) {
          // not a parameterized type, so any Class value will do

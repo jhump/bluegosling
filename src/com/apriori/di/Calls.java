@@ -9,10 +9,9 @@ import java.lang.annotation.Target;
 /**
  * A marker for an injectable wrapper method. The method should not be static and should
  * be abstract. A concrete version of the function will be generated in the {@linkplain
- * InjectedEntryPoint injection entry point}. The function can have no arguments. If it
- * does have arguments, they should have the same types and binding annotations as the
- * called method's injection dependencies. Any other dependencies not found in the argument
- * list will be automatically injected.
+ * InjectedEntryPoint injection entry point}. If the function has arguments, they should have the
+ * same types and qualifier annotations as the called method's injection dependencies. Any other
+ * dependencies not found in the argument list will be automatically injected.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

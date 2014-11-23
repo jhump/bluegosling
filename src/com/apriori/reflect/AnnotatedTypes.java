@@ -230,10 +230,36 @@ public final class AnnotatedTypes {
       // NB: AnnotatedType implementations in JRE do not override equals and hashCode and just
       // use identity-based implementations inherited from Object.
       requireNonNull(type);
-      return Types.hashCode(type.getType())
-            + 37 * Arrays.hashCode(type.getDeclaredAnnotations());
+      int hash = (Types.hashCode(type.getType())
+            + 37 * Arrays.hashCode(type.getDeclaredAnnotations()));
+      if (type instanceof AnnotatedParameterizedType) {
+         AnnotatedParameterizedType pt = (AnnotatedParameterizedType) type;
+         // TODO: owner type and annotations? what if getType() doesn't return a ParameterizedType?
+         return hash ^ hashCode(pt.getAnnotatedActualTypeArguments());
+      } else if (type instanceof AnnotatedArrayType) {
+         AnnotatedArrayType gat = (AnnotatedArrayType) type;
+         return hash ^ hashCode(gat.getAnnotatedGenericComponentType());
+      } else if (type instanceof AnnotatedTypeVariable) {
+         // don't need to also include bounds here, so the hash so far suffices
+         return hash;
+      } else if (type instanceof AnnotatedWildcardType) {
+         AnnotatedWildcardType wt = (AnnotatedWildcardType) type;
+         return hash ^ hashCode(wt.getAnnotatedLowerBounds())
+               ^ hashCode(wt.getAnnotatedUpperBounds());
+      } else {
+         // WTF?
+         return hash;
+      }      
    }
    
+   private static int hashCode(AnnotatedType types[]) {
+      int result = 1;
+      for (AnnotatedType type : types) {
+         result = 31 * result + (type == null ? 0 : hashCode(type));
+      }
+      return result;
+   }
+
    /**
     * Constructs a string representation of the given type. Since the generic type interfaces do not
     * document a {@code toString()} definition, this method can be used to construct a suitable

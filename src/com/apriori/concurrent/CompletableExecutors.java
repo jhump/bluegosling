@@ -2,6 +2,8 @@ package com.apriori.concurrent;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
+import com.apriori.util.Variable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -212,14 +214,14 @@ final class CompletableExecutors {
          // CompletableFuture has no factory method for a Callable. It also ignores requests
          // to interrupt the task if it is running. So we have to do something a little different
          // to get the right semantics (this is a bit hideous...)
-         Thread runner[] = new Thread[1];
+         Variable<Thread> runner = new Variable<>();
          // make a future that knows how to cancel the task if it is running
          CompletableFuture<T> future = new CompletableFuture<T>() {
             @Override public boolean cancel(boolean mayInterrupt) {
                boolean ret = super.cancel(mayInterrupt);
                if (ret && mayInterrupt) {
                   synchronized (runner) {
-                     Thread th = runner[0];
+                     Thread th = runner.get();
                      if (th != null) {
                         th.interrupt();
                      }
@@ -236,7 +238,7 @@ final class CompletableExecutors {
                   // (e.g. asynchronously cancelled or completed)
                   return; 
                }
-               runner[0] = Thread.currentThread();
+               runner.set(Thread.currentThread());
             }
             try {
                future.complete(task.call());
@@ -244,7 +246,7 @@ final class CompletableExecutors {
                future.completeExceptionally(t);
             } finally {
                synchronized (runner) {
-                  runner[0] = null;
+                  runner.clear();
                }
             }
          };

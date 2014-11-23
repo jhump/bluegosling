@@ -29,7 +29,7 @@ public interface FutureListener<T> {
     * @return a listener that uses the visitor when invoked
     */
    public static <T> FutureListener<T> forVisitor(final FutureVisitor<T> visitor) {
-      return (future) -> { future.visit(visitor); };
+      return f -> f.visit(visitor);
    }
    
    /**
@@ -39,7 +39,7 @@ public interface FutureListener<T> {
     * @return a listener that invokes the specified task
     */
    public static FutureListener<Object> forRunnable(final Runnable runnable) {
-      return (future) -> { runnable.run(); };
+      return f -> runnable.run();
    }
 
    /**
@@ -49,6 +49,6 @@ public interface FutureListener<T> {
     * @return a listener that calls {@code consumer.accept(completedFuture)} when invoked
     */
    static <T> FutureListener<T> forConsumer(Consumer<? super ListenableFuture<T>> consumer) {
-      return (future) -> { consumer.accept(ListenableFuture.cast(future)); };
+      return f -> consumer.accept(ListenableFuture.cast(f));
    }
 }

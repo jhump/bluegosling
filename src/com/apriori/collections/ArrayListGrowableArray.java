@@ -1,7 +1,5 @@
 package com.apriori.collections;
 
-import com.apriori.util.Throwables;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,7 +109,7 @@ public class ArrayListGrowableArray<T> implements GrowableArray<T>, Serializable
             clone.list = (InternalArrayList<T>) this.list.clone();
             return clone;
          } catch (CloneNotSupportedException e) {
-            throw Throwables.withCause(new AssertionError(), e);
+            throw new AssertionError(e);
          }
       }
    }

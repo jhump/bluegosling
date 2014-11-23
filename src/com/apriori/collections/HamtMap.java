@@ -1017,7 +1017,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       /**
        * A node that is visited during iteration.
        */
-      IntermediateTrieNode<K, V> node;
+      final IntermediateTrieNode<K, V> node;
       
       /**
        * The current/latest child visited during iteration. The next frame on the stack will hold

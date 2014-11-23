@@ -1,5 +1,7 @@
 package com.apriori.concurrent;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +66,7 @@ public class PipeliningExecutorService<K> {
     * @param executor the executor that will run individual tasks across all pipelines
     */
    public PipeliningExecutorService(Executor executor) {
-      this.executor = executor;
+      this.executor = requireNonNull(executor);
    }
    
    /**
@@ -142,9 +144,8 @@ public class PipeliningExecutorService<K> {
     * @throws NullPointerException if either the pipeline key or task is null
     */
    public void execute(K pipelineKey, Runnable task) {
-      if (pipelineKey == null || task == null) {
-         throw new NullPointerException();
-      }
+      requireNonNull(pipelineKey);
+      requireNonNull(task);
       // Atomically create the pipeline if necessary and enqueue this task therein.
       while (true) {
          Pipeline pipeline = pipelines.get(pipelineKey);
@@ -265,10 +266,7 @@ public class PipeliningExecutorService<K> {
     * @throws NullPointerException if either the pipeline key or task is null
     */
    public boolean isPipelineQuiescent(K pipelineKey) {
-      if (pipelineKey == null) {
-         throw new NullPointerException();
-      }
-      return pipelines.containsKey(pipelineKey);
+      return pipelines.containsKey(requireNonNull(pipelineKey));
    }
    
    /**
@@ -282,10 +280,7 @@ public class PipeliningExecutorService<K> {
     * @throws InterruptedException if the current thread is interrupted while waiting
     */
    public void awaitPipelineQuiescence(K pipelineKey) throws InterruptedException {
-      if (pipelineKey == null) {
-         throw new NullPointerException();
-      }
-      Pipeline pipeline = pipelines.get(pipelineKey);
+      Pipeline pipeline = pipelines.get(requireNonNull(pipelineKey));
       if (pipeline == null) {
          // already quiesced
          return;
@@ -309,10 +304,7 @@ public class PipeliningExecutorService<K> {
     */
    public boolean awaitPipelineQuiescence(K pipelineKey, long limit, TimeUnit unit)
          throws InterruptedException {
-      if (pipelineKey == null) {
-         throw new NullPointerException();
-      }
-      Pipeline pipeline = pipelines.get(pipelineKey);
+      Pipeline pipeline = pipelines.get(requireNonNull(pipelineKey));
       return pipeline == null || pipeline.terminated.await(limit, unit);
    }
    
@@ -326,10 +318,7 @@ public class PipeliningExecutorService<K> {
     * @throws NullPointerException if either the pipeline key or task is null
     */
    public List<Runnable> abortPipeline(K pipelineKey) {
-      if (pipelineKey == null) {
-         throw new NullPointerException();
-      }
-      Pipeline pipeline = pipelines.get(pipelineKey);
+      Pipeline pipeline = pipelines.get(requireNonNull(pipelineKey));
       return pipeline == null ? Collections.emptyList() : pipeline.abort();
    }
    
@@ -354,7 +343,7 @@ public class PipeliningExecutorService<K> {
     * @throws NullPointerException if either the pipeline key or task is null
     */
    public ListenableExecutorService newExecutorServiceForPipeline(K pipelineKey) {
-      return new SinglePipelineExecutorService<>(this, pipelineKey);
+      return new SinglePipelineExecutorService<>(this, requireNonNull(pipelineKey));
    }
 
    /**
@@ -454,7 +443,6 @@ public class PipeliningExecutorService<K> {
             // try to interrupt current task
             ((Future<?>) r).cancel(true);
          }
-         // TODO: terminated latch needs to be opened
          return Collections.unmodifiableList(aborted);
       }
       
@@ -483,7 +471,6 @@ public class PipeliningExecutorService<K> {
             }
          }
          return Collections.unmodifiableList(purged);
-         // TODO: terminated latch may need to be opened
       }
       
       /**

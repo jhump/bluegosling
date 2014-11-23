@@ -7,12 +7,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.RandomAccess;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
 
@@ -62,6 +65,28 @@ public final class Iterables {
          return addTo(iter.iterator(), coll);
       }
    }
+
+   public static boolean contains(Iterable<?> iter, Object o) {
+      if (iter instanceof Collection) {
+         return ((Collection<?>) iter).contains(o);
+      } else if (iter instanceof ImmutableCollection) {
+         return ((ImmutableCollection<?>) iter).contains(o);
+      } else if (iter instanceof ImmutableMap) {
+         return ((ImmutableMap<?, ?>) iter).entrySet().contains(o);
+      } else {
+         return contains(iter.iterator(), o);
+      }
+   }
+   
+   public static boolean contains(Iterator<?> iter, Object o) {
+      while (iter.hasNext()) {
+         Object obj= iter.next();
+         if (Objects.equals(obj, o)) {
+            return true;
+         }
+      }
+      return false;
+   }
    
    public static <E> Iterator<E> singletonIterator(E element) {
       return new SingletonIterator<E>(element, null);
@@ -70,7 +95,19 @@ public final class Iterables {
    public static <E> Iterator<E> singletonIterator(E element, Runnable onRemove) {
       return new SingletonIterator<E>(element, onRemove);
    }
+
+   public static <E> Iterator<E> unique(Iterator<E> iter) {
+      return unique(iter, OptionalInt.empty());
+   }
    
+   public static <E> Iterable<E> unique(Iterable<E> items) {
+      return () -> unique(items.iterator(), trySize(items));
+   }
+   
+   private static <E> Iterator<E> unique(Iterator<E> iter, OptionalInt size) {
+      Set<E> items = size.isPresent() ? new HashSet<>(size.getAsInt() * 4 / 3) : new HashSet<>();
+      return new FilteringIterator<>(iter, e -> items.add(e));
+   }
 
    public static <E> Iterator<E> reversed(Iterable<E> iterable) {
       // check for a few special cases where we can reverse the iterable very efficiently

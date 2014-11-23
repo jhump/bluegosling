@@ -4,6 +4,7 @@ import static com.apriori.concurrent.FutureTuples.asPair;
 import static com.apriori.concurrent.ListenableFuture.cast;
 import static com.apriori.concurrent.ListenableFuture.makeListenable;
 
+import com.apriori.collections.Iterables;
 import com.apriori.possible.Fulfillable;
 import com.apriori.tuples.Pair;
 
@@ -133,27 +134,15 @@ final class ListenableFutures {
    }
    
    /**
-    * Creates a defensive copy and snapshot of the given iterable.
+    * Creates a defensive copy of the given iterable.
     *
-    * @param futures futures to snapshot
-    * @return a copy/snapshot of the given iterable, as a list
+    * @param values values to snapshot
+    * @return a snapshot of the given iterable, as a list
     */
-   static <T> List<ListenableFuture<? extends T>> snapshot(
-         Iterable<ListenableFuture<? extends T>> futures) {
-      if (futures instanceof Collection) {
-         Collection<ListenableFuture<? extends T>> coll =
-               (Collection<ListenableFuture<? extends T>>) futures;
-         if (coll.isEmpty()) {
-            return Collections.emptyList();
-         }
-         return new ArrayList<ListenableFuture<? extends T>>(coll);
-      } else {
-         List<ListenableFuture<? extends T>> ret = new ArrayList<ListenableFuture<? extends T>>();
-         for (ListenableFuture<? extends T> future : futures) {
-            ret.add(future);
-         }
-         return ret;
-      }
+   static <T> List<T> snapshot(Iterable<T> values) {
+      ArrayList<T> ret = new ArrayList<T>(Iterables.trySize(values).orElse(16));
+      Iterables.addTo(values, ret);
+      return Collections.unmodifiableList(ret);
    }
    
    /**

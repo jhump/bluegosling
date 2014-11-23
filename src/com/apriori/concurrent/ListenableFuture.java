@@ -14,6 +14,7 @@ import com.apriori.concurrent.ListenableFutures.ListenableFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.ListenableScheduledFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.UnfinishableFuture;
 import com.apriori.util.TriFunction;
+import com.apriori.util.VariableBoolean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -699,7 +700,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
       }
       final int len = futureList.size();
       if (len == 1) {
-         return futureList.get(0).map((o) -> Collections.singletonList(o));
+         return futureList.get(0).map(o -> Collections.singletonList(o));
       }
       @SuppressWarnings({"unchecked", "rawtypes"}) // java generics not expressive enough
       CombiningFuture<List<T>> result = new CombiningFuture<List<T>>((Collection) futureList) {
@@ -906,14 +907,14 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future value that represents the value of the future future
     */
    static <T> ListenableFuture<T> dereference(
-         final ListenableFuture<? extends ListenableFuture<T>> future) {
-      final AtomicReference<ListenableFuture<?>> outstanding = new AtomicReference<>(future);
+         ListenableFuture<? extends ListenableFuture<T>> future) {
+      AtomicReference<ListenableFuture<?>> outstanding = new AtomicReference<>(future);
       // visible thanks to always written before volatile write and read after volatile read
-      final boolean shouldInterrupt[] = new boolean[1];
-      final AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
+      VariableBoolean shouldInterrupt = new VariableBoolean();
+      AbstractListenableFuture<T> result = new AbstractListenableFuture<T>() {
          @Override public boolean cancel(boolean mayInterrupt) {
             if (super.setCancelled()) {
-               shouldInterrupt[0] = mayInterrupt;
+               shouldInterrupt.set(mayInterrupt);
                // If there's a race here and the input future completes before we can cancel it,
                // then the listener below will execute. If we get here first, then the null value
                // signals the listener to cancel the future's value. If we get here second, then
@@ -934,7 +935,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
             if (outstanding.getAndSet(value) == null) {
                // result already cancelled, so also cancel this value
                if (value != null) {
-                  value.cancel(shouldInterrupt[0]);
+                  value.cancel(shouldInterrupt.get());
                }
                return;
             }

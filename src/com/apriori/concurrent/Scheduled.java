@@ -21,7 +21,7 @@ public interface Scheduled extends Delayed {
    
    /**
     * An accurate and precise comparator of {@link Delayed} objects that will compare the scheduled
-    * nano-time if both objects happen to be {@link Scheduled}.
+    * nano-time if both objects are instances of {@link Scheduled}.
     * 
     * <p>Comparing objects just based on delay is inherently racy at very fine precision since
     * nanoseconds pass between the method calls to query the objects' delay. So it may be

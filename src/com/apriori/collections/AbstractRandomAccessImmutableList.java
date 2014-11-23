@@ -1,6 +1,5 @@
 package com.apriori.collections;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
@@ -47,8 +46,8 @@ public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmut
    }
 
    @Override
-   public Iterator<E> iterator() {
-      return new Iterator<E>() {
+   public BidiIterator<E> iterator() {
+      return new BidiIterator<E>() {
          private int index = 0;
          
          @Override
@@ -62,6 +61,24 @@ public abstract class AbstractRandomAccessImmutableList<E> extends AbstractImmut
                throw new NoSuchElementException();
             }
             return get(index++);
+         }
+
+         @Override
+         public BidiIterator<E> reverse() {
+            return new ReversedBidiIterator<>(this);
+         }
+
+         @Override
+         public boolean hasPrevious() {
+            return index > 0;
+         }
+
+         @Override
+         public E previous() {
+            if (index <= 0) {
+               throw new NoSuchElementException();
+            }
+            return get(index--);
          }
       };
    }

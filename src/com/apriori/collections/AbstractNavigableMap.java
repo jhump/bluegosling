@@ -1066,7 +1066,7 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
          if (lastFetched == null) {
             throw new IllegalStateException();
          }
-         removeEntry(lastFetched);
+         removeEntry(lastFetched.getKey());
          resetModCount();
          lastFetched = null;
       }
