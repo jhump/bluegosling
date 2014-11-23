@@ -12,16 +12,14 @@ import java.util.concurrent.atomic.AtomicReference;
 public class RateLimiterTest {
 
    @Test public void test() throws Exception {
-      test1();
-      test1();
-      test1();
-      test1();
-      test1();
-      test1();
+      for (int i = 0; i < 20; i++) {
+         test1();
+      }
    }
 
    @Test public void test1() throws Exception {
-      int numThreads = 5;
+      int numThreads = 1;
+      int qps = 9_900_000;
       Stopwatch sw = new Stopwatch();
       AtomicReference<RateLimiter> rl = new AtomicReference<>();
       CountDownLatch ready = new CountDownLatch(numThreads);
@@ -36,14 +34,14 @@ public class RateLimiterTest {
                throw new RuntimeException(e);
             }
             RateLimiter l = rl.get();
-            for (int j = 0; j < 1; j++) {
-               l.acquire(100);
+            for (int j = 0; j < qps; j++) {
+               l.acquire();
             }
             done.countDown();
          }).start();
       }
       ready.await();
-      RateLimiter l = new RateLimiter(100, 1, 0, 1.0);
+      RateLimiter l = new RateLimiter(qps, 1, 0);
       rl.set(l);
       sw.start();
       go.countDown();
@@ -68,8 +66,8 @@ public class RateLimiterTest {
             }
             RateLimiter l = rl.get();
             Thread th = Thread.currentThread();
-            for (int j = 0; j < 10; j++) {
-               int p = r.nextInt(10) + 1;
+            for (int j = 0; j < 100; j++) {
+               int p = 1; //r.nextInt(10) + 1;
                l.acquire(p);
                System.out.println("" + th + " got " + p + " permits @ " + sw);
             }
@@ -77,12 +75,12 @@ public class RateLimiterTest {
          }).start();
       }
       ready.await();
-      RateLimiter l = new RateLimiter(10, 1, 0); 
+      RateLimiter l = new RateLimiter(100, 1, 0); 
       rl.set(l);
       sw.start();
       go.countDown();
-//      Thread.sleep(1500);
-//      l.setRate(20);
+      Thread.sleep(1500);
+      l.setRate(20);
       done.await();
    }
 }
