@@ -12,6 +12,16 @@ import java.util.function.Function;
  * <p>Functions that perform the transformations should be deterministic so that a stable,
  * unchanging set does not appear to be mutating when accessed through this transforming wrapper.
  * 
+ * <p>Since transformations can only be done in one direction, some operations are not supported.
+ * Namely, {@link #add(Object)} and {@link #addAll(Collection)} throw
+ * {@link UnsupportedOperationException}.
+ * 
+ * <p>Also due to transformations only working in one direction, some methods are implemented in
+ * terms of the collection's {@linkplain #iterator() transforming iterator} and thus may have worse
+ * performance than the underlying collection's implementation. These methods include
+ * {@link #contains(Object)}, {@link #containsAll(Collection)}, {@link #remove(Object)},
+ * {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
+ *
  * <p><strong>Note</strong>: The function should produce a 1-to-1 mapping from elements of the input
  * type to elements of the output type. If the function should ever produce the same output value
  * for two <em>unequal</em> input values, then the invariant that is core to the set -- that
@@ -25,23 +35,15 @@ import java.util.function.Function;
  * // take a snapshot to produce a transformed set that will never
  * // violate set invariants
  * Set&lt;Type2&gt; transformed = new HashSet&lt;&gt;(
- *       new TransformingCollection&lt;&gt;(input, function));
- * </pre>
+ *       new TransformingCollection&lt;&gt;(input, function));</pre>
  * 
- * <p>Since transformations can only be done in one direction, some operations are not supported.
- * Namely, {@link #add(Object)} and {@link #addAll(Collection)} throw
- * {@link UnsupportedOperationException}.
- * 
- * <p>Also due to transformations only working in one direction, some methods are implemented in
- * terms of the collection's {@linkplain #iterator() transforming iterator} and thus may have worse
- * performance than the underlying collection's implementation. These methods include
- * {@link #contains(Object)}, {@link #containsAll(Collection)}, {@link #remove(Object)},
- * {@link #removeAll(Collection)}, and {@link #retainAll(Collection)}.
- *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <I> the "input" type; the type of the wrapped set
  * @param <O> the "output" type; the type of elements in this set
+ * 
+ * @see TransformingSet.ReadOnly
+ * @see TransformingSet.Bidi
  */
 // TODO: tests
 public class TransformingSet<I, O> extends TransformingCollection<I, O> implements Set<O> {

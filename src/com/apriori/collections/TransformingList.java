@@ -32,6 +32,9 @@ import java.util.function.Function;
  *
  * @param <I> the "input" type; the type of the wrapped list
  * @param <O> the "output" type; the type of elements in this list
+ * 
+ * @see TransformingList.ReadOnly
+ * @see TransformingList.Bidi
  */
 //TODO: tests
 public class TransformingList<I, O> extends TransformingCollection<I, O> implements List<O> {

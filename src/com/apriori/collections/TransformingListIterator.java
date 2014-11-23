@@ -14,6 +14,9 @@ import java.util.function.Function;
  *
  * @param <I> the "input" type; the type of the wrapped iterator
  * @param <O> the "output" type; the type of elements in this iterator
+ * 
+ * @see TransformingListIterator.ReadOnly
+ * @see TransformingListIterator.Bidi
  */
 //TODO: tests
 public class TransformingListIterator<I, O> extends TransformingIterator<I, O>

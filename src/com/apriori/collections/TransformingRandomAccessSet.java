@@ -43,6 +43,9 @@ import java.util.function.Function;
  *
  * @param <I> the "input" type; the type of the wrapped set
  * @param <O> the "output" type; the type of elements in this set
+ * 
+ * @see TransformingRandomAccessSet.ReadOnly
+ * @see TransformingRandomAccessSet.Bidi
  */
 //TODO: tests
 public class TransformingRandomAccessSet<I, O> extends TransformingSet<I, O>

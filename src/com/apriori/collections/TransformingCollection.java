@@ -27,6 +27,9 @@ import java.util.function.Function;
  *
  * @param <I> the "input" type; the type of the wrapped collection
  * @param <O> the "output" type; the type of elements in this collection
+ * 
+ * @see TransformingCollection.ReadOnly
+ * @see TransformingCollection.Bidi
  */
 //TODO: tests
 public class TransformingCollection<I, O> extends TransformingIterable<I, O>
