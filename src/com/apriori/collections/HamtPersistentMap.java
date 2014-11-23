@@ -6,11 +6,30 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * An implementation of {@link PersistentMap} that uses an immutable hash array-mapped trie (HAMT)
+ * plus path copying on updates. This is an immutable and persistent version of {@link HamtMap}.
+ *
+ * @see HamtMap
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ *
+ * @param <K> the type of keys in the map
+ * @param <V> the type of value in the map
+ */
 // TODO: javadoc
-// TODO: tests
+// TODO: moar tests?
 public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       implements PersistentMap<K, V> {
 
+   /**
+    * A node in a linked list that stores key-value pairs for a given hash code.
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class ListNode<K, V> implements Entry<K, V> {
       final K key;
       final V value;
@@ -52,23 +71,114 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
    }
    
+   /**
+    * A mutable holder for storing the result of
+    * {@link TrieNode#put(int, int, Object, Object, PutResult)}. Java doesn't support light-weight
+    * tuples or returning multiple values on the stack, so we use this idiom to reduce allocations
+    * and garbage. Instead of each level in the trie creating and returning a new tuple, we allocate
+    * one up front and let each level of the trie modify that one object.
+    *
+    * @param <K> the type of keys in the trie
+    * @param <V> the type of values in the trie
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class PutResult<K, V> {
       PutResult() {
       }
       
+      /**
+       * The new sub-trie with the results of adding the new mapping.
+       */
       TrieNode<K, V> node;
+      
+      /**
+       * True if a new entry was added or false if an existing entry was updated. This is necessary
+       * for proper accounting of the map's size during
+       * {@link HamtPersistentMap#put(Object, Object)} operations.
+       */
       boolean added;
    }
    
+   /**
+    * A node in the trie.
+    *
+    * @param <K> the type of the keys
+    * @param <V> the type of the values
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private interface TrieNode<K, V> {
+      /**
+       * Determines if this node or any of its descendants contain the specified value.
+       *
+       * @param value the value
+       * @return true if the value is contained in the trie rooted at this node
+       */
       boolean containsValue(Object value);
+      
+      /**
+       * Finds a node for the specified key. Each level of the tree represents six (out of 32) bits
+       * from the key's hash code. 
+       *
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
+       * @param key the key to find
+       * @return the list node containing the key or {@code null} if the key is not found
+       */
       ListNode<K, V> findNode(int hash, int currentOffset, Object key);
+
+      /**
+       * Computes a new trie where the given key is removed. If the returned object is the same
+       * instance as {@code this}, then the key was not present.
+       *
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
+       * @param key the key to remove
+       * @return a new version of this trie with the given key removed
+       */
       TrieNode<K, V> remove(int hash, int currentOffset, Object key);
+      
+      /**
+       * Computes a new trie where the given mapping is added. The caller is expected to supply a
+       * {@linkplain PutResult holder for the result}. It is populated with the results of adding
+       * the mapping: a new trie and a flag indicating if the size of the new trie is different than
+       * {@code this}.
+       *
+       * @param hashCode the hash code for the key
+       * @param currentOffset represents the number of bits of the hash code already processed
+       * @param key the key to find
+       * @param value the value to associate with this key if not found and a new mapping is created
+       * @param result a holder for the result of the operation
+       */
       void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result);
    }
    
+   /**
+    * A non-leaf node in the trie. Each such level has an array of child nodes, each one
+    * representing a different combination of bits. Each such level encodes six bits of the keys'
+    * 32-bit hash codes, except the last level which only encodes two bits. So each level can have
+    * up to 64 child nodes (up to 4 children at the last level).
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class IntermediateTrieNode<K, V> implements TrieNode<K, V> {
+      
+      /**
+       * A bitmask for which children are present. Each child represents a different combination of
+       * six bits, up to 64 possible children (so one bit in this mask for each possible child).
+       */
       final long present;
+
+      /**
+       * The array of children. Its size is always the number of actual children.
+       * 
+       * <p>Implementation detail: Since this data structure is immutable, case must be taken to
+       * ensure that the array is never updated after the trie node is built.
+       */
       final TrieNode<K, V> children[];
       
       IntermediateTrieNode(long present, TrieNode<K, V> firstChild) {
@@ -206,6 +316,17 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
    }
 
+   /**
+    * A leaf node in the trie. Leaves represent a full 32-bit hash code. Since multiple objects
+    * could hash to the same 32-bit code, there could be collisions. Such collisions are managed
+    * using a linked list of all keys that share the same hash code, so each leaf node is also the
+    * head of a list.
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class LeafTrieNode<K, V> extends ListNode<K, V> implements TrieNode<K, V> {
       LeafTrieNode(K key, V value) {
          super(key, value);
@@ -228,7 +349,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public ListNode<K, V> findNode(int hash, int currentOffset, Object searchKey) {
          assert currentOffset >= 32;
-         return doFind(key);
+         return doFind(searchKey);
       }
       
       ListNode<K, V> doFind(Object searchKey) {
@@ -323,6 +444,21 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
    }
 
+   /**
+    * An inner node in the trie, but with leaf information. This type of node is used to
+    * "short-circuit" searches down a branch that has only one descendant. Instead of storing the
+    * extra nodes along the branch just to store a single leaf, the entire branch can be collapsed
+    * into one of these nodes.
+    * 
+    * <p>This can reduce search times by minimizing operations during key queries. It can also speed
+    * up store operations since we don't need to create the whole branch of intermediate nodes if a
+    * branch has only one descendant. 
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class InnerLeafTrieNode<K, V> extends LeafTrieNode<K, V> {
       final int hashCode;
       
@@ -413,7 +549,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    public static <K, V> HamtPersistentMap<K, V> create(Map<? extends K, ? extends V> map) {
-      return HamtPersistentMap.<K, V>create().merge(map);
+      return HamtPersistentMap.<K, V>create().putAll(map);
    }
 
    @SuppressWarnings("unchecked") // due to immutability, cast is safe
@@ -421,10 +557,17 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       if (map instanceof HamtPersistentMap) {
          return (HamtPersistentMap<K, V>) map;
       }
-      return HamtPersistentMap.<K, V>create().merge(map);
+      return HamtPersistentMap.<K, V>create().putAll(map);
    }
 
+   /**
+    * The total number of mappings present.
+    */
    private final int size;
+   
+   /**
+    * The root of the trie.
+    */
    private final TrieNode<K, V> root;
    
    private HamtPersistentMap(int size, TrieNode<K, V> root) {
@@ -455,11 +598,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
 
    @Override
-   public PersistentMap<K, V> put(K key, V value) {
-      return add(key, value);
-   }
-
-   private HamtPersistentMap<K, V> add(K key, V value) {
+   public HamtPersistentMap<K, V> put(K key, V value) {
       if (root == null) {
          return new HamtPersistentMap<K, V>(1, new InnerLeafTrieNode<K, V>(key, value, hash(key)));
       }
@@ -470,7 +609,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    @Override
-   public PersistentMap<K, V> remove(Object o) {
+   public HamtPersistentMap<K, V> remove(Object o) {
       if (root == null) {
          return this;
       }
@@ -479,13 +618,13 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
 
    @Override
-   public PersistentMap<K, V> removeAll(Iterable<?> keys) {
+   public HamtPersistentMap<K, V> removeAll(Iterable<?> keys) {
       if (isEmpty()) {
          return this;
       }
       // TODO: bulk remove? maybe create array sorted by hash code and then use bulk operations
       // to remove chunks from TrieNodes?
-      PersistentMap<K, V> ret = this;
+      HamtPersistentMap<K, V> ret = this;
       for (Object key : keys) {
          ret = ret.remove(key);
       }
@@ -493,13 +632,13 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
 
    @Override
-   public PersistentMap<K, V> retainAll(Iterable<?> keys) {
+   public HamtPersistentMap<K, V> retainAll(Iterable<?> keys) {
       if (isEmpty()) {
          return this;
       }
       // TODO: bulk remove? maybe create array sorted by hash code and then use bulk operations
       // to remove chunks from TrieNodes?
-      PersistentMap<K, V> ret = create();
+      HamtPersistentMap<K, V> ret = create();
       for (Object key : keys) {
          ListNode<K, V> node = root == null ? null : root.findNode(hash(key), 0, key);
          if (node != null) {
@@ -510,31 +649,26 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
 
    @Override
-   public PersistentMap<K, V> putAll(Map<? extends K, ? extends V> items) {
-      return merge(items);
-   }
-   
-   private HamtPersistentMap<K, V> merge(Map<? extends K, ? extends V> items) {
+   public HamtPersistentMap<K, V> putAll(Map<? extends K, ? extends V> items) {
       // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
       // operations to insert chunks into TrieNodes?
       HamtPersistentMap<K, V> ret = this;
       for (Map.Entry<? extends K, ? extends V> entry : items.entrySet()) {
-         ret = ret.add(entry.getKey(), entry.getValue());
+         ret = ret.put(entry.getKey(), entry.getValue());
       }
       return ret;
    }
 
    @Override
-   public PersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items) {
-      return merge(items);
-   }
-
-   private HamtPersistentMap<K, V> merge(ImmutableMap<? extends K, ? extends V> items) {
+   public HamtPersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items) {
+      if (isEmpty() && items instanceof HamtPersistentMap) {
+         return Immutables.cast((HamtPersistentMap<? extends K, ? extends V>) items);
+      }
       // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
       // operations to insert chunks into TrieNodes?
       HamtPersistentMap<K, V> ret = this;
       for (Entry<? extends K, ? extends V> entry : items) {
-         ret = ret.add(entry.key(), entry.value());
+         ret = ret.put(entry.key(), entry.value());
       }
       return ret;
    }
@@ -549,8 +683,24 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       return create();
    }
    
+   /**
+    * A stack frame, used to iterate over the tree without using recursion.
+    *
+    * @param <K> the type of the key
+    * @param <V> the type of the value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class StackFrame<K, V> {
+      /**
+       * A node that is visited during iteration.
+       */
       final IntermediateTrieNode<K, V> node;
+
+      /**
+       * The current/latest child visited during iteration. The next frame on the stack will hold
+       * a reference to the child.
+       */
       int childIndex;
       
       StackFrame(IntermediateTrieNode<K, V> node) {
@@ -559,8 +709,21 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
    }
    
+   /**
+    * An iterator over the mappings in the trie.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private class Iter implements Iterator<Entry<K, V>> {
+      /**
+       * The stack, used for doing a depth-first traversal without recursion.
+       */
       private final ArrayDeque<StackFrame<K, V>> stack = new ArrayDeque<StackFrame<K, V>>();
+
+      /**
+       * The current position of this iterator. This holds the next mapping to be returned by this
+       * iterator.
+       */
       private ListNode<K, V> current;
       
       @SuppressWarnings({ "unchecked", "synthetic-access" })

@@ -62,4 +62,11 @@ public interface PersistentCollection<E> extends ImmutableCollection<E> {
     * @return a new version of the collection that includes all of the specified items
     */
    PersistentCollection<E> addAll(Iterable<? extends E> items);
+   
+   /**
+    * Returns an empty collection.
+    *
+    * @return an empty persistent collection
+    */
+   PersistentCollection<E> clear();
 }

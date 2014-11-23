@@ -33,7 +33,10 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentSet<E> removeAll(Object o);
+   @Override default PersistentSet<E> removeAll(Object o) {
+      // sets don't have duplicates, so this is the same as remove(Object)
+      return remove(o);
+   }
 
    /**
     * {@inheritDoc}
@@ -58,4 +61,24 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * {@link PersistentCollection}.
     */
    @Override PersistentSet<E> addAll(Iterable<? extends E> items);
+
+   /**
+    * Returns an empty set.
+    *
+    * @return an empty persistent set
+    */
+   @Override PersistentSet<E> clear();
+   
+   /**
+    * Returns a persistent set that is backed by the given persistent map. Elements present in the
+    * set are the keys that are present in the map. Changes to the map are visible through the
+    * returned set and vice versa. If an element is added to the set, it is visible as a new key in
+    * the map and mapped to {@link Boolean#TRUE}.
+    *
+    * @param map a persistent map whose keys are the elements present in the resulting set
+    * @return a persistent set backed by the given map
+    */
+   static <E> PersistentSet<E> newSetFromMap(PersistentMap<E, Boolean> map) {
+      return new PersistentSetFromMap<>(map);
+   }
 }

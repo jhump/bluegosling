@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 // TODO: javadoc
 // TODO: tests
 // TODO: serialization
-// TODO: extend AbstractLinkedImmutableList
+// TODO: extend AbstractLinkedImmutableList?
 public class LinkedPersistentList<E> implements PersistentList<E>, Serializable {
    /*
     * Since Java does not do tail-call optimization for recursive functions, these methods use
@@ -193,7 +193,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> subList(int from, int to) {
+   public LinkedPersistentList<E> subList(int from, int to) {
       rangeCheckWide(from);
       rangeCheckWide(to);
       if (from > to) {
@@ -228,7 +228,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> add(int i, E e) {
+   public LinkedPersistentList<E> add(int i, E e) {
       rangeCheckWide(i);
       ArrayDeque<E> nodes = new ArrayDeque<E>(i);
       LinkedPersistentList<E> current = this;
@@ -244,7 +244,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> addAll(int i, Iterable<? extends E> items) {
+   public LinkedPersistentList<E> addAll(int i, Iterable<? extends E> items) {
       if (i == 0) {
          return addAll(items);
       }
@@ -270,17 +270,17 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> addFirst(E e) {
+   public LinkedPersistentList<E> addFirst(E e) {
       return new LinkedPersistentList<E>(e, this);
    }
 
    @Override
-   public PersistentList<E> addLast(E e) {
+   public LinkedPersistentList<E> addLast(E e) {
       return add(size, e);
    }
 
    @Override
-   public PersistentList<E> set(int i, E e) {
+   public LinkedPersistentList<E> set(int i, E e) {
       rangeCheck(i);
       ArrayDeque<E> nodes = new ArrayDeque<E>(i);
       LinkedPersistentList<E> current = this;
@@ -297,7 +297,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> remove(int i) {
+   public LinkedPersistentList<E> remove(int i) {
       rangeCheck(i);
       if (size == 1) {
          return EmptyList.instance();
@@ -317,17 +317,17 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> rest() {
+   public LinkedPersistentList<E> rest() {
       return next == null ? EmptyList.<E>instance() : next;
    }
 
    @Override
-   public PersistentList<E> add(E e) {
+   public LinkedPersistentList<E> add(E e) {
       return addFirst(e);
    }
 
    @Override
-   public PersistentList<E> remove(Object o) {
+   public LinkedPersistentList<E> remove(Object o) {
       ArrayDeque<E> nodes = new ArrayDeque<E>();
       LinkedPersistentList<E> current = this;
       while (current != null) {
@@ -350,7 +350,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
 
    @Override
-   public PersistentList<E> removeAll(Object o) {
+   public LinkedPersistentList<E> removeAll(Object o) {
       ArrayDeque<E> nodes = new ArrayDeque<E>(size);
       LinkedPersistentList<E> current = this;
       boolean found = false;
@@ -380,7 +380,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       return elements;
    }
    
-   private PersistentList<E> filter(Iterable<?> items, boolean remove) {
+   private LinkedPersistentList<E> filter(Iterable<?> items, boolean remove) {
       // this stinks, but it's the best way to get adequate performance by using
       // the collection's contains method (which, worst case, will be the same as
       // the fallback using just Iterable, but best case [like if the collection is
@@ -432,17 +432,22 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
    }
    
    @Override
-   public PersistentList<E> removeAll(Iterable<?> items) {
+   public LinkedPersistentList<E> removeAll(Iterable<?> items) {
       return filter(items, true);
    }
 
    @Override
-   public PersistentList<E> retainAll(Iterable<?> items) {
+   public LinkedPersistentList<E> retainAll(Iterable<?> items) {
       return filter(items, false);
+   }
+   
+   @Override
+   public LinkedPersistentList<E> clear() {
+      return create();
    }
 
    @Override
-   public PersistentList<E> addAll(Iterable<? extends E> items) {
+   public LinkedPersistentList<E> addAll(Iterable<? extends E> items) {
       Iterator<? extends E> iterator = Iterables.reversed(items);
       LinkedPersistentList<E> node = this;
       while (iterator.hasNext()) {
@@ -533,7 +538,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       }
 
       @Override
-      public PersistentList<E> subList(int from, int to) {
+      public LinkedPersistentList<E> subList(int from, int to) {
          if (from != 0) {
             throw new IndexOutOfBoundsException("" + from);
          }
@@ -544,7 +549,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       }
 
       @Override
-      public PersistentList<E> add(int i, E e) {
+      public LinkedPersistentList<E> add(int i, E e) {
          if (i != 0) {
             throw new IndexOutOfBoundsException("" + i);
          }
@@ -552,7 +557,7 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       }
 
       @Override
-      public PersistentList<E> addAll(int i, Iterable<? extends E> items) {
+      public LinkedPersistentList<E> addAll(int i, Iterable<? extends E> items) {
          if (i != 0) {
             throw new IndexOutOfBoundsException("" + i);
          }
@@ -560,58 +565,58 @@ public class LinkedPersistentList<E> implements PersistentList<E>, Serializable 
       }
 
       @Override
-      public PersistentList<E> addFirst(E e) {
+      public LinkedPersistentList<E> addFirst(E e) {
          return add(e);
       }
 
       @Override
-      public PersistentList<E> addLast(E e) {
+      public LinkedPersistentList<E> addLast(E e) {
          return add(e);
       }
 
       @Override
-      public PersistentList<E> set(int i, E e) {
+      public LinkedPersistentList<E> set(int i, E e) {
          throw new IndexOutOfBoundsException("" + i);
       }
 
       @Override
-      public PersistentList<E> remove(int i) {
+      public LinkedPersistentList<E> remove(int i) {
          throw new IndexOutOfBoundsException("" + i);
       }
 
       @Override
-      public PersistentList<E> rest() {
+      public LinkedPersistentList<E> rest() {
          return this;
       }
 
       @SuppressWarnings("synthetic-access")
       @Override
-      public PersistentList<E> add(E e) {
+      public LinkedPersistentList<E> add(E e) {
          return new LinkedPersistentList<E>(e, null);
       }
 
       @Override
-      public PersistentList<E> remove(Object o) {
+      public LinkedPersistentList<E> remove(Object o) {
          return this;
       }
 
       @Override
-      public PersistentList<E> removeAll(Object o) {
+      public LinkedPersistentList<E> removeAll(Object o) {
          return this;
       }
 
       @Override
-      public PersistentList<E> removeAll(Iterable<?> items) {
+      public LinkedPersistentList<E> removeAll(Iterable<?> items) {
          return this;
       }
 
       @Override
-      public PersistentList<E> retainAll(Iterable<?> items) {
+      public LinkedPersistentList<E> retainAll(Iterable<?> items) {
          return this;
       }
 
       @Override
-      public PersistentList<E> addAll(Iterable<? extends E> items) {
+      public LinkedPersistentList<E> addAll(Iterable<? extends E> items) {
          return create(items);
       }
    }

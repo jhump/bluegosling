@@ -123,4 +123,9 @@ class PersistentListWrapper<E>
    public PersistentListWrapper<E> rest() {
       return isEmpty() ? this : new PersistentListWrapper<E>(addLast, collection.subList(1, size()));
    }
+
+   @Override
+   public PersistentList<E> clear() {
+      return new PersistentListWrapper<>(new ArrayList<>(0));
+   }
 }

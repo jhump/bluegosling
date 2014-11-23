@@ -159,4 +159,11 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * {@link PersistentCollection}.
     */
    @Override PersistentList<E> addAll(Iterable<? extends E> items);
+   
+   /**
+    * Returns an empty list.
+    *
+    * @return an empty persistent list
+    */
+   @Override PersistentList<E> clear();
 }

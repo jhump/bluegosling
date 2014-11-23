@@ -21,4 +21,10 @@ class PersistentSetWrapper<E>
    protected PersistentSetWrapper<E> wrapPersistent(Set<E> coll) {
       return new PersistentSetWrapper<E>(coll);
    }
+
+
+   @Override
+   public PersistentSet<E> clear() {
+      return new PersistentSetWrapper<>(new HashSet<>(0));
+   }
 }
