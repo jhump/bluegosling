@@ -27,6 +27,17 @@ public final class Cloners {
     * Prevents instantiation.
     */
    private Cloners() {}
+   
+   static final Method CLONE_METHOD;
+   static {
+      try {
+         CLONE_METHOD = Object.class.getDeclaredMethod("clone");
+         CLONE_METHOD.setAccessible(true);
+      }
+      catch (SecurityException | NoSuchMethodException e) {
+         throw new AssertionError("Failed to get Object#clone() method!", e);
+      }
+   }
 
    /**
     * Checks that the clone is valid. This will assert that the clone is <em>not</em> the same
@@ -64,9 +75,8 @@ public final class Cloners {
       return new Cloner<T>() {
          @Override
          public T clone(T o) {
-            Method cloneMethod = findCloneMethod(o.getClass());
             try {
-               Object clone = cloneMethod.invoke(o); // o.clone()
+               Object clone = CLONE_METHOD.invoke(o); // o.clone()
                // check the object's value and type
                checkClone(o, clone);
                @SuppressWarnings("unchecked")
@@ -78,28 +88,6 @@ public final class Cloners {
             }
             catch (IllegalAccessException e) {
                throw new CloningException("Failed to invoke clone()", e);
-            }
-         }
-
-         private Method findCloneMethod(Class<?> clazz) {
-            try {
-               Method m = clazz.getDeclaredMethod("clone");
-               m.setAccessible(true);
-               return m;
-            }
-            catch (SecurityException e) {
-               throw new CloningException("Failed to locate clone() method", e);
-            }
-            catch (NoSuchMethodException e) {
-               if (clazz.getSuperclass() == null) {
-                  // This should never happen since this method is defined on java.lang.Object if
-                  // not overridden anywhere else in the object's class hierarchy.
-                  throw new CloningException("Failed to locate clone() method", e);
-               }
-               else {
-                  // try super-class
-                  return findCloneMethod(clazz.getSuperclass());
-               }
             }
          }
       };

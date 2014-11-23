@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -126,7 +127,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
                   @Override public Thread newThread(Runnable r) {
                      Thread ret = new Thread(r);
                      ret.setDaemon(true);
-                     ret.setName("AsynchronousAtom " + String.valueOf(id.incrementAndGet()));
+                     ret.setName("AsynchronousAtom-" + id.incrementAndGet());
                      return ret;
                   }
                }));
@@ -379,8 +380,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * future. Depending on the atom's {@link #getErrorHandler() error handler}, a validation failure
     * could block subsequent mutations.
     *
-    * @param function the function to apply; the atom's new value will be the result of applying
-    *       this function to the atom's previous value
+    * @param function the function to apply
     * @return a future result that will be the atom's new value after the function is applied
     */
    public ListenableFuture<T> apply(Function<? super T, ? extends T> function) {
@@ -392,6 +392,22 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
          AsynchronousAtom.this.notify(oldValue, newValue);
          return newValue;
       });
+   }
+   
+   /**
+    * Submits a mutation that will combine the atom's value with the given value, using the given
+    * function, and set the atom's value to the result. Validation cannot be done immediately, so a
+    * validation failure manifests as a failed future. Depending on the atom's
+    * {@link #getErrorHandler() error handler}, a validation failure could block subsequent
+    * mutations.
+    *
+    * @param t the value to combine
+    * @param function the function to apply
+    * @return a future result that will be the atom's new value after the function is applied
+    */
+   public ListenableFuture<T> combineWith(T t,
+         BiFunction<? super T, ? super T, ? extends T> function) {
+      return apply(v -> function.apply(v, t));
    }
 
    /**

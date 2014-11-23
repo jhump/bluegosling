@@ -15,7 +15,7 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
+public class ThreadLocalAtom<T> extends AbstractSynchronousAtom<T> {
    
    /** 
     * The root value, used to seed the atom's value in new threads.
@@ -68,12 +68,12 @@ public class ThreadLocalAtom<T> extends AbstractAtom<T> implements SynchronousAt
    }
 
    @Override
-   public T apply(Function<? super T, ? extends T> function) {
+   T update(Function<? super T, ? extends T> function, boolean returnNew) {
       T oldValue = value.get();
       T newValue = function.apply(oldValue);
       validate(newValue);
       value.set(newValue);
-      return newValue;
+      return returnNew ? newValue : oldValue;
    }
    
    /**

@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: tests
-public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
+public class SimpleAtom<T> extends AbstractSynchronousAtom<T> {
 
    /**
     * The object used to update the value atomically.
@@ -64,7 +64,7 @@ public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T>
    }
 
    @Override
-   public T apply(Function<? super T, ? extends T> function) {
+   T update(Function<? super T, ? extends T> function, boolean returnNew) {
       T oldValue;
       T newValue;
       while (true) {
@@ -76,6 +76,6 @@ public class SimpleAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T>
          }
       }
       notify(oldValue, newValue);
-      return newValue;
+      return returnNew ? newValue : oldValue;
    }
 }

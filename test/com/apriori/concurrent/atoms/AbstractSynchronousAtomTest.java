@@ -47,8 +47,10 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals("abc", atom.get());
       assertEquals("abc", atom.set("def"));
       assertEquals("def", atom.get());
-      assertEquals("DEF", atom.apply(String::toUpperCase));
+      assertEquals("DEF", atom.updateAndGet(String::toUpperCase));
       assertEquals("DEF", atom.get());
+      assertEquals("DEF", atom.getAndUpdate(String::toLowerCase));
+      assertEquals("def", atom.get());
    }
    
    @Test public void invalidMutations() {
@@ -67,12 +69,12 @@ public abstract class AbstractSynchronousAtomTest {
       assertFalse(notified.get());
       
       Function<Integer, Integer> addNine = (i) -> i + 9;
-      atom.apply(addNine);
+      atom.updateAndGet(addNine);
       assertEquals(Integer.valueOf(99), atom.get());
 
       notified.set(false);
       // another nine would push it over 100
-      assertThrows(IllegalArgumentException.class, () -> atom.apply(addNine));
+      assertThrows(IllegalArgumentException.class, () -> atom.updateAndGet(addNine));
       assertEquals(Integer.valueOf(99), atom.get()); // unchanged
       assertFalse(notified.get());
    }
@@ -110,7 +112,7 @@ public abstract class AbstractSynchronousAtomTest {
       }
       
       Function<String,String> twice = i -> i + i;
-      atom.apply(twice);
+      atom.updateAndGet(twice);
       for (List<?> notices : noticesArray) {
          assertEquals(Arrays.asList(Trio.create(atom, "abc", "abcabc")), notices);
          notices.clear();

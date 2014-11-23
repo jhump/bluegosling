@@ -27,7 +27,7 @@ import java.util.function.Predicate;
  * if a deadlock is detected when acquiring atoms' locks.
  */
 // TODO: tests
-public class TransactionalAtom<T> extends AbstractAtom<T> implements SynchronousAtom<T> {
+public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
 
    /**
     * Represents a version of this atom's value. Transactions are implemented using an MVCC, so each
@@ -259,7 +259,7 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
       }
       return current.pinAtom(this);
    }
-
+   
    /**
     * {@inheritDoc}
     * 
@@ -276,11 +276,38 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
     * @throws TransactionIsolationException if a transaction is in progress, and a concurrent
     *       transaction has updated the atom since the current transaction's version was established 
     */
+   @Override
+   public T getAndUpdate(Function<? super T, ? extends T> function) {
+      return super.getAndUpdate(function);
+   }
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>If no transaction is in progress on the current thread, this will effectively create one
+    * that does nothing but transform this atom. If one is in progress, the transaction will acquire
+    * an exclusive lock on the atom to prevent concurrent writers and will hold the lock until it is
+    * rolled back or committed.
+    * 
+    * <p>Watchers are only notified when this operation is committed. If there are other operations
+    * on this same atom, watchers will only be notified once with the value of this atom before the
+    * transaction began and its final value upon the transaction being committed.
+    * 
+    * @throws DeadlockException if a deadlock is detected when trying to acquire a lock for the atom
+    * @throws TransactionIsolationException if a transaction is in progress, and a concurrent
+    *       transaction has updated the atom since the current transaction's version was established 
+    */
+   @Override
+   public T updateAndGet(Function<? super T, ? extends T> function) {
+      return super.updateAndGet(function);
+   }
+
    @Override 
-   public T apply(Function<? super T, ? extends T> function) {
+   T update(Function<? super T, ? extends T> function, boolean returnNew) {
       Transaction current = Transaction.current();
+      T oldValue;
+      T newValue;
       if (current == null) {
-         T oldValue, newValue;
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
             oldValue = latest.value;
@@ -296,13 +323,13 @@ public class TransactionalAtom<T> extends AbstractAtom<T> implements Synchronous
             exclusive.unlock();
          }
          notify(oldValue, newValue);
-         return newValue;
       } else {
-         T newValue = function.apply(current.getAtom(this));
+         oldValue = current.getAtom(this);
+         newValue = function.apply(oldValue);
          validate(newValue);
          current.setAtom(this, newValue);
-         return newValue;
       }
+      return returnNew ? newValue : oldValue;
    }
 
    /**

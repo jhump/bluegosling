@@ -43,7 +43,7 @@ public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
          assertTrue(notices.isEmpty());
       }
       
-      atom.apply((s) -> s + s);
+      atom.updateAndGet((s) -> s + s);
       for (List<?> notices : noticesArray) {
          assertTrue(notices.isEmpty());
       }

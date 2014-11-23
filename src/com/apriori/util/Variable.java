@@ -2,8 +2,11 @@ package com.apriori.util;
 
 import com.apriori.concurrent.atoms.Atom;
 
+import java.io.Serializable;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
+import java.util.function.BinaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
  * A simple variable reference. This can be useful for simulating "out" parameters to a function or
@@ -19,7 +22,9 @@ import java.util.function.Function;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class Variable<T> {
+public class Variable<T> implements Serializable, Cloneable {
+   private static final long serialVersionUID = 7879572538527054255L;
+   
    private T value;
 
    /**
@@ -47,13 +52,83 @@ public class Variable<T> {
    /**
     * Sets this variable's value, returning the previously held value.
     * 
-    * @param value the new value
+    * @param v the new value
     * @return the variable's previous value
     */
-   public T set(T value) {
+   public T getAndSet(T v) {
       T ret = this.value;
-      this.value = value;
+      this.value = v;
       return ret;
+   }
+   
+   /**
+    * Sets this variable's value.
+    *
+    * @param value the new value
+    */
+   public void set(T value) {
+      this.value = value;
+   }
+
+   /**
+    * Accumulates the given value into this variable, using the given function to combine the
+    * current value with the given one. This stores the results of the function in this variable,
+    * but returns the variable's value from before the function's being applied.
+    *
+    * @param v a value
+    * @param fn the function that combines the current value and the given value
+    * @return the variable's value before accumulation
+    * 
+    * @see #accumulateAndGet(Object, BinaryOperator)
+    */
+   public T getAndAccumulate(T v, BinaryOperator<T> fn) {
+      T ret = this.value;
+      this.value = fn.apply(ret, v);
+      return ret;
+   }
+   
+   /**
+    * Accumulates the given value into this variable, using the given function to combine the
+    * current value with the given one. This stores the results of the function in this variable,
+    * and returns the variable's new value.
+    *
+    * @param v a value
+    * @param fn the function that combines the current value and the given value
+    * @return the variable's new value after accumulation
+    * 
+    * @see #getAndAccumulate(Object, BinaryOperator)
+    */
+   public T accumulateAndGet(T v, BinaryOperator<T> fn) {
+      return this.value = fn.apply(this.value, v);
+   }
+   
+   /**
+    * Updates the variable's current value using the given function. This stores the results of the
+    * function in this variable, but returns the variable's value from before the function's being
+    * applied.
+    *
+    * @param fn the function that computes the new value from the current one
+    * @return the variable's value before updating
+    * 
+    * @see #updateAndGet(UnaryOperator)
+    */
+   public T getAndUpdate(UnaryOperator<T> fn) {
+      T ret = this.value;
+      this.value = fn.apply(ret);
+      return ret;
+   }
+   
+   /**
+    * Updates the variable's current value using the given function. This stores the results of the
+    * function in this variable, and returns the variable's new value.
+    *
+    * @param fn the function that computes the new value from the current one
+    * @return the variable's new value after updating
+    * 
+    * @see #getAndUpdate(UnaryOperator)
+    */
+   public T updateAndGet(UnaryOperator<T> fn) {
+      return this.value = fn.apply(this.value);
    }
 
    /**
@@ -62,15 +137,33 @@ public class Variable<T> {
    public void clear() {
       set(null);
    }
-
+   
    /**
-    * Applies the given function to the variable. After this method returns, the variable's value
-    * is the result of applying the function to the variable's previous value.
-    *
-    * @param fn the function to apply
-    * @return the variable's new value
+    * Creates a shallow copy of this variable. The returned instance refers to the same value as
+    * this.
     */
-   public T apply(Function<? super T, ? extends T> fn) {
-      return this.value = fn.apply(this.value);
+   @SuppressWarnings("unchecked")
+   @Override
+   public Variable<T> clone() {
+      try {
+         return (Variable<T>) super.clone();
+      } catch (CloneNotSupportedException e) {
+         throw new AssertionError(e);
+      }
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      return o instanceof Variable && Objects.equals(this.value, ((Variable<?>) o).value);
+   }
+   
+   @Override
+   public int hashCode() {
+      return Objects.hashCode(value);
+   }
+   
+   @Override
+   public String toString() {
+      return String.valueOf(value);
    }
 }

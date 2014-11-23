@@ -84,11 +84,8 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
             assertEquals(Integer.valueOf(1), atom.get());
             assertEquals(Integer.valueOf(1), atom.set(123));
             assertEquals(Integer.valueOf(123), atom.get());
-            assertEquals(Integer.valueOf(223), atom.apply(new Function<Integer, Integer>() {
-               @Override public Integer apply(Integer input) {
-                  return input + 100;
-               }
-            }));
+            assertEquals(Integer.valueOf(223), atom.updateAndGet(i -> i + 100));
+            assertEquals(Integer.valueOf(223), atom.getAndUpdate(i -> i / 2));
             if (rollback) {
                t.rollback();
             }
@@ -96,7 +93,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
          if (rollback) {
             assertEquals(Integer.valueOf(1), atom.get());
          } else {
-            assertEquals(Integer.valueOf(223), atom.get());
+            assertEquals(Integer.valueOf(111), atom.get());
          }
       }
    }
@@ -126,9 +123,9 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       notified.set(false);
       pastStepOne.set(false);
       assertThrows(IllegalArgumentException.class, () -> Transaction.execute(t -> {
-         atom.apply(addNine); // this will get rolled back due to exception
+         atom.updateAndGet(addNine); // this will get rolled back due to exception
          pastStepOne.set(true);
-         atom.apply(addNine); // another nine would push it over 100
+         atom.updateAndGet(addNine); // another nine would push it over 100
       }));
       assertEquals(Integer.valueOf(90), atom.get()); // unchanged
       assertFalse(notified.get());
@@ -146,12 +143,13 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       Transaction.execute(t -> {
          assertEquals("", atom.set("a"));
          assertEquals("a", atom.set(atom.get() + "bc"));
-         assertEquals("abcabc", atom.apply(twice));
+         assertEquals("abcabc", atom.updateAndGet(twice));
+         assertEquals("abcabc", atom.getAndUpdate(String::toUpperCase));
       });
-      assertEquals("abcabc", atom.get());
+      assertEquals("ABCABC", atom.get());
       // watchers only get the total delta from before-transaction to committed-value
       assertEquals(1, notices.size());
-      assertEquals(Trio.create(atom,  "", "abcabc"), notices.get(0));
+      assertEquals(Trio.create(atom,  "", "ABCABC"), notices.get(0));
    }
    
    @Test public void commute_inTransaction() {
