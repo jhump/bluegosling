@@ -9,6 +9,17 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * A concurrent map that is backed by a persistent map. Modifications are made by atomically
+ * swapping one map for the modified one. Since persistent maps are immutable, the map itself isn't
+ * updated, only the reference to it. Modified maps are generally computed via limited copy-on-write
+ * (path-copying for tree-based map structures). 
+ *
+ * @param <K> the type of keys in the map
+ * @param <V> the type of values in the map
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: javadoc
 //TODO: tests
 public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
@@ -16,6 +27,12 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
    
    private final AtomicReference<PersistentMap<K, V>> underlying;
    
+   /**
+    * Constructs a new concurrent map whose initial state is the given persistent map. The given
+    * persistent map is also used to compute new maps during modifications.
+    *
+    * @param underlying the persistent map that initial backs the concurrent map
+    */
    public PersistentMapBackedConcurrentMap(PersistentMap<K, V> underlying) {
       this.underlying = new AtomicReference<PersistentMap<K, V>>(underlying);
    }

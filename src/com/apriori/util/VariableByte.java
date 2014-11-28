@@ -1,7 +1,7 @@
 package com.apriori.util;
 
 /**
- * A simple variable reference for an {@code byte}. This is the primitive specialization of
+ * A simple variable reference for a {@code byte}. This is the primitive specialization of
  * {@link Variable} for {@code byte}.
  * 
  * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type

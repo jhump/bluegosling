@@ -3,7 +3,7 @@ package com.apriori.util;
 import java.io.Serializable;
 
 /**
- * A simple variable reference for an {@code char}. This is the primitive specialization of
+ * A simple variable reference for a {@code char}. This is the primitive specialization of
  * {@link Variable} for {@code char}.
  * 
  * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type

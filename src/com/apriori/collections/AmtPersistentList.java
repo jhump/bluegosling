@@ -19,7 +19,7 @@ import java.util.Objects;
 public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
       implements PersistentList<E>, BidiIterable<E> {
 
-   private static final AmtPersistentList<Object> EMPTY = new AmtPersistentList<>(0, 0, 0, null);
+   private static final AmtPersistentList<Object> EMPTY = new AmtPersistentList<>(null, 0, 0, 0);
    
    @SuppressWarnings("unchecked") // safe due to immutability
    public AmtPersistentList<E> create() {
@@ -29,9 +29,8 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    public AmtPersistentList<E> create(Iterable<? extends E> items) {
       return create().addAll(items);
    }
-
+   
    private interface TrieNode<E> {
-      // TODO
    }
    
    private static class IntermediateTrieNode<E> implements TrieNode<E> {
@@ -55,7 +54,7 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    private final int size;
    private final int firstElementIndex;
 
-   private AmtPersistentList(int depth, int size, int firstElementIndex, TrieNode<E> root) {
+   private AmtPersistentList(TrieNode<E> root, int depth, int size, int firstElementIndex) {
       this.depth = depth;
       this.size = size;
       this.firstElementIndex = firstElementIndex;

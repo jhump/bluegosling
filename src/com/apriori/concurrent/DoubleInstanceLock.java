@@ -4,6 +4,7 @@ import com.apriori.util.Cloner;
 import com.apriori.util.Cloners;
 
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
+import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -47,7 +48,6 @@ import java.util.function.Function;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
 public class DoubleInstanceLock<T> {
    
    /**
@@ -79,8 +79,8 @@ public class DoubleInstanceLock<T> {
    }
    
    /*
-    * Identifiers below use the naming conventions of "left" and "right" to distinguish the two
-    * instances.
+    * Identifiers below use the naming conventions of "left" and "right" to distinguish between the
+    * two instances.
     */
 
    /**
@@ -104,7 +104,7 @@ public class DoubleInstanceLock<T> {
    private DoubleInstanceLock(T value, Cloner<T> cloner) {
       this.cloner = cloner;
       @SuppressWarnings("unchecked")
-      T a[] = (T[]) new Cloneable[2];
+      T a[] = (T[]) new Object[2];
       values = a;
       values[0] = value;
       values[1] = cloner.clone(value);
@@ -157,19 +157,24 @@ public class DoubleInstanceLock<T> {
     * results of subsequent operations undefined.
     * 
     * @param action the write operation to perform
+    * @throws ReentranceException if the given action is reentrant
     */
    public void writeWith(Consumer<? super T> action) {
       write((T t) -> { action.accept(t); return null; });
    }
    
    /**
-    * Performs a write operation that produces a result value.
+    * Performs a write operation that produces a result value. Note that write operations are
+    * <strong>not</strong> allowed to be reentrant. If the given action tries to invoke
+    * {@link #write(Function)} or {@link #writeWith(Consumer)} then a {@link ReentranceException}
+    * is thrown.
     *
     * <p><strong>Note</strong>: if the action is not deterministic, then applying the action could
     * cause divergence of the two sides of this structure, thus causing corruption and making the
     * results of subsequent operations undefined.
     * 
     * @param action the write operation to perform
+    * @throws ReentranceException if the given action is reentrant
     */
    public <U> U write(Function<? super T, ? extends U> action) {
       // only one writer at a time allowed 
@@ -187,7 +192,7 @@ public class DoubleInstanceLock<T> {
          // then flip which side readers are using
          int s = sync.flip();
          assert s == s2;
-         sync.acquire(s2); // make sure readers have drained
+         sync.awaitDrain(s2); // make sure readers have drained
          val = values[s2];
          if (sync.resetSnapshot(s2)) {
             values[s2] = val = cloner.clone(values[s2]);
@@ -233,64 +238,105 @@ public class DoubleInstanceLock<T> {
       private static final long LEFT_OR_RIGHT =     0x0000000080000000L;
       private static final long LEFT_OR_RIGHT_SHIFT = 31;
       private static final long LEFT_SNAPSHOT =     0x4000000000000000L;
-      private static final long LEFT_READER_MASK =  0x1fffffff00000000L;
+      private static final long LEFT_READER_MASK =  0x3fffffff00000000L;
       private static final long LEFT_READER_INC  =  0x0000000100000000L;
       private static final long LEFT_READER_SHIFT = 32;
       private static final long RIGHT_SNAPSHOT =    0x0000000040000000L;
-      private static final long RIGHT_READER_MASK = 0x000000001fffffffL;
+      private static final long RIGHT_READER_MASK = 0x000000003fffffffL;
       private static final long RIGHT_READER_INC  = 0x0000000000000001L;
+      
+      /**
+       * A thread that is waiting for readers to drain from the left side. This will be {@code null}
+       * if no such thread is waiting. Only threads that have write-locked this synchronizer need to
+       * wait for readers to drain, and the writers are exclusive. So we just need a single field to
+       * store the thread, not a queue.
+       */
+      private volatile Thread awaitingDrainLeft;
+
+      /**
+       * A thread that is waiting for readers to drain from the right side. This will be
+       * {@code null} if no such thread is waiting. Only threads that have write-locked this
+       * synchronizer need to wait for readers to drain, and the writers are exclusive. So we just
+       * need a single field to store the thread, not a queue. 
+       */
+      private volatile Thread awaitingDrainRight;
       
       Sync() {
       }
       
       /**
-       * Acquire the synchronizer in "write" or "reader drain" mode. A value of -1 indicates that
-       * the writer is getting exclusive access ("write" mode). A value of 0 or 1 indicates that a
-       * writer is waiting for reads to drain from left or right side, respectively.
+       * Acquire the synchronizer in "write" mode.
        *
-       * @param i acquisition mode
+       * @param i unused
        * @return true if acquisition succeeded
        */
       @Override
       protected boolean tryAcquire(long i) {
-         if (i == -1) {
-            // exclusive lock, for writers
-            if (getExclusiveOwnerThread() == Thread.currentThread()) {
-               // re-entrance not allowed!
-               throw new ReentranceException();
-            }
-            while (true) {
-               long s = getState();
-               if ((s & WRITE_LOCKED) != 0) {
-                  return false;
-               }
-               if (compareAndSetState(s, s | WRITE_LOCKED)) {
-                  setExclusiveOwnerThread(Thread.currentThread());
-                  assert trace("acquire write -- ", s | WRITE_LOCKED);
-                  return true;
-               }
-            }
-         } else {
-            // waiting for readers to drain
+         // exclusive lock, for writers
+         if (getExclusiveOwnerThread() == Thread.currentThread()) {
+            // re-entrance not allowed!
+            throw new ReentranceException();
+         }
+         while (true) {
             long s = getState();
-            if (i == LEFT) {
-               s &= LEFT_READER_MASK;
-            } else {
-               s &= RIGHT_READER_MASK;
+            if ((s & WRITE_LOCKED) != 0) {
+               return false;
             }
-            return s == 0;
+            if (compareAndSetState(s, s | WRITE_LOCKED)) {
+               setExclusiveOwnerThread(Thread.currentThread());
+               return true;
+            }
+         }
+      }
+      
+      /**
+       * Waits for readers to drain from the given side. This will block if there are in-process
+       * readers of the given side. On return, the given side has no readers. This is generally
+       * only used after a {@link #flip()} to make sure no new readers will try to use the given
+       * side.
+       *
+       * @param leftOrRight the side which should have no readers on return
+       */
+      void awaitDrain(int leftOrRight) {
+         if (getExclusiveOwnerThread() != Thread.currentThread()) {
+            // only exclusive writer can wait for threads to drain
+            throw new IllegalMonitorStateException();
+         }
+         // eagerly set the thread field, so exiting readers can unpark us
+         long mask;
+         if (leftOrRight == LEFT) {
+            awaitingDrainLeft = Thread.currentThread();
+            mask = LEFT_READER_MASK;
+         } else {
+            awaitingDrainRight = Thread.currentThread();
+            mask = RIGHT_READER_MASK;
+         }            
+         try {
+            // wait for the reader count to drain to zero
+            while (true) {
+               if ((getState() & mask) == 0) {
+                  return;
+               } else {
+                  LockSupport.park(this);
+               }
+            }
+         } finally {
+            if (leftOrRight == LEFT) {
+               awaitingDrainLeft = null;
+            } else {
+               awaitingDrainRight = null;
+            }
          }
       }
       
       /**
        * Releases the synchronizer when held in "write" mode.
        *
-       * @param i must be -1
+       * @param i unused
        * @return always true, indicating the lock is available for another writer to acquire
        */
       @Override
       protected boolean tryRelease(long i) {
-         assert i == -1;
          if (getExclusiveOwnerThread() != Thread.currentThread()) {
             throw new IllegalMonitorStateException();
          }
@@ -299,7 +345,6 @@ public class DoubleInstanceLock<T> {
             assert (s & WRITE_LOCKED) != 0;
             if (compareAndSetState(s, s & ~WRITE_LOCKED)) {
                setExclusiveOwnerThread(null);
-               assert trace("release write -- ", s & ~WRITE_LOCKED);
                return true;
             }
          }
@@ -346,7 +391,6 @@ public class DoubleInstanceLock<T> {
                n = s & ~LEFT_OR_RIGHT;
             }
             if (compareAndSetState(s, n)) {
-               assert trace("flip -- ", n);
                return leftOrRight;
             }
          }
@@ -378,7 +422,6 @@ public class DoubleInstanceLock<T> {
                }
             }
             if (compareAndSetState(s, n)) {
-               assert trace("snapshot -- ", n);
                return;
             }
          }
@@ -411,7 +454,6 @@ public class DoubleInstanceLock<T> {
                }
             }
             if (compareAndSetState(s, n)) {
-               assert trace("reset snapshot -- ", n);
                return true;
             }
          }
@@ -442,7 +484,6 @@ public class DoubleInstanceLock<T> {
             // check, but an assertion makes sense
             assert (s & m) != m;
             if (compareAndSetState(s, s + a)) {
-               assert trace("add shared -- ", s + a);
                return leftOrRight;
             }
          }
@@ -473,8 +514,14 @@ public class DoubleInstanceLock<T> {
             }
             long n = s - a;
             if (compareAndSetState(s, n)) {
-               assert trace("release shared -- ", n);
-               return (n & m) == 0;
+               if ((n & m) == 0) {
+                  // no more readers on this side; awake any threads waiting for it to drain
+                  Thread th = i == LEFT ? awaitingDrainLeft : awaitingDrainRight;
+                  if (th != null) {
+                     LockSupport.unpark(th);
+                  }
+               }
+               return false;
             }
          }
       }
@@ -528,11 +575,6 @@ public class DoubleInstanceLock<T> {
          sb.append(s & RIGHT_READER_MASK);
          sb.append(suffix);
          return sb.toString();
-      }
-      
-      private boolean trace(String what, long s) {
-         System.out.println(toString(what, s, ""));
-         return true;
       }
    }
 }

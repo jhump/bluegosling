@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A simple variable reference for an {@code boolean}. This is the primitive specialization of
+ * A simple variable reference for a {@code boolean}. This is the primitive specialization of
  * {@link Variable} for {@code boolean}.
  * 
  * <p>This class provides nearly the same API as {@link AtomicBoolean}. However, this version is

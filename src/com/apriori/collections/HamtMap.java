@@ -1,5 +1,7 @@
 package com.apriori.collections;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,6 +15,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * An implementation of {@link Map} that uses a hash array-mapped trie (HAMT). Under the hood, this
@@ -22,6 +27,9 @@ import java.util.Set;
  * likely than in a {@link java.util.HashMap HashMap} because the full 32 bits of hash value are
  * used (vs. hash value modulo array size, which is typically far lower cardinality than the full
  * 32 bits).
+ * 
+ * <p>Each level of the trie contains information for 6 bits of the hash code and thus can have up
+ * to 64 children. This means the trie can have a depth of up to six.
  * 
  * <p>Since this structure doesn't use a fixed size array for the mappings, it never pays a penalty
  * for resizing internal structures and re-hashing all of its contents (unlike a
@@ -38,9 +46,10 @@ import java.util.Set;
  * @param <K> the type of keys in the map
  * @param <V> the type of value in the map
  */
-// TODO: iteration is the slowest thing in here -- do we care? could speed it up by using insertion
-// order and maintaining orthogonal linked last, like LinkedHashMap
-// TODO: more efficient impls of other Map methods (putIfAbsent, computeIfAbsent, replace, etc)
+// TODO: add spliterator that is more efficient than default iterator-based one
+// TODO: allocate arrays in trie nodes less frequently (e.g. allow them to not be full) so that
+// mutations produce less garbage
+// TODO: more efficient impls of Map default methods (putIfAbsent, computeIfAbsent, replace, etc)
 public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cloneable {
    
    private static final long serialVersionUID = -9064441005458513893L;
@@ -201,6 +210,13 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
        * @return a deep copy of this node
        */
       TrieNode<K, V> clone();
+      
+      /**
+       * Executes the given action for each mapping in this trie.
+       *
+       * @param action the action to execute
+       */
+      void forEach(Consumer<ListNode<K, V>> action);
    }
    
    /**
@@ -275,7 +291,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public ListNode<K, V> findNode(int hashCode, int currentOffset, Object key) {
          assert currentOffset < 32;
          
-         int significantBits = (hashCode >> currentOffset) & 0x3f;
+         int significantBits = (hashCode >>> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          if ((present & mask) != 0) {
             int index = Long.bitCount((mask - 1) & present);
@@ -289,7 +305,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public ListNode<K, V> findOrAddNode(int hashCode, int currentOffset, K key, V value) {
          assert currentOffset < 32;
 
-         int significantBits = (hashCode >> currentOffset) & 0x3f;
+         int significantBits = (hashCode >>> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          int index = Long.bitCount((mask - 1) & present);
          currentOffset += 6;
@@ -326,7 +342,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public ListNode<K, V> removeNode(int hashCode, int currentOffset, Object key) {
          assert currentOffset < 32;
          
-         int significantBits = (hashCode >> currentOffset) & 0x3f;
+         int significantBits = (hashCode >>> currentOffset) & 0x3f;
          long mask = 1L << significantBits;
          if ((present & mask) == 0) {
             return null;
@@ -340,7 +356,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          }
          if (ret != child && !child.isEmpty()) {
             // not deleting this child, but maybe we need to collapse it into an InnerLeafTrieNode
-            InnerLeafTrieNode<K, V> replacement = child.tryCollapse(hashCode, currentOffset);
+            InnerLeafTrieNode<K, V> replacement = child.tryCollapse(hashCode, currentOffset + 6);
             if (replacement != null) {
                children[index] = replacement;
             }
@@ -427,6 +443,13 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
             return clone;
          } catch (CloneNotSupportedException e) {
             throw new AssertionError(e); // shouldn't be possible since this class is Cloneable
+         }
+      }
+      
+      @Override
+      public void forEach(Consumer<ListNode<K, V>> action) {
+         for (TrieNode<K, V> child : children) {
+            child.forEach(action);
          }
       }
    }
@@ -563,6 +586,15 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
       public LeafTrieNode<K, V> clone() {
          return (LeafTrieNode<K, V>) super.clone();
       }
+      
+      @Override
+      public void forEach(Consumer<ListNode<K, V>> action) {
+         ListNode<K, V> node = this;
+         while (node != null) {
+            action.accept(node);
+            node = node.next;
+         }
+      }
    }
    
    /**
@@ -627,8 +659,8 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          int branchLength = 0;
          while (true) {
             assert currentOffset < 32;
-            int mySignificantBits = (hash >> currentOffset) & 0x3f;
-            int newSignificantBits = (newHashCode >> currentOffset) & 0x3f;
+            int mySignificantBits = (hash >>> currentOffset) & 0x3f;
+            int newSignificantBits = (newHashCode >>> currentOffset) & 0x3f;
             if (mySignificantBits != newSignificantBits) {
                // here's the point where we split them
                long mask = 1L << mySignificantBits;
@@ -648,7 +680,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
                   // pop back up the tree, creating intermediate nodes as we go
                   currentOffset -= 6;
                   assert currentOffset >= 0;
-                  mySignificantBits = (hash >> currentOffset) & 0x3f;
+                  mySignificantBits = (hash >>> currentOffset) & 0x3f;
                   mask = 1L << mySignificantBits;
                   node = new IntermediateTrieNode<K, V>(mask, node);
                   branchLength--;
@@ -802,7 +834,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          }
          modCount++;
          if (--size == 0) {
-            assert root.isEmpty();
+            assert root.isEmpty() || removed == root;
             root = null;
          }
          return removed.value;
@@ -912,7 +944,23 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          throw new AssertionError();
       }
    }
-   
+
+   @Override
+   public void forEach(BiConsumer<? super K, ? super V> action) {
+      requireNonNull(action);
+      if (root != null) {
+         root.forEach(e -> action.accept(e.key, e.value));
+      }
+   }
+
+   @Override
+   public void replaceAll(BiFunction<? super K, ? super V, ? extends V> remapper) {
+      requireNonNull(remapper);
+      if (root != null) {
+         root.forEach(e -> e.value = remapper.apply(e.key, e.value));
+      }
+   }
+
    /**
     * Customizes de-serialization to read list of mappings the same way as written by
     * {@link #writeObject(ObjectOutputStream)}.
@@ -1164,7 +1212,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
          TrieNode<K, V> node = root;
          while (node instanceof IntermediateTrieNode) {
             IntermediateTrieNode<K, V> iNode = (IntermediateTrieNode<K, V>) node; 
-            int significantBits = (hashCode >> currentOffset) & 0x3f;
+            int significantBits = (hashCode >>> currentOffset) & 0x3f;
             long mask = 1L << significantBits;
             int index = Long.bitCount((mask - 1) & iNode.present);
             stack.push(new StackFrame<K, V>(iNode, index));

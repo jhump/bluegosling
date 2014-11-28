@@ -13,5 +13,4 @@ public class SpinLockTest extends AbstractLockTest {
    protected boolean isReentrant() {
       return false;
    }
-
 }

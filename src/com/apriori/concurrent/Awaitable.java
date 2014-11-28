@@ -1,6 +1,11 @@
 package com.apriori.concurrent;
 
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * An object that represents a future event.
@@ -68,5 +73,59 @@ public interface Awaitable {
          Thread.currentThread().interrupt();
       }
       return ret;
+   }
+   
+   static Awaitable fromFuture(Future<?> f) {
+      if (f instanceof Awaitable) {
+         return (Awaitable) f;
+      } else {
+         return new Awaitable() {
+            @Override
+            public void await() throws InterruptedException {
+               try {
+                  f.get();
+               } catch (ExecutionException | CancellationException e) {
+                  // can ignore since we only care that future finishes, not its actual disposition
+               }
+            }
+
+            @Override
+            public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+               try {
+                  f.get(limit, unit);
+                  return true;
+               } catch (ExecutionException | CancellationException e) {
+                  // can ignore since we only care that future finishes, not its actual disposition
+                  return true;
+               } catch (TimeoutException e) {
+                  return false;
+               }
+            }
+
+            @Override
+            public boolean isDone() {
+               return f.isDone();
+            }
+         };
+      }
+   }
+   
+   static Awaitable fromLatch(CountDownLatch latch) {
+      return new Awaitable() {
+         @Override
+         public void await() throws InterruptedException {
+            latch.await();
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return latch.await(limit, unit);
+         }
+         
+         @Override
+         public boolean isDone() {
+            return latch.getCount() == 0;
+         }
+      };
    }
 }

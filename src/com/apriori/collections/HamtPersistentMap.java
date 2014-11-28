@@ -1,14 +1,22 @@
 package com.apriori.collections;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * An implementation of {@link PersistentMap} that uses an immutable hash array-mapped trie (HAMT)
  * plus path copying on updates. This is an immutable and persistent version of {@link HamtMap}.
+ * 
+ * <p>Each level of the trie contains information for 4 bits of the hash code and thus can have up
+ * to 16 children. This means the trie can have a depth of up to eight.
  *
  * @see HamtMap
  * 
@@ -21,6 +29,23 @@ import java.util.Objects;
 // TODO: moar tests?
 public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       implements PersistentMap<K, V> {
+   
+   /*
+    * We intentionally use less density than HamtMap to reduce the cost of path copying on writes.
+    * HamtMap uses 6 bits per level (up to 64 children). That means a path-copy could copy up to
+    * 6 arrays (one at each level) and up to 324 elements. With a density of 4 bits per level (up to
+    * 16 children), a path-copy will copy up to 8 arrays, but only up to 128 elements.
+    * 
+    * A non-persistent HamtMap never does path copying, so it generally is *more* efficient with
+    * greater density. So we maximize density (up to 64 children since the biggest bitmask we can
+    * use that is efficient is a long, which has 64 bits).
+    */
+   
+   // TODO: Benchmark with densities of 4, 5, and 6 bits per level to verify that actual performance
+   // aligns with the intuition behind the above comments. Also benchmark HamtMap in the same way.
+   
+   private static final int BITS_PER_LEVEL = 4;
+   private static final int BITS_MASK = 0xf;
 
    /**
     * A node in a linked list that stores key-value pairs for a given hash code.
@@ -68,6 +93,18 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public String toString() {
          return MapUtils.toString(this);
+      }
+      
+      /**
+       * Computes a copy of this linked list, with all values replaced with the result of applying
+       * the given function to a node's current key and value.
+       *
+       * @param fn the function used to compute the replacement values
+       * @return a new linked list with values replaced using the given function
+       */
+      public ListNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+         ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
+         return new ListNode<>(key, fn.apply(key, value), newNext);
       }
    }
    
@@ -118,7 +155,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       boolean containsValue(Object value);
       
       /**
-       * Finds a node for the specified key. Each level of the tree represents six (out of 32) bits
+       * Finds a node for the specified key. Each level of the tree represents four (out of 32) bits
        * from the key's hash code. 
        *
        * @param hashCode the hash code for the key
@@ -152,13 +189,28 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
        * @param result a holder for the result of the operation
        */
       void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result);
+      
+      /**
+       * Executes the given action for every mapping present in this trie node.
+       *
+       * @param action the action to invoke
+       */
+      void forEach(Consumer<ListNode<K, V>> action);
+      
+      /**
+       * Computes a copy of this trie node, with all values replaced with the result of applying
+       * the given function to a mapping's current key and value.
+       *
+       * @param fn the function used to compute the replacement values
+       * @return a new trie node with values replaced using the given function
+       */
+      TrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn);
    }
    
    /**
     * A non-leaf node in the trie. Each such level has an array of child nodes, each one
-    * representing a different combination of bits. Each such level encodes six bits of the keys'
-    * 32-bit hash codes, except the last level which only encodes two bits. So each level can have
-    * up to 64 child nodes (up to 4 children at the last level).
+    * representing a different combination of bits. Each such level encodes four bits of the keys'
+    * 32-bit hash codes. So each level can have up to 16 child nodes.
     *
     * @param <K> the type of the key
     * @param <V> the type of the value
@@ -169,9 +221,9 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       
       /**
        * A bitmask for which children are present. Each child represents a different combination of
-       * six bits, up to 64 possible children (so one bit in this mask for each possible child).
+       * four bits, up to 16 possible children (so one bit in this mask for each possible child).
        */
-      final long present;
+      final int present;
 
       /**
        * The array of children. Its size is always the number of actual children.
@@ -181,13 +233,13 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
        */
       final TrieNode<K, V> children[];
       
-      IntermediateTrieNode(long present, TrieNode<K, V> firstChild) {
+      IntermediateTrieNode(int present, TrieNode<K, V> firstChild) {
          this.present = present;
          children = createChildren(1);
          children[0] = firstChild;
       }
 
-      IntermediateTrieNode(long present, TrieNode<K, V> children[]) {
+      IntermediateTrieNode(int present, TrieNode<K, V> children[]) {
          this.present = present;
          this.children = children;
       }
@@ -209,25 +261,25 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
 
       @Override
       public ListNode<K, V> findNode(int hash, int currentOffset, Object key) {
-         int significantBits = (hash >> currentOffset) & 0x3f;
+         int significantBits = (hash >>> currentOffset) & BITS_MASK;
          long mask = 1L << significantBits;
          if ((present & mask) == 0) {
             return null;
          }
          int index = Long.bitCount((mask - 1) & present);
-         return children[index].findNode(hash, currentOffset + 6, key);
+         return children[index].findNode(hash, currentOffset + BITS_PER_LEVEL, key);
       }
 
       @Override
       public TrieNode<K, V> remove(int hash, int currentOffset, Object key) {
-         int significantBits = (hash >> currentOffset) & 0x3f;
-         long mask = 1L << significantBits;
+         int significantBits = (hash >>> currentOffset) & BITS_MASK;
+         int mask = 1 << significantBits;
          if ((present & mask) == 0) {
             return this;
          }
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> oldChild = children[index];
-         TrieNode<K, V> newChild = oldChild.remove(hash, currentOffset + 6, key);
+         TrieNode<K, V> newChild = oldChild.remove(hash, currentOffset + BITS_PER_LEVEL, key);
          if (newChild == oldChild) {
             // nothing removed
             return this;
@@ -255,7 +307,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             if (index < numChildren) {
                System.arraycopy(children, index + 1, newChildren, index, numChildren - index);
             }
-            long newPresent = present & ~mask;
+            int newPresent = present & ~mask;
             return new IntermediateTrieNode<K, V>(newPresent, newChildren);
          } else if (numChildren == 1 && newChild instanceof LeafTrieNode) {
             // collapse this node and the leaf into an InnerLeafTrieNode
@@ -273,11 +325,11 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
 
       @Override
       public void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result) {
-         int significantBits = (hash >> currentOffset) & 0x3f;
-         long mask = 1L << significantBits;
+         int significantBits = (hash >>> currentOffset) & BITS_MASK;
+         int mask = 1 << significantBits;
          if ((present & mask) == 0) {
             // add new child node for this new entry
-            long newPresent = present | mask;
+            int newPresent = present | mask;
             int index = Long.bitCount((mask - 1) & newPresent);
             int length = children.length;
             TrieNode<K, V> newChildren[] = createChildren(length + 1);
@@ -287,7 +339,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             if (index < length) {
                System.arraycopy(children, index, newChildren, index + 1, length - index);
             }
-            if (currentOffset + 6 >= 32) {
+            if (currentOffset + BITS_PER_LEVEL >= 32) {
                newChildren[index] = new LeafTrieNode<K, V>(key, value);
             } else {
                newChildren[index] = new InnerLeafTrieNode<K, V>(key, value, hash);
@@ -299,7 +351,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> oldChild = children[index];
-         oldChild.put(hash, currentOffset + 6, key, value, result);
+         oldChild.put(hash, currentOffset + BITS_PER_LEVEL, key, value, result);
          TrieNode<K, V> newChild = result.node;
          if (newChild == oldChild) {
             // no change
@@ -313,6 +365,23 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          System.arraycopy(children, 0, newChildren, 0, length);
          newChildren[index] = newChild;
          result.node = new IntermediateTrieNode<K, V>(present, newChildren); 
+      }
+      
+      @Override
+      public void forEach(Consumer<ListNode<K, V>> action) {
+         for (TrieNode<K, V> child : children) {
+            child.forEach(action);
+         }
+      }
+
+      @Override
+      public TrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+         int len = children.length;
+         TrieNode<K, V> newChildren[] = createChildren(len);
+         for (int i = 0; i < len; i++) {
+            newChildren[i] = children[i].replaceAll(fn);
+         }
+         return new IntermediateTrieNode<>(present, newChildren);
       }
    }
 
@@ -442,6 +511,21 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next), hash);
          result.added = true;
       }
+      
+      @Override
+      public void forEach(Consumer<ListNode<K, V>> action) {
+         ListNode<K, V> node = this;
+         while (node != null) {
+            action.accept(node);
+            node = node.next;
+         }
+      }
+
+      @Override
+      public LeafTrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+         ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
+         return new LeafTrieNode<>(key, fn.apply(key, value), newNext);
+      }
    }
 
    /**
@@ -498,17 +582,17 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
 
       private TrieNode<K, V> create(int hash, int currentOffset, K newKey, V newValue) {
-         int significantBits1 = (hashCode >> currentOffset) & 0x3f;
-         int significantBits2 = (hash >> currentOffset) & 0x3f;
+         int significantBits1 = (hashCode >>> currentOffset) & BITS_MASK;
+         int significantBits2 = (hash >>> currentOffset) & BITS_MASK;
 
          if (significantBits1 == significantBits2) {
-            return new IntermediateTrieNode<K, V>(1L << significantBits1,
-                  create(hash, currentOffset + 6, newKey, newValue));
+            return new IntermediateTrieNode<K, V>(1 << significantBits1,
+                  create(hash, currentOffset + BITS_PER_LEVEL, newKey, newValue));
          }
          
-         long mask = (1L << significantBits1) | (1L << significantBits2);
+         int mask = (1 << significantBits1) | (1 << significantBits2);
          TrieNode<K, V> current, addition;
-         if (currentOffset + 6 >= 32) {
+         if (currentOffset + BITS_PER_LEVEL >= 32) {
             // at the end of the chain so use leaf nodes
             current = new LeafTrieNode<K, V>(this.key, this.value, this.next);
             addition = new LeafTrieNode<K, V>(newKey, newValue);
@@ -525,6 +609,12 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             children[1] = current;
          }
          return new IntermediateTrieNode<K, V>(mask, children);
+      }
+      
+      @Override
+      public LeafTrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+         ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
+         return new InnerLeafTrieNode<>(key, fn.apply(key, value), newNext, hashCode);
       }
    }
    
@@ -681,6 +771,20 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    @Override
    public HamtPersistentMap<K, V> clear() {
       return create();
+   }
+   
+   @Override
+   public void forEach(BiConsumer<? super K, ? super V> action) {
+      requireNonNull(action);
+      if (root != null) {
+         root.forEach(e -> action.accept(e.key, e.value));
+      }
+   }
+   
+   @Override
+   public PersistentMap<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+      requireNonNull(fn);
+      return root == null ? this : new HamtPersistentMap<>(size, root.replaceAll(fn));
    }
    
    /**

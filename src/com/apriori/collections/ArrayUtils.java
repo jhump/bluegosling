@@ -136,6 +136,6 @@ final class ArrayUtils {
       // if 50% not enough, grow by more
       totalCapacity = Math.min(MIN_GROWN_SIZE, Math.max(totalCapacity, requiredCapacity));
 
-      return Arrays.copyOf(array, requiredCapacity);
+      return Arrays.copyOf(array, totalCapacity);
    }
 }

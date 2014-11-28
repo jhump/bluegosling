@@ -920,10 +920,26 @@ final class Tables {
       }
    }
    
+   /**
+    * A map that synchronizes all operations using the monitor of the given lock. This is similar to
+    * {@link Collections#synchronizedMap(Map)} except that instead of using its own monitor, it uses
+    * the given object.
+    *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class SynchronizedMap<K, V> implements Map<K, V> {
       final Map<K, V> map;
       final Object lock;
       
+      /**
+       * Creates a map that synchronizes access to the given map using the given object as a lock.
+       *
+       * @param map the underlying map
+       * @param lock the object used as a lock
+       */
       SynchronizedMap(Map<K, V> map, Object lock) {
          this.map = map;
          this.lock = lock;
@@ -1122,10 +1138,27 @@ final class Tables {
       }
    }
    
+   /**
+    * A map-view of a table that synchronizes all access using the monitor of a given object. The
+    * map's values are themselves table or map views. The views returned for these values will also
+    * be synchronized on the same object. 
+    *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class SynchronizedTableMapView<K, V> extends TransformingTableMapView<K, V, V> {
 
       private final Object lock;
       
+      /**
+       * Creates a new table-map-view that synchronizes on the given lock.
+       *
+       * @param map the underlying map
+       * @param lock the object used as a lock
+       * @param synchronize a function that returns a synchronized view of a value
+       */
       SynchronizedTableMapView(TableMapView<K, V> map, Object lock, Function<V, V> synchronize) {
          super(map, synchronize);
          this.lock = lock;
@@ -1333,10 +1366,25 @@ final class Tables {
       }
    }
 
+   /**
+    * A collection that synchronizes all access using the monitor of a given lock object.
+    *
+    * @param <E> the type of elements in the collection
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class SynchronizedCollection<E> implements Collection<E> {
       private final Collection<E> coll;
       private final Object lock;
       
+      /**
+       * Creates a new collection that synchronizes all access using the given lock. This is very
+       * similar to {@link Collections#synchronizedCollection(Collection)} except that it
+       * synchronizes on the given lock instead of on itself.
+       *
+       * @param coll the underlying collection
+       * @param lock the object used as a lock
+       */
       SynchronizedCollection(Collection<E> coll, Object lock) {
          this.coll = coll;
          this.lock = lock;
@@ -1462,17 +1510,45 @@ final class Tables {
       }
    }
    
+   /**
+    * A set that synchronizes all access using the monitor of a given lock object.
+    *
+    * @param <E> the type of elements in the set
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set<E> {
+      
+      /**
+       * Creates a new set that synchronizes all access using the given lock. This is very similar
+       * to {@link Collections#synchronizedSet(Set)} except that it synchronizes on the given lock
+       * instead of on itself.
+       *
+       * @param set the underlying set
+       * @param lock the object used as a lock
+       */
       SynchronizedSet(Set<E> set, Object lock) {
          super(set, lock);
       }
    }
 
-   
+   /**
+    * An iterator that synchronizes all operations on the monitor of a given object.
+    *
+    * @param <E> the type of elements returned by the iterator
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class SynchronizedIterator<E> implements Iterator<E> {
       private final Iterator<E> iter;
       private final Object lock;
       
+      /**
+       * Creates a new iterator that synchronizes all operations using the given object as a lock.
+       *
+       * @param iter the underlying iterator
+       * @param lock the object used as a lock
+       */
       SynchronizedIterator(Iterator<E> iter, Object lock) {
          this.iter = iter;
          this.lock = lock;
@@ -1535,8 +1611,25 @@ final class Tables {
       }
    }
    
+   /**
+    * A read-only wrapper around a {@link TableMapView}. The underlying map can be modified outside
+    * of the wrapper, but the wrapper throws {@link UnsupportedOperationException} for all methods
+    * that might modify the map. Since a table-map-view contains map and table views as its values,
+    * the values are also decorated with read-only wrappers.
+    *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class UnmodifiableTableMapView<K, V> extends TransformingTableMapView<K, V, V> {
 
+      /**
+       * Creates a new table-map-view that does not allow modifications.
+       *
+       * @param map the underlying map
+       * @param unmodifiable a function that creates an unmodifiable view of a value
+       */
       UnmodifiableTableMapView(TableMapView<K, V> map, Function<V, V> unmodifiable) {
          super(map, unmodifiable);
       }

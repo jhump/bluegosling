@@ -98,13 +98,80 @@ class NestedMap<K, V> {
          return map.isEmpty();
       }
 
+      /**
+       * Returns the height of this level in the nested map. The leaf level has a height of zero.
+       * The root of a 2-D nested map has a height of two.
+       *
+       * @return the height of this level in the nested map
+       */
       abstract int height();
-      //abstract Level<K, V> child(K key);
+      
+      /**
+       * Stores a value in this level. The given array of keys is indexed using a given level's
+       * height. For example, the key at index zero corresponds to the key in the inner-most (e.g.
+       * leaf) level. The last element in the array corresponds to the first key in the path. This
+       * method is recursive: calling it on the root node will also invoke it for subsequent nested
+       * levels, finally storing the value in the leaf entry that corresponds to the full path.
+       *
+       * @param keys an array of keys for the new mapping
+       * @param value the value for the new mapping
+       * @return the old value associated with this path of keys or {@code null} if there was no
+       *       such previous mapping
+       */
       abstract V put(K keys[], V value);
+      
+      /**
+       * Gets a value from this level. The given array of keys is indexed using a given level's
+       * height. For example, the key at index zero corresponds to the key in the inner-most (e.g.
+       * leaf) level. The last element in the array corresponds to the first key in the path. This
+       * method is recursive: calling it on the root node will also invoke it for subsequent nested
+       * levels, finally returning the value from the leaf entry that corresponds to the full path.
+       *
+       * @param keys an array of keys for the mapping being queried
+       * @return the value for the given keys or {@code null} if no such mapping exists
+       */
       abstract V get(K keys[]);
+      
+      /**
+       * Removes a value from this level. The given array of keys is indexed using a given level's
+       * height. For example, the key at index zero corresponds to the key in the inner-most (e.g.
+       * leaf) level. The last element in the array corresponds to the first key in the path. This
+       * method is recursive: calling it on the root node will also invoke it for subsequent nested
+       * levels, finally removing the value from the leaf entry that corresponds to the full path.
+       *
+       * @param keys an array of keys for the mapping to remove
+       * @return the value that was associated with this path of keys and now removed, or
+       *       {@code null} if there was no mapping to remove       
+       */
       abstract V remove(K keys[]);
+      
+      /**
+       * Determines if the given keys exist in this level. The given array of keys is indexed using
+       * a given level's height. For example, the key at index zero corresponds to the key in the
+       * inner-most (e.g. leaf) level. The last element in the array corresponds to the first key in
+       * the path. This method is recursive: calling it on the root node will also invoke it for
+       * subsequent nested levels, finally querying the existence of the value from the leaf entry
+       * that corresponds to the full path.
+       *
+       * @param keys an array of keys for the mapping being queried
+       * @return true if this nested map contains an entry for the given keys; false otherwise
+       */
       abstract boolean containsKey(K keys[]);
+      
+      /**
+       * An iterator over entries in this level of the map. If this is a leaf level, the returned
+       * iterator has no elements since there are no further nested levels.
+       *
+       * @return an iterator over nested entries in this level of the map
+       */
       abstract Iterator<Entry<K, Level<K, V>>> entryIterator();
+      
+      /**
+       * An iterator over values in this level of the map. If this is not a leaf level, the returned
+       * iterator has no elements since there are no values in internal levels.
+       *
+       * @return an iterator over values in this level of the map
+       */
       abstract Iterator<Entry<K, V>> valueIterator();
    }
    
@@ -115,6 +182,13 @@ class NestedMap<K, V> {
    final boolean filterKeyPresentByNesting[];
    private final int numFilterKeys;
    
+   /**
+    * Constructs a nested map. The given function is provided, as input, the height for a level and
+    * should produce an empty map, used to create a new node for that level.
+    *
+    * @param mapMaker a function that produces an empty map for a given level
+    * @param height the height of this nested map
+    */
    NestedMap(IntFunction<Map<K, Object>> mapMaker, int height) {
       if (height < 1) {
          throw new IllegalArgumentException();
@@ -133,16 +207,23 @@ class NestedMap<K, V> {
       assert root.height() >= this.height() + numFilterKeys;
    }
 
-   NestedMap(NestedMap<K, V> other) {
-      // based on the exact same map properties as other
-      this.mapMaker = other.mapMaker;
-      this.root = other.root;
-      this.keyOrder = other.keyOrder;
-      this.filterKeysByNesting = other.filterKeysByNesting;
-      this.filterKeyPresentByNesting = other.filterKeyPresentByNesting;
-      this.numFilterKeys = other.numFilterKeys;
-   }
-
+   /**
+    * Constructs a view of the given map with a filter applied. All keys other than the given value
+    * at the given level are excluded from the view. This view has one fewer level than the given
+    * nested map; in other words, it's height is one less.
+    * 
+    * <p>To demonstrate how the view works, let's take a 3-D nested map. We construct a filtered
+    * view like so:<pre>
+    * NestedMap<K, V> filtered = new NestedMap<>(other, "a", 1);</pre>
+    * In this case, the second level of the tree is fixed with a value of "a" (the first is at
+    * height == 0; the last and third level is at height == 2). So querying this view with a key
+    * path of "x", "y" (since the filtered map has but two dimensions) is effectively the same as
+    * querying the original map with a path of "x", "a", "y".
+    *
+    * @param other a nested map
+    * @param filterKey the value used to filter a level of the tree
+    * @param filterHeight the height of the level being filtered
+    */
    NestedMap(NestedMap<K, V> other, K filterKey, int filterHeight) {
       this.mapMaker = other.mapMaker;
       this.root = other.root;
@@ -159,6 +240,24 @@ class NestedMap<K, V> {
       assert root.height() >= this.height() + numFilterKeys;
    }
    
+   /**
+    * Constructs a rotated or transposed view of the given map. A transposed view swaps the two
+    * inner-most levels. A rotation shifts all levels one to the right, displacing the right-most
+    * (e.g. inner-most) level into the left-most level. If the nested map has a height of just two,
+    * transposition and rotation are effectively the same. 
+    *
+    * <p>To demonstrate how the view works, let's take a 3-D nested map. If we created a transposed
+    * view, then querying the transposed view with a key path of "x", "y", "z" is effectively the
+    * same as querying the original map with a path of "x", "z", "y".
+    * 
+    * <p>Similarly, if we constructed a rotated view, querying the rotated view with a key path of
+    * "x", "y", "z" is effectively the same as querying the original map with a path of "y", "z",
+    * "x".
+    * 
+    * @param other a nested map
+    * @param transposed if true, this view is transposition of the given map; if false, this view is
+    *       a rotation of the given map
+    */
    NestedMap(NestedMap<K, V> other, boolean transposed) {
       this.mapMaker = other.mapMaker;
       this.root = other.root;
@@ -172,10 +271,20 @@ class NestedMap<K, V> {
       assert root.height() >= this.height() + numFilterKeys;
    }
 
+   /**
+    * Returns the root level of this nested map.
+    *
+    * @return the root level of this nested map
+    */
    NonLeafLevel<K, V> root() {
       return root;
    }
    
+   /**
+    * Returns the height of this nested map.
+    *
+    * @return the height of this nested map
+    */
    int height() {
       return keyOrder.length - numFilterKeys - 1;
    }
@@ -221,6 +330,7 @@ class NestedMap<K, V> {
       assert height1 < keyOrder.length - numFilterKeys;
       assert height2 < keyOrder.length - numFilterKeys;
       assert numFilterKeys + 2 <= keyOrder.length;
+      assert height1 != height2;
       int actualHeight1 = keyOrder[height1];
       int actualHeight2 = keyOrder[height2];
       K ret[] = filterKeysByNesting.clone();
@@ -245,6 +355,9 @@ class NestedMap<K, V> {
       assert height2 < keyOrder.length - numFilterKeys;
       assert height3 < keyOrder.length - numFilterKeys;
       assert numFilterKeys + 3 <= keyOrder.length;
+      assert height1 != height2;
+      assert height1 != height3;
+      assert height2 != height3;
       int actualHeight1 = keyOrder[height1];
       int actualHeight2 = keyOrder[height2];
       int actualHeight3 = keyOrder[height3];
@@ -268,12 +381,19 @@ class NestedMap<K, V> {
       return ret;
    }
    
-   K[] makeKeys(K key1, int height1, K key2, int height2, K key3, int height3, K key4, int height4) {
+   K[] makeKeys(K key1, int height1, K key2, int height2, K key3, int height3, K key4, int height4)
+   {
       assert height1 < keyOrder.length - numFilterKeys;
       assert height2 < keyOrder.length - numFilterKeys;
       assert height3 < keyOrder.length - numFilterKeys;
       assert height4 < keyOrder.length - numFilterKeys;
       assert numFilterKeys + 4 <= keyOrder.length;
+      assert height1 != height2;
+      assert height1 != height3;
+      assert height1 != height4;
+      assert height2 != height3;
+      assert height2 != height4;
+      assert height3 != height4;
       int actualHeight1 = keyOrder[height1];
       int actualHeight2 = keyOrder[height2];
       int actualHeight3 = keyOrder[height3];
@@ -375,6 +495,12 @@ class NestedMap<K, V> {
       return root.containsKey(keys);
    }
    
+   /**
+    * Computes the total number of mappings in this nested map. This is not a constant time
+    * operation. Instead, it is linear with the number of maps at the leaf level.
+    *
+    * @return the total number of mappings in this nested map
+    */
    public int size() {
       int sz = 0;
       int filterHeight = getLowestFilteredLevel();
@@ -394,10 +520,22 @@ class NestedMap<K, V> {
       return sz;
    }
    
+   /**
+    * Determines if this nested map is empty or not. This is not a constant time operation. Instead,
+    * it is linear with the height of this map. If this nested map is a {@linkplain
+    * NestedMap#NestedMap(NestedMap, Object, int) filtered view}, then the runtime complexity is
+    * proportional to the height of the base map (the underlying map, or its base map if the
+    * underlying map is also a filtered view).
+    *
+    * @return true if the nested map is empty; false otherwise
+    */
    public boolean isEmpty() {
       return !entryIterator((k, e) -> null).hasNext();
    }
    
+   /**
+    * Removes all mappings from this nested map.
+    */
    public void clear() {
       if (numFilterKeys == 0) {
          root.map().clear();
@@ -535,6 +673,14 @@ class NestedMap<K, V> {
       return new LevelIterator<>(root, fn, keyOrder[heightOfLevel]);
    }
 
+   /**
+    * A non-leaf level in a nested map. The values in this level of the map are subsequent levels.
+    *
+    * @param <K> the type of keys in the level
+    * @param <V> the type of values in the leaf level
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class NonLeafLevel<K, V> extends Level<K, V> {
       private final int height;
       private final IntFunction<Map<K, Object>> mapMaker;
@@ -627,6 +773,15 @@ class NestedMap<K, V> {
       }
    }
    
+   /**
+    * A non-leaf level in a nested map. The values in this level of the map are values, not
+    * subsequent levels.
+    *
+    * @param <K> the type of keys in this level
+    * @param <V> the type of values in this level
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class LeafLevel<K, V> extends Level<K, V> {
       
       LeafLevel(Map<K, ?> map) {
@@ -677,10 +832,33 @@ class NestedMap<K, V> {
       }
    }
    
+   /**
+    * A simple interface that represents a key for a nested map. A single key for a nested map is a
+    * path of keys, each element in the path representing a key for a level in the nested map.
+    *
+    * @param <K> the type of the keys
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    interface NestedKey<K> {
+      /**
+       * Gets the path element of this key corresponding to the given height, or level. A height of
+       * zero represents the leaf level.
+       *
+       * @param height the height of the key to query
+       * @return the value of the key element for the given level
+       */
       K getKey(int height);
    }
    
+   /**
+    * A stack-frame, used to iteratively perform depth-first traversal when iterating through
+    * mappings in the nested map.
+    *
+    * @param <T> the type of value fetched from the iterator
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    static class StackFrame<T> implements Iterator<T> {
       private final Iterator<? extends T> iter;
       private T lastFetched;
@@ -709,6 +887,14 @@ class NestedMap<K, V> {
       }
    }
    
+   /**
+    * An iterator through all entries in a nested map. This iterates through all entries in all leaf
+    * levels of the nested map.
+    *
+    * @param <T> the type of value fetched from the iterator
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    class EntryIterator<T> implements Iterator<T>, NestedKey<K> {
       private final BiFunction<NestedKey<K>, Entry<K, V>, T> fn;
       private final StackFrame<Entry<K, Level<K, V>>> stack[];
@@ -823,6 +1009,13 @@ class NestedMap<K, V> {
       }
    }
 
+   /**
+    * An iterator through nested entries at a given <strong>non-leaf</strong> level of the map.
+    *
+    * @param <T> the type of value fetched from the iterator
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    class LevelIterator<T> implements Iterator<T>, NestedKey<K> {
       private final int offset;
       private final StackFrame<Entry<K, Level<K, V>>> stack[];

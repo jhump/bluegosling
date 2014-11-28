@@ -102,25 +102,25 @@ public class AtomicBooleanFieldUpdaterTest {
       assertTrue(flag);
    }
    
-   @Test public void getAndCombine() {
-      assertFalse(updater.getAndCombine(this, false, op2));
+   @Test public void getAndAccumulate() {
+      assertFalse(updater.getAndAccumulate(this, false, op2));
       assertFalse(flag);
-      assertFalse(updater.getAndCombine(this, true, op2));
+      assertFalse(updater.getAndAccumulate(this, true, op2));
       assertTrue(flag);
-      assertTrue(updater.getAndCombine(this, false, op2));
+      assertTrue(updater.getAndAccumulate(this, false, op2));
       assertTrue(flag);
-      assertTrue(updater.getAndCombine(this, true, op2));
+      assertTrue(updater.getAndAccumulate(this, true, op2));
       assertFalse(flag);
    }
 
-   @Test public void combineAndGet() {
-      assertFalse(updater.combineAndGet(this, false, op2));
+   @Test public void accumulateAndGet() {
+      assertFalse(updater.accumulateAndGet(this, false, op2));
       assertFalse(flag);
-      assertTrue(updater.combineAndGet(this, true, op2));
+      assertTrue(updater.accumulateAndGet(this, true, op2));
       assertTrue(flag);
-      assertTrue(updater.combineAndGet(this, false, op2));
+      assertTrue(updater.accumulateAndGet(this, false, op2));
       assertTrue(flag);
-      assertFalse(updater.combineAndGet(this, true, op2));
+      assertFalse(updater.accumulateAndGet(this, true, op2));
       assertFalse(flag);
    }
 
@@ -159,8 +159,8 @@ public class AtomicBooleanFieldUpdaterTest {
             () -> uBad.weakCompareAndSet(new Object(), false, true));
       assertThrows(ClassCastException.class, () -> uBad.getAndUpdate(new Object(), op1));
       assertThrows(ClassCastException.class, () -> uBad.updateAndGet(new Object(), op1));
-      assertThrows(ClassCastException.class, () -> uBad.getAndCombine(new Object(), false, op2));
-      assertThrows(ClassCastException.class, () -> uBad.combineAndGet(new Object(), false, op2));
+      assertThrows(ClassCastException.class, () -> uBad.getAndAccumulate(new Object(), false, op2));
+      assertThrows(ClassCastException.class, () -> uBad.accumulateAndGet(new Object(), false, op2));
    }
    
    @Test public void privateField_onlyAccessibleFromSameEnclosingClass() {

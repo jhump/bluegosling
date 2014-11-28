@@ -5,7 +5,7 @@ import java.util.function.LongBinaryOperator;
 import java.util.function.LongUnaryOperator;
 
 /**
- * A simple variable reference for an {@code long}. This is the primitive specialization of
+ * A simple variable reference for a {@code long}. This is the primitive specialization of
  * {@link Variable} for {@code long}.
  * 
  * <p>This class provides nearly the same API as {@link AtomicLong}. However, this version is

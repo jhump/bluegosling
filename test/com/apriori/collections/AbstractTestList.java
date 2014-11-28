@@ -1,5 +1,7 @@
 package com.apriori.collections;
 
+import com.apriori.reflect.Members;
+
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -16,10 +18,12 @@ public abstract class AbstractTestList
    }
 
    @Override protected void failFastMethod(@SuppressWarnings("rawtypes") List list, Method m) {
-      // Default methods often check preconditions. So, the way the fail-fast tests
-      // work, they will often throw NPE instead of ConcurrentModificationException
-      // (because invoking each method is done reflectively, passing nulls and zeros).
-      if (!m.isDefault()) {
+      // Default methods often check preconditions before delegating to other interface methods.
+      // So, the way the fail-fast tests work, they will often throw NPE instead of
+      // ConcurrentModificationException (because invoking each method is done reflectively, passing
+      // nulls and zeros).
+      Method actualMethod = Members.findMethod(list.getClass(), m.getName(), m.getParameterTypes());
+      if (!actualMethod.isDefault()) {
          super.failFastMethod(list, m);
       }
    }

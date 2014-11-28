@@ -24,7 +24,7 @@ import java.util.function.Function;
  * A concurrent navigable map backed by a {@link TreeMap} and made thread-safe via a
  * {@link DoubleInstanceLock}.
  * 
- * <p>This map, its collection views, and iterators supports all operations. Iteration will never
+ * <p>This map, its collection views, and iterators support all operations. Iteration will never
  * throw {@link ConcurrentModificationException}. One thing that can throw this, however, is trying
  * to set an entry value via {@link Entry#setValue(Object)} after the entry has been removed.
  * 
@@ -39,7 +39,6 @@ import java.util.function.Function;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
 // TODO: serialization? cloning?
 public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, NavigableMap<K, V> {
 

@@ -44,7 +44,6 @@ import java.util.concurrent.locks.LockSupport;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
 public class SpinLock implements Lock {
 
    final AtomicBoolean locked = new AtomicBoolean();
@@ -177,16 +176,16 @@ public class SpinLock implements Lock {
             throw new InterruptedException();
          }
          Thread th = Thread.currentThread();
-         release();
          waiters.add(th);
+         release();
          try {
             LockSupport.park(this);
             if (Thread.interrupted()) {
                throw new InterruptedException();
             }
          } finally {
-            waiters.remove(th);
             lock();
+            waiters.remove(th);
          }
       }
 
@@ -194,13 +193,33 @@ public class SpinLock implements Lock {
       public void awaitUninterruptibly() {
          checkLock();
          Thread th = Thread.currentThread();
-         release();
+         boolean interrupted = false;
+         boolean failed = false;
          waiters.add(th);
+         release();
          try {
-            LockSupport.park(this);
+            do {
+               LockSupport.park(this);
+                if (Thread.interrupted()) {
+                   // save interrupt status so we can restore on exit
+                   interrupted = true;
+                }
+                // loop until we've been signaled, ignoring wake-ups caused by interruption
+                // (signaling thread will have removed us if we were signaled, so we can just check
+                // to see if we're still in the queue)
+            } while (waiters.contains(th));
+         } catch (RuntimeException | Error e) {
+            failed = true;
+            throw e;
          } finally {
-            waiters.remove(th);
             lock();
+            if (failed) {
+               waiters.remove(th);
+            }
+            // restore interrupt status on exit
+            if (interrupted) {
+               th.interrupt();
+            }
          }
       }
 
@@ -212,8 +231,8 @@ public class SpinLock implements Lock {
          }
          long start = System.nanoTime();
          Thread th = Thread.currentThread();
-         release();
          waiters.add(th);
+         release();
          try {
             LockSupport.parkNanos(this, nanosTimeout);
             if (Thread.interrupted()) {
@@ -221,8 +240,8 @@ public class SpinLock implements Lock {
             }
             return nanosTimeout - (System.nanoTime() - start);
          } finally {
-            waiters.remove(th);
             lock();
+            waiters.remove(th);
          }
       }
 

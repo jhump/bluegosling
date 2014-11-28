@@ -31,7 +31,6 @@ import java.util.concurrent.locks.Lock;
 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// tests
 public class NonReentrantLock implements Lock {
    
    private final Sync sync;

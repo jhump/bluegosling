@@ -38,7 +38,7 @@ public class Key<T> {
    }
 
    /**
-    * Returns an qualified key for the given type.
+    * Returns a qualified key for the given type.
     *
     * @param type a generic type
     * @param qualifier a qualifier
@@ -49,7 +49,7 @@ public class Key<T> {
    }
    
    /**
-    * Returns an qualified key for the given type.
+    * Returns a qualified key for the given type.
     *
     * @param type a generic type
     * @param qualifier a qualifier

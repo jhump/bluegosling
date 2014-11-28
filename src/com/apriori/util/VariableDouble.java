@@ -4,7 +4,7 @@ import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;
 
 /**
- * A simple variable reference for an {@code double}. This is the primitive specialization of
+ * A simple variable reference for a {@code double}. This is the primitive specialization of
  * {@link Variable} for {@code double}.
  * 
  * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type

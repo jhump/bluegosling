@@ -53,7 +53,7 @@ public interface PersistentMap<K, V> extends ImmutableMap<K, V> {
          return this;
       }
       V value = fn.apply(key);
-      return value == null ? this : put(key, fn.apply(key));
+      return value == null ? this : put(key, value);
    }
 
    default PersistentMap<K, V> computeIfPresent(K key,
