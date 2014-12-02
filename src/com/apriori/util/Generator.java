@@ -548,7 +548,9 @@ public abstract class Generator<T, U, X extends Throwable> {
          LockSupport.unpark(caller.getAndSet(null));
          
          try {
+            VariableBoolean interrupted = new VariableBoolean();
             Runnable onInterrupt = () -> {
+               interrupted.set(true);
                if (sequenceRef.get() == null) {
                   // sequence has been gc'ed; terminate
                   throw new SequenceAbandonedException();
@@ -563,7 +565,12 @@ public abstract class Generator<T, U, X extends Throwable> {
                @Override
                public U yield(T t) {
                   sync.sendValueToConsumer(t);
-                  return sync.waitForNextQuery(onInterrupt);
+                  U ret = sync.waitForNextQuery(onInterrupt);
+                  if (interrupted.getAndSet(false)) {
+                     // swallowing interrupts is gross: restore interrupt status
+                     Thread.currentThread().interrupt();
+                  }
+                  return ret;
                }
             };
             generator.run(initialValue, output);
