@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.apt.testing.TestEnvironment</li>
@@ -108,10 +108,10 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">TestEnvironment</span>
-extends java.lang.Object</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">Information about the current test, processing, and round environments. This represents the context
  of a test run by an <a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><code>AnnotationProcessorTestRunner</code></a>. It includes references to the current
- <code>ProcessingEnvironment</code>, <code>RoundEnvironment</code>, <code>JavaFileManager</code>, etc. An instance
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment</code></a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>RoundEnvironment</code></a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>, etc. An instance
  of this class can be injected into a test method so that the test logic can interact with the
  environment.</div>
 </li>
@@ -133,9 +133,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#annotationTypes--">annotationTypes</a></span>()</code>
-<div class="block">Gets the set of annotation types for the current round, as <code>TypeElement</code>s.</div>
+<div class="block">Gets the set of annotation types for the current round, as <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>s.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -147,36 +147,36 @@ extends java.lang.Object</pre>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#fileManager--">fileManager</a></span>()</code>
-<div class="block">Gets the current <code>JavaFileManager</code>.</div>
+<div class="block">Gets the current <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#filterAnnotationTypesFor-javax.annotation.processing.Processor-">filterAnnotationTypesFor</a></span>(javax.annotation.processing.Processor&nbsp;processor)</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#filterAnnotationTypesFor-javax.annotation.processing.Processor-">filterAnnotationTypesFor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a>&nbsp;processor)</code>
 <div class="block">Filters the current set of annotation types to only those supported by the specified processor.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#invokeProcessor--">invokeProcessor</a></span>()</code>
-<div class="block">Invokes the current processor under test by calling its <code>Processor.process(Set, RoundEnvironment)</code>
+<div class="block">Invokes the current processor under test by calling its <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a>
  method.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>javax.annotation.processing.ProcessingEnvironment</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#processingEnvironment--">processingEnvironment</a></span>()</code>
 <div class="block">Gets the current processing environment.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>javax.annotation.processing.Processor</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#processorUnderTest--">processorUnderTest</a></span>()</code>
 <div class="block">Gets the current processor under test or <code>null</code> if there isn't one.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>javax.annotation.processing.RoundEnvironment</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#roundEnvironment--">roundEnvironment</a></span>()</code>
 <div class="block">Gets the round environment for the current round of processing.</div>
 </td>
@@ -189,15 +189,15 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-">validateGeneratedFile</a></span>(javax.tools.FileObject&nbsp;file,
-                     java.lang.String&nbsp;resourcePath)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-">validateGeneratedFile</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools">FileObject</a>&nbsp;file,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;resourcePath)</code>
 <div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-boolean-">validateGeneratedFile</a></span>(javax.tools.FileObject&nbsp;file,
-                     java.lang.String&nbsp;resourcePath,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-boolean-">validateGeneratedFile</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools">FileObject</a>&nbsp;file,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;resourcePath,
                      boolean&nbsp;binary)</code>
 <div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.</div>
 </td>
@@ -207,8 +207,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -231,7 +231,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>fileManager</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a>&nbsp;fileManager()</pre>
-<div class="block">Gets the current <code>JavaFileManager</code>.</div>
+<div class="block">Gets the current <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the file manager</dd>
@@ -258,7 +258,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>processingEnvironment</h4>
-<pre>public&nbsp;javax.annotation.processing.ProcessingEnvironment&nbsp;processingEnvironment()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;processingEnvironment()</pre>
 <div class="block">Gets the current processing environment.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -272,7 +272,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>roundEnvironment</h4>
-<pre>public&nbsp;javax.annotation.processing.RoundEnvironment&nbsp;roundEnvironment()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;roundEnvironment()</pre>
 <div class="block">Gets the round environment for the current round of processing.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -300,8 +300,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>annotationTypes</h4>
-<pre>public&nbsp;java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;&nbsp;annotationTypes()</pre>
-<div class="block">Gets the set of annotation types for the current round, as <code>TypeElement</code>s. If the test
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotationTypes()</pre>
+<div class="block">Gets the set of annotation types for the current round, as <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>s. If the test
  defined a processor (using <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>@ProcessorUnderTest</code></a> or
  <a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>@InitializeProcessorField</code></a> annotations), then this will be
  filtered to just the annotations supported by that processor.
@@ -324,7 +324,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>filterAnnotationTypesFor</h4>
-<pre>public&nbsp;java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;&nbsp;filterAnnotationTypesFor(javax.annotation.processing.Processor&nbsp;processor)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;filterAnnotationTypesFor(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a>&nbsp;processor)</pre>
 <div class="block">Filters the current set of annotation types to only those supported by the specified processor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -342,7 +342,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>processorUnderTest</h4>
-<pre>public&nbsp;javax.annotation.processing.Processor&nbsp;processorUnderTest()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing">Processor</a>&nbsp;processorUnderTest()</pre>
 <div class="block">Gets the current processor under test or <code>null</code> if there isn't one.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -357,13 +357,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>invokeProcessor</h4>
 <pre>public&nbsp;boolean&nbsp;invokeProcessor()</pre>
-<div class="block">Invokes the current processor under test by calling its <code>Processor.process(Set, RoundEnvironment)</code>
+<div class="block">Invokes the current processor under test by calling its <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a>
  method. The current round environment and annotation types are passed to this method.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result returned by the processor</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if there is no current processor under test</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if there is no current processor under test</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/apt/testing/TestEnvironment.html#processorUnderTest--"><code>processorUnderTest()</code></a></dd>
 </dl>
@@ -375,9 +375,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>validateGeneratedFile</h4>
-<pre>public&nbsp;void&nbsp;validateGeneratedFile(javax.tools.FileObject&nbsp;file,
-                                  java.lang.String&nbsp;resourcePath)
-                           throws java.io.IOException</pre>
+<pre>public&nbsp;void&nbsp;validateGeneratedFile(<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools">FileObject</a>&nbsp;file,
+                                  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;resourcePath)
+                           throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.
  This method compares character contents vs. raw binary contents, so calling this method is equivalent to
  the following:
@@ -387,7 +387,7 @@ extends java.lang.Object</pre>
 <dd><code>file</code> - the output file to validate</dd>
 <dd><code>resourcePath</code> - the resource that contains the "golden" contents</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code> - if an exception occurs while reading the specified file or the specified resource</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception occurs while reading the specified file or the specified resource</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>ValidateGeneratedFiles</code></a></dd>
 </dl>
@@ -399,10 +399,10 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>validateGeneratedFile</h4>
-<pre>public&nbsp;void&nbsp;validateGeneratedFile(javax.tools.FileObject&nbsp;file,
-                                  java.lang.String&nbsp;resourcePath,
+<pre>public&nbsp;void&nbsp;validateGeneratedFile(<a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools">FileObject</a>&nbsp;file,
+                                  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;resourcePath,
                                   boolean&nbsp;binary)
-                           throws java.io.IOException</pre>
+                           throws <a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -411,7 +411,7 @@ extends java.lang.Object</pre>
 <dd><code>binary</code> - if true then the raw byte contents of the specified file and resource are compared; otherwise
        the files are interpreted as character data and the result strings are compared</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code> - if an exception occurs while reading the specified file or the specified resource</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an exception occurs while reading the specified file or the specified resource</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>ValidateGeneratedFiles</code></a></dd>
 </dl>

@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.reflect.Annotations</li>
@@ -108,8 +108,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">Annotations</span>
-extends java.lang.Object</pre>
-<div class="block">Utility methods for working with instances of <code>Annotation</code>. These are mostly helpful in
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Utility methods for working with instances of <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>. These are mostly helpful in
  fabricating annotation instances and performing comparisons between two annotations.</div>
 </li>
 </ul>
@@ -130,92 +130,92 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#create-java.lang.Class-java.util.Map-">create</a></span>(java.lang.Class&lt;T&gt;&nbsp;annotationType,
-      java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;attributes)</code>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#create-java.lang.Class-java.util.Map-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;annotationType,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;attributes)</code>
 <div class="block">Creates an annotation instance.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>boolean</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#equal-T-java.lang.Object-">equal</a></span>(T&nbsp;annotation,
-     java.lang.Object&nbsp;other)</code>
+     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;other)</code>
 <div class="block">Determines if two annotation objects are equal according to the contract defined on
- <code>Annotation</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>boolean</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#equal-T-java.lang.Object-java.util.function.Predicate-">equal</a></span>(T&nbsp;annotation,
-     java.lang.Object&nbsp;other,
-     java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</code>
+     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;other,
+     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</code>
 <div class="block">Determines if two annotation objects are equal, only considering attributes that match the
  specified predicate.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static &lt;A extends java.lang.annotation.Annotation&gt;<br>A</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#findAnnotation-java.lang.Class-java.lang.Class-">findAnnotation</a></span>(java.lang.Class&lt;?&gt;&nbsp;clazz,
-              java.lang.Class&lt;A&gt;&nbsp;annotationType)</code>
+<td class="colFirst"><code>static &lt;A extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>A</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#findAnnotation-java.lang.Class-java.lang.Class-">findAnnotation</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;A&gt;&nbsp;annotationType)</code>
 <div class="block">Returns an annotation, possibly searching for the annotation on super-types if not declared
  on the specified type.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>int</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#hashCode-T-">hashCode</a></span>(T&nbsp;annotation)</code>
-<div class="block">Computes the hash code for an annotation as defined in the contract on <code>Annotation</code>.</div>
+<div class="block">Computes the hash code for an annotation as defined in the contract on <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>int</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#hashCode-T-java.util.function.Predicate-">hashCode</a></span>(T&nbsp;annotation,
-        java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</code>
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</code>
 <div class="block">Computes the hash code for an annotation, only considering attributes that match the specified
  predicate.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-">toMap</a></span>(java.lang.annotation.Annotation&nbsp;annotation)</code>
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-">toMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation)</code>
 <div class="block">Returns a map of values that correspond to the annotation's methods.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-boolean-">toMap</a></span>(java.lang.annotation.Annotation&nbsp;annotation,
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-boolean-">toMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
      boolean&nbsp;includeAnnotationType)</code>
 <div class="block">Returns a map of values that correspond to the annotation's methods, optionally including the
- <code>Annotation.annotationType()</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true#annotationType--" title="class or interface in java.lang.annotation"><code>Annotation.annotationType()</code></a>.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-boolean-java.util.function.Predicate-">toMap</a></span>(java.lang.annotation.Annotation&nbsp;annotation,
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-boolean-java.util.function.Predicate-">toMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
      boolean&nbsp;includeAnnotationType,
-     java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</code>
+     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</code>
 <div class="block">Returns a map of values that correspond to the annotation's methods that match the specified
- predicate, optionally including the <code>Annotation.annotationType()</code>.</div>
+ predicate, optionally including the <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true#annotationType--" title="class or interface in java.lang.annotation"><code>Annotation.annotationType()</code></a>.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-java.util.function.Predicate-">toMap</a></span>(java.lang.annotation.Annotation&nbsp;annotation,
-     java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</code>
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toMap-java.lang.annotation.Annotation-java.util.function.Predicate-">toMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
+     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</code>
 <div class="block">Returns a map of values that correspond to the annotation's methods that match the specified
  predicate.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>java.lang.String</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toString-T-">toString</a></span>(T&nbsp;annotation)</code>
 <div class="block">Returns a string representation of the specified annotation object.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.annotation.Annotation&gt;<br>java.lang.String</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Annotations.html#toString-T-java.util.function.Predicate-">toString</a></span>(T&nbsp;annotation,
-        java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</code>
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</code>
 <div class="block">Returns a string representation of the annotation, with only the attributes that match the
  specified predicate.</div>
 </td>
@@ -225,8 +225,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -248,11 +248,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>findAnnotation</h4>
-<pre>public static&nbsp;&lt;A extends java.lang.annotation.Annotation&gt;&nbsp;A&nbsp;findAnnotation(java.lang.Class&lt;?&gt;&nbsp;clazz,
-                                                                           java.lang.Class&lt;A&gt;&nbsp;annotationType)</pre>
+<pre>public static&nbsp;&lt;A extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;A&nbsp;findAnnotation(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+                                                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;A&gt;&nbsp;annotationType)</pre>
 <div class="block">Returns an annotation, possibly searching for the annotation on super-types if not declared
  on the specified type. This will find annotations on super-types even if they aren't
- inheritable.
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">inheritable</a>.
  
  <p>If the annotation is not found on the specified type then the type's super-classes are
  searched for the annotation. If the annotation is still not found, then implemented interfaces
@@ -278,8 +278,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;T&nbsp;create(java.lang.Class&lt;T&gt;&nbsp;annotationType,
-                                                                   java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;attributes)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;T&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;annotationType,
+                                              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;attributes)</pre>
 <div class="block">Creates an annotation instance. Any values that are not specified will return their default
  value as defined in the annotation interface. The values are specified using the annotation
  method names as keys. The values in the map are the values to be returned by the annotation
@@ -292,8 +292,8 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an annotation</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if either argument is <code>null</code></dd>
-<dd><code>java.lang.IllegalArgumentException</code> - if the map contains a value of the wrong type (includes null
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either argument is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the map contains a value of the wrong type (includes null
        values and values whose type does not match the expected return type of the
        corresponding method), if the map is missing a required value (a required value is one
        that has no default value defined on the annotation), or if the map has unrecognized
@@ -307,7 +307,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>toMap</h4>
-<pre>public static&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;toMap(java.lang.annotation.Annotation&nbsp;annotation)</pre>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;toMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation)</pre>
 <div class="block">Returns a map of values that correspond to the annotation's methods. If the given annotation
  has any fields that are nested annotations or arrays of annotations, their values in the
  returned map will be recursively converted to maps. Arrays will be converted to lists so that
@@ -330,10 +330,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>toMap</h4>
-<pre>public static&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;toMap(java.lang.annotation.Annotation&nbsp;annotation,
-                                                                     boolean&nbsp;includeAnnotationType)</pre>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;toMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
+                                       boolean&nbsp;includeAnnotationType)</pre>
 <div class="block">Returns a map of values that correspond to the annotation's methods, optionally including the
- <code>Annotation.annotationType()</code>. If the given annotation has any fields that are nested
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true#annotationType--" title="class or interface in java.lang.annotation"><code>Annotation.annotationType()</code></a>. If the given annotation has any fields that are nested
  annotations or arrays of annotations, their values in the returned map will be recursively
  converted to maps. Arrays will be converted to lists so that creating maps from two equal
  annotations will result in equal maps (array values in the map prevent this since arrays don't
@@ -355,8 +355,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>toMap</h4>
-<pre>public static&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;toMap(java.lang.annotation.Annotation&nbsp;annotation,
-                                                                     java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</pre>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;toMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
+                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</pre>
 <div class="block">Returns a map of values that correspond to the annotation's methods that match the specified
  predicate. If the given annotation has any fields that are nested annotations or arrays of
  annotations, their values in the returned map will be recursively converted to maps. Arrays
@@ -379,11 +379,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>toMap</h4>
-<pre>public static&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;toMap(java.lang.annotation.Annotation&nbsp;annotation,
-                                                                     boolean&nbsp;includeAnnotationType,
-                                                                     java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</pre>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;toMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&nbsp;annotation,
+                                       boolean&nbsp;includeAnnotationType,
+                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</pre>
 <div class="block">Returns a map of values that correspond to the annotation's methods that match the specified
- predicate, optionally including the <code>Annotation.annotationType()</code>. If the given
+ predicate, optionally including the <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true#annotationType--" title="class or interface in java.lang.annotation"><code>Annotation.annotationType()</code></a>. If the given
  annotation has any fields that are nested annotations or arrays of annotations, their values
  in the returned map will be recursively converted to maps. Arrays will be converted to lists
  so that creating maps from two equal annotations will result in equal maps (array values in
@@ -408,10 +408,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>equal</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;boolean&nbsp;equal(T&nbsp;annotation,
-                                                                        java.lang.Object&nbsp;other)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;boolean&nbsp;equal(T&nbsp;annotation,
+                                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;other)</pre>
 <div class="block">Determines if two annotation objects are equal according to the contract defined on
- <code>Annotation</code>. This is useful for creating proxies that implement annotation interfaces
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>. This is useful for creating proxies that implement annotation interfaces
  so as to completely adhere to the annotation spec.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -421,7 +421,7 @@ extends java.lang.Object</pre>
 <dd>true if the other object has the same annotation type and returns equal values from
        the various annotation attributes</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Annotation.equals(Object)</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang.annotation"><code>Annotation.equals(Object)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -433,12 +433,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>equal</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;boolean&nbsp;equal(T&nbsp;annotation,
-                                                                        java.lang.Object&nbsp;other,
-                                                                        java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;boolean&nbsp;equal(T&nbsp;annotation,
+                                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;other,
+                                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</pre>
 <div class="block">Determines if two annotation objects are equal, only considering attributes that match the
  specified predicate. This implements the logic defined in the contract for equals defined on
- <code>Annotation</code>, except that it only compares methods that match the specified predicate.
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>, except that it only compares methods that match the specified predicate.
  This is useful for determining similarity between two annotations where not all annotation
  attributes are important.</div>
 <dl>
@@ -460,8 +460,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>hashCode</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;int&nbsp;hashCode(T&nbsp;annotation)</pre>
-<div class="block">Computes the hash code for an annotation as defined in the contract on <code>Annotation</code>.
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;int&nbsp;hashCode(T&nbsp;annotation)</pre>
+<div class="block">Computes the hash code for an annotation as defined in the contract on <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>.
  This is useful for creating proxies that implement annotation interfaces so as to completely
  adhere to the annotation spec.</div>
 <dl>
@@ -480,11 +480,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>hashCode</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;int&nbsp;hashCode(T&nbsp;annotation,
-                                                                       java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;int&nbsp;hashCode(T&nbsp;annotation,
+                                                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</pre>
 <div class="block">Computes the hash code for an annotation, only considering attributes that match the specified
  predicate. This implements the logic defined in the contract for hash code defined on
- <code>Annotation</code>, except that it only includes methods that match the specified predicate as
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>, except that it only includes methods that match the specified predicate as
  part of the computation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -503,7 +503,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;java.lang.String&nbsp;toString(T&nbsp;annotation)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(T&nbsp;annotation)</pre>
 <div class="block">Returns a string representation of the specified annotation object. The string will be in the
  form:<pre>
   @package.Class(attribute1 = attribute1 value, attribute2 = attribute2 value)
@@ -525,8 +525,8 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.annotation.Annotation&gt;&nbsp;java.lang.String&nbsp;toString(T&nbsp;annotation,
-                                                                                    java.util.function.Predicate&lt;? super java.lang.reflect.Method&gt;&nbsp;filterAttributes)</pre>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(T&nbsp;annotation,
+                                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;filterAttributes)</pre>
 <div class="block">Returns a string representation of the annotation, with only the attributes that match the
  specified predicate. The string representation is in the same form as
  <a href="../../../com/apriori/reflect/Annotations.html#toString-T-"><code>toString(Annotation)</code></a> but it only includes annotation attributes that match the

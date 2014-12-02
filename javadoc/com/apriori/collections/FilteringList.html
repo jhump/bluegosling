@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../com/apriori/collections/FilteringIterable.html" title="class in com.apriori.collections">com.apriori.collections.FilteringIterable</a>&lt;E&gt;</li>
@@ -121,20 +121,20 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.lang.Iterable&lt;E&gt;, java.util.Collection&lt;E&gt;, java.util.List&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">FilteringList&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a>&lt;E&gt;
-implements java.util.List&lt;E&gt;</pre>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</pre>
 <div class="block">A filtered view of another list. This is a wrapper that elides all members of the wrapped
  list that do not match a given predicate. Changes to the underlying list will be visible through
  the filtering collection (or at least those changes that effect elements that match the
  predicate).
  
  <p>Attempts to add/set items in the filtering list that do <em>not</em> match the predicate will
- throw <code>IllegalArgumentException</code>s.</div>
+ throw <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang"><code>IllegalArgumentException</code></a>s.</div>
 </li>
 </ul>
 </div>
@@ -153,8 +153,8 @@ implements java.util.List&lt;E&gt;</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#FilteringList-java.util.List-java.util.function.Predicate-">FilteringList</a></span>(java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;list,
-             java.util.function.Predicate&lt;? super <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;predicate)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#FilteringList-java.util.List-java.util.function.Predicate-">FilteringList</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;list,
+             <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;predicate)</code>
 <div class="block">Constructs a new filtering list.</div>
 </td>
 </tr>
@@ -181,17 +181,17 @@ implements java.util.List&lt;E&gt;</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#addAll-int-java.util.Collection-">addAll</a></span>(int&nbsp;index,
-      java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#capture--">capture</a></span>()</code>
 <div class="block">Capture a snapshot of the filtered elements.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a></code></td>
@@ -203,24 +203,24 @@ implements java.util.List&lt;E&gt;</pre>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#indexOf-java.lang.Object-">indexOf</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#indexOf-java.lang.Object-">indexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#internal--">internal</a></span>()</code>
 <div class="block">Gets the wrapped list.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#lastIndexOf-java.lang.Object-">lastIndexOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.ListIterator&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#listIterator--">listIterator</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.util.ListIterator&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#listIterator-int-">listIterator</a></span>(int&nbsp;index)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
@@ -233,7 +233,7 @@ implements java.util.List&lt;E&gt;</pre>
    <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/FilteringList.html#subList-int-int-">subList</a></span>(int&nbsp;fromIndex,
        int&nbsp;toIndex)</code>&nbsp;</td>
 </tr>
@@ -256,29 +256,29 @@ implements java.util.List&lt;E&gt;</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.List</h3>
-<code>add, addAll, clear, contains, containsAll, isEmpty, iterator, remove, removeAll, replaceAll, retainAll, size, sort, spliterator, toArray, toArray</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#replaceAll-java.util.function.UnaryOperator-" title="class or interface in java.util">replaceAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#sort-java.util.Comparator-" title="class or interface in java.util">sort</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
-<code>parallelStream, removeIf, stream</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach</code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
 </ul>
 </li>
 </ul>
@@ -300,8 +300,8 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FilteringList</h4>
-<pre>public&nbsp;FilteringList(java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;list,
-                     java.util.function.Predicate&lt;? super <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;predicate)</pre>
+<pre>public&nbsp;FilteringList(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;list,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Constructs a new filtering list. Elements in this list will include only the
  elements from the specified list that match the specified predicate. An element <code>e</code>
  matches the predicate if <code>predicate.apply(e)</code> returns true.</div>
@@ -326,7 +326,7 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>capture</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;capture()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;capture()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/FilteringIterable.html#capture--">FilteringIterable</a></code></span></div>
 <div class="block">Capture a snapshot of the filtered elements. The returned collection is not a wrapper and will
  thusly be disconnected from any future modifications to the wrapped iterable.</div>
@@ -344,7 +344,7 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>internal</h4>
-<pre>protected&nbsp;java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;internal()</pre>
+<pre>protected&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;internal()</pre>
 <div class="block">Gets the wrapped list.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -361,12 +361,12 @@ implements java.util.List&lt;E&gt;</pre>
 <li class="blockList">
 <h4>addAll</h4>
 <pre>public&nbsp;boolean&nbsp;addAll(int&nbsp;index,
-                      java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;c)</pre>
+                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;c)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-int-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - if any element in the specified collection does not match the
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any element in the specified collection does not match the
        predicate (in which case no element is added)</dd>
 </dl>
 </li>
@@ -380,7 +380,7 @@ implements java.util.List&lt;E&gt;</pre>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&nbsp;get(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#get-int-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -396,9 +396,9 @@ implements java.util.List&lt;E&gt;</pre>
              <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>set</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#set-int-E-" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - if the specified object does not match the predicate</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified object does not match the predicate</dd>
 </dl>
 </li>
 </ul>
@@ -414,9 +414,9 @@ implements java.util.List&lt;E&gt;</pre>
                 <a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - if the specified object does not match the predicate</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified object does not match the predicate</dd>
 </dl>
 </li>
 </ul>
@@ -429,7 +429,7 @@ implements java.util.List&lt;E&gt;</pre>
 <pre>public&nbsp;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&nbsp;remove(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-int-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -439,10 +439,10 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>indexOf</h4>
-<pre>public&nbsp;int&nbsp;indexOf(java.lang.Object&nbsp;o)</pre>
+<pre>public&nbsp;int&nbsp;indexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>indexOf</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#indexOf-java.lang.Object-" title="class or interface in java.util">indexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -452,10 +452,10 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>lastIndexOf</h4>
-<pre>public&nbsp;int&nbsp;lastIndexOf(java.lang.Object&nbsp;o)</pre>
+<pre>public&nbsp;int&nbsp;lastIndexOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>lastIndexOf</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#lastIndexOf-java.lang.Object-" title="class or interface in java.util">lastIndexOf</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -465,10 +465,10 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>listIterator</h4>
-<pre>public&nbsp;java.util.ListIterator&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;listIterator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;listIterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>listIterator</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator--" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -478,10 +478,10 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>listIterator</h4>
-<pre>public&nbsp;java.util.ListIterator&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;listIterator(int&nbsp;index)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true" title="class or interface in java.util">ListIterator</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;listIterator(int&nbsp;index)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>listIterator</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator-int-" title="class or interface in java.util">listIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -491,11 +491,11 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>subList</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;subList(int&nbsp;fromIndex,
-                                 int&nbsp;toIndex)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;&nbsp;subList(int&nbsp;fromIndex,
+                       int&nbsp;toIndex)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>subList</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -505,14 +505,14 @@ implements java.util.List&lt;E&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>equals</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>equals</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -525,11 +525,11 @@ implements java.util.List&lt;E&gt;</pre>
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>hashCode</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>hashCode</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/FilteringList.html" title="type parameter in FilteringList">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>

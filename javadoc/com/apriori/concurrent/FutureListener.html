@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@FunctionalInterface
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
 public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre>
 <div class="block">A listener for the completion of a future. When <a href="../../../com/apriori/concurrent/ListenableFuture.html#addListener-com.apriori.concurrent.FutureListener-java.util.concurrent.Executor-">registered with a
  future</a>, the listener will be called once the future completes.</div>
@@ -131,13 +131,13 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#forConsumer-java.util.function.Consumer-">forConsumer</a></span>(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</code>
-<div class="block">Adapts a <code>Consumer</code> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#forConsumer-java.util.function.Consumer-">forConsumer</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</code>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#forRunnable-java.lang.Runnable-">forRunnable</a></span>(java.lang.Runnable&nbsp;runnable)</code>
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureListener.html#forRunnable-java.lang.Runnable-">forRunnable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
 <div class="block">Creates a listener that will execute the specified task when the future completes.</div>
 </td>
 </tr>
@@ -205,7 +205,7 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <ul class="blockList">
 <li class="blockList">
 <h4>forRunnable</h4>
-<pre>static&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;java.lang.Object&gt;&nbsp;forRunnable(java.lang.Runnable&nbsp;runnable)</pre>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;forRunnable(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
 <div class="block">Creates a listener that will execute the specified task when the future completes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -221,8 +221,8 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <ul class="blockListLast">
 <li class="blockList">
 <h4>forConsumer</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forConsumer(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</pre>
-<div class="block">Adapts a <code>Consumer</code> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forConsumer(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</pre>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> to the <a href="../../../com/apriori/concurrent/FutureListener.html" title="interface in com.apriori.concurrent"><code>FutureListener</code></a> interface.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>consumer</code> - a consumer</dd>

@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.SpinLock</li>
@@ -107,15 +107,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.util.concurrent.locks.Lock</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">SpinLock</span>
-extends java.lang.Object
-implements java.util.concurrent.locks.Lock</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></pre>
 <div class="block">A non-reentrant and unfair lock that "spins" while waiting to lock. The lock will regularly
- yield if it's spinning too much. Because the only wait mechanism is
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true#yield--" title="class or interface in java.lang">yield</a> if it's spinning too much. Because the only wait mechanism is
  spinning, and no queues are used, the order of lock acquisition is non-deterministic (and thus
  unfair, possibly resulting in starvation if highly contended).
  
@@ -131,18 +131,18 @@ implements java.util.concurrent.locks.Lock</pre>
  held is non-deterministic. (See previous paragraph, about using this to guard very short/fast
  critical sections.)
  
- <p>Unlike lock acquisitions, awaiting a <code>Condition</code> created by this lock does not use
+ <p>Unlike lock acquisitions, awaiting a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true" title="class or interface in java.util.concurrent.locks"><code>Condition</code></a> created by this lock does not use
  spinning. Threads awaiting conditions are enqueued and will be notified in FIFO order by calls to
- <code>Condition.signal()</code>.
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true#signal--" title="class or interface in java.util.concurrent.locks"><code>Condition.signal()</code></a>.
  
  <p>Like normal locks, awaiting or signaling a condition requires that the lock be locked. But
  since the lock has no concept of an "owner", it cannot be verified that it is the awaiting or
  signaling thread that has locked it.
  
  <p>Awaiting a condition will unlock the lock before parking the awaiting thread. If that unlock
- operation fails, an <code>IllegalMonitorStateException</code> is thrown. Signaling a condition just
+ operation fails, an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalMonitorStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalMonitorStateException</code></a> is thrown. Signaling a condition just
  does a best effort check that the lock is locked. If the lock is not locked at the onset of the
- operation, an <code>IllegalMonitorStateException</code> is thrown. But if the lock is concurrently
+ operation, an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalMonitorStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalMonitorStateException</code></a> is thrown. But if the lock is concurrently
  unlocked by another thread, awaiting threads are still signaled.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -194,7 +194,7 @@ implements java.util.concurrent.locks.Lock</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SpinLock.html#lockInterruptibly--">lockInterruptibly</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.concurrent.locks.Condition</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true" title="class or interface in java.util.concurrent.locks">Condition</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SpinLock.html#newCondition--">newCondition</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -204,7 +204,7 @@ implements java.util.concurrent.locks.Lock</pre>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SpinLock.html#tryLock-long-java.util.concurrent.TimeUnit-">tryLock</a></span>(long&nbsp;time,
-       java.util.concurrent.TimeUnit&nbsp;unit)</code>&nbsp;</td>
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -215,8 +215,8 @@ implements java.util.concurrent.locks.Lock</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -259,7 +259,7 @@ implements java.util.concurrent.locks.Lock</pre>
 <pre>public&nbsp;void&nbsp;lock()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>lock</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#lock--" title="class or interface in java.util.concurrent.locks">lock</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -270,12 +270,12 @@ implements java.util.concurrent.locks.Lock</pre>
 <li class="blockList">
 <h4>lockInterruptibly</h4>
 <pre>public&nbsp;void&nbsp;lockInterruptibly()
-                       throws java.lang.InterruptedException</pre>
+                       throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>lockInterruptibly</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#lockInterruptibly--" title="class or interface in java.util.concurrent.locks">lockInterruptibly</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -288,7 +288,7 @@ implements java.util.concurrent.locks.Lock</pre>
 <pre>public&nbsp;boolean&nbsp;tryLock()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>tryLock</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#tryLock--" title="class or interface in java.util.concurrent.locks">tryLock</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -299,13 +299,13 @@ implements java.util.concurrent.locks.Lock</pre>
 <li class="blockList">
 <h4>tryLock</h4>
 <pre>public&nbsp;boolean&nbsp;tryLock(long&nbsp;time,
-                       java.util.concurrent.TimeUnit&nbsp;unit)
-                throws java.lang.InterruptedException</pre>
+                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
+                throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>tryLock</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#tryLock-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent.locks">tryLock</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -318,7 +318,7 @@ implements java.util.concurrent.locks.Lock</pre>
 <pre>public&nbsp;void&nbsp;unlock()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>unlock</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#unlock--" title="class or interface in java.util.concurrent.locks">unlock</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -328,10 +328,10 @@ implements java.util.concurrent.locks.Lock</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>newCondition</h4>
-<pre>public&nbsp;java.util.concurrent.locks.Condition&nbsp;newCondition()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true" title="class or interface in java.util.concurrent.locks">Condition</a>&nbsp;newCondition()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>newCondition</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.locks.Lock</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true#newCondition--" title="class or interface in java.util.concurrent.locks">newCondition</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a></code></dd>
 </dl>
 </li>
 </ul>

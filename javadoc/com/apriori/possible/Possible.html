@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">Possible&lt;T&gt;</span></pre>
 <div class="block">A possible value. A value might be present, but it may not be. This interface provides basically
- the same API as <code>Optional</code>, but as an interface instead of a class. Other implementations
+ the same API as <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util"><code>Optional</code></a>, but as an interface instead of a class. Other implementations
  are provided in this package, including ones that allow present <code>null</code> values and ones that
  are mutable.</div>
 </li>
@@ -156,24 +156,24 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#asSet--">asSet</a></span>()</code>
 <div class="block">Returns a view of this possible value as a set.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#filter-java.util.function.Predicate-">filter</a></span>(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#filter-java.util.function.Predicate-">filter</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</code>
 <div class="block">Filters the current value per the specified predicate.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#flatMap-java.util.function.Function-">flatMap</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#fromFuture-java.util.concurrent.Future-">fromFuture</a></span>(java.util.concurrent.Future&lt;? extends T&gt;&nbsp;future)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#fromFuture-java.util.concurrent.Future-">fromFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;? extends T&gt;&nbsp;future)</code>
 <div class="block">Returns a view of a future as a possible value.</div>
 </td>
 </tr>
@@ -185,7 +185,7 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -195,7 +195,7 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#map-java.util.function.Function-">map</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
@@ -206,8 +206,8 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;java.util.List&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#nullIfNotPresent-java.util.Collection-">nullIfNotPresent</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</code>
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#nullIfNotPresent-java.util.Collection-">nullIfNotPresent</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</code>
 <div class="block">Returns a list of the values, <code>null</code> if no value is present, from the specified
  collection of possible values.</div>
 </td>
@@ -226,17 +226,17 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(java.util.function.Supplier&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>&lt;X extends java.lang.Throwable&gt;<br><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(java.util.function.Supplier&lt;? extends X&gt;&nbsp;throwableSupplier)</code>
+<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwableSupplier)</code>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;java.util.List&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#presentOnly-java.util.Collection-">presentOnly</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</code>
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Possible.html#presentOnly-java.util.Collection-">presentOnly</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</code>
 <div class="block">Returns a list of the present values from the specified collection of possible values.</div>
 </td>
 </tr>
@@ -303,7 +303,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>map</h4>
-<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</pre>
+<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -320,7 +320,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>flatMap</h4>
-<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
+<pre>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
 </li>
 </ul>
 <a name="filter-java.util.function.Predicate-">
@@ -329,7 +329,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;filter(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</pre>
+<pre><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Filters the current value per the specified predicate. If a value is present and it matches
  the specified predicate then it is returned. Otherwise a possible value that is absent is
  returned.</div>
@@ -354,7 +354,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the contained value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.util.NoSuchElementException</code> - if a value is not present</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util">NoSuchElementException</a></code> - if a value is not present</dd>
 </dl>
 </li>
 </ul>
@@ -382,7 +382,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orElseGet</h4>
-<pre><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;orElseGet(java.util.function.Supplier&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;supplier)</pre>
+<pre><a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;orElseGet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;supplier)</pre>
 </li>
 </ul>
 <a name="orElseThrow-java.util.function.Supplier-">
@@ -391,8 +391,8 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orElseThrow</h4>
-<pre>&lt;X extends java.lang.Throwable&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;orElseThrow(java.util.function.Supplier&lt;? extends X&gt;&nbsp;throwableSupplier)
-                                       throws X extends java.lang.Throwable</pre>
+<pre>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&nbsp;orElseThrow(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwableSupplier)
+                             throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -401,7 +401,7 @@ var activeTableTab = "activeTableTab";
 <dd>the contained value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>X</code> - if a value is not present</dd>
-<dd><code>X extends java.lang.Throwable</code></dd>
+<dd><code>X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -411,7 +411,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>ifPresent</h4>
-<pre>void&nbsp;ifPresent(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;consumer)</pre>
+<pre>void&nbsp;ifPresent(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;consumer)</pre>
 </li>
 </ul>
 <a name="asSet--">
@@ -420,7 +420,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>asSet</h4>
-<pre>java.util.Set&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;asSet()</pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/Possible.html" title="type parameter in Possible">T</a>&gt;&nbsp;asSet()</pre>
 <div class="block">Returns a view of this possible value as a set. If a value is present, a singleton set with
  that value is returned. Otherwise, an empty set is returned.</div>
 <dl>
@@ -469,7 +469,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>fromFuture</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;fromFuture(java.util.concurrent.Future&lt;? extends T&gt;&nbsp;future)</pre>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&nbsp;fromFuture(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;? extends T&gt;&nbsp;future)</pre>
 <div class="block">Returns a view of a future as a possible value. If the future is incomplete, has failed, or
  has been cancelled then the value is not present. If and when the future completes
  successfully, the value will become present. The actual value is the future's result.</div>
@@ -487,7 +487,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>presentOnly</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;presentOnly(java.util.Collection&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</pre>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;presentOnly(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</pre>
 <div class="block">Returns a list of the present values from the specified collection of possible values.
  Possible values where no value is present are excluded. So the resulting list will have fewer
  elements than the specified collection in the event that not all values are present. The order
@@ -509,7 +509,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>nullIfNotPresent</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;nullIfNotPresent(java.util.Collection&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</pre>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;nullIfNotPresent(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;&gt;&nbsp;possibles)</pre>
 <div class="block">Returns a list of the values, <code>null</code> if no value is present, from the specified
  collection of possible values. The resulting list will always have exactly the same number of
  elements as the specified collection, even if not all values are present. The order of items

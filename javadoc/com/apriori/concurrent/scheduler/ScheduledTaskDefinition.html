@@ -201,7 +201,7 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#history--">history</a></span>()</code>
 <div class="block">Returns the history of past executions for this task definition.</div>
 </td>
@@ -402,7 +402,7 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>history</h4>
-<pre>java.util.List&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;&nbsp;history()</pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="type parameter in ScheduledTaskDefinition">V</a>&gt;&gt;&nbsp;history()</pre>
 <div class="block">Returns the history of past executions for this task definition. Only a
  limited number of past executions are retained and returned in this
  collection. Iteration order of the returned collection is such that
@@ -523,7 +523,7 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <dd><code><a href="../../../../com/apriori/concurrent/Cancellable.html#cancel-boolean-">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>interrupt</code> - <code>true</code> if a currently running invocation should be
-       interrupted via <code>Thread.interrupt()</code></dd>
+       interrupted via <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true#interrupt--" title="class or interface in java.lang"><code>Thread.interrupt()</code></a></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if the task was cancelled; <code>false</code> if it could
        not be cancelled because it was already finished</dd>
@@ -561,8 +561,8 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
  
  <p>If a task definition needs to be paused with no invocation running, then the
  caller can check <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#current--"><code>current()</code></a> after pausing. If it is not <code>null</code> then
- a task is executing and the caller will need to block
- until it finishes.</div>
+ a task is executing and the caller will need to <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#get--" title="class or interface in java.util.concurrent">block
+ until it finishes</a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if the task definition was paused; <code>false</code> if it could

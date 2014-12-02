@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.SortedArraySet&lt;E&gt;</li>
@@ -111,14 +111,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Serializable, java.lang.Cloneable, java.lang.Iterable&lt;E&gt;, java.util.Collection&lt;E&gt;, java.util.NavigableSet&lt;E&gt;, java.util.Set&lt;E&gt;, java.util.SortedSet&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">SortedArraySet&lt;E&gt;</span>
-extends java.lang.Object
-implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Serializable</pre>
-<div class="block">An implementation of <code>NavigableSet</code> that is optimized for memory efficiency at the cost of
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+<div class="block">An implementation of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util"><code>NavigableSet</code></a> that is optimized for memory efficiency at the cost of
  slower mutations. This is ideal for representing very large sets that do not change. Smaller sets
  that change infrequently is another good use case.
  
@@ -126,7 +126,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
  <em>O(log<sub>2</sub>n)</em>. Due to the way the elements are stored in the array, mutations
  (insertions and removals) can involve <em>O(n)</em> operations to shuffle elements around.
  
- <p>This set only supports <code>null</code> values when using a <code>Comparator</code> that can compare
+ <p>This set only supports <code>null</code> values when using a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> that can compare
  <code>null</code> values.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -176,18 +176,18 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Collection-">SortedArraySet</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Collection-">SortedArraySet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</code>
 <div class="block">Constructs a new set populated with the items in the given collection.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Collection-java.util.Comparator-">SortedArraySet</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source,
-              java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Collection-java.util.Comparator-">SortedArraySet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source,
+              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
 <div class="block">Constructs a new set populated with the items in the given collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Comparator-">SortedArraySet</a></span>(java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.Comparator-">SortedArraySet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
 <div class="block">Constructs a new empty set using the specified comparator to sort items within the set.</div>
 </td>
 </tr>
@@ -198,12 +198,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-int-java.util.Comparator-">SortedArraySet</a></span>(int&nbsp;initialCapacity,
-              java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
+              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</code>
 <div class="block">Constructs a new empty set.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.SortedSet-">SortedArraySet</a></span>(java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#SortedArraySet-java.util.SortedSet-">SortedArraySet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</code>
 <div class="block">Constructs a new set that is a copy of the specified sorted set.</div>
 </td>
 </tr>
@@ -228,7 +228,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#addAll-java.util.Collection-">addAll</a></span>(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;elements)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#addAll-java.util.Collection-">addAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;elements)</code></td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a></code></td>
@@ -243,28 +243,28 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#clone--">clone</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#comparator--">comparator</a></span>()</code></td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#contains-java.lang.Object-">contains</a></span>(java.lang.Object&nbsp;element)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#contains-java.lang.Object-">contains</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code></td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#containsAll-java.util.Collection-">containsAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;elements)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#containsAll-java.util.Collection-">containsAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</code></td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#descendingIterator--">descendingIterator</a></span>()</code></td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#descendingSet--">descendingSet</a></span>()</code></td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code></td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a></code></td>
@@ -279,11 +279,11 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#hashCode--">hashCode</a></span>()</code></td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#headSet-E-">headSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</code></td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#headSet-E-boolean-">headSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
        boolean&nbsp;inclusive)</code></td>
 </tr>
@@ -296,7 +296,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#isEmpty--">isEmpty</a></span>()</code></td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#iterator--">iterator</a></span>()</code></td>
 </tr>
 <tr id="i19" class="rowColor">
@@ -317,43 +317,43 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;element)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code></td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#removeAll-java.util.Collection-">removeAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;elements)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#removeAll-java.util.Collection-">removeAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</code></td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#retainAll-java.util.Collection-">retainAll</a></span>(java.util.Collection&lt;?&gt;&nbsp;elements)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#retainAll-java.util.Collection-">retainAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</code></td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#size--">size</a></span>()</code></td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#subSet-E-boolean-E-boolean-">subSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
       boolean&nbsp;fromInclusive,
       <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
       boolean&nbsp;toInclusive)</code></td>
 </tr>
 <tr id="i28" class="altColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#subSet-E-E-">subSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
       <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</code></td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#tailSet-E-">tailSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement)</code></td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#tailSet-E-boolean-">tailSet</a></span>(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
        boolean&nbsp;inclusive)</code></td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#toArray--">toArray</a></span>()</code></td>
 </tr>
 <tr id="i32" class="altColor">
@@ -361,7 +361,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#toArray-T:A-">toArray</a></span>(T[]&nbsp;a)</code></td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SortedArraySet.html#toString--">toString</a></span>()</code></td>
 </tr>
 <tr id="i34" class="altColor">
@@ -375,29 +375,29 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.SortedSet">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.SortedSet</h3>
-<code>spliterator</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
-<code>parallelStream, removeIf, stream</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach</code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
 </ul>
 </li>
 </ul>
@@ -450,7 +450,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>SortedArraySet</h4>
-<pre>public&nbsp;SortedArraySet(java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
+<pre>public&nbsp;SortedArraySet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
 <div class="block">Constructs a new empty set using the specified comparator to sort items within the set.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -480,7 +480,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <li class="blockList">
 <h4>SortedArraySet</h4>
 <pre>public&nbsp;SortedArraySet(int&nbsp;initialCapacity,
-                      java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
+                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
 <div class="block">Constructs a new empty set. The internal array will be sized as specified, and items will be
  sorted using the specified comparator.</div>
 <dl>
@@ -496,7 +496,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>SortedArraySet</h4>
-<pre>public&nbsp;SortedArraySet(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</pre>
+<pre>public&nbsp;SortedArraySet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</pre>
 <div class="block">Constructs a new set populated with the items in the given collection. All elements must be
  mutually comparable. They will be sorted per their natural ordering.</div>
 <dl>
@@ -511,9 +511,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>SortedArraySet</h4>
-<pre>public&nbsp;SortedArraySet(java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</pre>
+<pre>public&nbsp;SortedArraySet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source)</pre>
 <div class="block">Constructs a new set that is a copy of the specified sorted set. The new set will have the
- same contents and use the same <code>Comparator</code> as the specified set.</div>
+ same contents and use the same <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> as the specified set.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>source</code> - the sorted set to copy</dd>
@@ -526,8 +526,8 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SortedArraySet</h4>
-<pre>public&nbsp;SortedArraySet(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source,
-                      java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
+<pre>public&nbsp;SortedArraySet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;source,
+                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comp)</pre>
 <div class="block">Constructs a new set populated with the items in the given collection.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -566,9 +566,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -578,12 +578,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>addAll</h4>
-<pre>public&nbsp;boolean&nbsp;addAll(java.util.Collection&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;elements)</pre>
+<pre>public&nbsp;boolean&nbsp;addAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;elements)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>addAll</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -596,9 +596,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -608,12 +608,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(java.lang.Object&nbsp;element)</pre>
+<pre>public&nbsp;boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>contains</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>contains</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -623,12 +623,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAll</h4>
-<pre>public&nbsp;boolean&nbsp;containsAll(java.util.Collection&lt;?&gt;&nbsp;elements)</pre>
+<pre>public&nbsp;boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>containsAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>containsAll</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -641,9 +641,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -653,16 +653,16 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;iterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -672,12 +672,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;element)</pre>
+<pre>public&nbsp;boolean&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -687,12 +687,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>removeAll</h4>
-<pre>public&nbsp;boolean&nbsp;removeAll(java.util.Collection&lt;?&gt;&nbsp;elements)</pre>
+<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>removeAll</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -702,12 +702,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>retainAll</h4>
-<pre>public&nbsp;boolean&nbsp;retainAll(java.util.Collection&lt;?&gt;&nbsp;elements)</pre>
+<pre>public&nbsp;boolean&nbsp;retainAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;elements)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>retainAll</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -720,9 +720,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -732,12 +732,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>toArray</h4>
-<pre>public&nbsp;java.lang.Object[]&nbsp;toArray()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -752,9 +752,9 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;&lt;T&gt;&nbsp;T[]&nbsp;toArray(T[]&nbsp;a)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>toArray</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -764,10 +764,10 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>comparator</h4>
-<pre>public&nbsp;java.util.Comparator&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comparator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;comparator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>comparator</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#comparator--" title="class or interface in java.util">comparator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -780,7 +780,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;first()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>first</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#first--" title="class or interface in java.util">first</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -792,12 +792,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>headSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>headSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#headSet-E-" title="class or interface in java.util">headSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>headSet</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#headSet-E-" title="class or interface in java.util">headSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -810,7 +810,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;last()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>last</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#last--" title="class or interface in java.util">last</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -822,13 +822,13 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>subSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
-                                        <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
+                              <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>subSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#subSet-E-E-" title="class or interface in java.util">subSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>subSet</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#subSet-E-E-" title="class or interface in java.util">subSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -840,12 +840,12 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>tailSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>tailSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#tailSet-E-" title="class or interface in java.util">tailSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>tailSet</code>&nbsp;in interface&nbsp;<code>java.util.SortedSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true#tailSet-E-" title="class or interface in java.util">tailSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -860,7 +860,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;ceiling(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>ceiling</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#ceiling-E-" title="class or interface in java.util">ceiling</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -870,10 +870,10 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>descendingIterator</h4>
-<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;descendingIterator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;descendingIterator()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>descendingIterator</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#descendingIterator--" title="class or interface in java.util">descendingIterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -883,10 +883,10 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>descendingSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;descendingSet()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;descendingSet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>descendingSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#descendingSet--" title="class or interface in java.util">descendingSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -901,7 +901,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;floor(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>floor</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#floor-E-" title="class or interface in java.util">floor</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -913,11 +913,11 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>headSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
-                                         boolean&nbsp;inclusive)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;headSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
+                               boolean&nbsp;inclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>headSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#headSet-E-boolean-" title="class or interface in java.util">headSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -932,7 +932,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;higher(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>higher</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#higher-E-" title="class or interface in java.util">higher</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -947,7 +947,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;lower(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;e)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>lower</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#lower-E-" title="class or interface in java.util">lower</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -960,7 +960,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;pollFirst()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>pollFirst</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#pollFirst--" title="class or interface in java.util">pollFirst</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -973,7 +973,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;pollLast()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>pollLast</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#pollLast--" title="class or interface in java.util">pollLast</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -985,13 +985,13 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>subSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
-                                        boolean&nbsp;fromInclusive,
-                                        <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
-                                        boolean&nbsp;toInclusive)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;subSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
+                              boolean&nbsp;fromInclusive,
+                              <a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;toElement,
+                              boolean&nbsp;toInclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>subSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#subSet-E-boolean-E-boolean-" title="class or interface in java.util">subSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1003,11 +1003,11 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>tailSet</h4>
-<pre>public&nbsp;java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
-                                         boolean&nbsp;inclusive)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;tailSet(<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&nbsp;fromElement,
+                               boolean&nbsp;inclusive)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>tailSet</code>&nbsp;in interface&nbsp;<code>java.util.NavigableSet&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true#tailSet-E-boolean-" title="class or interface in java.util">tailSet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/NavigableSet.html?is-external=true" title="class or interface in java.util">NavigableSet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -1017,14 +1017,14 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>equals</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>equals</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1037,11 +1037,11 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>hashCode</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>hashCode</code>&nbsp;in interface&nbsp;<code>java.util.Set&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1051,10 +1051,10 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1067,7 +1067,7 @@ implements java.util.NavigableSet&lt;E&gt;, java.lang.Cloneable, java.io.Seriali
 <pre>public&nbsp;<a href="../../../com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a>&lt;<a href="../../../com/apriori/collections/SortedArraySet.html" title="type parameter in SortedArraySet">E</a>&gt;&nbsp;clone()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>clone</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>

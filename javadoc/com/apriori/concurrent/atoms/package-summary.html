@@ -109,13 +109,13 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X extends java.lang.Throwable&gt;</td>
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Computation.html" title="interface in com.apriori.concurrent.atoms">Transaction.Computation</a>&lt;T,X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
 <td class="colLast">
 <div class="block">A computation that produces a value and executes in (or with) a transaction.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X extends java.lang.Throwable&gt;</td>
+<td class="colFirst"><a href="../../../../com/apriori/concurrent/atoms/Transaction.Task.html" title="interface in com.apriori.concurrent.atoms">Transaction.Task</a>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
 <td class="colLast">
 <div class="block">A task that executes in (or with) a transaction.</div>
 </td>
@@ -236,7 +236,7 @@
 </a>
 <h2 title="Package com.apriori.concurrent.atoms Description">Package com.apriori.concurrent.atoms Description</h2>
 <div class="block">A set of classes for managing mutable thread-safe references. These are similar in many ways to
- an <code>AtomicReference</code>, but an <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><code>Atom</code></a> includes some additional APIs for atomic operations and
+ an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReference</code></a>, but an <a href="../../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><code>Atom</code></a> includes some additional APIs for atomic operations and
  allows for some asynchronous processing in the form of "watchers".
  
  <p>Another key difference is that this package provides a variety of implementations regarding
@@ -244,7 +244,7 @@
  <ul>
     <li><strong>CAS</strong>: A <a href="../../../../com/apriori/concurrent/atoms/SimpleAtom.html" title="class in com.apriori.concurrent.atoms"><code>SimpleAtom</code></a> uses a CAS
     (Compare And Set) operation/loop to atomically perform updates to a reference. This is the
-    same approach used by <code>AtomicReference</code>.</li> 
+    same approach used by <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReference</code></a>.</li> 
     <li><strong>TLS</strong>: A <a href="../../../../com/apriori/concurrent/atoms/ThreadLocalAtom.html" title="class in com.apriori.concurrent.atoms"><code>ThreadLocalAtom</code></a> uses
     thread-local storage to update a reference. This means that after the reference is seeded from
     a root value (which happens during initialization of the atom in a new thread), the value is

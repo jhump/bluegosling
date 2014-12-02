@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface Generator.Output" class="title">Interface Generator.Output&lt;T&gt;</h2>
+<h2 title="Interface Generator.Output" class="title">Interface Generator.Output&lt;T,U&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a> extends java.lang.Throwable&gt;</dd>
+<dd><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -111,10 +111,10 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@FunctionalInterface
-public static interface <span class="typeNameLabel">Generator.Output&lt;T&gt;</span></pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
+public static interface <span class="typeNameLabel">Generator.Output&lt;T,U&gt;</span></pre>
 <div class="block">Represents the output of a generated sequence. A generator sends data to its consumer by
- providing data through this interface. For symmetry with generator functionality in other
+ providing data through this interface. For consistency with generator functionality in other
  languages, the output method name of "yield" was chosen.</div>
 </li>
 </ul>
@@ -135,7 +135,7 @@ public static interface <span class="typeNameLabel">Generator.Output&lt;T&gt;</s
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">U</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.Output.html#yield-T-">yield</a></span>(<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>&nbsp;t)</code>
 <div class="block">Yields a value from the generator.</div>
 </td>
@@ -163,12 +163,18 @@ public static interface <span class="typeNameLabel">Generator.Output&lt;T&gt;</s
 <ul class="blockListLast">
 <li class="blockList">
 <h4>yield</h4>
-<pre>void&nbsp;yield(<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>&nbsp;t)</pre>
+<pre><a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">U</a>&nbsp;yield(<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>&nbsp;t)</pre>
 <div class="block">Yields a value from the generator. This sends the specified value to the consumer and
- also suspends the generator until the consumer requests another value.</div>
+ also suspends the generator until the consumer requests another value. Any value supplied
+ by the consumer in its call to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> is returned from this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>t</code> - the value to send to the consumer</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the value provided by the consumer</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/apriori/util/SequenceAbandonedException.html" title="class in com.apriori.util">SequenceAbandonedException</a></code> - if the consumer has abandoned the sequence, in which
+       case the generator should exit</dd>
 </dl>
 </li>
 </ul>

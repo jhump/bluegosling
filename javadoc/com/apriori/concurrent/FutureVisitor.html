@@ -140,15 +140,15 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureVisitor.html#failed-java.lang.Throwable-">failed</a></span>(java.lang.Throwable&nbsp;failure)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureVisitor.html#failed-java.lang.Throwable-">failed</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code>
 <div class="block">Invoked when the visited future failed.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureVisitor.html#of-java.util.function.Consumer-java.util.function.Consumer-java.lang.Runnable-">of</a></span>(java.util.function.Consumer&lt;? super T&gt;&nbsp;onSuccess,
-  java.util.function.Consumer&lt;? super java.lang.Throwable&gt;&nbsp;onFailure,
-  java.lang.Runnable&nbsp;onCancel)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/FutureVisitor.html#of-java.util.function.Consumer-java.util.function.Consumer-java.lang.Runnable-">of</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super T&gt;&nbsp;onSuccess,
+  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
+  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</code>
 <div class="block">Assembles a visitor using all of the specified callbacks.</div>
 </td>
 </tr>
@@ -195,7 +195,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>failed</h4>
-<pre>void&nbsp;failed(java.lang.Throwable&nbsp;failure)</pre>
+<pre>void&nbsp;failed(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</pre>
 <div class="block">Invoked when the visited future failed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -219,9 +219,9 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>of</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;&nbsp;of(java.util.function.Consumer&lt;? super T&gt;&nbsp;onSuccess,
-                               java.util.function.Consumer&lt;? super java.lang.Throwable&gt;&nbsp;onFailure,
-                               java.lang.Runnable&nbsp;onCancel)</pre>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;T&gt;&nbsp;of(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super T&gt;&nbsp;onSuccess,
+                               <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;onFailure,
+                               <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;onCancel)</pre>
 <div class="block">Assembles a visitor using all of the specified callbacks. Which callback is invoked depends
  on the disposition of the completed futures.</div>
 <dl>

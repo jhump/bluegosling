@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.PriorityQueues</li>
@@ -108,13 +108,13 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">PriorityQueues</span>
-extends java.lang.Object</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">Utility methods for working with instances of <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a> (not to be mistaken for
- <code>PriorityQueue</code>).
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util"><code>PriorityQueue</code></a>).
  
  <p>The meat of this class includes a <a href="../../../com/apriori/collections/PriorityQueues.AutoEntry.html" title="class in com.apriori.collections">useful base class</a> for value types
  that are stored into priority queues, and methods for adapting a priority queue to the standard
- <code>Queue</code> interface.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>Queue</code></a> interface.</div>
 </li>
 </ul>
 </div>
@@ -185,8 +185,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -217,9 +217,9 @@ extends java.lang.Object</pre>
  
  <p>If the same element and priority are to be added to multiple queues, create multiple
  entries. Adding the returned entry to more than one queue will result in an
- <code>IllegalStateException</code> being thrown. Trying to <a href="../../../com/apriori/collections/PriorityQueue.Entry.html#remove--">remove</a> the
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> being thrown. Trying to <a href="../../../com/apriori/collections/PriorityQueue.Entry.html#remove--">remove</a> the
  entry before it has actually been added to a queue will also result in an
- <code>IllegalStateException</code> being thrown.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> being thrown.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>element</code> - the element</dd>
@@ -238,7 +238,7 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;&lt;E,P&gt;&nbsp;<a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;&nbsp;asQueue(<a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections">PriorityQueue</a>&lt;E,P&gt;&nbsp;priorityQueue)</pre>
 <div class="block">Returns a view of a <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a> as an <a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections"><code>OrderedQueue</code></a>. The
  <a href="../../../com/apriori/collections/PriorityQueues.html#entry-E-P-"><code>entry(Object, Object)</code></a> method must be used to create objects that are added to the
- returned queue. Otherwise, adding an entry will result in a <code>ClassCastException</code>.</div>
+ returned queue. Otherwise, adding an entry will result in a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>priorityQueue</code> - a priority queue</dd>
@@ -258,9 +258,9 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;&lt;E,P,Q extends <a href="../../../com/apriori/collections/MeldablePriorityQueue.html" title="interface in com.apriori.collections">MeldablePriorityQueue</a>&lt;E,P,Q&gt;&gt;&nbsp;<a href="../../../com/apriori/collections/PriorityQueues.MeldableQueue.html" title="interface in com.apriori.collections">PriorityQueues.MeldableQueue</a>&lt;<a href="../../../com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a>&lt;E,P&gt;&gt;&nbsp;asQueue(Q&nbsp;priorityQueue)</pre>
 <div class="block">Returns a view of a <a href="../../../com/apriori/collections/MeldablePriorityQueue.html" title="interface in com.apriori.collections"><code>MeldablePriorityQueue</code></a> as a <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections"><code>MeldableOrderedQueue</code></a>. The
  <a href="../../../com/apriori/collections/PriorityQueues.html#entry-E-P-"><code>entry(Object, Object)</code></a> method must be used to create objects that are added to the
- returned queue. Otherwise, adding an entry will result in a <code>ClassCastException</code>.
+ returned queue. Otherwise, adding an entry will result in a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.
  Attempting to meld the returned queue with another whose underlying priority queue is not
- actually meldable will also result in a <code>ClassCastException</code>.</div>
+ actually meldable will also result in a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>priorityQueue</code> - a priority queue</dd>

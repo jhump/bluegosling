@@ -278,7 +278,7 @@
  <p>To make the most of the APIs in this package, your annotation processor should extend
  <a href="../../../../com/apriori/apt/reflect/ArProcessor.html" title="class in com.apriori.apt.reflect"><code>ArProcessor</code></a>. This alternate base class provides a reference to
  a <a href="../../../../com/apriori/apt/reflect/ArRoundEnvironment.html" title="class in com.apriori.apt.reflect"><code>ArRoundEnvironment</code></a>, which is very similar to the standard
- <code>RoundEnvironment</code> except that its API is defined in terms of
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>RoundEnvironment</code></a> except that its API is defined in terms of
  this set of reflection APIs (instead of in terms of elements and type mirrors).
  
  <p><strong>NOTE:</strong> APIs in this package requires the executing thread to be <a href="../../../../com/apriori/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-">setup for the current processing environment</a>. If you are running from the same thread on which

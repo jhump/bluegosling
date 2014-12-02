@@ -91,9 +91,9 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>@Target(value=METHOD)
- @Retention(value=RUNTIME)
- @Documented
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
 public @interface <span class="memberNameLabel">Calls</span></pre>
 <div class="block">A marker for an injectable wrapper method. The method should not be static and should
  be abstract. A concrete version of the function will be generated in the <a href="../../../com/apriori/di/InjectedEntryPoint.html" title="annotation in com.apriori.di">injection entry point</a>. If the function has arguments, they should have the
@@ -118,7 +118,7 @@ public @interface <span class="memberNameLabel">Calls</span></pre>
 <th class="colLast" scope="col">Required Element and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/di/Calls.html#value--">value</a></span></code>
 <div class="block">The name of the method that will be called in the generated injection entry point.</div>
 </td>
@@ -144,11 +144,11 @@ public @interface <span class="memberNameLabel">Calls</span></pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;java.lang.String&nbsp;value</pre>
+<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
 <div class="block">The name of the method that will be called in the generated injection entry point. The
  name should be specified in the same syntax as used by javadoc <code>{@link}</code>s
  with the one exception that inner classes should be denoted using dollar signs (<code>$</code>)
- instead of dots (as if referencing the class name for use in <code>Class.forName(String)</code>).
+ instead of dots (as if referencing the class name for use in <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#forName-java.lang.String-" title="class or interface in java.lang"><code>Class.forName(String)</code></a>).
  As in javadoc, a hash (<code>#</code>) should be used to separate the class from the
  method. Types in the parameter list do not need to be fully-qualified as long as
  no ambiguity results from using short names. The parameter list can be left out

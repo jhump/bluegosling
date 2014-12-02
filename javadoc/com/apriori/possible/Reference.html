@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.possible.Reference&lt;T&gt;</li>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">Reference&lt;T&gt;</span>
-extends java.lang.Object
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</pre>
 <div class="block">A <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">possible</a> value that, even if present, can be <code>null</code>. A reference
  can either be set or unset. If set, a value is present; if unset, the value is absent. References
@@ -163,23 +163,23 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static &lt;S,T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#cast-com.apriori.possible.Reference-java.lang.Class-">cast</a></span>(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;from,
-    java.lang.Class&lt;T&gt;&nbsp;target)</code>
+    <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;target)</code>
 <div class="block">Casts a reference to a different type.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#filter-java.util.function.Predicate-">filter</a></span>(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#filter-java.util.function.Predicate-">filter</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</code>
 <div class="block">Filters the current value per the specified predicate.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#flatMap-java.util.function.Function-">flatMap</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code></td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>abstract &lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#map-java.util.function.Function-">map</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/Reference.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.</div>
 </td>
 </tr>
@@ -218,8 +218,8 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.possible.Possible">
@@ -299,7 +299,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <li class="blockList">
 <h4>cast</h4>
 <pre>public static&nbsp;&lt;S,T&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;cast(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;from,
-                                      java.lang.Class&lt;T&gt;&nbsp;target)</pre>
+                                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;target)</pre>
 <div class="block">Casts a reference to a different type. The present value must be assignable to the new type.
  Using this method is much more efficient than creating a new reference value with a different
  type. Since reference values are immutable, the type on an existing instance can safely be
@@ -311,7 +311,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code> but re-cast to a <code>Reference&lt;T&gt;</code> where <code>T</code> is the target type</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.ClassCastException</code> - if the reference is set but the value is neither an instance of the
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang">ClassCastException</a></code> - if the reference is set but the value is neither an instance of the
        specified type nor <code>null</code></dd>
 </dl>
 </li>
@@ -325,7 +325,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;S&gt;&nbsp;upcast(<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;T&gt;&nbsp;from)</pre>
 <div class="block">Upcasts an reference to a super-type. This relies on the compiler to ensure that the types are
  compatible, so no class token argument is needed. Also, this version will never throw a
- <code>ClassCastException</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the reference value from which we are casting</dd>
@@ -342,7 +342,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>map</h4>
-<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;map(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</pre>
+<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns the current possible value, transformed by the specified function, if present.
  
  <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
@@ -363,7 +363,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>flatMap</h4>
-<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;flatMap(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
+<pre>public abstract&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
 <div class="block">
  
  <p>Overrides the return type to indicate that it will be an instance of <a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible"><code>Reference</code></a>.</div>
@@ -379,7 +379,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
+<pre>public abstract&nbsp;<a href="../../../com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a>&lt;<a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/Reference.html" title="type parameter in Reference">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Filters the current value per the specified predicate. If a value is present and it matches
  the specified predicate then it is returned. Otherwise a possible value that is absent is
  returned.

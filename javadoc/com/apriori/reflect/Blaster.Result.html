@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.reflect.Blaster.Result&lt;T&gt;</li>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static class <span class="typeNameLabel">Blaster.Result&lt;T&gt;</span>
-extends java.lang.Object</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">The result of blasting a method invocation out to a single target object. This result can
  either be a returned value or a thrown exception, depending on what happened during the method
  invocation.</div>
@@ -157,7 +157,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.lang.Throwable</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Blaster.Result.html#getFailure--">getFailure</a></span>()</code>
 <div class="block">Gets the throwable that caused the method invocation to fail.</div>
 </td>
@@ -173,8 +173,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -200,13 +200,13 @@ extends java.lang.Object</pre>
 <div class="block">Gets the result value. If the method invocation was not successful then this will throw
  the exception that was caught when the method was invoked. This method does not throw
  checked exceptions. If the failure that caused the method invocation was a checked
- exception then it will be wrapped in a <code>RuntimeException</code>.</div>
+ exception then it will be wrapped in a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><code>RuntimeException</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value returned from a method invocation</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Error</code> - if the method invocation threw an <code>Error</code></dd>
-<dd><code>java.lang.RuntimeException</code> - if the method invocation threw an exception</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Error.html?is-external=true" title="class or interface in java.lang">Error</a></code> - if the method invocation threw an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Error.html?is-external=true" title="class or interface in java.lang"><code>Error</code></a></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - if the method invocation threw an exception</dd>
 </dl>
 </li>
 </ul>
@@ -217,14 +217,14 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>checkedGet</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/Blaster.Result.html" title="type parameter in Blaster.Result">T</a>&nbsp;checkedGet()
-             throws java.util.concurrent.ExecutionException</pre>
+             throws <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></pre>
 <div class="block">Gets the result value. This is just like <a href="../../../com/apriori/reflect/Blaster.Result.html#get--"><code>get()</code></a> except that it wraps the failures
- in the checked exception type <code>ExecutionException</code> (just like <code>Future</code>s do).</div>
+ in the checked exception type <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutionException</code></a> (just like <code>Future</code>s do).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value returned from a method invocation</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.util.concurrent.ExecutionException</code> - if the method invocation threw an exception</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code> - if the method invocation threw an exception</dd>
 </dl>
 </li>
 </ul>
@@ -234,7 +234,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFailure</h4>
-<pre>public&nbsp;java.lang.Throwable&nbsp;getFailure()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;getFailure()</pre>
 <div class="block">Gets the throwable that caused the method invocation to fail. If the method invocation
  succeeded then this will return <code>null</code>.</div>
 <dl>

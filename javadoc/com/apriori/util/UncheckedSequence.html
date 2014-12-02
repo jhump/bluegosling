@@ -85,7 +85,7 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface UncheckedSequence" class="title">Interface UncheckedSequence&lt;T&gt;</h2>
+<h2 title="Interface UncheckedSequence" class="title">Interface UncheckedSequence&lt;T,U&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -94,15 +94,16 @@
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of elements in the sequence</dd>
+<dd><code>U</code> - the optional type of input to the sequence (<code>Void</code> if not needed)</dd>
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;T,java.lang.RuntimeException&gt;</dd>
+<dd><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;T,U,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">UncheckedSequence&lt;T&gt;</span>
-extends <a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;T,java.lang.RuntimeException&gt;</pre>
+<pre>public interface <span class="typeNameLabel">UncheckedSequence&lt;T,U&gt;</span>
+extends <a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;T,U,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
 <div class="block">A sequence that does not throw checked exceptions from calls to <a href="../../../com/apriori/util/Sequence.html#next--"><code>Sequence.next()</code></a>.</div>
 </li>
 </ul>
@@ -121,7 +122,7 @@ extends <a href="../../../com/apriori/util/Sequence.html" title="interface in co
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.util.<a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a></h3>
-<code><a href="../../../com/apriori/util/Sequence.html#asIterator--">asIterator</a>, <a href="../../../com/apriori/util/Sequence.html#next--">next</a></code></li>
+<code><a href="../../../com/apriori/util/Sequence.html#asIterator--">asIterator</a>, <a href="../../../com/apriori/util/Sequence.html#next--">next</a>, <a href="../../../com/apriori/util/Sequence.html#next-U-">next</a></code></li>
 </ul>
 </li>
 </ul>

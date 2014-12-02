@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.ArrayListGrowableArray&lt;T&gt;</li>
@@ -111,14 +111,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;T&gt;, java.io.Serializable, java.lang.Cloneable, java.lang.Iterable&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;T&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">ArrayListGrowableArray&lt;T&gt;</span>
-extends java.lang.Object
-implements <a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, java.io.Serializable, java.lang.Cloneable</pre>
-<div class="block">A simple growable array that is backed by an <code>ArrayList</code>. This implementation basically
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;T&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
+<div class="block">A simple growable array that is backed by an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a>. This implementation basically
  doubles the underlying array capacity when it gets full. This implementation does not
  automatically shrink the underlying array, instead requiring callers to use <a href="../../../com/apriori/collections/ArrayListGrowableArray.html#trimToSize--"><code>trimToSize()</code></a>
  to reduce the object's memory footprint.
@@ -165,7 +165,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#ArrayListGrowableArray-java.lang.Iterable-">ArrayListGrowableArray</a></span>(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#ArrayListGrowableArray-java.lang.Iterable-">ArrayListGrowableArray</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</code>
 <div class="block">Constructs a new growable array with the given contents.</div>
 </td>
 </tr>
@@ -213,7 +213,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#iterator--">iterator</a></span>()</code>
 <div class="block">Returns an iterator over the contents of this growable array.</div>
 </td>
@@ -232,7 +232,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#pushAll-java.lang.Iterable-">pushAll</a></span>(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#pushAll-java.lang.Iterable-">pushAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</code>
 <div class="block">Pushes multiple values to the end of this growable array, in bulk.</div>
 </td>
 </tr>
@@ -256,7 +256,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.util.Spliterator&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayListGrowableArray.html#spliterator--">spliterator</a></span>()</code>
 <div class="block">Creates a spliterator over the elements described by this iterable.</div>
 </td>
@@ -272,8 +272,8 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.GrowableArray">
@@ -293,8 +293,8 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach</code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
 </ul>
 </li>
 </ul>
@@ -341,7 +341,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ArrayListGrowableArray</h4>
-<pre>public&nbsp;ArrayListGrowableArray(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</pre>
+<pre>public&nbsp;ArrayListGrowableArray(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</pre>
 <div class="block">Constructs a new growable array with the given contents. The new array will have the same
  size as the given values. The order of values in the array is the same as the iteration
  order of the given values.</div>
@@ -368,7 +368,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <pre>public&nbsp;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="class in com.apriori.collections">ArrayListGrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;clone()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>clone</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -378,16 +378,16 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>iterator</h4>
-<pre>public&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;iterator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;iterator()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#iterator--">GrowableArray</a></code></span></div>
 <div class="block">Returns an iterator over the contents of this growable array. The returned iterator cannot be
- used to remove elements, and thus <code>Iterator.remove()</code> will throw
- <code>UnsupportedOperationException</code>.</div>
+ used to remove elements, and thus <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>Iterator.remove()</code></a> will throw
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/GrowableArray.html#iterator--">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>iterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an iterator over the contents of this array</dd>
 </dl>
@@ -399,20 +399,20 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>spliterator</h4>
-<pre>public&nbsp;java.util.Spliterator&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;spliterator()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true" title="class or interface in java.util">Spliterator</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;spliterator()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">SizedIterable</a></code></span></div>
 <div class="block">Creates a spliterator over the elements described by this iterable. Since this iterable has
  information about the number of elements, it returns a spliterator with the
- <code>Spliterator.SIZED</code> and <code>Spliterator.SUBSIZED</code> characteristics (but no others).</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true#SIZED" title="class or interface in java.util"><code>Spliterator.SIZED</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html?is-external=true#SUBSIZED" title="class or interface in java.util"><code>Spliterator.SUBSIZED</code></a> characteristics (but no others).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/GrowableArray.html#spliterator--">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html" title="interface in com.apriori.collections">GrowableArray</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/SizedIterable.html#spliterator--">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>spliterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Iterable.spliterator()</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang"><code>Iterable.spliterator()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -569,7 +569,7 @@ implements <a href="../../../com/apriori/collections/GrowableArray.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>pushAll</h4>
-<pre>public&nbsp;void&nbsp;pushAll(java.lang.Iterable&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</pre>
+<pre>public&nbsp;void&nbsp;pushAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/collections/ArrayListGrowableArray.html" title="type parameter in ArrayListGrowableArray">T</a>&gt;&nbsp;values)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/collections/GrowableArray.html#pushAll-java.lang.Iterable-">GrowableArray</a></code></span></div>
 <div class="block">Pushes multiple values to the end of this growable array, in bulk. The order of items pushed
  is based on the iteration order of the given collection or sequence.</div>

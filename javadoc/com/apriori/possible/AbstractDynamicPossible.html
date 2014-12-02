@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.possible.AbstractDynamicPossible&lt;T&gt;</li>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">AbstractDynamicPossible&lt;T&gt;</span>
-extends java.lang.Object
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;T&gt;</pre>
 <div class="block">An abstract base class for possible values that are dynamic, meaning whether a value is present
  or not can change over the life of the value. Possible values that are immutable should not
@@ -126,7 +126,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
  <p>The default implementations in this base class are thread-safe and suitable for sub-classes
  that support concurrent usage. Where appropriate, this is handled by first checking the abstract
  <a href="../../../com/apriori/possible/Possible.html#isPresent--"><code>Possible.isPresent()</code></a> before calling <a href="../../../com/apriori/possible/Possible.html#get--"><code>Possible.get()</code></a>. However, <code>get()</code> could still throw if
- the value suddenly becomes absent. So the implementations catch <code>NoSuchElementException</code>
+ the value suddenly becomes absent. So the implementations catch <a href="http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html?is-external=true" title="class or interface in java.util"><code>NoSuchElementException</code></a>
  and then proceed as if <code>isPresent()</code> had returned false.</div>
 </li>
 </ul>
@@ -179,32 +179,32 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#asSet--">asSet</a></span>()</code>
 <div class="block">Returns a view of this possible as a set.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#filter-java.util.function.Predicate-">filter</a></span>(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;predicate)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#filter-java.util.function.Predicate-">filter</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;predicate)</code>
 <div class="block">Returns a possible that reflects the result of applying the given predicate to this possible
  value, if present.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#flatMap-java.util.function.Function-">flatMap</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#flatMap-java.util.function.Function-">flatMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</code>
 <div class="block">Returns a possible that reflects the result of applying the given function to this possible
  value, if present.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;consumer)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#map-java.util.function.Function-">map</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends U&gt;&nbsp;function)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#map-java.util.function.Function-">map</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends U&gt;&nbsp;function)</code>
 <div class="block">Returns a possible that reflects the result of applying the given function to this possible
  value, if present.</div>
 </td>
@@ -224,11 +224,11 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(java.util.function.Supplier&lt;? extends <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;supplier)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>&lt;X extends java.lang.Throwable&gt;<br><a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(java.util.function.Supplier&lt;? extends X&gt;&nbsp;throwableSupplier)</code>
+<td class="colFirst"><code>&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;<br><a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/possible/AbstractDynamicPossible.html#orElseThrow-java.util.function.Supplier-">orElseThrow</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwableSupplier)</code>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 </td>
 </tr>
@@ -243,8 +243,8 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.possible.Possible">
@@ -309,7 +309,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>map</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends U&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;map(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends U&gt;&nbsp;function)</pre>
 <div class="block">Returns a possible that reflects the result of applying the given function to this possible
  value, if present.
  
@@ -335,7 +335,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>flatMap</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(java.util.function.Function&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
+<pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&nbsp;flatMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>,? extends <a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;U&gt;&gt;&nbsp;function)</pre>
 <div class="block">Returns a possible that reflects the result of applying the given function to this possible
  value, if present.
  
@@ -355,7 +355,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>filter</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;filter(java.util.function.Predicate&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;predicate)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;filter(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;predicate)</pre>
 <div class="block">Returns a possible that reflects the result of applying the given predicate to this possible
  value, if present.
  
@@ -401,7 +401,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>orElseGet</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&nbsp;orElseGet(java.util.function.Supplier&lt;? extends <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;supplier)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&nbsp;orElseGet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;supplier)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#orElseGet-java.util.function.Supplier-">orElseGet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;</code></dd>
@@ -414,8 +414,8 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>orElseThrow</h4>
-<pre>public&nbsp;&lt;X extends java.lang.Throwable&gt;&nbsp;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&nbsp;orElseThrow(java.util.function.Supplier&lt;? extends X&gt;&nbsp;throwableSupplier)
-                                              throws X extends java.lang.Throwable</pre>
+<pre>public&nbsp;&lt;X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&nbsp;orElseThrow(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;? extends X&gt;&nbsp;throwableSupplier)
+                                    throws X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/possible/Possible.html#orElseThrow-java.util.function.Supplier-">Possible</a></code></span></div>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 <dl>
@@ -427,7 +427,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <dd>the contained value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>X</code> - if a value is not present</dd>
-<dd><code>X extends java.lang.Throwable</code></dd>
+<dd><code>X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -437,7 +437,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>ifPresent</h4>
-<pre>public&nbsp;void&nbsp;ifPresent(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;consumer)</pre>
+<pre>public&nbsp;void&nbsp;ifPresent(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;consumer)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/possible/Possible.html#ifPresent-java.util.function.Consumer-">ifPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;</code></dd>
@@ -450,7 +450,7 @@ implements <a href="../../../com/apriori/possible/Possible.html" title="interfac
 <ul class="blockList">
 <li class="blockList">
 <h4>asSet</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;asSet()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/possible/AbstractDynamicPossible.html" title="type parameter in AbstractDynamicPossible">T</a>&gt;&nbsp;asSet()</pre>
 <div class="block">Returns a view of this possible as a set. At any given moment, the set may be an empty set
  or a singleton set, based on whether or not this possible is present.</div>
 <dl>

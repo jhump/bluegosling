@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6};
+var methods = {"i0":18,"i1":18,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/PrimeIterator.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/SequenceAbandonedException.html" title="class in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Sequence.html" target="_top">Frames</a></li>
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Interface Sequence" class="title">Interface Sequence&lt;T,X extends java.lang.Throwable&gt;</h2>
+<h2 title="Interface Sequence" class="title">Interface Sequence&lt;T,U,X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -100,17 +100,23 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of elements in the sequence</dd>
+<dd><code>U</code> - the optional type of input to the sequence (<code>Void</code> if not needed)</dd>
 <dd><code>X</code> - the type of exception that may be thrown during sequence generation</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;T&gt;</dd>
+<dd><a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;T,U&gt;</dd>
+</dl>
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">Sequence&lt;T,X extends java.lang.Throwable&gt;</span></pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
+public interface <span class="typeNameLabel">Sequence&lt;T,U,X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</span></pre>
 <div class="block">Represents a sequence of items produced by a <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util"><code>Generator</code></a>. This is very similar to the
- <code>Iterator</code> interface, but it allows for propagation of exceptions that the generator may
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a> interface, but it allows for propagation of exceptions that the generator may
  throw.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -135,15 +141,21 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>default java.util.Iterator&lt;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Sequence.html#asIterator--">asIterator</a></span>()</code>
-<div class="block">Returns a view of this sequence as an <code>Iterator</code>.</div>
+<div class="block">Returns a view of this sequence as an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a></code></td>
+<td class="colFirst"><code>default <a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Sequence.html#next--">next</a></span>()</code>
 <div class="block">Returns the next element in the sequence.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Sequence.html#next-U-">next</a></span>(<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">U</a>&nbsp;u)</code>
+<div class="block">Supplies a value to the generator and then returns the next element in the sequence.</div>
 </td>
 </tr>
 </table>
@@ -161,14 +173,40 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="next-java.lang.Object-">
+<!--   -->
+</a><a name="next-U-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>next</h4>
+<pre><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&nbsp;next(<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">U</a>&nbsp;u)
+throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<div class="block">Supplies a value to the generator and then returns the next element in the sequence. This
+ transfers control to the generator and returns when the generator provides the next value. If
+ the generator terminates, either in failure or successfully, then an exception is thrown.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>u</code> - an optional input used to compute the next value in the sequence</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the next element in the sequence</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>X</code> - if the generator fails and throws an exception</dd>
+<dd><code><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">SequenceFinishedException</a></code> - if the generator completes successfully, indicating that
+       there are no more elements in the sequence</dd>
+<dd><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="next--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>next</h4>
-<pre><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&nbsp;next()
-throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends java.lang.Throwable</pre>
+<pre>default&nbsp;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&nbsp;next()
+        throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <div class="block">Returns the next element in the sequence. This transfers control to the generator and returns
  when the generator provides the next value. If the generator terminates, either in failure or
  successfully, then an exception is thrown.</div>
@@ -179,7 +217,7 @@ throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter i
 <dd><code>X</code> - if the generator fails and throws an exception</dd>
 <dd><code><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">SequenceFinishedException</a></code> - if the generator completes successfully, indicating that
        there are no more elements in the sequence</dd>
-<dd><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends java.lang.Throwable</code></dd>
+<dd><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -189,14 +227,16 @@ throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter i
 <ul class="blockListLast">
 <li class="blockList">
 <h4>asIterator</h4>
-<pre>default&nbsp;java.util.Iterator&lt;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&gt;&nbsp;asIterator()</pre>
-<div class="block">Returns a view of this sequence as an <code>Iterator</code>. This may transfer control to the
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&gt;&nbsp;asIterator()</pre>
+<div class="block">Returns a view of this sequence as an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>. This may transfer control to the
  generator thread during calls to <code>hasNext()</code> to determine if there is another item by
  letting the generator actually produce it. As such, both <code>next()</code> and <code>hasNext()</code>
- methods may throw an (unchecked) exception if the generator fails.</div>
+ methods may throw an (unchecked) exception if the generator fails.
+ 
+ <p>All calls to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>next(Object)</code></a> pass <code>null</code> as the value to send to the generator.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a view of this sequence as an <code>Iterator</code></dd>
+<dd>a view of this sequence as an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -228,7 +268,7 @@ throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter i
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/util/PrimeIterator.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/util/SequenceAbandonedException.html" title="class in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/util/Sequence.html" target="_top">Frames</a></li>

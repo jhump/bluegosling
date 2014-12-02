@@ -104,7 +104,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd>java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;R&gt;&gt;</dd>
 </dl>
 <dl>
 <dt>Functional Interface:</dt>
@@ -112,14 +112,14 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@FunctionalInterface
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
 public interface <span class="typeNameLabel">PartialFunction&lt;T,R&gt;</span>
-extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;R&gt;&gt;</pre>
 <div class="block">A function that does not fully map the input domain to the output domain. This is reflected in
- the API by returning <code>no value</code> when a result cannot be computed for a
+ the API by returning <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>no value</code></a> when a result cannot be computed for a
  given input.
  
- <p>Note that the use of <code>Optional</code> means that <code>null</code> results for a valid input are
+ <p>Note that the use of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util"><code>Optional</code></a> means that <code>null</code> results for a valid input are
  not allowed.</div>
 </li>
 </ul>
@@ -141,14 +141,14 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>default &lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;V,<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialFunction.html#compose-java.util.function.Function-">compose</a></span>(java.util.function.Function&lt;? super V,? extends <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>&gt;&nbsp;before)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialFunction.html#compose-java.util.function.Function-">compose</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super V,? extends <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>&gt;&nbsp;before)</code>
 <div class="block">Returns a composed function that first applies the <code>before</code>
  function to its input, and then applies this function to the result.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default &lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>,V&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialFunction.html#maybeThen-java.util.function.Function-">maybeThen</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>,? extends V&gt;&nbsp;after)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/PartialFunction.html#maybeThen-java.util.function.Function-">maybeThen</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>,? extends V&gt;&nbsp;after)</code>
 <div class="block">Returns a composed function that first applies this function to
  its input, and then applies the <code>after</code> function to the result.</div>
 </td>
@@ -165,8 +165,8 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.util.function.Function">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.function.Function</h3>
-<code>andThen, apply, identity</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.function.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true#andThen-java.util.function.Function-" title="class or interface in java.util.function">andThen</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true#apply-T-" title="class or interface in java.util.function">apply</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true#identity--" title="class or interface in java.util.function">identity</a></code></li>
 </ul>
 </li>
 </ul>
@@ -188,14 +188,14 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>compose</h4>
-<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;V,<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>&gt;&nbsp;compose(java.util.function.Function&lt;? super V,? extends <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>&gt;&nbsp;before)</pre>
+<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;V,<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>&gt;&nbsp;compose(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super V,? extends <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>&gt;&nbsp;before)</pre>
 <div class="block">Returns a composed function that first applies the <code>before</code>
  function to its input, and then applies this function to the result.
  If evaluation of either function throws an exception, it is relayed to
  the caller of the composed function.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>compose</code>&nbsp;in interface&nbsp;<code>java.util.function.Function&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>,java.util.Optional&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>&gt;&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true#compose-java.util.function.Function-" title="class or interface in java.util.function">compose</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>V</code> - the type of input to the <code>before</code> function, and to the
            composed function</dd>
@@ -205,9 +205,9 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <dd>a composed function that first applies the <code>before</code>
  function and then applies this function</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if before is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if before is null</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Function.andThen(Function)</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true#andThen-java.util.function.Function-" title="class or interface in java.util.function"><code>Function.andThen(Function)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -217,7 +217,7 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>maybeThen</h4>
-<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>,V&gt;&nbsp;maybeThen(java.util.function.Function&lt;? super <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>,? extends V&gt;&nbsp;after)</pre>
+<pre>default&nbsp;&lt;V&gt;&nbsp;<a href="../../../com/apriori/util/PartialFunction.html" title="interface in com.apriori.util">PartialFunction</a>&lt;<a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">T</a>,V&gt;&nbsp;maybeThen(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/util/PartialFunction.html" title="type parameter in PartialFunction">R</a>,? extends V&gt;&nbsp;after)</pre>
 <div class="block">Returns a composed function that first applies this function to
  its input, and then applies the <code>after</code> function to the result.
  If evaluation of either function throws an exception, it is relayed to
@@ -232,7 +232,7 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <dd>a composed function that first applies this function and then
  applies the <code>after</code> function</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if after is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if after is null</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/util/PartialFunction.html#compose-java.util.function.Function-"><code>compose(Function)</code></a></dd>
 </dl>
@@ -259,7 +259,7 @@ extends java.util.function.Function&lt;T,java.util.Optional&lt;R&gt;&gt;</pre>
 <dd>a composed function that first applies this function and then
  applies the <code>after</code> function</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if after is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if after is null</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/util/PartialFunction.html#compose-java.util.function.Function-"><code>compose(Function)</code></a></dd>
 </dl>

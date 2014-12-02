@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>org.junit.runner.Runner</li>
@@ -150,16 +150,16 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
  <li><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>@ValidateGeneratedFiles</code></a>: Indicates a set of "golden" output files. When
  the processor completes, the test runner will verify that the processor produced the correct output by
  comparing it to these files.</li>
- <li><code>@SupportedSourceVersion</code>: Usually the supported source version comes from
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedSourceVersion</code></a>: Usually the supported source version comes from
  the processor under test. But if neither <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>ProcessorUnderTest</code></a> nor <a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>InitializeProcessorField</code></a> is
  used, then you can use this annotation on the test class to provide this information.<br>
- <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined  inherited, this test runner will interpret the value as inherited. So if you sub-class a test that has the
+ <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">inherited</a>, this test runner will interpret the value as inherited. So if you sub-class a test that has the
  annotation, it is not necessary re-annotate the sub-class.</li>
- <li><code>@SupportedAnnotationTypes</code>: Same remarks as for <code>SupportedSourceVersion</code>.
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedAnnotationTypes</code></a>: Same remarks as for <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a>.
  If a test does not otherwise define a processor for testing, this annotation can be used to provide this
  information to the environment. Also same notes about inheritance of this annotation.</li>
- <li><code>@SupportedOptions</code>: Same remarks again as for <code>SupportedSourceVersion</code> and
- <code>SupportedAnnotationTypes</code>.</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedOptions.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedOptions</code></a>: Same remarks again as for <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a> and
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a>.</li>
  </ul>
  
  <p><strong>On the test method:</strong>
@@ -192,31 +192,31 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
  <li><a href="../../../../com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing"><code>TestEnvironment</code></a>: a reference to the test environment, including accessor methods for everything
  else and a few extra utility methods, too. This is really the only thing any test method <em>needs</em>, but
  the other types are supported for convenience.</li>
- <li><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a> or <code>JavaFileManager</code>: a reference to the Java compiler's file manager.</li>
+ <li><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a> or <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>: a reference to the Java compiler's file manager.</li>
  <li><a href="../../../../com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing"><code>CategorizingDiagnosticCollector</code></a>: a reference to the collector of diagnostics emitted by the Java
- compiler. (See <code>DiagnosticListener</code>.)</li>
- <li><code>ProcessingEnvironment</code>: a reference to the processing environment.</li>
- <li><code>Elements</code>: a reference to the utility class for working with elements. (See
- <code>ProcessingEnvironment.getElementUtils()</code>).</li>
- <li><code>Types</code>: a reference to the utility class for working with type mirrors. (See
- <code>ProcessingEnvironment.getTypeUtils()</code>).</li>
- <li><code>Filer</code>: a reference to the interface used by an annotation processor to read and write files.
- (See <code>ProcessingEnvironment.getFiler()</code>).</li>
- <li><code>Messager</code>: a reference to the interfaced used by an annotation processor to emit messages and/or
- diagnostics. (See <code>ProcessingEnvironment.getMessager()</code>).</li>
- <li><code>SourceVersion</code>: a reference to the current version of the source code being processed. See
- <code>ProcessingEnvironment.getSourceVersion()</code>).</li>
+ compiler. (See <a href="http://docs.oracle.com/javase/8/docs/api/javax/tools/DiagnosticListener.html?is-external=true" title="class or interface in javax.tools"><code>DiagnosticListener</code></a>.)</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment</code></a>: a reference to the processing environment.</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Elements</code></a>: a reference to the utility class for working with elements. (See
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getElementUtils--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getElementUtils()</code></a>).</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Types</code></a>: a reference to the utility class for working with type mirrors. (See
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getTypeUtils--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getTypeUtils()</code></a>).</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Filer.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Filer</code></a>: a reference to the interface used by an annotation processor to read and write files.
+ (See <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getFiler--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getFiler()</code></a>).</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Messager.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Messager</code></a>: a reference to the interfaced used by an annotation processor to emit messages and/or
+ diagnostics. (See <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getMessager--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getMessager()</code></a>).</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/SourceVersion.html?is-external=true" title="class or interface in javax.lang.model"><code>SourceVersion</code></a>: a reference to the current version of the source code being processed. See
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getSourceVersion--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getSourceVersion()</code></a>).</li>
  <li><code>Map&lt;String, String&gt;</code>: a reference to the current options. See
- <code>ProcessingEnvironment.getOptions()</code>).</li>
- <li><code>RoundEnvironment</code>: a reference to the current round environment.</li>
- <li><code>Set&lt;<code>TypeElement</code>&gt;</code>: a reference to the set of annotation types for the current
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getOptions--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getOptions()</code></a>).</li>
+ <li><a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>RoundEnvironment</code></a>: a reference to the current round environment.</li>
+ <li><code>Set&lt;<a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>&gt;</code>: a reference to the set of annotation types for the current
  round of processing.</li>
- <li><code>? extends</code> <code>Processor</code>: a reference to the processor under test. If the method accepts a
- sub-class or sub-interface of <code>Processor</code> that is not compatible with the actual processor instance
- under test, the test method will fail with a <code>ClassCastException</code>.</li>
+ <li><code>? extends</code> <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a>: a reference to the processor under test. If the method accepts a
+ sub-class or sub-interface of <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a> that is not compatible with the actual processor instance
+ under test, the test method will fail with a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</li>
  </ul>
  Test methods are also allowed to return <code>boolean</code>, which represents the return value of executing
- <code>Processor.process(Set, RoundEnvironment)</code> and indicates whether the annotations for that round were
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a> and indicates whether the annotations for that round were
  consumed by the processor.
  
  <p>Note that a method annotated with <a href="../../../../com/apriori/apt/testing/NoProcess.html" title="annotation in com.apriori.apt.testing"><code>@NoProcess</code></a> must accept no arguments and return void
@@ -272,7 +272,7 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#AnnotationProcessorTestRunner-java.lang.Class-">AnnotationProcessorTestRunner</a></span>(java.lang.Class&lt;?&gt;&nbsp;klass)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#AnnotationProcessorTestRunner-java.lang.Class-">AnnotationProcessorTestRunner</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;klass)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -292,16 +292,16 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected org.junit.runners.model.Statement</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#methodInvoker-org.junit.runners.model.FrameworkMethod-java.lang.Object-">methodInvoker</a></span>(org.junit.runners.model.FrameworkMethod&nbsp;method,
-             java.lang.Object&nbsp;test)</code>&nbsp;</td>
+             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;test)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#validateInstanceMethods-java.util.List-">validateInstanceMethods</a></span>(java.util.List&lt;java.lang.Throwable&gt;&nbsp;errors)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#validateInstanceMethods-java.util.List-">validateInstanceMethods</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;errors)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected org.junit.runners.model.Statement</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html#withBefores-org.junit.runners.model.FrameworkMethod-java.lang.Object-org.junit.runners.model.Statement-">withBefores</a></span>(org.junit.runners.model.FrameworkMethod&nbsp;method,
-           java.lang.Object&nbsp;target,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;target,
            org.junit.runners.model.Statement&nbsp;statement)</code>&nbsp;</td>
 </tr>
 </table>
@@ -330,8 +330,8 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -353,7 +353,7 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AnnotationProcessorTestRunner</h4>
-<pre>public&nbsp;AnnotationProcessorTestRunner(java.lang.Class&lt;?&gt;&nbsp;klass)
+<pre>public&nbsp;AnnotationProcessorTestRunner(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;klass)
                               throws org.junit.runners.model.InitializationError</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -376,7 +376,7 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <li class="blockList">
 <h4>withBefores</h4>
 <pre>protected&nbsp;org.junit.runners.model.Statement&nbsp;withBefores(org.junit.runners.model.FrameworkMethod&nbsp;method,
-                                                        java.lang.Object&nbsp;target,
+                                                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;target,
                                                         org.junit.runners.model.Statement&nbsp;statement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -391,7 +391,7 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <li class="blockList">
 <h4>methodInvoker</h4>
 <pre>protected&nbsp;org.junit.runners.model.Statement&nbsp;methodInvoker(org.junit.runners.model.FrameworkMethod&nbsp;method,
-                                                          java.lang.Object&nbsp;test)</pre>
+                                                          <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;test)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>methodInvoker</code>&nbsp;in class&nbsp;<code>org.junit.runners.BlockJUnit4ClassRunner</code></dd>
@@ -404,7 +404,7 @@ extends org.junit.runners.BlockJUnit4ClassRunner</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>validateInstanceMethods</h4>
-<pre>protected&nbsp;void&nbsp;validateInstanceMethods(java.util.List&lt;java.lang.Throwable&gt;&nbsp;errors)</pre>
+<pre>protected&nbsp;void&nbsp;validateInstanceMethods(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;errors)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>validateInstanceMethods</code>&nbsp;in class&nbsp;<code>org.junit.runners.BlockJUnit4ClassRunner</code></dd>

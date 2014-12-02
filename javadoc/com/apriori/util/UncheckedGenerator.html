@@ -91,17 +91,17 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">com.apriori.util</div>
-<h2 title="Class UncheckedGenerator" class="title">Class UncheckedGenerator&lt;T&gt;</h2>
+<h2 title="Class UncheckedGenerator" class="title">Class UncheckedGenerator&lt;T,U&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">com.apriori.util.Generator</a>&lt;T,java.lang.RuntimeException&gt;</li>
+<li><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">com.apriori.util.Generator</a>&lt;T,U,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.util.UncheckedGenerator&lt;T&gt;</li>
+<li>com.apriori.util.UncheckedGenerator&lt;T,U&gt;</li>
 </ul>
 </li>
 </ul>
@@ -113,11 +113,12 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of value generated</dd>
+<dd><code>U</code> - the type of value passed to the generator</dd>
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="typeNameLabel">UncheckedGenerator&lt;T&gt;</span>
-extends <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;T,java.lang.RuntimeException&gt;</pre>
+<pre>public abstract class <span class="typeNameLabel">UncheckedGenerator&lt;T,U&gt;</span>
+extends <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;T,U,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</pre>
 <div class="block">A <a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util"><code>Generator</code></a> that does not throw checked exceptions during generation.</div>
 </li>
 </ul>
@@ -136,7 +137,7 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.apriori.util.<a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a></h3>
-<code><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>&gt;</code></li>
+<code><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>,<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">U</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -158,11 +159,7 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/UncheckedGenerator.html#UncheckedGenerator-java.util.concurrent.Executor-">UncheckedGenerator</a></span>(java.util.concurrent.Executor&nbsp;executor)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/UncheckedGenerator.html#UncheckedGenerator-java.util.concurrent.ThreadFactory-">UncheckedGenerator</a></span>(java.util.concurrent.ThreadFactory&nbsp;factory)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/UncheckedGenerator.html#UncheckedGenerator-java.util.concurrent.Executor-">UncheckedGenerator</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -180,7 +177,7 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">U</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/UncheckedGenerator.html#start--">start</a></span>()</code>
 <div class="block">Starts generation of a sequence of values.</div>
 </td>
@@ -191,14 +188,14 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.apriori.util.<a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a></h3>
-<code><a href="../../../com/apriori/util/Generator.html#asIterable--">asIterable</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-">create</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-java.util.concurrent.Executor-">create</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-java.util.concurrent.ThreadFactory-">create</a>, <a href="../../../com/apriori/util/Generator.html#run-com.apriori.util.Generator.Output-">run</a></code></li>
+<code><a href="../../../com/apriori/util/Generator.html#asIterable--">asIterable</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.BiConsumer-">create</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.BiConsumer-java.util.concurrent.Executor-">create</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-">create</a>, <a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-java.util.concurrent.Executor-">create</a>, <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-">run</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -223,22 +220,13 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <pre>protected&nbsp;UncheckedGenerator()</pre>
 </li>
 </ul>
-<a name="UncheckedGenerator-java.util.concurrent.ThreadFactory-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>UncheckedGenerator</h4>
-<pre>protected&nbsp;UncheckedGenerator(java.util.concurrent.ThreadFactory&nbsp;factory)</pre>
-</li>
-</ul>
 <a name="UncheckedGenerator-java.util.concurrent.Executor-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>UncheckedGenerator</h4>
-<pre>protected&nbsp;UncheckedGenerator(java.util.concurrent.Executor&nbsp;executor)</pre>
+<pre>protected&nbsp;UncheckedGenerator(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 </li>
 </ul>
 </li>
@@ -255,13 +243,13 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <ul class="blockListLast">
 <li class="blockList">
 <h4>start</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>&gt;&nbsp;start()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">U</a>&gt;&nbsp;start()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/util/Generator.html#start--">Generator</a></code></span></div>
 <div class="block">Starts generation of a sequence of values. Each call to this method will asynchronously invoke
- <a href="../../../com/apriori/util/Generator.html#run-com.apriori.util.Generator.Output-"><code>Generator.run(Output)</code></a>.</div>
+ <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>Generator.run(Object, Output)</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../com/apriori/util/Generator.html#start--">start</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,java.lang.RuntimeException&gt;</code></dd>
+<dd><code><a href="../../../com/apriori/util/Generator.html#start--">start</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">U</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the sequence of generated values</dd>
 </dl>

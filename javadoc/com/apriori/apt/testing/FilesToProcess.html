@@ -91,17 +91,17 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>@Target(value={TYPE,METHOD})
- @Retention(value=RUNTIME)
- @Documented
- @Inherited
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE" title="class or interface in java.lang.annotation">TYPE</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>})
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">@Inherited</a>
 public @interface <span class="memberNameLabel">FilesToProcess</span></pre>
 <div class="block">An annotation on a test class or method that defines the files to process.
  
  <p>When using <a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><code>AnnotationProcessorTestRunner</code></a> to run a test, these
  annotations are used to define the input files in a <a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a>
  that provides the mock file system for the annotation processors' environment.
- The named file(s) must be retrievable using <code>Class.getResource(String)</code>
+ The named file(s) must be retrievable using <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#getResource-java.lang.String-" title="class or interface in java.lang"><code>Class.getResource(String)</code></a>
  and thus must be on the class path.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>

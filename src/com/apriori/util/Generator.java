@@ -71,7 +71,7 @@ public abstract class Generator<T, U, X extends Throwable> {
        * by the consumer in its call to {@link Sequence#next(Object)} is returned from this method.
        *
        * @param t the value to send to the consumer
-       * @returns the value provided by the consumer
+       * @return the value provided by the consumer
        * @throws SequenceAbandonedException if the consumer has abandoned the sequence, in which
        *       case the generator should exit
        */
@@ -184,8 +184,6 @@ public abstract class Generator<T, U, X extends Throwable> {
 
    /**
     * Constructs a new generator that uses a default, shared thread pool to run generation logic.
-    *
-    * @param executor an executor
     */
    protected Generator() {
       this(SHARED_EXECUTOR);
@@ -229,7 +227,7 @@ public abstract class Generator<T, U, X extends Throwable> {
    
    /**
     * Starts generation of a sequence of values. Each call to this method will asynchronously invoke
-    * {@link #run(Output)}.
+    * {@link #run(Object, Output)}.
     *
     * @return the sequence of generated values
     */
@@ -561,17 +559,14 @@ public abstract class Generator<T, U, X extends Throwable> {
             U initialValue = sync.waitForNextQuery(onInterrupt);
 
             // run the generator
-            Output<T, U> output = new Output<T, U>() {
-               @Override
-               public U yield(T t) {
-                  sync.sendValueToConsumer(t);
-                  U ret = sync.waitForNextQuery(onInterrupt);
-                  if (interrupted.getAndSet(false)) {
-                     // swallowing interrupts is gross: restore interrupt status
-                     Thread.currentThread().interrupt();
-                  }
-                  return ret;
+            Output<T, U> output = t -> {
+               sync.sendValueToConsumer(t);
+               U u = sync.waitForNextQuery(onInterrupt);
+               if (interrupted.getAndSet(false)) {
+                  // swallowing interrupts is gross: restore interrupt status
+                  Thread.currentThread().interrupt();
                }
+               return u;
             };
             generator.run(initialValue, output);
             

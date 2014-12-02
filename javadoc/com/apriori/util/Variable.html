@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.util.Variable&lt;T&gt;</li>
@@ -111,13 +111,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>java.io.Serializable, java.lang.Cloneable</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Variable&lt;T&gt;</span>
-extends java.lang.Object
-implements java.io.Serializable, java.lang.Cloneable</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
 <div class="block">A simple variable reference. This can be useful for simulating "out" parameters to a function or
  for simulating non-final values being mutated from within an anonymous class or lambda. This is
  lighter-weight than using a single element array as the container and provides an API that is
@@ -125,7 +125,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
  
  <p>In many respects, this is similar to an <a href="../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><code>Atom</code></a> except that it is <strong>not</strong>
  thread-safe. If the variable is being accessed from multiple threads, use an <a href="../../../com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><code>Atom</code></a> or an
- <code>AtomicReference</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReference</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../serialized-form.html#com.apriori.util.Variable">Serialized Form</a></dd>
@@ -175,7 +175,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#accumulateAndGet-T-java.util.function.BinaryOperator-">accumulateAndGet</a></span>(<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;v,
-                java.util.function.BinaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
 <div class="block">Accumulates the given value into this variable, using the given function to combine the
  current value with the given one.</div>
 </td>
@@ -194,7 +194,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#equals-java.lang.Object-">equals</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a></code></td>
@@ -205,7 +205,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#getAndAccumulate-T-java.util.function.BinaryOperator-">getAndAccumulate</a></span>(<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;v,
-                java.util.function.BinaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
 <div class="block">Accumulates the given value into this variable, using the given function to combine the
  current value with the given one.</div>
 </td>
@@ -218,7 +218,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#getAndUpdate-java.util.function.UnaryOperator-">getAndUpdate</a></span>(java.util.function.UnaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#getAndUpdate-java.util.function.UnaryOperator-">getAndUpdate</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
 <div class="block">Updates the variable's current value using the given function.</div>
 </td>
 </tr>
@@ -233,12 +233,12 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#updateAndGet-java.util.function.UnaryOperator-">updateAndGet</a></span>(java.util.function.UnaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Variable.html#updateAndGet-java.util.function.UnaryOperator-">updateAndGet</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</code>
 <div class="block">Updates the variable's current value using the given function.</div>
 </td>
 </tr>
@@ -247,8 +247,8 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -351,7 +351,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;getAndAccumulate(<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;v,
-                          java.util.function.BinaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
+                          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into this variable, using the given function to combine the
  current value with the given one. This stores the results of the function in this variable,
  but returns the variable's value from before the function's being applied.</div>
@@ -375,7 +375,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;accumulateAndGet(<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;v,
-                          java.util.function.BinaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
+                          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into this variable, using the given function to combine the
  current value with the given one. This stores the results of the function in this variable,
  and returns the variable's new value.</div>
@@ -396,7 +396,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;getAndUpdate(java.util.function.UnaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;getAndUpdate(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
 <div class="block">Updates the variable's current value using the given function. This stores the results of the
  function in this variable, but returns the variable's value from before the function's being
  applied.</div>
@@ -416,7 +416,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;updateAndGet(java.util.function.UnaryOperator&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&nbsp;updateAndGet(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../com/apriori/util/Variable.html" title="type parameter in Variable">T</a>&gt;&nbsp;fn)</pre>
 <div class="block">Updates the variable's current value using the given function. This stores the results of the
  function in this variable, and returns the variable's new value.</div>
 <dl>
@@ -450,7 +450,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
  this.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>clone</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -460,10 +460,10 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(java.lang.Object&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -476,7 +476,7 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -486,10 +486,10 @@ implements java.io.Serializable, java.lang.Cloneable</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 </dl>
 </li>
 </ul>

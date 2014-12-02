@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.testing.InterfaceVerifier&lt;T&gt;</li>
@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">InterfaceVerifier&lt;T&gt;</span>
-extends java.lang.Object</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">An object that can verify an implementation of an interface by comparing its behavior to that of
  a reference implementation. This can be particularly useful, for example, when creating new
  implementations of standard interfaces like collections (<code>Collection</code>, <code>List</code>,
@@ -133,7 +133,7 @@ extends java.lang.Object</pre>
  <ul>
  <li>If the interface method is a <em>mutator</em> method then both objects must <em>match</em>
  after the method is called. By default, the objects will be compared against one another using
- <code>Object.equals(Object)</code>. But you can supply an alternative <a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing"><code>ObjectVerifier</code></a> that can
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang"><code>Object.equals(Object)</code></a>. But you can supply an alternative <a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing"><code>ObjectVerifier</code></a> that can
  determine if the test object has correctly mutated in the same way as the reference object.
  <p>
  By default, mutator methods are assumed to be all methods on the interface that return
@@ -141,7 +141,7 @@ extends java.lang.Object</pre>
  <a href="../../../com/apriori/testing/InterfaceVerifier.html#configureMethod-com.apriori.reflect.MethodSignature-"><code>configureMethod(MethodSignature)</code></a> and <a href="../../../com/apriori/testing/InterfaceVerifier.MethodConfiguration.html#mutator--"><code>InterfaceVerifier.MethodConfiguration.mutator()</code></a> for more
  details).
  <p>
- Also, if the two implementations implement <code>Object.hashCode()</code> using the same scheme, their
+ Also, if the two implementations implement <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang"><code>Object.hashCode()</code></a> using the same scheme, their
  hash codes can be compared after a mutator method is called to ensure that they match, too (see
  <a href="../../../com/apriori/testing/InterfaceVerifier.html#setCheckHashCodesAfterMutation-boolean-"><code>setCheckHashCodesAfterMutation(boolean)</code></a> for more details).</li>
  <li>If the interface method has a non-<code>void</code> return type then the return values of both the
@@ -235,17 +235,17 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.lang.Class...-">InterfaceVerifier</a></span>(java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;...&nbsp;interfaces)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.lang.Class...-">InterfaceVerifier</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;...&nbsp;interfaces)</code>
 <div class="block">Constructs a new verifier for one or more interfaces.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.lang.Class-">InterfaceVerifier</a></span>(java.lang.Class&lt;<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&nbsp;iface)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.lang.Class-">InterfaceVerifier</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&nbsp;iface)</code>
 <div class="block">Constructs a new verifier for a single interface.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.util.Set-">InterfaceVerifier</a></span>(java.util.Set&lt;java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;interfaces)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#InterfaceVerifier-java.util.Set-">InterfaceVerifier</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;interfaces)</code>
 <div class="block">Constructs a new verifier for one or more interfaces.</div>
 </td>
 </tr>
@@ -265,13 +265,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.reflect.Method&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#allMethods--">allMethods</a></span>()</code>
 <div class="block">Returns all methods supported by this interface verifier.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#allMethodSignatures--">allMethodSignatures</a></span>()</code>
 <div class="block">Returns all method signatures supported by this interface verifier.</div>
 </td>
@@ -305,24 +305,24 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code><a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#createProxy-T-T-java.lang.ClassLoader-">createProxy</a></span>(<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&nbsp;testImpl,
            <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&nbsp;referenceImpl,
-           java.lang.ClassLoader&nbsp;classLoader)</code>
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;classLoader)</code>
 <div class="block">Creates a proxy object.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#findMethod-java.lang.String-">findMethod</a></span>(java.lang.String&nbsp;methodNamePattern)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#findMethod-java.lang.String-">findMethod</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodNamePattern)</code>
 <div class="block">Finds a method whose name matches the specified search string.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#findMethods-java.lang.String-">findMethods</a></span>(java.lang.String&nbsp;methodNamePattern)</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#findMethods-java.lang.String-">findMethods</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodNamePattern)</code>
 <div class="block">Finds all methods whose names match the specified search string.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;java.lang.Throwable&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getDefaultExceptionVerifier--">getDefaultExceptionVerifier</a></span>()</code>
 <div class="block">Returns the default verifier used to verify exceptions thrown by methods.</div>
 </td>
@@ -334,13 +334,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getInterfaces--">getInterfaces</a></span>()</code>
 <div class="block">Returns the set of interfaces supported by this verifier.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.Throwable</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getLastException--">getLastException</a></span>()</code>
 <div class="block">Returns the exception thrown during the most recent method invocation or <code>null</code> if the
  most recent invocation did not throw an exception.</div>
@@ -348,20 +348,20 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethod-java.lang.String-java.lang.Class...-">getMethod</a></span>(java.lang.String&nbsp;methodName,
-         java.lang.Class&lt;?&gt;...&nbsp;args)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethod-java.lang.String-java.lang.Class...-">getMethod</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+         <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;...&nbsp;args)</code>
 <div class="block">Gets the method with the specified signature.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethodNamed-java.lang.String-">getMethodNamed</a></span>(java.lang.String&nbsp;methodName)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethodNamed-java.lang.String-">getMethodNamed</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName)</code>
 <div class="block">Gets the method with the specified name that is supported by this interface verifier.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethodsNamed-java.lang.String-">getMethodsNamed</a></span>(java.lang.String&nbsp;methodName)</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#getMethodsNamed-java.lang.String-">getMethodsNamed</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName)</code>
 <div class="block">Gets all methods with the specified name that are supported by this interface verifier.</div>
 </td>
 </tr>
@@ -397,7 +397,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#setDefaultExceptionVerifier-com.apriori.testing.ObjectVerifier-">setDefaultExceptionVerifier</a></span>(<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;java.lang.Throwable&gt;&nbsp;v)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/testing/InterfaceVerifier.html#setDefaultExceptionVerifier-com.apriori.testing.ObjectVerifier-">setDefaultExceptionVerifier</a></span>(<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;v)</code>
 <div class="block">Sets the default verifier used to verify the exceptions thrown by methods.</div>
 </td>
 </tr>
@@ -438,8 +438,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -461,14 +461,14 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>InterfaceVerifier</h4>
-<pre>public&nbsp;InterfaceVerifier(java.lang.Class&lt;<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&nbsp;iface)</pre>
+<pre>public&nbsp;InterfaceVerifier(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&nbsp;iface)</pre>
 <div class="block">Constructs a new verifier for a single interface.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>iface</code> - The interface whose implementation will be verified</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If the specified class tokens does not represent an interface</dd>
-<dd><code>java.lang.NullPointerException</code> - If the specified interface is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the specified class tokens does not represent an interface</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If the specified interface is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -478,16 +478,16 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>InterfaceVerifier</h4>
-<pre>public&nbsp;InterfaceVerifier(java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;...&nbsp;interfaces)</pre>
+<pre>public&nbsp;InterfaceVerifier(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;...&nbsp;interfaces)</pre>
 <div class="block">Constructs a new verifier for one or more interfaces.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>interfaces</code> - The interfaces whose implementations will be verified</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - if no interfaces are specified, if any of the specified class
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no interfaces are specified, if any of the specified class
             tokens does not represent an interface, or if the interfaces are incompatible (they
             have a method with the same signature but different and incompatible return types)</dd>
-<dd><code>java.lang.NullPointerException</code> - If any of the specified interfaces are <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If any of the specified interfaces are <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -497,16 +497,16 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>InterfaceVerifier</h4>
-<pre>public&nbsp;InterfaceVerifier(java.util.Set&lt;java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;interfaces)</pre>
+<pre>public&nbsp;InterfaceVerifier(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;interfaces)</pre>
 <div class="block">Constructs a new verifier for one or more interfaces.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>interfaces</code> - The interfaces whose implementations will be verified</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - if no interfaces are specified, if any of the specified class
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no interfaces are specified, if any of the specified class
             tokens does not represent an interface, or if the interfaces are incompatible (they
             have a method with the same signature but different and incompatible return types)</dd>
-<dd><code>java.lang.NullPointerException</code> - If the set of interfaces is <code>null</code> or if any of the
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If the set of interfaces is <code>null</code> or if any of the
             specified interfaces therein are <code>null</code></dd>
 </dl>
 </li>
@@ -532,7 +532,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>v</code> - the new default verifier</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if the specified verifier is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified verifier is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -557,14 +557,14 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setDefaultExceptionVerifier</h4>
-<pre>public&nbsp;void&nbsp;setDefaultExceptionVerifier(<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;java.lang.Throwable&gt;&nbsp;v)</pre>
+<pre>public&nbsp;void&nbsp;setDefaultExceptionVerifier(<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;v)</pre>
 <div class="block">Sets the default verifier used to verify the exceptions thrown by methods. Individual methods
  can override this default verifier.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>v</code> - the new default verifier</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code> - if the specified verifier is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified verifier is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -599,7 +599,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDefaultExceptionVerifier</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;java.lang.Throwable&gt;&nbsp;getDefaultExceptionVerifier()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/testing/ObjectVerifier.html" title="interface in com.apriori.testing">ObjectVerifier</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;getDefaultExceptionVerifier()</pre>
 <div class="block">Returns the default verifier used to verify exceptions thrown by methods. By default this
  verifier will be <a href="../../../com/apriori/testing/ObjectVerifiers.html#STRICT_EXCEPTIONS"><code>ObjectVerifiers.STRICT_EXCEPTIONS</code></a>.
  
@@ -686,7 +686,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastException</h4>
-<pre>public&nbsp;java.lang.Throwable&nbsp;getLastException()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;getLastException()</pre>
 <div class="block">Returns the exception thrown during the most recent method invocation or <code>null</code> if the
  most recent invocation did not throw an exception. This returns the excpetion thrown by the
  implementation under test. So if the reference implementation threw an exception but the test
@@ -718,7 +718,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMethodNamed</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;getMethodNamed(java.lang.String&nbsp;methodName)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;getMethodNamed(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName)</pre>
 <div class="block">Gets the method with the specified name that is supported by this interface verifier. If there
  are no methods with the specified name, <code>null</code> is returned.</div>
 <dl>
@@ -737,7 +737,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMethodsNamed</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;getMethodsNamed(java.lang.String&nbsp;methodName)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;getMethodsNamed(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName)</pre>
 <div class="block">Gets all methods with the specified name that are supported by this interface verifier. This
  will return more than one method if the named method is overloaded.</div>
 <dl>
@@ -754,7 +754,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>findMethod</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;findMethod(java.lang.String&nbsp;methodNamePattern)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;findMethod(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodNamePattern)</pre>
 <div class="block">Finds a method whose name matches the specified search string. The string can include wildcard
  characters like "?" and "*". If there are no methods with matching names, <code>null</code> is
  returned.</div>
@@ -774,7 +774,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>findMethods</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;findMethods(java.lang.String&nbsp;methodNamePattern)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;findMethods(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodNamePattern)</pre>
 <div class="block">Finds all methods whose names match the specified search string. The string can include
  wildcard characters like "?" and "*". This can return multiple matching methods with the same
  name if a matching method name is overloaded.</div>
@@ -792,8 +792,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMethod</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;getMethod(java.lang.String&nbsp;methodName,
-                                 java.lang.Class&lt;?&gt;...&nbsp;args)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&nbsp;getMethod(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;...&nbsp;args)</pre>
 <div class="block">Gets the method with the specified signature. This is similar to constructing a new method
  signature with the specified name and argument types except that if no such method is
  supported by this invocation handler then this method returns <code>null</code>.</div>
@@ -827,7 +827,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInterfaces</h4>
-<pre>public&nbsp;java.util.Set&lt;java.lang.Class&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;getInterfaces()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt;&gt;&nbsp;getInterfaces()</pre>
 <div class="block">Returns the set of interfaces supported by this verifier.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -841,7 +841,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>allMethods</h4>
-<pre>public&nbsp;java.util.Set&lt;java.lang.reflect.Method&gt;&nbsp;allMethods()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&gt;&nbsp;allMethods()</pre>
 <div class="block">Returns all methods supported by this interface verifier.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -855,7 +855,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>allMethodSignatures</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;allMethodSignatures()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a>&gt;&nbsp;allMethodSignatures()</pre>
 <div class="block">Returns all method signatures supported by this interface verifier.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -878,9 +878,9 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The configuration for the specified method signature</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If the specified method is not supported by this handler
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the specified method is not supported by this handler
             (i.e. not a method on any of the handler's interfaces)</dd>
-<dd><code>java.lang.NullPointerException</code> - If the specified method is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If the specified method is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -900,10 +900,10 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A configurator for configuring all specified methods at once</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If any of the specified methods is not supported by this
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If any of the specified methods is not supported by this
             handler (i.e. not a method on any of the handler's interfaces) or if no methods are
             specified</dd>
-<dd><code>java.lang.NullPointerException</code> - If any of the specified methods are <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If any of the specified methods are <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -931,7 +931,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The proxy object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If any of the interfaces to be implemented by the proxy are
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If any of the interfaces to be implemented by the proxy are
             not visible by name through the current object's class loader</dd>
 </dl>
 </li>
@@ -946,7 +946,7 @@ extends java.lang.Object</pre>
 <h4>createProxy</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&nbsp;createProxy(<a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&nbsp;testImpl,
                      <a href="../../../com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&nbsp;referenceImpl,
-                     java.lang.ClassLoader&nbsp;classLoader)</pre>
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;classLoader)</pre>
 <div class="block">Creates a proxy object. Methods on the proxy are handled by an invocation handler that
  dispatches to the test and reference implementations for verifying the functionality of the
  test implementation.</div>
@@ -958,10 +958,10 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The proxy object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If either of the implementations does not implement all
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If either of the implementations does not implement all
             required interfaces or if any of the interfaces are not visible by name through the
             specified class loader</dd>
-<dd><code>java.lang.NullPointerException</code> - If either of the implementations specified is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If either of the implementations specified is <code>null</code></dd>
 </dl>
 </li>
 </ul>
@@ -984,9 +984,9 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The invocation handler for the proxy</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If the specified object is not actually a proxy or if it is a
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the specified object is not actually a proxy or if it is a
             proxy that was not created using <a href="../../../com/apriori/testing/InterfaceVerifier.html#createProxy-T-T-"><code>createProxy(T, T)</code></a></dd>
-<dd><code>java.lang.NullPointerException</code> - If the specified proxy is <code>null</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - If the specified proxy is <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/testing/ObjectVerifiers.html#forTesting-java.lang.Class-"><code>ObjectVerifiers.forTesting(Class)</code></a></dd>
 </dl>
@@ -1009,7 +1009,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>other</code> - A verifier whose configuration will be copied into this</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalArgumentException</code> - If the specified verifier does not support exactly the same
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - If the specified verifier does not support exactly the same
             set of interfaces as this</dd>
 </dl>
 </li>

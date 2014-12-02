@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd>java.lang.Iterable&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -117,11 +117,11 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">ImmutableCollection&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a>&lt;E&gt;</pre>
-<div class="block">An immutable, read-only collection. This interface is similar to the standard <code>Collection</code>
+<div class="block">An immutable, read-only collection. This interface is similar to the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a>
  interface except that it defines no mutation operations.
  
- <p>The <code>remove()</code> operation of an immutable collection's
- <code>Iterable.iterator()</code> always throws <code>UnsupportedOperationException</code>.</div>
+ <p>The <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>remove()</code></a> operation of an immutable collection's
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a> always throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>.</div>
 </li>
 </ul>
 </div>
@@ -142,32 +142,32 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a></span>(java.lang.Object&nbsp;o)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#contains-java.lang.Object-">contains</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
 <div class="block">Determines if the specified object is a member of this collection.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAll-java.lang.Iterable-">containsAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
 <div class="block">Determines if this collection contains all of the specified items.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a></span>(java.lang.Iterable&lt;?&gt;&nbsp;items)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#containsAny-java.lang.Iterable-">containsAny</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</code>
 <div class="block">Determines if this collection contains any one of the specified items.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default java.util.stream.Stream&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#parallelStream--">parallelStream</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>default java.util.stream.Stream&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#stream--">stream</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.Object[]</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ImmutableCollection.html#toArray--">toArray</a></span>()</code>
 <div class="block">Returns an array with the same elements as this collection.</div>
 </td>
@@ -191,8 +191,8 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach, iterator</code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a></code></li>
 </ul>
 </li>
 </ul>
@@ -214,15 +214,15 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>toArray</h4>
-<pre>java.lang.Object[]&nbsp;toArray()</pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;toArray()</pre>
 <div class="block">Returns an array with the same elements as this collection. The order of elements in the
  returned array is the same as the order that elements are returned by the collection's
- <code>Iterable.iterator()</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang"><code>Iterable.iterator()</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an array with the same elements as this collection</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Collection.toArray()</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray--" title="class or interface in java.util"><code>Collection.toArray()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -246,10 +246,10 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <dd>an array with the same elements as this collection and the same component type as
        the specified array (possibly the same instance as the one specified)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.ArrayStoreException</code> - if any of the elements are not assignable to the component type
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/ArrayStoreException.html?is-external=true" title="class or interface in java.lang">ArrayStoreException</a></code> - if any of the elements are not assignable to the component type
        of the specified array</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>Collection.toArray(Object[])</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#toArray-T:A-" title="class or interface in java.util"><code>Collection.toArray(Object[])</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -259,7 +259,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>contains</h4>
-<pre>boolean&nbsp;contains(java.lang.Object&nbsp;o)</pre>
+<pre>boolean&nbsp;contains(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
 <div class="block">Determines if the specified object is a member of this collection.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -275,7 +275,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAll</h4>
-<pre>boolean&nbsp;containsAll(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
+<pre>boolean&nbsp;containsAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
 <div class="block">Determines if this collection contains all of the specified items.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -291,7 +291,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>containsAny</h4>
-<pre>boolean&nbsp;containsAny(java.lang.Iterable&lt;?&gt;&nbsp;items)</pre>
+<pre>boolean&nbsp;containsAny(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;?&gt;&nbsp;items)</pre>
 <div class="block">Determines if this collection contains any one of the specified items.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -307,7 +307,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>stream</h4>
-<pre>default&nbsp;java.util.stream.Stream&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;&nbsp;stream()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;&nbsp;stream()</pre>
 </li>
 </ul>
 <a name="parallelStream--">
@@ -316,7 +316,7 @@ extends <a href="../../../com/apriori/collections/SizedIterable.html" title="int
 <ul class="blockListLast">
 <li class="blockList">
 <h4>parallelStream</h4>
-<pre>default&nbsp;java.util.stream.Stream&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;&nbsp;parallelStream()</pre>
+<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">Stream</a>&lt;<a href="../../../com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt;&nbsp;parallelStream()</pre>
 </li>
 </ul>
 </li>

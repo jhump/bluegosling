@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd>java.util.Collection&lt;E&gt;, java.lang.Iterable&lt;E&gt;, java.util.List&lt;E&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -112,18 +112,18 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ConcurrentList&lt;E&gt;</span>
-extends java.util.List&lt;E&gt;</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</pre>
 <div class="block">A list that is thread-safe and supports concurrent mutations. In addition to standard list
  operations, several atomic operations are provided to enable concurrent updates.
  
- <p><code>Iterator</code>s returned by this interface will not throw
- <code>ConcurrentModificationException</code>s during traversal. However, this exception can still be
- thrown from modification operations made through the iterator: (<code>Iterator.remove()</code>,
- <code>ListIterator.add(Object)</code>, and <code>ListIterator.set(Object)</code>). Whether or not such
+ <p><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>s returned by this interface will not throw
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>s during traversal. However, this exception can still be
+ thrown from modification operations made through the iterator: (<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util"><code>Iterator.remove()</code></a>,
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true#add-E-" title="class or interface in java.util"><code>ListIterator.add(Object)</code></a>, and <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ListIterator.html?is-external=true#set-E-" title="class or interface in java.util"><code>ListIterator.set(Object)</code></a>). Whether or not such
  exceptions are thrown depends on a given implementation of this interface. But the only
  operations guaranteed to not throw are traversal/query operations.
  
- <p>This interface does not specify whether <code>Iterator</code>s are weakly consistent or are
+ <p>This interface does not specify whether <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>s are weakly consistent or are
  strongly consistent snaphots. That detail, as well as the conditions which are considered
  "conflicting concurrent modifications", should be documented by concrete sub-classes.</div>
 </li>
@@ -199,22 +199,22 @@ extends java.util.List&lt;E&gt;</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.List</h3>
-<code>add, add, addAll, addAll, clear, contains, containsAll, equals, get, hashCode, indexOf, isEmpty, iterator, lastIndexOf, listIterator, listIterator, remove, remove, removeAll, replaceAll, retainAll, set, size, sort, spliterator, toArray, toArray</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#addAll-int-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#get-int-" title="class or interface in java.util">get</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#indexOf-java.lang.Object-" title="class or interface in java.util">indexOf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#lastIndexOf-java.lang.Object-" title="class or interface in java.util">lastIndexOf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator--" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#listIterator-int-" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-int-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#replaceAll-java.util.function.UnaryOperator-" title="class or interface in java.util">replaceAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#set-int-E-" title="class or interface in java.util">set</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#sort-java.util.Comparator-" title="class or interface in java.util">sort</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
-<code>parallelStream, removeIf, stream</code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach</code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
 </ul>
 </li>
 </ul>
@@ -347,7 +347,7 @@ extends java.util.List&lt;E&gt;</pre>
  <a href="../../../com/apriori/collections/ConcurrentList.html#addAfter-int-E-E-"><code>addAfter(int, Object, Object)</code></a> when there is no predecessor.
  
  <p>The default implementation is simply the following:<br>
- <code>add(0, newValue)</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util"><code>add(0, newValue)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newValue</code> - the value to add to the front of the list</dd>
@@ -367,7 +367,7 @@ extends java.util.List&lt;E&gt;</pre>
  in place of <a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-"><code>addBefore(int, Object, Object)</code></a> when there is no successor.
  
  <p>The default implementation is simply the following:<br>
- <code>add(newValue)</code>.</div>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util"><code>add(newValue)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newValue</code> - the value to add to the front of the list</dd>
@@ -393,14 +393,14 @@ extends java.util.List&lt;E&gt;</pre>
  to get a new last element (the item that was after the given range that has now been pulled
  into the range due to an element removal).
  
- <p>The returned sub-list should never throw <code>ConcurrentModificationException</code> from any
+ <p>The returned sub-list should never throw <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a> from any
  of its operations (although its iterators may throw this exception if concurrent modifications
  conflict with attempts to modify the list via the iterator).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>subList</code>&nbsp;in interface&nbsp;<code>java.util.List&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><code>List.subList(int, int)</code></dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util"><code>List.subList(int, int)</code></a></dd>
 </dl>
 </li>
 </ul>

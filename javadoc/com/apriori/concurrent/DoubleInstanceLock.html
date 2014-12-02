@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.DoubleInstanceLock&lt;T&gt;</li>
@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">DoubleInstanceLock&lt;T&gt;</span>
-extends java.lang.Object</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A concurrency mechanism allowing concurrent readers and an exclusive writer. This is based on the
  technique called <a href="http://concurrencyfreaks.blogspot.com/2013/11/double-instance-locking.html">
  Double Instance Locking</a>. The linked article describes the use of two read-write locks, one
@@ -168,7 +168,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static &lt;T extends java.lang.Cloneable&gt;<br><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a>&lt;T&gt;</code></td>
+<td class="colFirst"><code>static &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;<br><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#newLock-T-">newLock</a></span>(T&nbsp;t)</code>
 <div class="block">Constructs a new double instance lock around the given object.</div>
 </td>
@@ -183,13 +183,13 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;U</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#read-java.util.function.Function-">read</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#read-java.util.function.Function-">read</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</code>
 <div class="block">Performs a read operation that produces a result value.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#readWith-java.util.function.Consumer-">readWith</a></span>(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#readWith-java.util.function.Consumer-">readWith</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</code>
 <div class="block">Performs a read operation that does not produce a result value.</div>
 </td>
 </tr>
@@ -202,13 +202,13 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;U</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#write-java.util.function.Function-">write</a></span>(java.util.function.Function&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#write-java.util.function.Function-">write</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</code>
 <div class="block">Performs a write operation that produces a result value.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#writeWith-java.util.function.Consumer-">writeWith</a></span>(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#writeWith-java.util.function.Consumer-">writeWith</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</code>
 <div class="block">Performs a write operation that does not produce a value.</div>
 </td>
 </tr>
@@ -217,8 +217,8 @@ extends java.lang.Object</pre>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -242,8 +242,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>newLock</h4>
-<pre>public static&nbsp;&lt;T extends java.lang.Cloneable&gt;&nbsp;<a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a>&lt;T&gt;&nbsp;newLock(T&nbsp;t)</pre>
-<div class="block">Constructs a new double instance lock around the given object. The object's <code>Object.clone()</code>
+<pre>public static&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>&gt;&nbsp;<a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a>&lt;T&gt;&nbsp;newLock(T&nbsp;t)</pre>
+<div class="block">Constructs a new double instance lock around the given object. The object's <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang"><code>Object.clone()</code></a>
  method is used to create additional instances.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -285,7 +285,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>readWith</h4>
-<pre>public&nbsp;void&nbsp;readWith(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;void&nbsp;readWith(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</pre>
 <div class="block">Performs a read operation that does not produce a result value. To maximize write throughput,
  read operations should be very fast. If a read operation needs to do something expensive,
  consider performing the operation on a <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#snapshot--">snapshot</a> instead of using this
@@ -306,7 +306,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>read</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;U&nbsp;read(java.util.function.Function&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</pre>
+<pre>public&nbsp;&lt;U&gt;&nbsp;U&nbsp;read(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</pre>
 <div class="block">Performs a read operation that produces a result value. To maximize write throughput, read
  operations should be very fast. If a read operation needs to do something expensive, consider
  performing the operation on a <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#snapshot--">snapshot</a> instead of using this method.
@@ -326,7 +326,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>writeWith</h4>
-<pre>public&nbsp;void&nbsp;writeWith(java.util.function.Consumer&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;void&nbsp;writeWith(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt;&nbsp;action)</pre>
 <div class="block">Performs a write operation that does not produce a value. Note that write operations are
  <strong>not</strong> allowed to be reentrant. If the given action tries to invoke
  <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#write-java.util.function.Function-"><code>write(Function)</code></a> or <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#writeWith-java.util.function.Consumer-"><code>writeWith(Consumer)</code></a> then a <a href="../../../com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent"><code>ReentranceException</code></a>
@@ -338,6 +338,8 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>action</code> - the write operation to perform</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent">ReentranceException</a></code> - if the given action is reentrant</dd>
 </dl>
 </li>
 </ul>
@@ -347,8 +349,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>write</h4>
-<pre>public&nbsp;&lt;U&gt;&nbsp;U&nbsp;write(java.util.function.Function&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</pre>
-<div class="block">Performs a write operation that produces a result value.
+<pre>public&nbsp;&lt;U&gt;&nbsp;U&nbsp;write(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>,? extends U&gt;&nbsp;action)</pre>
+<div class="block">Performs a write operation that produces a result value. Note that write operations are
+ <strong>not</strong> allowed to be reentrant. If the given action tries to invoke
+ <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#write-java.util.function.Function-"><code>write(Function)</code></a> or <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#writeWith-java.util.function.Consumer-"><code>writeWith(Consumer)</code></a> then a <a href="../../../com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent"><code>ReentranceException</code></a>
+ is thrown.
 
  <p><strong>Note</strong>: if the action is not deterministic, then applying the action could
  cause divergence of the two sides of this structure, thus causing corruption and making the
@@ -356,6 +361,8 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>action</code> - the write operation to perform</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/apriori/concurrent/ReentranceException.html" title="class in com.apriori.concurrent">ReentranceException</a></code> - if the given action is reentrant</dd>
 </dl>
 </li>
 </ul>

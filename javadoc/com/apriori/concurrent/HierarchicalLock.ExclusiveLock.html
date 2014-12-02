@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li>java.lang.Object</li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.concurrent.HierarchicalLock.ExclusiveLock</li>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">HierarchicalLock.ExclusiveLock</span>
-extends java.lang.Object
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLock.html" title="interface in com.apriori.concurrent">HierarchicalLock.AcquiredLock</a></pre>
 <div class="block">The result of acquiring an exclusive lock on a <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>. This object is used
  to release the lock or to change it (via promotion or demotion).</div>
@@ -180,7 +180,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html#tryPromoteToParent-long-java.util.concurrent.TimeUnit-">tryPromoteToParent</a></span>(long&nbsp;timeLimit,
-                  java.util.concurrent.TimeUnit&nbsp;unit)</code>
+                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Tries to promote this lock to an exclusive lock on its parent, waiting up to the specified
  amount of time before giving up.</div>
 </td>
@@ -196,8 +196,8 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -242,7 +242,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired shared lock</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; or if the exclusive lock has been acquired more than once (in a re-entrant
     manner)</dd>
 </dl>
@@ -267,7 +267,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired lock on the given child</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; if the given lock is not actually a child of the <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>
     which produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a>; or if this thread holds more than one such
     exclusive lock (from re-entrance)</dd>
@@ -293,7 +293,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired lock on the parent</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> is a root lock and
     does not have a parent; or if the implicit parent lock cannot be promoted to exclusive
     because this thread already holds the parent lock more than once (from re-entrance)</dd>
@@ -310,7 +310,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>promoteToParentInterruptibly</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;promoteToParentInterruptibly()
-                                                            throws java.lang.InterruptedException</pre>
+                                                            throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
 <div class="block">Promotes this lock to an exclusive lock on its parent, waiting interruptibly until it
  becomes available. On success, the held lock is released and replaced with a new
  <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> that represents the lock on the parent.</div>
@@ -318,9 +318,9 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly acquired lock on the parent</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the parent
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the parent
     lock to become available</dd>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> is a root lock and
     does not have a parent; or if the implicit parent lock cannot be promoted to exclusive
     because this thread already holds the parent lock more than once (from re-entrance)</dd>
@@ -345,7 +345,7 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dd>the newly acquired lock on the parent or <code>null</code> if the parent lock is not
     available</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> is a root lock and
     does not have a parent; or if the implicit parent lock cannot be promoted to exclusive
     because this thread already holds the parent lock more than once (from re-entrance)</dd>
@@ -362,8 +362,8 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <li class="blockList">
 <h4>tryPromoteToParent</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent">HierarchicalLock.ExclusiveLock</a>&nbsp;tryPromoteToParent(long&nbsp;timeLimit,
-                                                         java.util.concurrent.TimeUnit&nbsp;unit)
-                                                  throws java.lang.InterruptedException</pre>
+                                                         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
+                                                  throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
 <div class="block">Tries to promote this lock to an exclusive lock on its parent, waiting up to the specified
  amount of time before giving up. On success, the held lock is released and replaced with a
  new <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> that represents the lock on the parent.</div>
@@ -375,9 +375,9 @@ implements <a href="../../../com/apriori/concurrent/HierarchicalLock.AcquiredLoc
 <dd>the newly acquired lock on the parent or <code>null</code> if the time limit lapsed
     and the parent lock never became available</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - if this thread is interrupted while waiting for the parent
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if this thread is interrupted while waiting for the parent
     lock to become available</dd>
-<dd><code>java.lang.IllegalStateException</code> - if this thread does not hold this lock or has already
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this thread does not hold this lock or has already
     released it; if the lock that produced this <a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a> is a root lock and
     does not have a parent; or if the implicit parent lock cannot be promoted to exclusive
     because this thread already holds the parent lock more than once (from re-entrance)</dd>

@@ -91,9 +91,9 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>@Target(value=ANNOTATION_TYPE)
- @Retention(value=RUNTIME)
- @Documented
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#ANNOTATION_TYPE" title="class or interface in java.lang.annotation">ANNOTATION_TYPE</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html?is-external=true" title="class or interface in java.lang.annotation">@Documented</a>
 public @interface <span class="memberNameLabel">ScopeImplementor</span></pre>
 <div class="block">An annotation on a <code>Scope</code> that indicates an associated implementation.</div>
 </li>
@@ -115,7 +115,7 @@ public @interface <span class="memberNameLabel">ScopeImplementor</span></pre>
 <th class="colLast" scope="col">Required Element and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.lang.Class&lt;? extends <a href="../../../com/apriori/di/Scoper.html" title="interface in com.apriori.di">Scoper</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/di/Scoper.html" title="interface in com.apriori.di">Scoper</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/di/ScopeImplementor.html#value--">value</a></span></code>
 <div class="block">The class that implements this scope by default.</div>
 </td>
@@ -141,7 +141,7 @@ public @interface <span class="memberNameLabel">ScopeImplementor</span></pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;java.lang.Class&lt;? extends <a href="../../../com/apriori/di/Scoper.html" title="interface in com.apriori.di">Scoper</a>&gt;&nbsp;value</pre>
+<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../com/apriori/di/Scoper.html" title="interface in com.apriori.di">Scoper</a>&gt;&nbsp;value</pre>
 <div class="block">The class that implements this scope by default. It can be overridden by
  providing another implementation with the <a href="../../../com/apriori/di/UsingScope.html" title="annotation in com.apriori.di"><code>UsingScope</code></a> annotation.</div>
 </li>
