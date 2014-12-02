@@ -1,44 +1,28 @@
 package com.apriori.util;
 
-import java.util.Iterator;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * A {@link Generator} that does not throw checked exceptions during generation.
  *
  * @param <T> the type of value generated
+ * @param <U> the type of value passed to the generator
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: javadoc
-public abstract class UncheckedGenerator<T> extends Generator<T, RuntimeException> {
+public abstract class UncheckedGenerator<T, U> extends Generator<T, U, RuntimeException> {
 
    protected UncheckedGenerator() {
       super();
-   }
-
-   protected UncheckedGenerator(ThreadFactory factory) {
-      super(factory);
    }
 
    protected UncheckedGenerator(Executor executor) {
       super(executor);
    }
 
-   @Override public UncheckedSequence<T> start() {
-      final Sequence<T, RuntimeException> s = super.start();
-      return new UncheckedSequence<T>() {
-         @Override
-         public T next() {
-            return s.next();
-         }
-
-         @Override
-         public Iterator<T> asIterator() {
-            return s.asIterator();
-         }
-      };
-      
+   @Override public UncheckedSequence<T, U> start() {
+      Sequence<T, U, RuntimeException> s = super.start();
+      return s::next;
    }
 }

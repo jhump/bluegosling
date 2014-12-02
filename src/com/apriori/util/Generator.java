@@ -2,12 +2,13 @@ package com.apriori.util;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.concurrent.locks.LockSupport;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * An experimental class to provide generator functionality in Java. Since the Java language does
@@ -43,18 +44,19 @@ import java.util.function.Supplier;
  * best simulate a single-threaded generator pattern).
  *
  * @param <T> the type of value produced by the generator
+ * @param <U> the type of value passed to the generator
  * @param <X> the type of exception that may be thrown while generating a value
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see UncheckedGenerator
  */
-//TODO: test
-public abstract class Generator<T, X extends Throwable> {
+//TODO: moar tests
+public abstract class Generator<T, U, X extends Throwable> {
 
    /**
     * Represents the output of a generated sequence. A generator sends data to its consumer by
-    * providing data through this interface. For symmetry with generator functionality in other
+    * providing data through this interface. For consistency with generator functionality in other
     * languages, the output method name of "yield" was chosen.
     *
     * @param <T> the type of value produced
@@ -62,128 +64,100 @@ public abstract class Generator<T, X extends Throwable> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    @FunctionalInterface
-   public interface Output<T> {
+   public interface Output<T, U> {
       /**
        * Yields a value from the generator. This sends the specified value to the consumer and
-       * also suspends the generator until the consumer requests another value.
+       * also suspends the generator until the consumer requests another value. Any value supplied
+       * by the consumer in its call to {@link Sequence#next(Object)} is returned from this method.
        *
        * @param t the value to send to the consumer
+       * @returns the value provided by the consumer
+       * @throws SequenceAbandonedException if the consumer has abandoned the sequence, in which
+       *       case the generator should exit
        */
-      void yield(T t);
+      U yield(T t);
    }
    
    /**
-    * Runs a generator (in a different thread).
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * Sequence number, for giving worker threads unique names.
     */
-   private interface Runner {
-      /**
-       * Executes the specified block and returns a future.
-       *
-       * @param runnable the block of code to execute
-       * @return a future that will complete when the block finishes executing
-       */
-      Future<?> run(Runnable runnable);
-   }
+   static final AtomicInteger threadSeq = new AtomicInteger();
    
    /**
-    * A runner that always creates a new thread to execute code.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * A shared executor used for running generator workers when no other executor is given.
     */
-   private static enum ThreadRunner implements Runner {
-      /**
-       * The singleton instance of this class. No other instances are needed since this class is
-       * stateless.
-       */
-      INSTANCE;
-      
-      @Override public Future<?> run(Runnable runnable) {
-         FutureTask<?> task = new FutureTask<Void>(runnable, null);
-         new Thread(task).start();
-         return task;
-      }
-   }
+   private static final Executor SHARED_EXECUTOR = Executors.newCachedThreadPool(
+         new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+               Thread th = new Thread(r);
+               th.setName("Generator-" + threadSeq.incrementAndGet());
+               th.setDaemon(true);
+               return th;
+            }
+         });
 
    /**
-    * A runner that always creates a new thread using a given {@link ThreadFactory}.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class ThreadFactoryRunner implements Runner {
-      private final ThreadFactory factory;
-      
-      ThreadFactoryRunner(ThreadFactory factory) {
-         this.factory = factory;
-      }
-      
-      @Override public Future<?> run(Runnable runnable) {
-         FutureTask<?> task = new FutureTask<Void>(runnable, null);
-         factory.newThread(task).start();
-         return task;
-      }
-   }
-   
-   /**
-    * A runner that submits code to an {@link Executor}.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class ExecutorRunner implements Runner {
-      private final Executor executor;
-      
-      ExecutorRunner(Executor executor) {
-         this.executor = executor;
-      }
-      
-      @Override public Future<?> run(Runnable runnable) {
-         FutureTask<?> task = new FutureTask<Void>(runnable, null);
-         executor.execute(task);
-         return task;
-      }
-   }
-
-   /**
-    * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
-    * the generator's output. The new generated creates new threads for each iteration.
+    * Creates a new generator whose generation logic is performed by a {@link BiConsumer} that
+    * accepts the initial value provided to the generator as well as the generator's output. The new
+    * generator uses a default, shared thread pool.
     *
     * @param consumer the consumer that accepts the generator's output and uses it to yield
     *       generated values
-    * @return a new generator that creates a new thread for each iteration
+    * @return a new generator that uses a default, shared thread pool to run generation logic
     */
-   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer) {
+   public static <T, U> UncheckedGenerator<T, U> create(BiConsumer<U, Output<T, U>> consumer) {
       if (consumer == null) {
          throw new NullPointerException();
       }
-      return new UncheckedGenerator<T>() {
-         @Override protected void run(Output<T> out) {
-            consumer.accept(out);
+      return new UncheckedGenerator<T, U>() {
+         @Override protected void run(U initialValue, Output<T, U> out) {
+            consumer.accept(initialValue, out);
          }
       };
    }
 
    /**
     * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
-    * the generator's output. The new generated uses the specified factory to create new threads for
-    * each iteration.
+    * the generator's output. The new generator uses a default, shared thread pool.
     *
     * @param consumer the consumer that accepts the generator's output and uses it to yield
     *       generated values
-    * @param factory a thread factory
-    * @return a new generator that uses the given factory to create a new thread for each iteration
+    * @return a new generator that uses a default, shared thread pool to run generation logic
     */
-   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer, ThreadFactory factory) {
+   public static <T> UncheckedGenerator<T, Void> create(Consumer<Output<T, Void>> consumer) {
       if (consumer == null) {
          throw new NullPointerException();
       }
-      return new UncheckedGenerator<T>(factory) {
-         @Override protected void run(Output<T> out) {
+      return new UncheckedGenerator<T, Void>() {
+         @Override protected void run(Void initialValue, Output<T, Void> out) {
             consumer.accept(out);
          }
       };
    }
-
+   
+   /**
+    * Creates a new generator whose generation logic is performed by a {@link BiConsumer} that
+    * accepts the initial value provided to the generator as well as the generator's output. The new
+    * generator uses the specified executor to run logic for each execution.
+    *
+    * @param consumer the consumer that accepts the generator's output and uses it to yield
+    *       generated values
+    * @param executor an executor
+    * @return a new generator that uses the given executor to run generation logic
+    */
+   public static <T, U> UncheckedGenerator<T, U> create(BiConsumer<U, Output<T, U>> consumer,
+         Executor executor) {
+      if (consumer == null) {
+         throw new NullPointerException();
+      }
+      return new UncheckedGenerator<T, U>(executor) {
+         @Override protected void run(U initialValue, Output<T, U> out) {
+            consumer.accept(initialValue, out);
+         }
+      };
+   }
+   
    /**
     * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
     * the generator's output. The new generator uses the specified executor to run logic for each
@@ -194,34 +168,27 @@ public abstract class Generator<T, X extends Throwable> {
     * @param executor an executor
     * @return a new generator that uses the given executor to run generation logic
     */
-   public static <T> UncheckedGenerator<T> create(Consumer<Output<T>> consumer, Executor executor) {
+   public static <T> UncheckedGenerator<T, Void> create(Consumer<Output<T, Void>> consumer,
+         Executor executor) {
       if (consumer == null) {
          throw new NullPointerException();
       }
-      return new UncheckedGenerator<T>(executor) {
-         @Override protected void run(Output<T> out) {
+      return new UncheckedGenerator<T, Void>(executor) {
+         @Override protected void run(Void initialValue, Output<T, Void> out) {
             consumer.accept(out);
          }
       };
    }
    
-   final Runner runner;
+   final Executor executor;
 
    /**
-    * Constructs a new generator that creates a new thread for each iteration.
+    * Constructs a new generator that uses a default, shared thread pool to run generation logic.
+    *
+    * @param executor an executor
     */
    protected Generator() {
-      this(ThreadRunner.INSTANCE);
-   }
-
-   /**
-    * Constructs a new generator that uses the given thread factory to create a new thread for each
-    * iteration.
-    *
-    * @param factory a thread factory
-    */
-   protected Generator(ThreadFactory factory) {
-      this(new ThreadFactoryRunner(factory));
+      this(SHARED_EXECUTOR);
    }
 
    /**
@@ -230,28 +197,31 @@ public abstract class Generator<T, X extends Throwable> {
     * @param executor an executor
     */
    protected Generator(Executor executor) {
-      this(new ExecutorRunner(executor));
-   }
-
-   private Generator(Runner runner) {
-      this.runner = runner;
+      this.executor = executor;
    }
 
    /**
     * Performs generation logic. To send values to the sequence consumer, invoke
     * {@link Output#yield(Object)} on the given output object.
     *
+    * @param initialValue the initial value supplied to the generator, in the first call by the
+    *    consumer to {@link Sequence#next(Object)}
     * @param out the output to which generated values are sent
     * @throws X if an error occurs while generating values
     */
-   protected abstract void run(Output<T> out) throws X;
+   protected abstract void run(U initialValue, Output<T, U> out) throws X;
    
    /**
     * Returns a view of this generator as an {@link Iterable}. Exceptions thrown during generation
     * will result in runtime exceptions being thrown from the iterator's {@code next()} and/or
     * {@code hasNext()} methods.
-    *
+    * 
+    * <p>Each call to the returned object's {@link Iterable#iterator() iterator} method starts a new
+    * sequence.
+    * 
     * @return a view of this generator as an {@link Iterable}.
+    * 
+    * @see Sequence#asIterator()
     */
    public Iterable<T> asIterable() {
       return () -> start().asIterator();
@@ -263,181 +233,294 @@ public abstract class Generator<T, X extends Throwable> {
     *
     * @return the sequence of generated values
     */
-   public Sequence<T, X> start() {
-      SequenceImpl sequence = new SequenceImpl();
-      sequence.start();
-      return sequence;
-   }
-   
-   /**
-    * Puts a value in the specified queue, ignoring interruptions.
-    *
-    * @param queue the queue
-    * @param element the element to put into the queue
-    */
-   static <E> void put(SynchronousQueue<E> queue, E element) {
-      put(queue, element, null);
-   }
-   
-   /**
-    * Puts a value in the specified queue, running the given block on interruption.
-    *
-    * @param queue the queue
-    * @param element the element to put into the queue
-    * @param onInterrupt code to run when the thread is interrupted while waiting to put an element
-    *       in the queue, or {@code null} to indicate that the interrupt should be ignored
-    */
-   static <E> void put(SynchronousQueue<E> queue, E element, Runnable onInterrupt) {
-      boolean interrupted = false;
-      try {
-         while (true) {
-            try {
-               queue.put(element);
-               break;
-            } catch (InterruptedException e) {
-               interrupted = true;
-               if (onInterrupt != null) {
-                  onInterrupt.run();
-               }
-            }
-         }
-      } finally {
-         if (interrupted) {
-            Thread.currentThread().interrupt();
-         }
-      }
+   public Sequence<T, U, X> start() {
+      return new SequenceImpl().start();
    }
 
    /**
-    * Takes a value from the specified queue, ignoring interruptions.
-    *
-    * @param queue the queue
-    * @return the element to taken from the queue
+    * A sentinel value indicating a null element being returned from the sequence. We don't use an
+    * actual {@code null} reference since that indicates that the value hasn't yet been computed.
     */
-   static <E> E take(SynchronousQueue<E> queue) {
-      return take(queue, null);
-   }
+   static final Object NULL = new Object();
    
    /**
-    * Takes a value from the specified queue, running the given block on interruption.
-    *
-    * @param queue the queue
-    * @param onInterrupt code to run when the thread is interrupted while waiting to take an element
-    *       from the queue, or {@code null} to indicate that the interrupt should be ignored
-    * @return the element to taken from the queue
+    * A sentinel value indicating that the sequence is finished. This is a terminal value: no
+    * further values will be emitted by the sequence.
     */
-   static <E> E take(SynchronousQueue<E> queue, Runnable onInterrupt) {
-      boolean interrupted = false;
-      try {
-         while (true) {
-            try {
-               return queue.take();
-            } catch (InterruptedException e) {
-               interrupted = true;
-               if (onInterrupt != null) {
-                  onInterrupt.run();
-               }
-            }
-         }
-      } finally {
-         if (interrupted) {
-            Thread.currentThread().interrupt();
-         }
-      }
-   }
-
-   /**
-    * Singleton message object, used to hand control from the consumer to the generator, to compute
-    * and return the next item in the sequence. 
-    */
-   static final Object NEXT = new Object();
+   static final Object FINISHED = new Object();
    
    /**
-    * An exception thrown in the consuming thread when the generator fails. The cause of this
-    * exception will be what caused the generator thread to fail.
+    * A value indicating that the sequence failed. This is a terminal value: no further values will
+    * be emitted by the sequence.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   @SuppressWarnings("serial")
-   private static class SequenceException extends RuntimeException {
-      SequenceException(Throwable cause) {
-         super(cause);
+   static class Failure {
+      Throwable cause;
+      
+      Failure(Throwable cause) {
+         this.cause = cause;
       }
    }
-
+   
    /**
-    * An exception thrown in the generator thread to indicate that the corresponding sequence is
-    * no longer live. This means that the generator has no more consumers and the generator thread
-    * should exit.
+    * Returns true if the given value is a terminal value (e.g. the very last value emitted by a
+    * sequence).
     *
+    * @param o a value
+    * @return true if the given value is a terminal value
+    */
+   static final boolean isTerminal(Object o) {
+      return o == FINISHED || o instanceof Failure;
+   }
+   
+   /**
+    * The synchronization mechanism which allows handing control over from consumer to producer
+    * thread and vice versa.
+    *
+    * @param <T> the type of values emitted by the producer
+    * @param <U> the type of values passed to the producer
+    * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   @SuppressWarnings("serial")
-   private static class SequenceIsDeadException extends RuntimeException {
-      SequenceIsDeadException() {
+   private static class Sync<T, U> {
+      @SuppressWarnings("rawtypes")
+      private static final AtomicReferenceFieldUpdater<Sync, Thread> CONSUMER =
+            AtomicReferenceFieldUpdater.newUpdater(Sync.class, Thread.class, "consumerThread");
+      
+      volatile Thread producerThread;
+      volatile Object producerValue;
+      volatile Thread consumerThread;
+      volatile Object consumerValue;
+      
+      Sync() {
+      }
+      
+      /**
+       * Queries the producer for the next value. This should only be called by a consumer thread.
+       * This parks the current thread and unparks the producer thread. This thread is unparked and
+       * returns when the producer next yields a value or if the producer terminates.
+       * 
+       * <p>Once the producer emits a terminal value, any subsequent calls to this method will
+       * return that final value.
+       * 
+       * <p>The returned object will be one of the following:
+       * <ul>
+       * <li>A value, an instance of type {@code T}</li>
+       * <li>A {@link Failure}, if the generator terminated due to an exception</li>
+       * <li>Or {@link Generator#FINISHED FINISHED}, if the generator terminated normally</li>
+       * </ul>
+       *
+       * @return the object emitted by the producer
+       */
+      Object queryProducer(U u) {
+         Thread th = producerThread;
+         if (th == null) {
+            assert isTerminal(producerValue);
+            return producerValue;
+         }
+         if (!CONSUMER.compareAndSet(this, null, Thread.currentThread())) {
+            throw new RuntimeException("Sequence cannot be used simultaneously from two threads");
+         }
+         consumerValue = u != null ? u : NULL;
+         boolean interrupted = false;
+         // let producer compute the next value
+         LockSupport.unpark(th);
+         try {
+            while (true) {
+               Object ret = producerValue;
+               if (ret != null) {
+                  if (isTerminal(ret)) {
+                     producerThread = null;
+                  } else {
+                     producerValue = null;
+                  }
+                  assert consumerValue == null;
+                  assert consumerThread == null;
+                  return ret != NULL ? ret : null;
+               }
+               LockSupport.park(this);
+               if (Thread.interrupted()) {
+                  interrupted = true;
+               }
+            }
+         } finally {
+            if (interrupted) {
+               Thread.currentThread().interrupt();
+            }
+         }
+      }
+      
+      /**
+       * Sends a value to the consumer thread. This should only be called by the producer thread.
+       *
+       * @param t the value to send to the consumer
+       */
+      void sendValueToConsumer(T t) {
+         boolean sent = sendToConsumer(t != null ? t : NULL);
+         assert sent;
+      }
+
+      /**
+       * Sends a failure to the consumer thread. This should only be called by the producer thread.
+       * This is a terminal value.
+       *
+       * @param t the failure to send to the consumer thread
+       */
+      void sendFailureToConsumer(Throwable t) {
+         assert t != null;
+         sendToConsumer(new Failure(t));
+      }
+
+      /**
+       * Signals the end of values to the consumer thread. This should only be called by the
+       * producer thread. This is a terminal value.
+       */
+      void sendEndToConsumer() {
+         sendToConsumer(FINISHED);
+      }
+      
+      /**
+       * Waits for the next query from a consumer thread. This should only be called by the producer
+       * thread.
+       *
+       * @param onInterrupt a block that is executed if this thread gets interrupted while waiting
+       *       on the consumer to query the producer
+       */
+      U waitForNextQuery(Runnable onInterrupt) {
+         Object ret;
+         while ((ret = consumerValue) == null) {
+            LockSupport.park(this);
+            if (Thread.interrupted()) {
+               onInterrupt.run();
+            }
+         }
+         consumerValue = null;
+         assert consumerThread != null;
+         @SuppressWarnings("unchecked")
+         U u = (U) (ret == NULL ? null : ret);
+         return u;
+      }
+
+      private boolean sendToConsumer(Object o) {
+         Thread th = CONSUMER.getAndSet(this, null);
+         if (th == null) {
+            return false;
+         }
+         assert o != null;
+         while (producerValue != null) {
+            // WTF? Consumer still hasn't consumed the last value? That means we were invoked from
+            // a second consumer thread. In the interest of not throwing an exception here in the
+            // producer thread (which could lead to deadlock), we'll let it slide. We'd rather
+            // detect this in consumer thread and throw there. And that's exactly what we try to do
+            // when we CAS the consumerThread field in #queryProducer(Object).
+            Thread.yield();
+         }
+         producerValue = o;
+         LockSupport.unpark(th);
+         return true;
+      }
+
+      /*
+       * These two methods are synchronized so that setting the thread and interrupting it are
+       * mutually exclusive. This avoids a race where the producer is shutting down and sets the
+       * field to null while a concurrent thread is trying to interrupt it. In such a scenario, the
+       * interrupter could see the field as non-null, but then the producer terminate, and then the
+       * interrupt delivered. This could spuriously interrupt a subsequent task on the same thread.
+       * So synchronized lets us ensure that the thread is interrupted if-and-only-if the producer
+       * is still running.
+       */
+      
+      /**
+       * Sets the producer thread. This is used from the producer thread to initialize the value and
+       * to clear it when the producer terminates.
+       *
+       * @param producerThread the producer thread or {@code null}
+       */
+      synchronized void setProducer(Thread producerThread) {
+         this.producerThread = producerThread;
+      }
+      
+      /**
+       * Interrupts the producer thread if there is one. This is used to clean-up in the event of
+       * abandoned sequences. In such a case, the producer thread may be blocked indefinitely,
+       * waiting on the consumer to query it again. When the sequence is garbage collected, it will
+       * interrupt the producer thread and allow it to exit and release resources (including the
+       * thread).
+       */
+      synchronized void interruptProducer() {
+         Thread th = producerThread;
+         if (th != null) {
+            th.interrupt();
+         }
       }
    }
-
+   
    /**
     * An implementation of {@link Sequence}, for providing generated values to consumers.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class SequenceImpl implements Sequence<T, X> {
-      final SynchronousQueue<Supplier<T>> fromProducer = new SynchronousQueue<>();
-      final SynchronousQueue<Object> fromConsumer = new SynchronousQueue<>();
-      Future<?> future;
-      boolean finished;
+   private class SequenceImpl implements Sequence<T, U, X> {
+      private final Sync<T, U> sync = new Sync<>();
       
       SequenceImpl() {
       }
       
       /**
-       * Interrupts the generator thread when the sequence is garbage collected. This is done by
-       * canceling the future that represents the generation logic.
+       * Interrupts the generator thread when the sequence is garbage collected.
        */
       @Override protected void finalize() throws Throwable {
-         if (future != null) {
-            future.cancel(true);
-         }
+         sync.interruptProducer();
          super.finalize();
       }
       
       /**
        * Starts the generation logic.
        */
-      void start() {
-         future = runner.run(createSequenceRunner(fromProducer, fromConsumer, Generator.this, this));
+      SequenceImpl start() {
+         executor.execute(createSequenceRunner(sync, Generator.this, this));
+         // wait for producer thread to be initialized (could have used a CountDownLatch or a
+         // future, but no point in creating another synchronizer in addition to sync...)
+         boolean interrupted = false;
+         try {
+            // have to look at both thread and value fields because producer could set thread, get
+            // interrupted, set value to terminal state, and finally clear thread all while we were
+            // parked
+            while (sync.producerThread == null && sync.producerValue == null) {
+               LockSupport.park();
+               if (Thread.interrupted()) {
+                  interrupted = true;
+               }
+            }
+         } finally {
+            if (interrupted) {
+               Thread.currentThread().interrupt();
+            }
+         }
+
+         return this;
       }
       
-      /**
-       * Returns the next item in the sequence. This blocks until the generation logic provides the
-       * next value or sends a message indicating the sequence is finished or generation failed.
-       * 
-       * @return the next item in the sequence
-       * @throws X if the generation logic failed (the exception thrown is the same instance that
-       *       was thrown in the generation logic)
-       */
       @Override
-      public T next() throws X {
-         if (finished) {
+      public T next(U u) throws X {
+         Object o = sync.queryProducer(u);
+         if (o == FINISHED) {
             throw new SequenceFinishedException();
-         }
-         put(fromConsumer,  NEXT);
-         try {
-            return take(fromProducer).get();
-         } catch (SequenceFinishedException e) {
-            finished = true;
-            throw e;
-         } catch (SequenceException e) {
-            finished = true;
+         } else if (o instanceof Failure) {
+            // The producer thread can only throw unchecked exceptions or instances of X, so this
+            // should be safe (see Generator#run(Object, Output))
             @SuppressWarnings("unchecked")
-            X x = (X) e.getCause();
+            X x = (X) ((Failure) o).cause;
             throw x;
+         } else {
+            @SuppressWarnings("unchecked")
+            T t = (T) o;
+            return t;
          }
       }
    }
-   
+
    /**
     * Constructs the block of code that is executed to generate items in the sequence. The resulting
     * object cannot have a strong reference to the sequence, so the sequence can be garbage
@@ -445,56 +528,56 @@ public abstract class Generator<T, X extends Throwable> {
     * reference to the sequence. When the weak reference is cleared, that indicates that there are
     * no more consumers and that the code should abort.
     *
-    * @param fromProducer the queue used to transfer data from the generator thread to the consumer
-    * @param fromConsumer the queue used to transfer messages from the consumer to the generator
+    * @param sync the object used to transfer control back and forth between main consumer thread
+    *       and producer (co-routine) thread
     * @param generator the generator object
     * @param sequence the sequence object
     * @return a task that will generate the values in the sequence
     */
-   static <T> Runnable createSequenceRunner(final SynchronousQueue<Supplier<T>> fromProducer,
-         final SynchronousQueue<Object> fromConsumer, final Generator<T, ?> generator,
-         Sequence<T, ?> sequence) {
-      final WeakReference<Sequence<T, ?>> sequenceRef = new WeakReference<Sequence<T,?>>(sequence);
-      final Runnable onInterrupt = () -> {
-         if (sequenceRef.get() == null) {
-            throw new SequenceIsDeadException();
-         }
-      };
+   static <T, U> Runnable createSequenceRunner(Sync<T, U> sync, Generator<T, U, ?> generator,
+         Sequence<T, U, ?> sequence) {
+      WeakReference<Sequence<T, U, ?>> sequenceRef = new WeakReference<>(sequence);
+      Variable<Thread> caller = new Variable<>(Thread.currentThread());
+      // The returned task must not have a reference to the sequence other than sequenceRef. That
+      // way, the sequence can be gc'ed if it is abandoned (e.g. consumer does not exhaust the
+      // sequence). The task will notice this by observing sequenceRef as cleared and will try to
+      // terminate.
       return () -> {
-         Throwable failure = null;
+         // initialize producer field and notify caller it's been set
+         sync.setProducer(Thread.currentThread());
+         LockSupport.unpark(caller.getAndSet(null));
+         
          try {
-            // wait for consumer to invoke next() for the first time
-            take(fromConsumer);
-            
-            Output<T> output = new Output<T>() {
-               @Override
-               public void yield(T t) {
-                  // send value to consumer
-                  put(fromProducer, () -> t, onInterrupt);
-                  // and wait for it invoke next() again
-                  take(fromConsumer, onInterrupt);
+            Runnable onInterrupt = () -> {
+               if (sequenceRef.get() == null) {
+                  // sequence has been gc'ed; terminate
+                  throw new SequenceAbandonedException();
                }
             };
-   
-            generator.run(output);
             
-         } catch (Throwable t) {
-            failure = t;
-            
-         } finally {
-            if (sequenceRef.get() != null) {
-               try {
-                  if (failure == null) {
-                     put(fromProducer,
-                           () -> { throw new SequenceFinishedException(); },
-                           onInterrupt);
-                  } else {
-                     final Throwable t = failure;
-                     put(fromProducer, () -> { throw new SequenceException(t); }, onInterrupt);
-                  }
-               } catch (SequenceIsDeadException ignored) {
+            // wait for consumer to invoke next() for the first time
+            U initialValue = sync.waitForNextQuery(onInterrupt);
+
+            // run the generator
+            Output<T, U> output = new Output<T, U>() {
+               @Override
+               public U yield(T t) {
+                  sync.sendValueToConsumer(t);
+                  return sync.waitForNextQuery(onInterrupt);
                }
-            }
+            };
+            generator.run(initialValue, output);
+            
+            // clean finish
+            sync.sendEndToConsumer();
+            
+         } catch (SequenceAbandonedException e) {
+            // ignore
+         } catch (Throwable t) {
+            // un-clean finish
+            sync.sendFailureToConsumer(t);
+         } finally {
+            sync.setProducer(null);
          }
       };
    }

@@ -9,7 +9,6 @@ package com.apriori.util;
  */
 // TODO: javadoc
 public class SequenceFinishedException extends RuntimeException {
-
    private static final long serialVersionUID = 1224425258285484624L;
 
    public SequenceFinishedException() {
