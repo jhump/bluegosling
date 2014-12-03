@@ -32,14 +32,14 @@ public interface Sequence<T, U, X extends Throwable> {
    T next(U u) throws X;
    
    /**
-    * Returns the next element in the sequence. This transfers control to the generator and returns
-    * when the generator provides the next value. If the generator terminates, either in failure or
-    * successfully, then an exception is thrown.
+    * Returns the next element in the sequence. This is the same as calling:<pre>
+    * sequence.next(null);</pre>
     *
     * @return the next element in the sequence
     * @throws X if the generator fails and throws an exception
     * @throws SequenceFinishedException if the generator completes successfully, indicating that
     *       there are no more elements in the sequence
+    * @see #next(Object)
     */
    default T next() throws X {
       return next(null);

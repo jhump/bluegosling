@@ -1,6 +1,9 @@
 package com.apriori.util;
 
+import com.apriori.concurrent.DeadlockException;
+
 import java.lang.ref.WeakReference;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -11,37 +14,35 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * An experimental class to provide generator functionality in Java. Since the Java language does
- * not support a "yield" statement, generators cannot be done the normal way. So, instead of
- * the generator and consumer running in the same thread, and the generator's state/stack being
- * saved every time a value is produced and control returned to the consumer, this implementation
- * has the generator run on a separate thread. This approach has many downsides and is not useful
- * in practical situations for the following reasons:
+ * Provides generator functionality in Java. Since the Java language does not support co-routines,
+ * generators, or "green" threads, generators cannot be done the normal way. So, instead of the
+ * generator and consumer running in the same thread, and the generator's state/stack being saved
+ * every time a value is produced and control returned to the consumer, this implementation
+ * has the generator run on a separate thread. This approach has some down sides that may limit its
+ * utility/practicality:
  * <ol>
- * <li>A new thread is required for each iteration through the generated sequence. This makes it
- * easy to have a huge number of outstanding threads. It is possible to cause
- * {@link OutOfMemoryError}s this way since that is what happens when the JVM process cannot
- * allocate any more native threads. Using a thread pool to limit the number of threads can cause
- * the generators to appear frozen. This can happen if garbage collection is not happening
- * frequently, so unused generator threads continue to tie up threads in the pool. It also limits
- * the number of generated sequences that can be examined concurrently.</li>
+ * <li>A separate thread is required for each iteration through the generated sequence. When used a
+ * lot and across many consumer threads, this makes it easy to have a huge number of outstanding
+ * generator threads. It is possible to cause {@link OutOfMemoryError}s this way since that is what
+ * happens when the JVM process cannot allocate any more native threads. Using a thread pool to
+ * limit the number of threads is one way to mitigate this issue, but caution must be exercised as
+ * this approach can severely limit throughput and even cause deadlock.</li>
  * <li>Transfer of control from one thread to another is significantly more expensive than just
  * popping data from the stack into the heap and then returning control to a caller. So this
- * approach leads to slow iteration. A value must be transferred from one thread to another and
+ * approach leads to slower iteration. A value must be transferred from one thread to another and
  * threads must be parked and unparked for each transfer of control, from consumer to generator and
  * then back from generator to consumer.</li>
  * </ol>
- * <p>Despite its impracticality, it was a fun experiment to implement. The trickier bits of the
- * implementation are to avoid thread leaks. We must be able to detect if a consumer never reaches
- * the end of the stream and the generator thread never finishes its work. When that happens we
- * must interrupt the thread so that it exits. It may be possible to do this using phantom
- * references, but checking the reference frequently enough from the generator thread can be tricky.
- * It would likely require polling the reference while the thread waits for the consumer to return
- * control to the generator. Instead, a finalizer is used. When the consumer no longer has a
- * reference to the sequence, the sequence can be collected. When its finalizer is executed, it will
- * interrupt the generator thread. The generator has a weak reference to the sequence so it can
- * distinguish between this interruption and other interruptions that it should ignore (in order to
- * best simulate a single-threaded generator pattern).
+ * <p>The trickier bits of using separate threads to run generators involve avoiding thread leaks
+ * when a sequence is "abandoned". This happens if a consumer never reaches the end of the stream
+ * and the generator thread never finishes its work. When that happens we must interrupt the thread
+ * so that it exits. This is achieved using finalizers. This has the inherent down side that it is
+ * dependent on garbage collection and running finalizers, which means that an unfinished generator
+ * thread can needlessly tie up system resources for a non-deterministic amount of time.
+ * 
+ * <p>{@link Sequence}s produced by this generator are not intended to be used simultaneously from
+ * multiple consumer threads. If incorrect usage is detected, {@link Sequence#next(Object)} will
+ * throw a {@link ConcurrentModificationException}.
  *
  * @param <T> the type of value produced by the generator
  * @param <U> the type of value passed to the generator
@@ -51,13 +52,12 @@ import java.util.function.Consumer;
  * 
  * @see UncheckedGenerator
  */
-//TODO: moar tests
 public abstract class Generator<T, U, X extends Throwable> {
 
    /**
     * Represents the output of a generated sequence. A generator sends data to its consumer by
     * providing data through this interface. For consistency with generator functionality in other
-    * languages, the output method name of "yield" was chosen.
+    * languages, the name of the method is "yield".
     *
     * @param <T> the type of value produced
     * 
@@ -71,7 +71,7 @@ public abstract class Generator<T, U, X extends Throwable> {
        * by the consumer in its call to {@link Sequence#next(Object)} is returned from this method.
        *
        * @param t the value to send to the consumer
-       * @return the value provided by the consumer
+       * @return the subsequent value provided by the consumer
        * @throws SequenceAbandonedException if the consumer has abandoned the sequence, in which
        *       case the generator should exit
        */
@@ -141,6 +141,9 @@ public abstract class Generator<T, U, X extends Throwable> {
     * accepts the initial value provided to the generator as well as the generator's output. The new
     * generator uses the specified executor to run logic for each execution.
     *
+    * <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+    * executor is insufficient, throughput can be dramatically limited and deadlock may occur.
+    * 
     * @param consumer the consumer that accepts the generator's output and uses it to yield
     *       generated values
     * @param executor an executor
@@ -162,6 +165,9 @@ public abstract class Generator<T, U, X extends Throwable> {
     * Creates a new generator whose generation logic is performed by a {@link Consumer} that accepts
     * the generator's output. The new generator uses the specified executor to run logic for each
     * execution.
+    * 
+    * <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+    * executor is insufficient, throughput can be dramatically limited and deadlock may occur.
     *
     * @param consumer the consumer that accepts the generator's output and uses it to yield
     *       generated values
@@ -192,6 +198,9 @@ public abstract class Generator<T, U, X extends Throwable> {
    /**
     * Constructs a new generator that uses the given executor to run generation logic.
     *
+    * <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+    * executor is insufficient, throughput can be dramatically limited and deadlock may occur.
+    * 
     * @param executor an executor
     */
    protected Generator(Executor executor) {
@@ -227,7 +236,9 @@ public abstract class Generator<T, U, X extends Throwable> {
    
    /**
     * Starts generation of a sequence of values. Each call to this method will asynchronously invoke
-    * {@link #run(Object, Output)}.
+    * {@link #run(Object, Output)}. If the generator is started in the same thread that calls this
+    * method, it will abort (since that would otherwise result in deadlock). In that case, the very
+    * first call to {@link Sequence#next(Object)} will throw a {@link DeadlockException}.
     *
     * @return the sequence of generated values
     */
@@ -310,6 +321,8 @@ public abstract class Generator<T, U, X extends Throwable> {
        * </ul>
        *
        * @return the object emitted by the producer
+       * @throws ConcurrentModificationException if another consumer thread is waiting (a generator
+       *       should only be used by one consumer thread at a time)
        */
       Object queryProducer(U u) {
          Thread th = producerThread;
@@ -318,7 +331,8 @@ public abstract class Generator<T, U, X extends Throwable> {
             return producerValue;
          }
          if (!CONSUMER.compareAndSet(this, null, Thread.currentThread())) {
-            throw new RuntimeException("Sequence cannot be used simultaneously from two threads");
+            throw new ConcurrentModificationException(
+                  "Sequence cannot be used simultaneously from two threads");
          }
          consumerValue = u != null ? u : NULL;
          boolean interrupted = false;
@@ -400,28 +414,38 @@ public abstract class Generator<T, U, X extends Throwable> {
          return u;
       }
 
+      /**
+       * Sends the given value to the consumer (only called from producer thread). Returns true if
+       * the consumer was unparked and allowed to consume the value. Returns false if no consumer
+       * was waiting for it (should not usually happen, but can in cases of abnormal termination of
+       * the generator).
+       *
+       * @param o the value to send to the consumer
+       * @return true if a consumer was waiting for the value
+       */
       private boolean sendToConsumer(Object o) {
          Thread th = CONSUMER.getAndSet(this, null);
-         if (th == null) {
-            return false;
-         }
          assert o != null;
          while (producerValue != null) {
             // WTF? Consumer still hasn't consumed the last value? That means we were invoked from
             // a second consumer thread. In the interest of not throwing an exception here in the
-            // producer thread (which could lead to deadlock), we'll let it slide. We'd rather
-            // detect this in consumer thread and throw there. And that's exactly what we try to do
-            // when we CAS the consumerThread field in #queryProducer(Object).
+            // producer thread, we'll let it slide. We'd rather detect this in consumer thread and
+            // throw there. And that's exactly what we try to do when we CAS the consumerThread
+            // field in #queryProducer(Object).
             Thread.yield();
          }
          producerValue = o;
-         LockSupport.unpark(th);
-         return true;
+         if (th == null) {
+            return false;
+         } else {
+            LockSupport.unpark(th);
+            return true;
+         }
       }
 
       /*
-       * These two methods are synchronized so that setting the thread and interrupting it are
-       * mutually exclusive. This avoids a race where the producer is shutting down and sets the
+       * The following two methods are synchronized so that setting the thread and interrupting it
+       * are mutually exclusive. This avoids a race where the producer is shutting down and sets the
        * field to null while a concurrent thread is trying to interrupt it. In such a scenario, the
        * interrupter could see the field as non-null, but then the producer terminate, and then the
        * interrupt delivered. This could spuriously interrupt a subsequent task on the same thread.
@@ -479,7 +503,7 @@ public abstract class Generator<T, U, X extends Throwable> {
       SequenceImpl start() {
          executor.execute(createSequenceRunner(sync, Generator.this, this));
          // wait for producer thread to be initialized (could have used a CountDownLatch or a
-         // future, but no point in creating another synchronizer in addition to sync...)
+         // future, but why use another synchronizer object when we already have sync?)
          boolean interrupted = false;
          try {
             // have to look at both thread and value fields because producer could set thread, get
@@ -543,9 +567,13 @@ public abstract class Generator<T, U, X extends Throwable> {
       return () -> {
          // initialize producer field and notify caller it's been set
          sync.setProducer(Thread.currentThread());
-         LockSupport.unpark(caller.getAndSet(null));
          
          try {
+            if (caller.get() == Thread.currentThread()) {
+               // not allowed!
+               throw new DeadlockException("Generator cannot run in same thread as caller");
+            }
+            LockSupport.unpark(caller.getAndSet(null)); // set to null so caller thread can be GC'ed
             VariableBoolean interrupted = new VariableBoolean();
             Runnable onInterrupt = () -> {
                interrupted.set(true);
