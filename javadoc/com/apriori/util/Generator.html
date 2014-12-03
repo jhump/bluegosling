@@ -119,37 +119,35 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">Generator&lt;T,U,X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">An experimental class to provide generator functionality in Java. Since the Java language does
- not support a "yield" statement, generators cannot be done the normal way. So, instead of
- the generator and consumer running in the same thread, and the generator's state/stack being
- saved every time a value is produced and control returned to the consumer, this implementation
- has the generator run on a separate thread. This approach has many downsides and is not useful
- in practical situations for the following reasons:
+<div class="block">Provides generator functionality in Java. Since the Java language does not support co-routines,
+ generators, or "green" threads, generators cannot be done the normal way. So, instead of the
+ generator and consumer running in the same thread, and the generator's state/stack being saved
+ every time a value is produced and control returned to the consumer, this implementation
+ has the generator run on a separate thread. This approach has some down sides that may limit its
+ utility/practicality:
  <ol>
- <li>A new thread is required for each iteration through the generated sequence. This makes it
- easy to have a huge number of outstanding threads. It is possible to cause
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html?is-external=true" title="class or interface in java.lang"><code>OutOfMemoryError</code></a>s this way since that is what happens when the JVM process cannot
- allocate any more native threads. Using a thread pool to limit the number of threads can cause
- the generators to appear frozen. This can happen if garbage collection is not happening
- frequently, so unused generator threads continue to tie up threads in the pool. It also limits
- the number of generated sequences that can be examined concurrently.</li>
+ <li>A separate thread is required for each iteration through the generated sequence. When used a
+ lot and across many consumer threads, this makes it easy to have a huge number of outstanding
+ generator threads. It is possible to cause <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html?is-external=true" title="class or interface in java.lang"><code>OutOfMemoryError</code></a>s this way since that is what
+ happens when the JVM process cannot allocate any more native threads. Using a thread pool to
+ limit the number of threads is one way to mitigate this issue, but caution must be exercised as
+ this approach can severely limit throughput and even cause deadlock.</li>
  <li>Transfer of control from one thread to another is significantly more expensive than just
  popping data from the stack into the heap and then returning control to a caller. So this
- approach leads to slow iteration. A value must be transferred from one thread to another and
+ approach leads to slower iteration. A value must be transferred from one thread to another and
  threads must be parked and unparked for each transfer of control, from consumer to generator and
  then back from generator to consumer.</li>
  </ol>
- <p>Despite its impracticality, it was a fun experiment to implement. The trickier bits of the
- implementation are to avoid thread leaks. We must be able to detect if a consumer never reaches
- the end of the stream and the generator thread never finishes its work. When that happens we
- must interrupt the thread so that it exits. It may be possible to do this using phantom
- references, but checking the reference frequently enough from the generator thread can be tricky.
- It would likely require polling the reference while the thread waits for the consumer to return
- control to the generator. Instead, a finalizer is used. When the consumer no longer has a
- reference to the sequence, the sequence can be collected. When its finalizer is executed, it will
- interrupt the generator thread. The generator has a weak reference to the sequence so it can
- distinguish between this interruption and other interruptions that it should ignore (in order to
- best simulate a single-threaded generator pattern).</div>
+ <p>The trickier bits of using separate threads to run generators involve avoiding thread leaks
+ when a sequence is "abandoned". This happens if a consumer never reaches the end of the stream
+ and the generator thread never finishes its work. When that happens we must interrupt the thread
+ so that it exits. This is achieved using finalizers. This has the inherent down side that it is
+ dependent on garbage collection and running finalizers, which means that an unfinished generator
+ thread can needlessly tie up system resources for a non-deterministic amount of time.
+ 
+ <p><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util"><code>Sequence</code></a>s produced by this generator are not intended to be used simultaneously from
+ multiple consumer threads. If incorrect usage is detected, <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will
+ throw a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util"><code>UncheckedGenerator</code></a></dd>
@@ -308,7 +306,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>Generator</h4>
 <pre>protected&nbsp;Generator(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
-<div class="block">Constructs a new generator that uses the given executor to run generation logic.</div>
+<div class="block">Constructs a new generator that uses the given executor to run generation logic.
+
+ <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+ executor is insufficient, throughput can be dramatically limited and deadlock may occur.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>executor</code> - an executor</dd>
@@ -370,7 +371,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
                                                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function"><code>BiConsumer</code></a> that
  accepts the initial value provided to the generator as well as the generator's output. The new
- generator uses the specified executor to run logic for each execution.</div>
+ generator uses the specified executor to run logic for each execution.
+
+ <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+ executor is insufficient, throughput can be dramatically limited and deadlock may occur.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>consumer</code> - the consumer that accepts the generator's output and uses it to yield
@@ -391,7 +395,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
                                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> that accepts
  the generator's output. The new generator uses the specified executor to run logic for each
- execution.</div>
+ execution.
+ 
+ <p>Care must be exercised when using a custom executor. If the parallelism allowed by the
+ executor is insufficient, throughput can be dramatically limited and deadlock may occur.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>consumer</code> - the consumer that accepts the generator's output and uses it to yield
@@ -455,7 +462,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>start</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a>&gt;&nbsp;start()</pre>
 <div class="block">Starts generation of a sequence of values. Each call to this method will asynchronously invoke
- <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>run(Object, Output)</code></a>.</div>
+ <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>run(Object, Output)</code></a>. If the generator is started in the same thread that calls this
+ method, it will abort (since that would otherwise result in deadlock). In that case, the very
+ first call to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will throw a <a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><code>DeadlockException</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the sequence of generated values</dd>

@@ -207,9 +207,8 @@ throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter i
 <h4>next</h4>
 <pre>default&nbsp;<a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">T</a>&nbsp;next()
         throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
-<div class="block">Returns the next element in the sequence. This transfers control to the generator and returns
- when the generator provides the next value. If the generator terminates, either in failure or
- successfully, then an exception is thrown.</div>
+<div class="block">Returns the next element in the sequence. This is the same as calling:<pre>
+ sequence.next(null);</pre></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the next element in the sequence</dd>
@@ -218,6 +217,8 @@ throws <a href="../../../com/apriori/util/Sequence.html" title="type parameter i
 <dd><code><a href="../../../com/apriori/util/SequenceFinishedException.html" title="class in com.apriori.util">SequenceFinishedException</a></code> - if the generator completes successfully, indicating that
        there are no more elements in the sequence</dd>
 <dd><code><a href="../../../com/apriori/util/Sequence.html" title="type parameter in Sequence">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/util/Sequence.html#next-U-"><code>next(Object)</code></a></dd>
 </dl>
 </li>
 </ul>

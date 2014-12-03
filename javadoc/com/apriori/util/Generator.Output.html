@@ -115,7 +115,7 @@ var activeTableTab = "activeTableTab";
 public static interface <span class="typeNameLabel">Generator.Output&lt;T,U&gt;</span></pre>
 <div class="block">Represents the output of a generated sequence. A generator sends data to its consumer by
  providing data through this interface. For consistency with generator functionality in other
- languages, the output method name of "yield" was chosen.</div>
+ languages, the name of the method is "yield".</div>
 </li>
 </ul>
 </div>
@@ -171,7 +171,7 @@ public static interface <span class="typeNameLabel">Generator.Output&lt;T,U&gt;<
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>t</code> - the value to send to the consumer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the value provided by the consumer</dd>
+<dd>the subsequent value provided by the consumer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/apriori/util/SequenceAbandonedException.html" title="class in com.apriori.util">SequenceAbandonedException</a></code> - if the consumer has abandoned the sequence, in which
        case the generator should exit</dd>

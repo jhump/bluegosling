@@ -246,7 +246,9 @@ extends <a href="../../../com/apriori/util/Generator.html" title="class in com.a
 <pre>public&nbsp;<a href="../../../com/apriori/util/UncheckedSequence.html" title="interface in com.apriori.util">UncheckedSequence</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">U</a>&gt;&nbsp;start()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/util/Generator.html#start--">Generator</a></code></span></div>
 <div class="block">Starts generation of a sequence of values. Each call to this method will asynchronously invoke
- <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>Generator.run(Object, Output)</code></a>.</div>
+ <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>Generator.run(Object, Output)</code></a>. If the generator is started in the same thread that calls this
+ method, it will abort (since that would otherwise result in deadlock). In that case, the very
+ first call to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will throw a <a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><code>DeadlockException</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/util/Generator.html#start--">start</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/util/Generator.html" title="class in com.apriori.util">Generator</a>&lt;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">T</a>,<a href="../../../com/apriori/util/UncheckedGenerator.html" title="type parameter in UncheckedGenerator">U</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a>&gt;</code></dd>
