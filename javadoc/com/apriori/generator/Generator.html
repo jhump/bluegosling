@@ -47,11 +47,11 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/Functions.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li>Prev&nbsp;Class</li>
+<li><a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Generator.html" target="_top">Frames</a></li>
+<li><a href="../../../index.html?com/apriori/generator/Generator.html" target="_top">Frames</a></li>
 <li><a href="Generator.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -90,7 +90,7 @@ var activeTableTab = "activeTableTab";
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">com.apriori.util</div>
+<div class="subTitle">com.apriori.generator</div>
 <h2 title="Class Generator" class="title">Class Generator&lt;T,U,X extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -98,7 +98,7 @@ var activeTableTab = "activeTableTab";
 <li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>com.apriori.util.Generator&lt;T,U,X&gt;</li>
+<li>com.apriori.generator.Generator&lt;T,U,X&gt;</li>
 </ul>
 </li>
 </ul>
@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a></dd>
+<dd><a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a></dd>
 </dl>
 <hr>
 <br>
@@ -145,12 +145,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  dependent on garbage collection and running finalizers, which means that an unfinished generator
  thread can needlessly tie up system resources for a non-deterministic amount of time.
  
- <p><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util"><code>Sequence</code></a>s produced by this generator are not intended to be used simultaneously from
- multiple consumer threads. If incorrect usage is detected, <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will
+ <p><a href="../../../com/apriori/generator/Sequence.html" title="interface in com.apriori.generator"><code>Sequence</code></a>s produced by this generator are not intended to be used simultaneously from
+ multiple consumer threads. If incorrect usage is detected, <a href="../../../com/apriori/generator/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will
  throw a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util"><code>UncheckedGenerator</code></a></dd>
+<dd><a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator"><code>UncheckedGenerator</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -172,7 +172,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">T</a>,<a href="../../../com/apriori/util/Generator.Output.html" title="type parameter in Generator.Output">U</a>&gt;</span></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;<a href="../../../com/apriori/generator/Generator.Output.html" title="type parameter in Generator.Output">T</a>,<a href="../../../com/apriori/generator/Generator.Output.html" title="type parameter in Generator.Output">U</a>&gt;</span></code>
 <div class="block">Represents the output of a generated sequence.</div>
 </td>
 </tr>
@@ -193,13 +193,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#Generator--">Generator</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#Generator--">Generator</a></span>()</code>
 <div class="block">Constructs a new generator that uses a default, shared thread pool to run generation logic.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#Generator-java.util.concurrent.Executor-">Generator</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#Generator-java.util.concurrent.Executor-">Generator</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
 <div class="block">Constructs a new generator that uses the given executor to run generation logic.</div>
 </td>
 </tr>
@@ -219,36 +219,36 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#asIterable--">asIterable</a></span>()</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#asIterable--">asIterable</a></span>()</code>
 <div class="block">Returns a view of this generator as an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#create-java.util.function.BiConsumer-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer)</code>
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#create-java.util.function.BiConsumer-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer)</code>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function"><code>BiConsumer</code></a> that
  accepts the initial value provided to the generator as well as the generator's output.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,U&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#create-java.util.function.BiConsumer-java.util.concurrent.Executor-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer,
+<td class="colFirst"><code>static &lt;T,U&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,U&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#create-java.util.function.BiConsumer-java.util.concurrent.Executor-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer,
       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function"><code>BiConsumer</code></a> that
  accepts the initial value provided to the generator as well as the generator's output.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer)</code>
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#create-java.util.function.Consumer-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer)</code>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> that accepts
  the generator's output.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#create-java.util.function.Consumer-java.util.concurrent.Executor-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer,
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#create-java.util.function.Consumer-java.util.concurrent.Executor-">create</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer,
       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</code>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> that accepts
  the generator's output.</div>
@@ -256,14 +256,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-">run</a></span>(<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>&nbsp;initialValue,
-   <a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>&gt;&nbsp;out)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#run-U-com.apriori.generator.Generator.Output-">run</a></span>(<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>&nbsp;initialValue,
+   <a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>&gt;&nbsp;out)</code>
 <div class="block">Performs generation logic.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Generator.html#start--">start</a></span>()</code>
+<td class="colFirst"><code><a href="../../../com/apriori/generator/Sequence.html" title="interface in com.apriori.generator">Sequence</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">X</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/generator/Generator.html#start--">start</a></span>()</code>
 <div class="block">Starts generation of a sequence of values.</div>
 </td>
 </tr>
@@ -330,7 +330,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,U&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer)</pre>
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,U&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function"><code>BiConsumer</code></a> that
  accepts the initial value provided to the generator as well as the generator's output. The new
  generator uses a default, shared thread pool.</div>
@@ -349,7 +349,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> that accepts
  the generator's output. The new generator uses a default, shared thread pool.</div>
 <dl>
@@ -367,7 +367,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,U&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer,
+<pre>public static&nbsp;&lt;T,U&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,U&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;U,<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,U&gt;&gt;&nbsp;consumer,
                                                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function"><code>BiConsumer</code></a> that
  accepts the initial value provided to the generator as well as the generator's output. The new
@@ -391,7 +391,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>create</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/util/UncheckedGenerator.html" title="class in com.apriori.util">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer,
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;create(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;T,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&gt;&nbsp;consumer,
                                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Creates a new generator whose generation logic is performed by a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> that accepts
  the generator's output. The new generator uses the specified executor to run logic for each
@@ -409,27 +409,27 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="run-java.lang.Object-com.apriori.util.Generator.Output-">
+<a name="run-java.lang.Object-com.apriori.generator.Generator.Output-">
 <!--   -->
-</a><a name="run-U-com.apriori.util.Generator.Output-">
+</a><a name="run-U-com.apriori.generator.Generator.Output-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>run</h4>
-<pre>protected abstract&nbsp;void&nbsp;run(<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>&nbsp;initialValue,
-                            <a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util">Generator.Output</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>&gt;&nbsp;out)
-                     throws <a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
+<pre>protected abstract&nbsp;void&nbsp;run(<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>&nbsp;initialValue,
+                            <a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator">Generator.Output</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>&gt;&nbsp;out)
+                     throws <a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <div class="block">Performs generation logic. To send values to the sequence consumer, invoke
- <a href="../../../com/apriori/util/Generator.Output.html#yield-T-"><code>Generator.Output.yield(Object)</code></a> on the given output object.</div>
+ <a href="../../../com/apriori/generator/Generator.Output.html#yield-T-"><code>Generator.Output.yield(Object)</code></a> on the given output object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>initialValue</code> - the initial value supplied to the generator, in the first call by the
-    consumer to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a></dd>
+    consumer to <a href="../../../com/apriori/generator/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a></dd>
 <dd><code>out</code> - the output to which generated values are sent</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>X</code> - if an error occurs while generating values</dd>
-<dd><code><a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+<dd><code><a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">X</a> extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -439,7 +439,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>asIterable</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>&gt;&nbsp;asIterable()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>&gt;&nbsp;asIterable()</pre>
 <div class="block">Returns a view of this generator as an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a>. Exceptions thrown during generation
  will result in runtime exceptions being thrown from the iterator's <code>next()</code> and/or
  <code>hasNext()</code> methods.
@@ -450,7 +450,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a view of this generator as an <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a>.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/util/Sequence.html#asIterator--"><code>Sequence.asIterator()</code></a></dd>
+<dd><a href="../../../com/apriori/generator/Sequence.html#asIterator--"><code>Sequence.asIterator()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -460,11 +460,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>start</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/util/Sequence.html" title="interface in com.apriori.util">Sequence</a>&lt;<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/util/Generator.html" title="type parameter in Generator">X</a>&gt;&nbsp;start()</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/generator/Sequence.html" title="interface in com.apriori.generator">Sequence</a>&lt;<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">T</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">U</a>,<a href="../../../com/apriori/generator/Generator.html" title="type parameter in Generator">X</a>&gt;&nbsp;start()</pre>
 <div class="block">Starts generation of a sequence of values. Each call to this method will asynchronously invoke
- <a href="../../../com/apriori/util/Generator.html#run-U-com.apriori.util.Generator.Output-"><code>run(Object, Output)</code></a>. If the generator is started in the same thread that calls this
+ <a href="../../../com/apriori/generator/Generator.html#run-U-com.apriori.generator.Generator.Output-"><code>run(Object, Output)</code></a>. If the generator is started in the same thread that calls this
  method, it will abort (since that would otherwise result in deadlock). In that case, the very
- first call to <a href="../../../com/apriori/util/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will throw a <a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><code>DeadlockException</code></a>.</div>
+ first call to <a href="../../../com/apriori/generator/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will throw a <a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><code>DeadlockException</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the sequence of generated values</dd>
@@ -498,11 +498,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/util/Functions.html" title="class in com.apriori.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/util/Generator.Output.html" title="interface in com.apriori.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li>Prev&nbsp;Class</li>
+<li><a href="../../../com/apriori/generator/Generator.Output.html" title="interface in com.apriori.generator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../../../index.html?com/apriori/util/Generator.html" target="_top">Frames</a></li>
+<li><a href="../../../index.html?com/apriori/generator/Generator.html" target="_top">Frames</a></li>
 <li><a href="Generator.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">

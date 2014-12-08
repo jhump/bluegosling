@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -157,68 +157,74 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#isRunning--">isRunning</a></span>()</code>
+<div class="block">Returns true if the stopwatch is currently running.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#lap--">lap</a></span>()</code>
 <div class="block">Records the stopwatch's elapsed time as a lap measurement and resets the elapsed time.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#lapAverage--">lapAverage</a></span>()</code>
 <div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults--">lap results</a>, in
  nanoseconds.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#lapAverage-java.util.concurrent.TimeUnit-">lapAverage</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Convenience method that computes the average of <a href="../../../com/apriori/util/Stopwatch.html#lapResults--">lap results</a>, in the
  specified unit.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>long[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#lapResults--">lapResults</a></span>()</code>
 <div class="block">Queries for recorded lap times, in nanoseconds.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>long[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#lapResults-java.util.concurrent.TimeUnit-">lapResults</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Queries for recorded lap times, in the specified unit.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#read--">read</a></span>()</code>
 <div class="block">Queries for the elapsed time measured by the stopwatch, in nanoseconds.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#read-java.util.concurrent.TimeUnit-">read</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Queries for the elapased time measured by the stopwatch, in the specified unit.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#reset--">reset</a></span>()</code>
 <div class="block">Completely resets the stopwatch.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#start--">start</a></span>()</code>
 <div class="block">Starts the stopwatch.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#stop--">stop</a></span>()</code>
 <div class="block">Stops the stopwatch.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/util/Stopwatch.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -307,6 +313,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>this</code>, for method chaining</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/util/Stopwatch.html#reset--"><code>reset()</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="isRunning--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isRunning</h4>
+<pre>public&nbsp;boolean&nbsp;isRunning()</pre>
+<div class="block">Returns true if the stopwatch is currently running. It is running if <a href="../../../com/apriori/util/Stopwatch.html#start--"><code>start()</code></a> has
+ been called without a subsequent call to <a href="../../../com/apriori/util/Stopwatch.html#stop--"><code>stop()</code></a> or <a href="../../../com/apriori/util/Stopwatch.html#reset--"><code>reset()</code></a>.
+ 
+ <p>While not running, elapsed time does not accumulate into the stopwatch's
+ <a href="../../../com/apriori/util/Stopwatch.html#read--">value</a>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the stopwatch is running</dd>
 </dl>
 </li>
 </ul>
