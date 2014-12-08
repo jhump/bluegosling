@@ -1,5 +1,6 @@
 package com.apriori.util;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 // TODO: doc
@@ -18,8 +19,17 @@ public final class CallingClass {
       if (additionalStackFramesBack < 0) {
          throw new IllegalArgumentException("Stack frame distance must be non-negative");
       }
-      return getCaller(additionalStackFramesBack + 1,
-            Collections.singletonList(Thread.currentThread().getContextClassLoader()));
+      ClassLoader cl1 = Thread.currentThread().getContextClassLoader();
+      ClassLoader cl2 = CallingClass.class.getClassLoader();
+      Iterable<ClassLoader> cls;
+      if (cl1 == cl2 || cl2 == null) {
+         cls = Collections.singleton(cl1);
+      } else if (cl1 == null) {
+         cls = Collections.singleton(cl2);
+      } else {
+         cls = Arrays.asList(cl1, cl2);
+      }
+      return getCaller(additionalStackFramesBack + 1, cls);
    }
    
    public static Class<?> getCaller(int additionalStackFramesBack,
@@ -38,7 +48,11 @@ public final class CallingClass {
       String callerName = stackTrace[idx].getClassName();
       for (ClassLoader cl : classLoaders) {
          try {
-            return cl.loadClass(callerName);
+            if (cl == null) {
+               return Class.forName(callerName);
+            } else {
+               return cl.loadClass(callerName);
+            }
          } catch (ClassNotFoundException e) {
             // go on to the next class loader
          }

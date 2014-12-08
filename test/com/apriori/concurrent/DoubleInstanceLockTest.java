@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
 
 import static java.util.stream.Collectors.toList;
 
-import com.apriori.util.Variable;
-import com.apriori.util.VariableBoolean;
-import com.apriori.util.VariableInt;
-import com.apriori.util.VariableLong;
+import com.apriori.vars.Variable;
+import com.apriori.vars.VariableBoolean;
+import com.apriori.vars.VariableInt;
+import com.apriori.vars.VariableLong;
 
 import org.junit.Before;
 import org.junit.Test;

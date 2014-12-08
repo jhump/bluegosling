@@ -1,24 +1,26 @@
-package com.apriori.util;
+package com.apriori.vars;
 
+import com.apriori.util.ByteBinaryOperator;
+import com.apriori.util.ByteUnaryOperator;
 
 /**
- * A simple variable reference for a {@code short}. This is the primitive specialization of
- * {@link Variable} for {@code short}.
+ * A simple variable reference for a {@code byte}. This is the primitive specialization of
+ * {@link Variable} for {@code byte}.
  * 
  * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type
- * {@link Short} except that it is mutable.
+ * {@link Byte} except that it is mutable.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableShort extends Number implements Cloneable {
-   private static final long serialVersionUID = -8948943243479719520L;
+public class VariableByte extends Number implements Cloneable {
+   private static final long serialVersionUID = -9061697113254534341L;
    
-   private short value;
+   private byte value;
    
    /**
     * Creates a new variable whose value is zero.
     */
-   public VariableShort() {
+   public VariableByte() {
    }
 
    /**
@@ -26,14 +28,14 @@ public class VariableShort extends Number implements Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableShort(short value) {
+   public VariableByte(byte value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public short get() {
+   public byte get() {
       return value;
    }
    
@@ -43,46 +45,46 @@ public class VariableShort extends Number implements Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public short getAndSet(short v) {
-      short ret = this.value;
+   public byte getAndSet(byte v) {
+      byte ret = this.value;
       this.value = v;
       return ret;
    }
-   
+
    /**
     * Sets this variable's value.
     * 
     * @param v the new value
     */
-   public void set(short v) {
+   public void set(byte v) {
       this.value = v;
+   }
+
+   /**
+    * Updates the variable using the given function. After this method returns, the variable's value
+    * is the result of applying the function to the variable's previous value.
+    *
+    * @param fn the function to apply
+    * @return the variable's new value
+    */
+   public byte updateAndGet(ByteUnaryOperator fn) {
+      return this.value = fn.applyAsByte(this.value);
+   }
+
+   /**
+    * Updates the variable using the given function. After this method returns, the variable's value
+    * is the result of applying the function to the variable's previous value.
+    *
+    * @param fn the function to apply
+    * @return the variable's previous value
+    */
+   public byte getAndUpdate(ByteUnaryOperator fn) {
+      byte ret = this.value;
+      this.value = fn.applyAsByte(ret);
+      return ret;
    }
    
    /**
-    * Updates the variable using the given function. After this method returns, the variable's value
-    * is the result of applying the function to the variable's previous value.
-    *
-    * @param fn the function to apply
-    * @return the variable's new value
-    */
-   public short updateAndGet(ShortUnaryOperator fn) {
-      return this.value = fn.applyAsShort(this.value);
-   }
-
-   /**
-    * Updates the variable using the given function. After this method returns, the variable's value
-    * is the result of applying the function to the variable's previous value.
-    *
-    * @param fn the function to apply
-    * @return the variable's previous value
-    */
-   public short getAndUpdate(ShortUnaryOperator fn) {
-      short ret = this.value;
-      this.value = fn.applyAsShort(ret);
-      return ret;
-   }
-
-   /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
     * previous value and the specified value.
@@ -91,8 +93,8 @@ public class VariableShort extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public short accumulateAndGet(short v, ShortBinaryOperator fn) {
-      return this.value = fn.applyAsShort(this.value, v);
+   public byte accumulateAndGet(byte v, ByteBinaryOperator fn) {
+      return this.value = fn.applyAsByte(this.value, v);
    }
 
    /**
@@ -104,9 +106,9 @@ public class VariableShort extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public short getAndAccumulate(short v, ShortBinaryOperator fn) {
-      short ret = this.value;
-      this.value = fn.applyAsShort(ret, v);
+   public byte getAndAccumulate(byte v, ByteBinaryOperator fn) {
+      byte ret = this.value;
+      this.value = fn.applyAsByte(ret, v);
       return ret;
    }
    
@@ -116,7 +118,7 @@ public class VariableShort extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public short incrementAndGet() {
+   public byte incrementAndGet() {
       return ++this.value;
    }
 
@@ -126,7 +128,7 @@ public class VariableShort extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public short getAndIncrement() {
+   public byte getAndIncrement() {
       return this.value++;
    }
    
@@ -136,7 +138,7 @@ public class VariableShort extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public short decrementAndGet() {
+   public byte decrementAndGet() {
       return --this.value;
    }
 
@@ -146,7 +148,7 @@ public class VariableShort extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public short getAndDecrement() {
+   public byte getAndDecrement() {
       return this.value--;
    }
    
@@ -157,7 +159,7 @@ public class VariableShort extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's new value
     */
-   public short addAndGet(short a) {
+   public byte addAndGet(byte a) {
       return this.value += a;
    }
 
@@ -168,15 +170,15 @@ public class VariableShort extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's previous value
     */
-   public short getAndAdd(short a) {
-      short ret = this.value;
+   public byte getAndAdd(byte a) {
+      byte ret = this.value;
       this.value += a;
       return ret;
    }
    
    @Override
    public byte byteValue() {
-      return (byte) value;
+      return value;
    }
 
    @Override
@@ -208,26 +210,26 @@ public class VariableShort extends Number implements Cloneable {
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableShort clone() {
+   public VariableByte clone() {
       try {
-         return (VariableShort) super.clone();
+         return (VariableByte) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
    }
-
+   
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableShort && this.value == ((VariableShort) o).value;
+      return o instanceof VariableByte && this.value == ((VariableByte) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Short.hashCode(value);
+      return Byte.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Short.toString(value);
+      return Byte.toString(value);
    }
 }

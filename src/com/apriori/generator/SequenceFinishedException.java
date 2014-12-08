@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 /**
  * An exception thrown during {@linkplain Generator generation} of a sequence of elements. This

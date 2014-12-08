@@ -1,28 +1,27 @@
-package com.apriori.util;
+package com.apriori.vars;
 
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.LongBinaryOperator;
-import java.util.function.LongUnaryOperator;
+import com.apriori.util.ShortBinaryOperator;
+import com.apriori.util.ShortUnaryOperator;
+
 
 /**
- * A simple variable reference for a {@code long}. This is the primitive specialization of
- * {@link Variable} for {@code long}.
+ * A simple variable reference for a {@code short}. This is the primitive specialization of
+ * {@link Variable} for {@code short}.
  * 
- * <p>This class provides nearly the same API as {@link AtomicLong}. However, this version is
- * <strong>not</strong> thread-safe. If the variable is being accessed from multiple threads, use an
- * {@link AtomicLong} instead.
+ * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type
+ * {@link Short} except that it is mutable.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableLong extends Number implements Cloneable {
-   private static final long serialVersionUID = -8333227033380651229L;
+public class VariableShort extends Number implements Cloneable {
+   private static final long serialVersionUID = -8948943243479719520L;
    
-   private long value;
+   private short value;
    
    /**
     * Creates a new variable whose value is zero.
     */
-   public VariableLong() {
+   public VariableShort() {
    }
 
    /**
@@ -30,14 +29,14 @@ public class VariableLong extends Number implements Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableLong(long value) {
+   public VariableShort(short value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public long get() {
+   public short get() {
       return value;
    }
    
@@ -47,46 +46,46 @@ public class VariableLong extends Number implements Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public long getAndSet(long v) {
-      long ret = this.value;
+   public short getAndSet(short v) {
+      short ret = this.value;
       this.value = v;
       return ret;
    }
-
+   
    /**
     * Sets this variable's value.
     * 
     * @param v the new value
     */
-   public void set(long v) {
+   public void set(short v) {
       this.value = v;
-   }
-
-   /**
-    * Updates the variable using the given function. After this method returns, the variable's value
-    * is the result of applying the function to the variable's previous value.
-    *
-    * @param fn the function to apply
-    * @return the variable's new value
-    */
-   public long updateAndGet(LongUnaryOperator fn) {
-      return this.value = fn.applyAsLong(this.value);
-   }
-
-   /**
-    * Updates the variable using the given function. After this method returns, the variable's value
-    * is the result of applying the function to the variable's previous value.
-    *
-    * @param fn the function to apply
-    * @return the variable's previous value
-    */
-   public long getAndUpdate(LongUnaryOperator fn) {
-      long ret = this.value;
-      this.value = fn.applyAsLong(ret);
-      return ret;
    }
    
    /**
+    * Updates the variable using the given function. After this method returns, the variable's value
+    * is the result of applying the function to the variable's previous value.
+    *
+    * @param fn the function to apply
+    * @return the variable's new value
+    */
+   public short updateAndGet(ShortUnaryOperator fn) {
+      return this.value = fn.applyAsShort(this.value);
+   }
+
+   /**
+    * Updates the variable using the given function. After this method returns, the variable's value
+    * is the result of applying the function to the variable's previous value.
+    *
+    * @param fn the function to apply
+    * @return the variable's previous value
+    */
+   public short getAndUpdate(ShortUnaryOperator fn) {
+      short ret = this.value;
+      this.value = fn.applyAsShort(ret);
+      return ret;
+   }
+
+   /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
     * previous value and the specified value.
@@ -95,8 +94,8 @@ public class VariableLong extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public long accumulateAndGet(long v, LongBinaryOperator fn) {
-      return this.value = fn.applyAsLong(this.value, v);
+   public short accumulateAndGet(short v, ShortBinaryOperator fn) {
+      return this.value = fn.applyAsShort(this.value, v);
    }
 
    /**
@@ -108,9 +107,9 @@ public class VariableLong extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public long getAndAccumulate(long v, LongBinaryOperator fn) {
-      long ret = this.value;
-      this.value = fn.applyAsLong(ret, v);
+   public short getAndAccumulate(short v, ShortBinaryOperator fn) {
+      short ret = this.value;
+      this.value = fn.applyAsShort(ret, v);
       return ret;
    }
    
@@ -120,7 +119,7 @@ public class VariableLong extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public long incrementAndGet() {
+   public short incrementAndGet() {
       return ++this.value;
    }
 
@@ -130,7 +129,7 @@ public class VariableLong extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public long getAndIncrement() {
+   public short getAndIncrement() {
       return this.value++;
    }
    
@@ -140,7 +139,7 @@ public class VariableLong extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public long decrementAndGet() {
+   public short decrementAndGet() {
       return --this.value;
    }
 
@@ -150,7 +149,7 @@ public class VariableLong extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public long getAndDecrement() {
+   public short getAndDecrement() {
       return this.value--;
    }
    
@@ -161,7 +160,7 @@ public class VariableLong extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's new value
     */
-   public long addAndGet(long a) {
+   public short addAndGet(short a) {
       return this.value += a;
    }
 
@@ -172,12 +171,12 @@ public class VariableLong extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's previous value
     */
-   public long getAndAdd(long a) {
-      long ret = this.value;
+   public short getAndAdd(short a) {
+      short ret = this.value;
       this.value += a;
       return ret;
    }
-
+   
    @Override
    public byte byteValue() {
       return (byte) value;
@@ -185,12 +184,12 @@ public class VariableLong extends Number implements Cloneable {
 
    @Override
    public short shortValue() {
-      return (short) value;
+      return value;
    }
 
    @Override
    public int intValue() {
-      return (int) value;
+      return value;
    }
 
    @Override
@@ -212,26 +211,26 @@ public class VariableLong extends Number implements Cloneable {
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableLong clone() {
+   public VariableShort clone() {
       try {
-         return (VariableLong) super.clone();
+         return (VariableShort) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
    }
-   
+
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableLong && this.value == ((VariableLong) o).value;
+      return o instanceof VariableShort && this.value == ((VariableShort) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Long.hashCode(value);
+      return Short.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Long.toString(value);
+      return Short.toString(value);
    }
 }

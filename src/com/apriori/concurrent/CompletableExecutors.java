@@ -2,7 +2,7 @@ package com.apriori.concurrent;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-import com.apriori.util.Variable;
+import com.apriori.vars.Variable;
 
 import java.util.ArrayList;
 import java.util.Collection;

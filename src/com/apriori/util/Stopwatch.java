@@ -1,10 +1,7 @@
 package com.apriori.util;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A utility for measuring elapsed time. It can be stopped and restarted and the resulting elapsed
@@ -17,13 +14,52 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 // TODO: tests
 public class Stopwatch {
+
+   private static final AtomicReferenceFieldUpdater<Stopwatch, State> stateUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(Stopwatch.class, State.class, "state");
+
+   private static final long[] EMPTY_LAPS = new long[0];
+
+   /**
+    * A simple linked list of laps. The head of the list is the most recently recorded lap, and the
+    * tail is the first recorded.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class Lap {
+      // fields are mutable but must be read-only after we've CAS'ed the list into the
+      // stopwatch's state
+      long lapNanos;
+      Lap next;
+      int index;
+      
+      Lap() {
+      }
+      
+      void setNext(Lap next) {
+         this.next = next;
+         this.index = next == null ? 0 : next.index + 1;
+      }
+   }
+
+   /**
+    * The state of the stopwatch.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class State {
+      // fields are mutable but must be read-only after we've CAS'ed into the stopwatch's state
+      long soFar;
+      long currentBase;
+      boolean running;
+      Lap lapHead;
+      
+      State() {
+      }
+   }
    
    private final Clock clock;
-   private final List<Long> lapNanos = Collections.synchronizedList(new LinkedList<Long>());
-   private final ReentrantReadWriteLock guard = new ReentrantReadWriteLock(true);
-   private long soFar;
-   private long currentBase;
-   private boolean running;
+   private volatile State state;
    
    /**
     * Constructs a new stopwatch. This uses the system clock.
@@ -50,16 +86,23 @@ public class Stopwatch {
     * @return {@code this}, for method chaining
     */
    public Stopwatch start() {
-      guard.writeLock().lock();
-      try {
-         if (!running) {
-            currentBase = clock.nanoTime();
-            running = true;
+      State newState = null;
+      while (true) {
+         State st = state;
+         if (st != null && st.running) {
+            return this;
          }
-      } finally {
-         guard.writeLock().unlock();
+         if (newState == null) {
+            newState = new State();
+         }
+         newState.soFar = st == null ? 0 : st.soFar;
+         newState.currentBase = clock.nanoTime();
+         newState.running = true;
+         newState.lapHead = st == null ? null : st.lapHead;
+         if (stateUpdater.compareAndSet(this, st, newState)) {
+            return this;
+         }
       }
-      return this;
    }
 
    /**
@@ -71,18 +114,37 @@ public class Stopwatch {
     * @see #reset()
     */
    public Stopwatch stop() {
-      guard.writeLock().lock();
-      try {
-         if (running) {
-            soFar += clock.nanoTime() - currentBase;
-            running = false;
+      State newState = null;
+      while (true) {
+         State st = state;
+         if (st == null || !st.running) {
+            return this;
          }
-      } finally {
-         guard.writeLock().unlock();
+         if (newState == null) {
+            newState = new State();
+         }
+         newState.soFar = st.soFar + clock.nanoTime() - st.currentBase;
+         newState.lapHead = st.lapHead;
+         if (stateUpdater.compareAndSet(this, st, newState)) {
+            return this;
+         }
       }
-      return this;
    }
 
+   /**
+    * Returns true if the stopwatch is currently running. It is running if {@link #start()} has
+    * been called without a subsequent call to {@link #stop()} or {@link #reset()}.
+    * 
+    * <p>While not running, elapsed time does not accumulate into the stopwatch's
+    * {@linkplain #read() value}.
+    *
+    * @return true if the stopwatch is running
+    */
+   public boolean isRunning() {
+      State st = state;
+      return st != null && state.running;
+   }
+   
    /**
     * Records the stopwatch's elapsed time as a lap measurement and resets the elapsed time. If the
     * stopwatch is stopped when this method is called, it will still be stopped when this method
@@ -91,20 +153,41 @@ public class Stopwatch {
     * @return {@code this}, for method chaining
     */
    public Stopwatch lap() {
-      guard.writeLock().lock();
-      try {
-         if (running) {
-            long now = clock.nanoTime();
-            lapNanos.add(now - currentBase + soFar);
-            currentBase = now;
+      State newState = new State();
+      Lap newLap = new Lap();
+      while (true) {
+         State st = state;
+         if (st == null) {
+            newLap.lapNanos = 0;
+            newLap.setNext(null);
+
+            newState.soFar = 0;
+            newState.currentBase = 0;
+            newState.running = false;
+            newState.lapHead = newLap;
+         } else if (!st.running) {
+            newLap.lapNanos = st.soFar;
+            newLap.setNext(st.lapHead);
+
+            newState.soFar = 0;
+            newState.currentBase = 0;
+            newState.running = false;
+            newState.lapHead = newLap;
          } else {
-            lapNanos.add(soFar);
+            long now = clock.nanoTime();
+            newLap.lapNanos = now - st.currentBase + st.soFar;
+            newLap.setNext(st.lapHead);
+
+            newState.soFar = st.soFar;
+            newState.currentBase = now;
+            newState.running = true;
+            newState.lapHead = newLap;
          }
-         soFar = 0;
-      } finally {
-         guard.writeLock().unlock();
+         
+         if (stateUpdater.compareAndSet(this, st, newState)) {
+            return this;
+         }
       }
-      return this;
    }
    
    /**
@@ -115,15 +198,13 @@ public class Stopwatch {
     * @return the elapsed time, in nanoseconds
     */
    public long read() {
-      guard.readLock().lock();
-      try {
-         if (!running) {
-            return soFar;
-         } else {
-            return clock.nanoTime() - currentBase + soFar;
-         }
-      } finally {
-         guard.readLock().unlock();
+      State st = state;
+      if (st == null) {
+         return 0;
+      } else if (!st.running) {
+         return st.soFar;
+      } else {
+         return clock.nanoTime() - st.currentBase + st.soFar;
       }
    }
    
@@ -147,14 +228,17 @@ public class Stopwatch {
     * @return an array of lap times, in nanoseconds
     */
    public long[] lapResults() {
-      synchronized (lapNanos) {
-         long laps[] = new long[lapNanos.size()];
-         int i = 0;
-         for (long lap : lapNanos) {
-            laps[i++] = lap;
-         }
-         return laps;
+      State st = state;
+      Lap l = st == null ? null : st.lapHead;
+      if (l == null) {
+         return EMPTY_LAPS;
       }
+      long laps[] = new long[l.index + 1];
+      while (l != null) {
+         laps[l.index] = l.lapNanos;
+         l = l.next;
+      }
+      return laps;
    }
    
    /**
@@ -180,16 +264,20 @@ public class Stopwatch {
     * @return the average of lap results, in nanoseconds
     */
    public double lapAverage() {
+      State st = state;
+      if (st == null) {
+         return Double.NaN;
+      }
       long sum = 0;
       int count = 0;
-      for (long lap : lapResults()) {
+      for (Lap l = st.lapHead; l != null; l = l.next) {
          count++;
-         sum += lap;
+         sum += l.lapNanos;
       }
       if (count == 0) {
          return Double.NaN;
       }
-      return (sum * 1.0) / count;
+      return ((double) sum) / count;
    }
    
    /**
@@ -202,16 +290,20 @@ public class Stopwatch {
     * @see #lapAverage()
     */
    public double lapAverage(TimeUnit unit) {
+      State st = state;
+      if (st == null) {
+         return Double.NaN;
+      }
       long sum = 0;
       int count = 0;
-      for (long lap : lapResults(unit)) {
+      for (Lap l = st.lapHead; l != null; l = l.next) {
          count++;
-         sum += lap;
+         sum += unit.convert(l.lapNanos, TimeUnit.NANOSECONDS);
       }
       if (count == 0) {
          return Double.NaN;
       }
-      return (sum * 1.0) / count;
+      return ((double) sum) / count;
    }
    
    /**
@@ -221,14 +313,7 @@ public class Stopwatch {
     * @return {@code this}, for method chaining
     */
    public Stopwatch reset() {
-      guard.writeLock().lock();
-      try {
-         soFar = 0;
-         running = false;
-         lapNanos.clear();
-      } finally {
-         guard.writeLock().unlock();
-      }
+      state = null;
       return this;
    }
    

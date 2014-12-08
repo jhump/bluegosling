@@ -1,28 +1,28 @@
-package com.apriori.util;
+package com.apriori.vars;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.IntBinaryOperator;
-import java.util.function.IntUnaryOperator;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.LongBinaryOperator;
+import java.util.function.LongUnaryOperator;
 
 /**
- * A simple variable reference for an {@code int}. This is the primitive specialization of
- * {@link Variable} for {@code int}.
+ * A simple variable reference for a {@code long}. This is the primitive specialization of
+ * {@link Variable} for {@code long}.
  * 
- * <p>This class provides nearly the same API as {@link AtomicInteger}. However, this version is
+ * <p>This class provides nearly the same API as {@link AtomicLong}. However, this version is
  * <strong>not</strong> thread-safe. If the variable is being accessed from multiple threads, use an
- * {@link AtomicInteger} instead.
+ * {@link AtomicLong} instead.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableInt extends Number implements Cloneable {
-   private static final long serialVersionUID = 4022947442065262818L;
+public class VariableLong extends Number implements Cloneable {
+   private static final long serialVersionUID = -8333227033380651229L;
    
-   private int value;
+   private long value;
    
    /**
     * Creates a new variable whose value is zero.
     */
-   public VariableInt() {
+   public VariableLong() {
    }
 
    /**
@@ -30,14 +30,14 @@ public class VariableInt extends Number implements Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableInt(int value) {
+   public VariableLong(long value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public int get() {
+   public long get() {
       return value;
    }
    
@@ -47,8 +47,8 @@ public class VariableInt extends Number implements Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public int getAndSet(int v) {
-      int ret = this.value;
+   public long getAndSet(long v) {
+      long ret = this.value;
       this.value = v;
       return ret;
    }
@@ -58,7 +58,7 @@ public class VariableInt extends Number implements Cloneable {
     * 
     * @param v the new value
     */
-   public void set(int v) {
+   public void set(long v) {
       this.value = v;
    }
 
@@ -69,8 +69,8 @@ public class VariableInt extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public int updateAndGet(IntUnaryOperator fn) {
-      return this.value = fn.applyAsInt(this.value);
+   public long updateAndGet(LongUnaryOperator fn) {
+      return this.value = fn.applyAsLong(this.value);
    }
 
    /**
@@ -80,12 +80,12 @@ public class VariableInt extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public int getAndUpdate(IntUnaryOperator fn) {
-      int ret = this.value;
-      this.value = fn.applyAsInt(ret);
+   public long getAndUpdate(LongUnaryOperator fn) {
+      long ret = this.value;
+      this.value = fn.applyAsLong(ret);
       return ret;
    }
-
+   
    /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
@@ -95,8 +95,8 @@ public class VariableInt extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public int accumulateAndGet(int v, IntBinaryOperator fn) {
-      return this.value = fn.applyAsInt(this.value, v);
+   public long accumulateAndGet(long v, LongBinaryOperator fn) {
+      return this.value = fn.applyAsLong(this.value, v);
    }
 
    /**
@@ -108,9 +108,9 @@ public class VariableInt extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public int getAndAccumulate(int v, IntBinaryOperator fn) {
-      int ret = this.value;
-      this.value = fn.applyAsInt(ret, v);
+   public long getAndAccumulate(long v, LongBinaryOperator fn) {
+      long ret = this.value;
+      this.value = fn.applyAsLong(ret, v);
       return ret;
    }
    
@@ -120,7 +120,7 @@ public class VariableInt extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public int incrementAndGet() {
+   public long incrementAndGet() {
       return ++this.value;
    }
 
@@ -130,7 +130,7 @@ public class VariableInt extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public int getAndIncrement() {
+   public long getAndIncrement() {
       return this.value++;
    }
    
@@ -140,7 +140,7 @@ public class VariableInt extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public int decrementAndGet() {
+   public long decrementAndGet() {
       return --this.value;
    }
 
@@ -150,7 +150,7 @@ public class VariableInt extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public int getAndDecrement() {
+   public long getAndDecrement() {
       return this.value--;
    }
    
@@ -161,7 +161,7 @@ public class VariableInt extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's new value
     */
-   public int addAndGet(int a) {
+   public long addAndGet(long a) {
       return this.value += a;
    }
 
@@ -172,15 +172,25 @@ public class VariableInt extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's previous value
     */
-   public int getAndAdd(int a) {
-      int ret = this.value;
+   public long getAndAdd(long a) {
+      long ret = this.value;
       this.value += a;
       return ret;
    }
 
    @Override
+   public byte byteValue() {
+      return (byte) value;
+   }
+
+   @Override
+   public short shortValue() {
+      return (short) value;
+   }
+
+   @Override
    public int intValue() {
-      return value;
+      return (int) value;
    }
 
    @Override
@@ -202,9 +212,9 @@ public class VariableInt extends Number implements Cloneable {
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableInt clone() {
+   public VariableLong clone() {
       try {
-         return (VariableInt) super.clone();
+         return (VariableLong) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
@@ -212,16 +222,16 @@ public class VariableInt extends Number implements Cloneable {
    
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableInt && this.value == ((VariableInt) o).value;
+      return o instanceof VariableLong && this.value == ((VariableLong) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Integer.hashCode(value);
+      return Long.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Integer.toString(value);
+      return Long.toString(value);
    }
 }

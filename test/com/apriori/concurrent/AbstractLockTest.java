@@ -6,7 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.util.VariableBoolean;
+import com.apriori.vars.VariableBoolean;
 
 import org.junit.After;
 import org.junit.Before;

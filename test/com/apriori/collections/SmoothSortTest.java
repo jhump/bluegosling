@@ -60,7 +60,7 @@ public class SmoothSortTest {
       }
    }
    
-   public void sort_list_performance() {
+   /*@Test*/ public void sort_list_performance() {
       // warm up
       int maxLen = 10;
       int count = 1000;

@@ -14,7 +14,7 @@ import com.apriori.concurrent.ListenableFutures.ListenableFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.ListenableScheduledFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.UnfinishableFuture;
 import com.apriori.util.TriFunction;
-import com.apriori.util.VariableBoolean;
+import com.apriori.vars.VariableBoolean;
 
 import java.util.ArrayList;
 import java.util.Arrays;

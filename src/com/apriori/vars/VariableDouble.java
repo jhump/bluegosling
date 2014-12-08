@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.vars;
 
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;

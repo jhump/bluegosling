@@ -1,24 +1,30 @@
-package com.apriori.util;
+package com.apriori.vars;
 
+import com.apriori.util.BooleanBinaryOperator;
+import com.apriori.util.BooleanUnaryOperator;
+
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A simple variable reference for a {@code float}. This is the primitive specialization of
- * {@link Variable} for {@code float}.
+ * A simple variable reference for a {@code boolean}. This is the primitive specialization of
+ * {@link Variable} for {@code boolean}.
  * 
- * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type
- * {@link Float} except that it is mutable.
+ * <p>This class provides nearly the same API as {@link AtomicBoolean}. However, this version is
+ * <strong>not</strong> thread-safe. If the variable is being accessed from multiple threads, use an
+ * {@link AtomicBoolean} instead.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableFloat extends Number implements Cloneable {
-   private static final long serialVersionUID = -8164641785412683342L;
+public class VariableBoolean implements Serializable, Cloneable {
+   private static final long serialVersionUID = -6625609901250555921L;
    
-   private float value;
+   private boolean value;
    
    /**
-    * Creates a new variable whose value is zero.
+    * Creates a new variable whose value is false.
     */
-   public VariableFloat() {
+   public VariableBoolean() {
    }
 
    /**
@@ -26,14 +32,14 @@ public class VariableFloat extends Number implements Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableFloat(float value) {
+   public VariableBoolean(boolean value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public float get() {
+   public boolean get() {
       return value;
    }
    
@@ -43,19 +49,19 @@ public class VariableFloat extends Number implements Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public float getAndSet(float v) {
-      float ret = this.value;
+   public boolean getAndSet(boolean v) {
+      boolean ret = this.value;
       this.value = v;
       return ret;
    }
    
    /**
     * Sets this variable's value.
-    * 
-    * @param v the new value
+    *
+    * @param value the new value
     */
-   public void set(float v) {
-      this.value = v;
+   public void set(boolean value) {
+      this.value = value;
    }
    
    /**
@@ -65,10 +71,10 @@ public class VariableFloat extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public float updateAndGet(FloatUnaryOperator fn) {
-      return this.value = fn.applyAsFloat(this.value);
+   public boolean updateAndGet(BooleanUnaryOperator fn) {
+      return this.value = fn.applyAsBoolean(this.value);
    }
-   
+
    /**
     * Updates the variable using the given function. After this method returns, the variable's value
     * is the result of applying the function to the variable's previous value.
@@ -76,12 +82,12 @@ public class VariableFloat extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public float getAndUpdate(FloatUnaryOperator fn) {
-      float ret = this.value;
-      this.value = fn.applyAsFloat(ret);
+   public boolean getAndUpdate(BooleanUnaryOperator fn) {
+      boolean ret = this.value;
+      this.value = fn.applyAsBoolean(ret);
       return ret;
    }
-
+   
    /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
@@ -91,8 +97,8 @@ public class VariableFloat extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public float accumulateAndGet(float v, FloatBinaryOperator fn) {
-      return this.value = fn.applyAsFloat(this.value, v);
+   public boolean accumulateAndGet(boolean v, BooleanBinaryOperator fn) {
+      return this.value = fn.applyAsBoolean(this.value, v);
    }
 
    /**
@@ -104,39 +110,19 @@ public class VariableFloat extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public float getAndAccumulate(float v, FloatBinaryOperator fn) {
-      float ret = this.value;
-      this.value = fn.applyAsFloat(ret, v);
+   public boolean getAndAccumulate(boolean v, BooleanBinaryOperator fn) {
+      boolean ret = this.value;
+      this.value = fn.applyAsBoolean(ret, v);
       return ret;
    }
 
-   @Override
-   public int intValue() {
-      return (int) value;
-   }
-
-   @Override
-   public long longValue() {
-      return (long) value;
-   }
-
-   @Override
-   public float floatValue() {
-      return value;
-   }
-
-   @Override
-   public double doubleValue() {
-      return value;
-   }
-   
    /**
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableFloat clone() {
+   public VariableBoolean clone() {
       try {
-         return (VariableFloat) super.clone();
+         return (VariableBoolean) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
@@ -144,16 +130,16 @@ public class VariableFloat extends Number implements Cloneable {
    
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableFloat && this.value == ((VariableFloat) o).value;
+      return o instanceof VariableBoolean && this.value == ((VariableBoolean) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Float.hashCode(value);
+      return Boolean.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Float.toString(value);
+      return Boolean.toString(value);
    }
 }

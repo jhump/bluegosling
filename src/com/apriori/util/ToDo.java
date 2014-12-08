@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 @Documented
 @Repeatable(ToDos.class)
 @ToDo("Implement annotation processor that emits TODOs during compile, possibly as warnings.")
+@ToDo("Update TODO comments in this project to use @ToDo annotations instead.")
 public @interface ToDo {
    /**
     * A description of the task that needs to be done.

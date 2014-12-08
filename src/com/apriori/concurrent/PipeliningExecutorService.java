@@ -49,7 +49,7 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public class PipeliningExecutorService<K> {
+public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
 
    final Executor executor;
    final ConcurrentMap<K, Pipeline> pipelines = new ConcurrentHashMap<>();
@@ -82,6 +82,7 @@ public class PipeliningExecutorService<K> {
     * @return a future that represents the completion of the given task
     * @throws NullPointerException if either the pipeline key or task is null
     */
+   @Override
    public <T> ListenableFuture<T> submit(K pipelineKey, Callable<T> task) {
       SettableRunnableFuture<T> future = new SettableRunnableFuture<>(task);
       execute(pipelineKey, future);
@@ -102,6 +103,7 @@ public class PipeliningExecutorService<K> {
     * @return a future that represents the completion of the given task
     * @throws NullPointerException if either the pipeline key or task is null
     */
+   @Override
    public <T> ListenableFuture<T> submit(K pipelineKey, Runnable task, T result) {
       SettableRunnableFuture<T> future = new SettableRunnableFuture<>(task, result);
       execute(pipelineKey, future);
@@ -121,6 +123,7 @@ public class PipeliningExecutorService<K> {
     * @return a future that represents the completion of the given task
     * @throws NullPointerException if either the pipeline key or task is null
     */
+   @Override
    public ListenableFuture<Void> submit(K pipelineKey, Runnable task) {
       return submit(pipelineKey, task, null);
    }
@@ -143,6 +146,7 @@ public class PipeliningExecutorService<K> {
     * @param task a task
     * @throws NullPointerException if either the pipeline key or task is null
     */
+   @Override
    public void execute(K pipelineKey, Runnable task) {
       requireNonNull(pipelineKey);
       requireNonNull(task);
@@ -342,7 +346,7 @@ public class PipeliningExecutorService<K> {
     * @return a new executor service whose tasks are submitted to the given pipeline
     * @throws NullPointerException if either the pipeline key or task is null
     */
-   public ListenableExecutorService newExecutorServiceForPipeline(K pipelineKey) {
+   public ListenableExecutorService newExecutorServiceFor(K pipelineKey) {
       return new SinglePipelineExecutorService<>(this, requireNonNull(pipelineKey));
    }
 

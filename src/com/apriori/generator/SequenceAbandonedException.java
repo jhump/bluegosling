@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 /**
  * An exception thrown in the generator thread to indicate that the corresponding sequence has been

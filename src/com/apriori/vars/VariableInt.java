@@ -1,23 +1,28 @@
-package com.apriori.util;
+package com.apriori.vars;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntBinaryOperator;
+import java.util.function.IntUnaryOperator;
 
 /**
- * A simple variable reference for a {@code byte}. This is the primitive specialization of
- * {@link Variable} for {@code byte}.
+ * A simple variable reference for an {@code int}. This is the primitive specialization of
+ * {@link Variable} for {@code int}.
  * 
- * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type
- * {@link Byte} except that it is mutable.
+ * <p>This class provides nearly the same API as {@link AtomicInteger}. However, this version is
+ * <strong>not</strong> thread-safe. If the variable is being accessed from multiple threads, use an
+ * {@link AtomicInteger} instead.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableByte extends Number implements Cloneable {
-   private static final long serialVersionUID = -9061697113254534341L;
+public class VariableInt extends Number implements Cloneable {
+   private static final long serialVersionUID = 4022947442065262818L;
    
-   private byte value;
+   private int value;
    
    /**
     * Creates a new variable whose value is zero.
     */
-   public VariableByte() {
+   public VariableInt() {
    }
 
    /**
@@ -25,14 +30,14 @@ public class VariableByte extends Number implements Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableByte(byte value) {
+   public VariableInt(int value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public byte get() {
+   public int get() {
       return value;
    }
    
@@ -42,8 +47,8 @@ public class VariableByte extends Number implements Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public byte getAndSet(byte v) {
-      byte ret = this.value;
+   public int getAndSet(int v) {
+      int ret = this.value;
       this.value = v;
       return ret;
    }
@@ -53,7 +58,7 @@ public class VariableByte extends Number implements Cloneable {
     * 
     * @param v the new value
     */
-   public void set(byte v) {
+   public void set(int v) {
       this.value = v;
    }
 
@@ -64,8 +69,8 @@ public class VariableByte extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public byte updateAndGet(ByteUnaryOperator fn) {
-      return this.value = fn.applyAsByte(this.value);
+   public int updateAndGet(IntUnaryOperator fn) {
+      return this.value = fn.applyAsInt(this.value);
    }
 
    /**
@@ -75,12 +80,12 @@ public class VariableByte extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public byte getAndUpdate(ByteUnaryOperator fn) {
-      byte ret = this.value;
-      this.value = fn.applyAsByte(ret);
+   public int getAndUpdate(IntUnaryOperator fn) {
+      int ret = this.value;
+      this.value = fn.applyAsInt(ret);
       return ret;
    }
-   
+
    /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
@@ -90,8 +95,8 @@ public class VariableByte extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public byte accumulateAndGet(byte v, ByteBinaryOperator fn) {
-      return this.value = fn.applyAsByte(this.value, v);
+   public int accumulateAndGet(int v, IntBinaryOperator fn) {
+      return this.value = fn.applyAsInt(this.value, v);
    }
 
    /**
@@ -103,9 +108,9 @@ public class VariableByte extends Number implements Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public byte getAndAccumulate(byte v, ByteBinaryOperator fn) {
-      byte ret = this.value;
-      this.value = fn.applyAsByte(ret, v);
+   public int getAndAccumulate(int v, IntBinaryOperator fn) {
+      int ret = this.value;
+      this.value = fn.applyAsInt(ret, v);
       return ret;
    }
    
@@ -115,7 +120,7 @@ public class VariableByte extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public byte incrementAndGet() {
+   public int incrementAndGet() {
       return ++this.value;
    }
 
@@ -125,7 +130,7 @@ public class VariableByte extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public byte getAndIncrement() {
+   public int getAndIncrement() {
       return this.value++;
    }
    
@@ -135,7 +140,7 @@ public class VariableByte extends Number implements Cloneable {
     *
     * @return the variable's new value
     */
-   public byte decrementAndGet() {
+   public int decrementAndGet() {
       return --this.value;
    }
 
@@ -145,7 +150,7 @@ public class VariableByte extends Number implements Cloneable {
     *
     * @return the variable's previous value
     */
-   public byte getAndDecrement() {
+   public int getAndDecrement() {
       return this.value--;
    }
    
@@ -156,7 +161,7 @@ public class VariableByte extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's new value
     */
-   public byte addAndGet(byte a) {
+   public int addAndGet(int a) {
       return this.value += a;
    }
 
@@ -167,20 +172,10 @@ public class VariableByte extends Number implements Cloneable {
     * @param a the other addend
     * @return the variable's previous value
     */
-   public byte getAndAdd(byte a) {
-      byte ret = this.value;
+   public int getAndAdd(int a) {
+      int ret = this.value;
       this.value += a;
       return ret;
-   }
-   
-   @Override
-   public byte byteValue() {
-      return value;
-   }
-
-   @Override
-   public short shortValue() {
-      return value;
    }
 
    @Override
@@ -207,9 +202,9 @@ public class VariableByte extends Number implements Cloneable {
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableByte clone() {
+   public VariableInt clone() {
       try {
-         return (VariableByte) super.clone();
+         return (VariableInt) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
@@ -217,16 +212,16 @@ public class VariableByte extends Number implements Cloneable {
    
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableByte && this.value == ((VariableByte) o).value;
+      return o instanceof VariableInt && this.value == ((VariableInt) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Byte.hashCode(value);
+      return Integer.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Byte.toString(value);
+      return Integer.toString(value);
    }
 }

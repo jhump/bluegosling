@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

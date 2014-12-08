@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 import java.util.concurrent.Executor;
 

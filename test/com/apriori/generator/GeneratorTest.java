@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 import static com.apriori.testing.MoreAsserts.assertThrows;
 
@@ -9,6 +9,12 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.concurrent.DeadlockException;
 import com.apriori.concurrent.SameThreadExecutor;
+import com.apriori.generator.Generator;
+import com.apriori.generator.Sequence;
+import com.apriori.generator.SequenceAbandonedException;
+import com.apriori.generator.SequenceFinishedException;
+import com.apriori.generator.UncheckedGenerator;
+import com.apriori.generator.UncheckedSequence;
 
 import org.junit.Test;
 

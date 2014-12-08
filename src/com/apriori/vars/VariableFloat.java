@@ -1,27 +1,27 @@
-package com.apriori.util;
+package com.apriori.vars;
 
-import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.apriori.util.FloatBinaryOperator;
+import com.apriori.util.FloatUnaryOperator;
+
 
 /**
- * A simple variable reference for a {@code boolean}. This is the primitive specialization of
- * {@link Variable} for {@code boolean}.
+ * A simple variable reference for a {@code float}. This is the primitive specialization of
+ * {@link Variable} for {@code float}.
  * 
- * <p>This class provides nearly the same API as {@link AtomicBoolean}. However, this version is
- * <strong>not</strong> thread-safe. If the variable is being accessed from multiple threads, use an
- * {@link AtomicBoolean} instead.
+ * <p>This class is <strong>not</strong> thread-safe. This class is very similar to the boxed type
+ * {@link Float} except that it is mutable.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class VariableBoolean implements Serializable, Cloneable {
-   private static final long serialVersionUID = -6625609901250555921L;
+public class VariableFloat extends Number implements Cloneable {
+   private static final long serialVersionUID = -8164641785412683342L;
    
-   private boolean value;
+   private float value;
    
    /**
-    * Creates a new variable whose value is false.
+    * Creates a new variable whose value is zero.
     */
-   public VariableBoolean() {
+   public VariableFloat() {
    }
 
    /**
@@ -29,14 +29,14 @@ public class VariableBoolean implements Serializable, Cloneable {
     *
     * @param value the variable's initial value
     */
-   public VariableBoolean(boolean value) {
+   public VariableFloat(float value) {
       this.value = value;
    }
 
    /**
     * Gets this variable's current value.
     */
-   public boolean get() {
+   public float get() {
       return value;
    }
    
@@ -46,19 +46,19 @@ public class VariableBoolean implements Serializable, Cloneable {
     * @param v the new value
     * @return the variable's previous value
     */
-   public boolean getAndSet(boolean v) {
-      boolean ret = this.value;
+   public float getAndSet(float v) {
+      float ret = this.value;
       this.value = v;
       return ret;
    }
    
    /**
     * Sets this variable's value.
-    *
-    * @param value the new value
+    * 
+    * @param v the new value
     */
-   public void set(boolean value) {
-      this.value = value;
+   public void set(float v) {
+      this.value = v;
    }
    
    /**
@@ -68,10 +68,10 @@ public class VariableBoolean implements Serializable, Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public boolean updateAndGet(BooleanUnaryOperator fn) {
-      return this.value = fn.applyAsBoolean(this.value);
+   public float updateAndGet(FloatUnaryOperator fn) {
+      return this.value = fn.applyAsFloat(this.value);
    }
-
+   
    /**
     * Updates the variable using the given function. After this method returns, the variable's value
     * is the result of applying the function to the variable's previous value.
@@ -79,12 +79,12 @@ public class VariableBoolean implements Serializable, Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public boolean getAndUpdate(BooleanUnaryOperator fn) {
-      boolean ret = this.value;
-      this.value = fn.applyAsBoolean(ret);
+   public float getAndUpdate(FloatUnaryOperator fn) {
+      float ret = this.value;
+      this.value = fn.applyAsFloat(ret);
       return ret;
    }
-   
+
    /**
     * Accumulates the given value into  the variable using the given function. After this method
     * returns, the variable's value is the result of applying the function to the variable's
@@ -94,8 +94,8 @@ public class VariableBoolean implements Serializable, Cloneable {
     * @param fn the function to apply
     * @return the variable's new value
     */
-   public boolean accumulateAndGet(boolean v, BooleanBinaryOperator fn) {
-      return this.value = fn.applyAsBoolean(this.value, v);
+   public float accumulateAndGet(float v, FloatBinaryOperator fn) {
+      return this.value = fn.applyAsFloat(this.value, v);
    }
 
    /**
@@ -107,19 +107,39 @@ public class VariableBoolean implements Serializable, Cloneable {
     * @param fn the function to apply
     * @return the variable's previous value
     */
-   public boolean getAndAccumulate(boolean v, BooleanBinaryOperator fn) {
-      boolean ret = this.value;
-      this.value = fn.applyAsBoolean(ret, v);
+   public float getAndAccumulate(float v, FloatBinaryOperator fn) {
+      float ret = this.value;
+      this.value = fn.applyAsFloat(ret, v);
       return ret;
    }
 
+   @Override
+   public int intValue() {
+      return (int) value;
+   }
+
+   @Override
+   public long longValue() {
+      return (long) value;
+   }
+
+   @Override
+   public float floatValue() {
+      return value;
+   }
+
+   @Override
+   public double doubleValue() {
+      return value;
+   }
+   
    /**
     * Creates a copy of this variable. The returned instance has the same value as this.
     */
    @Override
-   public VariableBoolean clone() {
+   public VariableFloat clone() {
       try {
-         return (VariableBoolean) super.clone();
+         return (VariableFloat) super.clone();
       } catch (CloneNotSupportedException e) {
          throw new AssertionError(e);
       }
@@ -127,16 +147,16 @@ public class VariableBoolean implements Serializable, Cloneable {
    
    @Override
    public boolean equals(Object o) {
-      return o instanceof VariableBoolean && this.value == ((VariableBoolean) o).value;
+      return o instanceof VariableFloat && this.value == ((VariableFloat) o).value;
    }
    
    @Override
    public int hashCode() {
-      return Boolean.hashCode(value);
+      return Float.hashCode(value);
    }
    
    @Override
    public String toString() {
-      return Boolean.toString(value);
+      return Float.toString(value);
    }
 }

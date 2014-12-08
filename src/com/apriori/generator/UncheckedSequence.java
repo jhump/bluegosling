@@ -1,4 +1,4 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 /**
  * A sequence that does not throw checked exceptions from calls to {@link #next()}.

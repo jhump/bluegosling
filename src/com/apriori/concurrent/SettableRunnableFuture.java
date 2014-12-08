@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * value, or cause of failure, is set, subsequent attempts to set the value or cause of failure will
  * not succeed.
  * 
- * <p>Unlike its superclass, {@link SettableFuture}, cancelling this kind of future can interrupt a
+ * <p>Unlike its superclass, {@link SettableFuture}, canceling this kind of future can interrupt a
  * running task. 
  *
  * @param <T> the type of future value

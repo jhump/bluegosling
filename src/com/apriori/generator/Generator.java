@@ -1,6 +1,8 @@
-package com.apriori.util;
+package com.apriori.generator;
 
 import com.apriori.concurrent.DeadlockException;
+import com.apriori.vars.Variable;
+import com.apriori.vars.VariableBoolean;
 
 import java.lang.ref.WeakReference;
 import java.util.ConcurrentModificationException;
