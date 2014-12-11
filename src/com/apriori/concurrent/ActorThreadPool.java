@@ -1446,11 +1446,11 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             e.printStackTrace();
             throw e;
          } finally {
+            assert actors.isEmpty();
             if (!terminated) {
+               assert owner.isShutdown() && owner.actorQueues.isEmpty(); 
                owner.removeWorker(this);
             }
-            assert terminated || owner.isShutdown();
-            assert findTask() == null;
          }
       }
       

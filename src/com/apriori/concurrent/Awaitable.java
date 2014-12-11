@@ -1,14 +1,17 @@
 package com.apriori.concurrent;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * An object that represents a future event.
+ * An object that represents a future event. Like a {@link Future} without a value.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -39,43 +42,65 @@ public interface Awaitable {
     */
    boolean isDone();
 
+   /**
+    * Awaits the future event, blocking the current thread in a manner that cannot be interrupted
+    * until the event occurs.
+    */
    default void awaitUninterruptibly() {
       boolean interrupted = false;
-      while (true) {
-         try {
-            await();
-            break;
-         } catch (InterruptedException e) {
-            interrupted = true;
+      try {
+         while (true) {
+            try {
+               await();
+               return;
+            } catch (InterruptedException e) {
+               interrupted = true;
+            }
          }
-      }
-      if (interrupted) {
-         Thread.currentThread().interrupt();
+      } finally {
+         if (interrupted) {
+            Thread.currentThread().interrupt();
+         }
       }
    }
    
+   /**
+    * Awaits the future event, blocking in a manner that cannot be interrupted up to the specified
+    * amount of time until the event occurs.
+    *
+    * @param limit the maximum amount of time to wait
+    * @param unit the unit of {@code limit}
+    * @return true if the event occurred or false if the time limit was encountered first
+    */
    default boolean awaitUninterruptibly(long limit, TimeUnit unit) {
-      boolean ret;
       boolean interrupted = false;
       long startNanos = System.nanoTime();
       long limitNanos = unit.toNanos(limit);
-      while (true) {
-         try {
-            long spentNanos = System.nanoTime() - startNanos;
-            long remaining = limitNanos - spentNanos;
-            ret = await(remaining, TimeUnit.NANOSECONDS);
-            break;
-         } catch (InterruptedException e) {
-            interrupted = true;
+      try {
+         while (true) {
+            try {
+               long spentNanos = System.nanoTime() - startNanos;
+               long remaining = limitNanos - spentNanos;
+               return await(remaining, TimeUnit.NANOSECONDS);
+            } catch (InterruptedException e) {
+               interrupted = true;
+            }
+         }
+      } finally {
+         if (interrupted) {
+            Thread.currentThread().interrupt();
          }
       }
-      if (interrupted) {
-         Thread.currentThread().interrupt();
-      }
-      return ret;
    }
    
+   /**
+    * Adapts a {@link Future} to the {@link Awaitable} interface.
+    *
+    * @param f a future
+    * @return an awaitable that completes when the future completes
+    */
    static Awaitable fromFuture(Future<?> f) {
+      requireNonNull(f);
       if (f instanceof Awaitable) {
          return (Awaitable) f;
       } else {
@@ -110,7 +135,14 @@ public interface Awaitable {
       }
    }
    
+   /**
+    * Adapts a {@link CountDownLatch} to the {@link Awaitable} interface.
+    *
+    * @param latch a latch
+    * @return an awaitable that completes when the latch opens
+    */
    static Awaitable fromLatch(CountDownLatch latch) {
+      requireNonNull(latch);
       return new Awaitable() {
          @Override
          public void await() throws InterruptedException {
@@ -125,6 +157,36 @@ public interface Awaitable {
          @Override
          public boolean isDone() {
             return latch.getCount() == 0;
+         }
+      };
+   }
+   
+   /**
+    * Creates an awaitable that waits for the given {@link ExecutorService} to terminate.
+    *
+    * @param executor an executor service
+    * @return an awaitable that completes when the executor terminates
+    */
+   static Awaitable fromTerminatingExecutor(ExecutorService executor) {
+      requireNonNull(executor);
+      return new Awaitable() {
+         @Override
+         public void await() throws InterruptedException {
+            while (true) {
+               if (executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)) {
+                  return;
+               }
+            }
+         }
+
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            return executor.awaitTermination(limit, unit);
+         }
+
+         @Override
+         public boolean isDone() {
+            return executor.isTerminated();
          }
       };
    }

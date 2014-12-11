@@ -110,7 +110,7 @@ public class NonReentrantLock implements Lock {
       protected boolean tryRelease(int i) {
          if (i == -1) {
             setState(0);
-            return  true;
+            return true;
          } else {
             return compareAndSetState(1, 0);
          }

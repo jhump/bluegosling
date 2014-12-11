@@ -113,7 +113,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
     * {@link TrieNode#put(int, int, Object, Object, PutResult)}. Java doesn't support light-weight
     * tuples or returning multiple values on the stack, so we use this idiom to reduce allocations
     * and garbage. Instead of each level in the trie creating and returning a new tuple, we allocate
-    * one up front and let each level of the trie modify that one object.
+    * just one at the leaf of the recursive call and then let each level of the trie modify that one
+    * object.
     *
     * @param <K> the type of keys in the trie
     * @param <V> the type of values in the trie
@@ -186,9 +187,9 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
        * @param currentOffset represents the number of bits of the hash code already processed
        * @param key the key to find
        * @param value the value to associate with this key if not found and a new mapping is created
-       * @param result a holder for the result of the operation
+       * @return the result of the operation
        */
-      void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result);
+      PutResult<K, V> put(int hash, int currentOffset, K key, V value);
       
       /**
        * Executes the given action for every mapping present in this trie node.
@@ -324,7 +325,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
 
       @Override
-      public void put(int hash, int currentOffset, K key, V value, PutResult<K, V> result) {
+      public PutResult<K, V> put(int hash, int currentOffset, K key, V value) {
          int significantBits = (hash >>> currentOffset) & BITS_MASK;
          int mask = 1 << significantBits;
          if ((present & mask) == 0) {
@@ -344,27 +345,29 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             } else {
                newChildren[index] = new InnerLeafTrieNode<K, V>(key, value, hash);
             }
+            PutResult<K, V> result = new PutResult<>();
             result.node = new IntermediateTrieNode<K, V>(newPresent, newChildren);
             result.added = true;
-            return;
+            return result;
          }
          
          int index = Long.bitCount((mask - 1) & present);
          TrieNode<K, V> oldChild = children[index];
-         oldChild.put(hash, currentOffset + BITS_PER_LEVEL, key, value, result);
+         PutResult<K, V>  result = oldChild.put(hash, currentOffset + BITS_PER_LEVEL, key, value);
          TrieNode<K, V> newChild = result.node;
          if (newChild == oldChild) {
             // no change
             assert !result.added;
             result.node = this;
             result.added = false;
-            return;
+            return result;
          }
          int length = children.length;
          TrieNode<K, V> newChildren[] = createChildren(length);
          System.arraycopy(children, 0, newChildren, 0, length);
          newChildren[index] = newChild;
-         result.node = new IntermediateTrieNode<K, V>(present, newChildren); 
+         result.node = new IntermediateTrieNode<K, V>(present, newChildren);
+         return result;
       }
       
       @Override
@@ -470,13 +473,13 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
 
       @Override
-      public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
+      public PutResult<K, V> put(int hash, int currentOffset, K newKey, V newValue) {
          assert currentOffset >= 32;
-         doPut(newKey, newValue, hash, result);
-         return;
+         return doPut(newKey, newValue, hash);
       }
       
-      void doPut(K newKey, V newValue, int hash, PutResult<K, V> result) {
+      PutResult<K, V> doPut(K newKey, V newValue, int hash) {
+         PutResult<K, V> result = new PutResult<>();
          ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
          for (ListNode<K, V> current = this; current != null; current = current.next) {
             if (newKey == null ? current.key == null : newKey.equals(current.key)) {
@@ -484,14 +487,14 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                   // no change
                   result.node = this;
                   result.added = false;
-                  return;
+                  return result;
                }
                if (stack.isEmpty()) {
                   // changing the initial leaf node -- just create a new head ListNode with new
                   // value and keep the rest
                   result.node = create(newKey, newValue, next, hash);
                   result.added = false;
-                  return;
+                  return result;
                }
                // rebuild path from leaf node to here and keep the rest of the list
                current = new ListNode<K, V>(newKey, newValue, current.next); 
@@ -500,7 +503,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                   if (stack.isEmpty()) {
                      result.node = create(node.key, node.value, current, hash);
                      result.added = false;
-                     return;
+                     return result;
                   }
                   current = new ListNode<K, V>(node.key, node.value, current);
                }
@@ -510,6 +513,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          // adding new value - push to head of list
          result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next), hash);
          result.added = true;
+         return result;
       }
       
       @Override
@@ -567,12 +571,14 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
 
       @Override
-      public void put(int hash, int currentOffset, K newKey, V newValue, PutResult<K, V> result) {
+      public PutResult<K, V> put(int hash, int currentOffset, K newKey, V newValue) {
          if (hash == hashCode) {
-            doPut(newKey, newValue, hash, result);
+            return doPut(newKey, newValue, hash);
          } else {
+            PutResult<K, V> result = new PutResult<>();
             result.node = create(hash, currentOffset, newKey, newValue);
             result.added = true;
+            return result;
          }
       }
 
@@ -692,8 +698,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       if (root == null) {
          return new HamtPersistentMap<K, V>(1, new InnerLeafTrieNode<K, V>(key, value, hash(key)));
       }
-      PutResult<K, V> result = new PutResult<K, V>();
-      root.put(hash(key), 0, key, value, result);
+      PutResult<K, V> result = root.put(hash(key), 0, key, value);
       return result.node == root ? this
             : new HamtPersistentMap<K, V>(result.added ? size + 1 : size, result.node);
    }

@@ -72,7 +72,7 @@ public class SpinLock implements Lock {
          if (Thread.interrupted()) {
             throw new InterruptedException();
          }
-         for (int i = 0; i < 10_000; i++) {
+         for (int i = 0; i < 1_000; i++) {
             if (locked.compareAndSet(false, true)) {
                return;
             }

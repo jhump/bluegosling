@@ -9,18 +9,18 @@ import org.junit.Test;
 import java.util.concurrent.Callable;
 
 /**
- * Test cases for {@link AbstractListenableFuture}.
+ * Test cases for the base implementation of {@link AbstractListenableFuture}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SimpleListenableFutureTest extends AbstractListenableFutureTest {
+public class BaseListenableFutureTest extends AbstractListenableFutureTest {
    
    @Override
    protected ListenableFuture<String> makeFuture() {
       return new AbstractListenableFuture<String>() {
          @Override protected void interrupt() {
             // let test know that we got the interrupt
-            SimpleListenableFutureTest.this.interrupted();
+            interrupted();
          }
       };
    }

@@ -1,6 +1,7 @@
 package com.apriori.collections;
 
 import java.lang.reflect.Array;
+import java.util.AbstractCollection;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,6 +24,23 @@ import java.util.function.IntSupplier;
 // TODO: tests
 public final class Iterables {
    private Iterables() {
+   }
+   
+   public static <E> Collection<E> asCollection(Iterable<E> iter) {
+      if (iter instanceof Collection) {
+         return ((Collection<E>) iter);
+      }
+      return new AbstractCollection<E>() {
+         @Override
+         public Iterator<E> iterator() {
+            return iter.iterator();
+         }
+
+         @Override
+         public int size() {
+            return Iterables.size(iter);
+         }
+      };
    }
    
    public static <E> Comparator<Iterable<E>> comparator(Comparator<? super E> comparator) {

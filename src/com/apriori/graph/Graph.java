@@ -9,6 +9,7 @@ import com.apriori.concurrent.FutureVisitor;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.SettableRunnableFuture;
 import com.apriori.reflect.TypeRef;
+import com.apriori.util.Immediate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -383,7 +384,13 @@ public class Graph<T> {
             Object args[] = new Object[len];
             for (int i = 0; i < len; i++) {
                Node.Input<?> in = nodeInputs.get(i);
-               args[i] = (in.isAsync() || in.isOptional()) ? deps[i] : deps[i].getResult();
+               if (in.isAsync()) {
+                  args[i] = deps[i];
+               } else if (in.isOptional()) {
+                  args[i] = Immediate.fromCompletedFuture(deps[i]);
+               } else {
+                  args[i] = deps[i].getResult();
+               }
             }
             return node.apply(args);
          }, executor));
@@ -393,7 +400,7 @@ public class Graph<T> {
    }
    
    // similar to ListenableFuture.chainTo(...) except that it keeps cancellation status in sync
-   // (e.g. cancelling returned future also cancels input future) and the chained task can throw
+   // (e.g. canceling returned future also cancels input future) and the chained task can throw
    // a checked exception
    static <T, U> ListenableFuture<U> chain(ListenableFuture<T> src, Callable<U> op,
          Executor executor) {

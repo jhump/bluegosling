@@ -310,49 +310,57 @@ final class ListenableFutures {
    }
    
    /**
-    * A listenable future that wraps a {@link CompletableFuture}.
+    * A listenable future that wraps a {@link CompletionStage}.
     *
     * @param <T> the type of the future value
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class CompletableFutureWrapper<T> implements ListenableFuture<T> {
-      final CompletableFuture<T> future;
+   static class CompletionStageWrapper<T> implements ListenableFuture<T> {
+      final CompletionStage<T> stage;
+      CompletableFuture<T> cf;
       
-      CompletableFutureWrapper(CompletableFuture<T> future) {
-         this.future = future;
+      CompletionStageWrapper(CompletionStage<T> stage) {
+         this.stage = stage;
+      }
+      
+      private CompletableFuture<T> future() {
+         if (cf == null) {
+            cf = stage.toCompletableFuture();
+         }
+         return cf;
       }
 
       @Override
       public boolean cancel(boolean mayInterruptIfRunning) {
-         return future.cancel(mayInterruptIfRunning);
+         return future().cancel(mayInterruptIfRunning);
       }
 
       @Override
       public boolean isCancelled() {
-         return future.isCancelled();
+         return future().isCancelled();
       }
 
       @Override
       public boolean isDone() {
-         return future.isDone();
+         return future().isDone();
       }
 
       @Override
       public T get() throws InterruptedException, ExecutionException {
-         return future.get();
+         return future().get();
       }
 
       @Override
       public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
             TimeoutException {
-         return future.get(timeout, unit);
+         return future().get(timeout, unit);
       }
 
       @Override
       public void await() throws InterruptedException {
          try {
-            future.get();
+            future().get();
          } catch (ExecutionException e) {
          } catch (CancellationException e) {
          }
@@ -361,7 +369,7 @@ final class ListenableFutures {
       @Override
       public boolean await(long limit, TimeUnit unit) throws InterruptedException {
          try {
-            future.get(limit, unit);
+            future().get(limit, unit);
          } catch (ExecutionException e) {
          } catch (CancellationException e) {
          } catch (TimeoutException e) {
@@ -372,7 +380,7 @@ final class ListenableFutures {
 
       @Override
       public boolean isSuccessful() {
-         return future.isDone() && !future.isCompletedExceptionally();
+         return future().isDone() && !future().isCompletedExceptionally();
       }
 
       @Override
@@ -381,7 +389,7 @@ final class ListenableFutures {
             throw new IllegalStateException("future did not complete successfully");
          }
          try {
-            return future.join();
+            return future().join();
          } catch (Throwable t) {
             // sadly possible thanks to asynchronous obtrudeException
             throw new IllegalStateException("future did not complete successfully");
@@ -390,7 +398,7 @@ final class ListenableFutures {
 
       @Override
       public boolean isFailed() {
-         return future.isCompletedExceptionally() && !future.isCancelled();
+         return future().isCompletedExceptionally() && !future().isCancelled();
       }
 
       @Override
@@ -403,7 +411,7 @@ final class ListenableFutures {
          try {
             while (true) {
                try {
-                  future.get();
+                  future().get();
                   // sadly possible thanks to asynchronous obtrudeValue
                   throw new IllegalStateException("future did not complete with failure");
                } catch (ExecutionException e) {
@@ -420,15 +428,15 @@ final class ListenableFutures {
       @Override
       public void addListener(FutureListener<? super T> listener, Executor executor) {
          ListenableFuture<T> self = this;
-         future.whenCompleteAsync((err, val) -> { listener.onCompletion(self); }, executor);
+         stage.whenCompleteAsync((err, val) -> { listener.onCompletion(self); }, executor);
       }
 
       @Override
       public void visit(FutureVisitor<? super T> visitor) {
-         if (!future.isDone()) {
+         if (!future().isDone()) {
             throw new IllegalStateException("future is not yet done");
          }
-         if (future.isCancelled()) {
+         if (future().isCancelled()) {
             visitor.cancelled();
             return;
          }
@@ -437,7 +445,7 @@ final class ListenableFutures {
          try {
             while (true) {
                try {
-                  visitor.successful(future.get());
+                  visitor.successful(future().get());
                   return;
                } catch (ExecutionException e) {
                   visitor.failed(e.getCause());
@@ -452,13 +460,8 @@ final class ListenableFutures {
       }
       
       @Override
-      public CompletableFuture<T> toCompletableFuture() {
-         return future;
-      }
-      
-      @Override
       public CompletionStage<T> asCompletionStage() {
-         return future;
+         return stage;
       }
    }
    
@@ -1162,7 +1165,29 @@ final class ListenableFutures {
 
       @Override
       public CompletableFuture<T> toCompletableFuture() {
-         return future.toCompletableFuture();
+         CompletableFuture<T> ret = new CompletableFuture<T>() {
+            @Override public boolean cancel(boolean mayInterrupt) {
+               // cancel this future when the completable view gets cancelled
+               return super.cancel(mayInterrupt) && future.cancel(mayInterrupt);
+            }
+         };
+         future.visitWhenDone(new FutureVisitor<T>() {
+            @Override
+            public void successful(T result) {
+               ret.complete(result);
+            }
+
+            @Override
+            public void failed(Throwable failure) {
+               ret.completeExceptionally(failure);
+            }
+
+            @Override
+            public void cancelled() {
+               ret.cancel(false);
+            }
+         });
+         return ret;
       }
       
       /**

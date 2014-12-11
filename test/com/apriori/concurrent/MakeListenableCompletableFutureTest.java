@@ -10,10 +10,11 @@ import org.junit.Test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * Test cases for the future implementation returned from
- * {@link ListenableFutures#makeCompletable(CompletableFuture)}.
+ * {@link ListenableFuture#fromCompletionStage(CompletionStage)}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -71,11 +72,6 @@ public class MakeListenableCompletableFutureTest extends AbstractListenableFutur
       assertEquals(0, interruptCount.get());
    }
    
-   @Test public void toCompletableFuture() {
-      // make sure that unwrapping it works correctly
-      assertSame(completableFuture, future.toCompletableFuture());
-   }
-
    @Test public void asCompletionStage() {
       // make sure that unwrapping it works correctly
       assertSame(completableFuture, future.asCompletionStage());

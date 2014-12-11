@@ -1,12 +1,17 @@
 package com.apriori.concurrent;
 
+import com.apriori.collections.Iterables;
+
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -666,26 +671,6 @@ public class HierarchicalLock {
             throw new IllegalStateException("node is not locked");
          }
       }
-      
-      void toCollection(Collection<Thread> collection) {
-         HolderNode current = this;
-         current.lock();
-         try {
-            while (current != null) {
-               collection.add(current.thread);
-               HolderNode nextNode = current.next;
-               if (nextNode != null) {
-                  nextNode.lock();
-               }
-               current.unlock();
-               current = nextNode;
-            }
-         } finally {
-            if (current != null) {
-               current.unlock();
-            }
-         }
-      }
    }
    
    /**
@@ -975,27 +960,58 @@ public class HierarchicalLock {
       }
 
       Collection<Thread> getSharedHolders() {
-         HolderNode node;
-         long count;
-         while (true) {
-            long state = getState();
-            count = sharedCount(state);
-            if (count == 0) {
-               return Collections.emptySet();
+         return new AbstractCollection<Thread>() {
+            @SuppressWarnings("synthetic-access") // accesses private API of Sync
+            @Override
+            public Iterator<Thread> iterator() {
+               // get head of list of shared holders
+               HolderNode firstNode;
+               while (true) {
+                  long state = getState();
+                  if (sharedCount(state) == 0) {
+                     firstNode = null;
+                     break;
+                  }
+                  firstNode = holders;
+                  if (firstNode == null) {
+                     // racing with an acquisition or release -- let iterator be empty
+                     break;
+                  }
+                  // before returning holders, double-check state to make sure we weren't racing
+                  // with a thread that was putting an exclusive holder in it
+                  if (getState() == state) {
+                     break;
+                  }
+               }
+               final HolderNode firstNodeFinal = firstNode; 
+               
+               // now we can return a simple iterator that just traverses the linked list
+               return new Iterator<Thread>() {
+                  HolderNode current = firstNodeFinal;
+                  
+                  @Override
+                  public boolean hasNext() {
+                     return current != null;
+                  }
+
+                  @Override
+                  public Thread next() {
+                     if (current == null) {
+                        throw new NoSuchElementException();
+                     }
+                     // don't need a lock to read these atomically since current.thread is final
+                     Thread thread = current.thread;
+                     current = current.next;
+                     return thread;
+                  }
+               };
             }
-            node = holders;
-            if (node == null) {
-               // racing with an acquisition or release -- can just return empty
-               return Collections.emptySet();
+
+            @Override
+            public int size() {
+               return Iterables.size(iterator());
             }
-            if (getState() == state) {
-               break;
-            }
-         }
-         int holderCount = ((int) count) & Integer.MAX_VALUE;
-         Collection<Thread> collection = new HashSet<>(holderCount);
-         node.toCollection(collection);
-         return collection;
+         };
       }
 
       void addHolder(HolderNode node) {

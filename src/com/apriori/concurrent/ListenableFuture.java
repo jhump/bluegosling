@@ -6,8 +6,8 @@ import static com.apriori.concurrent.ListenableFutures.snapshot;
 
 import com.apriori.concurrent.ListenableFutures.CancelledFuture;
 import com.apriori.concurrent.ListenableFutures.CombiningFuture;
-import com.apriori.concurrent.ListenableFutures.CompletableFutureWrapper;
 import com.apriori.concurrent.ListenableFutures.CompletedFuture;
+import com.apriori.concurrent.ListenableFutures.CompletionStageWrapper;
 import com.apriori.concurrent.ListenableFutures.FailedFuture;
 import com.apriori.concurrent.ListenableFutures.ListenableCompletionStage;
 import com.apriori.concurrent.ListenableFutures.ListenableFutureWrapper;
@@ -479,48 +479,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
       };
       return result;
    }
-   
-   /**
-    * Converts this future into a {@link CompletableFuture}. The returned future will complete
-    * successfully when this future completes successfully or fail when this future fails. This
-    * only holds true if the returned future is allowed to finish normally. Due to the API provided
-    * by {@link CompletableFuture}, it is possible that the returned future could be asynchronously
-    * {@linkplain CompletableFuture#complete(Object) completed} or {@linkplain
-    * CompletableFuture#obtrudeValue(Object) obtruded} and thus diverge from this future's result.
-    * 
-    * <p>The returned future's cancellation status will be kept in sync with the specified future.
-    * So if the returned future is cancelled, so too will this future be cancelled, and
-    * vice versa.
-    *
-    * @return a version of this future, as a {@link CompletableFuture}
-    */
-   default CompletableFuture<T> toCompletableFuture() {
-      ListenableFuture<T> self = this;
-      CompletableFuture<T> ret = new CompletableFuture<T>() {
-         @Override public boolean cancel(boolean mayInterrupt) {
-            // cancel this future when the completable view gets cancelled
-            return super.cancel(mayInterrupt) && self.cancel(mayInterrupt);
-         }
-      };
-      this.visitWhenDone(new FutureVisitor<T>() {
-         @Override
-         public void successful(T result) {
-            ret.complete(result);
-         }
 
-         @Override
-         public void failed(Throwable failure) {
-            ret.completeExceptionally(failure);
-         }
-
-         @Override
-         public void cancelled() {
-            ret.cancel(false);
-         }
-      });
-      return ret;
-   }
-   
    /**
     * Returns a view of this future as a {@link CompletionStage}.
     *
@@ -541,7 +500,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
          // unwrap if we can
          return ((ListenableCompletionStage<T>) stage).future;
       }
-      return makeListenable(stage.toCompletableFuture());
+      return new CompletionStageWrapper<T>(stage); 
    }
    
    /**
@@ -566,27 +525,13 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
          return (ListenableFuture<T>) future;
       }
       if (future instanceof CompletableFuture) {
-         return makeListenable((CompletableFuture<T>) future);
+         return fromCompletionStage((CompletableFuture<T>) future);
       }
       if (future.isDone()) {
          // can get the value immediately
          return immediateCopy(future);
       }
       return new ListenableFutureWrapper<T>(future);
-   }
-   
-   /**
-    * Converts the given completable future into a {@link ListenableFuture}.
-    * 
-    * <p>The returned future's cancellation status will be kept in sync with the specified future.
-    * So if the returned future is cancelled, so too will the underlying future be cancelled, and
-    * vice versa.
-    *
-    * @param future a completable future
-    * @return a listenable future view of the given future
-    */
-   static <T> ListenableFuture<T> makeListenable(CompletableFuture<T> future) {
-      return new CompletableFutureWrapper<T>(future); 
    }
    
    /**
