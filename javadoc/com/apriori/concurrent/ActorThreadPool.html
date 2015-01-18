@@ -133,7 +133,7 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
  
  <p>This is similar in functionality to a <a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><code>PipeliningExecutorService</code></a>, which wraps another
  executor instead of providing its own thread pool. Because it does not control the way the
- executor dispatches tasks to actual threads, it does neither thread-pinning nor work-stealing.
+ executor dispatches tasks to actual threads, it can do neither thread-pinning nor work-stealing.
  
  <p>The definitions for "core" and "maximum" pool sizes differ a bit from
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html?is-external=true" title="class or interface in java.util.concurrent"><code>ThreadPoolExecutor</code></a>. The core pool consists of the threads that aren't ever allowed to

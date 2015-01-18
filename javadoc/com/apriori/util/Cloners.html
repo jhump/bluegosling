@@ -305,13 +305,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  follows the same flow as <a href="../../../com/apriori/util/Cloners.html#defaultClonerFor-java.lang.Class-"><code>defaultClonerFor(Class)</code></a> except that it evaluates the logic
  for <em>every object cloned</em> instead of trying to do it statically based on a given type.
  
- <p>
- So it is more flexible than <a href="../../../com/apriori/util/Cloners.html#defaultClonerFor-java.lang.Class-"><code>defaultClonerFor(Class)</code></a> since you don't have to know the
- runtime type of objects being cloned ahead of time. But its performance is worse and cloning
- may result in runtime exceptions during the cloning operation, instead of when creating the
- cloner. This occurs if a given object to be cloned is not array and implements neither
- <code>Cloneable</code> nor <code>Serializable</code> and whose class does not provide a suitable copy
- constructor.</div>
+ <p>So it is more flexible than <a href="../../../com/apriori/util/Cloners.html#defaultClonerFor-java.lang.Class-"><code>defaultClonerFor(Class)</code></a> since you don't have to know
+ the runtime type of objects being cloned ahead of time. But its performance is worse and
+ cloning may result in runtime exceptions during the cloning operation, instead of when
+ creating the cloner. This occurs if a given object to be cloned is not array and implements
+ neither <code>Cloneable</code> nor <code>Serializable</code> and whose class does not provide a suitable
+ copy constructor.</div>
 </li>
 </ul>
 </li>

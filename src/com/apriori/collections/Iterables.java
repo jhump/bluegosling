@@ -37,6 +37,7 @@ public final class Iterables {
     * returned. The return view may require linear time to compute the size (by actually performing
     * an iteration and counting elements).
     *
+    * @param <E> the type of elements in the collection
     * @param iter an iterable
     * @return a view of the given iterable as a collection
     */
@@ -65,6 +66,7 @@ public final class Iterables {
     * first, then the shorter one (which is a strict prefix of the longer one) is considered less
     * than the longer one.
     *
+    * @param <E> the type of element being compared
     * @param comparator a comparator of elements
     * @return a corresponding comparator of iterables
     */
@@ -93,6 +95,7 @@ public final class Iterables {
     * Adds the elements from the given iterator to the given collection. On return, the iterator
     * will have been exhausted and {@link Iterator#hasNext()} will return false.
     *
+    * @param <E> the type of elements retrieved from the given iterator
     * @param iter an iterator
     * @param coll a collection
     * @return true if the collection was modified; false if the iterator yielded no elements or if
@@ -113,6 +116,7 @@ public final class Iterables {
    /**
     * Adds the elements from the given iterable to the given collection.
     *
+    * @param <E> the type of elements in the given iterable
     * @param iter an iterable
     * @param coll a collection
     * @return true if the collection was modified; false if the iterable contained no elements or if
@@ -178,6 +182,7 @@ public final class Iterables {
     * remove the element using the iterator's {@link Iterator#remove() remove} method will throw
     * {@link UnsupportedOperationException}.
     *
+    * @param <E> the type of the element
     * @param element an element
     * @return an iterator that yields only the one element
     */
@@ -190,6 +195,7 @@ public final class Iterables {
     * remove the element using the iterator's {@link Iterator#remove() remove} method will invoke
     * the given removal handler.
     *
+    * @param <E> the type of the element
     * @param element an element
     * @param onRemove a removal handler, invoked when the iterator's
     *       {@link Iterator#remove() remove} method is called
@@ -203,6 +209,7 @@ public final class Iterables {
     * Returns an iterator that omits duplicates from the given iterator. Note that the tracking of
     * duplicates requires state that can use <em>O(n)</em> amount of memory.
     *
+    * @param <E> the type of elements retrieved from the iterator
     * @param iter an iterator
     * @return an iterator that returns the items of the given iterator but omits duplicates
     */
@@ -214,11 +221,12 @@ public final class Iterables {
     * Returns an iterable that omits duplicates from the given iterable. Note that the tracking of
     * duplicates requires state that can use <em>O(n)</em> amount of memory for each iteration.
     *
-    * @param tail an iterable
+    * @param <E> the type of elements in the iterable
+    * @param iter an iterable
     * @return an iterable that returns the items of the given iterable but omits duplicates
     */
-   public static <E> Iterable<E> unique(Iterable<E> items) {
-      return () -> unique(items.iterator(), trySize(items));
+   public static <E> Iterable<E> unique(Iterable<E> iter) {
+      return () -> unique(iter.iterator(), trySize(iter));
    }
 
    private static <E> Iterator<E> unique(Iterator<E> iter, OptionalInt size) {
@@ -233,6 +241,7 @@ public final class Iterables {
     * implementations (like lists, deques, and navigable sets) they will be used so there is no
     * space overhead.
     *
+    * @param <E> the type of elements in the iterable
     * @param iterable an iterable
     * @return an iterator that visits the elements of the iterable in reverse order
     */
@@ -341,7 +350,7 @@ public final class Iterables {
     * Counts the number of elements in the given iterator. On return, the iterator will have been
     * exhausted and {@link Iterator#hasNext()} will return false.
     *
-    * @param iterable an iterator
+    * @param iterator an iterator
     * @return the size of the given iterator
     * @see #size(Iterable)
     */

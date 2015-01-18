@@ -119,9 +119,16 @@ var activeTableTab = "activeTableTab";
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">An input to a node. An input is an incoming edge in the graph. The other side of the edge can
  either be another node or a key. Keys represent inputs to the graph that must be supplied when
- the graph is executed. An input can be asynchronous, meaning that the operation accepts a
- future for that input. This enables execution of the node's operation to concurrently overlap
- the computation of that input.</div>
+ the graph is executed.
+ 
+ <p>An input can be optional. The node's operation is invoked even if computation of the
+ optional input failed. The node's operation accepts an <a href="../../../com/apriori/util/Immediate.html" title="class in com.apriori.util"><code>Immediate</code></a> for optional inputs,
+ which can represent a successful value for the input or a failure.
+ 
+ <p>An input can also be asynchronous, which allows the execution one node's operation to run
+ concurrently with the computation of one of its input. The node's operation accepts a future
+ for the input if it is asynchronous. (Asynchronous inputs are implicitly optional since the
+ future could complete unsuccessfully.)</div>
 </li>
 </ul>
 </div>
@@ -265,9 +272,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>isOptional</h4>
 <pre>public abstract&nbsp;boolean&nbsp;isOptional()</pre>
 <div class="block">Returns true if this is an optional input or not. An optional input's type is
- <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>, so that the node can see if the associated operation was
- successful or not. Despite the fact that the input type is a future, the node's operation
- will not be invoked until this input is available.</div>
+ <a href="../../../com/apriori/util/Immediate.html" title="class in com.apriori.util"><code>Immediate</code></a>, so that the node can see if the associated operation was successful or
+ not.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this is an optional input or not</dd>

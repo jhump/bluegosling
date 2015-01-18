@@ -69,6 +69,10 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;com.apriori.vars</h1>
+<div class="docSummary">
+<div class="block">This package contains simple, mutable "holders" for reference types and primitives.</div>
+</div>
+<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
@@ -138,6 +142,15 @@
 </table>
 </li>
 </ul>
+<a name="package.description">
+<!--   -->
+</a>
+<h2 title="Package com.apriori.vars Description">Package com.apriori.vars Description</h2>
+<div class="block">This package contains simple, mutable "holders" for reference types and primitives. These are
+ lighter-weight and more intuitive than using single-element arrays for such uses. The APIs are
+ very similar to atomic variables in <code>java.util.concurrent</code>, but none of these classes are
+ thread-safe. They are meant more for use as "out parameters", where a function can modify a
+ variable defined in the scope of its caller (all on one thread).</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

@@ -151,7 +151,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?
  // violate map invariants
  Map&lt;Type2, ValueType&gt; transformed = new HashMap&lt;&gt;(
        TransformingMap.transformingKeys(input, function));</pre>
- <p>Also maps with transformed keys (due to transformations only working in one direction) have
+ <p>Also, maps with transformed keys (due to transformations only working in one direction) have
  some methods that are implemented in terms of the map's <a href="../../../com/apriori/collections/TransformingMap.html#entrySet--">entry iterator</a>
  and thus may have worse performance than the underlying map's implementation. These methods
  include <a href="../../../com/apriori/collections/TransformingMap.html#get-java.lang.Object-"><code>get(Object)</code></a>, <a href="../../../com/apriori/collections/TransformingMap.html#containsKey-java.lang.Object-"><code>containsKey(Object)</code></a> and <a href="../../../com/apriori/collections/TransformingMap.html#remove-java.lang.Object-"><code>remove(Object)</code></a>.</div>

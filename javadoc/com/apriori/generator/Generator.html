@@ -147,7 +147,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  
  <p><a href="../../../com/apriori/generator/Sequence.html" title="interface in com.apriori.generator"><code>Sequence</code></a>s produced by this generator are not intended to be used simultaneously from
  multiple consumer threads. If incorrect usage is detected, <a href="../../../com/apriori/generator/Sequence.html#next-U-"><code>Sequence.next(Object)</code></a> will
- throw a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>.</div>
+ throw a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>.
+ 
+ <p>To create a generator, either use a flavor of <a href="../../../com/apriori/generator/Generator.html#create-java.util.function.BiConsumer-"><code>create(java.util.function.BiConsumer&lt;U, com.apriori.generator.Generator.Output&lt;T, U&gt;&gt;)</code></a> and provide a lambda that will
+ yield all generated values OR create a sub-class and override the <a href="../../../com/apriori/generator/Generator.html#run-U-com.apriori.generator.Generator.Output-"><code>run(Object, Output)</code></a>
+ method with logic that yields the generated values.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator"><code>UncheckedGenerator</code></a></dd>

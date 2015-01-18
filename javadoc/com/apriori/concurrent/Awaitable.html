@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":18,"i3":18,"i4":17,"i5":17,"i6":6};
+var methods = {"i0":6,"i1":6,"i2":18,"i3":18,"i4":17,"i5":17,"i6":17,"i7":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">Awaitable</span></pre>
-<div class="block">An object that represents a future event.</div>
+<div class="block">An object that represents a future event. Like a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> without a value.</div>
 </li>
 </ul>
 </div>
@@ -142,22 +142,38 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>default void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly--">awaitUninterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly--">awaitUninterruptibly</a></span>()</code>
+<div class="block">Awaits the future event, blocking the current thread in a manner that cannot be interrupted
+ until the event occurs.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly-long-java.util.concurrent.TimeUnit-">awaitUninterruptibly</a></span>(long&nbsp;limit,
-                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Awaits the future event, blocking in a manner that cannot be interrupted up to the specified
+ amount of time until the event occurs.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#fromFuture-java.util.concurrent.Future-">fromFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;?&gt;&nbsp;f)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#fromFuture-java.util.concurrent.Future-">fromFuture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;?&gt;&nbsp;f)</code>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> to the <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#fromLatch-java.util.concurrent.CountDownLatch-">fromLatch</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent">CountDownLatch</a>&nbsp;latch)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#fromLatch-java.util.concurrent.CountDownLatch-">fromLatch</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent">CountDownLatch</a>&nbsp;latch)</code>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent"><code>CountDownLatch</code></a> to the <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#fromTerminatingExecutor-java.util.concurrent.ExecutorService-">fromTerminatingExecutor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</code>
+<div class="block">Creates an awaitable that waits for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutorService</code></a> to terminate.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Awaitable.html#isDone--">isDone</a></span>()</code>
 <div class="block">Returns true if the event has occurred.</div>
@@ -235,6 +251,8 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>awaitUninterruptibly</h4>
 <pre>default&nbsp;void&nbsp;awaitUninterruptibly()</pre>
+<div class="block">Awaits the future event, blocking the current thread in a manner that cannot be interrupted
+ until the event occurs.</div>
 </li>
 </ul>
 <a name="awaitUninterruptibly-long-java.util.concurrent.TimeUnit-">
@@ -245,6 +263,15 @@ var activeTableTab = "activeTableTab";
 <h4>awaitUninterruptibly</h4>
 <pre>default&nbsp;boolean&nbsp;awaitUninterruptibly(long&nbsp;limit,
                                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Awaits the future event, blocking in a manner that cannot be interrupted up to the specified
+ amount of time until the event occurs.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>limit</code> - the maximum amount of time to wait</dd>
+<dd><code>unit</code> - the unit of <code>limit</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the event occurred or false if the time limit was encountered first</dd>
+</dl>
 </li>
 </ul>
 <a name="fromFuture-java.util.concurrent.Future-">
@@ -254,15 +281,45 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>fromFuture</h4>
 <pre>static&nbsp;<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;fromFuture(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;?&gt;&nbsp;f)</pre>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> to the <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>f</code> - a future</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an awaitable that completes when the future completes</dd>
+</dl>
 </li>
 </ul>
 <a name="fromLatch-java.util.concurrent.CountDownLatch-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>fromLatch</h4>
 <pre>static&nbsp;<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;fromLatch(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent">CountDownLatch</a>&nbsp;latch)</pre>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent"><code>CountDownLatch</code></a> to the <a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>latch</code> - a latch</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an awaitable that completes when the latch opens</dd>
+</dl>
+</li>
+</ul>
+<a name="fromTerminatingExecutor-java.util.concurrent.ExecutorService-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>fromTerminatingExecutor</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>&nbsp;fromTerminatingExecutor(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</pre>
+<div class="block">Creates an awaitable that waits for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutorService</code></a> to terminate.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - an executor service</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an awaitable that completes when the executor terminates</dd>
+</dl>
 </li>
 </ul>
 </li>

@@ -886,9 +886,13 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfShort.html#addShort-int-short-">addShort(int, short)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfShort.html" title="interface in com.apriori.collections">PrimitiveList.OfShort</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#addTo-java.util.Iterator-java.util.Collection-">addTo(Iterator&lt;E&gt;, Collection&lt;? super E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds the elements from the given iterator to the given collection.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#addTo-java.lang.Iterable-java.util.Collection-">addTo(Iterable&lt;E&gt;, Collection&lt;? super E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds the elements from the given iterable to the given collection.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/Atom.html#addWatcher-com.apriori.concurrent.atoms.Atom.Watcher-">addWatcher(Atom.Watcher&lt;? super T&gt;)</a></span> - Method in interface com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a></dt>
 <dd>
 <div class="block">Registers a watcher, which will receive notifications when the atom's value changes.</div>
@@ -1387,6 +1391,10 @@
 <dd>
 <div class="block">Returns a <code>Class</code> representation of this type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#asCollection-java.lang.Iterable-">asCollection(Iterable&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
+<dd>
+<div class="block">Returns a view of the given iterable as a collection.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#asCompletionStage--">asCompletionStage()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Returns a view of this future as a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a>.</div>
@@ -1804,9 +1812,15 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ThreadLimitingExecutorService.html#awaitTermination-long-java.util.concurrent.TimeUnit-">awaitTermination(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ThreadLimitingExecutorService.html" title="class in com.apriori.concurrent">ThreadLimitingExecutorService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#awaitUninterruptibly--">awaitUninterruptibly()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Awaits the future event, blocking the current thread in a manner that cannot be interrupted
+ until the event occurs.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#awaitUninterruptibly-long-java.util.concurrent.TimeUnit-">awaitUninterruptibly(long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Awaits the future event, blocking in a manner that cannot be interrupted up to the specified
+ amount of time until the event occurs.</div>
+</dd>
 </dl>
 <a name="I:B">
 <!--   -->
@@ -2190,6 +2204,10 @@
 <dd>
 <div class="block">Invoked when the visited future was cancelled.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#cancelled--">cancelled()</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Returns an immediately cancelled value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#cancelledFuture--">cancelledFuture()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Returns a future that has already been cancelled.</div>
@@ -2244,11 +2262,17 @@
 <div class="block">Safely upcasts the key and/or value types of an immutable map entry.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#cast-java.util.Iterator-">cast(Iterator&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Casts the given iterator to one whose elements are a super-type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#cast-java.lang.Iterable-">cast(Iterable&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Casts the given iterable to one whose elements are a super-type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#cast-com.apriori.collections.SizedIterable-">cast(SizedIterable&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Casts the given sized iterable to one whose elements are a super-type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#cast-com.apriori.concurrent.ListenableFuture-">cast(ListenableFuture&lt;U&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Casts a future to a super-type.</div>
@@ -2871,7 +2895,9 @@
 <div class="block">The tools and implementations for actually generating code.</div>
 </dd>
 <dt><a href="com/apriori/generator/package-summary.html">com.apriori.generator</a> - package com.apriori.generator</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Utilities for simulating generators in Java.</div>
+</dd>
 <dt><a href="com/apriori/graph/package-summary.html">com.apriori.graph</a> - package com.apriori.graph</dt>
 <dd>
 <div class="block">APIs for representing complex processes as a dependency graph.</div>
@@ -2897,7 +2923,9 @@
 <div class="block">Miscellaneous utility classes.</div>
 </dd>
 <dt><a href="com/apriori/vars/package-summary.html">com.apriori.vars</a> - package com.apriori.vars</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This package contains simple, mutable "holders" for reference types and primitives.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/Pair.html#combine-com.apriori.tuples.Pair-">combine(Pair&lt;? extends Collection&lt;T&gt;, ? extends Collection&lt;U&gt;&gt;)</a></span> - Static method in class com.apriori.tuples.<a href="com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a></dt>
 <dd>
 <div class="block">Combines a pair of collections into a collection of pairs.</div>
@@ -3014,7 +3042,9 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ImmutableSortedSet.html#comparator--">comparator()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ImmutableSortedSet.html" title="interface in com.apriori.collections">ImmutableSortedSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#comparator-java.util.Comparator-">comparator(Comparator&lt;? super E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a comparator of iterables based on the given comparator of elements.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/MapBackedOrderedQueue.html#comparator--">comparator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/MapBackedOrderedQueue.html" title="class in com.apriori.collections">MapBackedOrderedQueue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/OrderedQueue.html#comparator--">comparator()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a></dt>
@@ -3238,12 +3268,14 @@
 <dd>
 <div class="block">Concatenates multiple sequences together.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#concat-java.lang.Iterable...-">concat(Iterable&lt;? extends E&gt;...)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#concat-java.util.Iterator...-">concat(Iterator&lt;? extends E&gt;...)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Concatenates all of the given iterators into one.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#concat-java.lang.Iterable-">concat(Iterable&lt;Iterator&lt;? extends E&gt;&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Concatenates all of the given iterators into one.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Operators.html#concatArray--">concatArray()</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Operators.html#concatArray-java.lang.Class-">concatArray(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></dt>
@@ -3259,6 +3291,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/Operators.html#concatFloatArray--">concatFloatArray()</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Operators.html#concatIntArray--">concatIntArray()</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#concatIterables-java.lang.Iterable...-">concatIterables(Iterable&lt;? extends E&gt;...)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#concatIterables-java.lang.Iterable-">concatIterables(Iterable&lt;Iterable&lt;? extends E&gt;&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Operators.html#concatList--">concatList()</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Operators.html" title="class in com.apriori.util">Operators</a></dt>
 <dd>&nbsp;</dd>
@@ -3356,9 +3392,13 @@
 <div class="block">Determines if the specified object is a member of this collection.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#contains-java.lang.Iterable-java.lang.Object-">contains(Iterable&lt;?&gt;, Object)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns true if the given iterable contains the given object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#contains-java.util.Iterator-java.lang.Object-">contains(Iterator&lt;?&gt;, Object)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns true if the given iterator contains the given object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#contains-java.lang.Object-">contains(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentListBackedConcurrentList.html#contains-java.lang.Object-">contains(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections">PersistentListBackedConcurrentList</a></dt>
@@ -3705,9 +3745,11 @@
 <dd>
 <div class="block">Returns the number of items in the buffer.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/AmtPersistentList.html#create--">create()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AmtPersistentList.html#create--">create()</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/AmtPersistentList.html#create-java.lang.Iterable-">create(Iterable&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AmtPersistentList.html#create-java.lang.Iterable-">create(Iterable&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/AmtPersistentList.html#create-java.util.Iterator-">create(Iterator&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/AmtPersistentList.html" title="class in com.apriori.collections">AmtPersistentList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentMap.html#create--">create()</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a></dt>
 <dd>&nbsp;</dd>
@@ -3980,6 +4022,18 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/Cloners.html#defaultClonerFor-java.lang.Class-">defaultClonerFor(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Cloners.html" title="class in com.apriori.util">Cloners</a></dt>
 <dd>
 <div class="block">Creates a "default" cloner for the specified class.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#deferredCancelledFuture-long-java.util.concurrent.TimeUnit-">deferredCancelledFuture(long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
+<dd>
+<div class="block">Returns a future that will be cancelled after the given delay.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#deferredFailedFuture-java.lang.Throwable-long-java.util.concurrent.TimeUnit-">deferredFailedFuture(Throwable, long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
+<dd>
+<div class="block">Returns a future that will fail with the given cause after the given delay.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#deferredFuture-T-long-java.util.concurrent.TimeUnit-">deferredFuture(T, long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
+<dd>
+<div class="block">Returns a future that will complete successfully with the given value after the given delay.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.NodeBuilder0.html#define-java.util.concurrent.Callable-">define(Callable&lt;T&gt;)</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.NodeBuilder0.html" title="class in com.apriori.graph">Node.NodeBuilder0</a></dt>
 <dd>
@@ -4880,6 +4934,10 @@
 <dd>
 <div class="block">Returns true if the method invocation failed (e.g.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#failed-java.lang.Throwable-">failed(Throwable)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Returns an immediate failure.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#failedFuture-java.lang.Throwable-">failedFuture(Throwable)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Returns a future that has already failed due to the specified cause.</div>
@@ -5190,7 +5248,9 @@
  collection of futures.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#flatMap-java.util.Iterator-java.util.function.Function-">flatMap(Iterator&lt;T&gt;, Function&lt;? super T, ? extends Iterator&lt;? extends U&gt;&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Expands the given sequence using the given function.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#flatMap-java.util.function.Function-">flatMap(Function&lt;? super T, ? extends ListenableFuture&lt;U&gt;&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Transforms the result of this future using the specified function.</div>
@@ -5746,6 +5806,10 @@
 <dd>
 <div class="block">Returns a view of the given future as a <a href="com/apriori/choice/Variant2.html" title="class in com.apriori.choice"><code>Variant2</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#fromCompletedFuture-java.util.concurrent.Future-">fromCompletedFuture(Future&lt;T&gt;)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Returns an immediate value with the same disposition as the given completed future.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#fromCompletionStage-java.util.concurrent.CompletionStage-">fromCompletionStage(CompletionStage&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Converts the given completion stage into a <a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>.</div>
@@ -5806,7 +5870,9 @@
 <div class="block">Converts a three-argument function into a three-argument predicate.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#fromFuture-java.util.concurrent.Future-">fromFuture(Future&lt;?&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> to the <a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Cancellable.html#fromFuture-java.util.concurrent.Future-">fromFuture(Future&lt;?&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Possible.html#fromFuture-java.util.concurrent.Future-">fromFuture(Future&lt;? extends T&gt;)</a></span> - Static method in interface com.apriori.possible.<a href="com/apriori/possible/Possible.html" title="interface in com.apriori.possible">Possible</a></dt>
@@ -5844,7 +5910,9 @@
 <div class="block">Adapts the JRE's <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util"><code>PriorityQueue</code></a> to this interface.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#fromLatch-java.util.concurrent.CountDownLatch-">fromLatch(CountDownLatch)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html?is-external=true" title="class or interface in java.util.concurrent"><code>CountDownLatch</code></a> to the <a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><code>Awaitable</code></a> interface.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BidiIterators.html#fromList-java.util.List-">fromList(List&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/BidiIterators.html" title="class in com.apriori.collections">BidiIterators</a></dt>
 <dd>
 <div class="block">Adapts a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> to the <a href="com/apriori/collections/BidiIterable.html" title="interface in com.apriori.collections"><code>BidiIterable</code></a> interface.</div>
@@ -5893,6 +5961,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequences.html#fromString-java.lang.CharSequence-java.nio.charset.Charset-com.apriori.collections.BitSequence.BitOrder-">fromString(CharSequence, Charset, BitSequence.BitOrder)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/BitSequences.html" title="class in com.apriori.collections">BitSequences</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#fromTerminatingExecutor-java.util.concurrent.ExecutorService-">fromTerminatingExecutor(ExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
+<dd>
+<div class="block">Creates an awaitable that waits for the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutorService</code></a> to terminate.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Fulfillable.html#fulfill-T-">fulfill(T)</a></span> - Method in interface com.apriori.possible.<a href="com/apriori/possible/Fulfillable.html" title="interface in com.apriori.possible">Fulfillable</a></dt>
 <dd>
 <div class="block">Fulfills the value.</div>
@@ -6130,6 +6202,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/NTuple.html#get-int-">get(int)</a></span> - Method in class com.apriori.tuples.<a href="com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a></dt>
 <dd>
 <div class="block">Retrieves an item from the tuple using its index.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#get--">get()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Gets this object's immediate value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#get--">get()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>
@@ -6775,6 +6851,10 @@
 <dd>
 <div class="block">Gets the throwable that caused the method invocation to fail.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#getFailure--">getFailure()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Gets this object's cause of failure.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getField-java.lang.String-">getField(String)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the public field with the specified name.</div>
@@ -7222,6 +7302,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#getResult--">getResult()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#getResult--">getResult()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Gets this object's successful result.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArMethod.html#getReturnType--">getReturnType()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArMethod.html" title="class in com.apriori.apt.reflect">ArMethod</a></dt>
 <dd>
 <div class="block">Returns the method's return type.</div>
@@ -7492,6 +7576,12 @@
 <dd>
 <div class="block">A single instance of the computation graph.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#greaterOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">greaterOf(Duration, Duration)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#greatestOf-com.apriori.concurrent.Duration...-">greatestOf(Duration...)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#greatestOf-java.lang.Iterable-">greatestOf(Iterable&lt;Duration&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Cancellable.html#group-com.apriori.concurrent.Cancellable...-">group(Cancellable...)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Cancellable.html#group-java.lang.Iterable-">group(Iterable&lt;? extends Cancellable&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a></dt>
@@ -7985,6 +8075,12 @@
 <dd>
 <div class="block">Configures the cast to <em>not</em> throw <a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect"><code>AmbiguousMethodException</code></a>s.</div>
 </dd>
+<dt><a href="com/apriori/util/Immediate.html" title="class in com.apriori.util"><span class="typeNameLink">Immediate</span></a>&lt;<a href="com/apriori/util/Immediate.html" title="type parameter in Immediate">T</a>&gt; - Class in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
+<dd>
+<div class="block">Like a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a>, except it represents a result that is available immediately.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#Immediate--">Immediate()</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/ImmutableCollection.html" title="interface in com.apriori.collections"><span class="typeNameLink">ImmutableCollection</span></a>&lt;<a href="com/apriori/collections/ImmutableCollection.html" title="type parameter in ImmutableCollection">E</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">An immutable, read-only collection.</div>
@@ -8537,6 +8633,10 @@
 <dd>
 <div class="block">Returns whether or not the task definition is cancelled.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#isCancelled--">isCancelled()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Determines if this object is cancelled or not.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/DispatchSettings.html#isCastingArguments--">isCastingArguments()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/DispatchSettings.html" title="class in com.apriori.reflect">DispatchSettings</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/DispatchSettings.html#isCastingReturnTypes--">isCastingReturnTypes()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/DispatchSettings.html" title="class in com.apriori.reflect">DispatchSettings</a></dt>
@@ -8671,6 +8771,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#isFailed--">isFailed()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#isFailed--">isFailed()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Determines if this object failed or not.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/NonReentrantLock.html#isFair--">isFair()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/NonReentrantLock.html" title="class in com.apriori.concurrent">NonReentrantLock</a></dt>
 <dd>
 <div class="block">Returns true if this is a fair lock.</div>
@@ -8822,6 +8926,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#isSuccessful--">isSuccessful()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#isSuccessful--">isSuccessful()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Determines if this object is successful or not.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isSuperTypeOf-com.apriori.apt.reflect.ArClass-">isSuperTypeOf(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if this class is a super-type of the specified class.</div>
@@ -8860,7 +8968,9 @@
  or higher.</div>
 </dd>
 <dt><a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections"><span class="typeNameLink">Iterables</span></a> - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Utility methods for working with instances of <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.EntrySet.html#iterator--">iterator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.EntrySet.html" title="class in com.apriori.collections">AbstractImmutableMap.EntrySet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.html#iterator--">iterator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a></dt>
@@ -9233,6 +9343,10 @@
 <div class="block">Eventually sets the field of the given object managed by this updater to the given updated
  value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#leastOf-com.apriori.concurrent.Duration...-">leastOf(Duration...)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#leastOf-java.lang.Iterable-">leastOf(Iterable&lt;Duration&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#length--">length()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
 <dd>
 <div class="block">Gets the length of the sequence.</div>
@@ -9241,6 +9355,8 @@
 <dd>
 <div class="block">Returns the length of this duration, in this object's <a href="com/apriori/concurrent/Duration.html#unit--"><code>Duration.unit()</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#lesserOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">lesserOf(Duration, Duration)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/PartialFunctions.html#lift-com.apriori.util.PartialFunction-O-">lift(PartialFunction&lt;? super I, ? extends O&gt;, O)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/PartialFunctions.html" title="class in com.apriori.util">PartialFunctions</a></dt>
 <dd>
 <div class="block">Lifts a partial function to a regular function via default value.</div>
@@ -9567,10 +9683,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.Future-">makeListenable(Future&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Converts the specified future into a <a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.CompletableFuture-">makeListenable(CompletableFuture&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
-<dd>
-<div class="block">Converts the given completable future into a <a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.ScheduledFuture-">makeListenable(ScheduledFuture&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
@@ -11408,13 +11520,21 @@
 <div class="block">Pushes a new value to the end of this growable array.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#push-java.util.Iterator-E-">push(Iterator&lt;? extends E&gt;, E)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Pushes the given element onto the head of the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#push-java.util.Iterator-E-java.lang.Runnable-">push(Iterator&lt;? extends E&gt;, E, Runnable)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Pushes the given element onto the head of the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#push-java.util.Iterator-E...-">push(Iterator&lt;? extends E&gt;, E...)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Pushes the given elements onto the head of the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#push-java.util.Iterator-java.lang.Iterable-">push(Iterator&lt;? extends E&gt;, Iterable&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Pushes the given elements onto the head of the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/NoCopyGrowableArray.html#push-T-">push(T)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayDeque.html#push-E-">push(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a></dt>
@@ -12664,7 +12784,9 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#reverse--">reverse()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#reversed-java.lang.Iterable-">reversed(Iterable&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns an iterator that navigates over the given iterable in reverse order.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/Transaction.html#rollback--">rollback()</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.html" title="class in com.apriori.concurrent.atoms">Transaction</a></dt>
 <dd>
 <div class="block">Rolls back the current transaction.</div>
@@ -13516,9 +13638,13 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Immutables.html#singletonImmutableSortedSet-java.util.Comparator-E-">singletonImmutableSortedSet(Comparator&lt;? super E&gt;, E)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Immutables.html" title="class in com.apriori.collections">Immutables</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#singletonIterator-E-">singletonIterator(E)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns an iterator that yields the given single element and then no more.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#singletonIterator-E-java.lang.Runnable-">singletonIterator(E, Runnable)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns an iterator that yields the given single element and then no more.</div>
+</dd>
 <dt><a href="com/apriori/di/SingletonScoper.html" title="class in com.apriori.di"><span class="typeNameLink">SingletonScoper</span></a> - Class in <a href="com/apriori/di/package-summary.html">com.apriori.di</a></dt>
 <dd>
 <div class="block">The implementation of the <code>Singleton</code> scope.</div>
@@ -13570,9 +13696,13 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtPersistentMap.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtPersistentMap.html" title="class in com.apriori.collections">HamtPersistentMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#size-java.lang.Iterable-">size(Iterable&lt;?&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Queries for the size of the given iterable, iterating and counting if necessary.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#size-java.util.Iterator-">size(Iterator&lt;?&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Counts the number of elements in the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#size--">size()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
@@ -13692,6 +13822,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#snapshot-java.lang.Iterable-">snapshot(Iterable&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
 <dd>
 <div class="block">Creates a snapshot of the given iterable.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#snapshot-java.util.Iterator-">snapshot(Iterator&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
+<dd>
+<div class="block">Creates a snapshot of the given iterator.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/DoubleInstanceLock.html#snapshot--">snapshot()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a></dt>
 <dd>
@@ -14155,6 +14289,10 @@
 <dd>
 <div class="block">Invoked when the visited future completed successfully.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#successful-T-">successful(T)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Returns a successful immediate value.</div>
+</dd>
 <dt><a href="com/apriori/util/Suppliers.html" title="class in com.apriori.util"><span class="typeNameLink">Suppliers</span></a> - Class in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
 <dd>
 <div class="block">Utility methods for constructing and using <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function"><code>Supplier</code></a>s.</div>
@@ -14494,11 +14632,17 @@
 <div class="block">Creates a snapshot of the given iterable as an array.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#toArray-java.lang.Iterable-T:A-">toArray(Iterable&lt;?&gt;, T[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a snapshot of the given iterable as an array of the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#toArray-java.util.Iterator-">toArray(Iterator&lt;?&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a snapshot of the given iterator as an array.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#toArray-java.util.Iterator-T:A-">toArray(Iterator&lt;?&gt;, T[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a snapshot of the given iterator as an array of the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#toArray--">toArray()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedPersistentList.html#toArray-T:A-">toArray(T[])</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a></dt>
@@ -14613,10 +14757,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection(SizedIterable&lt;? extends E&gt;)</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></dt>
 <dd>
 <div class="block">Adapts this <a href="com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface to the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a> interface.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#toCompletableFuture--">toCompletableFuture()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
-<dd>
-<div class="block">Converts this future into a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#toDays--">toDays()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
@@ -15553,7 +15693,9 @@
  lock is unavailable.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#trySize-java.lang.Iterable-">trySize(Iterable&lt;?&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Queries for the size of the given iterable, if known.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Choice.Ops3.html#tryThird--">tryThird()</a></span> - Method in interface com.apriori.choice.<a href="com/apriori/choice/Choice.Ops3.html" title="interface in com.apriori.choice">Choice.Ops3</a></dt>
 <dd>
 <div class="block">Retrieves the possible value of the third option.</div>
@@ -15699,9 +15841,13 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/Clock.html#uninterruptedSleepUntilNanoTime-long-">uninterruptedSleepUntilNanoTime(long)</a></span> - Method in interface com.apriori.util.<a href="com/apriori/util/Clock.html" title="interface in com.apriori.util">Clock</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#unique-java.util.Iterator-">unique(Iterator&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns an iterator that omits duplicates from the given iterator.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#unique-java.lang.Iterable-">unique(Iterable&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns an iterable that omits duplicates from the given iterable.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#unit--">unit()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
 <div class="block">Returns the unit of this object's <a href="com/apriori/concurrent/Duration.html#length"><code>Duration.length</code></a>.</div>
@@ -15834,9 +15980,13 @@
 <div class="block">Updates the variable using the given function.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#upToN-java.lang.Iterable-int-">upToN(Iterable&lt;E&gt;, int)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a view of the first <em>n</em> elements of the given iterable.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#upToN-java.util.Iterator-int-">upToN(Iterator&lt;E&gt;, int)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a view of the first <em>n</em> elements of the given iterator.</div>
+</dd>
 <dt><a href="com/apriori/di/UsingScope.html" title="annotation in com.apriori.di"><span class="typeNameLink">UsingScope</span></a> - Annotation Type in <a href="com/apriori/di/package-summary.html">com.apriori.di</a></dt>
 <dd>
 <div class="block">An annotation on an <a href="com/apriori/di/InjectedEntryPoint.html" title="annotation in com.apriori.di"><code>InjectedEntryPoint</code></a> that binds a scope annotation to
@@ -16235,6 +16385,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeVisitor.html#visit-java.lang.reflect.Type-P-">visit(Type, P)</a></span> - Method in interface com.apriori.reflect.<a href="com/apriori/reflect/TypeVisitor.html" title="interface in com.apriori.reflect">TypeVisitor</a></dt>
 <dd>
 <div class="block">Visits the given type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#visit-com.apriori.concurrent.FutureVisitor-">visit(FutureVisitor&lt;T&gt;)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
+<dd>
+<div class="block">Visits the result of this object using the given <a href="com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent"><code>FutureVisitor</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Binding.TargetVisitor.html#visitAdapter-com.apriori.di.Binding.TargetAdapter-P-">visitAdapter(Binding.TargetAdapter&lt;T&gt;, P)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Binding.TargetVisitor.html" title="interface in com.apriori.di">Binding.TargetVisitor</a></dt>
 <dd>&nbsp;</dd>

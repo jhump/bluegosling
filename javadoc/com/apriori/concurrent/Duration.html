@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":9,"i6":10,"i7":9,"i8":9,"i9":10,"i10":10,"i11":9,"i12":9,"i13":9,"i14":10,"i15":10,"i16":9,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10};
+var methods = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":9,"i9":9,"i10":9,"i11":10,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":9,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,143 +175,169 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#greaterOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">greaterOf</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d1,
+         <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d2)</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#greatestOf-com.apriori.concurrent.Duration...-">greatestOf</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>...&nbsp;durations)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#greatestOf-java.lang.Iterable-">greatestOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;&nbsp;durations)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#hours-long-">hours</a></span>(long&nbsp;hours)</code>
 <div class="block">Returns a new duration whose length is the specified number of hours.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#leastOf-com.apriori.concurrent.Duration...-">leastOf</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>...&nbsp;durations)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#leastOf-java.lang.Iterable-">leastOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;&nbsp;durations)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#length--">length</a></span>()</code>
 <div class="block">Returns the length of this duration, in this object's <a href="../../../com/apriori/concurrent/Duration.html#unit--"><code>unit()</code></a>.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#lesserOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">lesserOf</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d1,
+        <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d2)</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#micros-long-">micros</a></span>(long&nbsp;micros)</code>
 <div class="block">Returns a new duration whose length is the specified number of microseconds.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#millis-long-">millis</a></span>(long&nbsp;millis)</code>
 <div class="block">Returns a new duration whose length is the specified number of milliseconds.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#minus-com.apriori.concurrent.Duration-">minus</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;duration)</code>
 <div class="block">Returns the difference of this duration minus the specified duration.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#minus-long-java.util.concurrent.TimeUnit-">minus</a></span>(long&nbsp;other,
      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</code>
 <div class="block">Returns the difference of this duration minus the specified duration.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#minutes-long-">minutes</a></span>(long&nbsp;minutes)</code>
 <div class="block">Returns a new duration whose length is the specified number of minutes.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#nanos-long-">nanos</a></span>(long&nbsp;nanos)</code>
 <div class="block">Returns a new duration whose length is the specified number of nanoseconds.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#of-long-java.util.concurrent.TimeUnit-">of</a></span>(long&nbsp;length,
   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Constructs a new duration of the specified length and unit.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#plus-com.apriori.concurrent.Duration-">plus</a></span>(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;duration)</code>
 <div class="block">Returns the sum of this duration and the specified duration.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#plus-long-java.util.concurrent.TimeUnit-">plus</a></span>(long&nbsp;other,
     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;otherUnit)</code>
 <div class="block">Returns the sum of this duration and the specified duration.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#seconds-long-">seconds</a></span>(long&nbsp;seconds)</code>
 <div class="block">Returns a new duration whose length is the specified number of seconds.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#times-int-">times</a></span>(int&nbsp;multiplicand)</code>
 <div class="block">Returns this duration multiplied by the specified number of times.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#to-java.util.concurrent.TimeUnit-">to</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;desiredUnit)</code>
 <div class="block">Returns the length of this duration in the specified unit.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toDays--">toDays</a></span>()</code>
 <div class="block">Returns the length of this duration in days.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toHours--">toHours</a></span>()</code>
 <div class="block">Returns the length of this duration in hours.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toMicros--">toMicros</a></span>()</code>
 <div class="block">Returns the length of this duration in microseconds.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toMillis--">toMillis</a></span>()</code>
 <div class="block">Returns the length of this duration in milliseconds.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toMinutes--">toMinutes</a></span>()</code>
 <div class="block">Returns the length of this duration in minutes.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toNanos--">toNanos</a></span>()</code>
 <div class="block">Returns the length of this duration in nanoseconds.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toSeconds--">toSeconds</a></span>()</code>
 <div class="block">Returns the length of this duration in seconds.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/Duration.html#unit--">unit</a></span>()</code>
 <div class="block">Returns the unit of this object's <a href="../../../com/apriori/concurrent/Duration.html#length"><code>length</code></a>.</div>
@@ -728,6 +754,62 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparabl
 <dd><code>o</code> - another duration</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 </dl>
+</li>
+</ul>
+<a name="greaterOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>greaterOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;greaterOf(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d1,
+                                 <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d2)</pre>
+</li>
+</ul>
+<a name="greatestOf-com.apriori.concurrent.Duration...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>greatestOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;greatestOf(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>...&nbsp;durations)</pre>
+</li>
+</ul>
+<a name="greatestOf-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>greatestOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;greatestOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;&nbsp;durations)</pre>
+</li>
+</ul>
+<a name="lesserOf-com.apriori.concurrent.Duration-com.apriori.concurrent.Duration-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lesserOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;lesserOf(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d1,
+                                <a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;d2)</pre>
+</li>
+</ul>
+<a name="leastOf-com.apriori.concurrent.Duration...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>leastOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;leastOf(<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>...&nbsp;durations)</pre>
+</li>
+</ul>
+<a name="leastOf-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>leastOf</h4>
+<pre>public static&nbsp;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&nbsp;leastOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a>&gt;&nbsp;durations)</pre>
 </li>
 </ul>
 <a name="toString--">
