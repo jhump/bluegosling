@@ -63,7 +63,7 @@ public class Graph<T> {
       this(requireNonNull(resultNode), DEFAULT_EXECUTOR, findAllInputs(resultNode));
    }
    
-   Graph(Node<T> resultNode, Executor executor, Set<Key<?>> inputs) {
+   private Graph(Node<T> resultNode, Executor executor, Set<Key<?>> inputs) {
       this.resultNode = resultNode;
       this.executor = executor;
       this.inputs = inputs;
@@ -337,7 +337,8 @@ public class Graph<T> {
          
          if (inputs.size() != graph.inputKeys().size()) {
             String message = graph.inputKeys().stream()
-                  .filter(k -> !inputs.containsKey(k)).map(Key::toString)
+                  .filter(k -> !inputs.containsKey(k))
+                  .map(Key::toString)
                   .collect(Collectors.joining(", ",
                         "Missing input(s) required for computation: ", ""));
             throw new IllegalStateException(message);
@@ -389,6 +390,11 @@ public class Graph<T> {
                } else if (in.isOptional()) {
                   args[i] = Immediate.fromCompletedFuture(deps[i]);
                } else {
+                  if (deps[i].isFailed()) {
+                     // we want to propagate the cause of failure, regardless
+                     // if it's checked or not...
+                     sneakyThrow(deps[i].getFailure());
+                  }
                   args[i] = deps[i].getResult();
                }
             }
@@ -397,6 +403,11 @@ public class Graph<T> {
          resolved.put(node, ret);
          return ret;
       }
+   }
+   
+   @SuppressWarnings("unchecked") // we rely on unchecked exception to be sneaky
+   static <X extends Throwable> void sneakyThrow(Throwable th) throws X {
+      throw (X) th;
    }
    
    // similar to ListenableFuture.chainTo(...) except that it keeps cancellation status in sync

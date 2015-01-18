@@ -15,8 +15,8 @@ import java.util.concurrent.locks.LockSupport;
  * unfair, possibly resulting in starvation if highly contended).
  * 
  * <p>Timed lock operations are discouraged unless the wait times are measured in microseconds or
- * smaller, since spinning for long periods of time is wasteful of CPU compute capacity. For that
- * reason, this lock should only be used when the critical sections in which it is held are
+ * smaller, since spinning for long periods of time is extremely wasteful of CPU compute capacity.
+ * For that reason, this lock should only be used when the critical sections in which it is held are
  * very short/fast. Due to the use of spinning with periodic yields, timeout precision when
  * attempting a timed acquisition is greatly limited.
  * 

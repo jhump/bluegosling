@@ -1,5 +1,6 @@
 package com.apriori.apt;
 
+import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
  * <li>The set of supported annotation types can be defined by referencing actual annotation
  * class tokens using a {@literal @}{@link SupportedAnnotationClasses} annotation on the processor.
  * Note that this does not provide any wildcard facilities, but can be used in conjunction with the
- * standard {@literal @}{@link SupportedAnnotationTypes} annotation, which doess.</li>
+ * standard {@literal @}{@link SupportedAnnotationTypes} annotation, which does.</li>
  * </ul>
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -51,7 +52,7 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
       Set<String> ret = new HashSet<String>(super.getSupportedAnnotationTypes());
       SupportedAnnotationClasses ann = getClass().getAnnotation(SupportedAnnotationClasses.class);
       if (ann != null) {
-         for (java.lang.Class<? extends java.lang.annotation.Annotation> annClass : ann.value()) {
+         for (java.lang.Class<? extends Annotation> annClass : ann.value()) {
             ret.add(annClass.getName());
          }
       }

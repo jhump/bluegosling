@@ -27,7 +27,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.IntFunction;
 
-
+//TODO: doc
+//TODO: tests
 final class Tables3D {
    private Tables3D() {
    }
@@ -1131,9 +1132,8 @@ final class Tables3D {
 
       @Override
       public Map<P, Set<R>> rowIndex() {
-         // TODO: add TransformingMap.ReadOnly.ValuesOnly so we don't have to double-wrap
-         return Collections.unmodifiableMap(new TransformingMap.ValuesOnly<>(table.rowIndex(),
-               (k, s) -> Collections.unmodifiableSet(s)));
+         return TransformingMap.ReadOnly.transformingValues(table.rowIndex(),
+               s -> Collections.unmodifiableSet(s));
       }
 
       @Override

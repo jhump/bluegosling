@@ -2,6 +2,7 @@ package com.apriori.concurrent;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -476,6 +477,76 @@ public class Duration implements Comparable<Duration> {
       }
     }
     return ours < theirs ? -1 : (ours > theirs ? 1 : 0);
+  }
+  
+  // TODO: doc
+  
+  public static Duration greaterOf(Duration d1, Duration d2) {
+     return d1.compareTo(d2) >= 0 ? d1 : d2;
+  }
+  
+  public static Duration greatestOf(Duration... durations) {
+     int len = durations.length;
+     if (len == 0) {
+        throw new IllegalArgumentException();
+     }
+     Duration max = durations[0];
+     for (int i = 1; i < len; i++) {
+        Duration d = durations[i];
+        if (max.compareTo(d) < 0) {
+           max = d;
+        }
+     }
+     return max;
+  }
+
+  public static Duration greatestOf(Iterable<Duration> durations) {
+     Iterator<Duration> iter = durations.iterator();
+     if (!iter.hasNext()) {
+        throw new IllegalArgumentException();
+     }
+     Duration max = iter.next();
+     while (iter.hasNext()) {
+        Duration d = iter.next();
+        if (max.compareTo(d) < 0) {
+           max = d;
+        }
+     }
+     return max;
+  }
+
+  public static Duration lesserOf(Duration d1, Duration d2) {
+     return d1.compareTo(d2) <= 0 ? d1 : d2;
+  }
+  
+  public static Duration leastOf(Duration... durations) {
+     int len = durations.length;
+     if (len == 0) {
+        throw new IllegalArgumentException();
+     }
+     Duration min = durations[0];
+     for (int i = 1; i < len; i++) {
+        Duration d = durations[i];
+        if (min.compareTo(d) > 0) {
+           min = d;
+        }
+     }
+     return min;
+  }
+  
+  public static Duration leastOf(Iterable<Duration> durations) {
+     Iterator<Duration> iter = durations.iterator();
+     if (!iter.hasNext()) {
+        throw new IllegalArgumentException();
+     }
+     Duration min = iter.next();
+     while (iter.hasNext()) {
+        Duration d = iter.next();
+        if (min.compareTo(d) > 0) {
+           min = d;
+        }
+     }
+     return min;
   }
 
   @Override public String toString() {

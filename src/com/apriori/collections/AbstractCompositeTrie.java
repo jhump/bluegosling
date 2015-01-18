@@ -239,9 +239,8 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       @Override
       public CompositeTrie<K, C, V> prefixMap(Iterable<C> newPrefix) {
          Collection<C> snapshot = Iterables.snapshot(newPrefix);
-         return snapshot.isEmpty()
-               ? this
-               : new PrefixCompositeTrie<>(Iterables.concat(this.prefix, snapshot), parent);
+         return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(Iterables.concatIterables(
+               this.prefix, snapshot), parent);
       }
       
       protected Iterable<C> checkPrefix(Iterable<C> newKey) {

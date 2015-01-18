@@ -3,7 +3,7 @@ package com.apriori.collections;
 import java.util.Map;
 
 /**
- * A view of data in a table as a {@link Map}.
+ * A view of data in a table as a {@link Map}. The values will themselves be maps or other tables.
  *
  * @param <K> the type of keys in the map
  * @param <V> the type of views in the map

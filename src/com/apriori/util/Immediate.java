@@ -15,8 +15,8 @@ import java.util.concurrent.Future;
  * {@link Variable}, it can represent either a successful result value or a cause of failure.
  * 
  * <p>Its API closely resembles that of {@link ListenableFuture} except that, since the value is
- * immediately available, no methods ever block. So methods for determining if the value is "done"
- * yet and those that block until it's done are unnecessary.
+ * immediately available, no methods ever block. So methods for determining if the value is complete
+ * and those that block until it's complete are unnecessary.
  * 
  * @param <T> the type of value
  */
@@ -119,7 +119,7 @@ public abstract class Immediate<T> {
     * Gets this object's cause of failure.
     *
     * @return this object's cause of failure.
-    * @throws IllegalStateException if this object is successful
+    * @throws IllegalStateException if this object is successful or cancelled
     * @see ListenableFuture#getResult()
     */
    public abstract Throwable getFailure();

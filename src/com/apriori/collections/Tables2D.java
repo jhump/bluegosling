@@ -20,7 +20,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
-
+// TODO: doc
+// TODO: tests
 final class Tables2D {
    private Tables2D() {
    }
@@ -826,9 +827,8 @@ final class Tables2D {
 
       @Override
       public Map<R, Set<C>> columnIndex() {
-         // TODO: add TransformingMap.ReadOnly.ValuesOnly so we don't have to double-wrap
-         return Collections.unmodifiableMap(new TransformingMap.ValuesOnly<>(table.columnIndex(),
-               (k, s) -> Collections.unmodifiableSet(s)));
+         return TransformingMap.ReadOnly.transformingValues(table.columnIndex(),
+               s -> Collections.unmodifiableSet(s));
       }
 
       @Override

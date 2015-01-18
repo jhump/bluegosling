@@ -239,7 +239,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
          Collection<K> snapshot = Iterables.snapshot(newPrefix);
          return snapshot.isEmpty()
                ? this
-               : new PrefixSequenceTrie<>(Iterables.concat(this.prefix, snapshot), parent);
+               : new PrefixSequenceTrie<>(Iterables.concatIterables(this.prefix, snapshot), parent);
       }
       
       N getRoot() {

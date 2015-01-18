@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.IntFunction;
 
-
+//TODO: doc
+//TODO: tests
 final class Tables4D {
    private Tables4D() {
    }

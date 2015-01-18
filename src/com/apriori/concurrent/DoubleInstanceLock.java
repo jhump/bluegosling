@@ -31,8 +31,9 @@ import java.util.function.Function;
  * inspect or interact with that value will encounter concurrency issues as the object is not
  * thread-safe. The <em>only</em> thread-safe interaction is through this
  * {@link DoubleInstanceLock}. If an operation needs to provide access to the object, use
- * {@link #snapshot()} instead of the read or write methods. Access should always be marshaled so
- * as to prevent mutations to the snapshot. 
+ * {@link #snapshot()} instead of the read or write methods. Note that write operations should never
+ * be made to such a snapshot (actual copies are made lazily, to defer any cost of copying to the
+ * next write operation and to allow multiple readers to share the same snapshot).
  * 
  * <p>The object must be cloneable so that stable snapshots of the object can be captured. (Also, it
  * is cloned initially to generate the two instances from the one object.) It is <em>very

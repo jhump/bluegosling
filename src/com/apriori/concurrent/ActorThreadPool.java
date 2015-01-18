@@ -41,7 +41,7 @@ import java.util.function.Consumer;
  * 
  * <p>This is similar in functionality to a {@link PipeliningExecutorService}, which wraps another
  * executor instead of providing its own thread pool. Because it does not control the way the
- * executor dispatches tasks to actual threads, it does neither thread-pinning nor work-stealing.
+ * executor dispatches tasks to actual threads, it can do neither thread-pinning nor work-stealing.
  * 
  * <p>The definitions for "core" and "maximum" pool sizes differ a bit from
  * {@link ThreadPoolExecutor}. The core pool consists of the threads that aren't ever allowed to

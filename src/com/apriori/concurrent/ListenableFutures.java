@@ -19,13 +19,16 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -505,6 +508,182 @@ final class ListenableFutures {
    }
 
    /**
+    * Abstract base class for futures with a known result but that incur a fixed delay before that
+    * result is becomes available and the future completes. If no listeners are added to the future
+    * then no actual scheduling of deferred completion is necessary. Instead, various methods on the
+    * future will try to complete the future if it's not already done and its completion is due. But
+    * if listeners are added, then completion is scheduled (using a static
+    * {@link ScheduledExecutorService} with a fixed size pool) so that the listener can be invoked
+    * in a timely manner once the delay has passed.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @see AbstractDeferredFuture#doComplete()
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+
+   static abstract class AbstractDeferredFuture<T> extends AbstractListenableFuture<T> {
+
+      /**
+       * Tracks thread numbers, for naming threads used by the static thread pool below.
+       */
+      private static final AtomicLong THREAD_ID = new AtomicLong();
+      
+      /**
+       * A static thread pool used to schedule completion of a future, used if and only if a
+       * listener is added to a future.
+       */
+      private static final ScheduledExecutorService SCHEDULER =
+            Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2,
+                  r -> {
+                     Thread th = new Thread(r);
+                     th.setDaemon(true);
+                     th.setName("DeferredFuture-completion-scheduler-"
+                           + THREAD_ID.incrementAndGet());
+                     return th;
+                  }); 
+
+      /**
+       * Absolute time in {@linkplain System#nanoTime() system nanos} when this future completes.
+       */
+      private final long completionTimeNanos;
+      
+      /**
+       * If true, then completion has been scheduled (because a listener was added).
+       */
+      private final AtomicBoolean scheduled = new AtomicBoolean();
+
+      /**
+       * Constructs a new future that will complete after the given delay.
+       *
+       * @param delay the delay until the future completes
+       * @param unit the unit of the given delay
+       */
+      AbstractDeferredFuture(long delay, TimeUnit unit) {
+         this.completionTimeNanos = System.nanoTime() + unit.toNanos(delay);
+      }
+
+      @Override
+      public boolean isDone() {
+         return maybeComplete();
+      }
+
+      @Override
+      public void await() throws InterruptedException {
+         if (scheduled.get()) {
+            super.await();
+            return;
+         }
+         
+         long maxWaitTime = completionTimeNanos - System.nanoTime();
+         if (!await(maxWaitTime, TimeUnit.NANOSECONDS)) {
+            doComplete();
+         }
+      }
+
+      @Override
+      public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+         if (scheduled.get()) {
+            return super.await(limit, unit);
+         }
+         
+         long limitNanos = unit.toNanos(limit);
+         long maxWaitTime = Math.min(completionTimeNanos - System.nanoTime(), limitNanos);
+         if (super.await(maxWaitTime, TimeUnit.NANOSECONDS)) {
+            return true;
+         }
+         return tryComplete();
+      }
+      
+      /**
+       * Tries to complete the future if completion is due. Returns true if the completion was due
+       * and {@link #doComplete()} was called or false otherwise.
+       *
+       * @return true if the completion was due
+       */
+      private boolean tryComplete() {
+         if (System.nanoTime() > completionTimeNanos) {
+            doComplete();
+            return true;
+         }
+         return false;
+      }
+      
+      /**
+       * Completes this future. This method should call one of the following methods in order to
+       * complete the future:
+       * <ul>
+       * <li>{@link #setValue(Object)}</li>
+       * <li>{@link #setFailure(Throwable)}</li>
+       * <li>{@link #setCancelled()}</li>
+       * <li>{@link #cancel(boolean)}</li>
+       * </ul>
+       */
+      abstract void doComplete();
+      
+      /**
+       * Determines if this future is complete and actually completes the future if not already done
+       * but completion is due. Returns true if the future is complete upon return.
+       *
+       * @return true if the future is complete
+       */
+      private boolean maybeComplete() {
+         if (super.isDone()) {
+            return true;
+         }
+         return scheduled.get() ? false : tryComplete();
+      }
+
+      @Override
+      public boolean isCancelled() {
+         maybeComplete();
+         return super.isCancelled();
+      }
+
+      @Override
+      public void addListener(FutureListener<? super T> listener, Executor executor) {
+         if (!maybeComplete() && scheduled.compareAndSet(false, true)) {
+            long waitNanos = completionTimeNanos - System.nanoTime();
+            ScheduledFuture<?> f =
+                  SCHEDULER.schedule(this::doComplete, waitNanos, TimeUnit.NANOSECONDS);
+            this.addListener(future -> f.cancel(false), SameThreadExecutor.get());
+         }
+         super.addListener(listener, executor);
+      }
+
+      @Override
+      public boolean isSuccessful() {
+         maybeComplete();
+         return super.isSuccessful();
+      }
+
+      @Override
+      public T getResult() {
+         maybeComplete();
+         return super.getResult();
+      }
+
+      @Override
+      public boolean isFailed() {
+         maybeComplete();
+         return super.isFailed();
+      }
+
+      @Override
+      public Throwable getFailure() {
+         maybeComplete();
+         return super.getFailure();
+      }
+
+      @Override
+      public void visit(FutureVisitor<? super T> visitor) {
+         maybeComplete();
+         super.visit(visitor);
+      }
+   }
+
+   /**
     * A future that has already successfully completed. 
     *
     * @param <T> the type of the future value
@@ -749,6 +928,72 @@ final class ListenableFutures {
       }
    }
    
+   /**
+    * A future which completes with a given value after a given amount of time. This future always
+    * completes successfully unless it is {@linkplain #cancel(boolean) cancelled} before the delay
+    * elapses.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   static class DeferredFuture<T> extends AbstractDeferredFuture<T> {
+      private final T value;
+      
+      DeferredFuture(T value, long delay, TimeUnit unit) {
+         super(delay, unit);
+         this.value = value;
+      }
+
+      @Override
+      void doComplete() {
+         this.setValue(value);
+      }
+   }
+   
+   /**
+    * A future which fails after a given amount of time. This future always completes with the given
+    * cause of failure unless it is {@linkplain #cancel(boolean) cancelled} before the delay
+    * elapses.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   static class DeferredFailedFuture<T> extends AbstractDeferredFuture<T> {
+      private final Throwable failure;
+      
+      DeferredFailedFuture(Throwable failure, long delay, TimeUnit unit) {
+         super(delay, unit);
+         this.failure = failure;
+      }
+
+      @Override
+      void doComplete() {
+         this.setFailure(failure);
+      }
+   }
+
+   /**
+    * A future which is cancelled after a given amount of time. This future always completes due to
+    * a cancellation. It may complete before the delay elapses if it gets
+    * {@linkplain #cancel(boolean) cancelled}.
+    *
+    * @param <T> the type of future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   static class DeferredCancelledFuture<T> extends AbstractDeferredFuture<T> {
+      DeferredCancelledFuture(long delay, TimeUnit unit) {
+         super(delay, unit);
+      }
+
+      @Override
+      void doComplete() {
+         this.setCancelled();
+      }
+   }
+
    /**
     * A future that can never finish.
     *

@@ -45,6 +45,10 @@ import java.util.function.Consumer;
  * <p>{@link Sequence}s produced by this generator are not intended to be used simultaneously from
  * multiple consumer threads. If incorrect usage is detected, {@link Sequence#next(Object)} will
  * throw a {@link ConcurrentModificationException}.
+ * 
+ * <p>To create a generator, either use a flavor of {@link #create} and provide a lambda that will
+ * yield all generated values OR create a sub-class and override the {@link #run(Object, Output)}
+ * method with logic that yields the generated values.
  *
  * @param <T> the type of value produced by the generator
  * @param <U> the type of value passed to the generator

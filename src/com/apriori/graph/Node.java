@@ -66,7 +66,7 @@ public abstract class Node<T> {
    
    /**
     * The distinct set of inputs that are defined as {@link Key}s. These inputs are bound to a
-    * value when the computation graph is {@linkplain Graph.Computation#compute() executed}.
+    * value when the computation graph is {@linkplain Graph.Computation executed}.
     *
     * @return the set of {@link Key} inputs
     */
@@ -93,14 +93,14 @@ public abstract class Node<T> {
     *       by this node
     */
    public <U> Node<U> andThen(Function<T, U> fn) {
-      return new Node1<>(new ImmediateInput<>(this), fn::apply);
+      return new Node1<>(new RequiredInput<>(this), fn::apply);
    }
    
    /**
     * Returns a graph consisting of this node and its transitive dependencies. Executing the graph
     * yields values that are produced by this node.
     *
-    * @return a graph that yuelds values produced by this node
+    * @return a graph that yields values produced by this node
     */
    public Graph<T> toGraph() {
       return new Graph<>(this);
@@ -127,9 +127,16 @@ public abstract class Node<T> {
    /**
     * An input to a node. An input is an incoming edge in the graph. The other side of the edge can
     * either be another node or a key. Keys represent inputs to the graph that must be supplied when
-    * the graph is executed. An input can be asynchronous, meaning that the operation accepts a
-    * future for that input. This enables execution of the node's operation to concurrently overlap
-    * the computation of that input.
+    * the graph is executed.
+    * 
+    * <p>An input can be optional. The node's operation is invoked even if computation of the
+    * optional input failed. The node's operation accepts an {@link Immediate} for optional inputs,
+    * which can represent a successful value for the input or a failure.
+    * 
+    * <p>An input can also be asynchronous, which allows the execution one node's operation to run
+    * concurrently with the computation of one of its input. The node's operation accepts a future
+    * for the input if it is asynchronous. (Asynchronous inputs are implicitly optional since the
+    * future could complete unsuccessfully.)
     *
     * @param <T> the type of the input
     * 
@@ -191,9 +198,8 @@ public abstract class Node<T> {
 
       /**
        * Returns true if this is an optional input or not. An optional input's type is
-       * {@link ListenableFuture}, so that the node can see if the associated operation was
-       * successful or not. Despite the fact that the input type is a future, the node's operation
-       * will not be invoked until this input is available. 
+       * {@link Immediate}, so that the node can see if the associated operation was successful or
+       * not. 
        *
        * @return true if this is an optional input or not
        */
@@ -227,19 +233,19 @@ public abstract class Node<T> {
    }
    
    /**
-    * An immediate (e.g. not asynchronous) input.
+    * A required input.
     *
     * @param <T> the type of the input
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class ImmediateInput<T> extends Input<T> {
+   static class RequiredInput<T> extends Input<T> {
 
-      ImmediateInput(Key<T> key) {
+      RequiredInput(Key<T> key) {
          super(key);
       }
 
-      ImmediateInput(Node<T> node) {
+      RequiredInput(Node<T> node) {
          super(node);
       }
 
@@ -1004,7 +1010,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <T> NodeBuilder1<T> withInput(Class<T> input) {
-         return new NodeBuilder1<>(new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder1<>(new RequiredInput<>(Key.of(input)));
       }
       
       /**
@@ -1020,7 +1026,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <T> NodeBuilder1<T> withInput(TypeRef<T> input) {
-         return new NodeBuilder1<>(new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder1<>(new RequiredInput<>(Key.of(input)));
       }
       
       /**
@@ -1032,7 +1038,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <T> NodeBuilder1<T> withInput(Key<T> input) {
-         return new NodeBuilder1<>(new ImmediateInput<>(input));
+         return new NodeBuilder1<>(new RequiredInput<>(input));
       }
       
       /**
@@ -1044,7 +1050,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <T> NodeBuilder1<T> dependingOn(Node<T> input) {
-         return new NodeBuilder1<>(new ImmediateInput<>(input));
+         return new NodeBuilder1<>(new RequiredInput<>(input));
       }
       
       public <T> NodeBuilder1<ListenableFuture<T>> withAsyncInput(Class<T> input) {
@@ -1129,7 +1135,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <B> NodeBuilder2<A, B> withInput(Class<B> in) {
-         return new NodeBuilder2<>(input, new ImmediateInput<>(Key.of(in)));
+         return new NodeBuilder2<>(input, new RequiredInput<>(Key.of(in)));
       }
       
       /**
@@ -1145,7 +1151,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <B> NodeBuilder2<A, B> withInput(TypeRef<B> in) {
-         return new NodeBuilder2<>(input, new ImmediateInput<>(Key.of(in)));
+         return new NodeBuilder2<>(input, new RequiredInput<>(Key.of(in)));
       }
       
       /**
@@ -1157,7 +1163,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <B> NodeBuilder2<A, B> withInput(Key<B> in) {
-         return new NodeBuilder2<>(input, new ImmediateInput<>(in));
+         return new NodeBuilder2<>(input, new RequiredInput<>(in));
       }
       
       /**
@@ -1169,7 +1175,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <B> NodeBuilder2<A, B> dependingOn(Node<B> in) {
-         return new NodeBuilder2<>(input, new ImmediateInput<>(in));
+         return new NodeBuilder2<>(input, new RequiredInput<>(in));
       }
       
       public <B> NodeBuilder2<A, ListenableFuture<B>> withAsyncInput(Class<B> in) {
@@ -1257,7 +1263,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <C> NodeBuilder3<A, B, C> withInput(Class<C> input) {
-         return new NodeBuilder3<>(input1, input2, new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder3<>(input1, input2, new RequiredInput<>(Key.of(input)));
       }
       
       /**
@@ -1273,7 +1279,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <C> NodeBuilder3<A, B, C> withInput(TypeRef<C> input) {
-         return new NodeBuilder3<>(input1, input2, new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder3<>(input1, input2, new RequiredInput<>(Key.of(input)));
       }
       
       /**
@@ -1285,7 +1291,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <C> NodeBuilder3<A, B, C> withInput(Key<C> input) {
-         return new NodeBuilder3<>(input1, input2, new ImmediateInput<>(input));
+         return new NodeBuilder3<>(input1, input2, new RequiredInput<>(input));
       }
       
       /**
@@ -1297,7 +1303,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <C> NodeBuilder3<A, B, C> dependingOn(Node<C> input) {
-         return new NodeBuilder3<>(input1, input2, new ImmediateInput<>(input));
+         return new NodeBuilder3<>(input1, input2, new RequiredInput<>(input));
       }
 
       public <C> NodeBuilder3<A, B, ListenableFuture<C>> withAsyncInput(Class<C> input) {
@@ -1388,7 +1394,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <D> NodeBuilder4<A, B, C, D> withInput(Class<D> input) {
-         return new NodeBuilder4<>(input1, input2, input3, new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder4<>(input1, input2, input3, new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1404,7 +1410,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <D> NodeBuilder4<A, B, C, D> withInput(TypeRef<D> input) {
-         return new NodeBuilder4<>(input1, input2, input3, new ImmediateInput<>(Key.of(input)));
+         return new NodeBuilder4<>(input1, input2, input3, new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1416,7 +1422,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <D> NodeBuilder4<A, B, C, D> withInput(Key<D> input) {
-         return new NodeBuilder4<>(input1, input2, input3, new ImmediateInput<>(input));
+         return new NodeBuilder4<>(input1, input2, input3, new RequiredInput<>(input));
       }
 
       /**
@@ -1428,7 +1434,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <D> NodeBuilder4<A, B, C, D> dependingOn(Node<D> input) {
-         return new NodeBuilder4<>(input1, input2, input3, new ImmediateInput<>(input));
+         return new NodeBuilder4<>(input1, input2, input3, new RequiredInput<>(input));
       }
 
       public <D> NodeBuilder4<A, B, C, ListenableFuture<D>> withAsyncInput(Class<D> input) {
@@ -1523,7 +1529,7 @@ public abstract class Node<T> {
        */
       public <E> NodeBuilder5<A, B, C, D, E> withInput(Class<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1540,7 +1546,7 @@ public abstract class Node<T> {
        */
       public <E> NodeBuilder5<A, B, C, D, E> withInput(TypeRef<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1552,7 +1558,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <E> NodeBuilder5<A, B, C, D, E> withInput(Key<E> input) {
-         return new NodeBuilder5<>(input1, input2, input3, input4, new ImmediateInput<>(input));
+         return new NodeBuilder5<>(input1, input2, input3, input4, new RequiredInput<>(input));
       }
 
       /**
@@ -1564,7 +1570,7 @@ public abstract class Node<T> {
        *       operation
        */
       public <E> NodeBuilder5<A, B, C, D, E> dependingOn(Node<E> input) {
-         return new NodeBuilder5<>(input1, input2, input3, input4, new ImmediateInput<>(input));
+         return new NodeBuilder5<>(input1, input2, input3, input4, new RequiredInput<>(input));
       }
 
       public <E> NodeBuilder5<A, B, C, D, ListenableFuture<E>> withAsyncInput(Class<E> input) {
@@ -1663,7 +1669,7 @@ public abstract class Node<T> {
        */
       public <F> NodeBuilder6<A, B, C, D, E, F> withInput(Class<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1680,7 +1686,7 @@ public abstract class Node<T> {
        */
       public <F> NodeBuilder6<A, B, C, D, E, F> withInput(TypeRef<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1693,7 +1699,7 @@ public abstract class Node<T> {
        */
       public <F> NodeBuilder6<A, B, C, D, E, F> withInput(Key<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       /**
@@ -1706,7 +1712,7 @@ public abstract class Node<T> {
        */
       public <F> NodeBuilder6<A, B, C, D, E, F> dependingOn(Node<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       public <F> NodeBuilder6<A, B, C, D, E, ListenableFuture<F>> withAsyncInput(Class<F> input) {
@@ -1814,7 +1820,7 @@ public abstract class Node<T> {
        */
       public <G> NodeBuilder7<A, B, C, D, E, F, G> withInput(Class<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1831,7 +1837,7 @@ public abstract class Node<T> {
        */
       public <G> NodeBuilder7<A, B, C, D, E, F, G> withInput(TypeRef<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1844,7 +1850,7 @@ public abstract class Node<T> {
        */
       public <G> NodeBuilder7<A, B, C, D, E, F, G> withInput(Key<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       /**
@@ -1857,7 +1863,7 @@ public abstract class Node<T> {
        */
       public <G> NodeBuilder7<A, B, C, D, E, F, G> dependingOn(Node<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       public <G> NodeBuilder7<A, B, C, D, E, F, ListenableFuture<G>> withAsyncInput(
@@ -1974,7 +1980,7 @@ public abstract class Node<T> {
        */
       public <H> NodeBuilder8<A, B, C, D, E, F, G, H> withInput(Class<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -1991,7 +1997,7 @@ public abstract class Node<T> {
        */
       public <H> NodeBuilder8<A, B, C, D, E, F, G, H> withInput(TypeRef<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -2004,7 +2010,7 @@ public abstract class Node<T> {
        */
       public <H> NodeBuilder8<A, B, C, D, E, F, G, H> withInput(Key<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       /**
@@ -2017,7 +2023,7 @@ public abstract class Node<T> {
        */
       public <H> NodeBuilder8<A, B, C, D, E, F, G, H> dependingOn(Node<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       public <H> NodeBuilder8<A, B, C, D, E, F, G, ListenableFuture<H>> withAsyncInput(
@@ -2140,7 +2146,7 @@ public abstract class Node<T> {
        */
       public <I> NodeBuilder9<A, B, C, D, E, F, G, H, I> withInput(Class<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -2157,7 +2163,7 @@ public abstract class Node<T> {
        */
       public <I> NodeBuilder9<A, B, C, D, E, F, G, H, I> withInput(TypeRef<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               new ImmediateInput<>(Key.of(input)));
+               new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -2170,7 +2176,7 @@ public abstract class Node<T> {
        */
       public <I> NodeBuilder9<A, B, C, D, E, F, G, H, I> withInput(Key<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       /**
@@ -2183,7 +2189,7 @@ public abstract class Node<T> {
        */
       public <I> NodeBuilder9<A, B, C, D, E, F, G, H, I> dependingOn(Node<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               new ImmediateInput<>(input));
+               new RequiredInput<>(input));
       }
 
       public <I> NodeBuilder9<A, B, C, D, E, F, G, H, ListenableFuture<I>> withAsyncInput(
@@ -2313,7 +2319,7 @@ public abstract class Node<T> {
        */
       public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, J> withInput(Class<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               input9, new ImmediateInput<>(Key.of(input)));
+               input9, new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -2330,7 +2336,7 @@ public abstract class Node<T> {
        */
       public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, J> withInput(TypeRef<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               input9, new ImmediateInput<>(Key.of(input)));
+               input9, new RequiredInput<>(Key.of(input)));
       }
 
       /**
@@ -2343,7 +2349,7 @@ public abstract class Node<T> {
        */
       public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, J> withInput(Key<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               input9, new ImmediateInput<>(input));
+               input9, new RequiredInput<>(input));
       }
 
       /**
@@ -2356,7 +2362,7 @@ public abstract class Node<T> {
        */
       public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, J> dependingOn(Node<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
-               input9, new ImmediateInput<>(input));
+               input9, new RequiredInput<>(input));
       }
 
       public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, ListenableFuture<J>> withAsyncInput(

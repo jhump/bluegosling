@@ -8,6 +8,9 @@ import com.apriori.concurrent.ListenableFutures.CancelledFuture;
 import com.apriori.concurrent.ListenableFutures.CombiningFuture;
 import com.apriori.concurrent.ListenableFutures.CompletedFuture;
 import com.apriori.concurrent.ListenableFutures.CompletionStageWrapper;
+import com.apriori.concurrent.ListenableFutures.DeferredCancelledFuture;
+import com.apriori.concurrent.ListenableFutures.DeferredFailedFuture;
+import com.apriori.concurrent.ListenableFutures.DeferredFuture;
 import com.apriori.concurrent.ListenableFutures.FailedFuture;
 import com.apriori.concurrent.ListenableFutures.ListenableCompletionStage;
 import com.apriori.concurrent.ListenableFutures.ListenableFutureWrapper;
@@ -30,6 +33,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -91,7 +95,8 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * and has failed.
     * 
     * @return the cause of failure
-    * @throws IllegalArgumentException if the future is not complete or did not fail
+    * @throws IllegalArgumentException if the future is not complete, was successful, or was
+    *       cancelled
     */
    Throwable getFailure();
    
@@ -309,7 +314,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * Transforms this future using the specified function. The given function is applied, even if
     * this future fails. Since the function takes the future as an input, not just its resulting
     * value, the function can then inspect the future to see whether it completed successfully or
-    * not. The function is not invoked until the given future is done, so it is safe for it call
+    * not. The function is not invoked until the given future is done, so it is safe for it to call
     * {@link #getResult()}, {@link #getFailure()}, or {@link #visit(FutureVisitor)}.
     * 
     * <p>The returned future's cancellation status is kept in sync with the given future. So if the
@@ -588,6 +593,47 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
    static <T> ListenableFuture<T> cancelledFuture() {
       return (CancelledFuture<T>) CancelledFuture.INSTANCE;
    }
+   
+   /**
+    * Returns a future that will complete successfully with the given value after the given delay.
+    * This future may not complete successfully if it is {@linkplain #cancel(boolean) cancelled}
+    * before the delay elapses.
+    * 
+    * @param value the future value
+    * @param delay the time after which the future completes
+    * @param unit the unit for the given delay
+    * @return a future that will complete successfully with the given value after the given delay
+    */
+   static <T> ListenableFuture<T> deferredFuture(T value, long delay, TimeUnit unit) {
+      return new DeferredFuture<>(value, delay, unit);
+   }
+   
+   /**
+    * Returns a future that will fail with the given cause after the given delay. This future may
+    * not fail with the given cause if it is {@linkplain #cancel(boolean) cancelled} before the
+    * delay elapses.
+    * 
+    * @param failure the cause of future failure
+    * @param delay the time after which the future completes
+    * @param unit the unit for the given delay
+    * @return a future that will fail with the given cause after the given delay
+    */
+   static <T> ListenableFuture<T> deferredFailedFuture(Throwable failure, long delay,
+         TimeUnit unit) {
+      return new DeferredFailedFuture<>(failure, delay, unit);
+   }
+
+   /**
+    * Returns a future that will be cancelled after the given delay. This future may complete before
+    * the given delay elapses if it is {@linkplain #cancel(boolean) cancelled}.
+    * 
+    * @param delay the time after which the future is cancelled
+    * @param unit the unit for the given delay
+    * @return a future that will be cancelled after the given delay
+    */
+   static <T> ListenableFuture<T> deferredCancelledFuture(long delay, TimeUnit unit) {
+      return new DeferredCancelledFuture<>(delay, unit);
+   }
 
    /**
     * Returns a future that will never finish. This can be useful in some circumstances for
@@ -595,9 +641,11 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * 
     * <p>The returned future cannot be used with blocking calls, since they would never return or
     * always timeout. So calls to both forms of {@link ListenableFuture#get} and both forms of
-    * {@link ListenableFuture#await} all throw {@link UnsupportedOperationException}. Additionally,
-    * the future cannot be cancelled (as that would implicitly finish it). So calls to
-    * {@link #cancel(boolean)} always return false.
+    * {@link ListenableFuture#await} all throw {@link UnsupportedOperationException}.
+    * 
+    * <p>Additionally, the future cannot be cancelled (as that would implicitly finish it). So calls
+    * to {@link #cancel(boolean)} always return false but don't actually cause the future to become
+    * {@linkplain #isCancelled() cancelled}.
     *
     * @return a future that will never finish
     */

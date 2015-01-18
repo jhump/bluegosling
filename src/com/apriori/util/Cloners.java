@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 /**
  * Utility methods and constants for using and creating {@code Cloner} instances.
@@ -29,12 +30,12 @@ public final class Cloners {
    private Cloners() {}
    
    static final Method CLONE_METHOD;
+   
    static {
       try {
          CLONE_METHOD = Object.class.getDeclaredMethod("clone");
          CLONE_METHOD.setAccessible(true);
-      }
-      catch (SecurityException | NoSuchMethodException e) {
+      } catch (SecurityException | NoSuchMethodException e) {
          throw new AssertionError("Failed to get Object#clone() method!", e);
       }
    }
@@ -54,8 +55,7 @@ public final class Cloners {
    public static void checkClone(Object orig, Object clone) {
       if (clone == orig) {
          throw new CloningException("Clone should not be same instance as original object");
-      }
-      else if (clone.getClass() != orig.getClass()) {
+      } else if (clone.getClass() != orig.getClass()) {
          throw new CloningException(
                "Clone should be of the same class as original object");
       }
@@ -72,23 +72,18 @@ public final class Cloners {
     *         operation
     */
    public static <T extends Cloneable> Cloner<T> forCloneable() {
-      return new Cloner<T>() {
-         @Override
-         public T clone(T o) {
-            try {
-               Object clone = CLONE_METHOD.invoke(o); // o.clone()
-               // check the object's value and type
-               checkClone(o, clone);
-               @SuppressWarnings("unchecked")
-               T ret = (T) clone;
-               return ret;
-            }
-            catch (InvocationTargetException e) {
-               throw new CloningException("Failed to invoke clone()", e);
-            }
-            catch (IllegalAccessException e) {
-               throw new CloningException("Failed to invoke clone()", e);
-            }
+      return  o -> {
+         try {
+            Object clone = CLONE_METHOD.invoke(o); // o.clone()
+            // check the object's value and type
+            checkClone(o, clone);
+            @SuppressWarnings("unchecked")
+            T ret = (T) clone;
+            return ret;
+         } catch (InvocationTargetException e) {
+            throw new CloningException("Failed to invoke clone()", e);
+         } catch (IllegalAccessException e) {
+            throw new CloningException("Failed to invoke clone()", e);
          }
       };
    }
@@ -105,50 +100,28 @@ public final class Cloners {
     *         cloning operation
     */
    public static <T extends Serializable> Cloner<T> forSerializable() {
-      return new Cloner<T>() {
-         @Override
-         public T clone(T o) {
-            ObjectOutputStream oos = null;
-            ObjectInputStream ois = null;
-            try {
-               // write the object
-               ByteArrayOutputStream bos = new ByteArrayOutputStream();
-               oos = new ObjectOutputStream(bos);
+      return o -> {
+         try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            // write the object
+            try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                oos.writeObject(o);
-               oos.close();
-               oos = null;
-               // and read it back in
-               ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-               ois = new ObjectInputStream(bis);
-               Object clone = ois.readObject();
-               ois.close();
-               ois = null;
-               // check the object's value and type
-               checkClone(o, clone);
-               @SuppressWarnings("unchecked")
-               T ret = (T) clone;
-               return ret;
             }
-            catch (IOException e) {
+            // and read it back in
+            Object clone;
+            try (ObjectInputStream ois =
+                  new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()))) {
+               clone = ois.readObject();
+            } catch (ClassNotFoundException e) {
                throw new CloningException("Failed to clone via serialization", e);
             }
-            catch (ClassNotFoundException e) {
-               throw new CloningException("Failed to clone via serialization", e);
-            }
-            finally {
-               // close streams in case an exception
-               // was raised
-               try {
-                  if (oos != null)
-                     oos.close();
-               }
-               catch (IOException ignored) {}
-               try {
-                  if (ois != null)
-                     ois.close();
-               }
-               catch (IOException ignored) {}
-            }
+            // check the object's value and type
+            checkClone(o, clone);
+            @SuppressWarnings("unchecked")
+            T ret = (T) clone;
+            return ret;
+         } catch (IOException e) {
+            throw new CloningException("Failed to clone via serialization", e);
          }
       };
    }
@@ -188,17 +161,10 @@ public final class Cloners {
          try {
             Method ret = clazz.getDeclaredMethod(methodName, argType);
             int mods = ret.getModifiers();
-            if (Modifier.isStatic(mods)) {
-               return ret;
-            }
-            else {
-               return null;
-            }
-         }
-         catch (SecurityException e) {
+            return Modifier.isStatic(mods) ? ret : null;
+         } catch (SecurityException e) {
             return null;
-         }
-         catch (NoSuchMethodException e) {
+         } catch (NoSuchMethodException e) {
             return null;
          }
       }
@@ -220,11 +186,9 @@ public final class Cloners {
       public Constructor<T> getMember(Class<?> argType) {
          try {
             return clazz.getDeclaredConstructor(argType);
-         }
-         catch (SecurityException e) {
+         } catch (SecurityException e) {
             return null;
-         }
-         catch (NoSuchMethodException e) {
+         } catch (NoSuchMethodException e) {
             return null;
          }
       }
@@ -234,8 +198,8 @@ public final class Cloners {
     * Helper class used for breadth-first search in {@link #findMemberForInterface}.
     */
    private static class InterfaceSearchNode {
-      public Class<?> iface;
-      public int level;
+      public final Class<?> iface;
+      public final int level;
 
       public InterfaceSearchNode(Class<?> iface, int level) {
          this.iface = iface;
@@ -303,27 +267,14 @@ public final class Cloners {
 
       if (candidateMembers.size() > 1) {
          // uh oh - ambiguous results
-         StringBuilder msg = new StringBuilder();
-         msg.append("Ambiguous results: can't decide from ");
-         boolean first = true;
-         for (Class<?> iface : candidateArgTypes) {
-            if (first) {
-               first = false;
-            }
-            else {
-               msg.append(", ");
-            }
-            msg.append(iface.getName());
-         }
-         throw new IllegalArgumentException(msg.toString());
-
-      }
-      else if (candidateMembers.size() == 1) {
+         String msg = candidateArgTypes.stream()
+               .map(Class::getName)
+               .collect(Collectors.joining(", ", "Ambiguous results: can't decide from ", ""));
+         throw new IllegalArgumentException(msg);
+      } else if (candidateMembers.size() == 1) {
          // got it!
          return candidateMembers.get(0);
-
-      }
-      else {
+      } else {
          // nothing found
          return null;
       }
@@ -519,12 +470,10 @@ public final class Cloners {
       final Class<?> argTypes[] = cons.getParameterTypes();
       if (argTypes.length > 1) {
          throw new IllegalArgumentException("Constructor must take no more than one argument");
-      }
-      else if (argTypes.length == 1) {
+      } else if (argTypes.length == 1) {
          if (argTypes[0].isPrimitive()) {
             throw new IllegalArgumentException("Constructor argument cannot be primitive");
-         }
-         else if (!argTypes[0].isAssignableFrom(cons.getDeclaringClass())) {
+         } else if (!argTypes[0].isAssignableFrom(cons.getDeclaringClass())) {
             throw new IllegalArgumentException(
                   "Constructor argument is not compatible with declaring class");
          }
@@ -532,27 +481,19 @@ public final class Cloners {
       // make sure we can access it
       cons.setAccessible(true);
 
-      return new Cloner<T>() {
-         @Override
-         public T clone(T o) {
-            try {
-               T clone =
-                     argTypes.length == 0 ? cons.newInstance() : cons.newInstance(o);
-               checkClone(o, clone);
-               return clone;
-            }
-            catch (IllegalArgumentException e) {
-               throw new CloningException("Failed to invoke copy constructor", e);
-            }
-            catch (InstantiationException e) {
-               throw new CloningException("Failed to invoke copy constructor", e);
-            }
-            catch (IllegalAccessException e) {
-               throw new CloningException("Failed to invoke copy constructor", e);
-            }
-            catch (InvocationTargetException e) {
-               throw new CloningException("Failed to invoke copy constructor", e);
-            }
+      return o -> {
+         try {
+            T clone = argTypes.length == 0 ? cons.newInstance() : cons.newInstance(o);
+            checkClone(o, clone);
+            return clone;
+         } catch (IllegalArgumentException e) {
+            throw new CloningException("Failed to invoke copy constructor", e);
+         } catch (InstantiationException e) {
+            throw new CloningException("Failed to invoke copy constructor", e);
+         } catch (IllegalAccessException e) {
+            throw new CloningException("Failed to invoke copy constructor", e);
+         } catch (InvocationTargetException e) {
+            throw new CloningException("Failed to invoke copy constructor", e);
          }
       };
    }
@@ -631,15 +572,12 @@ public final class Cloners {
       final boolean isStatic = Modifier.isStatic(method.getModifiers());
       if (argTypes.length > 0 && !isStatic) {
          throw new IllegalArgumentException("Instance method must take no argument");
-      }
-      else if (argTypes.length > 1) {
+      } else if (argTypes.length > 1) {
          throw new IllegalArgumentException("Static method must take no more than one argument");
-      }
-      else if (argTypes.length == 1) {
+      } else if (argTypes.length == 1) {
          if (argTypes[0].isPrimitive()) {
             throw new IllegalArgumentException("Static method argument cannot be primitive");
-         }
-         else if (!argTypes[0].isAssignableFrom(method.getDeclaringClass())) {
+         } else if (!argTypes[0].isAssignableFrom(method.getDeclaringClass())) {
             throw new IllegalArgumentException(
                   "Static method argument is not compatible with declaring class");
          }
@@ -647,27 +585,21 @@ public final class Cloners {
       // make sure we can access it
       method.setAccessible(true);
 
-      return new Cloner<T>() {
-         @Override
-         public T clone(T o) {
-            try {
-               T receiver = isStatic ? null : o;
-               Object clone =
-                     argTypes.length == 0 ? method.invoke(receiver) : method.invoke(receiver, o);
-               checkClone(o, clone);
-               @SuppressWarnings("unchecked")
-               T ret = (T) clone;
-               return ret;
-            }
-            catch (IllegalArgumentException e) {
-               throw new CloningException("Failed to invoke copy method", e);
-            }
-            catch (IllegalAccessException e) {
-               throw new CloningException("Failed to invoke copy method", e);
-            }
-            catch (InvocationTargetException e) {
-               throw new CloningException("Failed to invoke copy method", e);
-            }
+      return o -> {
+         try {
+            T receiver = isStatic ? null : o;
+            Object clone =
+                  argTypes.length == 0 ? method.invoke(receiver) : method.invoke(receiver, o);
+            checkClone(o, clone);
+            @SuppressWarnings("unchecked")
+            T ret = (T) clone;
+            return ret;
+         } catch (IllegalArgumentException e) {
+            throw new CloningException("Failed to invoke copy method", e);
+         } catch (IllegalAccessException e) {
+            throw new CloningException("Failed to invoke copy method", e);
+         } catch (InvocationTargetException e) {
+            throw new CloningException("Failed to invoke copy method", e);
          }
       };
    }
@@ -699,12 +631,10 @@ public final class Cloners {
                            + " exists for " + clazz.getName());
             }
             return withCopyMethod(method);
-         }
-         catch (SecurityException e) {
+         } catch (SecurityException e) {
             throw new IllegalArgumentException("No copy method named " + methodName
                   + " exists for " + clazz.getName());
-         }
-         catch (NoSuchMethodException e) {
+         } catch (NoSuchMethodException e) {
             // try super-class method
             currentClass = currentClass.getSuperclass();
          }
@@ -788,13 +718,10 @@ public final class Cloners {
       if (clone == null) {
          throw new NullPointerException();
       }
-      return new Cloner<T>() {
-         @Override
-         public T clone(T o) {
-            // check the object's value and type
-            checkClone(o, clone);
-            return clone;
-         }
+      return o -> {
+         // check the object's value and type
+         checkClone(o, clone);
+         return clone;
       };
    }
 
@@ -840,12 +767,7 @@ public final class Cloners {
       }
       ArrayList<Cloner<?>> ret = new ArrayList<Cloner<?>>(clones.size());
       for (Object clone : clones) {
-         if (clone == null) {
-            ret.add(null);
-         }
-         else {
-            ret.add(fromInstance(clone));
-         }
+         ret.add(clone == null ? null : fromInstance(clone));
       }
       return ret;
    }
@@ -872,8 +794,7 @@ public final class Cloners {
             T clone = null;
             try {
                clone = c.call();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                throw new CloningException("Callable failed to return clone", e);
             }
             // check the object's value and type
@@ -1002,20 +923,17 @@ public final class Cloners {
          Cloner<T> ret = (Cloner<T>) Cloners.<Object> forArray((Cloner<Object>) defaultClonerFor(element));
          return ret;
 
-      }
-      else if (Cloneable.class.isAssignableFrom(clazz)) {
+      } else if (Cloneable.class.isAssignableFrom(clazz)) {
          @SuppressWarnings("unchecked")
          Cloner<T> ret = (Cloner<T>) Cloners.<Cloneable> forCloneable();
          return ret;
 
-      }
-      else if (Serializable.class.isAssignableFrom(clazz)) {
+      } else if (Serializable.class.isAssignableFrom(clazz)) {
          @SuppressWarnings("unchecked")
          Cloner<T> ret = (Cloner<T>) Cloners.<Serializable> forSerializable();
          return ret;
 
-      }
-      else {
+      } else {
          return withCopyConstructor(clazz);
       }
    }
@@ -1025,20 +943,16 @@ public final class Cloners {
     * follows the same flow as {@link #defaultClonerFor(Class)} except that it evaluates the logic
     * for <em>every object cloned</em> instead of trying to do it statically based on a given type.
     * 
-    * <p>
-    * So it is more flexible than {@link #defaultClonerFor(Class)} since you don't have to know the
-    * runtime type of objects being cloned ahead of time. But its performance is worse and cloning
-    * may result in runtime exceptions during the cloning operation, instead of when creating the
-    * cloner. This occurs if a given object to be cloned is not array and implements neither
-    * {@code Cloneable} nor {@code Serializable} and whose class does not provide a suitable copy
-    * constructor.
+    * <p>So it is more flexible than {@link #defaultClonerFor(Class)} since you don't have to know
+    * the runtime type of objects being cloned ahead of time. But its performance is worse and
+    * cloning may result in runtime exceptions during the cloning operation, instead of when
+    * creating the cloner. This occurs if a given object to be cloned is not array and implements
+    * neither {@code Cloneable} nor {@code Serializable} and whose class does not provide a suitable
+    * copy constructor.
     */
-   public static Cloner<Object> GENERIC_CLONER = new Cloner<Object>() {
-      @Override
-      public Object clone(Object o) {
-         @SuppressWarnings("unchecked")
-         Cloner<Object> delegate = (Cloner<Object>) Cloners.defaultClonerFor(o.getClass());
-         return delegate.clone(o);
-      }
+   public static Cloner<Object> GENERIC_CLONER = o -> {
+      @SuppressWarnings("unchecked")
+      Cloner<Object> delegate = (Cloner<Object>) Cloners.defaultClonerFor(o.getClass());
+      return delegate.clone(o);
    };
 }

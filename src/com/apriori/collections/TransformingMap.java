@@ -36,7 +36,7 @@ import java.util.function.Function;
  * // violate map invariants
  * Map&lt;Type2, ValueType&gt; transformed = new HashMap&lt;&gt;(
  *       TransformingMap.transformingKeys(input, function));</pre>
- * <p>Also maps with transformed keys (due to transformations only working in one direction) have
+ * <p>Also, maps with transformed keys (due to transformations only working in one direction) have
  * some methods that are implemented in terms of the map's {@linkplain #entrySet() entry iterator}
  * and thus may have worse performance than the underlying map's implementation. These methods
  * include {@link #get(Object)}, {@link #containsKey(Object)} and {@link #remove(Object)}.

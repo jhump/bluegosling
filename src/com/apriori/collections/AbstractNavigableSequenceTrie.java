@@ -8,6 +8,7 @@ import com.apriori.possible.Reference;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -431,9 +432,8 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> newPrefix) {
          Collection<K> snapshot = Iterables.snapshot(newPrefix);
-         return snapshot.isEmpty()
-               ? this
-               : new NavigablePrefixSequenceTrie<>(Iterables.concat(this.prefix, snapshot), parent);
+         return snapshot.isEmpty() ? this : new NavigablePrefixSequenceTrie<>(
+               Iterables.concatIterables(this.prefix, snapshot), parent);
       }
       
       N getRoot() {
@@ -1000,7 +1000,8 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
          Iterable<K> keyIter = base.asIterable(key);
          Reference<V> v = base.remove(keyIter);
          return v.isPresent()
-               ? new AbstractMap.SimpleImmutableEntry<>(Iterables.snapshot(keyIter), v.get())
+               ? new AbstractMap.SimpleImmutableEntry<>(
+                     new ArrayList<>(Iterables.snapshot(keyIter)), v.get())
                : null;
       }
    }
