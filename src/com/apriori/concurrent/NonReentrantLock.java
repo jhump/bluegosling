@@ -11,8 +11,8 @@ import java.util.concurrent.locks.Lock;
  * effort to satisfy acquisitions in FIFO order, but barging can occur (and often will if the lock
  * is highly contended).
  * 
- * <p>Like the name says, this lock is non-reentrant and will deadlock if
- * re-entrance is accidentally attempted.
+ * <p>Like the name says, this lock is non-reentrant and will deadlock if re-entrance is
+ * accidentally attempted.
  * 
  * <p>Since it is not reentrant (i.e. no bookkeeping that allows it to track re-entrance),
  * this lock does not have an exclusive owner thread. This enables patterns of use where it is
@@ -82,7 +82,9 @@ public class NonReentrantLock implements Lock {
 
    @Override
    public void unlock() {
-      sync.release(-1);
+      if (!sync.release(1)) {
+         throw new IllegalMonitorStateException();
+      }
    }
 
    @Override
@@ -103,17 +105,18 @@ public class NonReentrantLock implements Lock {
       
       @Override
       protected boolean tryAcquire(int i) {
+         assert i == 1;
          return compareAndSetState(0, i);
       }
       
       @Override
       protected boolean tryRelease(int i) {
-         if (i == -1) {
-            setState(0);
-            return true;
-         } else {
-            return compareAndSetState(1, 0);
+         if (i == 0) {
+            // this happens if awaiting a condition but lock not held
+            return false;
          }
+         assert i == 1;
+         return compareAndSetState(i, 0);
       }
       
       @Override

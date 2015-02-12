@@ -1,11 +1,6 @@
 package com.apriori.concurrent;
 
-import com.apriori.collections.Iterables;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Collections;
@@ -67,27 +62,27 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
  */
 // TODO: javadoc
 // TODO: tests
-public class HierarchicalLock {
+public class HierarchicalLock implements Serializable {
+   private static final long serialVersionUID = 997443573217210719L;
 
    /**
     * A map of waiting threads to the exclusive lock on which they wait. This is maintained to
     * enable deadlock detection.
     */
-   static ConcurrentHashMap<Thread, HierarchicalLock> blockedForExclusive =
-         new ConcurrentHashMap<Thread, HierarchicalLock>(16, 0.75F, 100);
+   static ConcurrentHashMap<Thread, HierarchicalLock> blockedForExclusive = 
+         new ConcurrentHashMap<>();
 
    /**
     * A map of waiting threads to the shared lock on which they wait. This is maintained to enable
     * deadlock detection.
     */
-   static ConcurrentHashMap<Thread, HierarchicalLock> blockedForShared =
-         new ConcurrentHashMap<Thread, HierarchicalLock>(16, 0.75F, 100);
+   static ConcurrentHashMap<Thread, HierarchicalLock> blockedForShared = new ConcurrentHashMap<>();
    
    /**
     * The result of acquiring a {@link HierarchicalLock}. After acquisition, this object can be used
     * to release, demote, or promote the held lock. This API just contains methods in common to both
-    * types of acquired locks. Both concrete lock implementations provide a wider API, with methods
-    * that are specific to them. 
+    * types of acquired locks. Both concrete acquired locks provide a wider API, with method that
+    * are specific to them. 
     *
     * @see ExclusiveLock
     * @see SharedLock
@@ -173,7 +168,7 @@ public class HierarchicalLock {
    }
 
    /**
-    * The lock's queued synchronizer.
+    * The lock's synchronizer.
     */
    final Sync sync;
    
@@ -191,28 +186,32 @@ public class HierarchicalLock {
     * Marks the current thread as blocking for this lock in exclusive mode.
     */
    void beginBlockingForExclusive() {
-      blockedForExclusive.put(Thread.currentThread(), this);
+      HierarchicalLock l = blockedForExclusive.put(Thread.currentThread(), this);
+      assert l == null;
    }
    
    /**
     * Marks the current thread as no longer blocking for this lock in exclusive mode.
     */
-   boolean endBlockingForExclusive() {
-      return blockedForExclusive.remove(Thread.currentThread()) != null;
+   void endBlockingForExclusive() {
+      HierarchicalLock l = blockedForExclusive.remove(Thread.currentThread());
+      assert l != null;
    }
 
    /**
     * Marks the current thread as blocking for this lock in shared mode.
     */
    void beginBlockingForShared() {
-      blockedForShared.put(Thread.currentThread(), this);
+      HierarchicalLock l = blockedForShared.put(Thread.currentThread(), this);
+      assert l == null;
    }
    
    /**
     * Marks the current thread as no longer blocking for this lock in shared mode.
     */
-   boolean endBlockingForShared() {
-      return blockedForShared.remove(Thread.currentThread()) != null;
+   void endBlockingForShared() {
+      HierarchicalLock l = blockedForShared.remove(Thread.currentThread());
+      assert l != null;
    }
 
    /**
@@ -232,6 +231,7 @@ public class HierarchicalLock {
     * @return the lock's parent or {@code null} if it has no parent
     */
    public HierarchicalLock getParent() {
+      // overridden by ChildLock to return non-null
       return null;
    }
    
@@ -292,6 +292,7 @@ public class HierarchicalLock {
     * @return a new {@link SharedLock}
     */
    SharedLock newSharedLock(SharedLock parentLock) {
+      // overridden in ChildLock to support non-null parent lock
       assert parentLock == null;
       return new SharedLock();
    }
@@ -453,6 +454,7 @@ public class HierarchicalLock {
     * @return a new {@link ExclusiveLock}
     */
    ExclusiveLock newExclusiveLock(SharedLock parentLock) {
+      // overridden in ChildLock to support non-null parent lock
       assert parentLock == null;
       return new ExclusiveLock();
    }
@@ -627,10 +629,11 @@ public class HierarchicalLock {
    /**
     * A node in a linked list of threads that hold a {@link HierarchicalLock}. This class extends
     * {@link AbstractQueuedSynchronizer} so it can support locking operations so list manipulation
-    * can be done in a thread-safe way. Its locking and unlocking mechanisms are not re-entrant. 
+    * can be done in a thread-safe way. Its locking and unlocking mechanisms are not reentrant. 
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
+   @SuppressWarnings("serial") // cannot be serialized despite that it extends AQS which can
    private static class HolderNode extends AbstractQueuedSynchronizer {
       final boolean isExclusive;
       final Thread thread;
@@ -642,16 +645,6 @@ public class HierarchicalLock {
          this.isExclusive = isExclusive;
          thread = Thread.currentThread();
          holdCount = 1;
-      }
-      
-      private void writeObject(@SuppressWarnings("unused") ObjectOutputStream out)
-            throws IOException {
-         throw new NotSerializableException();
-      }
-      
-      private void readObject(@SuppressWarnings("unused") ObjectInputStream in)
-            throws IOException {
-         throw new NotSerializableException();
       }
       
       @Override protected boolean tryAcquire(int i) {
@@ -726,16 +719,17 @@ public class HierarchicalLock {
             return;
          }
          
-         checkForDeadlock(isWaitingForExclusive, new HashSet<Thread>());
+         checkForDeadlock(isWaitingForExclusive, new HashSet<>());
       }
 
       private void checkForDeadlock(boolean isWaitingForExclusive, Set<Thread> blocked) {
          Thread exclusive = getExclusiveHolder();
-         Collection<Thread> threads = exclusive == null
-               ? Collections.<Thread>emptySet() : Collections.singleton(exclusive);
-         if (isWaitingForExclusive && threads.isEmpty()) {
-            threads = getSharedHolders();
+         if (!isWaitingForExclusive && exclusive == null) {
+            // waiting on shared lock and exclusive lock no longer held, so deadlock not possible
+            return;
          }
+         Collection<Thread> threads = exclusive != null
+               ? Collections.singleton(exclusive) : getSharedHolders();
          for (Thread thread : threads) {
             if (blocked.contains(thread)) {
                throw new DeadlockException();
@@ -961,33 +955,35 @@ public class HierarchicalLock {
 
       Collection<Thread> getSharedHolders() {
          return new AbstractCollection<Thread>() {
+            
             @SuppressWarnings("synthetic-access") // accesses private API of Sync
-            @Override
-            public Iterator<Thread> iterator() {
+            private HolderNode head() {
                // get head of list of shared holders
-               HolderNode firstNode;
+               HolderNode head;
                while (true) {
                   long state = getState();
                   if (sharedCount(state) == 0) {
-                     firstNode = null;
-                     break;
+                     return null;
                   }
-                  firstNode = holders;
-                  if (firstNode == null) {
-                     // racing with an acquisition or release -- let iterator be empty
-                     break;
+                  if ((head = holders) == null) {
+                     // racing with an acquisition or release; let list be empty
+                     return null;
                   }
                   // before returning holders, double-check state to make sure we weren't racing
                   // with a thread that was putting an exclusive holder in it
                   if (getState() == state) {
-                     break;
+                     return head;
                   }
                }
-               final HolderNode firstNodeFinal = firstNode; 
+            }
+            
+            @Override
+            public Iterator<Thread> iterator() {
+               HolderNode head = head();
                
                // now we can return a simple iterator that just traverses the linked list
                return new Iterator<Thread>() {
-                  HolderNode current = firstNodeFinal;
+                  HolderNode current = head;
                   
                   @Override
                   public boolean hasNext() {
@@ -1009,7 +1005,9 @@ public class HierarchicalLock {
 
             @Override
             public int size() {
-               return Iterables.size(iterator());
+               int sz = 0;
+               for (HolderNode node = head(); node != null; sz++, node = node.next);
+               return sz;
             }
          };
       }
@@ -1567,6 +1565,7 @@ public class HierarchicalLock {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class ChildLock extends HierarchicalLock {
+      private static final long serialVersionUID = -1641628892267912504L;
 
       ChildLock(boolean fair) {
          super(fair);

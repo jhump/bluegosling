@@ -14,7 +14,7 @@
  *    thread-local storage to update a reference. This means that after the reference is seeded from
  *    a root value (which happens during initialization of the atom in a new thread), the value is
  *    changed independently of other threads. No thread can see the updates made by another.</li>
- *    <li><strong>Asynchronous</strong>: An {@link com.apriori.concurrent.atoms.AsynchronousAtomTest}
+ *    <li><strong>Asynchronous</strong>: An {@link com.apriori.concurrent.atoms.AsynchronousAtom}
  *    uses a thread pool to asynchronously perform updates. All updates for a given atom are
  *    serialized and applied sequentially. But many atoms can be updated concurrently using multiple
  *    threads in the pool.</li> 

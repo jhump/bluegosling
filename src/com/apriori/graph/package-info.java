@@ -25,7 +25,7 @@
  * <dd>A key that describes an input to the graph. Values are bound to these inputs when the graph
  * is computed. A key consists of a type (the type of the input) and an optional qualifier (for
  * distinguishing multiple inputs with the same type).</dd>
- * <dt>{@linkplain com.apriori.graph.Graph.Computation Computation}</dt>
+ * <dt>{@linkplain com.apriori.graph.Computation Computation}</dt>
  * <dd>A single execution of the graph. A computation represents a single invocation of the logic in
  * the graph and of its nodes' operations. Inputs are defined for a computation, and then it is
  * executed to produce the graph's result.</dd>

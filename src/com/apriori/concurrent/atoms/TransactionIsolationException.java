@@ -14,22 +14,40 @@ package com.apriori.concurrent.atoms;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: javadoc
 public class TransactionIsolationException extends RuntimeException {
 
    private static final long serialVersionUID = 3957146576789743305L;
 
+   /**
+    * Constructs a new exception with a {@code null} message and no cause.
+    */
    public TransactionIsolationException() {
    }
 
+   /**
+    * Constructs a new exception with the given message and no cause.
+    *
+    * @param message a message
+    */
    public TransactionIsolationException(String message) {
       super(message);
    }
 
+   /**
+    * Constructs a new exception with a {@code null} message and the given cause.
+    *
+    * @param cause the cause of this exception
+    */
    public TransactionIsolationException(Throwable cause) {
       super(cause);
    }
    
+   /**
+    * Constructs a new exception with the given message and the given cause.
+    *
+    * @param message a message
+    * @param cause the cause of this exception
+    */
    public TransactionIsolationException(String message, Throwable cause) {
       super(message, cause);
    }

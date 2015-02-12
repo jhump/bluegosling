@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +68,11 @@ public interface CompletableExecutorService extends ExecutorService {
    /**
     * Converts the specified service into a {@link CompletableExecutorService}. If the specified
     * service <em>is</em> already completable, it is returned without any conversion.
+    * 
+    * <p>Instances of {@link CompletableFuture} returned from the executor's various {@code submit}
+    * methods differ from typical completable futures in that a call to {@code future.cancel(true)}
+    * <em>will</em> attempt to interrupt the thread that is running the associated task. (See
+    * {@link CompletableFutures#callInterruptiblyAsync(Callable, Executor)}.)
     * 
     * @param executor the executor service
     * @return a completable version of the specified service

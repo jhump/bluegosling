@@ -14,7 +14,6 @@ import java.util.function.Predicate;
  * @param <T> the type of the atom's value
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
 public class ThreadLocalAtom<T> extends AbstractSynchronousAtom<T> {
    
    /** 

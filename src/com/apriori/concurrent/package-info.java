@@ -8,7 +8,7 @@
  * improve the ease of use of futures. This interface is accompanied by several classes with useful
  * static methods to further expand the types of tasks you can perform using futures.
  * 
- * <h3>{@link com.apriori.concurrent.PipeliningExecutorService}</h3>
+ * <h3>{@link com.apriori.concurrent.PipeliningExecutor}</h3>
  * An executor service that maintains multiple "pipelines" for sequential processing. Tasks
  * associated with the same pipeline run sequentially. Tasks for multiple pipelines run
  * concurrently.

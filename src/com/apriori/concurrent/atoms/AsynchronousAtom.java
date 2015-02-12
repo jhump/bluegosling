@@ -1,17 +1,26 @@
 package com.apriori.concurrent.atoms;
 
+import static com.apriori.concurrent.ThreadFactories.newGroupingDaemonThreadFactory;
+
+import com.apriori.concurrent.ActorThreadPool;
+import com.apriori.concurrent.FutureListener;
+import com.apriori.concurrent.FutureVisitor;
 import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
-import com.apriori.concurrent.PipeliningExecutorService;
+import com.apriori.concurrent.RunnableListenableFuture;
+import com.apriori.concurrent.SerializingExecutor;
 import com.apriori.possible.Reference;
+import com.apriori.util.TriFunction;
 
+import java.util.LinkedList;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -50,7 +59,6 @@ import java.util.function.Predicate;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO: tests
 public class AsynchronousAtom<T> extends AbstractAtom<T> {
    
    /**
@@ -119,18 +127,10 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    /**
     * The thread pool used to execute mutation operations.
     */
-   private static final PipeliningExecutorService<AsynchronousAtom<?>> threadPool =
-         new PipeliningExecutorService<AsynchronousAtom<?>>(Executors.newCachedThreadPool(
-               new ThreadFactory() {
-                  private final AtomicInteger id = new AtomicInteger();
-                  
-                  @Override public Thread newThread(Runnable r) {
-                     Thread ret = new Thread(r);
-                     ret.setDaemon(true);
-                     ret.setName("AsynchronousAtom-" + id.incrementAndGet());
-                     return ret;
-                  }
-               }));
+   private static final SerializingExecutor<AsynchronousAtom<?>> threadPool =
+         new ActorThreadPool<>(Runtime.getRuntime().availableProcessors() * 2, Integer.MAX_VALUE,
+               30, TimeUnit.SECONDS,
+               newGroupingDaemonThreadFactory(AsynchronousAtom.class.getSimpleName()));
 
    /**
     * The atom's error handler.
@@ -144,9 +144,19 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
    
    /**
     * The queue of operations; empty unless the atom is blocked due to prior error.
+    * 
+    * <p>This field should only be accessed from a thread pool and from tasks that execute
+    * sequentially with respect to other tasks for this same atom. So it need not be thread-safe.
+
     */
-   private final ConcurrentLinkedQueue<ListenableFutureTask<T>> queued =
-         new ConcurrentLinkedQueue<ListenableFutureTask<T>>();
+   private final LinkedList<RunnableListenableFuture<T>> queued =
+         new LinkedList<RunnableListenableFuture<T>>();
+   
+   /**
+    * The size of the queue of operations; zero unless the atom is blocked due to prior error. This
+    * is maintained separately as a volatile value so that it is visible from any thread.
+    */
+   private volatile int queueSize;
    
    /**
     * The atom's value.
@@ -225,14 +235,12 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
          public void run() {
             if (blocked) {
                blocked = false;
-               while (!queued.isEmpty() && !blocked) {
-                  runSingleTask(queued.remove());
-               }
+               processQueued();
             }
          }
       });
    }
-
+   
    /**
     * Restarts mutation operations in a blocked atom. Any queued operations will be applied after
     * the atom is restarted. The atom will be reset to its seed value, which is the value used
@@ -290,13 +298,15 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
                value = seedValue;
             }
             if (cancelPending) {
-               while (!queued.isEmpty()) {
-                  queued.remove().cancel(false);
+               try {
+                  while (!queued.isEmpty()) {
+                     queued.remove().cancel(false);
+                  }
+               } finally {
+                  queueSize = queued.size();
                }
             } else {
-               while (!queued.isEmpty() && !blocked) {
-                  runSingleTask(queued.remove());
-               }
+               processQueued();
             }
          }
       });
@@ -316,7 +326,23 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       
       return success.get();
    }
-   
+
+   /**
+    * Processes any tasks in the queue. This is used after error recovery to execute any tasks that
+    * were queued while the atom was blocked. This method returns when either a queued task fails
+    * and causes the atom to be blocked again or when the queue has been exhausted.
+    * 
+    * <p>This should only be executed in a thread pool and must execute sequentially with respect to
+    * other tasks for this same atom.
+    */
+   private void processQueued() {
+      while (!queued.isEmpty() && !blocked) {
+         RunnableListenableFuture<T> task = queued.remove();
+         queueSize = queued.size();
+         runSingleTask(task);
+      }
+   }
+
    /**
     * Returns the number of queued mutation operations. Operations are queued only when an error
     * causes the atom to become blocked. {@linkplain #resume() Resuming} the atom will drain the
@@ -325,7 +351,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @return the length of the queue of pending mutations
     */
    public int getQueueLength() {
-      return queued.size();
+      return queueSize;
    }
    
    /**
@@ -351,7 +377,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *       complete
     */
    public ListenableFuture<T> getPending() {
-      return apply(Function.identity());
+      return submit(() -> value);
    }
    
    /**
@@ -369,31 +395,67 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       return submit(() -> {
          T oldValue = value;
          value = newValue;
-         AsynchronousAtom.this.notify(oldValue, newValue);
+         notify(oldValue, newValue);
          return oldValue;
       });
    }
-
+   
    /**
-    * Submits a mutation that will apply the specified function and set the atom's value to its
-    * result. Validation cannot be done immediately, so a validation failure manifests as a failed
+    * Applies a function to the atom's value. The atom's new value will be the result of applying
+    * the specified function to the atom's current value. Watchers are notified when the value is
+    * changed.
+    * 
+    * <p>Since validation cannot be done immediately, validation failure manifests as a failed
     * future. Depending on the atom's {@link #getErrorHandler() error handler}, a validation failure
     * could block subsequent mutations.
     *
     * @param function the function to apply
     * @return a future result that will be the atom's new value after the function is applied
     */
-   public ListenableFuture<T> apply(Function<? super T, ? extends T> function) {
+   public ListenableFuture<T> updateAndGet(Function<? super T, ? extends T> function) {
+      return doUpdate(function, true);
+   }
+
+   /**
+    * Applies a function to the atom's value. The atom's new value will be the result of applying
+    * the specified function to the atom's current value. Watchers are notified when the value is
+    * changed.
+    * 
+    * <p>Since validation cannot be done immediately, validation failure manifests as a failed
+    * future. Depending on the atom's {@link #getErrorHandler() error handler}, a validation failure
+    * could block subsequent mutations.
+    *
+    * @param function the function to apply
+    * @return a future result that will be the atom's initial value (before function is applied) but
+    *       that won't complete until after the function is applied
+    */
+   public ListenableFuture<T> getAndUpdate(Function<? super T, ? extends T> function) {
+      return doUpdate(function, false);
+   }
+
+   /**
+    * Applies the given function asynchronously, returning a future that either completes with the
+    * atom's initial or resulting value.
+    *
+    * @param function a function that is used to compute a new value for the atom
+    * @param returnNew if true, the returned future completes with the atom's new value, after the
+    *       function is applied; otherwise returns the atom's initial value
+    * @return a future that completes once the function has been applied
+    */
+   private ListenableFuture<T> doUpdate(Function<? super T, ? extends T> function,
+         boolean returnNew) {
       return submit(() -> {
          T oldValue = value;
          T newValue = function.apply(oldValue);
          validate(newValue);
          value = newValue;
-         AsynchronousAtom.this.notify(oldValue, newValue);
-         return newValue;
+         notify(oldValue, newValue);
+         return returnNew ? newValue : oldValue;
       });
    }
    
+   // TODO: fix up javadoc for accumulate methods
+
    /**
     * Submits a mutation that will combine the atom's value with the given value, using the given
     * function, and set the atom's value to the result. Validation cannot be done immediately, so a
@@ -405,9 +467,14 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param function the function to apply
     * @return a future result that will be the atom's new value after the function is applied
     */
-   public ListenableFuture<T> combineWith(T t,
+   public ListenableFuture<T> accumulateAndGet(T t,
          BiFunction<? super T, ? super T, ? extends T> function) {
-      return apply(v -> function.apply(v, t));
+      return updateAndGet(v -> function.apply(v, t));
+   }
+
+   public ListenableFuture<T> getAndAccumulate(T t,
+         BiFunction<? super T, ? super T, ? extends T> function) {
+      return getAndUpdate(v -> function.apply(v, t));
    }
 
    /**
@@ -425,11 +492,13 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       if (transaction != null) {
          // play nice with transactions -- queue up actions so that they are only submitted
          // when the transaction gets committed
-         transaction.enqueueAsynchronousAction(this, future);
+         TransactionalFutureTask<T> ret = new TransactionalFutureTask<>(future);
+         transaction.enqueueAsynchronousAction(this, ret);
+         return ret;
       } else {
          submitFuture(this, future);
+         return future;
       }
-      return future;
    }
    
    /**
@@ -439,8 +508,10 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param atom the atom which this operation affects
     * @param future a future task that will perform an operation on the specified atom when executed
     */
-   static <T> void submitFuture(final AsynchronousAtom<T> atom,
-         final ListenableFutureTask<T> future) {
+   static <T> void submitFuture(AsynchronousAtom<T> atom, RunnableListenableFuture<T> future) {
+      if (future instanceof TransactionalFutureTask) {
+         ((TransactionalFutureTask<T>) future).markCommitted();
+      }
       threadPool.execute(atom, () -> atom.runSingleTask(future));
    }
    
@@ -453,13 +524,15 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *
     * @param task a future task that will perform an operation on this atom when executed
     */
-   private void runSingleTask(ListenableFutureTask<T> task) {
+   private void runSingleTask(RunnableListenableFuture<T> task) {
       if (blocked) {
          queued.add(task);
+         queueSize = queued.size();
       } else {
          task.run();
          if (task.isFailed()) {
-            switch (errorHandler.onError(AsynchronousAtom.this, task.getFailure())) {
+            ErrorAction action = errorHandler.onError(AsynchronousAtom.this, task.getFailure());
+            switch (action) {
                case BLOCK:
                   blocked = true;
                   break;
@@ -467,10 +540,234 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
                   value = seedValue;
                   break;
                default:
-                  // IGNORE
+                  assert action == ErrorAction.IGNORE;
                   break;
             }
          }
+      }
+   }
+   
+   /**
+    * A future that is scheduled from within a transaction. The main functionality it adds is for
+    * deadlock avoidance: this future doesn't allow blocking a thread until the future completes if
+    * that thread is the submitter (the one in the transaction) and the transaction has not yet been
+    * committed.
+    * 
+    * <p>This is necessary since the task isn't actually submitted for execution until the
+    * transaction is committed. So the future can never complete until after the transaction is
+    * committed; blocking on the future before then cannot work and would deadlock.
+    * 
+    * <p>So the {@code get} and {@code await} methods on this future will immediately throw an
+    * {@link IllegalStateException} if called while still inside the uncommitted transaction.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class TransactionalFutureTask<T> implements RunnableListenableFuture<T> {
+
+      /**
+       * The actual task that will run once submitted for execution.
+       */
+      private final RunnableListenableFuture<T> delegate;
+      
+      /**
+       * The thread that created/submitted this task inside a transaction.
+       */
+      private final Thread submitter = Thread.currentThread();
+      
+      /**
+       * A flag that indicates if this task is still pending (e.g. transaction not committed). If
+       * false, the future has been scheduled for execution or has been cancelled.
+       */
+      private volatile boolean pending = true;
+      
+      TransactionalFutureTask(RunnableListenableFuture<T> delegate) {
+         this.delegate = delegate;
+      }
+      
+      /**
+       * Indicates that the transaction has been committed and this task submitted for execution.
+       */
+      void markCommitted() {
+         pending = false;
+      }
+
+      @Override
+      public void run() {
+         delegate.run();
+      }
+
+      @Override
+      public boolean cancel(boolean mayInterruptIfRunning) {
+         pending = false;
+         return delegate.cancel(mayInterruptIfRunning);
+      }
+
+      @Override
+      public boolean isCancelled() {
+         return delegate.isCancelled();
+      }
+
+      @Override
+      public boolean isDone() {
+         return delegate.isDone();
+      }
+      
+      /**
+       * Checks whether the current thread is allowed to block until this future is complete. If the
+       * thread cannot block, an {@link IllegalStateException} is thrown. A thread is not allowed to
+       * block if it would cause deadlock in the transaction that scheduled the task.
+       */
+      void checkCanBlock() {
+         // If the transaction hasn't been committed, then the submitter thread isn't allowed to
+         // block because that would cause the transaction to freeze in a deadlock!
+         if (!pending && Thread.currentThread() == submitter) {
+            throw new IllegalStateException(
+                  "Cannot block on future until corresponding transaction is committed");
+         }
+      }
+
+      @Override
+      public T getNow(T valueIfIncomplete) {
+         return delegate.getNow(valueIfIncomplete);
+      }
+
+      @Override
+      public T get() throws InterruptedException, ExecutionException {
+         checkCanBlock();
+         return delegate.get();
+      }
+
+      @Override
+      public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
+            TimeoutException {
+         checkCanBlock();
+         return delegate.get();
+      }
+
+      @Override
+      public void await() throws InterruptedException {
+         checkCanBlock();
+         delegate.await();
+      }
+
+      @Override
+      public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+         checkCanBlock();
+         return delegate.await(limit, unit);
+      }
+
+      @Override
+      public boolean isSuccessful() {
+         return delegate.isSuccessful();
+      }
+
+      @Override
+      public T getResult() {
+         return delegate.getResult();
+      }
+
+      @Override
+      public boolean isFailed() {
+         return delegate.isFailed();
+      }
+
+      @Override
+      public Throwable getFailure() {
+         return delegate.getFailure();
+      }
+
+      @Override
+      public void addListener(FutureListener<? super T> listener, Executor executor) {
+         delegate.addListener(listener, executor);
+      }
+
+      @Override
+      public void visit(FutureVisitor<? super T> visitor) {
+         delegate.visit(visitor);
+      }
+      
+      @Override
+      public void awaitUninterruptibly() {
+         delegate.awaitUninterruptibly();
+      }
+
+      @Override
+      public boolean awaitUninterruptibly(long limit, TimeUnit unit) {
+         return delegate.awaitUninterruptibly(limit, unit);
+      }
+
+      @Override
+      public void visitWhenDone(FutureVisitor<? super T> visitor) {
+         delegate.visitWhenDone(visitor);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> chainTo(Callable<U> task, Executor executor) {
+         return delegate.chainTo(task, executor);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> chainTo(Runnable task, U result, Executor executor) {
+         return delegate.chainTo(task, result, executor);
+      }
+
+      @Override
+      public ListenableFuture<Void> chainTo(Runnable task, Executor executor) {
+         return delegate.chainTo(task, executor);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> chainTo(Function<? super T, ? extends U> task,
+            Executor executor) {
+         return delegate.chainTo(task, executor);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> map(Function<? super T, ? extends U> function) {
+         return delegate.map(function);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> flatMap(
+            Function<? super T, ? extends ListenableFuture<U>> function) {
+         return delegate.flatMap(function);
+      }
+
+      @Override
+      public <U> ListenableFuture<U> mapFuture(
+            Function<? super ListenableFuture<T>, ? extends U> function) {
+         return delegate.mapFuture(function);
+      }
+
+      @Override
+      public ListenableFuture<T> mapException(
+            Function<Throwable, ? extends Throwable> function) {
+         return delegate.mapException(function);
+      }
+
+      @Override
+      public ListenableFuture<T> recover(Function<Throwable, ? extends T> function) {
+         return delegate.recover(function);
+      }
+
+      @Override
+      public <U, V> ListenableFuture<V> combineWith(ListenableFuture<U> other,
+            BiFunction<? super T, ? super U, ? extends V> function) {
+         return delegate.combineWith(other, function);
+      }
+
+      @Override
+      public <U, V, W> ListenableFuture<W> combineWith(ListenableFuture<U> other1,
+            ListenableFuture<V> other2,
+            TriFunction<? super T, ? super U, ? super V, ? extends W> function) {
+         return delegate.combineWith(other1, other2, function);
+      }
+
+      @Override
+      public CompletionStage<T> asCompletionStage() {
+         return delegate.asCompletionStage();
       }
    }
 }

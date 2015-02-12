@@ -1,8 +1,12 @@
 package com.apriori.concurrent;
 
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -21,6 +25,10 @@ import java.util.concurrent.TimeoutException;
  * method has completed. More subtly, this means that a call to {@link #setValue(Object)} that
  * "loses the race" with a concurrent cancellation will not actually return until the cancellation
  * completes and any interruption code has executed (same for {@link #setFailure(Throwable)}).
+ * 
+ * <p>The blocking methods in this class ({@link #get} and {@link #await}) are safe to call from
+ * a fork-join pool. When called from within a fork-join pool, these methods use a
+ * {@link ManagedBlocker} instead of directly blocking.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
@@ -97,6 +105,22 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
    @Override
    public boolean isDone() {
       return sync.isDone();
+   }
+   
+   @Override
+   public T getNow(T valueIfIncomplete) {
+      Object state = sync.getState();
+      if (state == INCOMPLETE || state == CANCELLING) {
+         return valueIfIncomplete;
+      } else if (state instanceof Failure) {
+         throw new CompletionException(((Failure) state).cause);
+      } else if (state == CANCELLED) {
+         throw new CancellationException();
+      } else {
+         @SuppressWarnings("unchecked")
+         T ret = (T) state;
+         return ret;
+      } 
    }
 
    /**
@@ -193,14 +217,23 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
 
    @Override
    public void await() throws InterruptedException {
-      sync.acquireSharedInterruptibly(null);
+      if (ForkJoinTask.inForkJoinPool()) {
+         ForkJoinPool.managedBlock(new Blocker(sync));
+      } else {
+         sync.acquireSharedInterruptibly(null);
+      }
    }
 
    @Override
    public boolean await(long limit, TimeUnit unit) throws InterruptedException {
-      return sync.tryAcquireSharedNanos(null, unit.toNanos(limit));
+      if (ForkJoinTask.inForkJoinPool()) {
+         ForkJoinPool.managedBlock(new TimedBlocker(sync, limit, unit));
+         return isDone();
+      } else {
+         return sync.tryAcquireSharedNanos(null, unit.toNanos(limit));
+      }
    }
-   
+
    /**
     * A special marker value for a future result that indicates the future failed.
     *
@@ -384,6 +417,54 @@ public abstract class AbstractListenableFuture<T> implements ListenableFuture<T>
       public boolean isDone() {
          Object state = getState();
          return state != INCOMPLETE && state != CANCELLING;
+      }
+   }
+   
+   private static class Blocker implements ManagedBlocker {
+      private final Sync sync;
+      
+      Blocker(Sync sync) {
+         this.sync = sync;
+      }
+      
+      @Override
+      public boolean isReleasable() {
+         return sync.isDone();
+      }
+
+      @Override
+      public boolean block() throws InterruptedException {
+         sync.acquireSharedInterruptibly(null);
+         return true;
+      }
+   }
+   
+   private static class TimedBlocker implements ManagedBlocker {
+
+      private final Sync sync; 
+      private final long deadline;
+      
+      TimedBlocker(Sync sync, long timeout, TimeUnit unit) {
+         this.sync = sync;
+               
+         long now = System.nanoTime();
+         long end = now + unit.toNanos(Math.max(0, timeout));
+         // avoid overflow
+         if (end < now) {
+            end = Long.MAX_VALUE;
+         }
+         this.deadline = end;
+      }
+
+      @Override
+      public boolean block() throws InterruptedException {
+         sync.tryAcquireSharedNanos(null, deadline - System.nanoTime());
+         return true;
+      }
+
+      @Override
+      public boolean isReleasable() {
+         return sync.isDone() || System.nanoTime() >= deadline;
       }
    }
 }

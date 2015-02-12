@@ -1539,7 +1539,17 @@ public final class Types {
       return false;
    }
    
-   // TODO: doc
+   /**
+    * Returns an array type with the given component type. If the given component type is a simple
+    * class token, then a class token that represents an array of that type is returned. Otherwise,
+    * a generic array type is returned.
+    * 
+    * <p>This is a convenience method that will delegate to {@link #getArrayType(Class)} or
+    * {@link #newGenericArrayType(Type)}, depending on the type of the argument.
+    *
+    * @param componentType the component type
+    * @return a type that represents an array of the given component type
+    */
    public static Type arrayTypeOf(Type componentType) {
       if (componentType instanceof Class) {
          return getArrayType((Class<?>) componentType);

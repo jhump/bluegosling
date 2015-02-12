@@ -26,7 +26,6 @@ import java.util.function.Predicate;
  * shared locks; those that modify atom's value acquire exclusive locks. Transactions are restarted
  * if a deadlock is detected when acquiring atoms' locks.
  */
-// TODO: tests
 public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
 
    /**

@@ -66,7 +66,7 @@ public abstract class Node<T> {
    
    /**
     * The distinct set of inputs that are defined as {@link Key}s. These inputs are bound to a
-    * value when the computation graph is {@linkplain Graph.Computation executed}.
+    * value when the computation graph is {@linkplain Computation executed}.
     *
     * @return the set of {@link Key} inputs
     */

@@ -39,7 +39,7 @@ import java.util.function.Consumer;
  * <p>Pinning actors to threads can help with cache performance and locality of reference. Allowing
  * other threads to steal actors helps with fairness and can improve throughput.
  * 
- * <p>This is similar in functionality to a {@link PipeliningExecutorService}, which wraps another
+ * <p>This is similar in functionality to a {@link PipeliningExecutor}, which wraps another
  * executor instead of providing its own thread pool. Because it does not control the way the
  * executor dispatches tasks to actual threads, it can do neither thread-pinning nor work-stealing.
  * 
@@ -255,11 +255,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       while (true) {
          if (!prestartCoreThread()) {
             // All core threads started. Now check if we need another thread beyond the core pool.
-            if (getActiveCount() < actorQueues.size()
-                  && sync.getThreadCount() < getMaximumPoolSize()) {
-               if (startNewThread(queue)) {
-                  return true;
-               }
+            if (sync.getThreadCount() < actorQueues.size() && startNewThread(queue)) {
+               return true;
             }
          }
          if (sync.isShutdown()) {
@@ -1124,10 +1121,22 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    private static class ActorQueue implements Runnable {
       
-      // return values from #nextTask()
-      static final int TASK_FOUND = 0;
-      static final int NO_TASK = 1;
-      static final int NOT_READY = 2;
+      private enum TaskResult {
+         /**
+          * Indicates that a task was found and is now marked as running.
+          */
+         TASK_FOUND,
+         
+         /**
+          * Indicates that no task was found; this queue is empty.
+          */
+         NO_TASK,
+         
+         /**
+          * Indicates that no task is ready because one is still running.
+          */
+         NOT_READY
+      }
       
       private static final int STATE_REMOVED =    0x80000000;
       private static final int STATE_RUNNING =    0x40000000;
@@ -1176,14 +1185,14 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        *       or {@link #TASK_FOUND} if a task was found and de-queued.
        * @see #run()
        */
-      int nextTask() {
+      TaskResult nextTask() {
          while (true) {
             int s = state;
             if ((s & STATE_REMOVED) != 0) {
-               return NO_TASK;
+               return TaskResult.NO_TASK;
             }
             if ((s & STATE_RUNNING) != 0) {
-               return NOT_READY;
+               return TaskResult.NOT_READY;
             }
             if (s != 0) {
                // atomically decrement task count and mark as running
@@ -1194,7 +1203,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                         // instead of returning r, we return this so we can properly clean-up
                         // after task completes
                         this.current = r;
-                        return TASK_FOUND;
+                        return TaskResult.TASK_FOUND;
                      }
                      // state was reserved for a task, but we're racing with thread
                      // that is adding it to queue
@@ -1204,7 +1213,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             } else {
                if (stateUpdater.compareAndSet(this, s, STATE_REMOVED)) {
                   owner.actorQueues.remove(actor, this);
-                  return NO_TASK;
+                  return TaskResult.NO_TASK;
                }
             }
          }
@@ -1466,10 +1475,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          // find a ready task in our own work queue
          for (Iterator<ActorQueue> iter = actors.iterator(); iter.hasNext(); ) {
             ActorQueue actor = iter.next();
-            int i= actor.nextTask();
-            if (i == ActorQueue.NO_TASK) {
+            ActorQueue.TaskResult result = actor.nextTask();
+            if (result == ActorQueue.TaskResult.NO_TASK) {
                iter.remove();
-            } else if (i != ActorQueue.NOT_READY) {
+            } else if (result == ActorQueue.TaskResult.TASK_FOUND) {
                // move this actor to the end of the queue to give the others a chance in the
                // next round of finding a task
                iter.remove();
@@ -1491,10 +1500,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       Runnable tryStealActor(Worker stealer) {
          for (Iterator<ActorQueue> iter = actors.descendingIterator(); iter.hasNext(); ) {
             ActorQueue actor = iter.next();
-            int i = actor.nextTask();
-            if (i == ActorQueue.NO_TASK) {
+            ActorQueue.TaskResult result = actor.nextTask();
+            if (result == ActorQueue.TaskResult.NO_TASK) {
                iter.remove();
-            } else if (i != ActorQueue.NOT_READY) {
+            } else if (result == ActorQueue.TaskResult.TASK_FOUND) {
                // move this actor to new worker
                iter.remove();
                stealer.actors.add(actor);

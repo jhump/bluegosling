@@ -77,7 +77,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       assertThrows(IllegalStateException.class, () -> atom.pin());
    }
    
-   @Test public void getSetApply_inTransaction() {
+   @Test public void getSetUpdateAccumulate_inTransaction() {
       TransactionalAtom<Integer> atom = create(1);
       for (final Boolean rollback : Arrays.asList(true, false)) {
          Transaction.execute(t -> {
@@ -86,6 +86,9 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
             assertEquals(Integer.valueOf(123), atom.get());
             assertEquals(Integer.valueOf(223), atom.updateAndGet(i -> i + 100));
             assertEquals(Integer.valueOf(223), atom.getAndUpdate(i -> i / 2));
+            assertEquals(Integer.valueOf(111), atom.get());
+            assertEquals(Integer.valueOf(222), atom.accumulateAndGet(2, (a, b) -> a * b));
+            assertEquals(Integer.valueOf(222), atom.getAndAccumulate(2, (a, b) -> a << b));
             if (rollback) {
                t.rollback();
             }
@@ -93,7 +96,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
          if (rollback) {
             assertEquals(Integer.valueOf(1), atom.get());
          } else {
-            assertEquals(Integer.valueOf(111), atom.get());
+            assertEquals(Integer.valueOf(888), atom.get());
          }
       }
    }

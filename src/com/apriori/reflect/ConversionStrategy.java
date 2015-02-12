@@ -224,7 +224,7 @@ class ConversionStrategy<I, O> {
       newStrategy.requiresCast = this.requiresCast;
       newStrategy.requiresAutoBoxOrUnbox = this.requiresAutoBoxOrUnbox;
       if (this.converter != null) {
-         newStrategy.converter = Converters.forArray(outputType, this.converter);
+         newStrategy.converter = Converter.forArray(outputType, this.converter);
       }
       return newStrategy;
    }
@@ -250,7 +250,7 @@ class ConversionStrategy<I, O> {
       // types aren't assignable, so we need to figure out if we can convert
       Function<I, O> function = getConversion(from, to);
       if (function != null) {
-         strategy.setConverter(Converters.fromFunction(function));
+         strategy.setConverter(Converter.fromFunction(function));
       } else if (to.equals(autoBoxTypes.get(from)) || to.equals(autoUnboxTypes.get(from))) {
          // conversion not needed since reflection always resorts to boxed
          // types, but we need to know if auto-boxing/unboxing was required to

@@ -12,7 +12,6 @@ import java.util.function.Predicate;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO: tests
 public class SimpleAtom<T> extends AbstractSynchronousAtom<T> {
 
    /**

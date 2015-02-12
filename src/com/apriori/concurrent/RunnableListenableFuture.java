@@ -9,5 +9,5 @@ import java.util.concurrent.RunnableFuture;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-interface RunnableListenableFuture<T> extends RunnableFuture<T>, ListenableFuture<T> {
+public interface RunnableListenableFuture<T> extends RunnableFuture<T>, ListenableFuture<T> {
 }

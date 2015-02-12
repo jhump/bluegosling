@@ -479,12 +479,25 @@ public class Duration implements Comparable<Duration> {
     return ours < theirs ? -1 : (ours > theirs ? 1 : 0);
   }
   
-  // TODO: doc
-  
+  /**
+   * Returns the greater of two given durations.
+   *
+   * @param d1 a duration
+   * @param d2 another duration
+   * @return whichever given duration is larger, or the first one if they are equal
+   */
   public static Duration greaterOf(Duration d1, Duration d2) {
      return d1.compareTo(d2) >= 0 ? d1 : d2;
   }
   
+  /**
+   * Returns the greatest of the given durations.
+   *
+   * @param durations one or more durations
+   * @return whichever given duration is largest; the earliest such value if more than one has the
+   *     same greatest value
+   * @throws IllegalArgumentException if the given array is empty
+   */
   public static Duration greatestOf(Duration... durations) {
      int len = durations.length;
      if (len == 0) {
@@ -500,6 +513,14 @@ public class Duration implements Comparable<Duration> {
      return max;
   }
 
+  /**
+   * Returns the greatest of the given durations.
+   *
+   * @param durations one or more durations
+   * @return whichever given duration is largest; the earliest such value if more than one has the
+   *     same greatest value
+   * @throws IllegalArgumentException if the given iterable is empty
+   */
   public static Duration greatestOf(Iterable<Duration> durations) {
      Iterator<Duration> iter = durations.iterator();
      if (!iter.hasNext()) {
@@ -515,10 +536,25 @@ public class Duration implements Comparable<Duration> {
      return max;
   }
 
+  /**
+   * Returns the lesser of two given durations.
+   *
+   * @param d1 a duration
+   * @param d2 another duration
+   * @return whichever given duration is smaller, or the first one if they are equal
+   */
   public static Duration lesserOf(Duration d1, Duration d2) {
      return d1.compareTo(d2) <= 0 ? d1 : d2;
   }
   
+  /**
+   * Returns the least of the given durations.
+   *
+   * @param durations one or more durations
+   * @return whichever given duration is smallest; the earliest such value if more than one has the
+   *     same least value
+   * @throws IllegalArgumentException if the given array is empty
+   */
   public static Duration leastOf(Duration... durations) {
      int len = durations.length;
      if (len == 0) {
@@ -534,6 +570,14 @@ public class Duration implements Comparable<Duration> {
      return min;
   }
   
+  /**
+   * Returns the least of the given durations.
+   *
+   * @param durations one or more durations
+   * @return whichever given duration is smallest; the earliest such value if more than one has the
+   *     same least value
+   * @throws IllegalArgumentException if the given iterable is empty
+   */
   public static Duration leastOf(Iterable<Duration> durations) {
      Iterator<Duration> iter = durations.iterator();
      if (!iter.hasNext()) {

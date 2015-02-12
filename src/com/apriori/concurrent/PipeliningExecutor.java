@@ -49,7 +49,7 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
+public class PipeliningExecutor<K> implements SerializingExecutor<K> {
 
    final Executor executor;
    final ConcurrentMap<K, Pipeline> pipelines = new ConcurrentHashMap<>();
@@ -65,7 +65,7 @@ public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
     *
     * @param executor the executor that will run individual tasks across all pipelines
     */
-   public PipeliningExecutorService(Executor executor) {
+   public PipeliningExecutor(Executor executor) {
       this.executor = requireNonNull(executor);
    }
    
@@ -335,7 +335,7 @@ public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
     * Creates a new service whose tasks are submitted to the specified pipeline. Shutting down the
     * returned service only affects submissions to the pipeline made by that service. Other tasks
     * submitted from other sources will continue to be accepted. Similarly, shutting down the
-    * returned service in no way affects this {@link PipeliningExecutorService}, nor its underlying
+    * returned service in no way affects this {@link PipeliningExecutor}, nor its underlying
     * executor.
     * 
     * <p>This method is an adapter. For APIs that expect an {@link ExecutorService}, you can use
@@ -515,13 +515,13 @@ public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
    
    private static class SinglePipelineExecutorService<K> extends AbstractExecutorService
          implements ListenableExecutorService {
-      private final PipeliningExecutorService<K> pipeliner;
+      private final PipeliningExecutor<K> pipeliner;
       private final K pipelineKey;
       private final Object shutdownLock = new Object();
       private boolean shutdown;
       private final CountDownLatch terminatedLatch = new CountDownLatch(1);
       
-      SinglePipelineExecutorService(PipeliningExecutorService<K> pipeliner, K pipelineKey) {
+      SinglePipelineExecutorService(PipeliningExecutor<K> pipeliner, K pipelineKey) {
          this.pipeliner = pipeliner;
          this.pipelineKey = pipelineKey;
       }
@@ -619,7 +619,7 @@ public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
       }
       
       /**
-       * All tasks that get issued to underlying {@link PipeliningExecutorService} are tagged.
+       * All tasks that get issued to underlying {@link PipeliningExecutor} are tagged.
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
@@ -725,7 +725,7 @@ public class PipeliningExecutorService<K> implements SerializingExecutor<K> {
       /**
        * A more complex wrapper for tasks that are instances of {@link AbstractListenableFuture}.
        * This must extend {@link AbstractListenableFuture} instead of the above {@link WrappedTask}
-       * base class so that the {@link PipeliningExecutorService} knows how to mark it as failed in
+       * base class so that the {@link PipeliningExecutor} knows how to mark it as failed in
        * the event that a task is accepted but then later marked as failed due to being rejected by
        * the underlying exceutor.
        *

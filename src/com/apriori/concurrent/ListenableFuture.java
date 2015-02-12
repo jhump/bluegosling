@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -136,7 +137,31 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
       ListenableFuture<T> cast = (ListenableFuture<T>) future;
       return cast;
    }
-
+   
+   /**
+    * Gets the value of the future or a given default value if the future is not yet complete. If
+    * the future is complete but finished with a failure or due to cancellation, this method will
+    * throw an exception.
+    *
+    * @param valueIfIncomplete the value to return if the future is not yet complete
+    * @return the future's value or the given value if the future is not yet complete
+    * @throws CancellationException if the future was cancelled
+    * @throws CompletionException if the future finished with a failure (the cause of the thrown
+    *       exception will be the cause of the failure)
+    */
+   default T getNow(T valueIfIncomplete) {
+      if (!isDone()) {
+         return valueIfIncomplete;
+      } else if (isSuccessful()) {
+         return getResult();
+      } else if (isFailed()) {
+         throw new CompletionException(getFailure());
+      } else {
+         //assert isCancelled();
+         throw new CancellationException();
+      }
+   }
+   
    /**
     * Adds a listener that visits this future using a {@link SameThreadExecutor} when it completes.
     * 

@@ -1,5 +1,6 @@
 package com.apriori.concurrent;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +45,9 @@ import java.util.concurrent.locks.LockSupport;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SpinLock implements Lock {
+public class SpinLock implements Lock, Serializable {
+
+   private static final long serialVersionUID = 736917527438719039L;
 
    final AtomicBoolean locked = new AtomicBoolean();
 
@@ -72,7 +75,7 @@ public class SpinLock implements Lock {
          if (Thread.interrupted()) {
             throw new InterruptedException();
          }
-         for (int i = 0; i < 1_000; i++) {
+         for (int i = 0; i < 10_000; i++) {
             if (locked.compareAndSet(false, true)) {
                return;
             }
@@ -127,7 +130,9 @@ public class SpinLock implements Lock {
 
    @Override
    public void unlock() {
-      locked.set(false);
+      if (!locked.compareAndSet(true, false)) {
+         throw new IllegalMonitorStateException();
+      }
    }
 
    @Override
@@ -140,9 +145,10 @@ public class SpinLock implements Lock {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class ConditionObject implements Condition {
-      private final ConcurrentLinkedQueue<Thread> waiters = new ConcurrentLinkedQueue<>();
+   private class ConditionObject extends ConcurrentLinkedQueue<Thread> implements Condition {
       
+      private static final long serialVersionUID = -924227956590939763L;
+
       ConditionObject() {
       }
       
@@ -158,17 +164,24 @@ public class SpinLock implements Lock {
       }
       
       /**
-       * Unlocks the spin lock associated with this condition, requiring that it was locked.
-       * 
-       * @throws IllegalMonitorStateException if the lock cannot be unlocked because it was not
-       *       locked to begin with
+       * Adds the given thread to the condition queue and unlocks this lock. If the lock is already
+       * unlocked then an {@link IllegalMonitorStateException} and the thread will not be in the
+       * queue.
+       *
+       * @param th a thread to enqueue
        */
-      private void release() {
+      private void enqueueAndUnlock(Thread th) {
+         // We need the thread in the queue before the lock is released to prevent race conditions
+         // between await and signal, so add it first.
+         add(th);
          if (!locked.compareAndSet(true, false)) {
+            // but we can't leave the thread in the queue if the lock was in an invalid state, so
+            // remove before throwing
+            remove(th);
             throw new IllegalMonitorStateException();
          }
       }
-      
+
       @Override
       public void await() throws InterruptedException {
          checkLock();
@@ -176,8 +189,7 @@ public class SpinLock implements Lock {
             throw new InterruptedException();
          }
          Thread th = Thread.currentThread();
-         waiters.add(th);
-         release();
+         enqueueAndUnlock(th);
          try {
             LockSupport.park(this);
             if (Thread.interrupted()) {
@@ -185,7 +197,7 @@ public class SpinLock implements Lock {
             }
          } finally {
             lock();
-            waiters.remove(th);
+            remove(th);
          }
       }
 
@@ -195,8 +207,7 @@ public class SpinLock implements Lock {
          Thread th = Thread.currentThread();
          boolean interrupted = false;
          boolean failed = false;
-         waiters.add(th);
-         release();
+         enqueueAndUnlock(th);
          try {
             do {
                LockSupport.park(this);
@@ -207,14 +218,14 @@ public class SpinLock implements Lock {
                 // loop until we've been signaled, ignoring wake-ups caused by interruption
                 // (signaling thread will have removed us if we were signaled, so we can just check
                 // to see if we're still in the queue)
-            } while (waiters.contains(th));
+            } while (contains(th));
          } catch (RuntimeException | Error e) {
             failed = true;
             throw e;
          } finally {
             lock();
             if (failed) {
-               waiters.remove(th);
+               remove(th);
             }
             // restore interrupt status on exit
             if (interrupted) {
@@ -231,8 +242,7 @@ public class SpinLock implements Lock {
          }
          long start = System.nanoTime();
          Thread th = Thread.currentThread();
-         waiters.add(th);
-         release();
+         enqueueAndUnlock(th);
          try {
             LockSupport.parkNanos(this, nanosTimeout);
             if (Thread.interrupted()) {
@@ -241,7 +251,7 @@ public class SpinLock implements Lock {
             return nanosTimeout - (System.nanoTime() - start);
          } finally {
             lock();
-            waiters.remove(th);
+            remove(th);
          }
       }
 
@@ -259,7 +269,7 @@ public class SpinLock implements Lock {
       @Override
       public void signal() {
          checkLock();
-         Thread th = waiters.poll();
+         Thread th = poll();
          if (th != null) {
             LockSupport.unpark(th);
          }
@@ -269,7 +279,7 @@ public class SpinLock implements Lock {
       public void signalAll() {
          checkLock();
          while (true) {
-            Thread th = waiters.poll();
+            Thread th = poll();
             if (th == null) {
                return;
             }

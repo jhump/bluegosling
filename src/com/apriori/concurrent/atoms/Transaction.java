@@ -5,7 +5,7 @@ import com.apriori.concurrent.HierarchicalLock.AcquiredLock;
 import com.apriori.concurrent.HierarchicalLock.ExclusiveLock;
 import com.apriori.concurrent.HierarchicalLock.SharedLock;
 import com.apriori.concurrent.ListenableFuture;
-import com.apriori.concurrent.ListenableFutureTask;
+import com.apriori.concurrent.RunnableListenableFuture;
 import com.apriori.concurrent.SettableFuture;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Trio;
@@ -40,8 +40,20 @@ import java.util.function.Function;
  * <p>{@link AsynchronousAtom}s also participate in transactions. Changes that are queued for an
  * {@link AsynchronousAtom} are only submitted for execution when the transaction commits. Any
  * pending operations that are effected by a rollback will be cancelled.
+ * 
+ * <p>A transaction is executed by creating a {@link Runner}, which allows for customizing the
+ * settings of the transaction before execution. Or, if default settings are acceptable, several
+ * static methods are provided as shorthand. There are methods for transactions whose logic is
+ * idempotent (which can be retried) and for those that are non-idempotent. The methods each come in
+ * two flavors: one for executing tasks that do not produce a value, and another for executing a
+ * computation that does produce a value.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see #execute(Task)
+ * @see #executeNonIdempotent(Task)
+ * @see #compute(Computation)
+ * @see #computeNonIdempotent(Computation)
  */
 // TODO: tests
 public class Transaction {
@@ -63,22 +75,22 @@ public class Transaction {
       SERIALIZABLE,
       
       /**
-       * Repeatable read isolation; aka snapshot isolation. This is close to serializable, but can
-       * provide better performance since locks aren't required for every read. The main artifact
-       * that can occur is an anomaly called write skew. But this can be mitigated in updates to a
-       * transactional atom by using {@linkplain TransactionalAtom#commute(Function) commutative}
-       * operations or by {@linkplain TransactionalAtom#pin() pinning} read values.
+       * Snapshot isolation. This is close to serializable, but can provide better performance since
+       * locks aren't required for every read. The main artifact that can occur is an anomaly called
+       * write skew. But this can be mitigated in updates to a transactional atom by using
+       * {@linkplain TransactionalAtom#commute(Function) commutative} operations or by
+       * {@linkplain TransactionalAtom#pin() pinning} read values.
        * 
        * <p>This is the default isolation level for a transaction when not otherwise configured.
        */
-      REPEATABLE_READ,
+      SNAPSHOT,
       
       /**
        * Read committed isolation. This only provides locking for write operations and does not
        * really isolate query operations. In a transaction, subsequent reads of the same atom may
        * return different results. This can provide the best performance, since a particular version
        * of an atom does not have to be found on reads, but is likely to only be marginal
-       * improvement over {@link #REPEATABLE_READ}. Repeatable reads are still possible for any
+       * improvement over {@link #SNAPSHOT}. Repeatable reads are still possible for any
        * single atom via pinning it.
        */
       READ_COMMITTED
@@ -149,7 +161,7 @@ public class Transaction {
     * @param task the task
     * @return a computation that will execute the task and return {@code null}
     */
-   static <X extends Throwable> Computation<Void, X> asComputation(final Task<X> task) {
+   static <X extends Throwable> Computation<Void, X> asComputation(Task<X> task) {
       return (t) -> { task.execute(t); return null; };
    }
    
@@ -158,9 +170,9 @@ public class Transaction {
     * transaction as well as thresholds for certain types of failures can be defined prior to
     * running the transaction.
     * 
-    * <p>If otherwise unspecified, the default isolation level is
-    * {@link IsolationLevel#REPEATABLE_READ}. Similarly, if unspecified, the default maximum number
-    * of isolation failures is 1000, and the default maximum number of deadlock failures is 10. 
+    * <p>If otherwise unspecified, the default isolation level is {@link IsolationLevel#SNAPSHOT}.
+    * Similarly, if unspecified, the default maximum number of isolation failures is 1000, and the
+    * default maximum number of deadlock failures is 10. 
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -168,7 +180,7 @@ public class Transaction {
       /**
        * The isolation level to use in the transaction.
        */
-      private IsolationLevel isolationLevel = IsolationLevel.REPEATABLE_READ;
+      private IsolationLevel isolationLevel = IsolationLevel.SNAPSHOT;
       
       /**
        * The maximum number of isolation failures before the transaction is aborted.
@@ -185,7 +197,7 @@ public class Transaction {
        *
        * @param level the isolation level in which to run transactions
        * @return this, for method chaining
-       * @throws NullPointerException is the specified isolation level is null
+       * @throws NullPointerException if the specified isolation level is null
        */
       public Runner withIsolationLevel(IsolationLevel level) {
          if (level == null) {
@@ -200,7 +212,7 @@ public class Transaction {
        * when a {@link TransactionIsolationException} is thrown while running the transaction. After
        * this many failures have been observed, the transaction is aborted and the last observed
        * exception is propagated. If the transaction is not idempotent, the specified value is
-       * ignored as such transactions are never re-tried.
+       * ignored as such transactions are never retried.
        * 
        * <p>The minimum valid value is one, which means that after observing just one such failure,
        * the transaction is aborted.
@@ -721,8 +733,8 @@ public class Transaction {
        * A sequence of updates made to asynchronous atoms. These updates are only executed if the
        * transaction is committed.
        */
-      final Queue<Pair<AsynchronousAtom<?>, ListenableFutureTask<?>>> asyncActions =
-            new ArrayDeque<Pair<AsynchronousAtom<?>, ListenableFutureTask<?>>>();
+      final Queue<Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>>> asyncActions =
+            new ArrayDeque<Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>>>();
       
       /**
        * Information about atoms modified in the scope of this savepoint.
@@ -767,7 +779,7 @@ public class Transaction {
        * is done during a roll-back.
        */
       void cancelFutures() {
-         for (Pair<AsynchronousAtom<?>, ListenableFutureTask<?>> asyncAction : asyncActions) {
+         for (Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>> asyncAction : asyncActions) {
             asyncAction.getSecond().cancel(false);
          }
          for (AtomInfo<?> info : atomInfo.values()) {
@@ -779,12 +791,12 @@ public class Transaction {
        * Submits asynchronous actions for execution. This is done during a commit.
        */
       void submitAsyncActions() {
-         for (Pair<AsynchronousAtom<?>, ListenableFutureTask<?>> asyncAction : asyncActions) {
+         for (Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>> asyncAction : asyncActions) {
             @SuppressWarnings("unchecked")
             AsynchronousAtom<Object> atom = (AsynchronousAtom<Object>) asyncAction.getFirst();
             @SuppressWarnings("unchecked")
-            ListenableFutureTask<Object> future =
-                  (ListenableFutureTask<Object>) asyncAction.getSecond();
+            RunnableListenableFuture<Object> future =
+                  (RunnableListenableFuture<Object>) asyncAction.getSecond();
 
             AsynchronousAtom.submitFuture(atom, future);
          }
@@ -1417,9 +1429,10 @@ public class Transaction {
     * @param atom an asynchronous atom
     * @param runnable the runnable future that performs the action
     */
-   <T> void enqueueAsynchronousAction(AsynchronousAtom<T> atom, ListenableFutureTask<T> runnable) {
-      Pair<AsynchronousAtom<?>, ListenableFutureTask<?>> pair =
-            Pair.<AsynchronousAtom<?>, ListenableFutureTask<?>>create(atom, runnable); 
+   <T> void enqueueAsynchronousAction(AsynchronousAtom<T> atom,
+         RunnableListenableFuture<T> runnable) {
+      Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>> pair =
+            Pair.<AsynchronousAtom<?>, RunnableListenableFuture<?>>create(atom, runnable); 
       savepoint.asyncActions.add(pair);
    }
    

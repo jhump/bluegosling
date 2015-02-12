@@ -2,8 +2,6 @@ package com.apriori.concurrent;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-import com.apriori.vars.Variable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +38,19 @@ final class CompletableExecutors {
       ret.completeExceptionally(failure);
       return ret;
    }
-   
+
+   /**
+    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
+    * cancelled future, instead of one that is immediately successful.
+    *
+    * @return an immediately cancelled future
+    */
+   static <T> CompletableFuture<T> cancelledFuture() {
+      CompletableFuture<T> ret = new CompletableFuture<T>();
+      ret.cancel(false);
+      return ret;
+   }
+
    /**
     * A {@link ListenableExecutorService} that executes submitted tasks synchronously on the same
     * thread as the one that submits them.
@@ -156,7 +166,7 @@ final class CompletableExecutors {
          boolean done = false;
          for (Callable<T> callable : tasks) {
             if (done || System.nanoTime() >= deadline) {
-               results.add(ListenableFuture.cancelledFuture());
+               results.add(cancelledFuture());
                done = true;
             } else {
                results.add(submit(callable));
@@ -211,63 +221,17 @@ final class CompletableExecutors {
 
       @Override
       public <T> CompletableFuture<T> submit(Callable<T> task) {
-         // CompletableFuture has no factory method for a Callable. It also ignores requests
-         // to interrupt the task if it is running. So we have to do something a little different
-         // to get the right semantics (this is a bit hideous...)
-         Variable<Thread> runner = new Variable<>();
-         // make a future that knows how to cancel the task if it is running
-         CompletableFuture<T> future = new CompletableFuture<T>() {
-            @Override public boolean cancel(boolean mayInterrupt) {
-               boolean ret = super.cancel(mayInterrupt);
-               if (ret && mayInterrupt) {
-                  synchronized (runner) {
-                     Thread th = runner.get();
-                     if (th != null) {
-                        th.interrupt();
-                     }
-                  }
-               }
-               return ret;
-            }
-         };
-         // the actual task we execute: invokes the callable and completes the future
-         Runnable r = () -> {
-            synchronized (runner) {
-               if (future.isDone()) {
-                  // no need to do anything if task is done
-                  // (e.g. asynchronously cancelled or completed)
-                  return; 
-               }
-               runner.set(Thread.currentThread());
-            }
-            try {
-               future.complete(task.call());
-            } catch (Throwable t) {
-               future.completeExceptionally(t);
-            } finally {
-               synchronized (runner) {
-                  runner.clear();
-               }
-            }
-         };
-         
-         // finally, submit the task and return the future
-         delegate.execute(r);
-         return future;
+         return CompletableFutures.callInterruptiblyAsync(task, this);
       }
 
       @Override
       public <T> CompletableFuture<T> submit(Runnable task, T result) {
-         // we use submit(Callable) instead of CompletableFuture.runAsync or
-         // CompletableFuture.supplyAsync so we can get cancel/interrupt functionality
          return submit(Executors.callable(task, result));
       }
 
       @Override
       public CompletableFuture<Void> submit(Runnable task) {
-         // we use submit(Callable) instead of CompletableFuture.runAsync or
-         // CompletableFuture.supplyAsync so we can get cancel/interrupt functionality
-         return submit(Executors.callable(task, null));
+         return CompletableFutures.runInterruptiblyAsync(task, this);
       }
 
       @Override

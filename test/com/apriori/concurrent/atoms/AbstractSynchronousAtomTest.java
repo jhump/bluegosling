@@ -42,7 +42,7 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals(Integer.valueOf(99), atom.get()); // unchanged
    }
    
-   @Test public void getSetApply() {
+   @Test public void getSetUpdateAccumulate() {
       SynchronousAtom<String> atom = create("abc");
       assertEquals("abc", atom.get());
       assertEquals("abc", atom.set("def"));
@@ -51,6 +51,10 @@ public abstract class AbstractSynchronousAtomTest {
       assertEquals("DEF", atom.get());
       assertEquals("DEF", atom.getAndUpdate(String::toLowerCase));
       assertEquals("def", atom.get());
+      assertEquals("defabc", atom.accumulateAndGet("abc", String::concat));
+      assertEquals("defabc", atom.get());
+      assertEquals("defabc", atom.getAndAccumulate("XYZ", String::concat));
+      assertEquals("defabcXYZ", atom.get());
    }
    
    @Test public void invalidMutations() {
