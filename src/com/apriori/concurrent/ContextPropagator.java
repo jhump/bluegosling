@@ -87,7 +87,7 @@ public interface ContextPropagator<T> {
     * just use both of those.
     *
     * @param capturer captures context of the calling thread
-    * @param restorer restores sets a context value into the calling thread
+    * @param installer installs a context value into the calling thread
     * @return a propagator that uses the given objects to propagate context
     */
    public static <T> ContextPropagator<T> create(Supplier<? extends T> capturer,
@@ -106,7 +106,7 @@ public interface ContextPropagator<T> {
     * the {@code install} logic and discard its return value.
     *
     * @param capturer captures context of the calling thread
-    * @param restorer restores sets a context value into the calling thread
+    * @param installer installs a context value into the calling thread
     * @return a propagator that uses the given objects to propagate context
     */
    public static <T> ContextPropagator<T> create(Supplier<? extends T> capturer,
@@ -126,7 +126,7 @@ public interface ContextPropagator<T> {
          T prev = threadLocal.get();
          threadLocal.set(t);
          return prev;
-      });
+      }, threadLocal::set);
    }
 
    /**

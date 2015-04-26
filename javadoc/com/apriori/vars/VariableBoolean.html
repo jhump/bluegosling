@@ -168,8 +168,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#accumulateAndGet-boolean-com.apriori.util.BooleanBinaryOperator-">accumulateAndGet</a></span>(boolean&nbsp;v,
-                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#accumulateAndGet-boolean-com.apriori.function.BooleanBinaryOperator-">accumulateAndGet</a></span>(boolean&nbsp;v,
+                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -191,8 +191,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#getAndAccumulate-boolean-com.apriori.util.BooleanBinaryOperator-">getAndAccumulate</a></span>(boolean&nbsp;v,
-                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#getAndAccumulate-boolean-com.apriori.function.BooleanBinaryOperator-">getAndAccumulate</a></span>(boolean&nbsp;v,
+                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -204,7 +204,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#getAndUpdate-com.apriori.util.BooleanUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#getAndUpdate-com.apriori.function.BooleanUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -224,7 +224,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#updateAndGet-com.apriori.util.BooleanUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableBoolean.html#updateAndGet-com.apriori.function.BooleanUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -322,13 +322,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-com.apriori.util.BooleanUnaryOperator-">
+<a name="updateAndGet-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;boolean&nbsp;updateAndGet(<a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;boolean&nbsp;updateAndGet(<a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -339,13 +339,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-com.apriori.util.BooleanUnaryOperator-">
+<a name="getAndUpdate-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;boolean&nbsp;getAndUpdate(<a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;boolean&nbsp;getAndUpdate(<a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -356,14 +356,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-boolean-com.apriori.util.BooleanBinaryOperator-">
+<a name="accumulateAndGet-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;boolean&nbsp;accumulateAndGet(boolean&nbsp;v,
-                                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;fn)</pre>
+                                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>
@@ -376,14 +376,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-boolean-com.apriori.util.BooleanBinaryOperator-">
+<a name="getAndAccumulate-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;boolean&nbsp;getAndAccumulate(boolean&nbsp;v,
-                                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;fn)</pre>
+                                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>

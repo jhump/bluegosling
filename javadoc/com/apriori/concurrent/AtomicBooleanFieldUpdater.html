@@ -163,9 +163,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#accumulateAndGet-T-boolean-com.apriori.util.BooleanBinaryOperator-">accumulateAndGet</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#accumulateAndGet-T-boolean-com.apriori.function.BooleanBinaryOperator-">accumulateAndGet</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
                 boolean&nbsp;x,
-                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</code>
+                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the updated value.</div>
 </td>
@@ -187,9 +187,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndAccumulate-T-boolean-com.apriori.util.BooleanBinaryOperator-">getAndAccumulate</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndAccumulate-T-boolean-com.apriori.function.BooleanBinaryOperator-">getAndAccumulate</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
                 boolean&nbsp;x,
-                <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</code>
+                <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the previous value.</div>
 </td>
@@ -204,8 +204,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndUpdate-T-com.apriori.util.BooleanUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
-            <a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;updateFunction)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndUpdate-T-com.apriori.function.BooleanUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
+            <a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;updateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the previous value.</div>
 </td>
@@ -242,8 +242,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#updateAndGet-T-com.apriori.util.BooleanUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
-            <a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;updateFunction)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html#updateAndGet-T-com.apriori.function.BooleanUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
+            <a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;updateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the updated value.</div>
 </td>
@@ -410,7 +410,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 
  <p>
  <a href="package-summary.html#weakCompareAndSet">May fail spuriously and does not provide
- ordering guarantees</a>, so is only rarely an appropriate alternative to <code>compareAndSet</code>.</div>
+ ordering guarantees</a>, so is only rarely an appropriate alternative to
+ <code>compareAndSet</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>obj</code> - An object whose field to conditionally set</dd>
@@ -502,16 +503,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-java.lang.Object-com.apriori.util.BooleanUnaryOperator-">
+<a name="getAndUpdate-java.lang.Object-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
-</a><a name="getAndUpdate-T-com.apriori.util.BooleanUnaryOperator-">
+</a><a name="getAndUpdate-T-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
 <pre>public final&nbsp;boolean&nbsp;getAndUpdate(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
-                                  <a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;updateFunction)</pre>
+                                  <a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;updateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the previous value. The function should be
  side-effect-free, since it may be re-applied when attempted updates fail due to contention
@@ -525,16 +526,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-java.lang.Object-com.apriori.util.BooleanUnaryOperator-">
+<a name="updateAndGet-java.lang.Object-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
-</a><a name="updateAndGet-T-com.apriori.util.BooleanUnaryOperator-">
+</a><a name="updateAndGet-T-com.apriori.function.BooleanUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
 <pre>public final&nbsp;boolean&nbsp;updateAndGet(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
-                                  <a href="../../../com/apriori/util/BooleanUnaryOperator.html" title="interface in com.apriori.util">BooleanUnaryOperator</a>&nbsp;updateFunction)</pre>
+                                  <a href="../../../com/apriori/function/BooleanUnaryOperator.html" title="interface in com.apriori.function">BooleanUnaryOperator</a>&nbsp;updateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the updated value. The function should be
  side-effect-free, since it may be re-applied when attempted updates fail due to contention
@@ -548,9 +549,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-java.lang.Object-boolean-com.apriori.util.BooleanBinaryOperator-">
+<a name="getAndAccumulate-java.lang.Object-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
-</a><a name="getAndAccumulate-T-boolean-com.apriori.util.BooleanBinaryOperator-">
+</a><a name="getAndAccumulate-T-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -558,7 +559,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>getAndAccumulate</h4>
 <pre>public final&nbsp;boolean&nbsp;getAndAccumulate(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
                                       boolean&nbsp;x,
-                                      <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</pre>
+                                      <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the previous value. The
  function should be side-effect-free, since it may be re-applied when attempted updates fail
@@ -574,9 +575,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-java.lang.Object-boolean-com.apriori.util.BooleanBinaryOperator-">
+<a name="accumulateAndGet-java.lang.Object-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
-</a><a name="accumulateAndGet-T-boolean-com.apriori.util.BooleanBinaryOperator-">
+</a><a name="accumulateAndGet-T-boolean-com.apriori.function.BooleanBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -584,7 +585,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>accumulateAndGet</h4>
 <pre>public final&nbsp;boolean&nbsp;accumulateAndGet(<a href="../../../com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&nbsp;obj,
                                       boolean&nbsp;x,
-                                      <a href="../../../com/apriori/util/BooleanBinaryOperator.html" title="interface in com.apriori.util">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</pre>
+                                      <a href="../../../com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a>&nbsp;accumulateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the updated value. The
  function should be side-effect-free, since it may be re-applied when attempted updates fail

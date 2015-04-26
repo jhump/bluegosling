@@ -167,8 +167,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>char</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#accumulateAndGet-char-com.apriori.util.CharBinaryOperator-">accumulateAndGet</a></span>(char&nbsp;v,
-                <a href="../../../com/apriori/util/CharBinaryOperator.html" title="interface in com.apriori.util">CharBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#accumulateAndGet-char-com.apriori.function.CharBinaryOperator-">accumulateAndGet</a></span>(char&nbsp;v,
+                <a href="../../../com/apriori/function/CharBinaryOperator.html" title="interface in com.apriori.function">CharBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -190,8 +190,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>char</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#getAndAccumulate-char-com.apriori.util.CharBinaryOperator-">getAndAccumulate</a></span>(char&nbsp;v,
-                <a href="../../../com/apriori/util/CharBinaryOperator.html" title="interface in com.apriori.util">CharBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#getAndAccumulate-char-com.apriori.function.CharBinaryOperator-">getAndAccumulate</a></span>(char&nbsp;v,
+                <a href="../../../com/apriori/function/CharBinaryOperator.html" title="interface in com.apriori.function">CharBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -203,7 +203,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>char</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#getAndUpdate-com.apriori.util.CharUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/util/CharUnaryOperator.html" title="interface in com.apriori.util">CharUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#getAndUpdate-com.apriori.function.CharUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/function/CharUnaryOperator.html" title="interface in com.apriori.function">CharUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -223,7 +223,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>char</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#updateAndGet-com.apriori.util.CharUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/util/CharUnaryOperator.html" title="interface in com.apriori.util">CharUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableChar.html#updateAndGet-com.apriori.function.CharUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/function/CharUnaryOperator.html" title="interface in com.apriori.function">CharUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -321,13 +321,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-com.apriori.util.CharUnaryOperator-">
+<a name="updateAndGet-com.apriori.function.CharUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;char&nbsp;updateAndGet(<a href="../../../com/apriori/util/CharUnaryOperator.html" title="interface in com.apriori.util">CharUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;char&nbsp;updateAndGet(<a href="../../../com/apriori/function/CharUnaryOperator.html" title="interface in com.apriori.function">CharUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -338,13 +338,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-com.apriori.util.CharUnaryOperator-">
+<a name="getAndUpdate-com.apriori.function.CharUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;char&nbsp;getAndUpdate(<a href="../../../com/apriori/util/CharUnaryOperator.html" title="interface in com.apriori.util">CharUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;char&nbsp;getAndUpdate(<a href="../../../com/apriori/function/CharUnaryOperator.html" title="interface in com.apriori.function">CharUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -355,14 +355,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-char-com.apriori.util.CharBinaryOperator-">
+<a name="accumulateAndGet-char-com.apriori.function.CharBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;char&nbsp;accumulateAndGet(char&nbsp;v,
-                             <a href="../../../com/apriori/util/CharBinaryOperator.html" title="interface in com.apriori.util">CharBinaryOperator</a>&nbsp;fn)</pre>
+                             <a href="../../../com/apriori/function/CharBinaryOperator.html" title="interface in com.apriori.function">CharBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>
@@ -375,14 +375,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-char-com.apriori.util.CharBinaryOperator-">
+<a name="getAndAccumulate-char-com.apriori.function.CharBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;char&nbsp;getAndAccumulate(char&nbsp;v,
-                             <a href="../../../com/apriori/util/CharBinaryOperator.html" title="interface in com.apriori.util">CharBinaryOperator</a>&nbsp;fn)</pre>
+                             <a href="../../../com/apriori/function/CharBinaryOperator.html" title="interface in com.apriori.function">CharBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>

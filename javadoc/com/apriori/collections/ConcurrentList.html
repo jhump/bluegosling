@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":18,"i3":18,"i4":6,"i5":6,"i6":6};
+var methods = {"i0":6,"i1":6,"i2":18,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ConcurrentSkipListOrderedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ConcurrentList.html" target="_top">Frames</a></li>
@@ -167,9 +167,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default void</code></td>
+<td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#addLast-E-">addLast</a></span>(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</code>
-<div class="block">Adds an element to the end of the list.</div>
+<div class="block">Adds an element to the end of the list and returns its index, atomically.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -192,6 +192,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-">subList</a></span>(int&nbsp;fromIndex,
        int&nbsp;toIndex)</code>
 <div class="block">Returns a view of the portion of this list between the specified indices.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ConcurrentList.html#tailList-int-">tailList</a></span>(int&nbsp;fromIndex)</code>
+<div class="block">Returns a view of the tail of this list.</div>
 </td>
 </tr>
 </table>
@@ -362,22 +368,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <ul class="blockList">
 <li class="blockList">
 <h4>addLast</h4>
-<pre>default&nbsp;void&nbsp;addLast(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</pre>
-<div class="block">Adds an element to the end of the list. This method is named for readability and can be used
- in place of <a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-"><code>addBefore(int, Object, Object)</code></a> when there is no successor.
- 
- <p>The default implementation is simply the following:<br>
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util"><code>add(newValue)</code></a>.</div>
+<pre>int&nbsp;addLast(<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&nbsp;newValue)</pre>
+<div class="block">Adds an element to the end of the list and returns its index, atomically. This method can be
+ used in place of <a href="../../../com/apriori/collections/ConcurrentList.html#addBefore-int-E-E-"><code>addBefore(int, Object, Object)</code></a> when there is no successor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>newValue</code> - the value to add to the front of the list</dd>
+<dd><code>newValue</code> - the value to add to the end of the list</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the index of the newly added value</dd>
 </dl>
 </li>
 </ul>
 <a name="subList-int-int-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>subList</h4>
 <pre><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;&nbsp;subList(int&nbsp;fromIndex,
@@ -395,12 +400,42 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
  
  <p>The returned sub-list should never throw <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a> from any
  of its operations (although its iterators may throw this exception if concurrent modifications
- conflict with attempts to modify the list via the iterator).</div>
+ conflict with attempts to modify the list via the iterator).
+ 
+ <p>Unlike the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> interface, implementations may choose to return an
+ unmodifiable view. In that case, changes made to the underlying list are visible via the
+ sub-list view. But the sub-list view itself may throw <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a>
+ for structural modifications, like adding and removing elements.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util"><code>List.subList(int, int)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="tailList-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>tailList</h4>
+<pre><a href="../../../com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a>&lt;<a href="../../../com/apriori/collections/ConcurrentList.html" title="type parameter in ConcurrentList">E</a>&gt;&nbsp;tailList(int&nbsp;fromIndex)</pre>
+<div class="block">Returns a view of the tail of this list. Changes to this list are visible through the returned
+ view, and vice versa.
+ 
+ <p>This is similar to using <a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-"><code>subList(fromIndex, size())</code></a> except that
+ the returned list can <em>grow as the underlying list grows</em>. If an element is added after
+ the given index, it will not displace the last element of the sub-list but instead extend it.
+ 
+ <p>Like <a href="../../../com/apriori/collections/ConcurrentList.html#subList-int-int-"><code>subList(int, int)</code></a>, implementations may choose to return an unmodifiable view,
+ in which case the returned view can throw <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> when
+ structural modifications are attempted.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fromIndex</code> - low endpoint (inclusive) of the tail list</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a view of the specified range within this list</dd>
 </dl>
 </li>
 </ul>
@@ -432,7 +467,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/collections/CompositeTrie.html" title="interface in com.apriori.collections"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/collections/ConcurrentSkipListOrderedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/collections/ConcurrentList.html" target="_top">Frames</a></li>

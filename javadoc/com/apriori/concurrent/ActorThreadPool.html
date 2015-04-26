@@ -131,18 +131,19 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
  <p>Pinning actors to threads can help with cache performance and locality of reference. Allowing
  other threads to steal actors helps with fairness and can improve throughput.
  
- <p>This is similar in functionality to a <a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent"><code>PipeliningExecutorService</code></a>, which wraps another
- executor instead of providing its own thread pool. Because it does not control the way the
- executor dispatches tasks to actual threads, it can do neither thread-pinning nor work-stealing.
+ <p>This is similar in functionality to a <a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent"><code>PipeliningExecutor</code></a>, which wraps another
+ executor instead of providing its own thread pool. Because a <a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent"><code>PipeliningExecutor</code></a> does not
+ control the way the executor dispatches tasks to actual threads, it can do neither thread-pinning
+ nor work-stealing.
  
- <p>The definitions for "core" and "maximum" pool sizes differ a bit from
+ <p>The definitions for "core" and "maximum" pool sizes differ a bit from a
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html?is-external=true" title="class or interface in java.util.concurrent"><code>ThreadPoolExecutor</code></a>. The core pool consists of the threads that aren't ever allowed to
  expire. They are kept alive until the executor terminates. The maximum pool size is the peak size
  allowed in cases of where the number of concurrent active actors exceeds the size of the core
  pool. A <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html?is-external=true" title="class or interface in java.util.concurrent"><code>ThreadPoolExecutor</code></a> only adds threads beyond the core pool size when its work
- queue is full. However, this executor uses unbounded queues, one per actor. It adds threads
- beyond the core pool size whenever an actor is added but all existing threads are busy with
- previously submitted tasks for other actors.</div>
+ queue is full. However, an <a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent"><code>ActorThreadPool</code></a> uses unbounded queues, one per actor and adds
+ threads beyond the core pool size whenever an actor is added but all existing threads are busy
+ with previously submitted tasks for other actors.</div>
 </li>
 </ul>
 </div>
@@ -208,7 +209,9 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ActorThreadPool.html#execute-T-java.lang.Runnable-">execute</a></span>(<a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="type parameter in ActorThreadPool">T</a>&nbsp;t,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Executes the given task, associated with the given key.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -447,9 +450,18 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <h4>execute</h4>
 <pre>public&nbsp;void&nbsp;execute(<a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="type parameter in ActorThreadPool">T</a>&nbsp;t,
                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-">SerializingExecutor</a></code></span></div>
+<div class="block">Executes the given task, associated with the given key. The task will run <em>after</em> any
+ previously submitted tasks for the same key and <em>before</em> any subsequently submitted
+ tasks for the same key.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-">execute</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a>&lt;<a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="type parameter in ActorThreadPool">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>t</code> - the key</dd>
+<dd><code>task</code> - the task</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true#execute-java.lang.Runnable-" title="class or interface in java.util.concurrent"><code>Executor.execute(Runnable)</code></a></dd>
 </dl>
 </li>
 </ul>

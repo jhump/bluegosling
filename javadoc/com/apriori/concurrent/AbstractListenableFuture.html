@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,7 +135,11 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
  the future, the future is not considered <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#isDone--">done</a> until after that interrupt
  method has completed. More subtly, this means that a call to <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setValue-T-"><code>setValue(Object)</code></a> that
  "loses the race" with a concurrent cancellation will not actually return until the cancellation
- completes and any interruption code has executed (same for <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setFailure-java.lang.Throwable-"><code>setFailure(Throwable)</code></a>).</div>
+ completes and any interruption code has executed (same for <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setFailure-java.lang.Throwable-"><code>setFailure(Throwable)</code></a>).
+ 
+ <p>The blocking methods in this class (<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#get--"><code>get()</code></a> and <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#await--"><code>await()</code></a>) are safe to call from
+ a fork-join pool. When called from within a fork-join pool, these methods use a
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.ManagedBlocker.html?is-external=true" title="class or interface in java.util.concurrent"><code>ForkJoinPool.ManagedBlocker</code></a> instead of directly blocking.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent"><code>ListenableFutureTask</code></a></dd>
@@ -218,57 +222,63 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#getNow-T-">getNow</a></span>(<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&nbsp;valueIfIncomplete)</code>
+<div class="block">Gets the value of the future or a given default value if the future is not yet complete.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#getResult--">getResult</a></span>()</code>
 <div class="block">Gets the result of a successful future.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#interrupt--">interrupt</a></span>()</code>
 <div class="block">Invoked when the task is cancelled and allowed to interrupt a running task.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#isCancelled--">isCancelled</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#isDone--">isDone</a></span>()</code>
 <div class="block">Returns true if the event has occurred.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#isFailed--">isFailed</a></span>()</code>
 <div class="block">Returns true if the future is done and failed.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#isSuccessful--">isSuccessful</a></span>()</code>
 <div class="block">Returns true if the future is done and was successful.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setCancelled--">setCancelled</a></span>()</code>
 <div class="block">Sets the future as cancelled.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setFailure-java.lang.Throwable-">setFailure</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code>
 <div class="block">Sets the future as failed with the specified cause of failure.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#setValue-T-">setValue</a></span>(<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&nbsp;value)</code>
 <div class="block">Sets the future as successfully completed with the specified result.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/AbstractListenableFuture.html#visit-com.apriori.concurrent.FutureVisitor-">visit</a></span>(<a href="../../../com/apriori/concurrent/FutureVisitor.html" title="interface in com.apriori.concurrent">FutureVisitor</a>&lt;? super <a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&gt;&nbsp;visitor)</code>
 <div class="block">Invokes applicable methods on the specified visitor, depending on the disposition of this
@@ -288,7 +298,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></h3>
-<code><a href="../../../com/apriori/concurrent/ListenableFuture.html#asCompletionStage--">asCompletionStage</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#cancelledFuture--">cancelledFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#cast-com.apriori.concurrent.ListenableFuture-">cast</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.util.concurrent.Callable-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.util.function.Function-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.lang.Runnable-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.lang.Runnable-U-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#combineWith-com.apriori.concurrent.ListenableFuture-java.util.function.BiFunction-">combineWith</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#combineWith-com.apriori.concurrent.ListenableFuture-com.apriori.concurrent.ListenableFuture-com.apriori.util.TriFunction-">combineWith</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#completedFuture-T-">completedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredCancelledFuture-long-java.util.concurrent.TimeUnit-">deferredCancelledFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredFailedFuture-java.lang.Throwable-long-java.util.concurrent.TimeUnit-">deferredFailedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredFuture-T-long-java.util.concurrent.TimeUnit-">deferredFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#dereference-com.apriori.concurrent.ListenableFuture-">dereference</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#failedFuture-java.lang.Throwable-">failedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstOf-java.lang.Iterable-">firstOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstOf-com.apriori.concurrent.ListenableFuture...-">firstOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstSuccessfulOf-java.lang.Iterable-">firstSuccessfulOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstSuccessfulOf-com.apriori.concurrent.ListenableFuture...-">firstSuccessfulOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#flatMap-java.util.function.Function-">flatMap</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#fromCompletionStage-java.util.concurrent.CompletionStage-">fromCompletionStage</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#join-java.lang.Iterable-">join</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#join-com.apriori.concurrent.ListenableFuture...-">join</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.Future-">makeListenable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.ScheduledFuture-">makeListenable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#map-java.util.function.Function-">map</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#mapException-java.util.function.Function-">mapException</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#mapFuture-java.util.function.Function-">mapFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#recover-java.util.function.Function-">recover</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#unfinishableFuture--">unfinishableFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#visitWhenDone-com.apriori.concurrent.FutureVisitor-">visitWhenDone</a></code></li>
+<code><a href="../../../com/apriori/concurrent/ListenableFuture.html#asCompletionStage--">asCompletionStage</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#cancelledFuture--">cancelledFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#cast-com.apriori.concurrent.ListenableFuture-">cast</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.util.concurrent.Callable-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.util.function.Function-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.lang.Runnable-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#chainTo-java.lang.Runnable-U-java.util.concurrent.Executor-">chainTo</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#combineWith-com.apriori.concurrent.ListenableFuture-java.util.function.BiFunction-">combineWith</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#combineWith-com.apriori.concurrent.ListenableFuture-com.apriori.concurrent.ListenableFuture-com.apriori.function.TriFunction-">combineWith</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#completedFuture-T-">completedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredCancelledFuture-long-java.util.concurrent.TimeUnit-">deferredCancelledFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredFailedFuture-java.lang.Throwable-long-java.util.concurrent.TimeUnit-">deferredFailedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#deferredFuture-T-long-java.util.concurrent.TimeUnit-">deferredFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#dereference-com.apriori.concurrent.ListenableFuture-">dereference</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#failedFuture-java.lang.Throwable-">failedFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstOf-java.lang.Iterable-">firstOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstOf-com.apriori.concurrent.ListenableFuture...-">firstOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstSuccessfulOf-java.lang.Iterable-">firstSuccessfulOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#firstSuccessfulOf-com.apriori.concurrent.ListenableFuture...-">firstSuccessfulOf</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#flatMap-java.util.function.Function-">flatMap</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#fromCompletionStage-java.util.concurrent.CompletionStage-">fromCompletionStage</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#join-java.lang.Iterable-">join</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#join-com.apriori.concurrent.ListenableFuture...-">join</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.Future-">makeListenable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#makeListenable-java.util.concurrent.ScheduledFuture-">makeListenable</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#map-java.util.function.Function-">map</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#mapException-java.util.function.Function-">mapException</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#mapFuture-java.util.function.Function-">mapFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#recover-java.util.function.Function-">recover</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#unfinishableFuture--">unfinishableFuture</a>, <a href="../../../com/apriori/concurrent/ListenableFuture.html#visitWhenDone-com.apriori.concurrent.FutureVisitor-">visitWhenDone</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.Cancellable">
@@ -302,7 +312,7 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></h3>
-<code><a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly--">awaitUninterruptibly</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly-long-java.util.concurrent.TimeUnit-">awaitUninterruptibly</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromFuture-java.util.concurrent.Future-">fromFuture</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromLatch-java.util.concurrent.CountDownLatch-">fromLatch</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromTerminatingExecutor-java.util.concurrent.ExecutorService-">fromTerminatingExecutor</a></code></li>
+<code><a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly--">awaitUninterruptibly</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#awaitUninterruptibly-long-java.util.concurrent.TimeUnit-">awaitUninterruptibly</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromCondition-java.util.concurrent.locks.Condition-java.util.concurrent.locks.Lock-java.util.function.BooleanSupplier-">fromCondition</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromFuture-java.util.concurrent.Future-">fromFuture</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromIntrinsic-java.lang.Object-java.util.function.BooleanSupplier-">fromIntrinsic</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromLatch-java.util.concurrent.CountDownLatch-">fromLatch</a>, <a href="../../../com/apriori/concurrent/Awaitable.html#fromTerminatingExecutor-java.util.concurrent.ExecutorService-">fromTerminatingExecutor</a></code></li>
 </ul>
 </li>
 </ul>
@@ -454,6 +464,29 @@ implements <a href="../../../com/apriori/concurrent/ListenableFuture.html" title
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#isDone--" title="class or interface in java.util.concurrent">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the event has occurred; false otherwise</dd>
+</dl>
+</li>
+</ul>
+<a name="getNow-java.lang.Object-">
+<!--   -->
+</a><a name="getNow-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNow</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&nbsp;getNow(<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&nbsp;valueIfIncomplete)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/apriori/concurrent/ListenableFuture.html#getNow-T-">ListenableFuture</a></code></span></div>
+<div class="block">Gets the value of the future or a given default value if the future is not yet complete. If
+ the future is complete but finished with a failure or due to cancellation, this method will
+ throw an exception.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../com/apriori/concurrent/ListenableFuture.html#getNow-T-">getNow</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="../../../com/apriori/concurrent/AbstractListenableFuture.html" title="type parameter in AbstractListenableFuture">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>valueIfIncomplete</code> - the value to return if the future is not yet complete</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the future's value or the given value if the future is not yet complete</dd>
 </dl>
 </li>
 </ul>

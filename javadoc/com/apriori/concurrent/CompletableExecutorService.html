@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CompletableFutures.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/CompletableExecutorService.html" target="_top">Frames</a></li>
@@ -303,7 +303,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 <h4>makeCompletable</h4>
 <pre>static&nbsp;<a href="../../../com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a>&nbsp;makeCompletable(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</pre>
 <div class="block">Converts the specified service into a <a href="../../../com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent"><code>CompletableExecutorService</code></a>. If the specified
- service <em>is</em> already completable, it is returned without any conversion.</div>
+ service <em>is</em> already completable, it is returned without any conversion.
+ 
+ <p>Instances of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a> returned from the executor's various <code>submit</code>
+ methods differ from typical completable futures in that a call to <code>future.cancel(true)</code>
+ <em>will</em> attempt to interrupt the thread that is running the associated task. (See
+ <a href="../../../com/apriori/concurrent/CompletableFutures.html#callInterruptiblyAsync-java.util.concurrent.Callable-java.util.concurrent.Executor-"><code>CompletableFutures.callInterruptiblyAsync(Callable, Executor)</code></a>.)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>executor</code> - the executor service</dd>
@@ -340,7 +345,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/E
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/DeadlockException.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/CompletableFutures.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/CompletableExecutorService.html" target="_top">Frames</a></li>

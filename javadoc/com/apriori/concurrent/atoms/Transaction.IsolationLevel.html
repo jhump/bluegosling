@@ -146,13 +146,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#REPEATABLE_READ">REPEATABLE_READ</a></span></code>
-<div class="block">Repeatable read isolation; aka snapshot isolation.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#SERIALIZABLE">SERIALIZABLE</a></span></code>
+<div class="block">Serializable isolation.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#SERIALIZABLE">SERIALIZABLE</a></span></code>
-<div class="block">Serializable isolation.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#SNAPSHOT">SNAPSHOT</a></span></code>
+<div class="block">Snapshot isolation.</div>
 </td>
 </tr>
 </table>
@@ -227,18 +227,18 @@ the order they are declared.</div>
  reading, in order to prevent a write skew anomaly.</div>
 </li>
 </ul>
-<a name="REPEATABLE_READ">
+<a name="SNAPSHOT">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>REPEATABLE_READ</h4>
-<pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a> REPEATABLE_READ</pre>
-<div class="block">Repeatable read isolation; aka snapshot isolation. This is close to serializable, but can
- provide better performance since locks aren't required for every read. The main artifact
- that can occur is an anomaly called write skew. But this can be mitigated in updates to a
- transactional atom by using <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute-java.util.function.Function-">commutative</a>
- operations or by <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#pin--">pinning</a> read values.
+<h4>SNAPSHOT</h4>
+<pre>public static final&nbsp;<a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html" title="enum in com.apriori.concurrent.atoms">Transaction.IsolationLevel</a> SNAPSHOT</pre>
+<div class="block">Snapshot isolation. This is close to serializable, but can provide better performance since
+ locks aren't required for every read. The main artifact that can occur is an anomaly called
+ write skew. But this can be mitigated in updates to a transactional atom by using
+ <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#commute-java.util.function.Function-">commutative</a> operations or by
+ <a href="../../../../com/apriori/concurrent/atoms/TransactionalAtom.html#pin--">pinning</a> read values.
  
  <p>This is the default isolation level for a transaction when not otherwise configured.</div>
 </li>
@@ -254,7 +254,7 @@ the order they are declared.</div>
  really isolate query operations. In a transaction, subsequent reads of the same atom may
  return different results. This can provide the best performance, since a particular version
  of an atom does not have to be found on reads, but is likely to only be marginal
- improvement over <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#REPEATABLE_READ"><code>REPEATABLE_READ</code></a>. Repeatable reads are still possible for any
+ improvement over <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#SNAPSHOT"><code>SNAPSHOT</code></a>. Repeatable reads are still possible for any
  single atom via pinning it.</div>
 </li>
 </ul>

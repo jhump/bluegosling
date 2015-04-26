@@ -172,8 +172,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#accumulateAndGet-float-com.apriori.util.FloatBinaryOperator-">accumulateAndGet</a></span>(float&nbsp;v,
-                <a href="../../../com/apriori/util/FloatBinaryOperator.html" title="interface in com.apriori.util">FloatBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#accumulateAndGet-float-com.apriori.function.FloatBinaryOperator-">accumulateAndGet</a></span>(float&nbsp;v,
+                <a href="../../../com/apriori/function/FloatBinaryOperator.html" title="interface in com.apriori.function">FloatBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -203,8 +203,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#getAndAccumulate-float-com.apriori.util.FloatBinaryOperator-">getAndAccumulate</a></span>(float&nbsp;v,
-                <a href="../../../com/apriori/util/FloatBinaryOperator.html" title="interface in com.apriori.util">FloatBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#getAndAccumulate-float-com.apriori.function.FloatBinaryOperator-">getAndAccumulate</a></span>(float&nbsp;v,
+                <a href="../../../com/apriori/function/FloatBinaryOperator.html" title="interface in com.apriori.function">FloatBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -216,7 +216,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#getAndUpdate-com.apriori.util.FloatUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/util/FloatUnaryOperator.html" title="interface in com.apriori.util">FloatUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#getAndUpdate-com.apriori.function.FloatUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/function/FloatUnaryOperator.html" title="interface in com.apriori.function">FloatUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -244,7 +244,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#updateAndGet-com.apriori.util.FloatUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/util/FloatUnaryOperator.html" title="interface in com.apriori.util">FloatUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableFloat.html#updateAndGet-com.apriori.function.FloatUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/function/FloatUnaryOperator.html" title="interface in com.apriori.function">FloatUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -349,13 +349,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-com.apriori.util.FloatUnaryOperator-">
+<a name="updateAndGet-com.apriori.function.FloatUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;float&nbsp;updateAndGet(<a href="../../../com/apriori/util/FloatUnaryOperator.html" title="interface in com.apriori.util">FloatUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;float&nbsp;updateAndGet(<a href="../../../com/apriori/function/FloatUnaryOperator.html" title="interface in com.apriori.function">FloatUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -366,13 +366,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-com.apriori.util.FloatUnaryOperator-">
+<a name="getAndUpdate-com.apriori.function.FloatUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;float&nbsp;getAndUpdate(<a href="../../../com/apriori/util/FloatUnaryOperator.html" title="interface in com.apriori.util">FloatUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;float&nbsp;getAndUpdate(<a href="../../../com/apriori/function/FloatUnaryOperator.html" title="interface in com.apriori.function">FloatUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -383,14 +383,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-float-com.apriori.util.FloatBinaryOperator-">
+<a name="accumulateAndGet-float-com.apriori.function.FloatBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;float&nbsp;accumulateAndGet(float&nbsp;v,
-                              <a href="../../../com/apriori/util/FloatBinaryOperator.html" title="interface in com.apriori.util">FloatBinaryOperator</a>&nbsp;fn)</pre>
+                              <a href="../../../com/apriori/function/FloatBinaryOperator.html" title="interface in com.apriori.function">FloatBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>
@@ -403,14 +403,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-float-com.apriori.util.FloatBinaryOperator-">
+<a name="getAndAccumulate-float-com.apriori.function.FloatBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;float&nbsp;getAndAccumulate(float&nbsp;v,
-                              <a href="../../../com/apriori/util/FloatBinaryOperator.html" title="interface in com.apriori.util">FloatBinaryOperator</a>&nbsp;fn)</pre>
+                              <a href="../../../com/apriori/function/FloatBinaryOperator.html" title="interface in com.apriori.function">FloatBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>

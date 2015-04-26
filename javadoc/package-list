@@ -9,6 +9,7 @@ com.apriori.concurrent.scheduler
 com.apriori.di
 com.apriori.di.collections
 com.apriori.di.tools
+com.apriori.function
 com.apriori.generator
 com.apriori.graph
 com.apriori.possible

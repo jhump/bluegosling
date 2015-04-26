@@ -135,16 +135,20 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  inspect or interact with that value will encounter concurrency issues as the object is not
  thread-safe. The <em>only</em> thread-safe interaction is through this
  <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><code>DoubleInstanceLock</code></a>. If an operation needs to provide access to the object, use
- <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#snapshot--"><code>snapshot()</code></a> instead of the read or write methods. Note that write operations should never
- be made to such a snapshot (actual copies are made lazily, to defer any cost of copying to the
- next write operation and to allow multiple readers to share the same snapshot).
+ <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html#snapshot--"><code>snapshot()</code></a> instead of the read or write methods. Note that, since actual copies of the
+ instance are made lazily (to defer the cost of copying to the next write operation and to allow
+ multiple readers to share the same snapshot), mutations should <em>never</em> be made to a
+ snapshot.
  
  <p>The object must be cloneable so that stable snapshots of the object can be captured. (Also, it
  is cloned initially to generate the two instances from the one object.) It is <em>very
  important</em> that no operations be performed directly against the object after the
  <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><code>DoubleInstanceLock</code></a> is created. All subsequent operations must use read and write methods
  on the <a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><code>DoubleInstanceLock</code></a> to access the data. Failing to comply can result in corruption
- of the data and undefined behavior.</div>
+ of the data and undefined behavior.
+ 
+ <p>This object can safely be used in a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html?is-external=true" title="class or interface in java.util.concurrent"><code>ForkJoinPool</code></a>. Blocking operations (for writes)
+ will use a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.ManagedBlocker.html?is-external=true" title="class or interface in java.util.concurrent"><code>ForkJoinPool.ManagedBlocker</code></a> if invoked from such a pool.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://concurrencyfreaks.blogspot.com/2013/11/double-instance-locking.html">

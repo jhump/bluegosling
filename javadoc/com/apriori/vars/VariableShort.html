@@ -172,8 +172,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#accumulateAndGet-short-com.apriori.util.ShortBinaryOperator-">accumulateAndGet</a></span>(short&nbsp;v,
-                <a href="../../../com/apriori/util/ShortBinaryOperator.html" title="interface in com.apriori.util">ShortBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#accumulateAndGet-short-com.apriori.function.ShortBinaryOperator-">accumulateAndGet</a></span>(short&nbsp;v,
+                <a href="../../../com/apriori/function/ShortBinaryOperator.html" title="interface in com.apriori.function">ShortBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -219,8 +219,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#getAndAccumulate-short-com.apriori.util.ShortBinaryOperator-">getAndAccumulate</a></span>(short&nbsp;v,
-                <a href="../../../com/apriori/util/ShortBinaryOperator.html" title="interface in com.apriori.util">ShortBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#getAndAccumulate-short-com.apriori.function.ShortBinaryOperator-">getAndAccumulate</a></span>(short&nbsp;v,
+                <a href="../../../com/apriori/function/ShortBinaryOperator.html" title="interface in com.apriori.function">ShortBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -250,7 +250,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#getAndUpdate-com.apriori.util.ShortUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/util/ShortUnaryOperator.html" title="interface in com.apriori.util">ShortUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#getAndUpdate-com.apriori.function.ShortUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/function/ShortUnaryOperator.html" title="interface in com.apriori.function">ShortUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -288,7 +288,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#updateAndGet-com.apriori.util.ShortUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/util/ShortUnaryOperator.html" title="interface in com.apriori.util">ShortUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableShort.html#updateAndGet-com.apriori.function.ShortUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/function/ShortUnaryOperator.html" title="interface in com.apriori.function">ShortUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -386,13 +386,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-com.apriori.util.ShortUnaryOperator-">
+<a name="updateAndGet-com.apriori.function.ShortUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;short&nbsp;updateAndGet(<a href="../../../com/apriori/util/ShortUnaryOperator.html" title="interface in com.apriori.util">ShortUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;short&nbsp;updateAndGet(<a href="../../../com/apriori/function/ShortUnaryOperator.html" title="interface in com.apriori.function">ShortUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -403,13 +403,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-com.apriori.util.ShortUnaryOperator-">
+<a name="getAndUpdate-com.apriori.function.ShortUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;short&nbsp;getAndUpdate(<a href="../../../com/apriori/util/ShortUnaryOperator.html" title="interface in com.apriori.util">ShortUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;short&nbsp;getAndUpdate(<a href="../../../com/apriori/function/ShortUnaryOperator.html" title="interface in com.apriori.function">ShortUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -420,14 +420,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-short-com.apriori.util.ShortBinaryOperator-">
+<a name="accumulateAndGet-short-com.apriori.function.ShortBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;short&nbsp;accumulateAndGet(short&nbsp;v,
-                              <a href="../../../com/apriori/util/ShortBinaryOperator.html" title="interface in com.apriori.util">ShortBinaryOperator</a>&nbsp;fn)</pre>
+                              <a href="../../../com/apriori/function/ShortBinaryOperator.html" title="interface in com.apriori.function">ShortBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>
@@ -440,14 +440,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-short-com.apriori.util.ShortBinaryOperator-">
+<a name="getAndAccumulate-short-com.apriori.function.ShortBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;short&nbsp;getAndAccumulate(short&nbsp;v,
-                              <a href="../../../com/apriori/util/ShortBinaryOperator.html" title="interface in com.apriori.util">ShortBinaryOperator</a>&nbsp;fn)</pre>
+                              <a href="../../../com/apriori/function/ShortBinaryOperator.html" title="interface in com.apriori.function">ShortBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>

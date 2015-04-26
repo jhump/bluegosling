@@ -117,9 +117,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  transaction as well as thresholds for certain types of failures can be defined prior to
  running the transaction.
  
- <p>If otherwise unspecified, the default isolation level is
- <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#REPEATABLE_READ"><code>Transaction.IsolationLevel.REPEATABLE_READ</code></a>. Similarly, if unspecified, the default maximum number
- of isolation failures is 1000, and the default maximum number of deadlock failures is 10.</div>
+ <p>If otherwise unspecified, the default isolation level is <a href="../../../../com/apriori/concurrent/atoms/Transaction.IsolationLevel.html#SNAPSHOT"><code>Transaction.IsolationLevel.SNAPSHOT</code></a>.
+ Similarly, if unspecified, the default maximum number of isolation failures is 1000, and the
+ default maximum number of deadlock failures is 10.</div>
 </li>
 </ul>
 </div>
@@ -250,7 +250,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this, for method chaining</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - is the specified isolation level is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified isolation level is null</dd>
 </dl>
 </li>
 </ul>
@@ -265,7 +265,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  when a <a href="../../../../com/apriori/concurrent/atoms/TransactionIsolationException.html" title="class in com.apriori.concurrent.atoms"><code>TransactionIsolationException</code></a> is thrown while running the transaction. After
  this many failures have been observed, the transaction is aborted and the last observed
  exception is propagated. If the transaction is not idempotent, the specified value is
- ignored as such transactions are never re-tried.
+ ignored as such transactions are never retried.
  
  <p>The minimum valid value is one, which means that after observing just one such failure,
  the transaction is aborted.</div>

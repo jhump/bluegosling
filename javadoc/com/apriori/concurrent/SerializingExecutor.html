@@ -98,12 +98,30 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>K</code> - the type of key, used to group tasks into serial pipelines</dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a>, <a href="../../../com/apriori/concurrent/PipeliningExecutorService.html" title="class in com.apriori.concurrent">PipeliningExecutorService</a></dd>
+<dd><a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a>, <a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">SerializingExecutor&lt;K&gt;</span></pre>
+<div class="block">An executor that serializes multiple tasks that correspond to the same key. So tasks submitted
+ for the same key will be executed in FIFO order. If tasks are submitted for different keys, they
+ may be executed concurrently.
+ 
+ <p>This is useful for establishing serial pipelines, where concurrency is achieved through the
+ use of multiple pipelines. One specific use is for sending events to a listener. So that one
+ slow listener doesn't block others, each can be its own pipeline. All notifications for a
+ listener are then delivered in FIFO order, but a single slow listener doesn't have to stall
+ deliver of notifications to other listeners.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent"><code>Executor</code></a>, 
+<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent"><code>ListenableExecutorService</code></a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -125,27 +143,40 @@ var activeTableTab = "activeTableTab";
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-">execute</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Executes the given task, associated with the given key.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#newExecutorFor-K-">newExecutorFor</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#newExecutorFor-K-">newExecutorFor</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k)</code>
+<div class="block">Returns an executor that associates all tasks with the given key.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.util.concurrent.Callable-">submit</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>&nbsp;</td>
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>default <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-">submit</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-T-">submit</a></span>(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-      T&nbsp;value)</code>&nbsp;</td>
+      T&nbsp;value)</code>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -172,6 +203,16 @@ var activeTableTab = "activeTableTab";
 <h4>execute</h4>
 <pre>void&nbsp;execute(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Executes the given task, associated with the given key. The task will run <em>after</em> any
+ previously submitted tasks for the same key and <em>before</em> any subsequently submitted
+ tasks for the same key.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>k</code> - the key</dd>
+<dd><code>task</code> - the task</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true#execute-java.lang.Runnable-" title="class or interface in java.util.concurrent"><code>Executor.execute(Runnable)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="newExecutorFor-java.lang.Object-">
@@ -183,6 +224,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>newExecutorFor</h4>
 <pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;newExecutorFor(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k)</pre>
+<div class="block">Returns an executor that associates all tasks with the given key. This is useful to adapt this
+ class to the standard <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent"><code>Executor</code></a> interface.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>k</code> - the key</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an executor that associates all tasks with the given key</dd>
+</dl>
 </li>
 </ul>
 <a name="submit-java.lang.Object-java.lang.Runnable-">
@@ -195,6 +244,17 @@ var activeTableTab = "activeTableTab";
 <h4>submit</h4>
 <pre>default&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>k</code> - the key</dd>
+<dd><code>task</code> - the task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a future that will complete when the task completes or is cancelled</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>execute(Object, Runnable)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="submit-java.lang.Object-java.lang.Runnable-java.lang.Object-">
@@ -208,6 +268,19 @@ var activeTableTab = "activeTableTab";
 <pre>default&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
                                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                                        T&nbsp;value)</pre>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled. On successful completion, the future's value
+ will be that of the given value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>k</code> - the key</dd>
+<dd><code>task</code> - the task</dd>
+<dd><code>value</code> - the value of the future on successful completion</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a future that will complete when the task completes or is cancelled</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>execute(Object, Runnable)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="submit-java.lang.Object-java.util.concurrent.Callable-">
@@ -220,6 +293,18 @@ var activeTableTab = "activeTableTab";
 <h4>submit</h4>
 <pre>default&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="type parameter in SerializingExecutor">K</a>&nbsp;k,
                                        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</pre>
+<div class="block">Executes the given task, associated with the given key, and returns a future that will
+ complete when the task completes or is cancelled. On successful completion, the future's value
+ will be the value returned by the given task</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>k</code> - the key</dd>
+<dd><code>task</code> - the task, which produces the value of the future on success</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a future that will complete when the task completes or is cancelled</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>execute(Object, Runnable)</code></a></dd>
+</dl>
 </li>
 </ul>
 </li>

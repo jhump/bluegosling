@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/util/ShortConsumer.html" title="interface in com.apriori.util">ShortConsumer</a>&gt;</dd>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/function/ShortConsumer.html" title="interface in com.apriori.function">ShortConsumer</a>&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ShortIterator</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/util/ShortConsumer.html" title="interface in com.apriori.util">ShortConsumer</a>&gt;</pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/function/ShortConsumer.html" title="interface in com.apriori.function">ShortConsumer</a>&gt;</pre>
 <div class="block">An <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a> that can provide primitive (un-boxed) shorts.</div>
 </li>
 </ul>
@@ -149,7 +149,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShortIterator.html#forEachRemaining-com.apriori.util.ShortConsumer-">forEachRemaining</a></span>(<a href="../../../com/apriori/util/ShortConsumer.html" title="interface in com.apriori.util">ShortConsumer</a>&nbsp;action)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ShortIterator.html#forEachRemaining-com.apriori.function.ShortConsumer-">forEachRemaining</a></span>(<a href="../../../com/apriori/function/ShortConsumer.html" title="interface in com.apriori.function">ShortConsumer</a>&nbsp;action)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a></code></td>
@@ -213,16 +213,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIte
 </dl>
 </li>
 </ul>
-<a name="forEachRemaining-com.apriori.util.ShortConsumer-">
+<a name="forEachRemaining-com.apriori.function.ShortConsumer-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>forEachRemaining</h4>
-<pre>default&nbsp;void&nbsp;forEachRemaining(<a href="../../../com/apriori/util/ShortConsumer.html" title="interface in com.apriori.util">ShortConsumer</a>&nbsp;action)</pre>
+<pre>default&nbsp;void&nbsp;forEachRemaining(<a href="../../../com/apriori/function/ShortConsumer.html" title="interface in com.apriori.function">ShortConsumer</a>&nbsp;action)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true#forEachRemaining-T_CONS-" title="class or interface in java.util">forEachRemaining</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/util/ShortConsumer.html" title="interface in com.apriori.util">ShortConsumer</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true#forEachRemaining-T_CONS-" title="class or interface in java.util">forEachRemaining</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/PrimitiveIterator.html?is-external=true" title="class or interface in java.util">PrimitiveIterator</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a>,<a href="../../../com/apriori/function/ShortConsumer.html" title="interface in com.apriori.function">ShortConsumer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

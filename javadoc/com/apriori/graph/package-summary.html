@@ -85,60 +85,66 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/graph/NodeDecorator.html" title="interface in com.apriori.graph">NodeDecorator</a></td>
+<td class="colLast">
+<div class="block">An object used to decorate a node operation.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation1.html" title="interface in com.apriori.graph">NodeOperations.Operation1</a>&lt;A,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts a single input and produces a result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation10.html" title="interface in com.apriori.graph">NodeOperations.Operation10</a>&lt;A,B,C,D,E,F,G,H,I,J,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts ten inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation2.html" title="interface in com.apriori.graph">NodeOperations.Operation2</a>&lt;A,B,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts two inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation3.html" title="interface in com.apriori.graph">NodeOperations.Operation3</a>&lt;A,B,C,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts three inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation4.html" title="interface in com.apriori.graph">NodeOperations.Operation4</a>&lt;A,B,C,D,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts four inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation5.html" title="interface in com.apriori.graph">NodeOperations.Operation5</a>&lt;A,B,C,D,E,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts five inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation6.html" title="interface in com.apriori.graph">NodeOperations.Operation6</a>&lt;A,B,C,D,E,F,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts six inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation7.html" title="interface in com.apriori.graph">NodeOperations.Operation7</a>&lt;A,B,C,D,E,F,G,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts seven inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation8.html" title="interface in com.apriori.graph">NodeOperations.Operation8</a>&lt;A,B,C,D,E,F,G,H,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts eight inputs and produces a result.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/graph/NodeOperations.Operation9.html" title="interface in com.apriori.graph">NodeOperations.Operation9</a>&lt;A,B,C,D,E,F,G,H,I,T&gt;</td>
 <td class="colLast">
 <div class="block">An operation that accepts nine inputs and produces a result.</div>
@@ -156,15 +162,23 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/graph/Graph.html" title="class in com.apriori.graph">Graph</a>&lt;T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/graph/Computation.html" title="class in com.apriori.graph">Computation</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A computation graph.</div>
+<div class="block">A single instance of the computation graph.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/graph/Graph.Computation.html" title="class in com.apriori.graph">Graph.Computation</a>&lt;T&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/graph/ComputationFactory.html" title="class in com.apriori.graph">ComputationFactory</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/graph/ComputationFactory.Builder.html" title="class in com.apriori.graph">ComputationFactory.Builder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/graph/Graph.html" title="class in com.apriori.graph">Graph</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A single instance of the computation graph.</div>
+<div class="block">A computation graph.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -291,7 +305,7 @@
  <dd>A key that describes an input to the graph. Values are bound to these inputs when the graph
  is computed. A key consists of a type (the type of the input) and an optional qualifier (for
  distinguishing multiple inputs with the same type).</dd>
- <dt><a href="../../../com/apriori/graph/Graph.Computation.html" title="class in com.apriori.graph">Computation</a></dt>
+ <dt><a href="../../../com/apriori/graph/Computation.html" title="class in com.apriori.graph">Computation</a></dt>
  <dd>A single execution of the graph. A computation represents a single invocation of the logic in
  the graph and of its nodes' operations. Inputs are defined for a computation, and then it is
  executed to produce the graph's result.</dd>

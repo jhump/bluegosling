@@ -120,7 +120,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  
  <p><a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a>s also participate in transactions. Changes that are queued for an
  <a href="../../../../com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms"><code>AsynchronousAtom</code></a> are only submitted for execution when the transaction commits. Any
- pending operations that are effected by a rollback will be cancelled.</div>
+ pending operations that are effected by a rollback will be cancelled.
+ 
+ <p>A transaction is executed by creating a <a href="../../../../com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms"><code>Transaction.Runner</code></a>, which allows for customizing the
+ settings of the transaction before execution. Or, if default settings are acceptable, several
+ static methods are provided as shorthand. There are methods for transactions whose logic is
+ idempotent (which can be retried) and for those that are non-idempotent. The methods each come in
+ two flavors: one for executing tasks that do not produce a value, and another for executing a
+ computation that does produce a value.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../com/apriori/concurrent/atoms/Transaction.html#execute-com.apriori.concurrent.atoms.Transaction.Task-"><code>execute(Task)</code></a>, 
+<a href="../../../../com/apriori/concurrent/atoms/Transaction.html#executeNonIdempotent-com.apriori.concurrent.atoms.Transaction.Task-"><code>executeNonIdempotent(Task)</code></a>, 
+<a href="../../../../com/apriori/concurrent/atoms/Transaction.html#compute-com.apriori.concurrent.atoms.Transaction.Computation-"><code>compute(Computation)</code></a>, 
+<a href="../../../../com/apriori/concurrent/atoms/Transaction.html#computeNonIdempotent-com.apriori.concurrent.atoms.Transaction.Computation-"><code>computeNonIdempotent(Computation)</code></a></dd>
+</dl>
 </li>
 </ul>
 </div>

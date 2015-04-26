@@ -42,7 +42,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/RateLimiter.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/SameThreadExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/RunnableListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/ReentranceException.html" target="_top">Frames</a></li>
@@ -122,7 +122,11 @@
 <br>
 <pre>public class <span class="typeNameLabel">ReentranceException</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></pre>
-<div class="block">An exception indicating that a reentrant lock acquisition was attempted but is not unsupported.</div>
+<div class="block">An exception indicating that a reentrant lock acquisition was attempted but is not unsupported.
+
+ Most non-reentrant synchronization mechanisms lack the book-keeping necessary to throw such an
+ exception. But for those that can do the book-keeping but disallow re-entrance for some other
+ reason, this exception can be thrown.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../serialized-form.html#com.apriori.concurrent.ReentranceException">Serialized Form</a></dd>
@@ -259,7 +263,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExcep
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/RateLimiter.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/SameThreadExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/RunnableListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/ReentranceException.html" target="_top">Frames</a></li>

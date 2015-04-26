@@ -172,8 +172,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#accumulateAndGet-byte-com.apriori.util.ByteBinaryOperator-">accumulateAndGet</a></span>(byte&nbsp;v,
-                <a href="../../../com/apriori/util/ByteBinaryOperator.html" title="interface in com.apriori.util">ByteBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#accumulateAndGet-byte-com.apriori.function.ByteBinaryOperator-">accumulateAndGet</a></span>(byte&nbsp;v,
+                <a href="../../../com/apriori/function/ByteBinaryOperator.html" title="interface in com.apriori.function">ByteBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -219,8 +219,8 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#getAndAccumulate-byte-com.apriori.util.ByteBinaryOperator-">getAndAccumulate</a></span>(byte&nbsp;v,
-                <a href="../../../com/apriori/util/ByteBinaryOperator.html" title="interface in com.apriori.util">ByteBinaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#getAndAccumulate-byte-com.apriori.function.ByteBinaryOperator-">getAndAccumulate</a></span>(byte&nbsp;v,
+                <a href="../../../com/apriori/function/ByteBinaryOperator.html" title="interface in com.apriori.function">ByteBinaryOperator</a>&nbsp;fn)</code>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </td>
 </tr>
@@ -250,7 +250,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#getAndUpdate-com.apriori.util.ByteUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/util/ByteUnaryOperator.html" title="interface in com.apriori.util">ByteUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#getAndUpdate-com.apriori.function.ByteUnaryOperator-">getAndUpdate</a></span>(<a href="../../../com/apriori/function/ByteUnaryOperator.html" title="interface in com.apriori.function">ByteUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -288,7 +288,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>byte</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#updateAndGet-com.apriori.util.ByteUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/util/ByteUnaryOperator.html" title="interface in com.apriori.util">ByteUnaryOperator</a>&nbsp;fn)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/vars/VariableByte.html#updateAndGet-com.apriori.function.ByteUnaryOperator-">updateAndGet</a></span>(<a href="../../../com/apriori/function/ByteUnaryOperator.html" title="interface in com.apriori.function">ByteUnaryOperator</a>&nbsp;fn)</code>
 <div class="block">Updates the variable using the given function.</div>
 </td>
 </tr>
@@ -386,13 +386,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="updateAndGet-com.apriori.util.ByteUnaryOperator-">
+<a name="updateAndGet-com.apriori.function.ByteUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;byte&nbsp;updateAndGet(<a href="../../../com/apriori/util/ByteUnaryOperator.html" title="interface in com.apriori.util">ByteUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;byte&nbsp;updateAndGet(<a href="../../../com/apriori/function/ByteUnaryOperator.html" title="interface in com.apriori.function">ByteUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -403,13 +403,13 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndUpdate-com.apriori.util.ByteUnaryOperator-">
+<a name="getAndUpdate-com.apriori.function.ByteUnaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;byte&nbsp;getAndUpdate(<a href="../../../com/apriori/util/ByteUnaryOperator.html" title="interface in com.apriori.util">ByteUnaryOperator</a>&nbsp;fn)</pre>
+<pre>public&nbsp;byte&nbsp;getAndUpdate(<a href="../../../com/apriori/function/ByteUnaryOperator.html" title="interface in com.apriori.function">ByteUnaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Updates the variable using the given function. After this method returns, the variable's value
  is the result of applying the function to the variable's previous value.</div>
 <dl>
@@ -420,14 +420,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="accumulateAndGet-byte-com.apriori.util.ByteBinaryOperator-">
+<a name="accumulateAndGet-byte-com.apriori.function.ByteBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
 <pre>public&nbsp;byte&nbsp;accumulateAndGet(byte&nbsp;v,
-                             <a href="../../../com/apriori/util/ByteBinaryOperator.html" title="interface in com.apriori.util">ByteBinaryOperator</a>&nbsp;fn)</pre>
+                             <a href="../../../com/apriori/function/ByteBinaryOperator.html" title="interface in com.apriori.function">ByteBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>
@@ -440,14 +440,14 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable
 </dl>
 </li>
 </ul>
-<a name="getAndAccumulate-byte-com.apriori.util.ByteBinaryOperator-">
+<a name="getAndAccumulate-byte-com.apriori.function.ByteBinaryOperator-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
 <pre>public&nbsp;byte&nbsp;getAndAccumulate(byte&nbsp;v,
-                             <a href="../../../com/apriori/util/ByteBinaryOperator.html" title="interface in com.apriori.util">ByteBinaryOperator</a>&nbsp;fn)</pre>
+                             <a href="../../../com/apriori/function/ByteBinaryOperator.html" title="interface in com.apriori.function">ByteBinaryOperator</a>&nbsp;fn)</pre>
 <div class="block">Accumulates the given value into  the variable using the given function. After this method
  returns, the variable's value is the result of applying the function to the variable's
  previous value and the specified value.</div>

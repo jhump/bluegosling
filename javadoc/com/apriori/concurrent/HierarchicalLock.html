@@ -105,10 +105,15 @@ var activeTableTab = "activeTableTab";
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">HierarchicalLock</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
 <div class="block">A hierarchical lock that supports shared and exclusive locking modes and supports lock
  promotion and demotion. Locks can be promoted from child to parent or from shared to exclusive,
  and they can be demoted from parent to child or from exclusive to shared.
@@ -142,6 +147,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  billion times, or 2 billion threads each acquiring it once. (These limits are intentionally very
  high such that no practical use of the lock will ever bump into them.)
  
+ <p>This lock is safe to use in a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html?is-external=true" title="class or interface in java.util.concurrent"><code>ForkJoinPool</code></a>. If blocking methods are invoked from such
+ a pool then a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.ManagedBlocker.html?is-external=true" title="class or interface in java.util.concurrent"><code>ForkJoinPool.ManagedBlocker</code></a> is used.
+ 
  <p><strong>NOTE:</strong> Deadlock detection in this class only works when other waiting threads
  are also waiting for a <a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a>. It is still possible for deadlock to occur if
  threads in the graph are waiting on other kinds of synchronizers. Code that acquires a
@@ -150,7 +158,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/concurrent/HierarchicalLock.SharedLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.SharedLock</code></a>, 
-<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a></dd>
+<a href="../../../com/apriori/concurrent/HierarchicalLock.ExclusiveLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock.ExclusiveLock</code></a>, 
+<a href="../../../serialized-form.html#com.apriori.concurrent.HierarchicalLock">Serialized Form</a></dd>
 </dl>
 </li>
 </ul>
