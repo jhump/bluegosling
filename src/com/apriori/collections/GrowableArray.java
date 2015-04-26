@@ -3,6 +3,7 @@ package com.apriori.collections;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.OptionalInt;
 import java.util.Spliterator;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
@@ -154,10 +155,9 @@ public interface GrowableArray<E> extends SizedIterable<E> {
       // mark the initial index, for the first item we'll append
       int i = size();
       // try to pre-allocate the entire amount needed
-      if (values instanceof Collection) {
-         growBy(((Collection<?>) values).size());
-      } else if (values instanceof SizedIterable) {
-         growBy(((SizedIterable<?>) values).size());
+      OptionalInt otherSize = Iterables.trySize(values);
+      if (otherSize.isPresent()) {
+         growBy(otherSize.getAsInt());
       }
       for (E t : values) {
          if (i < size()) {

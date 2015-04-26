@@ -19,6 +19,31 @@ public final class CompletableFutures {
    }
    
    /**
+    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
+    * failed future, instead of one that is immediately successful.
+    *
+    * @param failure the cause of the future's failure
+    * @return an immediately failed future
+    */
+   public static <T> CompletableFuture<T> failedFuture(Throwable failure) {
+      CompletableFuture<T> ret = new CompletableFuture<T>();
+      ret.completeExceptionally(failure);
+      return ret;
+   }
+
+   /**
+    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
+    * cancelled future, instead of one that is immediately successful.
+    *
+    * @return an immediately cancelled future
+    */
+   public static <T> CompletableFuture<T> cancelledFuture() {
+      CompletableFuture<T> ret = new CompletableFuture<T>();
+      ret.cancel(false);
+      return ret;
+   }
+
+   /**
     * Returns a {@link CompletableFuture} that completes when the given task completes. The task is
     * run asynchronously in the {@link ForkJoinPool#commonPool()}.
     * 

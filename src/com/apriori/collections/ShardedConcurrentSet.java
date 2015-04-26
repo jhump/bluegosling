@@ -211,17 +211,21 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       if (concurrency < 1) {
          throw new IllegalArgumentException("concurrency must be > 0");
       }
+      int concurrencyPowerOfTwo = Integer.highestOneBit(concurrency);
+      if (concurrency > concurrencyPowerOfTwo) {
+         concurrencyPowerOfTwo <<= 1;
+      }
       S copy = makeClone(set);
       copy.clear(); // empty shard
-      shards = new Set[concurrency];
+      shards = new Set[concurrencyPowerOfTwo];
       shards[0] = copy;
-      for (int i = 1; i < concurrency; i++) {
+      for (int i = 1; i < concurrencyPowerOfTwo; i++) {
          shards[i] = makeClone(copy);
       }
-      shardLocks = new ReentrantReadWriteLock[concurrency];
-      shardModCounts = new int[concurrency];
-      shardLatestIteratorModCounts = new int[concurrency];
-      for (int i = 0; i < concurrency; i++) {
+      shardLocks = new ReentrantReadWriteLock[concurrencyPowerOfTwo];
+      shardModCounts = new int[concurrencyPowerOfTwo];
+      shardLatestIteratorModCounts = new int[concurrencyPowerOfTwo];
+      for (int i = 0; i < concurrencyPowerOfTwo; i++) {
          shardLocks[i] = new ReentrantReadWriteLock(fair);
          shardLatestIteratorModCounts[i] = -1;
       }
@@ -305,7 +309,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
    }
 
    private int shardNumFor(Object o) {
-      return ((o == null ? 0 : o.hashCode()) & 0x7fffffff) % shards.length;
+      return ((o == null ? 0 : o.hashCode()) & 0x7fffffff) & (shards.length - 1);
    }
    
    <T> Collection<T>[] collectionToShards(Collection<T> coll) {

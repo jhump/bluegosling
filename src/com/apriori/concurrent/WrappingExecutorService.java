@@ -1,7 +1,5 @@
 package com.apriori.concurrent;
 
-import com.apriori.collections.TransformingCollection;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,27 +9,60 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
-//TODO: doc
+/**
+ * An executor service that provides a way to wrap tasks that are executed. Wrappers can perform a
+ * range of cross-cutting concerns before and after delegating to the wrapped task.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: tests
 public abstract class WrappingExecutorService extends WrappingExecutor
       implements ListenableExecutorService {
 
+   /**
+    * Constructs a new executor service that delegates to the given executor service.
+    *
+    * @param delegate an executor service
+    */
    protected WrappingExecutorService(ExecutorService delegate) {
       super(ListenableExecutorService.makeListenable(delegate));
    }
    
+   /**
+    * Returns the underlying executor service.
+    *
+    * @return the underlying executor service
+    */
    @Override
    protected ListenableExecutorService delegate() {
       return (ListenableExecutorService) super.delegate();
    }
    
+   /**
+    * Wraps the given task. This is called for each task executed.
+    *
+    * @param c a task
+    * @return a wrapper around the given task that will be executed in its place
+    */
    protected abstract <T> Callable<T> wrap(Callable<T> c);
    
+   /**
+    * Wraps the given collection of tasks by calling {@link #wrap(Callable)} for each element in the
+    * given collection.
+    *
+    * @param coll a collection of tasks
+    * @return a new collection with the results of wrapping each task
+    */
    protected <T, C extends Callable<T>> Collection<Callable<T>> wrap(Collection<C> coll) {
-      return new TransformingCollection<C, Callable<T>>(coll, this::wrap);
+      return coll.stream().map(this::wrap).collect(Collectors.toList());
    }
    
+   /**
+    * Wraps the given task by first adapting it to a {@link Executors#callable(Runnable) Callable}
+    * and then wrapping via {@link #wrap(Callable)}.
+    */
    @Override
    protected Runnable wrap(Runnable r) {
       return () -> {

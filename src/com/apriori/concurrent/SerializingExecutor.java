@@ -8,7 +8,7 @@ import java.util.concurrent.Executor;
  * for the same key will be executed in FIFO order. If tasks are submitted for different keys, they
  * may be executed concurrently.
  * 
- * <p>This is useful for establishing serial pipelines, where concurrency is acheived through the
+ * <p>This is useful for establishing serial pipelines, where concurrency is achieved through the
  * use of multiple pipelines. One specific use is for sending events to a listener. So that one
  * slow listener doesn't block others, each can be its own pipeline. All notifications for a
  * listener are then delivered in FIFO order, but a single slow listener doesn't have to stall
@@ -17,6 +17,7 @@ import java.util.concurrent.Executor;
  * @param <K> the type of key, used to group tasks into serial pipelines
  * 
  * @see Executor
+ * @see ListenableExecutorService
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

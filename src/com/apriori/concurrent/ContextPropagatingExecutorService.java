@@ -22,7 +22,7 @@ public class ContextPropagatingExecutorService extends WrappingExecutorService {
    }
    
    @Override
-   protected <T> Callable<T> wrap(Callable<T> c) {
+   protected final <T> Callable<T> wrap(Callable<T> c) {
       // capture context in calling/submitting thread
       List<Pair<ContextPropagator<Object>, Object>> captured =
             new ArrayList<>(propagators.size());
@@ -52,5 +52,15 @@ public class ContextPropagatingExecutorService extends WrappingExecutorService {
             }
          }
       };
+   }
+   
+   @Override
+   protected final Runnable wrap(Runnable r) {
+      return super.wrap(r);
+   }
+   
+   @Override
+   protected final <T, C extends Callable<T>> Collection<Callable<T>> wrap(Collection<C> coll) {
+      return super.wrap(coll);
    }
 }

@@ -1,6 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.BooleanConsumer;
+import com.apriori.function.BooleanConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

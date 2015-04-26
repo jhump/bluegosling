@@ -3,6 +3,9 @@ package com.apriori.concurrent;
 import com.apriori.util.Cloner;
 import com.apriori.util.Cloners;
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
@@ -31,9 +34,10 @@ import java.util.function.Function;
  * inspect or interact with that value will encounter concurrency issues as the object is not
  * thread-safe. The <em>only</em> thread-safe interaction is through this
  * {@link DoubleInstanceLock}. If an operation needs to provide access to the object, use
- * {@link #snapshot()} instead of the read or write methods. Note that write operations should never
- * be made to such a snapshot (actual copies are made lazily, to defer any cost of copying to the
- * next write operation and to allow multiple readers to share the same snapshot).
+ * {@link #snapshot()} instead of the read or write methods. Note that, since actual copies of the
+ * instance are made lazily (to defer the cost of copying to the next write operation and to allow
+ * multiple readers to share the same snapshot), mutations should <em>never</em> be made to a
+ * snapshot.
  * 
  * <p>The object must be cloneable so that stable snapshots of the object can be captured. (Also, it
  * is cloned initially to generate the two instances from the one object.) It is <em>very
@@ -41,6 +45,9 @@ import java.util.function.Function;
  * {@link DoubleInstanceLock} is created. All subsequent operations must use read and write methods
  * on the {@link DoubleInstanceLock} to access the data. Failing to comply can result in corruption
  * of the data and undefined behavior.
+ * 
+ * <p>This object can safely be used in a {@link ForkJoinPool}. Blocking operations (for writes)
+ * will use a {@link ManagedBlocker} if invoked from such a pool.
  *
  * @param <T> the type of element that is being accessed by readers and writers
  *
@@ -179,7 +186,7 @@ public class DoubleInstanceLock<T> {
     */
    public <U> U write(Function<? super T, ? extends U> action) {
       // only one writer at a time allowed 
-      sync.acquire(-1);
+      sync.acquireWriteLock();
       try {
          // first get side that readers aren't using
          int s2 = sync.leftOrRight();
@@ -203,7 +210,7 @@ public class DoubleInstanceLock<T> {
          sync.release(-1);
       }
    }
-
+   
    /**
     * Returns a snapshot of the data, like for performing expensive work that requires a strongly
     * consistent view.
@@ -266,6 +273,42 @@ public class DoubleInstanceLock<T> {
       }
       
       /**
+       * Awaits the write lock. This is a wrapper around {@link #acquire(long)} that is safe to
+       * invoke in a {@link ForkJoinPool}. If in such a pool, a {@link ManagedBlocker} is used.
+       */
+      void acquireWriteLock() {
+         // exclusive lock, for writers
+         if (getExclusiveOwnerThread() == Thread.currentThread()) {
+            // re-entrance not allowed!
+            throw new ReentranceException();
+         }
+
+         if (ForkJoinTask.inForkJoinPool()) {
+            ManagedBlockers.blockUninterruptibly(new LockBlocker());
+         } else {
+            acquire(-1);
+         }
+      }
+      
+      /**
+       * Awaits the readers of the given side to drain. This is a wrapper around
+       * {@link #doAwaitDrain(int)} that is safe to invoke in a {@link ForkJoinPool}. If in such a
+       * pool, a {@link ManagedBlocker} is used.
+       */
+      void awaitDrain(int side) {
+         if (getExclusiveOwnerThread() != Thread.currentThread()) {
+            // only exclusive writer can wait for threads to drain
+            throw new IllegalMonitorStateException();
+         }
+         
+         if (ForkJoinTask.inForkJoinPool()) {
+            ManagedBlockers.blockUninterruptibly(new DrainBlocker(side));
+         } else {
+            doAwaitDrain(side);
+         }
+      }
+      
+      /**
        * Acquire the synchronizer in "write" mode.
        *
        * @param i unused
@@ -273,11 +316,6 @@ public class DoubleInstanceLock<T> {
        */
       @Override
       protected boolean tryAcquire(long i) {
-         // exclusive lock, for writers
-         if (getExclusiveOwnerThread() == Thread.currentThread()) {
-            // re-entrance not allowed!
-            throw new ReentranceException();
-         }
          while (true) {
             long s = getState();
             if ((s & WRITE_LOCKED) != 0) {
@@ -298,11 +336,7 @@ public class DoubleInstanceLock<T> {
        *
        * @param leftOrRight the side which should have no readers on return
        */
-      void awaitDrain(int leftOrRight) {
-         if (getExclusiveOwnerThread() != Thread.currentThread()) {
-            // only exclusive writer can wait for threads to drain
-            throw new IllegalMonitorStateException();
-         }
+      private void doAwaitDrain(int leftOrRight) {
          // eagerly set the thread field, so exiting readers can unpark us
          long mask;
          if (leftOrRight == LEFT) {
@@ -576,6 +610,56 @@ public class DoubleInstanceLock<T> {
          sb.append(s & RIGHT_READER_MASK);
          sb.append(suffix);
          return sb.toString();
+      }
+      
+      /**
+       * A managed blocker that awaits the synchronizer to be acquired in exclusive mode.
+       *
+       * @author Joshua Humphries (jhumphries131@gmail.com)
+       */
+      private class LockBlocker implements ManagedBlocker {
+         LockBlocker() {
+         }
+         
+         @Override
+         public boolean block() throws InterruptedException {
+            acquire(-1);
+            return true;
+         }
+
+         @SuppressWarnings("synthetic-access")
+         @Override
+         public boolean isReleasable() {
+            return getExclusiveOwnerThread() == Thread.currentThread();
+         }
+      }
+
+      /**
+       * A managed blocker that awaits readers of a given side to drain.
+       *
+       * @author Joshua Humphries (jhumphries131@gmail.com)
+       */
+      private class DrainBlocker implements ManagedBlocker {
+         private final int side;
+         private final long mask;
+         
+         DrainBlocker(int side) {
+            this.side = side;
+            mask = side == LEFT ? LEFT_READER_MASK : RIGHT_READER_MASK;
+         }
+         
+         @SuppressWarnings("synthetic-access")
+         @Override
+         public boolean block() throws InterruptedException {
+            doAwaitDrain(side);
+            return true;
+         }
+
+         @SuppressWarnings("synthetic-access")
+         @Override
+         public boolean isReleasable() {
+            return (getState() & mask) == 0;
+         }
       }
    }
 }

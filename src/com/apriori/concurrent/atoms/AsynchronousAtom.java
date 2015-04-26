@@ -9,8 +9,8 @@ import com.apriori.concurrent.ListenableFuture;
 import com.apriori.concurrent.ListenableFutureTask;
 import com.apriori.concurrent.RunnableListenableFuture;
 import com.apriori.concurrent.SerializingExecutor;
+import com.apriori.function.TriFunction;
 import com.apriori.possible.Reference;
-import com.apriori.util.TriFunction;
 
 import java.util.LinkedList;
 import java.util.concurrent.Callable;

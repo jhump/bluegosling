@@ -1,10 +1,10 @@
 package com.apriori.collections;
 
-import com.apriori.util.BooleanConsumer;
-import com.apriori.util.ByteConsumer;
-import com.apriori.util.CharConsumer;
-import com.apriori.util.FloatConsumer;
-import com.apriori.util.ShortConsumer;
+import com.apriori.function.BooleanConsumer;
+import com.apriori.function.ByteConsumer;
+import com.apriori.function.CharConsumer;
+import com.apriori.function.FloatConsumer;
+import com.apriori.function.ShortConsumer;
 
 import java.util.ListIterator;
 import java.util.PrimitiveIterator;

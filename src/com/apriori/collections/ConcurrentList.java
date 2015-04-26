@@ -96,18 +96,13 @@ public interface ConcurrentList<E> extends List<E> {
    }
    
    /**
-    * Adds an element to the end of the list. This method is named for readability and can be used
-    * in place of {@link #addBefore(int, Object, Object)} when there is no successor.
-    * 
-    * <p>The default implementation is simply the following:<br>
-    * {@link #add(Object) add(newValue)}.
+    * Adds an element to the end of the list and returns its index, atomically. This method can be
+    * used in place of {@link #addBefore(int, Object, Object)} when there is no successor.
     *
-    * @param newValue the value to add to the front of the list
+    * @param newValue the value to add to the end of the list
+    * @return the index of the newly added value
     */
-   default void addLast(E newValue) {
-      boolean added = add(newValue);
-      assert added;
-   }
+   int addLast(E newValue);
    
    /**
     * Returns a view of the portion of this list between the specified indices. Changes to this
@@ -124,8 +119,30 @@ public interface ConcurrentList<E> extends List<E> {
     * <p>The returned sub-list should never throw {@link ConcurrentModificationException} from any
     * of its operations (although its iterators may throw this exception if concurrent modifications
     * conflict with attempts to modify the list via the iterator).
+    * 
+    * <p>Unlike the standard {@link List} interface, implementations may choose to return an
+    * unmodifiable view. In that case, changes made to the underlying list are visible via the
+    * sub-list view. But the sub-list view itself may throw {@link UnsupportedOperationException}
+    * for structural modifications, like adding and removing elements.
     *
     * @see java.util.List#subList(int, int)
     */
    @Override ConcurrentList<E> subList(int fromIndex, int toIndex);
+
+   /**
+    * Returns a view of the tail of this list. Changes to this list are visible through the returned
+    * view, and vice versa.
+    * 
+    * <p>This is similar to using {@link #subList(int, int) subList(fromIndex, size())} except that
+    * the returned list can <em>grow as the underlying list grows</em>. If an element is added after
+    * the given index, it will not displace the last element of the sub-list but instead extend it.
+    * 
+    * <p>Like {@link #subList(int, int)}, implementations may choose to return an unmodifiable view,
+    * in which case the returned view can throw {@link UnsupportedOperationException} when
+    * structural modifications are attempted.
+    *
+    * @param fromIndex low endpoint (inclusive) of the tail list
+    * @return a view of the specified range within this list
+    */
+   ConcurrentList<E> tailList(int fromIndex);
 }

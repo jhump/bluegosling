@@ -3,6 +3,7 @@ package com.apriori.concurrent;
 import com.apriori.possible.AbstractDynamicPossible;
 import com.apriori.possible.Fulfillable;
 import com.apriori.util.Throwables;
+import com.apriori.vars.Variable;
 
 import java.util.Collections;
 import java.util.NoSuchElementException;
@@ -147,7 +148,7 @@ public class SettableFuture<T> extends AbstractListenableFuture<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class RunnableView implements RunnableListenableFuture<T> {
-      private final Thread runner[] = new Thread[1];
+      private final Variable<Thread> runner = new Variable<>();
       private final Callable<T> task;
       private boolean hasBeenRun;
       
@@ -161,7 +162,7 @@ public class SettableFuture<T> extends AbstractListenableFuture<T> {
             if (isDone() || hasBeenRun) {
                return;
             }
-            runner[0] = Thread.currentThread();
+            runner.set(Thread.currentThread());
             hasBeenRun = true;
          }
          try {
@@ -170,7 +171,7 @@ public class SettableFuture<T> extends AbstractListenableFuture<T> {
             setFailure(t);
          } finally {
             synchronized (runner) {
-               runner[0] = null;
+               runner.set(null);
             }
          }
       }
@@ -209,7 +210,7 @@ public class SettableFuture<T> extends AbstractListenableFuture<T> {
       public boolean cancel(boolean mayInterruptIfRunning) {
          if (mayInterruptIfRunning) {
             synchronized (runner) {
-               Thread th = runner[0];
+               Thread th = runner.get();
                if (th != null) {
                   th.interrupt();
                }

@@ -2,6 +2,7 @@ package com.apriori.concurrent;
 
 import com.apriori.collections.Iterables;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -23,15 +24,24 @@ public class InterceptingExecutorService extends WrappingExecutorService {
    }
    
    @Override
-   protected <T> Callable<T> wrap(Callable<T> c) {
-      return () -> {
-         Iterator<Interceptor> i = interceptors.iterator();
-         Callable<T> wrapper = c;
-         while (i.hasNext()) {
-            final Callable<T> wrapped = wrapper;
-            wrapper = () -> i.next().intercept(this, wrapped);
-         }
-         return wrapper.call();
-      };
+   protected final <T> Callable<T> wrap(Callable<T> c) {
+      Iterator<Interceptor> iter = interceptors.iterator();
+      Callable<T> wrapper = c;
+      while (iter.hasNext()) {
+         final Callable<T> wrapped = wrapper;
+         Interceptor interceptor = iter.next();
+         wrapper = () -> interceptor.intercept(this, wrapped);
+      }
+      return wrapper;
+   }
+   
+   @Override
+   protected final Runnable wrap(Runnable r) {
+      return super.wrap(r);
+   }
+   
+   @Override
+   protected final <T, C extends Callable<T>> Collection<Callable<T>> wrap(Collection<C> coll) {
+      return super.wrap(coll);
    }
 }

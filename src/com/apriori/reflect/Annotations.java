@@ -1,13 +1,12 @@
 package com.apriori.reflect;
 
-import static com.apriori.util.Predicates.alwaysAccept;
+import static com.apriori.function.Predicates.alwaysAccept;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -236,17 +235,12 @@ public final class Annotations {
       if (returnType instanceof Class) {
          // not a parameterized type, so any Class value will do
          return classValue;
-      } else if (returnType instanceof ParameterizedType) {
-         ParameterizedType pt = (ParameterizedType) returnType;
-         Type args[] = pt.getActualTypeArguments();
-         // the given Class value must conform to the given arg
-         assert args.length == 1;
-         if (!Types.isAssignable(args[0], actualTypeArg)) {
+      } else {
+         if (!Types.isAssignable(returnType,
+               Types.newParameterizedType(Class.class, actualTypeArg))) {
             badClassType(returnType, classValue);
          }
          return classValue;
-      } else {
-         throw new AssertionError("Class return type should be a Class or a ParameterizedType");
       }      
    }
    

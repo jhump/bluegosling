@@ -9,6 +9,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.function.BooleanSupplier;
 
 /**
  * An object that represents a future event. Like a {@link Future} without a value.
@@ -187,6 +190,102 @@ public interface Awaitable {
          @Override
          public boolean isDone() {
             return executor.isTerminated();
+         }
+      };
+   }
+   
+   // TODO: doc
+   public static Awaitable fromIntrinsic(Object obj, BooleanSupplier complete) {
+      return new Awaitable() {
+         @Override
+         public boolean isDone() {
+            return complete.getAsBoolean();
+         }
+         
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            if (limit < 0) {
+               limit = 0;
+            }
+            long now = System.nanoTime();
+            // avoid overflow
+            long deadline = now + unit.toNanos(limit);
+            if (deadline < now) {
+               deadline = Long.MAX_VALUE;
+            }
+            synchronized (obj) {
+               while (!complete.getAsBoolean()) {
+                  now = System.nanoTime();
+                  if (now >= deadline) {
+                     return false;
+                  }
+                  long waitNanos = deadline - now;
+                  long waitMillis = TimeUnit.NANOSECONDS.toMillis(waitNanos);
+                  waitNanos = waitNanos - TimeUnit.MILLISECONDS.toNanos(waitMillis);
+                  assert waitNanos < 1_000_000;
+                  obj.wait(waitMillis, (int) waitNanos);
+               }
+               return true;
+            }
+         }
+         
+         @Override
+         public void await() throws InterruptedException {
+            synchronized (obj) {
+               while (!complete.getAsBoolean()) {
+                  obj.wait();
+               }
+            }
+         }
+      };
+   }
+   
+   // TODO: doc
+   public static Awaitable fromCondition(Condition condition, Lock lock, BooleanSupplier complete) {
+      return new Awaitable() {
+         @Override
+         public boolean isDone() {
+            return complete.getAsBoolean();
+         }
+         
+         @Override
+         public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+            if (limit < 0) {
+               limit = 0;
+            }
+            long now = System.nanoTime();
+            // avoid overflow
+            long deadline = now + unit.toNanos(limit);
+            if (deadline < now) {
+               deadline = Long.MAX_VALUE;
+            }
+            if (!lock.tryLock(limit, unit)) {
+               return false;
+            }
+            try {
+               while (!complete.getAsBoolean()) {
+                  now = System.nanoTime();
+                  if (now >= deadline) {
+                     return false;
+                  }
+                  condition.await(deadline - now, TimeUnit.NANOSECONDS);
+               }
+               return true;
+            } finally {
+               lock.unlock();
+            }
+         }
+
+         @Override
+         public void await() throws InterruptedException {
+            lock.lockInterruptibly();
+            try {
+               while (!complete.getAsBoolean()) {
+                  condition.await();
+               }
+            } finally {
+               lock.unlock();
+            }
          }
       };
    }

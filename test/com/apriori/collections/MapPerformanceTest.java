@@ -24,15 +24,15 @@ public class MapPerformanceTest {
    private static final int WEIGHT_GET = 100;
    private static final int WEIGHT_PUT = 300;
    private static final int WEIGHT_REMOVE = 250;
-   private static final int WEIGHT_ITERATE = 0;
+   private static final int WEIGHT_ITERATE = 5;
    
    // Parameters around JIT warm-up
    private static final int NUM_WARMUP_CYCLES = 2_000_000;
    private static final long WARMUP_KEYSPACE_SIZE = 100_000;
    
    // Parameters for actual test run
-   private static final int NUM_SECONDS_TO_TEST = 4;
-   private static final int TEST_CYCLE_INCREMENT = 100;
+   private static final int NUM_SECONDS_TO_TEST = 5;
+   private static final int TEST_CYCLE_INCREMENT = 300;
    private static final long FULL_TEST_KEYSPACE_SIZE = 10_000_000;
    
    private Results[] createTests() {
@@ -95,10 +95,9 @@ public class MapPerformanceTest {
       int c = -1;
       for (int i = 0; i < NUM_SECONDS_TO_TEST; i++) {
          for (Results r : results) {
-            if (++c % 72 == 0 && c > 0) {
-               System.out.printf(" %3.1f%%%n", (c * 100.0) / total);
+            if (++c % 5 == 0 && c > 0) {
+               System.out.printf(" %3.1f%%", (c * 100.0) / total);
             }
-            System.out.print(".");
             // we interleave the tests for all maps, running each for 1 second at a time
             long startNanos = System.nanoTime();
             long endNanos = startNanos + TimeUnit.SECONDS.toNanos(1);

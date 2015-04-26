@@ -19,6 +19,9 @@ public abstract class AbstractTestMeldableOrderedQueue
    public abstract MeldableOrderedQueue<Object, ?> makeCollection();
    
    @Override
+   public abstract MeldableOrderedQueue<Object, ?> makeCollection(int capacity);
+   
+   @Override
    @SuppressWarnings("unchecked") // it's a wildcard; why does compiler think it's unsafe?
    public MeldableOrderedQueue<Object, ?> makeFullCollection() {
       return (MeldableOrderedQueue<Object, ?>) super.makeFullCollection();

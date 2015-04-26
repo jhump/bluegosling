@@ -16,6 +16,11 @@ public class SkewHeapOrderedQueueTest extends AbstractTestMeldableOrderedQueue {
    public MeldableOrderedQueue<Object, ?> makeCollection() {
       return new SkewHeapOrderedQueue<Object>(getComparator());
    }
+
+   @Override
+   public MeldableOrderedQueue<Object, ?> makeCollection(int capacity) {
+      return null; // capacity constraint not supported
+   }
    
    @Override
    public boolean isFailFastSupported() {

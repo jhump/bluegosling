@@ -311,19 +311,18 @@ public final class AnnotatedTypes {
             sb.append(">");
          }
       } else if (type instanceof AnnotatedArrayType) {
-         // doing the nested arrays recursively would result in the reverse order we want since
-         // annotations are root component type first, and then outer-most to inner-most.  
-         List<AnnotatedArrayType> arrays = new ArrayList<>();
-         while (type instanceof AnnotatedArrayType) {
-            AnnotatedArrayType arrayType = (AnnotatedArrayType) type;
-            arrays.add(arrayType);
-            type = arrayType.getAnnotatedGenericComponentType();
+         // Doing the nested arrays recursively would result in the reverse order we want since
+         // annotations are root component type first, and then outer-most to inner-most. So we 
+         // start by finding root component type.
+         AnnotatedType componentType = type;
+         while (componentType instanceof AnnotatedArrayType) {
+            AnnotatedArrayType arrayType = (AnnotatedArrayType) componentType;
+            componentType = arrayType.getAnnotatedGenericComponentType();
          }
-         // first is the element type
-         toStringBuilder(type, sb);
+         toStringBuilder(componentType, sb);
          // then outer-most to inner-most
-         for (AnnotatedArrayType array : arrays) {
-            Annotation annotations[] = array.getDeclaredAnnotations();
+         while (type instanceof AnnotatedArrayType) {
+            Annotation annotations[] = type.getDeclaredAnnotations();
             if (annotations.length > 0) {
                sb.append(" ");
                for (Annotation a : annotations) {
@@ -332,6 +331,8 @@ public final class AnnotatedTypes {
                }
             }
             sb.append("[]");
+            AnnotatedArrayType arrayType = (AnnotatedArrayType) type;
+            type = arrayType.getAnnotatedGenericComponentType();
          }
       } else if (type instanceof AnnotatedWildcardType) {
          for (Annotation a : type.getDeclaredAnnotations()) {

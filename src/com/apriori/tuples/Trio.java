@@ -1,7 +1,7 @@
 package com.apriori.tuples;
 
-import com.apriori.util.TriFunction;
-import com.apriori.util.TriPredicate;
+import com.apriori.function.TriFunction;
+import com.apriori.function.TriPredicate;
 
 import java.io.Serializable;
 import java.util.ArrayList;

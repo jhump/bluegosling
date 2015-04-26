@@ -2,9 +2,9 @@ package com.apriori.concurrent;
 
 import static java.util.Objects.requireNonNull;
 
+import com.apriori.function.BooleanBinaryOperator;
+import com.apriori.function.BooleanUnaryOperator;
 import com.apriori.reflect.Members;
-import com.apriori.util.BooleanBinaryOperator;
-import com.apriori.util.BooleanUnaryOperator;
 import com.apriori.util.CallingClass;
 import com.apriori.util.IsDerivedFrom;
 
@@ -135,7 +135,8 @@ public abstract class AtomicBooleanFieldUpdater<T> {
     *
     * <p>
     * <a href="package-summary.html#weakCompareAndSet">May fail spuriously and does not provide
-    * ordering guarantees</a>, so is only rarely an appropriate alternative to {@code compareAndSet}.
+    * ordering guarantees</a>, so is only rarely an appropriate alternative to
+    * {@code compareAndSet}.
     *
     * @param obj An object whose field to conditionally set
     * @param expect the expected value

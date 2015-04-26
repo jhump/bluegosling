@@ -21,15 +21,14 @@ public class InterceptingExecutor extends WrappingExecutor {
    }
    
    @Override
-   protected Runnable wrap(Runnable r) {
-      return () -> {
-         Iterator<Interceptor> i = interceptors.iterator();
-         Runnable wrapper = r;
-         while (i.hasNext()) {
-            final Runnable wrapped = wrapper;
-            wrapper = () -> i.next().intercept(this, wrapped);
-         }
-         wrapper.run();
-      };
+   protected final Runnable wrap(Runnable r) {
+      Iterator<Interceptor> iter = interceptors.iterator();
+      Runnable wrapper = r;
+      while (iter.hasNext()) {
+         final Runnable wrapped = wrapper;
+         Interceptor interceptor = iter.next();
+         wrapper = () -> interceptor.intercept(this, wrapped);
+      }
+      return wrapper;
    }
 }

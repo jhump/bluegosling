@@ -1,20 +1,20 @@
 package com.apriori.collections;
 
-import com.apriori.util.BooleanConsumer;
-import com.apriori.util.BooleanPredicate;
-import com.apriori.util.BooleanUnaryOperator;
-import com.apriori.util.ByteConsumer;
-import com.apriori.util.BytePredicate;
-import com.apriori.util.ByteUnaryOperator;
-import com.apriori.util.CharConsumer;
-import com.apriori.util.CharPredicate;
-import com.apriori.util.CharUnaryOperator;
-import com.apriori.util.FloatConsumer;
-import com.apriori.util.FloatPredicate;
-import com.apriori.util.FloatUnaryOperator;
-import com.apriori.util.ShortConsumer;
-import com.apriori.util.ShortPredicate;
-import com.apriori.util.ShortUnaryOperator;
+import com.apriori.function.BooleanConsumer;
+import com.apriori.function.BooleanPredicate;
+import com.apriori.function.BooleanUnaryOperator;
+import com.apriori.function.ByteConsumer;
+import com.apriori.function.BytePredicate;
+import com.apriori.function.ByteUnaryOperator;
+import com.apriori.function.CharConsumer;
+import com.apriori.function.CharPredicate;
+import com.apriori.function.CharUnaryOperator;
+import com.apriori.function.FloatConsumer;
+import com.apriori.function.FloatPredicate;
+import com.apriori.function.FloatUnaryOperator;
+import com.apriori.function.ShortConsumer;
+import com.apriori.function.ShortPredicate;
+import com.apriori.function.ShortUnaryOperator;
 
 import java.util.AbstractList;
 import java.util.ConcurrentModificationException;

@@ -22,10 +22,11 @@ import java.util.Queue;
  * changing an element's priority using this operation.
  * 
  * <p>This class does not extend the {@link java.util.Collection} interface due to incompatibilities
- * with the {@link #add} method's signature. Also, this container class has some API for treating
- * it as a container of elements and other APIs for treating it as a container of entries (element
- * + priority), a dichotomy that is not had with standard collections. If you really need a standard
- * collection backed by a priority queue, use {@link PriorityQueues#asQueue(PriorityQueue)}. 
+ * with the {@link #add} method's signature. Also, this container class has some methods where it
+ * acts as a container of elements and other methods where it acts as a container of entries
+ * (element + priority), a dichotomy that is not had with standard collections. If you really need a
+ * standard collection backed by a priority queue, use
+ * {@link PriorityQueues#asQueue(PriorityQueue)}. 
  * 
  * <p>Generally, implementations of this interface do not provide iterators that support
  * {@link Iterator#remove()}. This is because removal of an element often has significant impact on
@@ -155,6 +156,15 @@ public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E
     * @return true if the specified object is an element in this queue, false otherwise
     */
    boolean containsElement(Object o);
+   
+   /**
+    * Determines if the specified object matches the priority of any element in this queue.
+    *
+    * @param o an object
+    * @return true if the specified object matches the priority of any element in this queue, false
+    *       otherwise
+    */
+   boolean containsPriority(Object o);
    
    /**
     * Determines if this queue contains all of the specified items.

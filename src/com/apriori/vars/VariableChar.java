@@ -1,7 +1,7 @@
 package com.apriori.vars;
 
-import com.apriori.util.CharBinaryOperator;
-import com.apriori.util.CharUnaryOperator;
+import com.apriori.function.CharBinaryOperator;
+import com.apriori.function.CharUnaryOperator;
 
 import java.io.Serializable;
 

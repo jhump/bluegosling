@@ -71,7 +71,7 @@ public class FilteringIterator<E> implements Iterator<E> {
       if (needNext) {
          findNext();
       }
-      return next == null;
+      return next != null;
    }
 
    @Override

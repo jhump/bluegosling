@@ -1,8 +1,8 @@
 package com.apriori.possible;
 
+import static com.apriori.function.Predicates.alwaysAccept;
+import static com.apriori.function.Predicates.alwaysReject;
 import static com.apriori.testing.MoreAsserts.assertThrows;
-import static com.apriori.util.Predicates.alwaysAccept;
-import static com.apriori.util.Predicates.alwaysReject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

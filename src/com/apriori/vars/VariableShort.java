@@ -1,7 +1,7 @@
 package com.apriori.vars;
 
-import com.apriori.util.ShortBinaryOperator;
-import com.apriori.util.ShortUnaryOperator;
+import com.apriori.function.ShortBinaryOperator;
+import com.apriori.function.ShortUnaryOperator;
 
 
 /**

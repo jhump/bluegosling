@@ -311,6 +311,9 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
          try {
             oldValue = latest.value;
             newValue = function.apply(oldValue);
+            if (newValue == oldValue) {
+               return oldValue;
+            }
             validate(newValue);
             long version = Transaction.pinNewVersion();
             try {
@@ -325,6 +328,9 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
       } else {
          oldValue = current.getAtom(this);
          newValue = function.apply(oldValue);
+         if (newValue == oldValue) {
+            return oldValue;
+         }
          validate(newValue);
          current.setAtom(this, newValue);
       }
@@ -370,6 +376,9 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
          try {
             oldValue = latest.value;
             newValue = function.apply(oldValue);
+            if (newValue == oldValue) {
+               return ListenableFuture.completedFuture(oldValue);
+            }
             validate(newValue);
             long version = Transaction.pinNewVersion();
             try {
@@ -412,6 +421,9 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
          ExclusiveLock exclusive = lock.exclusiveLock();
          try {
             oldValue = latest.value;
+            if (newValue == oldValue) {
+               return oldValue;
+            }
             long version = Transaction.pinNewVersion();
             try {
                addValue(newValue, version, Transaction.oldestVersion());

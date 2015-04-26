@@ -1,6 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.ShortConsumer;
+import com.apriori.function.ShortConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

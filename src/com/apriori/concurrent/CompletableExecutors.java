@@ -27,31 +27,6 @@ final class CompletableExecutors {
    }
    
    /**
-    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
-    * failed future, instead of one that is immediately successful.
-    *
-    * @param failure the cause of the future's failure
-    * @return an immediately failed future
-    */
-   static <T> CompletableFuture<T> failedFuture(Throwable failure) {
-      CompletableFuture<T> ret = new CompletableFuture<T>();
-      ret.completeExceptionally(failure);
-      return ret;
-   }
-
-   /**
-    * Like {@link CompletableFuture#completedFuture(Object)}, except that it returns an immediately
-    * cancelled future, instead of one that is immediately successful.
-    *
-    * @return an immediately cancelled future
-    */
-   static <T> CompletableFuture<T> cancelledFuture() {
-      CompletableFuture<T> ret = new CompletableFuture<T>();
-      ret.cancel(false);
-      return ret;
-   }
-
-   /**
     * A {@link ListenableExecutorService} that executes submitted tasks synchronously on the same
     * thread as the one that submits them.
     */
@@ -125,7 +100,7 @@ final class CompletableExecutors {
          try {
             return completedFuture(task.call());
          } catch (Throwable th) {
-            return failedFuture(th);
+            return CompletableFutures.failedFuture(th);
          }
       }
 
@@ -135,7 +110,7 @@ final class CompletableExecutors {
             task.run();
             return completedFuture(result);
          } catch (Throwable th) {
-            return failedFuture(th);
+            return CompletableFutures.failedFuture(th);
          }
       }
 
@@ -145,7 +120,7 @@ final class CompletableExecutors {
             task.run();
             return completedFuture(null);
          } catch (Throwable th) {
-            return failedFuture(th);
+            return CompletableFutures.failedFuture(th);
          }
       }
 
@@ -166,7 +141,7 @@ final class CompletableExecutors {
          boolean done = false;
          for (Callable<T> callable : tasks) {
             if (done || System.nanoTime() >= deadline) {
-               results.add(cancelledFuture());
+               results.add(CompletableFutures.cancelledFuture());
                done = true;
             } else {
                results.add(submit(callable));

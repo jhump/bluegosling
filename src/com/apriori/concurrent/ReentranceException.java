@@ -4,7 +4,7 @@ package com.apriori.concurrent;
  * An exception indicating that a reentrant lock acquisition was attempted but is not unsupported.
  *
  * Most non-reentrant synchronization mechanisms lack the book-keeping necessary to throw such an
- * exception. But for those that can do the book-keeping but disallow re-entrance from some other
+ * exception. But for those that can do the book-keeping but disallow re-entrance for some other
  * reason, this exception can be thrown.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)

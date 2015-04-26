@@ -1,6 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.ByteConsumer;
+import com.apriori.function.ByteConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

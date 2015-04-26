@@ -1,7 +1,7 @@
 package com.apriori.vars;
 
-import com.apriori.util.FloatBinaryOperator;
-import com.apriori.util.FloatUnaryOperator;
+import com.apriori.function.FloatBinaryOperator;
+import com.apriori.function.FloatUnaryOperator;
 
 
 /**

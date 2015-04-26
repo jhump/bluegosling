@@ -32,20 +32,30 @@ public abstract class AbstractTestQueue extends AbstractTestCollection {
    }
    
    @Override
-   public abstract Queue<?> makeCollection();
-   
+   public abstract Queue<Object> makeCollection();
+
+   /**
+    * Creates a queue with limited capacity. If the queue under test does not support constraining
+    * the capacity, this method should return {@code null}.
+    *
+    * @param maxCapacity the maximum capacity the queue can hold
+    * @return a new queue or {@code null} if the queue under test doesn't support capacity limits
+    */
+   public abstract Queue<Object> makeCollection(int maxCapacity);
+
    @Override
-   public Queue<?> makeFullCollection() {
-      return (Queue<?>) super.makeFullCollection();
+   @SuppressWarnings("unchecked")
+   public Queue<Object> makeFullCollection() {
+      return (Queue<Object>) super.makeFullCollection();
    }
 
    @Override
-   public Queue<?> makeConfirmedCollection() {
+   public Queue<Object> makeConfirmedCollection() {
       return new LinkedList<Object>();
    }
 
    @Override
-   public Queue<?> makeConfirmedFullCollection() {
+   public Queue<Object> makeConfirmedFullCollection() {
       return new LinkedList<Object>(Arrays.asList(getFullElements()));
    }
    
@@ -163,15 +173,167 @@ public abstract class AbstractTestQueue extends AbstractTestCollection {
    }
    
    public void testOffer() {
-      // TODO
+      resetEmpty();
+      
+      Queue<Object> queue = getCollection();
+      
+      // offer and make sure remove returns that same item
+      Object o = getFullElements()[0];
+      assertTrue(queue.offer(o));
+      assertFalse(queue.isEmpty());
+      assertEquals(o, queue.remove());
+      
+      // offer several
+      Queue<Object> benchmark = getConfirmed();
+      for (Object obj : getFullElements()) {
+         assertTrue(queue.offer(obj));
+         benchmark.offer(obj);
+         verify();
+      }
+      
+      while (!queue.isEmpty()) {
+         Object o1 = queue.remove();
+         Object o2 = benchmark.remove();
+         assertSame(o1, o2);
+         verify();
+      }
+      
+      // capacity constrained
+      queue = makeCollection(1);
+      // test returns null if capacity constraint not supported
+      if (queue != null) {
+         assertTrue(queue.offer(o));
+         // capacity of 1 means we can't add second item
+         assertFalse(queue.offer(o));
+         // until after we remove the first one
+         assertSame(o, queue.remove());
+         assertTrue(queue.offer(o));
+         assertFalse(queue.offer(o));
+      }
+      queue = makeCollection(getFullElements().length);
+      // test returns null if capacity constraint not supported
+      if (queue != null) {
+         queue.addAll(Arrays.asList(getFullElements()));
+         assertEquals(getFullElements().length, queue.size());
+         // queue is now full
+         assertFalse(queue.offer(o));
+         // until after we remove one
+         assertEquals(o, queue.remove());
+         assertTrue(queue.offer(o));
+         assertFalse(queue.offer(o));
+      }
    }
 
    public void testPoll() {
-      // TODO
+      // (basically same test as testQueueRemove, except returns null instead of throws exception
+      // when empty)
+      
+      // remove from empty queue
+      resetEmpty();
+      Queue<Object> queue = getCollection();
+      assertNull(queue.poll());
+      
+      // remove from queue with single element
+      Object o = getFullElements()[0];
+      queue.add(o);
+      assertEquals(o, queue.poll());
+      assertTrue(queue.isEmpty());
+      
+      // repeated removes from a full queue
+      resetFull();
+      queue = getCollection();
+      Queue<Object> benchmark = getConfirmed();
+      
+      // seed w/ lots o' data
+      queue.addAll(Arrays.asList(getFullElements()));
+      queue.addAll(Arrays.asList(getFullElements()));
+      queue.addAll(Arrays.asList(getOtherNonNullStringElements()));
+      queue.addAll(Arrays.asList(getOtherNonNullStringElements()));
+
+      benchmark.addAll(Arrays.asList(getFullElements()));
+      benchmark.addAll(Arrays.asList(getFullElements()));
+      benchmark.addAll(Arrays.asList(getOtherNonNullStringElements()));
+      benchmark.addAll(Arrays.asList(getOtherNonNullStringElements()));
+      
+      verify();
+      
+      while (!queue.isEmpty()) {
+         Object o1 = queue.poll();
+         Object o2 = benchmark.poll();
+         assertEquals(o2, o1);
+         verify();
+      }
+
+      assertNull(queue.poll());
    }
    
    public void testPeek() {
-      // TODO
-   }
+      // (very similar to testPoll, but we verify that peek doesn't remove and subsequent poll
+      // returns the same element as returned by peek)
+      
+      // remove from empty queue
+      resetEmpty();
+      Queue<Object> queue = getCollection();
+      assertNull(queue.peek());
 
+      // remove from queue with single element
+      Object o = getFullElements()[0];
+      queue.add(o);
+      assertEquals(o, queue.peek());
+      
+      // repeated removes from a full queue
+      resetFull();
+      queue = getCollection();
+      Queue<Object> benchmark = getConfirmed();
+      
+      verify();
+      
+      while (!queue.isEmpty()) {
+         o = queue.peek();
+         assertEquals(o, queue.remove());
+         benchmark.remove();
+         verify();
+      }
+
+      assertNull(queue.peek());
+   }
+   
+   public void testElement() {
+      // (basically same test as testPeek, except throws exception when empty instead
+      // of returning null)
+      
+      // remove from empty queue
+      resetEmpty();
+      Queue<Object> queue = getCollection();
+      try {
+         queue.element();
+         fail("Expecting exception but none thrown");
+      } catch (NoSuchElementException expected) {
+      }
+
+      // remove from queue with single element
+      Object o = getFullElements()[0];
+      queue.add(o);
+      assertEquals(o, queue.element());
+      
+      // repeated removes from a full queue
+      resetFull();
+      queue = getCollection();
+      Queue<Object> benchmark = getConfirmed();
+      
+      verify();
+      
+      while (!queue.isEmpty()) {
+         o = queue.element();
+         assertEquals(o, queue.remove());
+         benchmark.remove();
+         verify();
+      }
+
+      try {
+         queue.element();
+         fail("Expecting exception but none thrown");
+      } catch (NoSuchElementException expected) {
+      }
+   }
 }

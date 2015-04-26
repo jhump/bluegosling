@@ -13,7 +13,13 @@ public interface Clock {
       if (duration < 0) {
          throw new IllegalArgumentException();
       }
-      sleepUntilNanoTime(nanoTime() + unit.toNanos(duration));
+      // avoid overflow 
+      long now = nanoTime();
+      long target = now + unit.toNanos(duration);
+      if (target < now) {
+         target = Long.MAX_VALUE;
+      }
+      sleepUntilNanoTime(target);
    }
 
    default void sleepUntilMillis(long wakeTimeMillis) throws InterruptedException {
@@ -29,7 +35,13 @@ public interface Clock {
       if (duration < 0) {
          throw new IllegalArgumentException();
       }
-      uninterruptedSleepUntilNanoTime(nanoTime() + unit.toNanos(duration));
+      // avoid overflow 
+      long now = nanoTime();
+      long target = now + unit.toNanos(duration);
+      if (target < now) {
+         target = Long.MAX_VALUE;
+      }
+      uninterruptedSleepUntilNanoTime(target);
    }
 
    default void uninterruptedSleepUntilMillis(long wakeTimeMillis) {

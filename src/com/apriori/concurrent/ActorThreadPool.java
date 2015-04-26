@@ -6,7 +6,6 @@ import com.apriori.collections.TreiberStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,17 +39,18 @@ import java.util.function.Consumer;
  * other threads to steal actors helps with fairness and can improve throughput.
  * 
  * <p>This is similar in functionality to a {@link PipeliningExecutor}, which wraps another
- * executor instead of providing its own thread pool. Because it does not control the way the
- * executor dispatches tasks to actual threads, it can do neither thread-pinning nor work-stealing.
+ * executor instead of providing its own thread pool. Because a {@link PipeliningExecutor} does not
+ * control the way the executor dispatches tasks to actual threads, it can do neither thread-pinning
+ * nor work-stealing.
  * 
- * <p>The definitions for "core" and "maximum" pool sizes differ a bit from
+ * <p>The definitions for "core" and "maximum" pool sizes differ a bit from a
  * {@link ThreadPoolExecutor}. The core pool consists of the threads that aren't ever allowed to
  * expire. They are kept alive until the executor terminates. The maximum pool size is the peak size
  * allowed in cases of where the number of concurrent active actors exceeds the size of the core
  * pool. A {@link ThreadPoolExecutor} only adds threads beyond the core pool size when its work
- * queue is full. However, this executor uses unbounded queues, one per actor. It adds threads
- * beyond the core pool size whenever an actor is added but all existing threads are busy with
- * previously submitted tasks for other actors.
+ * queue is full. However, an {@link ActorThreadPool} uses unbounded queues, one per actor and adds
+ * threads beyond the core pool size whenever an actor is added but all existing threads are busy
+ * with previously submitted tasks for other actors.
  *
  * @param <T> the type of actor with which each task is associated
  * 
@@ -62,10 +62,6 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    @SuppressWarnings("rawtypes")
    private static final AtomicLongFieldUpdater<ActorThreadPool> poolSizeLimitsUpdater =
          AtomicLongFieldUpdater.newUpdater(ActorThreadPool.class, "poolSizeLimits");
-
-   @SuppressWarnings("rawtypes")
-   private static final AtomicIntegerFieldUpdater<ActorThreadPool> largestPoolSizeUpdater =
-         AtomicIntegerFieldUpdater.newUpdater(ActorThreadPool.class, "largestPoolSize");
 
    @SuppressWarnings("rawtypes")
    private static final AtomicLongFieldUpdater<ActorThreadPool> keepAliveUpdater =
@@ -225,14 +221,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                Worker w = queue.getWorker();
                // worker could be null if the thread that added first task to the queue is still
                // (concurrently) trying to find a worker to accept the new actor
-               if (w == null) {
-                  // let other thread find  worker and then try again (in case the other thread
+               if (w == null || !w.tryNotify()) {
+                  // let other thread find worker and then try again (in case the other thread
                   // can't find a worker due to thread pool being shutdown)
                   Thread.yield();
                   continue;
                }
-               // make sure worker sees the new task (in case it's idle)
-               w.tryNotify();
                taskCount.increment();
                return;
             }
@@ -268,7 +262,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          // potentially transient, we only hash the actor to one of the core threads. But if that
          // preferred thread is busy, we'll find an idle worker instead. (If all threads are busy,
          // leave it on the preferred thread.)
-         // TODO: find an idle thread if preferred core thread is busy
+         // TODO: wake up an idle thread if preferred core thread is busy
          Worker ws[] = workers;
          int threadCount = Math.min(sync.getThreadCount(), ws.length);
          int idx = queue.hashCode() % (Math.min(threadCount, getCorePoolSize()));
@@ -366,11 +360,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * @param threadCount the new thread count, for consideration as the largest observed count
     */
    private void updateIfLargest(int threadCount) {
-      while (true) {
-         int l = largestPoolSize;
-         if (l >= threadCount || largestPoolSizeUpdater.compareAndSet(this, l, threadCount)) {
-            return;
-         }
+      // we don't need to use CAS because this method is only called while sync is held exclusively
+      int l = largestPoolSize;
+      if (l >= threadCount) {
+         l = threadCount;
       }
    }
 
@@ -613,25 +606,22 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * @return the list of removed tasks that were queued but never executed
     */
    public List<Runnable> shutdownNow() {
-      List<Runnable> tasks = null;
+      ArrayList<Runnable> tasks = null;
       // using a lock so that concurrent calls to shutdownNow results in one call "winning" and
       // getting all tasks vs. letting them race and possibly split the outstanding tasks
       sync.lock();
       try {
-         if (!sync.isShutdown()) {
-            // Only drain tasks on the first call. Subsequent calls don't need to since no more
-            // tasks can be submitted after shutdown.
-            sync.shutdownWhileLocked();
-            tasks = new ArrayList<>((int) Math.max(0, getTaskCount() - getCompletedTaskCount()));
-            for (ActorQueue queue : actorQueues.values()) {
-               queue.drainTo(tasks);
-            }
+         sync.shutdownWhileLocked();
+         tasks = new ArrayList<>((int) Math.max(0, getTaskCount() - getCompletedTaskCount()));
+         for (ActorQueue queue : actorQueues.values()) {
+            queue.drainTo(tasks);
          }
       } finally {
          sync.unlock(sync.getThreadCount());
       }
       forEachWorker(Worker::interrupt);
-      return tasks != null ? tasks : Collections.emptyList();
+      tasks.trimToSize();
+      return tasks;
    }
 
    /**
@@ -717,8 +707,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       while (true) {
          Worker ws[] = workers;
          int s = stealer.getIndex();
-         if (ws[s] != stealer) {
-            // the stealer is being concurrently moved by a change to the pool; try again
+         if (ws[s] != stealer || !Sync.validateStamp(stamp)) {
+            // there is a concurrent change to the worker pool in progress; try again
             Thread.yield();
             stamp = sync.getStamp();
             continue;
@@ -793,10 +783,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             assert oldIndex == threadCount;
             // we increment the stamp around these operations so that a concurrent thread that is
             // traversing the workers array can detect interference
-            sync.stamp();
+            sync.stamp(true);
             ws[wIdx] = last;
-            sync.stamp();
             ws[threadCount] = null;
+            sync.stamp(false);
          }
          return true;
       } finally {
@@ -826,10 +816,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             assert oldIndex == threadCount: "" + oldIndex + " != " + threadCount;
             // we increment the stamp around these operations so that a concurrent thread that is
             // traversing the workers array can detect interference
-            sync.stamp();
+            sync.stamp(true);
             ws[wIdx] = last;
-            sync.stamp();
             ws[threadCount] = null;
+            sync.stamp(false);
          }
       } finally {
          sync.unlock(threadCount);
@@ -855,7 +845,9 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       private static final long TERMINATING_STATE = 0x2000000000000000L;
       private static final long TERMINATED_STATE =  0x4000000000000000L;
       
-      private static final long STAMP_MASK =        0x1fffffff00000000L;
+      private static final long STAMP_WRITING =     0x1000000000000000L;
+      private static final long STAMP_WIDE_MASK =   0x1fffffff00000000L;
+      private static final long STAMP_MASK =        0x0fffffff00000000L;
       private static final long STAMP_INC =         0x0000000100000000L;
       private static final long STAMP_SHIFT = 32;
 
@@ -912,6 +904,18 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        */
       long getStamp() {
          return getState() & STAMP_MASK;
+      }
+      
+      /**
+       * Validates the given stamp. The stamp is invalid if it a "write bit" is set, indicating that
+       * another thread is concurrently modifying the worker pool. In this case, the stamp observer
+       * should yield and read the stamp again until it sees a valid stamp.
+       *
+       * @param stamp a stamp
+       * @return true if the stamp is valid
+       */
+      static boolean validateStamp(long stamp) {
+         return (stamp & STAMP_WRITING) == 0;
       }
 
       /**
@@ -1017,12 +1021,22 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * Increments the stamp value. This is used to indicate changes to other threads when no
        * other detectable change has yet been recorded (like moving a worker in the workers array).
        * Such changes should only be made while this sync is locked.
+       * 
+       * <p>The argument indicates whether to set a "write bit" in the stamp. This should bit should
+       * be set if an operation is modifying the worker pool.
+       * 
+       * @param writing true if the caller is writing to the worker pool and thus the "write bit" in
+       *       the stamp should be set; false if the "write bit" should be unset
        */
-      void stamp() {
+      void stamp(boolean writing) {
          while (true) {
             long s = getState();
             assert (s & LOCK_MASK) != 0;
-            long newState = (s & ~STAMP_MASK) | ((s + STAMP_INC) & STAMP_MASK);
+            long newState;
+            newState = (s & ~STAMP_WIDE_MASK) | ((s + STAMP_INC) & STAMP_MASK);
+            if (writing) {
+               newState |= STAMP_WRITING;
+            }
             if (compareAndSetState(s, newState)) {
                break;
             }

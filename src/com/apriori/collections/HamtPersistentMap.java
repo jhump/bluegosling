@@ -109,12 +109,11 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    /**
-    * A mutable holder for storing the result of
-    * {@link TrieNode#put(int, int, Object, Object, PutResult)}. Java doesn't support light-weight
-    * tuples or returning multiple values on the stack, so we use this idiom to reduce allocations
-    * and garbage. Instead of each level in the trie creating and returning a new tuple, we allocate
-    * just one at the leaf of the recursive call and then let each level of the trie modify that one
-    * object.
+    * A mutable holder for storing the result of {@link TrieNode#put(int, int, Object, Object)}.
+    * Java doesn't support light-weight tuples or returning multiple values on the stack, so we use
+    * this idiom to reduce allocations and garbage. Instead of each level in the trie creating and
+    * returning a new tuple, we allocate just one at the leaf of the recursive call and then let
+    * each level of the trie modify that one object.
     *
     * @param <K> the type of keys in the trie
     * @param <V> the type of values in the trie

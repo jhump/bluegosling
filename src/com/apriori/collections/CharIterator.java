@@ -1,6 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.CharConsumer;
+import com.apriori.function.CharConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

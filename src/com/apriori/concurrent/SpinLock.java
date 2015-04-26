@@ -48,6 +48,11 @@ import java.util.concurrent.locks.LockSupport;
 public class SpinLock implements Lock, Serializable {
 
    private static final long serialVersionUID = 736917527438719039L;
+   
+   /**
+    * The number of times to "spin" in a busy-wait loop before yielding.
+    */
+   private static final int SPIN_TIMES = 1000;
 
    final AtomicBoolean locked = new AtomicBoolean();
 
@@ -60,7 +65,7 @@ public class SpinLock implements Lock, Serializable {
    @Override
    public void lock() {
       while (true) {
-         for (int i = 0; i < 10_000; i++) {
+         for (int i = 0; i < SPIN_TIMES; i++) {
             if (locked.compareAndSet(false, true)) {
                return;
             }
@@ -75,7 +80,7 @@ public class SpinLock implements Lock, Serializable {
          if (Thread.interrupted()) {
             throw new InterruptedException();
          }
-         for (int i = 0; i < 10_000; i++) {
+         for (int i = 0; i < SPIN_TIMES; i++) {
             if (locked.compareAndSet(false, true)) {
                return;
             }
@@ -98,26 +103,16 @@ public class SpinLock implements Lock, Serializable {
          }
          long nanosRemaining = deadline - System.nanoTime();
          if (nanosRemaining < 100) {
+            // so little time; just spin until we get the lock or times runs out
             do {
                if (locked.compareAndSet(false, true)) {
                   return true;
                }
                nanosRemaining = deadline - System.nanoTime();
             } while (nanosRemaining > 0);
-            
             return false;
-
          } else {
-            int attempts;
-            if (nanosRemaining < 100_000)  {
-               attempts = 10;
-            } else if (nanosRemaining < 1_000_000) {
-               attempts = 100;
-            } else if (nanosRemaining < 10_000_000) {
-               attempts = 1000;
-            } else {
-               attempts = 10_000;
-            }
+            int attempts = (int) Math.min(nanosRemaining, SPIN_TIMES);
             for (int i = 0; i < attempts; i++) {
                if (locked.compareAndSet(false, true)) {
                   return true;
@@ -141,11 +136,26 @@ public class SpinLock implements Lock, Serializable {
    }
    
    /**
+    * A thread in a condition wait queue. In addition to the thread reference, this also tracks a
+    * flag indicating whether the thread has been signaled or not.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class WaitingThread {
+      final Thread thread;
+      volatile boolean signaled;
+      
+      WaitingThread(Thread thread) {
+         this.thread = thread;
+      }
+   }
+   
+   /**
     * A simple condition queue associated with a {@link SpinLock}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private class ConditionObject extends ConcurrentLinkedQueue<Thread> implements Condition {
+   private class ConditionObject extends ConcurrentLinkedQueue<WaitingThread> implements Condition {
       
       private static final long serialVersionUID = -924227956590939763L;
 
@@ -170,14 +180,18 @@ public class SpinLock implements Lock, Serializable {
        *
        * @param th a thread to enqueue
        */
-      private void enqueueAndUnlock(Thread th) {
+      private void enqueueAndUnlock(WaitingThread th) {
          // We need the thread in the queue before the lock is released to prevent race conditions
          // between await and signal, so add it first.
          add(th);
          if (!locked.compareAndSet(true, false)) {
             // but we can't leave the thread in the queue if the lock was in an invalid state, so
             // remove before throwing
-            remove(th);
+            if (!remove(th)) {
+               // a concurrent thread tried (or is trying) to signal this thread, so we need to
+               // propagate that signal to another waiting thread so it's not lost
+               signal();
+            }
             throw new IllegalMonitorStateException();
          }
       }
@@ -188,23 +202,37 @@ public class SpinLock implements Lock, Serializable {
          if (Thread.interrupted()) {
             throw new InterruptedException();
          }
-         Thread th = Thread.currentThread();
+         WaitingThread th = new WaitingThread(Thread.currentThread());
+         boolean failed = false;
          enqueueAndUnlock(th);
          try {
             LockSupport.park(this);
             if (Thread.interrupted()) {
+               failed = true;
                throw new InterruptedException();
             }
+         } catch (RuntimeException | Error e) {
+            failed = true;
+            throw e;
          } finally {
             lock();
-            remove(th);
+            if (!th.signaled) {
+               // if removal fails, a concurrent thread tried (or is trying) to signal this thread,
+               // so mark this operation as failed, and we'll propagate the signal below
+               failed = !remove(th);
+            }
+            if (failed) {
+               // we were de-queued and should have been signaled; but since we're throwing
+               // instead, propagate signal to next waiter
+               signal();
+            }
          }
       }
 
       @Override
       public void awaitUninterruptibly() {
          checkLock();
-         Thread th = Thread.currentThread();
+         WaitingThread th = new WaitingThread(Thread.currentThread());
          boolean interrupted = false;
          boolean failed = false;
          enqueueAndUnlock(th);
@@ -216,20 +244,25 @@ public class SpinLock implements Lock, Serializable {
                    interrupted = true;
                 }
                 // loop until we've been signaled, ignoring wake-ups caused by interruption
-                // (signaling thread will have removed us if we were signaled, so we can just check
-                // to see if we're still in the queue)
-            } while (contains(th));
+            } while (!th.signaled);
          } catch (RuntimeException | Error e) {
             failed = true;
             throw e;
          } finally {
             lock();
+            if (!th.signaled) {
+               // if removal fails, a concurrent thread tried (or is trying) to signal this thread,
+               // so mark this operation as failed, and we'll propagate the signal below
+               failed = !remove(th);
+            }
             if (failed) {
-               remove(th);
+               // we were de-queued and should have been signaled; but since we're throwing
+               // instead, propagate signal to next waiter
+               signal();
             }
             // restore interrupt status on exit
             if (interrupted) {
-               th.interrupt();
+               th.thread.interrupt();
             }
          }
       }
@@ -241,18 +274,34 @@ public class SpinLock implements Lock, Serializable {
             throw new InterruptedException();
          }
          long start = System.nanoTime();
-         Thread th = Thread.currentThread();
+         WaitingThread th = new WaitingThread(Thread.currentThread());
+         boolean failed = false;
+         long ret;
          enqueueAndUnlock(th);
          try {
             LockSupport.parkNanos(this, nanosTimeout);
             if (Thread.interrupted()) {
+               failed = true;
                throw new InterruptedException();
             }
-            return nanosTimeout - (System.nanoTime() - start);
+            ret = nanosTimeout - (System.nanoTime() - start);
+         } catch (RuntimeException | Error e) {
+            failed = true;
+            throw e;
          } finally {
             lock();
-            remove(th);
+            if (!th.signaled) {
+               // if removal fails, a concurrent thread tried (or is trying) to signal this thread,
+               // so mark this operation as failed, and we'll propagate the signal below
+               failed = !remove(th);
+            }
+            if (failed) {
+               // we were de-queued and should have been signaled; but since we're throwing
+               // instead, propagate signal to next waiter
+               signal();
+            }
          }
+         return ret;
       }
 
       @Override
@@ -269,9 +318,10 @@ public class SpinLock implements Lock, Serializable {
       @Override
       public void signal() {
          checkLock();
-         Thread th = poll();
+         WaitingThread th = poll();
          if (th != null) {
-            LockSupport.unpark(th);
+            th.signaled = true;
+            LockSupport.unpark(th.thread);
          }
       }
 
@@ -279,11 +329,12 @@ public class SpinLock implements Lock, Serializable {
       public void signalAll() {
          checkLock();
          while (true) {
-            Thread th = poll();
+            WaitingThread th = poll();
             if (th == null) {
                return;
             }
-            LockSupport.unpark(th);
+            th.signaled = true;
+            LockSupport.unpark(th.thread);
          }
       }
    }

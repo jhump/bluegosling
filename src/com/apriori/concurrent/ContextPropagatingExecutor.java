@@ -21,7 +21,7 @@ public class ContextPropagatingExecutor extends WrappingExecutor {
    }
    
    @Override
-   protected Runnable wrap(Runnable r) {
+   protected final Runnable wrap(Runnable r) {
       // capture context in calling/submitting thread
       List<Pair<ContextPropagator<Object>, Object>> captured =
             new ArrayList<>(propagators.size());

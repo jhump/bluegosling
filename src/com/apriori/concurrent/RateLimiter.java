@@ -7,14 +7,13 @@ import com.apriori.util.SystemClock;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 // TODO: javadoc
 // TODO: tests
 public class RateLimiter {
    
    private static final long NANOS_PER_SEC = TimeUnit.SECONDS.toNanos(1);
-   private static final long NANOS_PER_MILLI = TimeUnit.MILLISECONDS.toNanos(1);
+   private static final long NANOS_PER_MICRO = TimeUnit.MICROSECONDS.toNanos(1);
    
    private final Clock clock;
 
@@ -66,14 +65,8 @@ public class RateLimiter {
       if (permits < 1) {
          throw new IllegalArgumentException();
       }
-      long acquireCompleteNanos;
-      lock();
-      try {
-         acquireCompleteNanos = makeReservation(permits, -1);
-      } finally {
-         unlock();
-      }
-      clock.uninterruptedSleepUntilNanoTime(acquireCompleteNanos);
+      long acquireCompleteNanos = makeReservation(permits, -1);
+      clock.uninterruptedSleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
    }
    
    public void acquireInterruptibly() throws InterruptedException {
@@ -87,14 +80,8 @@ public class RateLimiter {
       if (Thread.interrupted()) {
          throw new InterruptedException();
       }
-      long acquireCompleteNanos;
-      lock();
-      try {
-         acquireCompleteNanos = makeReservation(permits, -1);
-      } finally {
-         unlock();
-      }
-      clock.sleepUntilNanoTime(acquireCompleteNanos);
+      long acquireCompleteNanos = makeReservation(permits, -1);
+      clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
    }
 
    public boolean tryAcquire() {
@@ -105,16 +92,7 @@ public class RateLimiter {
       if (permits < 1) {
          throw new IllegalArgumentException();
       }
-      long acquireCompleteNanos;
-      lock();
-      try {
-         acquireCompleteNanos = makeReservation(permits, 0);
-         if (acquireCompleteNanos == -1) {
-            return false;
-         }
-      } finally {
-         unlock();
-      }
+      long acquireCompleteNanos = makeReservation(permits, 0);
       return acquireCompleteNanos != -1;
    }
    
@@ -129,17 +107,11 @@ public class RateLimiter {
          throw new IllegalArgumentException();
       }
       long maxWaitNanos = unit.toNanos(timeLimit);
-      long acquireCompleteNanos;
-      lock();
-      try {
-         acquireCompleteNanos = makeReservation(permits, maxWaitNanos);
-      } finally {
-         unlock();
-      }
+      long acquireCompleteNanos = makeReservation(permits, maxWaitNanos);
       if (acquireCompleteNanos == -1) {
          return false;
       }
-      clock.sleepUntilNanoTime(acquireCompleteNanos);
+      clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
       return true;
    }
    
@@ -187,31 +159,38 @@ public class RateLimiter {
     * @param permits the number of permits to reserve
     * @param maxWaitNanos the maximum number of nanoseconds the caller is willing to wait for the
     *       permits or -1 if there is no wait limit
-    * @return the time, in {@linkplain System#nanoTime() nanos}, when the permits become available
-    *       or -1 if no reservation was made because the wait limit would have been exceeded
+    * @return the duration to wait, in {@linkplain System#nanoTime() nanos}, until the permits
+    *       become available or -1 if no reservation was made because the wait limit would have been
+    *       exceeded
     */
-   private long makeReservation(long permits, long maxWaitNanos) {
-      // Give ourselves an extra millisecond for margin of error. Otherwise, we get weird effects
+   private synchronized long makeReservation(long permits, long maxWaitNanos) {
+      final long realNow = clock.nanoTime();
+      // Give ourselves an extra microsecond for margin of error. Otherwise, we get weird effects
       // with very high rates but max bucket size of 1 where the permit should have been in the
       // bucket but we missed it due to scheduling inaccuracy.
-      final long now = clock.nanoTime() - NANOS_PER_MILLI;
+      final long now = realNow - NANOS_PER_MICRO;
       final double rate = rateNanosPerPermit;
       long asOf = asOfNanos;
       long stored = storedPermits;
       double jtr = jitter;
-      if (asOf <= now) {
+      
+      if (now > asOf) {
          // last time stamp is in the past, so we compute the number of permits as of now
-         long max = maxStoredPermits;
-         long delta = now - asOf;
-         double jrate = jtr == 0 ? rate : computeJitteredRate(rate, jtr, delta);
-         long newPermits = (long) (delta / jrate);
-         stored = Math.max(stored, Math.min(max, stored + newPermits));
-         asOf = asOf + (long) (newPermits * jrate);
+         long newPermits;
+         if (jtr == 0) {
+            newPermits = (long) ((now - asOf) / rate);
+            asOf = now;
+         } else {
+            long delta = now - asOf;
+            double jrate = computeJitteredRate(rate, jtr, delta);
+            newPermits = (long) (delta / jrate);
+            asOf = asOf + (long) (newPermits * jrate); 
+         }
+         stored = Math.max(stored, Math.min(maxStoredPermits, stored + newPermits));
          if (stored >= permits) {
-            // we already have enough permits to satisfy the request!
             this.asOfNanos = asOf;
             this.storedPermits = stored - permits;
-            return now;
+            return 0;
          }
          // fall through to below to figure out how long to wait
       } else {
@@ -219,23 +198,24 @@ public class RateLimiter {
       }
       
       long shortage = permits - stored;
-      long waitTime;
+      long extraTime;
       if (jtr == 0) {
-         waitTime = (long) (shortage * rate);
+         extraTime = (long) (shortage * rate);
       } else {
          double jrate = computeJitteredRate(rate, jtr, shortage * rate);
-         waitTime = (long) (shortage * jrate);
+         extraTime = (long) (shortage * jrate);
       }
+      asOf += extraTime;
+      long waitTime = Math.max(0, asOf - realNow); 
       if (maxWaitNanos < 0 || maxWaitNanos > waitTime) {
-         asOf += waitTime;
          this.asOfNanos = asOf;
          this.storedPermits = 0;
-         return asOf;
+         return waitTime;
       }
       return -1;
    }
    
-   private double computeJitteredRate(double rate, double jtr, double timePeriodNanos) {
+   private static double computeJitteredRate(double rate, double jtr, double timePeriodNanos) {
       ThreadLocalRandom r = ThreadLocalRandom.current();
       double timePeriodSeconds = timePeriodNanos / NANOS_PER_SEC;
       double j = jtr * Math.pow(r.nextDouble(), timePeriodSeconds);
@@ -243,48 +223,5 @@ public class RateLimiter {
          j = -j;
       }
       return rate * (1.0 + j);
-   }
-
-//   private final AtomicBoolean lock = new AtomicBoolean();
-//   
-//   private void lock() {
-//      while (true) {
-//         if (lock.compareAndSet(false, true)) {
-//            return;
-//         }
-//      }
-//   }
-//
-//   private void unlock() {
-//      lock.set(false);
-//   }
-
-   private final Lock lock = new Lock();
-   
-   private void lock() {
-      lock.acquire(0);
-   }
-   
-   private void unlock() {
-      lock.release(0);
-   }
-
-   /** A simple non-reentrant lock. */
-   private static class Lock extends AbstractQueuedSynchronizer {
-      private static final long serialVersionUID = 6064513427789707295L;
-
-      Lock() {
-      }
-      
-      @Override
-      protected boolean tryAcquire(int i) {
-         return compareAndSetState(0, 1);
-      }
-      
-      @Override
-      protected boolean tryRelease(int i) {
-         setState(0);
-         return true;
-      }
    }
 }

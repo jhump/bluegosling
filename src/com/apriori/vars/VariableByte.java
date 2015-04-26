@@ -1,7 +1,7 @@
 package com.apriori.vars;
 
-import com.apriori.util.ByteBinaryOperator;
-import com.apriori.util.ByteUnaryOperator;
+import com.apriori.function.ByteBinaryOperator;
+import com.apriori.function.ByteUnaryOperator;
 
 /**
  * A simple variable reference for a {@code byte}. This is the primitive specialization of

@@ -275,7 +275,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getSuperclass();
       } else if (type instanceof ParameterizedType) {
-         return Types.getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
+         return getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
       } else if (type instanceof GenericArrayType) {
          return Object.class;
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
@@ -310,7 +310,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getInterfaces();
       } else if (type instanceof ParameterizedType) {
-         return Types.getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
+         return getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
       } else if (type instanceof GenericArrayType) {
          return ARRAY_INTERFACES;
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
@@ -394,7 +394,7 @@ public final class Types {
          return ((Class<?>) type).getGenericInterfaces();
       } else if (type instanceof ParameterizedType) {
          Class<?> interfaces[] =
-               Types.getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
+               getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
          if (interfaces.length == 0) {
             return interfaces;
          }
@@ -791,19 +791,19 @@ public final class Types {
    /**
     * Determines if one type is assignable to another. This is true when the RHS is a sub-type
     * of the LHS (co-variance). This is effectively the same as {@link Class#isAssignableFrom(Class)
-    * from.isAssignableFrom(to)}, but supports generic types instead of only raw types.
+    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types.
     * 
     * <p>For an assignment that would require an unchecked cast, this function returns false, as in
     * this example:
     * <pre>
-    * Type genericType = new TypeRef&lt;List&lt;String&gt;&gt;() {};
+    * Type genericType = new TypeRef&lt;List&lt;String&gt;&gt;() {}.asTypes();
     * Type rawType = List.class;
     * 
     * // This returns true, no unchecked cast:
-    * Types.isAssignableFrom(rawType, genericType);
+    * Types.isAssignable(rawType, genericType);
     * 
     * // This returns false as it requires unchecked cast:
-    * Types.isAssignableFrom(genericType, rawType);
+    * Types.isAssignable(genericType, rawType);
     * </pre>
     * 
     * <p>Similarly, even though the Java language allows an assignment of an {@code int} value to a

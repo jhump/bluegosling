@@ -1,6 +1,6 @@
 package com.apriori.collections;
 
-import com.apriori.util.FloatConsumer;
+import com.apriori.function.FloatConsumer;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

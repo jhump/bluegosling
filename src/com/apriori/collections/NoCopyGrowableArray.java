@@ -1,11 +1,11 @@
 package com.apriori.collections;
 
-import com.apriori.util.Predicates;
+import com.apriori.function.Predicates;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.OptionalInt;
 
 /**
  * A growable array that does not require doubling and copying an underlying array. Instead, it
@@ -229,10 +229,9 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       int e = lastDataBlockOccupancy;
       int lim = d == -1 ? 0 : indexBlock[d].length;
       // try to pre-allocate the entire amount needed
-      if (values instanceof Collection) {
-         growBy(((Collection<?>) values).size());
-      } else if (values instanceof ImmutableCollection) {
-         growBy(((ImmutableCollection<?>) values).size());
+      OptionalInt otherSize = Iterables.trySize(values);
+      if (otherSize.isPresent()) {
+         growBy(otherSize.getAsInt());
       }
       for (T t : values) {
          if (i >= size) {

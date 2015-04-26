@@ -149,7 +149,8 @@ public class DoubleInstanceLockTest {
                   // reader is not blocked by writers, so we'll catch some version in the middle
                   int sz = l.size();
                   assertTrue(sz >= 5 && sz <= 105);
-                  assertTrue("" + sz + " < " + prevSz.get(), sz >= prevSz.get()); // monotonic progress of writers
+                  // verify progress of writers is monotonic
+                  assertTrue("" + sz + " < " + prevSz.get(), sz >= prevSz.get());
                   prevSz.set(sz);
                   readCount.incrementAndGet();
                });

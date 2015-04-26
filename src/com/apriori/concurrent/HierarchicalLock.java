@@ -1,5 +1,8 @@
 package com.apriori.concurrent;
 
+import static com.apriori.concurrent.ManagedBlockers.managedBlockFor;
+import static com.apriori.concurrent.ManagedBlockers.managedBlockUninterruptiblyFor;
+
 import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -10,6 +13,9 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
@@ -48,6 +54,9 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
  * is the total of acquisitions, be it in the form of one thread acquiring/re-entering the lock 2
  * billion times, or 2 billion threads each acquiring it once. (These limits are intentionally very
  * high such that no practical use of the lock will ever bump into them.)
+ * 
+ * <p>This lock is safe to use in a {@link ForkJoinPool}. If blocking methods are invoked from such
+ * a pool then a {@link ManagedBlocker} is used.
  * 
  * <p><strong>NOTE:</strong> Deadlock detection in this class only works when other waiting threads
  * are also waiting for a {@link HierarchicalLock}. It is still possible for deadlock to occur if
@@ -327,9 +336,17 @@ public class HierarchicalLock implements Serializable {
     *    thread that directly or indirectly is waiting on it, is holding this lock)
     */
    public SharedLock trySharedLock(long timeLimit, TimeUnit unit) throws InterruptedException {
-      return doTrySharedLock(timeLimit, unit, null);
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockFor(() -> doTrySharedLock(timeLimit, unit));
+      } else {
+         return doTrySharedLock(timeLimit, unit);
+      }
    }
 
+   SharedLock doTrySharedLock(long timeLimit, TimeUnit unit) throws InterruptedException {
+      return doTrySharedLock(timeLimit, unit, null);
+   }
+   
    SharedLock doTrySharedLock(long timeLimit, TimeUnit unit, SharedLock parentLock)
          throws InterruptedException {
       if (sync.tryAcquireShared(1) >= 0) {
@@ -360,6 +377,14 @@ public class HierarchicalLock implements Serializable {
     * @see #sharedLockInterruptibly()
     */
    public SharedLock sharedLock() {
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockUninterruptiblyFor(this::doSharedLock);
+      } else {
+         return doSharedLock();
+      }
+   }
+   
+   SharedLock doSharedLock() {
       return doSharedLock(null);
    }
    
@@ -387,6 +412,14 @@ public class HierarchicalLock implements Serializable {
     *    thread that directly or indirectly is waiting on it, is holding this lock)
     */
    public SharedLock sharedLockInterruptibly() throws InterruptedException {
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockFor(this::doSharedLockInterruptibly);
+      } else {
+         return doSharedLockInterruptibly();
+      }
+   }
+   
+   SharedLock doSharedLockInterruptibly() throws InterruptedException {
       return doSharedLockInterruptibly(null);
    }
    
@@ -489,10 +522,19 @@ public class HierarchicalLock implements Serializable {
     *    thread that directly or indirectly is waiting on it, is holding this lock)
     */
    public ExclusiveLock tryExclusiveLock(long timeLimit, TimeUnit unit)
-      throws InterruptedException {
+         throws InterruptedException {
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockFor(() -> doTryExclusiveLock(timeLimit, unit));
+      } else {
+         return doTryExclusiveLock(timeLimit, unit);
+      }
+   }
+
+   ExclusiveLock doTryExclusiveLock(long timeLimit, TimeUnit unit)
+         throws InterruptedException {
       return doTryExclusiveLock(timeLimit, unit, null);
    }
-   
+
    ExclusiveLock doTryExclusiveLock(long timeLimit, TimeUnit unit, SharedLock parentLock)
          throws InterruptedException {
       if (Thread.interrupted()) {
@@ -526,6 +568,14 @@ public class HierarchicalLock implements Serializable {
     * @see #exclusiveLockInterruptibly()
     */
    public ExclusiveLock exclusiveLock() {
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockUninterruptiblyFor(this::doExclusiveLock);
+      } else {
+         return doExclusiveLock();
+      }
+   }
+   
+   ExclusiveLock doExclusiveLock() {
       return doExclusiveLock(null);
    }
    
@@ -554,6 +604,14 @@ public class HierarchicalLock implements Serializable {
     *    thread that directly or indirectly is waiting on it, is holding this lock)
     */
    public ExclusiveLock exclusiveLockInterruptibly() throws InterruptedException {
+      if (ForkJoinTask.inForkJoinPool()) {
+         return managedBlockFor(this::doExclusiveLockInterruptibly);
+      } else {
+         return doExclusiveLockInterruptibly();
+      }
+   }
+   
+   ExclusiveLock doExclusiveLockInterruptibly() throws InterruptedException {
       return doExclusiveLockInterruptibly(null);
    }
    
@@ -1134,6 +1192,14 @@ public class HierarchicalLock implements Serializable {
        *    lock)
        */
       public ExclusiveLock promoteToExclusive() {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockUninterruptiblyFor(this::doPromoteToExclusive);
+         } else {
+            return doPromoteToExclusive();
+         }
+      }
+      
+      ExclusiveLock doPromoteToExclusive() {
          return doPromoteToExclusive(null);
       }
       
@@ -1171,6 +1237,14 @@ public class HierarchicalLock implements Serializable {
        *    lock)
        */
       public ExclusiveLock promoteToExclusiveInterruptibly() throws InterruptedException {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockFor(this::doPromoteToExclusiveInterruptibly);
+         } else {
+            return doPromoteToExclusiveInterruptibly();
+         }
+      }
+      
+      ExclusiveLock doPromoteToExclusiveInterruptibly() throws InterruptedException {
          return doPromoteToExclusiveInterruptibly(null);
       }
       
@@ -1244,6 +1318,15 @@ public class HierarchicalLock implements Serializable {
        */
       public ExclusiveLock tryPromoteToExclusive(long timeLimit, TimeUnit unit)
             throws InterruptedException {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockFor(() -> doTryPromoteToExclusive(timeLimit, unit));
+         } else {
+            return doTryPromoteToExclusive(timeLimit, unit);
+         }
+      }
+      
+      ExclusiveLock doTryPromoteToExclusive(long timeLimit, TimeUnit unit)
+            throws InterruptedException {
          return doTryPromoteToExclusive(timeLimit, unit, null);
       }
 
@@ -1284,6 +1367,14 @@ public class HierarchicalLock implements Serializable {
        * @throws DeadlockException {@inheritDoc}
        */
       @Override public SharedLock demoteToChild(HierarchicalLock child) {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockUninterruptiblyFor(() -> doDemoteToChild(child));
+         } else {
+            return doDemoteToChild(child);
+         }
+      }
+      
+      SharedLock doDemoteToChild(HierarchicalLock child) {
          checkLock();
          checkRelationship(child);
          SharedLock childLock = child.sharedLock();
@@ -1310,6 +1401,14 @@ public class HierarchicalLock implements Serializable {
        */
       public SharedLock demoteToChildInterruptibly(HierarchicalLock child)
             throws InterruptedException {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockFor(() -> doDemoteToChildInterruptibly(child));
+         } else {
+            return doDemoteToChildInterruptibly(child);
+         }
+      }
+      
+      SharedLock doDemoteToChildInterruptibly(HierarchicalLock child) throws InterruptedException {
          checkLock();
          checkRelationship(child);
          SharedLock childLock = child.sharedLockInterruptibly();
@@ -1362,6 +1461,15 @@ public class HierarchicalLock implements Serializable {
        *    other thread that directly or indirectly is waiting on it, is holding the child lock)
        */
       public SharedLock tryDemoteToChild(HierarchicalLock child, long timeLimit, TimeUnit unit)
+            throws InterruptedException {
+         if (ForkJoinTask.inForkJoinPool()) {
+            return managedBlockFor(() -> doTryDemoteToChild(child, timeLimit, unit));
+         } else {
+            return doTryDemoteToChild(child, timeLimit, unit);
+         }
+      }
+      
+      SharedLock doTryDemoteToChild(HierarchicalLock child, long timeLimit, TimeUnit unit)
             throws InterruptedException {
          checkLock();
          checkRelationship(child);
@@ -1604,7 +1712,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
       
-      @Override public SharedLock trySharedLock(long timeLimit, TimeUnit unit)
+      @Override SharedLock doTrySharedLock(long timeLimit, TimeUnit unit)
             throws InterruptedException {
          long startNanos = System.nanoTime();
          SharedLock parentLock = getParent().trySharedLock(timeLimit, unit);
@@ -1626,7 +1734,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
 
-      @Override public SharedLock sharedLock() {
+      @Override SharedLock doSharedLock() {
          SharedLock parentLock = getParent().sharedLock();
          boolean release = true;
          try {
@@ -1640,7 +1748,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
 
-      @Override public SharedLock sharedLockInterruptibly() throws InterruptedException {
+      @Override SharedLock doSharedLockInterruptibly() throws InterruptedException {
          SharedLock parentLock = getParent().sharedLockInterruptibly();
          boolean release = true;
          try {
@@ -1673,7 +1781,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
       
-      @Override public ExclusiveLock tryExclusiveLock(long timeLimit, TimeUnit unit)
+      @Override ExclusiveLock doTryExclusiveLock(long timeLimit, TimeUnit unit)
             throws InterruptedException {
          long startNanos = System.nanoTime();
          SharedLock parentLock = getParent().trySharedLock(timeLimit, unit);
@@ -1695,7 +1803,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
 
-      @Override public ExclusiveLock exclusiveLock() {
+      @Override ExclusiveLock doExclusiveLock() {
          SharedLock parentLock = getParent().sharedLock();
          boolean release = true;
          try {
@@ -1709,7 +1817,7 @@ public class HierarchicalLock implements Serializable {
          }
       }
 
-      @Override public ExclusiveLock exclusiveLockInterruptibly() throws InterruptedException {
+      @Override ExclusiveLock doExclusiveLockInterruptibly() throws InterruptedException {
          SharedLock parentLock = getParent().sharedLockInterruptibly();
          boolean release = true;
          try {
@@ -1740,19 +1848,20 @@ public class HierarchicalLock implements Serializable {
             parentLock.unlock();
          }
          
-         @Override public ExclusiveLock promoteToExclusive() {
+         @Override ExclusiveLock doPromoteToExclusive() {
             return doPromoteToExclusive(parentLock);
          }
          
-         @Override public ExclusiveLock promoteToExclusiveInterruptibly() throws InterruptedException {
+         @Override ExclusiveLock doPromoteToExclusiveInterruptibly()
+               throws InterruptedException {
             return doPromoteToExclusiveInterruptibly(parentLock);
          }
          
-         @Override  public ExclusiveLock tryPromoteToExclusive() {
+         @Override public ExclusiveLock tryPromoteToExclusive() {
             return doTryPromoteToExclusive(parentLock);
          }
          
-         @Override public ExclusiveLock tryPromoteToExclusive(long timeLimit, TimeUnit unit)
+         @Override ExclusiveLock doTryPromoteToExclusive(long timeLimit, TimeUnit unit)
                throws InterruptedException {
             return doTryPromoteToExclusive(timeLimit, unit, parentLock);
          }
@@ -1785,6 +1894,14 @@ public class HierarchicalLock implements Serializable {
          }
          
          @Override public ExclusiveLock promoteToParent() {
+            if (ForkJoinTask.inForkJoinPool()) {
+               return managedBlockUninterruptiblyFor(this::doPromoteToParent);
+            } else {
+               return doPromoteToParent();
+            }
+         }
+         
+         ExclusiveLock doPromoteToParent() {
             checkLock();
             ExclusiveLock newLock = parentLock.promoteToExclusive();
             super.unlock();
@@ -1792,6 +1909,14 @@ public class HierarchicalLock implements Serializable {
          }
          
          @Override public ExclusiveLock promoteToParentInterruptibly() throws InterruptedException {
+            if (ForkJoinTask.inForkJoinPool()) {
+               return managedBlockFor(this::doPromoteToParentInterruptibly);
+            } else {
+               return doPromoteToParentInterruptibly();
+            }
+         }
+         
+         ExclusiveLock doPromoteToParentInterruptibly() throws InterruptedException {
             checkLock();
             ExclusiveLock newLock = parentLock.promoteToExclusiveInterruptibly();
             super.unlock();
@@ -1808,6 +1933,15 @@ public class HierarchicalLock implements Serializable {
          }
          
          @Override public ExclusiveLock tryPromoteToParent(long timeLimit, TimeUnit unit)
+               throws InterruptedException {
+            if (ForkJoinTask.inForkJoinPool()) {
+               return managedBlockFor(() -> doTryPromoteToParent(timeLimit, unit));
+            } else {
+               return doTryPromoteToParent(timeLimit, unit);
+            }
+         }
+         
+         ExclusiveLock doTryPromoteToParent(long timeLimit, TimeUnit unit)
                throws InterruptedException {
             checkLock();
             ExclusiveLock newLock = parentLock.tryPromoteToExclusive(timeLimit, unit);

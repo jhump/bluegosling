@@ -1,7 +1,7 @@
 package com.apriori.vars;
 
-import com.apriori.util.BooleanBinaryOperator;
-import com.apriori.util.BooleanUnaryOperator;
+import com.apriori.function.BooleanBinaryOperator;
+import com.apriori.function.BooleanUnaryOperator;
 
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;

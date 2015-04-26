@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.concurrent.test.FieldUpdaterMaker;
 import com.apriori.concurrent.test.TestPublicClass;
-import com.apriori.util.BooleanBinaryOperator;
-import com.apriori.util.BooleanUnaryOperator;
+import com.apriori.function.BooleanBinaryOperator;
+import com.apriori.function.BooleanUnaryOperator;
 
 import org.junit.Test;
 

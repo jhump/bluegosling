@@ -1,11 +1,71 @@
 package com.apriori.util;
 
+import com.apriori.reflect.Members;
+
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.function.BiFunction;
 
 // TODO: doc
 // TODO: tests
 public final class CallingClass {
+   private CallingClass() {
+   }
+   
+   public static class StackFrame {
+      
+      @SuppressWarnings("unused") // used to construct a null sentinel value of type Method
+      private static void nullMethod() {
+      }
+      
+      private static Method NULL_SENTINEL;
+      static {
+         try {
+            NULL_SENTINEL = StackFrame.class.getDeclaredMethod("nullMethod");
+         } catch (NoSuchMethodException | SecurityException e) {
+            throw new AssertionError(e);
+         }
+      }
+      
+      private final StackTraceElement st;
+      private final Class<?> clazz;
+      private Method method = NULL_SENTINEL;
+      
+      StackFrame(StackTraceElement st, Class<?> clazz) {
+         this.st = st;
+         this.clazz = clazz;
+      }
+      
+      public Class<?> getLocationClass() {
+         return clazz;
+      }
+      
+      public String getLocationClassName() {
+         return st.getClassName();
+      }
+      
+      public Method getLocationMethod() {
+         if (method == null) {
+            Collection<Method> matches = Members.findMethods(clazz, st.getMethodName());
+            method = matches.size() == 1 ? method = matches.iterator().next() : NULL_SENTINEL;
+         }
+         return method == NULL_SENTINEL ? null : method;
+      }
+      
+      public String getLocationMethodName() {
+         return st.getMethodName();
+      }
+      
+      public String getSourceFileName() {
+         return st.getFileName();
+      }
+      
+      public int getSourceLineNumber() {
+         return st.getLineNumber();
+      }
+   }
    
    public static Class<?> getCaller() {
       return getCaller(1);
@@ -16,6 +76,33 @@ public final class CallingClass {
    }
    
    public static Class<?> getCaller(int additionalStackFramesBack) {
+      return computeCaller(additionalStackFramesBack, (ste, cls) -> cls);
+   }
+   
+   public static Class<?> getCaller(int additionalStackFramesBack,
+         Iterable<? extends ClassLoader> classLoaders) {
+      return computeCaller(additionalStackFramesBack, classLoaders, (ste, cls) -> cls);
+   }
+
+   public static StackFrame getCallerStackFrame() {
+      return getCallerStackFrame(1);
+   }
+   
+   public static StackFrame getCallerStackFrame(Iterable<? extends ClassLoader> classLoaders) {
+      return getCallerStackFrame(1, classLoaders);
+   }
+   
+   public static StackFrame getCallerStackFrame(int additionalStackFramesBack) {
+      return computeCaller(additionalStackFramesBack, StackFrame::new);
+   }
+   
+   public static StackFrame getCallerStackFrame(int additionalStackFramesBack,
+         Iterable<? extends ClassLoader> classLoaders) {
+      return computeCaller(additionalStackFramesBack, classLoaders, StackFrame::new);
+   }
+
+   private static <T> T computeCaller(int additionalStackFramesBack,
+         BiFunction<StackTraceElement, Class<?>, T> fn) {
       if (additionalStackFramesBack < 0) {
          throw new IllegalArgumentException("Stack frame distance must be non-negative");
       }
@@ -29,11 +116,12 @@ public final class CallingClass {
       } else {
          cls = Arrays.asList(cl1, cl2);
       }
-      return getCaller(additionalStackFramesBack + 1, cls);
+      return computeCaller(additionalStackFramesBack + 1, cls, fn);
    }
-   
-   public static Class<?> getCaller(int additionalStackFramesBack,
-         Iterable<? extends ClassLoader> classLoaders) {
+
+   private static <T> T computeCaller(int additionalStackFramesBack,
+         Iterable<? extends ClassLoader> classLoaders,
+         BiFunction<StackTraceElement, Class<?>, T> fn) {
       if (additionalStackFramesBack < 0) {
          throw new IllegalArgumentException("Stack frame distance must be non-negative");
       }
@@ -49,15 +137,15 @@ public final class CallingClass {
       for (ClassLoader cl : classLoaders) {
          try {
             if (cl == null) {
-               return Class.forName(callerName);
+               return fn.apply(stackTrace[idx], Class.forName(callerName));
             } else {
-               return cl.loadClass(callerName);
+               return fn.apply(stackTrace[idx], cl.loadClass(callerName));
             }
          } catch (ClassNotFoundException e) {
             // go on to the next class loader
          }
       }
       // Not found!
-      return null;
+      return fn.apply(stackTrace[idx], null);
    }
 }

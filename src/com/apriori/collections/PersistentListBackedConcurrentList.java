@@ -13,27 +13,36 @@ import java.util.function.Function;
 
 // TODO: javadoc
 // TODO: tests
-public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> {
+public abstract class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> {
    
-   final AtomicReference<PersistentList<E>> underlying;
-   
-   public PersistentListBackedConcurrentList(PersistentList<E> underlying) {
-      this.underlying = new AtomicReference<PersistentList<E>>(underlying);
+   public static <E> PersistentListBackedConcurrentList<E> withUnmodifiableSublist(
+         PersistentList<E> underlying) {
+      return new WithUnmodifiableSublist<E>(underlying);
    }
+
+   public static <E> PersistentListBackedConcurrentList<E> withModifiableSublist(
+         PersistentList<E> underlying) {
+      return new WithModifiableSublist<E>(underlying);
+   }
+   
+   PersistentListBackedConcurrentList() {
+   }
+   
+   abstract PersistentList<E> get();
 
    @Override
    public int size() {
-      return underlying.get().size();
+      return get().size();
    }
 
    @Override
    public boolean isEmpty() {
-      return underlying.get().isEmpty();
+      return get().isEmpty();
    }
 
    @Override
    public boolean contains(Object o) {
-      return underlying.get().contains(o);
+      return get().contains(o);
    }
 
    @Override
@@ -43,436 +52,745 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
 
    @Override
    public Object[] toArray() {
-      return underlying.get().toArray();
+      return get().toArray();
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
-      return underlying.get().toArray(a);
+      return get().toArray(a);
    }
-
-   @Override
-   public boolean add(E e) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.add(e);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public boolean remove(Object o) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.remove(o);
-         if (original == modified) {
-            return false;
-         }
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
+   
    @Override
    public boolean containsAll(Collection<?> c) {
-      return underlying.get().containsAll(c);
-   }
-
-   @Override
-   public boolean addAll(Collection<? extends E> c) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.addAll(c);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public boolean addAll(int index, Collection<? extends E> c) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.addAll(index, c);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public boolean removeAll(Collection<?> c) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.removeAll(c);
-         if (original == modified) {
-            return false;
-         }
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public boolean retainAll(Collection<?> c) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.retainAll(c);
-         if (original == modified) {
-            return false;
-         }
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public void clear() {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original;
-         while (!modified.isEmpty()) {
-            modified = modified.rest();
-         }
-         if (original == modified || underlying.compareAndSet(original, modified)) {
-            return;
-         }
-      }
+      return get().containsAll(c);
    }
 
    @Override
    public E get(int index) {
-      return underlying.get().get(index);
+      return get().get(index);
    }
-
-   @Override
-   public E set(int index, E element) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.set(index, element);
-         if (original == modified) {
-            return element;
-         }
-         if (underlying.compareAndSet(original, modified)) {
-            return original.get(index);
-         }
-      }
-   }
-
-   @Override
-   public boolean replace(int index, E existing, E replacement) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         E e = original.get(index);
-         if (existing == null ? e != null : !existing.equals(e)) {
-            return false;
-         }
-         PersistentList<E> modified = original.set(index, replacement);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public void add(int index, E element) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.add(index, element);
-         if (underlying.compareAndSet(original, modified)) {
-            return;
-         }
-      }
-   }
-
-   @Override
-   public boolean addAfter(int index, E expectedPriorValue, E addition) {
-      if (index < 1) {
-         throw new IllegalArgumentException();
-      }
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         E priorValue = original.get(index - 1);
-         if (!Objects.equals(priorValue, expectedPriorValue)) {
-            return false;
-         }
-         PersistentList<E> modified = original.add(index, addition);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public boolean addBefore(int index, E expectedNextValue, E addition) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         if (index >= original.size()) {
-            throw new IllegalArgumentException();
-         }
-         E nextValue = original.get(index);
-         if (!Objects.equals(nextValue, expectedNextValue)) {
-            return false;
-         }
-         PersistentList<E> modified = original.add(index, addition);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
-   @Override
-   public E remove(int index) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         PersistentList<E> modified = original.remove(index);
-         if (underlying.compareAndSet(original, modified)) {
-            return original.get(index);
-         }
-      }
-   }
-
-   @Override
-   public boolean remove(int index, Object o) {
-      while (true) {
-         PersistentList<E> original = underlying.get();
-         E e = original.get(index);
-         if (o == null ? e != null : !o.equals(e)) {
-            return false;
-         }
-         PersistentList<E> modified = original.remove(index);
-         if (underlying.compareAndSet(original, modified)) {
-            return true;
-         }
-      }
-   }
-
+   
    @Override
    public int indexOf(Object o) {
-      return underlying.get().indexOf(o);
+      return get().indexOf(o);
    }
 
    @Override
    public int lastIndexOf(Object o) {
-      return underlying.get().lastIndexOf(o);
+      return get().lastIndexOf(o);
    }
 
    @Override
    public ListIterator<E> listIterator() {
       return listIterator(0);
-   }
-
+   } 
+   
    @Override
    public ListIterator<E> listIterator(int index) {
-      ImmutableList<E> list = underlying.get();
-      if (index < 0 || index > list.size()) {
+      int sz = size();
+      if (index < 0 || index > sz) {
          throw new IndexOutOfBoundsException();
       }
-      return new Iter(list, index);
-   }
-
-   @Override
-   public ConcurrentList<E> subList(int fromIndex, int toIndex) {
-      ImmutableList<E> list = underlying.get();
-      if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
-         throw new IndexOutOfBoundsException();
-      }
-      return new SubList(fromIndex, toIndex);
+      return new Iter<>(this, get().iterator(), index);
    }
    
-   private class SubList implements ConcurrentList<E> {
-      private final int from;
-      private final int to;
-      private final AtomicReference<Pair<ImmutableList<E>, ImmutableList<E>>> memoized;
+   private static class WithUnmodifiableSublist<E> extends PersistentListBackedConcurrentList<E> {
+      final AtomicReference<PersistentList<E>> underlying;
       
-      SubList(int from, int to) {
-         this.from = from;
-         this.to = to;
-         memoized = new AtomicReference<>();
-      }
-      
-      private ImmutableList<E> underlyingSublist() {
-         while (true) {
-            Pair<ImmutableList<E>, ImmutableList<E>> pair = memoized.get();
-            ImmutableList<E> l = underlying.get();
-            if (pair != null && l == pair.getFirst()) {
-               return pair.getSecond();
-            }
-            int start = from > l.size() ? l.size() : from;
-            int end = to > l.size() ? l.size() : to;
-            ImmutableList<E> subList = l.subList(start, end);
-            if (memoized.compareAndSet(pair, Pair.create(l, subList))) {
-               return subList;
-            }
-         }
+      public WithUnmodifiableSublist(PersistentList<E> underlying) {
+         this.underlying = new AtomicReference<>(underlying);
       }
       
       @Override
-      public int size() {
-         return underlyingSublist().size();
-      }
-
-      @Override
-      public boolean isEmpty() {
-         return underlyingSublist().isEmpty();
-      }
-
-      @Override
-      public boolean contains(Object o) {
-         return underlyingSublist().contains(o);
-      }
-
-      @Override
-      public Iterator<E> iterator() {
-         return listIterator();
-      }
-
-      @Override
-      public Object[] toArray() {
-         return underlyingSublist().toArray();
-      }
-
-      @Override
-      public <T> T[] toArray(T[] a) {
-         return underlyingSublist().toArray(a);
-      }
-
-      @Override
-      public boolean add(E e) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public boolean remove(Object o) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-         return underlyingSublist().containsAll(c);
-      }
-
-      @Override
-      public boolean addAll(Collection<? extends E> c) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public boolean addAll(int index, Collection<? extends E> c) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public boolean removeAll(Collection<?> c) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public boolean retainAll(Collection<?> c) {
-         // TODO: implement me
-         return false;
-      }
-
-      @Override
-      public void clear() {
-         // TODO: implement me
-      }
-
-      @Override
-      public E get(int index) {
-         return underlyingSublist().get(index);
+      final PersistentList<E> get() {
+         return underlying.get();
       }
 
       @Override
       public E set(int index, E element) {
-         // TODO: implement me
-         return null;
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.set(index, element);
+            if (modified == original) {
+               return element;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return original.get(index);
+            }
+         }
       }
 
       @Override
       public boolean replace(int index, E expectedValue, E newValue) {
-         // TODO: implement me
-         return false;
+         while (true) {
+            PersistentList<E> original = get();
+            if (!Objects.equals(original.get(index), expectedValue)) {
+               return false;
+            }
+            PersistentList<E> modified = original.set(index, newValue);
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
+      }
+      
+      @Override
+      public boolean add(E e) {
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.add(e);
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
+      }
+
+      @Override
+      public int addLast(E e) {
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.addLast(e);
+            if (underlying.compareAndSet(original, modified)) {
+               return original.size();
+            }
+         }
       }
 
       @Override
       public void add(int index, E element) {
-         // TODO: implement me
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.add(index, element);
+            if (underlying.compareAndSet(original, modified)) {
+               return;
+            }
+         }
       }
 
       @Override
+      public boolean addAll(Collection<? extends E> c) {
+         if (c.isEmpty()) {
+            return false;
+         }
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.addAll(c);
+            if (modified == original) {
+               return false;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
+      }
+
+      @Override
+      public boolean addAll(int index, Collection<? extends E> c) {
+         if (c.isEmpty()) {
+            return false;
+         }
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.addAll(index, c);
+            if (modified == original) {
+               return false;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
+      }
+      
+      @Override
       public boolean addAfter(int index, E expectedPriorValue, E addition) {
-         // TODO: implement me
-         return false;
+         while (true) {
+            PersistentList<E> original = get();
+            if (!Objects.equals(original.get(index - 1), expectedPriorValue)) {
+               return false;
+            }
+            PersistentList<E> modified = original.add(index, addition);
+            assert modified != original;
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
       public boolean addBefore(int index, E expectedNextValue, E addition) {
-         // TODO: implement me
-         return false;
+         while (true) {
+            PersistentList<E> original = get();
+            if (!Objects.equals(original.get(index), expectedNextValue)) {
+               return false;
+            }
+            PersistentList<E> modified = original.add(index, addition);
+            assert modified != original;
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
       public E remove(int index) {
-         // TODO: implement me
-         return null;
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.remove(index);
+            assert modified != original;
+            if (underlying.compareAndSet(original, modified)) {
+               return original.get(index);
+            }
+         }
       }
 
       @Override
       public boolean remove(int index, E expectedValue) {
-         // TODO: implement me
-         return false;
+         while (true) {
+            PersistentList<E> original = get();
+            if (!Objects.equals(original.get(index), expectedValue)) {
+               return false;
+            }
+            PersistentList<E> modified = original.remove(index);
+            assert modified != original;
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
-      public int indexOf(Object o) {
-         return underlyingSublist().indexOf(o);
+      public boolean remove(Object o) {
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.remove(o);
+            if (modified == original) {
+               return false;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
-      public int lastIndexOf(Object o) {
-         return underlyingSublist().lastIndexOf(o);
+      public boolean removeAll(Collection<?> c) {
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.removeAll(c);
+            if (modified == original) {
+               return false;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
-      public ListIterator<E> listIterator() {
-         return listIterator(0);
+      public boolean retainAll(Collection<?> c) {
+         while (true) {
+            PersistentList<E> original = get();
+            PersistentList<E> modified = original.retainAll(c);
+            if (modified == original) {
+               return false;
+            }
+            if (underlying.compareAndSet(original, modified)) {
+               return true;
+            }
+         }
       }
 
       @Override
-      public ListIterator<E> listIterator(int index) {
-         return new Iter(underlyingSublist(), index, from);
+      public void clear() {
+         underlying.set(get().clear());
       }
 
       @Override
       public ConcurrentList<E> subList(int fromIndex, int toIndex) {
-         ImmutableList<E> list = underlyingSublist();
-         if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
+         if (fromIndex < 0 || toIndex > size() || fromIndex > toIndex) {
             throw new IndexOutOfBoundsException();
          }
-         return new SubList(from + fromIndex, from + toIndex);
+         // TODO
+         //return new UnmodifiableSubList(fromIndex, toIndex);
+         return null;
+      }
+
+      @Override
+      public ConcurrentList<E> tailList(int fromIndex) {
+         if (fromIndex < 0 || fromIndex > size()) {
+            throw new IndexOutOfBoundsException();
+         }
+         // TODO
+         //return new UnmodifiableSubList(fromIndex, -1);
+         return null;
+      }
+      
+      // TODO
+      private abstract class UnmodifiableSubList implements ConcurrentList<E> {
+         UnmodifiableSubList(int fromIndex, int toIndex) {
+            // TODO
+         }
       }
    }
    
+   private static class WithModifiableSublist<E> extends PersistentListBackedConcurrentList<E> {
+      final Object lock = new Object();
+      volatile PersistentList<E> underlying;
+      
+      public WithModifiableSublist(PersistentList<E> underlying) {
+         this.underlying = underlying;
+      }
+      
+      @Override
+      final PersistentList<E> get() {
+         return underlying;
+      }
+
+      @Override
+      public boolean add(E e) {
+         synchronized (lock) {
+            addLastLocked(e);
+         }
+         return true;
+      }
+
+      @Override
+      public int addLast(E e) {
+         synchronized (lock) {
+            return addLastLocked(e);
+         }
+      }
+
+      int addLastLocked(E e) {
+         PersistentList<E> original = underlying;
+         underlying = underlying.add(e);
+         return original.size();
+      }
+
+      @Override
+      public boolean remove(Object o) {
+         synchronized (lock) {
+            return removeLocked(o);
+         }
+      }
+
+      boolean removeLocked(Object o) {
+         PersistentList<E> modified = underlying.remove(o);
+         if (modified == underlying) {
+            return false;
+         }
+         underlying = modified;
+         return true;
+      }
+
+      @Override
+      public boolean addAll(Collection<? extends E> c) {
+         if (c.isEmpty()) {
+            return false;
+         }
+         synchronized (lock) {
+            return addAllLocked(c);
+         }
+      }
+      
+      boolean addAllLocked(Collection<? extends E> c) {
+         PersistentList<E> modified = underlying.addAll(c);
+         if (modified == underlying) {
+            return false;
+         }
+         underlying = modified;
+         return true;
+      }
+
+      @Override
+      public boolean addAll(int index, Collection<? extends E> c) {
+         if (c.isEmpty()) {
+            return false;
+         }
+         synchronized (lock) {
+            return addAllLocked(index, c);
+         }
+      }
+      
+      boolean addAllLocked(int index, Collection<? extends E> c) {
+         PersistentList<E> modified = underlying.addAll(index, c);
+         if (modified == underlying) {
+            return false;
+         }
+         underlying = modified;
+         return true;
+      }
+
+      @Override
+      public boolean removeAll(Collection<?> c) {
+         if (underlying.isEmpty() || c.isEmpty()) {
+            return false;
+         }
+         synchronized (lock) {
+            return removeAllLocked(c);
+         }
+      }
+      
+      boolean removeAllLocked(Collection<?> c) {
+         PersistentList<E> modified = underlying.removeAll(c);
+         if (modified == underlying) {
+            return false;
+         }
+         underlying = modified;
+         return true;
+      }
+
+      @Override
+      public boolean retainAll(Collection<?> c) {
+         if (underlying.isEmpty()) {
+            return false;
+         }
+         synchronized (lock) {
+            return retainAllLocked(c);
+         }
+      }
+
+      boolean retainAllLocked(Collection<?> c) {
+         PersistentList<E> modified = underlying.retainAll(c);
+         if (modified == underlying) {
+            return false;
+         }
+         underlying = modified;
+         return true;
+      }
+
+      @Override
+      public void clear() {
+         if (underlying.isEmpty()) {
+            return;
+         }
+         synchronized (lock) {
+            clearLocked();
+         }
+      }
+      
+      void clearLocked() {
+         underlying = underlying.clear();
+      }
+
+      @Override
+      public E set(int index, E element) {
+         synchronized (lock) {
+            PersistentList<E> modified = underlying.set(index, element);
+            if (modified == underlying) {
+               return element;
+            }
+            E ret = underlying.get(index);
+            underlying = modified;
+            return ret;
+         }
+      }
+
+      @Override
+      public boolean replace(int index, E existing, E replacement) {
+         synchronized (lock) {
+            if (!Objects.equals(existing, underlying.get(index))) {
+               return false;
+            }
+            underlying = underlying.set(index, replacement);
+            return true;
+         }
+      }
+
+      @Override
+      public void add(int index, E element) {
+         synchronized (lock) {
+            addLocked(index, element);
+         }
+      }
+
+      void addLocked(int index, E e) {
+         underlying = underlying.add(index, e);
+      }
+
+
+      @Override
+      public boolean addAfter(int index, E expectedPriorValue, E addition) {
+         if (index < 1) {
+            throw new IllegalArgumentException();
+         }
+         synchronized (lock) {
+            if (!Objects.equals(underlying.get(index - 1), expectedPriorValue)) {
+               return false;
+            }
+            underlying = underlying.add(index, addition);
+            return true;
+         }
+      }
+
+      @Override
+      public boolean addBefore(int index, E expectedNextValue, E addition) {
+         synchronized (lock) {
+            if (index >= underlying.size()) {
+               throw new IllegalArgumentException();
+            }
+            if (!Objects.equals(underlying.get(index), expectedNextValue)) {
+               return false;
+            }
+            underlying = underlying.add(index, addition);
+            return true;
+         }
+      }
+
+      @Override
+      public E remove(int index) {
+         synchronized (lock) {
+            return removeLocked(index);
+         }
+      }
+
+      E removeLocked(int index) {
+         PersistentList<E> modified = underlying.remove(index);
+         E ret = underlying.get(index);
+         underlying = modified;
+         return ret;
+      }
+      
+      @Override
+      public boolean remove(int index, Object o) {
+         synchronized (lock) {
+            return removeLocked(index, o);
+         }
+      }
+      
+      private boolean removeLocked(int index, Object o) {
+         if (!Objects.equals(o, underlying.get(index))) {
+            return false;
+         }
+         underlying = underlying.remove(index);
+         return true;
+      }
+
+      @Override
+      public ConcurrentList<E> subList(int fromIndex, int toIndex) {
+         if (fromIndex < 0 || toIndex > size() || fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException();
+         }
+         // TODO
+         //return new ModifiableSubList(this, fromIndex, toIndex);
+         return null;
+      }
+
+      @Override
+      public ConcurrentList<E> tailList(int fromIndex) {
+         if (fromIndex < 0 || fromIndex > size()) {
+            throw new IndexOutOfBoundsException();
+         }
+         // TODO
+         //return new ModifiableSubList(this, fromIndex, -1);
+         return null;
+      }
+
+      private abstract class ModifiableSubList implements ConcurrentList<E> {
+         private final int from;
+         private final int to;
+         private final AtomicReference<Pair<ImmutableList<E>, ImmutableList<E>>> memoized;
+         
+         ModifiableSubList(int from, int to) {
+            this.from = from;
+            this.to = to;
+            memoized = new AtomicReference<>();
+         }
+         
+         private ImmutableList<E> underlyingSublist() {
+            // TODO
+            /*while (true) {
+               Pair<ImmutableList<E>, ImmutableList<E>> pair = memoized.get();
+               ImmutableList<E> l = underlying.get();
+               if (pair != null && l == pair.getFirst()) {
+                  return pair.getSecond();
+               }
+               int start = from > l.size() ? l.size() : from;
+               int end = to > l.size() ? l.size() : to;
+               ImmutableList<E> subList = l.subList(start, end);
+               if (memoized.compareAndSet(pair, Pair.create(l, subList))) {
+                  return subList;
+               }
+            }*/
+            return null;
+         }
+         
+         @Override
+         public int size() {
+            return underlyingSublist().size();
+         }
+
+         @Override
+         public boolean isEmpty() {
+            return underlyingSublist().isEmpty();
+         }
+
+         @Override
+         public boolean contains(Object o) {
+            return underlyingSublist().contains(o);
+         }
+
+         @Override
+         public Iterator<E> iterator() {
+            return listIterator();
+         }
+
+         @Override
+         public Object[] toArray() {
+            return underlyingSublist().toArray();
+         }
+
+         @Override
+         public <T> T[] toArray(T[] a) {
+            return underlyingSublist().toArray(a);
+         }
+
+         @Override
+         public boolean add(E e) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean remove(Object o) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean containsAll(Collection<?> c) {
+            return underlyingSublist().containsAll(c);
+         }
+
+         @Override
+         public boolean addAll(Collection<? extends E> c) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean addAll(int index, Collection<? extends E> c) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean removeAll(Collection<?> c) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean retainAll(Collection<?> c) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public void clear() {
+            // TODO: implement me
+         }
+
+         @Override
+         public E get(int index) {
+            return underlyingSublist().get(index);
+         }
+
+         @Override
+         public E set(int index, E element) {
+            // TODO: implement me
+            return null;
+         }
+
+         @Override
+         public boolean replace(int index, E expectedValue, E newValue) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public void add(int index, E element) {
+            // TODO: implement me
+         }
+
+         @Override
+         public boolean addAfter(int index, E expectedPriorValue, E addition) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public boolean addBefore(int index, E expectedNextValue, E addition) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public E remove(int index) {
+            // TODO: implement me
+            return null;
+         }
+
+         @Override
+         public boolean remove(int index, E expectedValue) {
+            // TODO: implement me
+            return false;
+         }
+
+         @Override
+         public int indexOf(Object o) {
+            return underlyingSublist().indexOf(o);
+         }
+
+         @Override
+         public int lastIndexOf(Object o) {
+            return underlyingSublist().lastIndexOf(o);
+         }
+
+         @Override
+         public ListIterator<E> listIterator() {
+            return listIterator(0);
+         }
+
+         @Override
+         public ListIterator<E> listIterator(int index) {
+            return new Iter<>(this, underlyingSublist().iterator(), index, from);
+         }
+
+         @Override
+         public ConcurrentList<E> subList(int fromIndex, int toIndex) {
+            ImmutableList<E> list = underlyingSublist();
+            if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
+               throw new IndexOutOfBoundsException();
+            }
+            // TODO
+            //return new NestedSubList(this, fromIndex, toIndex);
+            return null;
+         }
+
+         @Override
+         public ConcurrentList<E> tailList(int fromIndex) {
+            ImmutableList<E> list = underlyingSublist();
+            if (fromIndex < 0 || fromIndex > list.size()) {
+               throw new IndexOutOfBoundsException();
+            }
+            // TODO
+            //return new NestedSubList(this, fromIndex, -1);
+            return null;
+         }
+      }
+   }
+
    /**
-    * A node in a doubly-linked list, used to represent the snapshot view of the list for iteration
-    * and support mutation operations. The iterator is a consistent snapshot of the list at the
-    * time iteration began, and will reflect all mutations made through the iterator. But it will
-    * not reflect any modifications made directly to the list, outside of the iterator.
+    * A node in a doubly-linked list, used to represent the snapshot view of the list for
+    * iteration and support mutation operations. The iterator is a consistent snapshot of the
+    * list at the time iteration began, and will reflect all mutations made through the iterator.
+    * But it will not reflect any modifications made directly to the list, outside of the
+    * iterator.
     * 
-    * <p>This linked list is capped at the end with a special "end" node. This allows advancing the
-    * iterator to a position "after the end of the list", with navigating back through the list via
-    * predecessor nodes still being possible.
+    * <p>This linked list is capped at the end with a special "end" node. This allows advancing
+    * the iterator to a position "after the end of the list", with navigating back through the
+    * list via predecessor nodes still being possible.
     *
     * @param <E> the type of element in the list
     * 
@@ -481,26 +799,27 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
    private static class IterNode<E> {
 
       /**
-       * Returns the head of the given list as a node with no predecessor.
+       * Returns the first element from the given iterator as a node with no predecessor.
        *
-       * @param list a list
-       * @return a node whose value is the head of the given list and that has no predecessor
+       * @param iter an iterator
+       * @return a node whose value is the first element from the given iterator and that has no
+       *       predecessor
        */
-      static <E> IterNode<E> listHead(ImmutableList<E> list) {
-         return list.isEmpty()
-               ? endNode(null) : new IterNode<E>(list.first(), null, nextFromList(list));
+      static <E> IterNode<E> head(Iterator<E> iter) {
+         return iter.hasNext()
+               ? endNode(null) : new IterNode<E>(iter.next(), null, nextFromIter(iter));
       }
 
       /**
-       * Returns a function that computes the next node as the head of the given list.
+       * Returns a function that computes the next node as the next element from the given iterator.
        *
-       * @param list the list
-       * @return a function that uses the head of the given list as the next node
+       * @param iter an iterator
+       * @return a function that uses the next element from the given iterator as the next node
        */
-      private static <E> Function<IterNode<E>, IterNode<E>> nextFromList(ImmutableList<E> list) {
-         return prev -> list.isEmpty()
+      private static <E> Function<IterNode<E>, IterNode<E>> nextFromIter(Iterator<E> iter) {
+         return prev -> iter.hasNext()
                ? endNode(prev)
-               : new IterNode<E>(list.first(), prev, nextFromList(list.rest()));
+               : new IterNode<E>(iter.next(), prev, nextFromIter(iter));
       }
       
       /**
@@ -592,20 +911,22 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
       }
    }
    
-   private class Iter implements ListIterator<E> {
+   private static class Iter<E> implements ListIterator<E> {
+      private ConcurrentList<E> list;
       private final int offset;
       private int currentIndex;
       private IterNode<E> current;
       private IterNode<E> lastFetched;
       
-      Iter(ImmutableList<E> list, int start) {
-         this(list, start, 0);
+      Iter(ConcurrentList<E> list, Iterator<E> iter, int start) {
+         this(list, iter, start, 0);
       }
 
-      Iter(ImmutableList<E> list, int start, int offset) {
+      Iter(ConcurrentList<E> list, Iterator<E> iter, int start, int offset) {
+         this.list = list;
          this.offset = offset;
          currentIndex = start;
-         current = IterNode.listHead(list);
+         current = IterNode.head(iter);
          for (int i = 0; i < start; i++) {
             current = current.next();
          }
@@ -663,8 +984,7 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
          if (lastFetched == null) {
             throw new IllegalStateException();
          }
-         if (!PersistentListBackedConcurrentList.this
-               .remove(lastFetchedIndex() + offset, lastFetched.value())) {
+         if (!list.remove(lastFetchedIndex() + offset, lastFetched.value())) {
             throw new ConcurrentModificationException();
          }
          // re-wire current iterator state to reflect removal
@@ -693,8 +1013,7 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
          if (lastFetched == null) {
             throw new IllegalStateException();
          }
-         if (!PersistentListBackedConcurrentList.this
-               .replace(lastFetchedIndex() + offset, lastFetched.value(), e)) {
+         if (!list.replace(lastFetchedIndex() + offset, lastFetched.value(), e)) {
             throw new ConcurrentModificationException();
          }
          // update current iterator state to show new element
@@ -724,15 +1043,13 @@ public class PersistentListBackedConcurrentList<E> implements ConcurrentList<E> 
          }
          
          if (adjacent == null) {
-            PersistentListBackedConcurrentList.this.add(offset, e);
+            list.add(offset, e);
          } else if (isPredecessor) {
-            if (!PersistentListBackedConcurrentList.this
-                  .addAfter(currentIndex + offset, adjacent.value(), e)) {
+            if (!list.addAfter(currentIndex + offset, adjacent.value(), e)) {
                throw new ConcurrentModificationException();
             }
          } else {
-            if (!PersistentListBackedConcurrentList.this
-                  .addBefore(currentIndex + offset, adjacent.value(), e)) {
+            if (!list.addBefore(currentIndex + offset, adjacent.value(), e)) {
                throw new ConcurrentModificationException();
             }
          }

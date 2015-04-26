@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.function.Function;
 
 public abstract class AbstractTestOrderedQueue extends AbstractTestQueue {
 
@@ -48,20 +49,23 @@ public abstract class AbstractTestOrderedQueue extends AbstractTestQueue {
    }
    
    @Override
-   public abstract OrderedQueue<?> makeCollection();
+   public abstract OrderedQueue<Object> makeCollection();
    
    @Override
-   public OrderedQueue<?> makeFullCollection() {
-      return (OrderedQueue<?>) super.makeFullCollection();
+   public abstract OrderedQueue<Object> makeCollection(int capacity);
+   
+   @Override
+   public OrderedQueue<Object> makeFullCollection() {
+      return (OrderedQueue<Object>) super.makeFullCollection();
    }
 
    @Override
-   public Queue<?> makeConfirmedCollection() {
+   public Queue<Object> makeConfirmedCollection() {
       return new PriorityQueue<Object>(10, getComparator());
    }
 
    @Override
-   public Queue<?> makeConfirmedFullCollection() {
+   public Queue<Object> makeConfirmedFullCollection() {
       Queue<Object> queue = new PriorityQueue<Object>(10, getComparator());
       queue.addAll(Arrays.asList(getFullElements()));
       return queue;
@@ -72,9 +76,23 @@ public abstract class AbstractTestOrderedQueue extends AbstractTestQueue {
       return false;
    }
    
-   @Override public void testQueueRemove() {
-      super.testQueueRemove();
-      
+   public void testOrderRemove() {
+      doTestOrder(q -> q.remove());
+   }
+   
+   public void testOrderPoll() {
+      doTestOrder(Queue::poll);
+   }
+   
+   public void testOrderPeek() {
+      doTestOrder(q -> {
+         Object o = q.peek();
+         assertSame(o, q.poll());
+         return o;
+      });
+   }
+   
+   private void doTestOrder(Function<Queue<Object>, Object> poll) {
       // explicit test that we get items out in expected order
       resetEmpty();
       Queue<Object> queue = getCollection();
@@ -94,7 +112,7 @@ public abstract class AbstractTestOrderedQueue extends AbstractTestQueue {
 
       List<Object> removed = new ArrayList<Object>(queue.size());
       while (!queue.isEmpty()) {
-         removed.add(queue.remove());
+         removed.add(poll.apply(queue));
       }
       
       assertEquals(sorted, removed);

@@ -23,6 +23,11 @@ public class FibonacciHeapOrderedQueueTest extends AbstractTestMeldableOrderedQu
    }
    
    @Override
+   public MeldableOrderedQueue<Object, ?> makeCollection(int capacity) {
+      return null; // capacity constraint not supported
+   }
+   
+   @Override
    public boolean isFailFastSupported() {
       return true;
    }
