@@ -2,13 +2,14 @@ package com.apriori.collections;
 
 import static java.util.Objects.requireNonNull;
 
+import com.apriori.concurrent.contended.ContendedInteger;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
@@ -42,10 +43,10 @@ public class LockFreeArrayBlockingQueue<E> extends AbstractLockFreeBlockingQueue
    private final static int SPIN_TIMES = 1000;
    
    private final E data[];
-   private final AtomicInteger tentativeHead = new AtomicInteger();
-   private final AtomicInteger confirmedHead = new AtomicInteger();
-   private final AtomicInteger tentativeTail = new AtomicInteger();
-   private final AtomicInteger confirmedTail = new AtomicInteger();
+   private final ContendedInteger tentativeHead = new ContendedInteger();
+   private final ContendedInteger confirmedHead = new ContendedInteger();
+   private final ContendedInteger tentativeTail = new ContendedInteger();
+   private final ContendedInteger confirmedTail = new ContendedInteger();
    
    @SuppressWarnings("unchecked")
    public LockFreeArrayBlockingQueue(int capacity) {

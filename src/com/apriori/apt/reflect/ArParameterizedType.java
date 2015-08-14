@@ -48,11 +48,46 @@ public class ArParameterizedType implements ArType {
     * @param declaredType the type mirror
     * @return a parameterized type
     * @throws NullPointerException if the specified type mirror is null
+    * @throws IllegalArgumentException if the specified type mirror is not a parameterized type
+    *       (e.g. neither it nor any enclosing type has type arguments) 
     */
-   // TODO: throw IllegalArgumentException if the specified type should be represented by a
-   // Class instead of a ParameterizedType (i.e. it has no type parameters and is not enclosed in
-   // a type that has type parameters)
    public static ArParameterizedType forTypeMirror(DeclaredType declaredType) {
+      if (isParameterized(declaredType)) {
+         return forParameterizedTypeMirror(declaredType);
+      }
+      throw new IllegalArgumentException(
+            "Given type is not parameterized: " + declaredType.toString());
+   }
+   
+   /**
+    * Returns true if the given type, or any enclosing type, has type arguments.
+    *
+    * @param declaredType
+    * @return
+    */
+   static boolean isParameterized(DeclaredType declaredType) {
+      while (true) {
+         if (!declaredType.getTypeArguments().isEmpty()) {
+            return true;
+         }
+         TypeMirror enclosing = declaredType.getEnclosingType();
+         if (enclosing.getKind() == TypeKind.NONE) {
+            return false;
+         }
+         assert enclosing.getKind() == TypeKind.DECLARED;
+         declaredType = (DeclaredType) enclosing;
+      }
+   }
+
+   /**
+    * Creates a parameterized type for the given type mirror, which is known to be parameterized. It
+    * is up to callers to ensure that the given type is parameterized.
+    *
+    * @param declaredType the type mirror
+    * @return a parameterized type
+    * @see #isParameterized(DeclaredType)
+    */
+   static ArParameterizedType forParameterizedTypeMirror(DeclaredType declaredType) {
       return new ArParameterizedType(declaredType);
    }
    

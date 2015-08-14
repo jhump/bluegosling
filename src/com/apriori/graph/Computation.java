@@ -238,7 +238,7 @@ public class Computation<T> {
       List<Node.Input<?>> nodeInputs = node.inputs();
       int len = nodeInputs.size();
       ListenableFuture<?> deps[] = new ListenableFuture<?>[len];
-      List<ListenableFuture<?>> syncDeps = new ArrayList<>(len);
+      List<ListenableFuture<?>> synchronousDeps = new ArrayList<>(len);
       for (int i = 0; i < len; i++) {
          Node.Input<?> in = nodeInputs.get(i);
          ListenableFuture<?> future;
@@ -249,10 +249,10 @@ public class Computation<T> {
          }
          deps[i] = future;
          if (!in.isAsync()) {
-            syncDeps.add(future);
+            synchronousDeps.add(future);
          }
       }
-      ListenableFuture<U> ret = dereference(chain(join(syncDeps),
+      ListenableFuture<U> ret = dereference(chain(join(synchronousDeps),
             decorate(node, decorators.iterator(), () -> node.apply(buildArgs(node, deps))),
             executor));
       resolved.put(node, ret);
@@ -313,7 +313,7 @@ public class Computation<T> {
       SettableRunnableFuture<U> result = new SettableRunnableFuture<U>(op) {
          // keep cancellation status in sync
          @Override public boolean cancel(boolean mayInterrupt) {
-            if (super.setCancelled()) {
+            if (super.cancel(mayInterrupt)) {
                src.cancel(mayInterrupt);
                return true;
             }

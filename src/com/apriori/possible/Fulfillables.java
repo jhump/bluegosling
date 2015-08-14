@@ -1,9 +1,10 @@
 package com.apriori.possible;
 
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * Utility implementations of {@link Fulfillable}.
@@ -16,8 +17,8 @@ final class Fulfillables {
    
    static class FulfillableImpl<T> extends AbstractDynamicPossible<T> implements Fulfillable<T> {
       @SuppressWarnings("rawtypes") // class tokens require use of raw types
-      private static AtomicReferenceFieldUpdater<FulfillableImpl, Object[]> updater =
-            AtomicReferenceFieldUpdater.newUpdater(FulfillableImpl.class, Object[].class, "value");
+      private static UnsafeReferenceFieldUpdater<FulfillableImpl, Object[]> updater =
+            new UnsafeReferenceFieldUpdater<>(FulfillableImpl.class, Object[].class, "value");
 
       private volatile T[] value;
       

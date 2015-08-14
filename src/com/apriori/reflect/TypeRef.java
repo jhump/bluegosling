@@ -502,7 +502,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @return true if this represents a sub-type of {@code ref}
     */
    public boolean isSubTypeOf(TypeRef<?> ref) {
-      return Types.isAssignable(ref.type, this.type);
+      return Types.isAssignableStrict(ref.type, this.type);
    }
 
    /**
@@ -514,10 +514,10 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * 
     * @param ref a {@code TypeRef}
     * @return true if this represents a super type of {@code ref}
-    * @see Types#isAssignable(Type, Type)
+    * @see Types#isAssignableStrict(Type, Type)
     */
    public boolean isAssignableFrom(TypeRef<?> ref) {
-      return Types.isAssignable(this.type, ref.type);
+      return Types.isAssignableStrict(this.type, ref.type);
    }
 
    /**

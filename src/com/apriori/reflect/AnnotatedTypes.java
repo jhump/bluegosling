@@ -16,6 +16,7 @@ import java.lang.reflect.AnnotatedParameterizedType;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.AnnotatedTypeVariable;
 import java.lang.reflect.AnnotatedWildcardType;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -23,6 +24,7 @@ import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -216,7 +218,7 @@ public final class AnnotatedTypes {
     * @param type a generic type
     * @return a hash code for the given type
     */
-   static final int hashCode(AnnotatedType type) {
+   public static final int hashCode(AnnotatedType type) {
       // NB: AnnotatedType implementations in JRE do not override equals and hashCode and just
       // use identity-based implementations inherited from Object.
       requireNonNull(type);
@@ -258,7 +260,7 @@ public final class AnnotatedTypes {
     * @param type a generic type
     * @return a string representation of the given type
     */
-   static String toString(AnnotatedType type) {
+   public static String toString(AnnotatedType type) {
       requireNonNull(type);
       StringBuilder sb = new StringBuilder();
       toStringBuilder(type, sb);
@@ -843,6 +845,16 @@ public final class AnnotatedTypes {
 //      typeVariables.putAll(currentVars);
 //   }
    
+   public static AnnotatedArrayType newAnnotatedArrayType(GenericArrayType type,
+         Annotation... annotations) {
+      return newAnnotatedArrayType(type, Arrays.asList(annotations));
+   }
+   
+   public static AnnotatedArrayType newAnnotatedArrayType(GenericArrayType type,
+         Iterable<? extends Annotation> annotations) {
+      return newAnnotatedArrayType(newAnnotatedType(type.getGenericComponentType()), annotations);
+   }
+   
    public static AnnotatedArrayType newAnnotatedArrayType(AnnotatedType componentType,
          Annotation... annotations) {
       return newAnnotatedArrayType(componentType, Arrays.asList(annotations));
@@ -884,14 +896,63 @@ public final class AnnotatedTypes {
    public static AnnotatedType newAnnotatedType(Type type, Annotation... annotations) {
       return newAnnotatedType(type, Arrays.asList(annotations));
    }
-   
+
+   public static AnnotatedType newAnnotatedType(Class<?> clazz, Annotation... annotations) {
+      return newAnnotatedType(clazz, Arrays.asList(annotations));
+   }
+
+   public static AnnotatedType newAnnotatedType(Class<?> clazz,
+         Iterable<? extends Annotation> annotations) {
+      if (clazz.isArray()) {
+         return newAnnotatedArrayType(newAnnotatedType(clazz.getComponentType()), annotations);
+      } else {
+         return new AnnotatedTypeImpl(clazz, annotations);
+      }
+   }
+
    public static AnnotatedType newAnnotatedType(Type type,
          Iterable<? extends Annotation> annotations) {
-      // TODO: if type is not a Class, delegate to some other factory method so that return
-      // value's type is correct (e.g. if type instanceof ParameterizedType, we should return an
-      // AnnotatedParameterizedType) 
-      return new AnnotatedTypeImpl(type, annotations);
+      if (type instanceof Class) {
+         return newAnnotatedType((Class<?>) type, annotations);
+      } else if (type instanceof ParameterizedType) {
+         return newAnnotatedParameterizedType((ParameterizedType) type, annotations);
+      } else if (type instanceof GenericArrayType) {
+         return newAnnotatedArrayType((GenericArrayType) type, annotations);
+      } else if (type instanceof WildcardType) {
+         return newAnnotatedWildcardType((WildcardType) type, annotations);
+      } else if (type instanceof TypeVariable) {
+         return newAnnotatedTypeVariable((TypeVariable<?>) type, annotations);
+      } else {
+         throw new UnknownTypeException(type);
+      }
    }
+   
+   private static List<AnnotatedType> asAnnotatedTypes(Type[] types) {
+      List<AnnotatedType> a = new ArrayList<>(types.length);
+      for (Type t : types) {
+         a.add(newAnnotatedType(t));
+      }
+      return Collections.unmodifiableList(a);
+   }
+   
+   public static AnnotatedParameterizedType newAnnotatedParameterizedType(ParameterizedType type,
+         Annotation... annotations) {
+      return newAnnotatedParameterizedType(type, Arrays.asList(annotations));
+   }
+   
+   public static AnnotatedParameterizedType newAnnotatedParameterizedType(ParameterizedType type,
+         Iterable<? extends Annotation> annotations) {
+      Type owner = type.getOwnerType();
+      return owner == null
+            ? newAnnotatedParameterizedType(newAnnotatedType(type.getRawType()),
+                  asAnnotatedTypes(type.getActualTypeArguments()),
+                  annotations)
+            : newAnnotatedParameterizedType(
+                  newAnnotatedParameterizedType((ParameterizedType) owner),
+                  newAnnotatedType(type.getRawType()),
+                  asAnnotatedTypes(type.getActualTypeArguments()),
+                  annotations);
+   } 
    
    /**
     * Creates a new {@link ParameterizedType} for a generic top-level or static type. In this case,
@@ -1092,6 +1153,26 @@ public final class AnnotatedTypes {
    public static AnnotatedWildcardType newSuperAnnotatedWildcardType(AnnotatedType bound,
          Iterable<? extends Annotation> annotations) {
       return newAnnotatedWildcardTypeInternal(bound, annotations, false);
+   }
+   
+   public static AnnotatedWildcardType newAnnotatedWildcardType(WildcardType type,
+         Annotation... annotations) {
+      return newAnnotatedWildcardType(type, Arrays.asList(annotations));
+   }
+   
+   public static AnnotatedWildcardType newAnnotatedWildcardType(WildcardType type,
+         Iterable<? extends Annotation> annotations) {
+      boolean isUpperBound;
+      Type[] bounds = type.getLowerBounds();
+      if (bounds.length == 0) {
+         bounds = type.getUpperBounds();
+         isUpperBound = true;
+      } else {
+         isUpperBound = false;
+      }
+      assert bounds.length == 1;
+      return newAnnotatedWildcardTypeInternal(newAnnotatedType(bounds[0]), annotations,
+            isUpperBound);
    }
 
    private static AnnotatedWildcardType newAnnotatedWildcardTypeInternal(AnnotatedType bound,
@@ -1303,6 +1384,9 @@ public final class AnnotatedTypes {
       }
    }
    
+   /**
+    * Implements {@link AnnotatedTypeVariable}.
+    */
    private static class AnnotatedTypeVariableImpl extends AnnotatedTypeImpl
          implements AnnotatedTypeVariable {
       private static final long serialVersionUID = 2528423947615752140L;

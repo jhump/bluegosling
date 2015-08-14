@@ -1,12 +1,12 @@
 package com.apriori.concurrent;
 
+import com.apriori.concurrent.unsafe.UnsafeIntegerFieldUpdater;
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.apriori.util.IsDerivedFrom;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.AbstractOwnableSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -48,26 +48,25 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
    private static final long serialVersionUID = 2087545583039578782L;
 
    @SuppressWarnings("rawtypes")
-   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Object>
-   stateUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
-               Object.class, "state");
+   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Object>
+   stateUpdater = new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class,
+         Object.class, "state");
 
    @SuppressWarnings("rawtypes")
-   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> headUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
-               Node.class, "head");
+   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> headUpdater =
+         new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class, Node.class,
+               "head");
 
    @SuppressWarnings("rawtypes")
-   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> tailUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
-               Node.class, "tail");
+   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> tailUpdater =
+         new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class, Node.class,
+               "tail");
 
-   static final AtomicIntegerFieldUpdater<Node> waitStatusUpdater = AtomicIntegerFieldUpdater
-         .newUpdater(Node.class, "waitStatus");
+   static final UnsafeIntegerFieldUpdater<Node> waitStatusUpdater =
+         new UnsafeIntegerFieldUpdater<>(Node.class, "waitStatus");
 
-   static final AtomicReferenceFieldUpdater<Node, Node> nextUpdater = AtomicReferenceFieldUpdater
-         .newUpdater(Node.class, Node.class, "next");
+   static final UnsafeReferenceFieldUpdater<Node, Node> nextUpdater =
+         new UnsafeReferenceFieldUpdater<>(Node.class, Node.class, "next");
 
    /**
     * Creates a new instance with initial synchronization state of {@code null}.

@@ -3,6 +3,8 @@ package com.apriori.concurrent;
 import static com.apriori.concurrent.ManagedBlockers.managedBlockFor;
 import static com.apriori.concurrent.ManagedBlockers.managedBlockUninterruptiblyFor;
 
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -17,7 +19,6 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
@@ -747,8 +748,8 @@ public class HierarchicalLock implements Serializable {
       private static final long STAMP_MASK = 0xffffc00000000000L;
       private static final long STAMP_UNIT = 0x0000400000000000L;
       
-      private static final AtomicReferenceFieldUpdater<Sync, HolderNode> holdersUpdater =
-            AtomicReferenceFieldUpdater.newUpdater(Sync.class, HolderNode.class, "holders");
+      private static final UnsafeReferenceFieldUpdater<Sync, HolderNode> holdersUpdater =
+            new UnsafeReferenceFieldUpdater<>(Sync.class, HolderNode.class, "holders");
       
       private static long exclusiveCount(long state) {
          return (state & EXCLUSIVE_MASK) >>> EXCLUSIVE_SHIFT;

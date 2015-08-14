@@ -353,7 +353,7 @@ public class TypesTest {
             long.class, float.class, double.class, void.class };
       for (int i = 0; i < primitives.length; i++) {
          for (int j = 0; j < primitives.length; j++) {
-            assertEquals(i == j, Types.isAssignable(primitives[i], primitives[j]));
+            assertEquals(i == j, Types.isAssignableStrict(primitives[i], primitives[j]));
          }
       }
       // other raw types assignable if compatible (just like Class.isAssignableFrom)
@@ -500,12 +500,12 @@ public class TypesTest {
     * that wildcards and type variables that extend the {@code from} are also assignable.
     */
    private void assertIsAssignable(Type to, Type from) {
-      assertTrue(Types.isAssignable(to, from));
+      assertTrue(Types.isAssignableStrict(to, from));
       // if we can, check that wildcard or type var that extends given type is also assignable
       // (can't have a wildcard or type var that extends a primitive or other wildcard)
       if (!Types.isPrimitive(from) && !(from instanceof WildcardType)) {
-         assertTrue(Types.isAssignable(to, Types.newExtendsWildcardType(from)));
-         assertTrue(Types.isAssignable(to, fabricateTypeVarThatExtends(from)));
+         assertTrue(Types.isAssignableStrict(to, Types.newExtendsWildcardType(from)));
+         assertTrue(Types.isAssignableStrict(to, fabricateTypeVarThatExtends(from)));
       }
       // if we can, do similar check for arrays of the given types (cannot create arrays of
       // wildcard type, void, or unknown type impls)
@@ -517,9 +517,9 @@ public class TypesTest {
          Type toArray = to instanceof Class
                ? Types.getArrayType((Class<?>) to)
                : Types.newGenericArrayType(to);
-         assertTrue(Types.isAssignable(toArray, fromArray));
-         assertTrue(Types.isAssignable(toArray, Types.newExtendsWildcardType(fromArray)));
-         assertTrue(Types.isAssignable(toArray, fabricateTypeVarThatExtends(fromArray)));
+         assertTrue(Types.isAssignableStrict(toArray, fromArray));
+         assertTrue(Types.isAssignableStrict(toArray, Types.newExtendsWildcardType(fromArray)));
+         assertTrue(Types.isAssignableStrict(toArray, fabricateTypeVarThatExtends(fromArray)));
       }
    }
 
@@ -529,14 +529,14 @@ public class TypesTest {
     * assignable.
     */
    private void assertIsNotAssignable(Type to, Type from) {
-      assertFalse(Types.isAssignable(to, from));
+      assertFalse(Types.isAssignableStrict(to, from));
       if (Types.isPrimitive(from) || from instanceof WildcardType) {
          // no more checks can be made (can't have a wildcard or type var that
          // extends a primitive or wildcard type)
          return;
       }
-      assertFalse(Types.isAssignable(to, Types.newExtendsWildcardType(from)));
-      assertFalse(Types.isAssignable(to, fabricateTypeVarThatExtends(from)));
+      assertFalse(Types.isAssignableStrict(to, Types.newExtendsWildcardType(from)));
+      assertFalse(Types.isAssignableStrict(to, fabricateTypeVarThatExtends(from)));
    }
 
    private Type fabricateTypeVarThatExtends(Type... t) {

@@ -51,10 +51,12 @@ public class ActorThreadPoolTest {
          }
       }
       assertEquals(5, ex.getActiveCount());
+      assertEquals(100, ex.getTaskCount());
       for (Future<?> f : all) {
          f.get();
       }
-      // all tasks done, but they decrement active count concurrently so give them a chance to do so
+      // all tasks done, but the executor threads decrement active count concurrently so give them
+      // a chance to do so
       Thread.sleep(50);
       assertEquals(0, ex.getActiveCount());
       assertTrue(ex.getCurrentPoolSize() >= 3 && ex.getCurrentPoolSize() <= 5);
@@ -63,5 +65,7 @@ public class ActorThreadPoolTest {
       Thread.sleep(300); // give the non-core threads enough time to time out and terminate
       assertEquals(3, ex.getCurrentPoolSize());
       assertEquals(5, ex.getLargestPoolSize());
+      assertEquals(100, ex.getTaskCount());
+      assertEquals(100, ex.getCompletedTaskCount());
    }
 }

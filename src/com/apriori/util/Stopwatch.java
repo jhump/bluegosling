@@ -1,7 +1,8 @@
 package com.apriori.util;
 
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A utility for measuring elapsed time. It can be stopped and restarted and the resulting elapsed
@@ -15,8 +16,8 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 // TODO: tests
 public class Stopwatch {
 
-   private static final AtomicReferenceFieldUpdater<Stopwatch, State> stateUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(Stopwatch.class, State.class, "state");
+   private static final UnsafeReferenceFieldUpdater<Stopwatch, State> stateUpdater =
+         new UnsafeReferenceFieldUpdater<>(Stopwatch.class, State.class, "state");
 
    private static final long[] EMPTY_LAPS = new long[0];
 
@@ -209,7 +210,7 @@ public class Stopwatch {
    }
    
    /**
-    * Queries for the elapased time measured by the stopwatch, in the specified unit.
+    * Queries for the elapsed time measured by the stopwatch, in the specified unit.
     * 
     * @param unit the unit in which measured elapsed time is returned
     * @return the elapsed time, in the specified unit

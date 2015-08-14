@@ -1,8 +1,9 @@
 package com.apriori.concurrent;
 
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A {@link RunnableListenableFuture runnable} future that is also settable. Setting the value or
@@ -24,9 +25,8 @@ public class SettableRunnableFuture<T> extends SettableFuture<T>
       implements RunnableListenableFuture<T> {
 
    @SuppressWarnings("rawtypes")
-   public static final AtomicReferenceFieldUpdater<SettableRunnableFuture, Thread> runnerUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(SettableRunnableFuture.class, Thread.class,
-               "runner");
+   public static final UnsafeReferenceFieldUpdater<SettableRunnableFuture, Thread> runnerUpdater =
+         new UnsafeReferenceFieldUpdater<>(SettableRunnableFuture.class, Thread.class, "runner");
    
    private final Callable<T> task;
    private volatile Thread runner;

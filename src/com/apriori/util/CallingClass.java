@@ -76,12 +76,18 @@ public final class CallingClass {
    }
    
    public static Class<?> getCaller(int additionalStackFramesBack) {
-      return computeCaller(additionalStackFramesBack, (ste, cls) -> cls);
+      if (additionalStackFramesBack < 0) {
+         throw new IllegalArgumentException("Stack frame distance must be non-negative");
+      }
+      return computeCaller(additionalStackFramesBack + 1, (ste, cls) -> cls);
    }
    
    public static Class<?> getCaller(int additionalStackFramesBack,
          Iterable<? extends ClassLoader> classLoaders) {
-      return computeCaller(additionalStackFramesBack, classLoaders, (ste, cls) -> cls);
+      if (additionalStackFramesBack < 0) {
+         throw new IllegalArgumentException("Stack frame distance must be non-negative");
+      }
+      return computeCaller(additionalStackFramesBack + 1, classLoaders, (ste, cls) -> cls);
    }
 
    public static StackFrame getCallerStackFrame() {
@@ -93,19 +99,22 @@ public final class CallingClass {
    }
    
    public static StackFrame getCallerStackFrame(int additionalStackFramesBack) {
-      return computeCaller(additionalStackFramesBack, StackFrame::new);
+      if (additionalStackFramesBack < 0) {
+         throw new IllegalArgumentException("Stack frame distance must be non-negative");
+      }
+      return computeCaller(additionalStackFramesBack + 1, StackFrame::new);
    }
    
    public static StackFrame getCallerStackFrame(int additionalStackFramesBack,
          Iterable<? extends ClassLoader> classLoaders) {
-      return computeCaller(additionalStackFramesBack, classLoaders, StackFrame::new);
+      if (additionalStackFramesBack < 0) {
+         throw new IllegalArgumentException("Stack frame distance must be non-negative");
+      }
+      return computeCaller(additionalStackFramesBack + 1, classLoaders, StackFrame::new);
    }
 
    private static <T> T computeCaller(int additionalStackFramesBack,
          BiFunction<StackTraceElement, Class<?>, T> fn) {
-      if (additionalStackFramesBack < 0) {
-         throw new IllegalArgumentException("Stack frame distance must be non-negative");
-      }
       ClassLoader cl1 = Thread.currentThread().getContextClassLoader();
       ClassLoader cl2 = CallingClass.class.getClassLoader();
       Iterable<ClassLoader> cls;
@@ -122,9 +131,6 @@ public final class CallingClass {
    private static <T> T computeCaller(int additionalStackFramesBack,
          Iterable<? extends ClassLoader> classLoaders,
          BiFunction<StackTraceElement, Class<?>, T> fn) {
-      if (additionalStackFramesBack < 0) {
-         throw new IllegalArgumentException("Stack frame distance must be non-negative");
-      }
       StackTraceElement stackTrace[] = Thread.currentThread().getStackTrace();
       // Top of the stack is this method. Next item is this method's caller. So we start with the
       // third item (index = 2) since that is the caller we're interested in.

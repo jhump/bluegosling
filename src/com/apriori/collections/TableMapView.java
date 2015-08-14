@@ -19,7 +19,7 @@ public interface TableMapView<K, V> extends Map<K, V> {
     * the map and vice versa.
     * 
     * <p>Note that if this map is a view that does not allow adding elements then the returned view
-    * will also not allow adding elements. In such a case this method and {@link #get(Object)} will
+    * will also not allow adding elements. In such a case, this method and {@link #get(Object)} will
     * not actually behave differently.
     *
     * @param key the key

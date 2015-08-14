@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
  * return false.
  * 
  * <p>This is implemented using a <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve
- * of Eratosthenese</a>. This implementation is an incremental sieve, so it has no fixed upper
+ * of Eratosthenes</a>. This implementation is an incremental sieve, so it has no fixed upper
  * bound other than being bound by heap space. Generating the {@code n}<sup>th</sup> prime requires
  * <em>O(n)</em> memory, so a lot of memory is required for very large {@code n}.
  * 

@@ -30,6 +30,21 @@ final class Multimaps {
       Collection<V> get(K key);
       boolean put(K key, V value);
       boolean putAll(K key, Iterable<? extends V> values);
+      
+      default boolean putAll(Map<? extends K, ? extends Iterable<? extends V>> mappings) {
+         boolean ret = false;
+         for (Entry<? extends K, ? extends Iterable<? extends V>> entry : mappings.entrySet()) {
+            if (putAll(entry.getKey(), entry.getValue())) {
+               ret = true;
+            }
+         }
+         return ret;
+      }
+      
+      default boolean putAll(Multimap<? extends K, ? extends V> mappings) {
+         return putAll(mappings.asMap());
+      }
+      
       boolean containsKey(Object key);
       boolean containsValue(Object value);
       Collection<V> removeAll(Object key);
@@ -39,9 +54,11 @@ final class Multimaps {
       Set<K> keySet();
       Collection<Entry<K, V>> entries();
       Collection<V> values();
+      @Override boolean equals(Object o);
+      @Override int hashCode();
    }
-
-   static class MapBackedMultimap<K, V, C extends Collection<V>, M extends Map<K, C>>
+   
+   static abstract class MapBackedMultimap<K, V, C extends Collection<V>, M extends Map<K, C>>
        implements Multimap<K, V> {
        
       final M map;

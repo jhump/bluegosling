@@ -234,16 +234,14 @@ final class ReflectionVisitors {
                return ArGenericArrayType.forTypeMirror(mirror);
             }
             @Override public ArType visitDeclared(DeclaredType mirror, Void v) {
-               // TODO: also allow types w/ no args but that are non-static member types enclosed
-               // in types that have args to be represented as parameterized types
-               if (mirror.getTypeArguments().isEmpty()) {
+               if (ArParameterizedType.isParameterized(mirror)) {
+                  return ArParameterizedType.forParameterizedTypeMirror(mirror);
+               } else {
                   ArClass ret = ReflectionVisitors.CLASS_VISITOR.visit(mirror.asElement());
                   if (ret == null) {
                      throw new MirroredTypeException(mirror);
                   }
                   return ret;
-               } else {
-                  return ArParameterizedType.forTypeMirror(mirror);
                }
             }
             @Override public ArType visitTypeVariable(javax.lang.model.type.TypeVariable mirror, Void v) {

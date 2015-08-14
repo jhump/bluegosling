@@ -72,11 +72,11 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
             return;
          }
          shortest = queues.pollFirstEntry();
-         if ((shortest == null || !shortest.getValue().isEmpty()) && tryStartWorker(command)) {
+         if ((shortest == null || shortest.getValue().isEmpty()) && tryStartWorker(command)) {
             return;
          }
          if (shortest == null) {
-            // another thread is 
+            // another thread concurrently started the last worker; try again
             Thread.yield();
             continue;
          }

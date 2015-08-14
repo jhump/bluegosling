@@ -236,7 +236,7 @@ public final class Annotations {
          // not a parameterized type, so any Class value will do
          return classValue;
       } else {
-         if (!Types.isAssignable(returnType,
+         if (!Types.isAssignableStrict(returnType,
                Types.newParameterizedType(Class.class, actualTypeArg))) {
             badClassType(returnType, classValue);
          }

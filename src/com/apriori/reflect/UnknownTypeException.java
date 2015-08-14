@@ -18,6 +18,6 @@ public class UnknownTypeException extends RuntimeException {
    private static final long serialVersionUID = -8130625109889432666L;
 
    public UnknownTypeException(Type t) {
-      super("Unknown type: " + t);
+      super("Unknown type: " + t.getTypeName());
    }
 }

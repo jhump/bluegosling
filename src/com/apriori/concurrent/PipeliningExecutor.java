@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,7 +15,6 @@ import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -51,81 +51,75 @@ import java.util.function.Predicate;
 // TODO: tests
 public class PipeliningExecutor<K> implements SerializingExecutor<K> {
 
+   private static final int DEFAULT_MAX_BATCH_SIZE = 32;
+   private static final Duration DEFAULT_MAX_BATCH_DURATION = Duration.millis(500);
+   
    final Executor executor;
    final ConcurrentMap<K, Pipeline> pipelines = new ConcurrentHashMap<>();
+   final int maxBatchSize;
+   final long maxBatchDurationNanos;
    final Phaser phaser = new Phaser() {
       @Override protected boolean onAdvance(int phase, int registeredParties) {
          return false; // never terminates
       }
    };
-   
+
    /**
     * Constructs a new pipelining executor that uses the specified executor for actually running
-    * tasks. 
+    * tasks. Any given pipeline is allowed to process a batch of up to 32 tasks or process for
+    * up to 500 milliseconds (whichever occurs first) before yielding. 
     *
     * @param executor the executor that will run individual tasks across all pipelines
     */
    public PipeliningExecutor(Executor executor) {
+      this(executor, DEFAULT_MAX_BATCH_SIZE, DEFAULT_MAX_BATCH_DURATION.length(),
+            DEFAULT_MAX_BATCH_DURATION.unit());
+   }
+
+   /**
+    * Constructs a new pipelining executor that uses the specified executor for actually running
+    * tasks and runs up to the given number of tasks in a batch. Any given pipeline is allowed to
+    * process a batch of up to the given number or process for up to 500 milliseconds (whichever
+    * occurs first) before yielding. 
+    *
+    * @param executor the executor that will run individual tasks across all pipelines
+    */
+   public PipeliningExecutor(Executor executor, int maxBatchSize) {
+      this(executor, maxBatchSize, DEFAULT_MAX_BATCH_DURATION.length(),
+            DEFAULT_MAX_BATCH_DURATION.unit());
+   }
+
+   /**
+    * Constructs a new pipelining executor that uses the specified executor for actually running
+    * tasks and runs tasks in batches up to the given duration. Any given pipeline is allowed to
+    * process a batch of up to 32 tasks or process for up to the given duration (whichever occurs
+    * first) before yielding. 
+    *
+    * @param executor the executor that will run individual tasks across all pipelines
+    */
+   public PipeliningExecutor(Executor executor, long maxBatchDuration, TimeUnit unit) {
+      this(executor, DEFAULT_MAX_BATCH_SIZE, maxBatchDuration, unit);
+   }
+
+   /**
+    * Constructs a new pipelining executor that uses the specified executor for actually running
+    * tasks and runs up to the given number of tasks in a batch, for up to the given duration. Any
+    * given pipeline is allowed to process a batch of up to the given number of tasks or process for
+    * up to the given duration (whichever occurs first) before yielding. 
+    *
+    * @param executor the executor that will run individual tasks across all pipelines
+    */
+   public PipeliningExecutor(Executor executor, int maxBatchSize, long maxBatchDuration,
+         TimeUnit unit) {
+      if (maxBatchSize <= 0) {
+         throw new IllegalArgumentException("Max batch size must be positive");
+      }
+      if (maxBatchDuration < 0) {
+         throw new IllegalArgumentException("Max batch duration cannot be negative");
+      }
       this.executor = requireNonNull(executor);
-   }
-   
-   /**
-    * Submits a task for the specified pipeline. The task can run concurrently with other tasks
-    * submitted for different pipelines. It will not execute until all previously submitted tasks
-    * for the same pipeline have completed.
-    * 
-    * <p>If the task is accepted now but then later rejected by the underlying executor, the
-    * returned future will fail and the cause will be a {@link RejectedExecutionException}.
-    *
-    * @param pipelineKey the key that identifies the pipeline
-    * @param task a task
-    * @return a future that represents the completion of the given task
-    * @throws NullPointerException if either the pipeline key or task is null
-    */
-   @Override
-   public <T> ListenableFuture<T> submit(K pipelineKey, Callable<T> task) {
-      SettableRunnableFuture<T> future = new SettableRunnableFuture<>(task);
-      execute(pipelineKey, future);
-      return future;
-   }
-
-   /**
-    * Submits a task for the specified pipeline. The task can run concurrently with other tasks
-    * submitted for different pipelines. It will not execute until all previously submitted tasks
-    * for the same pipeline have completed.
-    * 
-    * <p>If the task is accepted now but then later rejected by the underlying executor, the
-    * returned future will fail and the cause will be a {@link RejectedExecutionException}.
-    *
-    * @param pipelineKey the key that identifies the pipeline
-    * @param task a task
-    * @param result the result of the task when it completes
-    * @return a future that represents the completion of the given task
-    * @throws NullPointerException if either the pipeline key or task is null
-    */
-   @Override
-   public <T> ListenableFuture<T> submit(K pipelineKey, Runnable task, T result) {
-      SettableRunnableFuture<T> future = new SettableRunnableFuture<>(task, result);
-      execute(pipelineKey, future);
-      return future;
-   }
-
-   /**
-    * Submits a task for the specified pipeline. The task can run concurrently with other tasks
-    * submitted for different pipelines. It will not execute until all previously submitted tasks
-    * for the same pipeline have completed.
-    * 
-    * <p>If the task is accepted now but then later rejected by the underlying executor, the
-    * returned future will fail and the cause will be a {@link RejectedExecutionException}.
-    *
-    * @param pipelineKey the key that identifies the pipeline
-    * @param task a task
-    * @return a future that represents the completion of the given task
-    * @throws NullPointerException if either the pipeline key or task is null
-    */
-   @Override
-   public ListenableFuture<Void> submit(K pipelineKey, Runnable task) {
-      return submit(pipelineKey, task, null);
+      this.maxBatchSize = maxBatchSize;
+      this.maxBatchDurationNanos = unit.toNanos(maxBatchDuration);
    }
 
    /**
@@ -158,7 +152,7 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
             Pipeline existing = pipelines.putIfAbsent(pipelineKey,  pipeline);
             if (existing == null) {
                phaser.register();
-               pipeline.run();
+               pipeline.start();
                return;
             }
             pipeline = existing;
@@ -248,7 +242,7 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
     * @return a map of all tasks that were drained, grouped by pipeline key
     */
    public Map<K, List<Runnable>> abortAll() {
-      Map<K, List<Runnable>> aborted = new HashMap<>();
+      Map<K, List<Runnable>> aborted = new HashMap<>(pipelines.size() * 4 / 3);
       for (Iterator<Entry<K, Pipeline>> iter = pipelines.entrySet().iterator();
             iter.hasNext(); ) {
          Entry<K, Pipeline> entry = iter.next();
@@ -359,10 +353,12 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private class Pipeline {
-      private final Queue<Runnable> queue = new ConcurrentLinkedQueue<>();
+      // these two elements are guarded by this object's intrinsic lock
+      private final Queue<Runnable> queue = new LinkedList<>();
+      private Runnable current;
+      
       final CountDownLatch terminated = new CountDownLatch(1);
       private final K pipelineKey;
-      private volatile Runnable current;      
       
       /**
        * Constructs a new pipeline.
@@ -382,44 +378,72 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
        * @return true if the task was enqueued; false if this pipeline is cleaning itself up and
        *       the caller should instead construct and use a new pipeline object
        */
-      boolean enqueue(Runnable task) {
+      synchronized boolean enqueue(Runnable task) {
          if (current == null) {
             return false;
          }
          queue.add(task);
-         // Double-check, in case we were racing with concurrent completion of last task in
-         // the queue. If so, remove the one we just added. Although highly unlikely, it is
-         // possible that the remove could fail, which means the task was already de-queued,
-         // and executed. (If that happened, we can return true to caller.)
-         if (current == null && queue.remove(task)) {
-            return false;
-         }
          return true;
       }
       
+      void start() {
+         runBatch();
+      }
+      
       /**
-       * Runs the current task using the underlying executor. When the task completes, the next
-       * task in the pipeline will become "current" and subsequently run.
+       * Runs the current batch using the underlying executor. When the batch completes, if there
+       * are any remaining tasks, they are scheduled to run in a subsequent batch.
        */
-      void run() {
+      private void runBatch() {
          try {
             executor.execute(() -> {
-               try {
-                  current.run();
-               } finally {
-                  runNext();
+               long nanosStart = System.nanoTime();
+               long nanosEnd = nanosStart + maxBatchDurationNanos;
+               if (nanosEnd < nanosStart) {
+                  // avoid overflow
+                  nanosEnd = Long.MAX_VALUE;
+               } else {
+                  assert nanosEnd > nanosStart || maxBatchDurationNanos == 0;
+               }
+               int taskCount = 0;
+               Runnable c;
+               synchronized (this) {
+                  c = this.current;
+               }
+               assert c != null;
+               while (true) {
+                  try {
+                     c.run();
+                  } catch (Exception e) {
+                     // TODO: log?
+                  }
+                  c = next();
+                  if (c == null) {
+                     return;
+                  }
+                  long now = System.nanoTime();
+                  if (now >= nanosEnd || ++taskCount == maxBatchSize) {
+                     // schedule the rest of the work in another batch and finish
+                     runBatch();
+                     return;
+                  }
                }
             });
          } catch (RejectedExecutionException e) {
-            Runnable failed = current;
-            current = null; // prevents new tasks from being enqueued with this pipeline
+            List<Runnable> failed;
+            synchronized (this) {
+               failed = new ArrayList<>(queue.size() + 1);
+               failed.add(current);
+               failed.addAll(queue);
+               queue.clear();
+               current = null; // prevents new tasks from being enqueued with this pipeline
+            }
             remove(pipelineKey, this);
             terminated.countDown();
-            // exhaust the queue and fail all tasks
-            do {
-               rejectTask(failed, e);
-               failed = queue.poll();
-            } while (failed != null);
+            // fail all tasks
+            for (Runnable r : failed) {
+               rejectTask(r, e);
+            }
          }
       }
       
@@ -430,22 +454,18 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
        * @return the list of tasks that were removed from the pipeline's queue
        */
       List<Runnable> abort() {
-         List<Runnable> aborted = new ArrayList<>();
-         Runnable r;
-         while (true) {
-            r = queue.poll();
-            if (r == null) {
-               break;
-            }
-            if (r instanceof Future) {
-               ((Future<?>) r).cancel(false);
-            }
-            aborted.add(r);
+         List<Runnable> aborted;
+         Runnable c;
+         synchronized (this) {
+            aborted = new ArrayList<>(queue);
+            queue.clear();
+            c = current;
          }
-         r = current;
-         if (r instanceof Future) {
+         if (c instanceof Future) {
             // try to interrupt current task
-            ((Future<?>) r).cancel(true);
+            ((Future<?>) c).cancel(true);
+         } else if (c instanceof Cancellable) {
+            ((Cancellable) c).cancel(true);
          }
          return Collections.unmodifiableList(aborted);
       }
@@ -460,18 +480,23 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
        */
       List<Runnable> purge(Predicate<Runnable> filter) {
          List<Runnable> purged = new ArrayList<>();
-         for (Runnable r : queue) {
-            if (filter.test(r) && queue.remove(r)) {
-               purged.add(r);
+         Runnable c;
+         synchronized (this) {
+            for (Iterator<Runnable> iter = queue.iterator(); iter.hasNext();) {
+               Runnable r = iter.next();
+               if (filter.test(r)) {
+                  iter.remove();
+                  purged.add(r);
+               }
             }
+            c = current;
          }
-         Runnable r = current;
-         if (filter.test(r)) {
+         if (filter.test(c)) {
             // try to interrupt current task if it matches predicate
-            if (r instanceof Future) {
-               ((Future<?>) r).cancel(true);
-            } else if (r instanceof Cancellable) {
-               ((Future<?>) r).cancel(true);
+            if (c instanceof Future) {
+               ((Future<?>) c).cancel(true);
+            } else if (c instanceof Cancellable) {
+               ((Cancellable) c).cancel(true);
             }
          }
          return Collections.unmodifiableList(purged);
@@ -502,14 +527,13 @@ public class PipeliningExecutor<K> implements SerializingExecutor<K> {
       /**
        * Runs the next item in the queue or cleans up this pipeline if the queue is empty.
        */
-      private void runNext() {
+      private synchronized Runnable next() {
          current = queue.poll();
-         if (current != null) {
-            run();
-         } else {
+         if (current == null) {
             remove(pipelineKey, this);
             terminated.countDown();
          }
+         return current;
       }
    }
    

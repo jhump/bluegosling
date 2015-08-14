@@ -170,7 +170,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     *
     * @return a map builder that constructs {@link ConcurrentSkipListMap} instances
     */
-   static <K extends Comparable<K>, V> MapBuilder<K, V, ConcurrentSkipListMap<K, V>, ?> forConcurrentSkipListMap() {
+   static <K extends Comparable<K>, V> MapBuilder<K, V, ConcurrentSkipListMap<K, V>, ?>
+   forConcurrentSkipListMap() {
       return MapBuilder.<K, V, ConcurrentSkipListMap<K, V>>withMapConstructor(
             ConcurrentSkipListMap::new);
    }

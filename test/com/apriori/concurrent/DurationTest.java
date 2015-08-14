@@ -1,11 +1,13 @@
 package com.apriori.concurrent;
 
-import java.util.concurrent.TimeUnit;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import java.math.BigInteger;
+import java.util.concurrent.TimeUnit;
 
 /** Test cases for {@link Duration}. */
 public class DurationTest {
@@ -325,8 +327,55 @@ public class DurationTest {
     assertEquals(Duration.seconds(-Long.MAX_VALUE / 1000 - d2.toSeconds()), d1.minus(d2));
   }
 
-  // TODO: tests for times() and dividedBy()
+  @Test public void times() {
+     Duration d1 = Duration.seconds(100);
+     // simple cases: 0, 1, -1
+     assertEquals(Duration.seconds(0), d1.times(0));
+     assertEquals(d1, d1.times(1));
+     assertEquals(Duration.seconds(-100), d1.times(-1));
+     // larger multiplier
+     assertEquals(Duration.seconds(100_000_000), d1.times(1_000_000));
+  }
+
+  @Test public void times_lessPreciseOnOverflow() {
+     // jump to next unit
+     Duration d = Duration.seconds(10);
+     long expectedLen = BigInteger.valueOf(Long.MAX_VALUE)
+           .multiply(BigInteger.valueOf(10))
+           .divide(BigInteger.valueOf(60)) // convert to min
+           .longValue();
+     assertEquals(Duration.minutes(expectedLen), d.times(Long.MAX_VALUE));
+     // jump multiple units
+     d = Duration.seconds(100);
+     expectedLen = BigInteger.valueOf(Long.MAX_VALUE)
+           .multiply(BigInteger.valueOf(100))
+           .divide(BigInteger.valueOf(60)) // to min
+           .divide(BigInteger.valueOf(60)) // to hr
+           .longValue();
+     assertEquals(Duration.hours(expectedLen), d.times(Long.MAX_VALUE));
+     d = Duration.millis(4_000_000);
+     expectedLen = BigInteger.valueOf(Long.MAX_VALUE)
+           .multiply(BigInteger.valueOf(4_000_000))
+           .divide(BigInteger.valueOf(1000)) // to sec
+           .divide(BigInteger.valueOf(60)) // to min
+           .divide(BigInteger.valueOf(60)) // to hr
+           .divide(BigInteger.valueOf(24)) // to day
+           .longValue();
+     assertEquals(Duration.days(expectedLen), d.times(Long.MAX_VALUE));
+     // clamp to Long.MAX_VALUE days
+     d = Duration.hours(100);
+     assertEquals(Duration.days(Long.MAX_VALUE), d.times(Long.MAX_VALUE));
+     d = Duration.nanos(Long.MIN_VALUE);
+     assertEquals(Duration.days(Long.MAX_VALUE), d.times(Long.MIN_VALUE));
+  }
   
+  @Test public void times_lessPreciseOnUnderflow() {
+     // TODO
+  }
+  
+  // TODO: tests for dividedBy()
+
+
   @Test public void compareTo() {
     for (TimeUnit unit : TimeUnit.values()) {
       Duration least = Duration.of(-123, unit);

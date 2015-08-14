@@ -2,23 +2,29 @@ package com.apriori.concurrent;
 
 import static java.util.Objects.requireNonNull;
 
-import com.apriori.collections.TreiberStack;
+import com.apriori.concurrent.contended.ContendedInteger;
+import com.apriori.concurrent.unsafe.UnsafeLongFieldUpdater;
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.concurrent.atomic.AtomicLongFieldUpdater;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.LockSupport;
@@ -60,12 +66,72 @@ import java.util.function.Consumer;
 public class ActorThreadPool<T> implements SerializingExecutor<T> {
    
    @SuppressWarnings("rawtypes")
-   private static final AtomicLongFieldUpdater<ActorThreadPool> poolSizeLimitsUpdater =
-         AtomicLongFieldUpdater.newUpdater(ActorThreadPool.class, "poolSizeLimits");
-
+   private static UnsafeLongFieldUpdater<ActorThreadPool> poolSizeLimitsUpdater =
+         new UnsafeLongFieldUpdater<>(ActorThreadPool.class, "poolSizeLimits");
+   
    @SuppressWarnings("rawtypes")
-   private static final AtomicLongFieldUpdater<ActorThreadPool> keepAliveUpdater =
-         AtomicLongFieldUpdater.newUpdater(ActorThreadPool.class, "keepAliveNanos");
+   private static UnsafeLongFieldUpdater<ActorThreadPool> keepAliveNanosUpdater =
+         new UnsafeLongFieldUpdater<>(ActorThreadPool.class, "keepAliveNanos");
+   
+   static final int DEFAULT_MAX_BATCH_SIZE = 32;
+   static final Duration DEFAULT_MAX_BATCH_DURATION = Duration.millis(500);
+   static final Duration DEFAULT_KEEP_ALIVE_DURATION = Duration.seconds(30);
+   
+   public static class Builder {
+      private int corePoolSize = Runtime.getRuntime().availableProcessors();
+      private int maximumPoolSize = corePoolSize * 4;
+      private Duration keepAliveDuration = DEFAULT_KEEP_ALIVE_DURATION;
+      private ThreadFactory threadFactory = Executors.defaultThreadFactory();
+      private int maxBatchSize = DEFAULT_MAX_BATCH_SIZE;
+      private Duration maxBatchDuration = DEFAULT_MAX_BATCH_DURATION;
+      
+      Builder() {
+      }
+      
+      public Builder setPoolSize(int poolSize) {
+         return setCorePoolSize(poolSize).setMaximumPoolSize(poolSize);
+      }
+      
+      public Builder setCorePoolSize(int corePoolSize) {
+         this.corePoolSize = corePoolSize;
+         return this;
+      }
+      
+      public Builder setMaximumPoolSize(int maximumPoolSize) {
+         this.maximumPoolSize = maximumPoolSize;
+         return this;
+      }
+      
+      public Builder setKeepAlive(long keepAlive, TimeUnit unit) {
+         this.keepAliveDuration = Duration.of(keepAlive, unit);
+         return this;
+      }
+      
+      public Builder setThreadFactory(ThreadFactory threadFactory) {
+         this.threadFactory = threadFactory;
+         return this;
+      }
+      
+      public Builder setMaxBatchSize(int maxBatchSize) {
+         this.maxBatchSize = maxBatchSize;
+         return this;
+      }
+      
+      public Builder setMaxBatchDuration(long maxBatchDuration, TimeUnit unit) {
+         this.maxBatchDuration = Duration.of(maxBatchDuration, unit);
+         return this;
+      }
+      
+      public <T> ActorThreadPool<T> build() {
+         return new ActorThreadPool<>(corePoolSize, maximumPoolSize, keepAliveDuration.length(),
+               keepAliveDuration.unit(), threadFactory, maxBatchSize, maxBatchDuration.length(),
+               maxBatchDuration.unit());
+      }
+   }
+   
+   public static Builder newBuilder() {
+      return new Builder();
+   }
 
    /**
     * The thread pool's synchronizer. Used as a lock to synchronize removals and additions of
@@ -78,7 +144,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    /**
     * A map of all active actors. Each actors has its own queue of tasks.
     */
-   final ConcurrentMap<T, ActorQueue> actorQueues = new ConcurrentHashMap<>();
+   final ConcurrentMap<T, ActorQueue<T>> actorQueues = new ConcurrentHashMap<>();
    
    /**
     * The count of active threads, incremented and decremented as threads become active or idle.
@@ -89,12 +155,17 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * The total count of tasks submitted to the thread pool.
     */
    final LongAdder taskCount = new LongAdder();
-   
+
    /**
     * The total count of tasks completed.
     */
    final LongAdder completedTaskCount = new LongAdder();
-   
+
+   /**
+    * The total count of batches executed by the thread pool.
+    */
+   final LongAdder batchCount = new LongAdder();
+
    /**
     * The total count of times an idle worker has stolen an actor from another busy worker.
     */
@@ -103,7 +174,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    /**
     * The pool of workers.
     */
-   volatile Worker workers[];
+   volatile Worker<T> workers[];
    
    /**
     * Encodes both {@code corePoolSize} (lower 32 bits) and {@code maximumPoolSize} (upper 32 bits).
@@ -114,7 +185,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    /**
     * Tracks the largest (in number of threads) the pool has ever been.
     */
-   volatile int largestPoolSize;
+   int largestPoolSize;
    
    /**
     * The duration, in nanoseconds, for which idle threads are kept alive. 
@@ -127,20 +198,46 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    volatile ThreadFactory threadFactory;
    
    /**
+    * Maximum batch size when processing tasks for an actor.
+    */
+   final int maxBatchSize;
+   
+   /**
+    * Maximum duration, in nanoseconds, for a single batch.
+    */
+   final long maxBatchDurationNanos;
+   
+   /**
     * Creates a new thread pool with the given size. Idle threads are retained for 30 seconds before
     * terminating. Threads are created using a {@linkplain Executors#defaultThreadFactory() default
-    * thread factory}.
+    * thread factory}. When processing any given actor, a batch will be processed of up to 32 tasks
+    * or for up to 500 milliseconds (whichever occurs first) before moving to a different actor.
+    *
+    * @param poolSize the size of the pool, which is both the core pool size and maximum size
+    */
+   public ActorThreadPool(int poolSize) {
+      this(poolSize, poolSize);
+   }
+
+   /**
+    * Creates a new thread pool with the given size. Idle threads are retained for 30 seconds before
+    * terminating. Threads are created using a {@linkplain Executors#defaultThreadFactory() default
+    * thread factory}. When processing any given actor, a batch will be processed of up to 32 tasks
+    * or for up to 500 milliseconds (whichever occurs first) before moving to a different actor.
     *
     * @param corePoolSize the size of the core pool
     * @param maximumPoolSize the maximum number of threads allowed in the pool
     */
    public ActorThreadPool(int corePoolSize, int maximumPoolSize) {
-      this(corePoolSize, maximumPoolSize, 30, TimeUnit.SECONDS);
+      this(corePoolSize, maximumPoolSize, DEFAULT_KEEP_ALIVE_DURATION.length(),
+            DEFAULT_KEEP_ALIVE_DURATION.unit(), Executors.defaultThreadFactory());
    }
 
    /**
     * Creates a new thread pool with the given size and keep-alive time. Threads are created using a
-    * {@linkplain Executors#defaultThreadFactory() default thread factory}.
+    * {@linkplain Executors#defaultThreadFactory() default thread factory}. When processing any
+    * given actor, a batch will be processed of up to 32 tasks or for up to 500 milliseconds
+    * (whichever occurs first) before moving to a different actor.
     *
     * @param corePoolSize the size of the core pool
     * @param maximumPoolSize the maximum number of threads allowed in the pool
@@ -153,7 +250,26 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    }
 
    /**
-    * Creates a new thread pool with the given size, keep-alive time, and thread factory.
+    * Creates a new thread pool with the given size and thread factory. Idle threads are retained
+    * for 30 seconds before terminating. When processing any given actor, a batch will be processed
+    * of up to 32 tasks or for up to 500 milliseconds (whichever occurs first) before moving to a
+    * different actor.
+    *
+    * @param corePoolSize the size of the core pool
+    * @param maximumPoolSize the maximum number of threads allowed in the pool
+    * @param keepAliveTime the duration for which an idle thread is retained
+    * @param unit the unit for the keep-alive time
+    * @param threadFactory the factory used to create worker threads
+    */
+   public ActorThreadPool(int corePoolSize, int maximumPoolSize, ThreadFactory threadFactory) {
+      this(corePoolSize, maximumPoolSize, DEFAULT_KEEP_ALIVE_DURATION.length(),
+            DEFAULT_KEEP_ALIVE_DURATION.unit(), threadFactory);
+   }
+
+   /**
+    * Creates a new thread pool with the given size, keep-alive time, and thread factory. When
+    * processing any given actor, a batch will be processed of up to 32 tasks or for up to 500
+    * milliseconds (whichever occurs first) before moving to a different actor. 
     *
     * @param corePoolSize the size of the core pool
     * @param maximumPoolSize the maximum number of threads allowed in the pool
@@ -163,6 +279,49 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    public ActorThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
          ThreadFactory threadFactory) {
+      this(corePoolSize, maximumPoolSize, keepAliveTime, unit, threadFactory,
+            DEFAULT_MAX_BATCH_SIZE, DEFAULT_MAX_BATCH_DURATION.length(),
+            DEFAULT_MAX_BATCH_DURATION.unit());
+   }
+   
+   /**
+    * Creates a new thread pool with the given size, keep-alive time, thread factory, and maximum
+    * batch size. When processing any given actor, a batch will be processed of up to the given
+    * number of tasks or for up to 500 milliseconds (whichever occurs first) before moving to a
+    * different actor. 
+    *
+    * @param corePoolSize the size of the core pool
+    * @param maximumPoolSize the maximum number of threads allowed in the pool
+    * @param keepAliveTime the duration for which an idle thread is retained
+    * @param unit the unit for the keep-alive time
+    * @param threadFactory the factory used to create worker threads
+    * @param maxBatchSize the maximum size of a batch of tasks processed for a single worker
+    */
+   public ActorThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
+         ThreadFactory threadFactory, int maxBatchSize) {
+      this(corePoolSize, maximumPoolSize, keepAliveTime, unit, threadFactory, maxBatchSize,
+            DEFAULT_MAX_BATCH_DURATION.length(), DEFAULT_MAX_BATCH_DURATION.unit());
+   }
+
+   /**
+    * Creates a new thread pool with the given size, keep-alive time, thread factory, and maximum
+    * batch size and duration. When processing any given actor, a batch will be processed of up to
+    * the given number of tasks or for up to the given duration (whichever occurs first) before
+    * moving to a different actor. 
+    *
+    * @param corePoolSize the size of the core pool
+    * @param maximumPoolSize the maximum number of threads allowed in the pool
+    * @param keepAliveTime the duration for which an idle thread is retained
+    * @param keepAliveUnit the unit for the keep-alive time
+    * @param threadFactory the factory used to create worker threads
+    * @param maxBatchSize the maximum size of a batch of tasks processed for a single worker
+    * @param maxBatchDuration the maximum duration for processing a batch of tasks for a single
+    *       worker
+    * @param maxBatchDurationUnit the unit for the maximum batch duration
+    */
+   public ActorThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime,
+         TimeUnit keepAliveUnit, ThreadFactory threadFactory, int maxBatchSize,
+         long maxBatchDuration, TimeUnit maxBatchDurationUnit) {
       if (corePoolSize < 0) {
          throw new IllegalArgumentException("corePoolSize must be non-negative");
       }
@@ -175,11 +334,21 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       if (keepAliveTime < 0) {
          throw new IllegalArgumentException("keepAliveTime must be non-negative");
       }
+      if (maxBatchSize <= 0) {
+         throw new IllegalArgumentException("maxBatchSize must be positive");
+      }
+      if (maxBatchDuration < 0) {
+         throw new IllegalArgumentException("maxBatchDuration must be non-negative");
+      }
       requireNonNull(threadFactory);
       this.poolSizeLimits = poolSizeLimits(corePoolSize, maximumPoolSize);
-      this.keepAliveNanos = unit.toNanos(keepAliveTime);
+      this.keepAliveNanos = keepAliveUnit.toNanos(keepAliveTime);
       this.threadFactory = threadFactory;
-      this.workers = new Worker[Math.max(1, corePoolSize)];
+      @SuppressWarnings("unchecked")
+      Worker<T> ws[]= (Worker<T>[]) new Worker<?>[Math.max(1, corePoolSize)];
+      this.workers = ws;
+      this.maxBatchSize = maxBatchSize;
+      this.maxBatchDurationNanos = maxBatchDurationUnit.toNanos(maxBatchDuration);
    }
    
    /**
@@ -197,12 +366,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          if (isShutdown()) {
             throw new RejectedExecutionException();
          }
-         ActorQueue queue = actorQueues.get(t);
+         ActorQueue<T> queue = actorQueues.get(t);
          if (queue == null) {
-            queue = new ActorQueue(this, t, task);
-            ActorQueue existing = actorQueues.putIfAbsent(t, queue);
+            queue = new ActorQueue<>(this, t, task);
+            ActorQueue<T> existing = actorQueues.putIfAbsent(t, queue);
             if (existing == null) {
-               if (assignToWorker(queue)) {
+               if (assignToWorker(queue, null, false)) {
                   taskCount.increment();
                   return;
                } else {
@@ -218,7 +387,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                   // we were racing with shutdown
                   throw new RejectedExecutionException();
                }
-               Worker w = queue.getWorker();
+               Worker<T> w = queue.getWorker();
                // worker could be null if the thread that added first task to the queue is still
                // (concurrently) trying to find a worker to accept the new actor
                if (w == null || !w.tryNotify()) {
@@ -241,10 +410,13 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * thread is added to the pool, and the given actor assigned to it.
     *
     * @param queue the queue for the new actor
+    * @param movingFrom the worker that previously owned the actor or {@code null} if this is a new
+    *       actor
+    * @param force if true the actor is assigned even if the thread pool is shutting down
     * @return true if the actor was assigned to a worker or false if it could not be done due to the
     *       executor shutting down
     */
-   private boolean assignToWorker(ActorQueue queue) {
+   boolean assignToWorker(ActorQueue<T> queue, Worker<T> movingFrom, boolean force) {
       int attemptNumber = 0;
       while (true) {
          if (!prestartCoreThread()) {
@@ -253,25 +425,34 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                return true;
             }
          }
-         if (sync.isShutdown()) {
+         if (!force && sync.isShutdown()) {
             return false;
          }
          // Pick a worker. If an actor's queue is exhausted and then a new task comes in, we create
          // a new queue for it. We want that queue to always end up initially pinned to the same
          // thread to reduce cache misses on the core that runs the task. Since non-core threads are
-         // potentially transient, we only hash the actor to one of the core threads. But if that
-         // preferred thread is busy, we'll find an idle worker instead. (If all threads are busy,
-         // leave it on the preferred thread.)
-         // TODO: wake up an idle thread if preferred core thread is busy
-         Worker ws[] = workers;
+         // potentially transient, we only hash the actor to one of the core threads. But we'll also
+         // try to wake up an idle thread, so if the core thread it gets hashed to is busy, an idle
+         // one can steal it. (If all threads are busy, it will be left on the preferred one.)
+         Worker<T> ws[] = workers;
          int threadCount = Math.min(sync.getThreadCount(), ws.length);
-         int idx = queue.hashCode() % (Math.min(threadCount, getCorePoolSize()));
-         Worker w = ws[idx];
-         if (w != null && w.add(queue, attemptNumber++)) {
-            if (sync.isShutdown() && w.remove(queue)) {
+         int coreSize = Math.min(threadCount, getCorePoolSize());
+         int idx = queue.hashCode() % coreSize;
+         Worker<T> w = ws[idx];
+         while (true) {
+            // don't assign it to the same worker it's coming from
+            if (w == null || w != movingFrom) {
+               break;
+            }
+            idx = (idx + 1) % coreSize;
+            w = ws[idx];
+         }
+         if (w != null && w.add(queue, attemptNumber++, movingFrom)) {
+            if (!force && sync.isShutdown() && w.remove(queue)) {
                // lost the race with concurrent shutdown
                return false;
             }
+            awakeOneWorker(w);
             return true;
          }
       }
@@ -296,7 +477,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          if (threadCount >= getCorePoolSize()) {
             return false;
          }
-         Worker ws[] = workers;
+         Worker<T> ws[] = workers;
          if (threadCount >= ws.length) {
             int newSz = ws.length + (ws.length >> 1);
             if (newSz < ws.length) {
@@ -305,7 +486,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             }
             ws = Arrays.copyOf(ws, newSz);
          }
-         ws[threadCount] = new Worker(this, threadCount, null);
+         ws[threadCount] = new Worker<>(this, threadCount, null);
          workers = ws;
          updateIfLargest(++threadCount);
          return true;
@@ -322,7 +503,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * @return true if a new worker was created or false if the executor is shutting down or the
     *       maximum pool size has already been reached
     */
-   private boolean startNewThread(ActorQueue actor) {
+   private boolean startNewThread(ActorQueue<T> actor) {
       if (sync.getThreadCount() >= getMaximumPoolSize()) {
          return false;
       }
@@ -335,7 +516,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          if (threadCount >= getMaximumPoolSize()) {
             return false;
          }
-         Worker ws[] = workers;
+         Worker<T> ws[] = workers;
          if (threadCount >= ws.length) {
             int newSz = ws.length + (ws.length >> 1);
             if (newSz < ws.length) {
@@ -344,7 +525,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             }
             ws = Arrays.copyOf(ws, newSz);
          }
-         ws[threadCount] = new Worker(this, threadCount, actor);
+         ws[threadCount] = new Worker<>(this, threadCount, actor);
          workers = ws;
          updateIfLargest(++threadCount);
          return true;
@@ -361,9 +542,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    private void updateIfLargest(int threadCount) {
       // we don't need to use CAS because this method is only called while sync is held exclusively
-      int l = largestPoolSize;
-      if (l >= threadCount) {
-         l = threadCount;
+      if (threadCount >= largestPoolSize) {
+         largestPoolSize = threadCount;
       }
    }
 
@@ -495,7 +675,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          throw new IllegalArgumentException("keepAliveTime must be non-negative");
       }
       long newValue = unit.toNanos(keepAliveTime);
-      long oldValue = keepAliveUpdater.getAndSet(this, newValue);
+      long oldValue = keepAliveNanosUpdater.getAndSet(this, newValue);
       if (oldValue < newValue) {
          // keep-alive time has been shrunk, so wake up idle workers to make sure they respect
          // the new keep-alive and terminate sooner if necessary
@@ -511,6 +691,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    public int getActiveCount() {
       long c = activeCount.longValue();
+      assert c > 0;
       assert c <= Integer.MAX_VALUE;
       return (int) c;
    }
@@ -543,6 +724,16 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    public long getCompletedTaskCount() {
       return completedTaskCount.longValue();
+   }
+
+   /**
+    * Returns the total number of batches executed by this executor. Each batch will include at
+    * least one processed task (which may have been cancelled).
+    *
+    * @return the total number of batches processed by this executor
+    */
+   public long getBatchCount() {
+      return batchCount.longValue();
    }
 
    /**
@@ -605,22 +796,20 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * 
     * @return the list of removed tasks that were queued but never executed
     */
-   public List<Runnable> shutdownNow() {
-      ArrayList<Runnable> tasks = null;
+   public Map<T, List<Runnable>> shutdownNow() {
+      Map<T, List<Runnable>> tasks = new HashMap<>(actorQueues.size() * 4 / 3);
       // using a lock so that concurrent calls to shutdownNow results in one call "winning" and
       // getting all tasks vs. letting them race and possibly split the outstanding tasks
       sync.lock();
       try {
          sync.shutdownWhileLocked();
-         tasks = new ArrayList<>((int) Math.max(0, getTaskCount() - getCompletedTaskCount()));
-         for (ActorQueue queue : actorQueues.values()) {
-            queue.drainTo(tasks);
+         for (ActorQueue<T> queue : actorQueues.values()) {
+            tasks.put(queue.actor, queue.drain());
          }
       } finally {
          sync.unlock(sync.getThreadCount());
       }
       forEachWorker(Worker::interrupt);
-      tasks.trimToSize();
       return tasks;
    }
 
@@ -677,11 +866,11 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * in state when the executor is shutdown or when idle threads should terminate after the pool
     * size shrinks (via {@link #setCorePoolSize(int)} or {@link #setMaximumPoolSize(int)}).
     */
-   void forEachWorker(Consumer<Worker> cons) {
+   void forEachWorker(Consumer<Worker<T>> cons) {
       long stamp = sync.getStamp();
       while (true) {
-         Worker ws[] = workers;
-         for (Worker w : ws) {
+         Worker<T> ws[] = workers;
+         for (Worker<T> w : ws) {
             if (w == null) {
                break;
             }
@@ -695,6 +884,52 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          stamp = newStamp; // interference detected, try again
       }
    }
+   
+   /**
+    * Awakens a single worker. This starts at the index after that of the given worker and examines
+    * each one in turn to find one that can be awakened.
+    *
+    * @param start the worker sending the signal; traversal of workers starts adjacent to it
+    */
+   public void awakeOneWorker(Worker<T> start) {
+      long stamp = sync.getStamp();
+      while (true) {
+         Worker<T> ws[] = workers;
+         int s = start.getIndex();
+         if (ws[s] != start || !Sync.validateStamp(stamp)) {
+            // there is a concurrent change to the worker pool in progress; try again
+            Thread.yield();
+            stamp = sync.getStamp();
+            continue;
+         }
+         int len = ws.length;
+         for (int i = s + 1; i != s; i++) {
+            if (i >= len) {
+               i = -1;
+               continue;
+            }
+            Worker<T> w = ws[i];
+            if (w == null) {
+               if (i < s) {
+                  // can't get to loop termination condition because pool has been concurrently
+                  // changed, so break now
+                  break;
+               }
+               i = -1;
+               continue;
+            }
+            if (w != start && w.awake()) {
+               return;
+            }
+         }
+         // double-check stamp because if something changed then we need to try again
+         long newStamp = sync.getStamp();
+         if (newStamp == stamp) {
+            return;
+         }
+         stamp = newStamp;
+      }
+   }
 
    /**
     * Tries to steal an actor from a busy worker so that it can be processed by an idle worker.
@@ -702,10 +937,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * @param stealer the idle worker that wants to steal work
     * @return the stolen task to run or {@code null} if there is no work to steal
     */
-   Runnable tryStealFromOtherWorker(Worker stealer) {
+   ActorQueue<T> tryStealFromOtherWorker(Worker<T> stealer) {
       long stamp = sync.getStamp();
       while (true) {
-         Worker ws[] = workers;
+         Worker<T> ws[] = workers;
          int s = stealer.getIndex();
          if (ws[s] != stealer || !Sync.validateStamp(stamp)) {
             // there is a concurrent change to the worker pool in progress; try again
@@ -719,7 +954,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                i = -1;
                continue;
             }
-            Worker w = ws[i];
+            Worker<T> w = ws[i];
             if (w == null) {
                if (i < s) {
                   // can't get to loop termination condition because pool has been concurrently
@@ -730,9 +965,9 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                continue;
             }
             if (w != stealer) {
-               Runnable r = w.tryStealActor(stealer);
-               if (r != null) {
-                  return r;
+               ActorQueue<T> q = w.tryStealActor(stealer);
+               if (q != null) {
+                  return q;
                }
             }
          }
@@ -751,10 +986,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     * false if a concurrent thread has enqueued a new task for this worker to process.
     *
     * @param w the worker that might be removed
-    * @param wStamp the worker's stamp, used to detect concurrent submission of tasks to the worker
+    * @param wStamp the worker's stamp, used to detect concurrent submission of tasks to the worker,
+    *       or -1 to indicate that the worker should be removed even if a task is concurrently
+    *       submitted
     * @return true if the worker was removed from the pool; false otherwise
     */
-   boolean tryRemoveWorker(Worker w, long wStamp) {
+   boolean tryRemoveWorker(Worker<T> w, long wStamp) {
       if (sync.getThreadCount() <= getCorePoolSize()) {
          return false;
       }
@@ -766,9 +1003,14 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             return false;
          }
          
-         int wIdx = w.tryNullify(wStamp);
-         if (wIdx == -1) {
-            return false;
+         int wIdx;
+         if (wStamp == -1) {
+            wIdx = w.nullify();
+         } else {
+            wIdx = w.tryNullify(wStamp);
+            if (wIdx == -1) {
+               return false;
+            }
          }
          assert wIdx < threadCount && wIdx >= 0;
          assert workers[wIdx] == w;
@@ -777,8 +1019,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             workers[wIdx] = null;
          } else {
             // instead of shuffling array, just swap places with last worker
-            Worker ws[] = workers;
-            Worker last = ws[threadCount];
+            Worker<T> ws[] = workers;
+            Worker<T> last = ws[threadCount];
             int oldIndex = last.move(wIdx);
             assert oldIndex == threadCount;
             // we increment the stamp around these operations so that a concurrent thread that is
@@ -800,7 +1042,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     *
     * @param w the worker thread to remove
     */
-   void removeWorker(Worker w) {
+   void removeWorker(Worker<T> w) {
       sync.lock();
       int threadCount = sync.getThreadCount();
       try {
@@ -810,8 +1052,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             workers[wIdx] = null;
          } else {
             // instead of shuffling array, just swap places with last worker
-            Worker ws[] = workers;
-            Worker last = ws[threadCount];
+            Worker<T> ws[] = workers;
+            Worker<T> last = ws[threadCount];
             int oldIndex = last.move(wIdx);
             assert oldIndex == threadCount: "" + oldIndex + " != " + threadCount;
             // we increment the stamp around these operations so that a concurrent thread that is
@@ -851,9 +1093,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       private static final long STAMP_INC =         0x0000000100000000L;
       private static final long STAMP_SHIFT = 32;
 
-      // We don't actually need to use a mask since we can just use narrowing conversion from
-      // long to int.
-      //private static final long THREAD_COUNT_MASK = 0x00000000ffffffffL;
+      // We don't define a THREAD_COUNT_MASK because a narrowing conversion from long to int
+      // suffices to mask away the high bits.
       
       // arguments for #acquire(long)
       private static final long MODE_LOCK = 1;
@@ -864,7 +1105,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * synchronizers waiter nodes because those are FIFO waiters to acquire the sync (as a lock).
        * These threads aren't waiting for that, so mixing them can lead to liveness problems. 
        */
-      final TreiberStack<Thread> terminateWaiters = new TreiberStack<>();
+      final Queue<Thread> terminateWaiters = new ConcurrentLinkedQueue<>();
       
       Sync() {
       }
@@ -1133,7 +1374,11 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class ActorQueue implements Runnable {
+   private static class ActorQueue<T> {
+      
+      @SuppressWarnings("rawtypes")
+      private static UnsafeReferenceFieldUpdater<ActorQueue, Worker> workerUpdater =
+            new UnsafeReferenceFieldUpdater<>(ActorQueue.class, Worker.class, "worker");
       
       private enum TaskResult {
          /**
@@ -1156,17 +1401,23 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       private static final int STATE_RUNNING =    0x40000000;
       private static final int STATE_COUNT_MASK = 0x3fffffff;
       
-      private static final AtomicIntegerFieldUpdater<ActorQueue> stateUpdater =
-            AtomicIntegerFieldUpdater.newUpdater(ActorQueue.class, "state");
-      private static final AtomicReferenceFieldUpdater<ActorQueue, Worker> workerUpdater =
-            AtomicReferenceFieldUpdater.newUpdater(ActorQueue.class, Worker.class, "worker");
-      
+      /**
+       * The thread pool that processes tasks in this actor queue.
+       */
       private final ActorThreadPool<?> owner;
-      private final Object actor;
+      
+      /**
+       * The actor to which this queue belongs.
+       */
+      final T actor;
+      
+      /**
+       * The actual queue of tasks.
+       */
       private final ConcurrentLinkedDeque<Runnable> tasks = new ConcurrentLinkedDeque<>();
-      private volatile int state;
+      private final ContendedInteger state = new ContendedInteger();
       private Runnable current;
-      private volatile Worker worker;
+      private volatile Worker<T> worker;
       
       /**
        * Constructs a new actor queue for the given actor, in the given thread pool, with the given
@@ -1176,18 +1427,16 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @param actor the actor to whose tasks are held in this queue
        * @param initialTask the initial task to enqueue
        */
-      ActorQueue(ActorThreadPool<?> owner, Object actor, Runnable initialTask) {
+      ActorQueue(ActorThreadPool<?> owner, T actor, Runnable initialTask) {
          this.owner = owner;
          this.actor = actor;
-         this.state = 1;
+         this.state.set(1);
          tasks.addLast(initialTask);
       }
       
       @Override
       public int hashCode() {
-         int h = actor.hashCode();
-         
-         return h;
+         return actor.hashCode();
       }
       
       /**
@@ -1201,7 +1450,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        */
       TaskResult nextTask() {
          while (true) {
-            int s = state;
+            int s = state.get();
             if ((s & STATE_REMOVED) != 0) {
                return TaskResult.NO_TASK;
             }
@@ -1210,12 +1459,10 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             }
             if (s != 0) {
                // atomically decrement task count and mark as running
-               if (stateUpdater.compareAndSet(this, s, (s - 1) | STATE_RUNNING)) {
+               if (state.compareAndSet(s, (s - 1) | STATE_RUNNING)) {
                   while (true) {
                      Runnable r = tasks.pollFirst();
                      if (r != null) {
-                        // instead of returning r, we return this so we can properly clean-up
-                        // after task completes
                         this.current = r;
                         return TaskResult.TASK_FOUND;
                      }
@@ -1224,11 +1471,9 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                      Thread.yield();
                   }
                }
-            } else {
-               if (stateUpdater.compareAndSet(this, s, STATE_REMOVED)) {
-                  owner.actorQueues.remove(actor, this);
-                  return TaskResult.NO_TASK;
-               }
+            } else if (state.compareAndSet(s, STATE_REMOVED)) {
+               owner.actorQueues.remove(actor, this);
+               return TaskResult.NO_TASK;
             }
          }
       }
@@ -1238,8 +1483,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * call to {@link #nextTask()}. No further tasks can be de-queued and run until this one
        * completes.
        */
-      @Override
-      public void run() {
+      void runTask() {
          try {
             current.run();
          } finally {
@@ -1247,9 +1491,9 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             current = null;
             // no longer running
             while (true) {
-               int s = state;
+               int s = state.get();
                assert (s & STATE_RUNNING) != 0;
-               if (stateUpdater.compareAndSet(this, s, s & ~STATE_RUNNING)) {
+               if (state.compareAndSet(s, s & ~STATE_RUNNING)) {
                   break;
                }
             }
@@ -1265,14 +1509,14 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        */
       boolean add(Runnable r) {
          while (true) {
-            int s = state;
+            int s = state.get();
             if ((s & STATE_REMOVED) != 0) {
                return false;
             }
             if ((s & STATE_COUNT_MASK) == STATE_COUNT_MASK) {
-               throw new IllegalStateException("Actor queue has too many queued tasks");
+               throw new RejectedExecutionException("Actor queue has too many queued tasks");
             }
-            if (stateUpdater.compareAndSet(this, s, s + 1)) {
+            if (state.compareAndSet(s, s + 1)) {
                break;
             }
          }
@@ -1291,13 +1535,19 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          if (tasks.remove(r)) {
             while (true) {
                // we got it out of the queue, but now we must "un-reserve" its slot
-               int s = state;
+               int s = state.get();
                if ((s & STATE_COUNT_MASK) == 0) {
                   // doh! another thread has "de-queued" the item, so we have to put it back
                   tasks.addLast(r);
                   return false;
                }
-               if (stateUpdater.compareAndSet(this, s, s - 1)) {
+               if (s == 1) {
+                  // if we're removing last item from the queue, expunge it
+                  if (state.compareAndSet(s, STATE_REMOVED)) {
+                     owner.actorQueues.remove(actor, this);
+                     return true;
+                  }
+               } else if (state.compareAndSet(s, s - 1)) {
                   return true;
                }
             }
@@ -1306,19 +1556,24 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       }
       
       /**
-       * Drains the contents of this actor's queue into the given list. On return, this actor's
-       * queue will be empty.
+       * Drains the contents of this actor's queue and returns the contents in a list. On return,
+       * this actor's queue will be empty.
        *
-       * @param list the list into which this actor's queue is drained
+       * @return a list of the pending tasks that were drained
        */
-      void drainTo(List<Runnable> list) {
+      List<Runnable> drain() {
+         ArrayList<Runnable> results = new ArrayList<>();
          while (!tasks.isEmpty()) {
-            // drain from the end
+            // poll from the tail so we don't interfere with a worker processing from the head
             Runnable r = tasks.peekLast();
             if (r != null && remove(r)) {
-               list.add(r);
+               results.add(r);
             }
          }
+         results.trimToSize();
+         // since we polled from the end, it's in reverse order, so fix it up
+         Collections.reverse(results);
+         return results;
       }
 
       /**
@@ -1327,7 +1582,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        *
        * @return this actor's worker thread or {@code null}
        */
-      Worker getWorker() {
+      Worker<T> getWorker() {
          return worker;
       }
 
@@ -1338,7 +1593,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        *
        * @param worker the actor's new worker thread
        */
-      void setWorker(Worker worker) {
+      void setWorker(Worker<T> worker) {
          this.worker = worker;
       }
       
@@ -1350,7 +1605,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @return true if the worker thread was updated; false if the actual value did not match the
        *       expected value
        */
-      boolean compareAndSetWorker(Worker expected, Worker updated) {
+      boolean compareAndSetWorker(Worker<T> expected, Worker<T> updated) {
          return workerUpdater.compareAndSet(this, expected, updated);
       }
    }
@@ -1363,18 +1618,23 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class Worker implements Runnable {
-      private static final AtomicLongFieldUpdater<Worker> workerIndexUpdater =
-            AtomicLongFieldUpdater.newUpdater(Worker.class, "workerIndexAndStamp");
+   private static class Worker<T> implements Runnable {
       
-      private static final long WORKER_STAMP_MASK = 0xffffffff00000000L;
-      private static final long WORKER_STAMP_INC =  0x0000000100000000L;
+      @SuppressWarnings("rawtypes")
+      private static UnsafeLongFieldUpdater<Worker> workerIndexAndStampUpdater =
+            new UnsafeLongFieldUpdater<>(Worker.class, "workerIndexAndStamp");
+
+      private static final long WORKER_PARK_MASK =  0x0000000300000000L;
+      private static final long WORKER_PARKED    =  0x0000000100000000L;
+      private static final long WORKER_UNPARKED  =  0x0000000200000000L;
+      private static final long WORKER_STAMP_MASK = 0xfffffffc00000000L;
+      private static final long WORKER_STAMP_INC =  0x0000000400000000L;
       private static final long WORKER_INDEX_MASK = 0x00000000ffffffffL;
       
-      private final ActorThreadPool<?> owner;
+      private final ActorThreadPool<T> owner;
       private final Thread thread;
-      private final ConcurrentLinkedDeque<ActorQueue> actors = new ConcurrentLinkedDeque<>();
-      private volatile long workerIndexAndStamp; // index in lower 32 bits, stamp in upper 32 bits
+      private final ConcurrentLinkedDeque<ActorQueue<T>> actors = new ConcurrentLinkedDeque<>();
+      private volatile long workerIndexAndStamp;
       
       /**
        * Creates a new worker with the given initial actor to process.
@@ -1382,7 +1642,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @param owner the executor that owns the worker
        * @param actor the initial actor to process
        */
-      Worker(ActorThreadPool<?> owner, int index, ActorQueue actor) {
+      Worker(ActorThreadPool<T> owner, int index, ActorQueue<T> actor) {
          this.owner = owner;
          this.thread = owner.threadFactory.newThread(this);
          if (actor != null) {
@@ -1418,24 +1678,55 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             while (true) {
                boolean shutdown = owner.isShutdown();
                long stamp = workerIndexAndStamp & WORKER_STAMP_MASK;
-               Runnable r = findTask();
-               if (r != null) {
-                  // clear interrupt status before starting next task
-                  Thread.interrupted();
-                  try {
-                     // run the task!
-                     r.run();
-                  } catch (Throwable t) {
+               // clear interrupt status before starting next task
+               Thread.interrupted();
+               ActorQueue<T> q = findActor();
+               if (q != null) {
+                  // process a batch for this actor
+                  int batchSize = 0;
+                  long batchStartNanos = System.nanoTime();
+                  while (true) {
                      try {
-                        thread.getUncaughtExceptionHandler().uncaughtException(thread, t);
-                     } catch (Throwable t2) {
-                        // eek!
-                        t2.printStackTrace();
+                        q.runTask();
+                     } catch (Throwable t) {
+                        try {
+                           thread.getUncaughtExceptionHandler().uncaughtException(thread, t);
+                        } catch (Throwable t2) {
+                           // eek!
+                           t2.printStackTrace();
+                        }
+                     }
+                     lastRunNanos = System.nanoTime();
+                     // if maximum pool size shrank, we may need to shed this worker
+                     if (owner.getCurrentPoolSize() > owner.getMaximumPoolSize()
+                           && owner.tryRemoveWorker(this, -1)) {
+                        while (true) {
+                           ActorQueue<T> actor = actors.poll();
+                           if (actor == null) {
+                              break;
+                           }
+                           boolean assigned = owner.assignToWorker(actor, this, true);
+                           assert assigned;
+                        }
+                        terminated = true;
+                        break;
+                     }
+                     // try to process next task in the batch
+                     if (lastRunNanos - batchStartNanos >= owner.maxBatchDurationNanos
+                           || ++batchSize >= owner.maxBatchSize) {
+                        // at the limit for one batch
+                        break;
+                     }
+                     ActorQueue.TaskResult result = q.nextTask();
+                     if (result != ActorQueue.TaskResult.TASK_FOUND) {
+                        // no next task for this batch
+                        if (result == ActorQueue.TaskResult.NO_TASK) {
+                           actors.remove(q); // clean-up
+                        }
+                        break;
                      }
                   }
-                  lastRunNanos = System.nanoTime();
-                  // TODO: terminate if max size has shrunk and we now need to shed workers
-                  // (requires that this thread unload all of its actors on to other workers)
+                  owner.batchCount.increment();
                } else {
                   // no task ready so we're no longer active
                   owner.activeCount.decrement();
@@ -1444,7 +1735,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                   } else {
                      long idleNanos = System.nanoTime() - lastRunNanos;
                      long nanosLeft = owner.keepAliveNanos - idleNanos;
-                     if (nanosLeft <= 0) {
+                     if (nanosLeft <= 0
+                           || owner.getCurrentPoolSize() > owner.getMaximumPoolSize()) {
                         if (owner.tryRemoveWorker(this, stamp)) {
                            terminated = true;
                            break;
@@ -1455,40 +1747,111 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                      }
                      // clear interrupt status before waiting for next task
                      Thread.interrupted();
+                     // findNext() above will mark this worker as parked if it finds nothing
                      if (nanosLeft == 0) {
                         LockSupport.park();
                      } else {
                         LockSupport.parkNanos(nanosLeft);
                      }
+                     markNotParked();
                      owner.activeCount.increment(); // active again
                   }
                }
             }
          } catch (RuntimeException | Error e) {
             // TODO: here just for testing/debugging
-            e.printStackTrace();
-            throw e;
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            pw.println("Thread: " + Thread.currentThread().getName());
+            e.printStackTrace(pw);
+            pw.close();
+            System.err.println(sw.toString());
+            //throw e;
          } finally {
-            assert actors.isEmpty();
             if (!terminated) {
-               assert owner.isShutdown() && owner.actorQueues.isEmpty(); 
                owner.removeWorker(this);
+               assert owner.isShutdown();
+               // Ideally, we'd also assert that there are no actors in need of workers. But this
+               // can't reliably be done due to races, due to the way actors and workers operate
+               // without locks. We can't even assert that our own set of actors is empty since a
+               // steal could be in-progress (where the actor has been stolen, but is still
+               // attributed to this worker instead of the stealer).
             }
          }
       }
       
       /**
-       * Finds the next task that this worker should process. This de-queues a work item from the
+       * Finds the next actor that this worker should process. This de-queues a work item from the
        * actors that are pinned to this worker. When multiple actors are pinned to a thread, the
        * thread will round-robin over the available actors. If no work is available in the worker's
        * queue, it will try to steal work from another worker thread.
        *
-       * @return the next task to run or {@code null} if no work is available
+       * @return the next actor to process or {@code null} if no work is available
        */
-      private Runnable findTask() {
+      private ActorQueue<T> findActor() {
+         ActorQueue<T> q = doFindActor();
+         if (q != null) {
+            return q;
+         }
+         // Not found? We'll mark ourselves as parked, but we need to try again. Otherwise, a new
+         // submission might have happened while not marked as parked (meaning submitter won't have
+         // attempted to awake us) and we'll miss it.
+         markParked();
+         q = doFindActor();
+         if (q != null) {
+            // Found one! So we can mark ourselves as not parked since we have a task to process.
+            if (markNotParked()) {
+               // if we were awoken while we repeated the search, we need to try to propagate that
+               // unpark to another idle worker, just to make sure we don't miss a chance to steal
+               // on a new submission
+               owner.awakeOneWorker(this);
+            }
+         }
+         return q;
+      }
+      
+      /**
+       * Marks this worker as parked. This is done just before the worker goes idle.
+       */
+      private void markParked() {
+         while (true) {
+            long w = workerIndexAndStamp;
+            assert (w & WORKER_PARK_MASK) == 0;
+            long parked = w | WORKER_PARKED;
+            if (workerIndexAndStampUpdater.compareAndSet(this, w, parked)) {
+               return;
+            }
+         }
+      }
+
+      /**
+       * Marks this worker as not parked. This is done right after the worker wakes up, or if the
+       * worker was prevented from becoming idle.
+       *
+       * @return true if another thread tried to unpark this worker
+       */
+      private boolean markNotParked() {
+         while (true) {
+            long w = workerIndexAndStamp;
+            assert (w & WORKER_PARK_MASK) != 0;
+            long notParked = w & ~WORKER_PARK_MASK;
+            if (workerIndexAndStampUpdater.compareAndSet(this, w, notParked)) {
+               return (w & WORKER_UNPARKED) != 0;
+            }
+         }
+      }
+
+      /**
+       * Searches for an actor to process, looking first in this worker's queue of actors and then
+       * falling back to trying to steal an actor from another worker. On return, the found actor
+       * is ready to run and has already had one of its tasks readied.
+       *
+       * @return the actor to process or {@code null} if there is nothing to process now
+       */
+      private ActorQueue<T> doFindActor() {
          // find a ready task in our own work queue
-         for (Iterator<ActorQueue> iter = actors.iterator(); iter.hasNext(); ) {
-            ActorQueue actor = iter.next();
+         for (Iterator<ActorQueue<T>> iter = actors.iterator(); iter.hasNext(); ) {
+            ActorQueue<T> actor = iter.next();
             ActorQueue.TaskResult result = actor.nextTask();
             if (result == ActorQueue.TaskResult.NO_TASK) {
                iter.remove();
@@ -1511,9 +1874,9 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @param stealer the idle worker that is trying to steal work
        * @return the task that was stolen or {@code null} if nothing is available
        */
-      Runnable tryStealActor(Worker stealer) {
-         for (Iterator<ActorQueue> iter = actors.descendingIterator(); iter.hasNext(); ) {
-            ActorQueue actor = iter.next();
+      ActorQueue<T> tryStealActor(Worker<T> stealer) {
+         for (Iterator<ActorQueue<T>> iter = actors.descendingIterator(); iter.hasNext(); ) {
+            ActorQueue<T> actor = iter.next();
             ActorQueue.TaskResult result = actor.nextTask();
             if (result == ActorQueue.TaskResult.NO_TASK) {
                iter.remove();
@@ -1530,20 +1893,21 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       }
       
       /**
-       * Tries to pin a new actor to this worker. Returns true if the actor was accepted (possibly
+       * Tries to pin an actor to this worker. Returns true if the actor was accepted (possibly
        * by another thread concurrently stealing from this worker). False if the actor was not
        * accepted (because this worker is terminating).
        *
        * @param actor the new actor that this worker should process
        * @param attemptNumber the attempt number for adding this actor to a worker
+       * @param movingFrom the worker that previously owned the actor or {@code null}
        * @return true if the actor is accepted; false if the caller should try adding to another
        *       worker
        */
-      boolean add(ActorQueue actor, int attemptNumber) {
-         if (!actor.compareAndSetWorker(null, this)) {
+      boolean add(ActorQueue<T> actor, int attemptNumber, Worker<T> movingFrom) {
+         if (!actor.compareAndSetWorker(movingFrom, this)) {
             // this actor was concurrently stolen by a different worker (racing with this
             // thread during a previous attempt) 
-            assert attemptNumber > 0;
+            assert movingFrom != null || attemptNumber > 0;
             return true;
          }
          actors.addLast(actor);
@@ -1567,7 +1931,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @param actor the actor to remove from this worker
        * @return true if the remove succeeds
        */
-      boolean remove(ActorQueue actor) {
+      boolean remove(ActorQueue<T> actor) {
          return actors.removeLastOccurrence(actor);
       }
       
@@ -1583,7 +1947,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             if ((i & WORKER_INDEX_MASK) == WORKER_INDEX_MASK) {
                return false; // already nullified
             }
-            if (workerIndexUpdater.compareAndSet(this, i, i + WORKER_STAMP_INC)) {
+            if (workerIndexAndStampUpdater.compareAndSet(this, i, i + WORKER_STAMP_INC)) {
                awake();
                return true;
             }
@@ -1591,12 +1955,29 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       }
       
       /**
-       * Wakes this worker thread up if it is idle and parked.
+       * Wakes this worker thread up if it is idle and parked. Returns false if the thread was not
+       * awakened because it is not idle.
        */
-      void awake() {
+      boolean awake() {
+         while (true) {
+            long w = workerIndexAndStamp;
+            if ((w & WORKER_PARK_MASK) != WORKER_PARKED) {
+               // doesn't need to be awakened
+               return false;
+            }
+            if (((int) w) == -1) {
+               // worker has been "nullified" and is shutting down
+               return false;
+            }
+            long unparked = (w & ~WORKER_PARKED) | WORKER_UNPARKED;
+            if (workerIndexAndStampUpdater.compareAndSet(this, w, unparked)) {
+               break;
+            }
+         }
          LockSupport.unpark(thread);
+         return true;
       }
-      
+
       /**
        * Interrupts this worker thread.
        */
@@ -1617,7 +1998,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                return -1;
             }
             long newIndex = i | WORKER_INDEX_MASK; // set all bits (equivalent to index of -1)
-            if (workerIndexUpdater.compareAndSet(this, i, newIndex)) {
+            if (workerIndexAndStampUpdater.compareAndSet(this, i, newIndex)) {
                return (int) i;
             }
          }
@@ -1632,12 +2013,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          while (true) {
             long i = workerIndexAndStamp;
             long newIndex = i | WORKER_INDEX_MASK; // set all bits (equivalent to index of -1)
-            if (workerIndexUpdater.compareAndSet(this, i, newIndex)) {
+            if (workerIndexAndStampUpdater.compareAndSet(this, i, newIndex)) {
                return (int) i;
             }
          }
       }
-
+      
       /**
        * Moves this worker to the given index
        *
@@ -1648,7 +2029,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          while (true) {
             long i = workerIndexAndStamp;
             long newIndex = (i & ~WORKER_INDEX_MASK) | toIndex;
-            if (workerIndexUpdater.compareAndSet(this, i, newIndex)) {
+            if (workerIndexAndStampUpdater.compareAndSet(this, i, newIndex)) {
                return (int) i;
             }
          }

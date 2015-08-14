@@ -1,6 +1,7 @@
 package com.apriori.generator;
 
 import com.apriori.concurrent.DeadlockException;
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.apriori.vars.Variable;
 import com.apriori.vars.VariableBoolean;
 
@@ -10,7 +11,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.LockSupport;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -300,8 +300,8 @@ public abstract class Generator<T, U, X extends Throwable> {
     */
    private static class Sync<T, U> {
       @SuppressWarnings("rawtypes")
-      private static final AtomicReferenceFieldUpdater<Sync, Thread> CONSUMER =
-            AtomicReferenceFieldUpdater.newUpdater(Sync.class, Thread.class, "consumerThread");
+      private static final UnsafeReferenceFieldUpdater<Sync, Thread> CONSUMER =
+            new UnsafeReferenceFieldUpdater<>(Sync.class, Thread.class, "consumerThread");
       
       volatile Thread producerThread;
       volatile Object producerValue;

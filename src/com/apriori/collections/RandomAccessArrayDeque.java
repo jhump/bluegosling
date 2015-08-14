@@ -32,12 +32,12 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    public RandomAccessArrayDeque() {
       data = new Object[DEFAULT_SIZE];
-      capacity = Integer.MAX_VALUE;
+      capacity = 0;
    }
 
    public RandomAccessArrayDeque(Collection<? extends E> coll) {
       data = new Object[Math.min(MINIMUM_SIZE, coll.size())];
-      capacity = Integer.MAX_VALUE;
+      capacity = 0;
       addAll(coll);
    }
 
@@ -92,22 +92,118 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
    
    @Override
    protected void removeRange(int fromIndex, int toIndex) {
-      // TODO Auto-generated method stub
+      if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
+         throw new IllegalArgumentException("Invalid indices: " + fromIndex + " -> " + toIndex);
+      }
+      if (fromIndex == toIndex) {
+         // nothing to do
+         return;
+      }
+      int h = head, s = size, t = h + s, l = data.length;
+      if (fromIndex == 0 && toIndex == s) {
+         // completely cleared
+         if (t > data.length) {
+            Arrays.fill(data, h, l, null);
+            Arrays.fill(data, 0, t - l, null);
+         } else {
+            Arrays.fill(data, h, t, null);
+         }
+         size = head = 0;
+      } else {
+         int trailingCount = s - toIndex;
+         int numRemoved = toIndex - fromIndex;
+         if (trailingCount > fromIndex) {
+            // fewer items at the head to shift
+            int newH = h + numRemoved;
+            if (newH >= l) {
+               newH -= l;
+            }
+            if (newH + fromIndex <= s) {
+               // new destination range is contiguous
+               if (h + fromIndex <= s) {
+                  // source range is, too! easy
+                  System.arraycopy(data, h, data, newH, fromIndex);
+               } else {
+                  int prefix = s - h;
+                  System.arraycopy(data, 0, data, newH + prefix, fromIndex - prefix);
+                  System.arraycopy(data, h, data, newH, s - h);
+               }
+            } else {
+               // destination range is *not* contiguous
+               if (h + fromIndex <= s) {
+                  // source range is contiguous
+                  int prefix = size - newH;
+                  System.arraycopy(data, h + prefix, data, 0, fromIndex - prefix);
+                  System.arraycopy(data, h, data, newH, prefix);
+               } else {
+                  assert h < newH;
+                  int d = newH - h;
+                  int prefix = s - newH;
+                  int suffix = h + fromIndex - s;
+                  System.arraycopy(data, 0, data, d, suffix);
+                  System.arraycopy(data, s - d, data, 0, d);
+                  System.arraycopy(data, h, data, newH, prefix);
+               }
+            }
+            // nullify removed data
+            if (h < newH) {
+               Arrays.fill(data, h, newH, null);
+            } else {
+               Arrays.fill(data, h, s, null);
+               Arrays.fill(data, 0, newH, null);
+            }
+         } else {
+            // fewer items at the tail to shift
+            int newT = t - numRemoved;
+            if (newT < 0) {
+               newT += l;
+            }
+            if (newT - trailingCount >= 0) {
+               // new destination range is contiguous
+               // TODO
+
+            } else {
+               // source range is contiguous
+               // TODO
+               
+            }
+            // nullify removed data
+            if (newT < t) {
+               Arrays.fill(data, newT, t, null);
+            } else {
+               Arrays.fill(data, newT, s, null);
+               Arrays.fill(data, 0, t, null);
+            }
+            
+         }
+         size -= numRemoved;
+      }
       modCount++;
    }
    
    @Override
    public void clear() {
-      int h = head, s = size, l = data.length;
-      int end = h + s;
-      if (end > l) {
+      int h = head, s = size, l = data.length, t = h + s;
+      if (t > l) {
          Arrays.fill(data, h, l, null);
-         Arrays.fill(data, 0, end - l, null);
+         Arrays.fill(data, 0, t - l, null);
       } else {
-         Arrays.fill(data, h, end, null);
+         Arrays.fill(data, h, t, null);
       }
-      head = size = 0;
+      size = head = 0;
       modCount++;
+   }
+   
+   @Override
+   public boolean addAll(Collection<? extends E> c) {
+      if (c.isEmpty()) {
+         return false;
+      }
+      Object[] a = c.toArray();
+      maybeGrowArray(a.length);
+      // TODO Auto-generated method stub
+      modCount++;
+      return true;
    }
    
    @Override
@@ -115,6 +211,11 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       if (c.isEmpty()) {
          return false;
       }
+      if (size + c.size() > capacity && capacity != 0) {
+         throw new IllegalStateException("deque cannot fit given collection");
+      }
+      Object[] a = c.toArray();
+      maybeGrowArray(a.length);
       // TODO Auto-generated method stub
       modCount++;
       return true;
@@ -156,17 +257,54 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       return ret;
    }
    
+   private void maybeGrowArray(int capacityNeeded) {
+      int l = data.length, s = size, c = capacity;
+      int neededSize = s + capacityNeeded;
+      if (neededSize > c && c != 0) {
+         throw new IllegalStateException("deque cannot fit given elements");
+      }
+      if (neededSize <= l) {
+         return; // nothing to do
+      }
+      int newLen = l * 2; // try doubling
+      if (newLen < l) {
+         // overflow
+         newLen = Integer.MAX_VALUE;
+      }
+      if (newLen < neededSize) {
+         newLen = neededSize;
+      }
+      if (newLen > c && c != 0) { 
+         newLen = c;
+      }
+      Object newData[] = new Object[newLen];
+      int h = head, t = tail();
+      if (h < t) {
+         System.arraycopy(data, h, newData, 0, s);
+      } else {
+         int prefix = l - h;
+         System.arraycopy(data, h, newData, 0, prefix);
+         System.arraycopy(data, 0, newData, prefix, s - prefix);
+      }
+      data = newData;
+      head = 0;
+      modCount++;
+   }
+   
    @Override
    public void add(int index, E element) {
       // TODO Auto-generated method stub
+      maybeGrowArray(1);
+      size++;
       modCount++;
    }
    
    @Override
    public E remove(int index) {
-      // TODO Auto-generated method stub
-      modCount++;
-      return null;
+      @SuppressWarnings("unchecked")
+      E ret = (E) data[computeIndex(index, false)];
+      removeRange(index, index + 1);
+      return ret;
    }
    
    @Override
@@ -188,9 +326,16 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       if (size == capacity && capacity != 0) {
          return false;
       }
-      // TODO Auto-generated method stub
+      maybeGrowArray(1);
+      int h = head - 1;
+      if (h < 0) {
+         h += data.length;
+      }
+      data[h] = e;
+      head = h;
+      size++;
       modCount++;
-      return false;
+      return true;
    }
    
    @Override
@@ -198,7 +343,13 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       if (size == capacity && capacity != 0) {
          return false;
       }
-      // TODO Auto-generated method stub
+      maybeGrowArray(1);
+      int t = head + size, l = data.length;
+      if (t >= l) {
+         t -= l;
+      }
+      data[t] = e;
+      size++;
       modCount++;
       return false;
    }
@@ -224,11 +375,15 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       if (size == 0) {
          return null;
       }
+      int h = head, l = data.length;
       @SuppressWarnings("unchecked")
-      E ret = (E) data[head];
-      if (++head >= data.length) {
-         head -= data.length;
+      E ret = (E) data[h++];
+      
+      if (h >= l) {
+         h -= l;
       }
+      head = h;
+      size--;
       modCount++;
       return ret;
    }
@@ -250,6 +405,7 @@ public class RandomAccessArrayDeque<E> extends AbstractList<E> implements Deque<
       }
       @SuppressWarnings("unchecked")
       E ret = (E) data[tail()];
+      size--;
       modCount++;
       return ret;
    }

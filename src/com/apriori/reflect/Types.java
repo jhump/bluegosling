@@ -531,7 +531,8 @@ public final class Types {
     * corresponds to the given generic type. Annotations inherited from the type's superclass are
     * not included. If no annotations can be found then an empty array is returned.
     * 
-    * <p>If the given type is a wildcard type or a type variable then an empty array is returned.
+    * <p>If the given type is an array type, a wildcard type, or a type variable then an empty
+    * array is returned.
     *
     * @param type the generic type
     * @return annotations that are directly defined on the given type 
@@ -545,9 +546,8 @@ public final class Types {
       } else if (type instanceof ParameterizedType) {
          Class<?> annotatedClass = getRawType(((ParameterizedType) type).getOwnerType());
          return annotatedClass.getDeclaredAnnotations();
-      } else if (type instanceof GenericArrayType) {
-         return Object[].class.getDeclaredAnnotations();
-      } else if (type instanceof WildcardType || type instanceof TypeVariable) {
+      } else if (type instanceof GenericArrayType || type instanceof WildcardType
+            || type instanceof TypeVariable) {
          return EMPTY_ANNOTATIONS;
       } else {
          throw new UnknownTypeException(type);
@@ -655,7 +655,7 @@ public final class Types {
     * @param type a generic type
     * @return a hash code for the given type
     */
-   static final int hashCode(Type type) {
+   public static final int hashCode(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
          return type.hashCode();
@@ -691,7 +691,6 @@ public final class Types {
       return result;
    }
 
-   
    /**
     * Constructs a string representation of the given type. Since the generic type interfaces do not
     * document a {@code toString()} definition, this method can be used to construct a suitable
@@ -700,7 +699,7 @@ public final class Types {
     * @param type a generic type
     * @return a string representation of the given type
     */
-   static String toString(Type type) {
+   public static String toString(Type type) {
       requireNonNull(type);
       StringBuilder sb = new StringBuilder();
       toStringBuilder(type, sb);
@@ -791,7 +790,10 @@ public final class Types {
    /**
     * Determines if one type is assignable to another. This is true when the RHS is a sub-type
     * of the LHS (co-variance). This is effectively the same as {@link Class#isAssignableFrom(Class)
-    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types.
+    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types. To that
+    * end, it returns true if {@code from} can be assigned to {@code to} using either Identity
+    * Conversion (JLS 5.1.1) or Widening Reference Conversion (JLS 5.1.4). See {@link #isAssignable}
+    * (the non-strict form) to instead check for compatibility via Assignment Conversion (JLS 5.2).
     * 
     * <p>For an assignment that would require an unchecked cast, this function returns false, as in
     * this example:
@@ -815,7 +817,7 @@ public final class Types {
     * @param from the RHS of assignment
     * @return true if the assignment is allowed
     */
-   public static boolean isAssignable(Type to, Type from) {
+   public static boolean isAssignableStrict(Type to, Type from) {
       if (requireNonNull(to) == requireNonNull(from)) {
          return true;
       } else if (to instanceof Class && from instanceof Class) {
@@ -827,7 +829,7 @@ public final class Types {
                ? ((WildcardType) from).getUpperBounds()
                : ((TypeVariable<?>) from).getBounds();
          for (Type bound : bounds) {
-            if (isAssignable(to, bound)) {
+            if (isAssignableStrict(to, bound)) {
                return true;
             }
          }
@@ -836,8 +838,11 @@ public final class Types {
       } else if (to instanceof Class) {
          Class<?> toClass = (Class<?>) to;
          if (from instanceof GenericArrayType) {
+            if (toClass == Cloneable.class || toClass == Serializable.class) {
+               return true;
+            }
             GenericArrayType fromArrayType = (GenericArrayType) from;
-            return toClass.isArray() && isAssignable(toClass.getComponentType(),
+            return toClass.isArray() && isAssignableStrict(toClass.getComponentType(),
                   fromArrayType.getGenericComponentType());
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
@@ -887,12 +892,12 @@ public final class Types {
             if (toArg instanceof WildcardType) {
                WildcardType wildcardArg = (WildcardType) toArg;
                for (Type upperBound : wildcardArg.getUpperBounds()) {
-                  if (!isAssignable(upperBound, fromArg)) {
+                  if (!isAssignableStrict(upperBound, fromArg)) {
                      return false;
                   }
                }
                for (Type lowerBound : wildcardArg.getLowerBounds()) {
-                  if (!isAssignable(fromArg, lowerBound)) {
+                  if (!isAssignableStrict(fromArg, lowerBound)) {
                      return false;
                   }
                }
@@ -905,10 +910,10 @@ public final class Types {
          GenericArrayType toArrayType = (GenericArrayType) to;
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
-            return fromClass.isArray() && isAssignable(toArrayType.getGenericComponentType(),
+            return fromClass.isArray() && isAssignableStrict(toArrayType.getGenericComponentType(),
                   fromClass.getComponentType());
          } else if (from instanceof GenericArrayType) {
-            return isAssignable(toArrayType.getGenericComponentType(),
+            return isAssignableStrict(toArrayType.getGenericComponentType(),
                   ((GenericArrayType) from).getGenericComponentType());
          } else {
             return false;
@@ -923,7 +928,7 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignable(bound, from)) {
+            if (!isAssignableStrict(bound, from)) {
                return false;
             }
          }
@@ -939,6 +944,163 @@ public final class Types {
       }
    }
    
+   // TODO: doc!!
+   
+   // JLS 5.2
+   public static boolean isAssignable(Type to, Type from) {
+      // TODO
+      return false;
+   }
+
+   // JLS 4.10.2, 4.10.3 (no sub-typing for primitives)
+   public static boolean isSubtypeStrict(Type aType, Type possibleSubtype) {
+      // TODO
+      return false;
+   }
+
+   private static final Map<Class<?>, Class<?>> PRIMITIVE_DIRECT_SUPERTYPES;
+   private static final Map<Class<?>, Set<Class<?>>> PRIMITIVE_SUBTYPES;
+   static {
+      Map<Class<?>, Class<?>> primitiveSuperTypes = new HashMap<>(8);
+      primitiveSuperTypes.put(byte.class, short.class);
+      primitiveSuperTypes.put(short.class, int.class);
+      primitiveSuperTypes.put(char.class, int.class);
+      primitiveSuperTypes.put(int.class, long.class);
+      primitiveSuperTypes.put(long.class, float.class);
+      primitiveSuperTypes.put(float.class, double.class);
+      PRIMITIVE_DIRECT_SUPERTYPES = Collections.unmodifiableMap(primitiveSuperTypes);
+      
+      Map<Class<?>, Set<Class<?>>> primitiveSubTypes = new HashMap<>(8);
+      Set<Class<?>> subTypes = new HashSet<>(2);
+      subTypes.add(byte.class);
+      primitiveSubTypes.put(short.class, Collections.unmodifiableSet(subTypes));
+      subTypes = new HashSet<>(4);
+      subTypes.add(byte.class);
+      subTypes.add(short.class);
+      subTypes.add(char.class);
+      primitiveSubTypes.put(int.class, Collections.unmodifiableSet(subTypes));
+      subTypes = new HashSet<>(6);
+      subTypes.add(byte.class);
+      subTypes.add(short.class);
+      subTypes.add(char.class);
+      subTypes.add(int.class);
+      primitiveSubTypes.put(long.class, Collections.unmodifiableSet(subTypes));
+      subTypes = new HashSet<>(7);
+      subTypes.add(byte.class);
+      subTypes.add(short.class);
+      subTypes.add(char.class);
+      subTypes.add(int.class);
+      subTypes.add(long.class);
+      primitiveSubTypes.put(float.class, Collections.unmodifiableSet(subTypes));
+      subTypes = new HashSet<>(8);
+      subTypes.add(byte.class);
+      subTypes.add(short.class);
+      subTypes.add(char.class);
+      subTypes.add(int.class);
+      subTypes.add(long.class);
+      subTypes.add(float.class);
+      primitiveSubTypes.put(double.class, Collections.unmodifiableSet(subTypes));
+      PRIMITIVE_SUBTYPES = Collections.unmodifiableMap(primitiveSubTypes);
+   }
+
+   // JLS 4.10
+   public static boolean isSubtype(Type aType, Type possibleSubtype) {
+      if (isSubtypeStrict(aType, possibleSubtype)) {
+         return true;
+      }
+      if (!(aType instanceof Class) || !(possibleSubtype instanceof Class)) {
+         return false;
+      }
+      Class<?> a = (Class<?>) aType;
+      Class<?> b = (Class<?>) possibleSubtype;
+      Set<Class<?>> subTypes = PRIMITIVE_SUBTYPES.get(a);
+      return subTypes != null && subTypes.contains(b);
+   }
+   
+   // JLS 5.1.1: like equals() except that two equal wildcard types are not considered the same
+   public static boolean isSameType(Type a, Type b) {
+      if (requireNonNull(a) == requireNonNull(b)) {
+         return true;
+      } else if (a instanceof Class) {
+         return b instanceof Class && a.equals(b);
+      } else if (a instanceof ParameterizedType) {
+         if (!(b instanceof ParameterizedType)) {
+            return false;
+         }
+         ParameterizedType ptA = (ParameterizedType) a;
+         ParameterizedType ptB = (ParameterizedType) b;
+         Type ownerA = ptA.getOwnerType();
+         Type ownerB = ptB.getOwnerType();
+         if ((ownerA == null) != (ownerB == null)) {
+            return false;
+         }
+         if ((ownerA != null && !isSameType(ownerA, ownerB))
+               || !isSameType(ptA.getRawType(), ptB.getRawType())) {
+            return false;
+         }
+         Type argsA[] = ptA.getActualTypeArguments();
+         Type argsB[] = ptB.getActualTypeArguments();
+         int len = argsA.length;
+         if (len != argsB.length) {
+            return false;
+         }
+         for (int i = 0; i < len; i++) {
+            // Recursive call uses equals() instead of isSameType(), after ruling out wildcards.
+            // If either/both have a wildcard argument, e.g. List<? extends Number>, then they
+            // are not the same type (even with same bounds, since the actual type represented
+            // by the wildcard is unknown). But with the wildcard pushed down further, they can
+            // be the same type. E.g. two types, both List<Class<?>>, are the same type. 
+            if (argsA[i] instanceof WildcardType || argsB[i] instanceof WildcardType
+                  || !equals(argsA[i], argsB[i])) {
+               return false;
+            }
+         }
+         return true;
+      } else if (a instanceof GenericArrayType) {
+         if (!(b instanceof GenericArrayType)) {
+            return false;
+         }
+         GenericArrayType gatA = (GenericArrayType) a;
+         GenericArrayType gatB = (GenericArrayType) b;
+         return isSameType(gatA.getGenericComponentType(), gatB.getGenericComponentType());
+      } else if (a instanceof TypeVariable) {
+         if (!(b instanceof TypeVariable)) {
+            return false;
+         }
+         TypeVariable<?> tvA = (TypeVariable<?>) a;
+         TypeVariable<?> tvB = (TypeVariable<?>) b;
+         // if we know these refer to the same variable on the same declaration, then we don't
+         // need to also check that the type bounds match
+         return tvA.getGenericDeclaration().equals(tvB.getGenericDeclaration())
+               && tvA.getName().equals(tvB.getName());
+      } else if (a instanceof WildcardType) {
+         return false;
+      } else {
+         // WTF?
+         return a.equals(b);
+      }
+   }
+   
+   // JLS 4.10
+   public static Type[] getDirectSupertypes(Type type) {
+      if (type instanceof Class) {
+         Class<?> clazz = (Class<?>) type;
+         if (clazz.isPrimitive()) {
+            Class<?> superType = PRIMITIVE_DIRECT_SUPERTYPES.get(clazz);
+            return superType == null ? EMPTY_TYPES : new Type[] { superType };
+         }
+      }
+      Type superClass = getGenericSuperclass(type);
+      Type[] superInterfaces = getGenericInterfaces(type);
+      if (superClass == null) {
+         return superInterfaces;
+      }
+      Type[] superTypes = new Type[superInterfaces.length + 1];
+      System.arraycopy(superInterfaces, 0, superTypes, 1, superInterfaces.length);
+      superTypes[0] = superClass;
+      return superTypes;
+   }
+
    /**
     * Resolves the given type variable in the context of the given type. For example, if the given
     * type variable is {@code Collection.<E>} and the given type is the parameterized type
@@ -1187,7 +1349,7 @@ public final class Types {
       for (Type bound : variable.getBounds()) {
          // do any substitutions on owner type variables that may be referenced
          bound = replaceTypeVariablesInternal(bound, resolvedVariables);
-         if (!isAssignable(bound, argument)) {
+         if (!isAssignableStrict(bound, argument)) {
             throw new IllegalArgumentException("Argument" + id + ", "
                   + argument.getTypeName() + " does not extend bound "+ bound.getTypeName());
          }
@@ -1685,27 +1847,33 @@ public final class Types {
    private static ParameterizedType newParameterizedTypeInternal(ParameterizedType ownerType,
          Class<?> rawType, List<Type> typeArguments) {
       requireNonNull(rawType);
-      for (Type type : typeArguments) {
+      List<Type> copyOfArguments = new ArrayList<>(typeArguments); // defensive copy
+      for (Type type : copyOfArguments) {
          requireNonNull(type);
       }
-      List<Type> copyOfArguments = new ArrayList<>(typeArguments); // defensive copy
       Type owner;
       if (ownerType != null) {
          if (rawType.getDeclaringClass() != getRawType(ownerType)) {
             throw new IllegalArgumentException("Owner type " + ownerType.getTypeName() + " does not"
                   + " match actual owner of given raw type " + rawType.getTypeName());
-         } else if ((rawType.getModifiers() & Modifier.STATIC) != 0) {
+         } else if (Modifier.isStatic(rawType.getModifiers())) {
             throw new IllegalArgumentException("Given raw type " + rawType.getTypeName()
                   + " is static so cannot have a parameterized owner type");
          }
          owner = ownerType;
+      } else if (typeArguments.isEmpty()) {
+         throw new IllegalArgumentException("Parameterized type must either have type arguments or "
+               + "have a parameterized owner type");
       } else {
-         Class<?> ownerClass = rawType.getDeclaringClass();
-         if (ownerClass != null && !typeArguments.isEmpty()
-               && (rawType.getModifiers() & Modifier.STATIC) == 0
-               && ownerClass.getTypeParameters().length > 0) {
-            throw new IllegalArgumentException("Non-static parameterized type "
-               + rawType.getTypeName() + " must have parameterized owner");
+         Class<?> clazz = rawType;
+         Class<?> ownerClass = null;
+         while (clazz != null && !Modifier.isStatic(clazz.getModifiers())) {
+            ownerClass = clazz.getDeclaringClass();
+            if (ownerClass != null && ownerClass.getTypeParameters().length > 0) {
+               throw new IllegalArgumentException("Non-static parameterized type "
+                  + rawType.getTypeName() + " must have parameterized owner");
+            }
+            clazz = ownerClass;
          }
          owner = ownerClass;
       }

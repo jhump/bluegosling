@@ -22,10 +22,6 @@ public final class SameThreadExecutor implements Executor {
       try {
          command.run();
       } catch (Throwable t) {
-         if (t instanceof InterruptedException) {
-            Thread.currentThread().interrupt();
-         }
-         
          try {
             Thread.currentThread().getUncaughtExceptionHandler()
                   .uncaughtException(Thread.currentThread(), t);

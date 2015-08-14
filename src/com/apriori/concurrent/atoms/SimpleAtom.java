@@ -1,6 +1,7 @@
 package com.apriori.concurrent.atoms;
 
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -18,8 +19,8 @@ public class SimpleAtom<T> extends AbstractSynchronousAtom<T> {
     * The object used to update the value atomically.
     */
    @SuppressWarnings("rawtypes") // cannot use type args with class token
-   private static final AtomicReferenceFieldUpdater<SimpleAtom, Object> updater =
-         AtomicReferenceFieldUpdater.newUpdater(SimpleAtom.class, Object.class, "value");
+   private static final UnsafeReferenceFieldUpdater<SimpleAtom, Object> updater =
+         new UnsafeReferenceFieldUpdater<>(SimpleAtom.class, Object.class, "value");
    
    /**
     * The atom's value.

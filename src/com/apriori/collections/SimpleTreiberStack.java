@@ -1,10 +1,11 @@
 package com.apriori.collections;
 
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A very simple, thread-safe stack. This is a simpler and lighter weight version than
@@ -25,8 +26,8 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 public class SimpleTreiberStack<T> implements Stack<T> {
    
    @SuppressWarnings("rawtypes")
-   private static final AtomicReferenceFieldUpdater<SimpleTreiberStack, Node> headUpdater =
-         AtomicReferenceFieldUpdater.newUpdater(SimpleTreiberStack.class, Node.class, "head");
+   private static final UnsafeReferenceFieldUpdater<SimpleTreiberStack, Node> headUpdater =
+         new UnsafeReferenceFieldUpdater<>(SimpleTreiberStack.class, Node.class, "head");
    
    /**
     * A linked list node that comprises the stack. Due to the limited API (no internal removes),
