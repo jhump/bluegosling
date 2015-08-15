@@ -257,8 +257,6 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     *
     * @param corePoolSize the size of the core pool
     * @param maximumPoolSize the maximum number of threads allowed in the pool
-    * @param keepAliveTime the duration for which an idle thread is retained
-    * @param unit the unit for the keep-alive time
     * @param threadFactory the factory used to create worker threads
     */
    public ActorThreadPool(int corePoolSize, int maximumPoolSize, ThreadFactory threadFactory) {

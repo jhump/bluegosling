@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -164,18 +164,34 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#hashCode-java.lang.reflect.AnnotatedType-">hashCode</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type)</code>
+<div class="block">Computes a hash code for the given generic type.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.AnnotatedType-java.lang.annotation.Annotation...-">newAnnotatedArrayType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;componentType,
                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.AnnotatedType-java.lang.Iterable-">newAnnotatedArrayType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;componentType,
                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedArrayType</code></a> object with the given component type.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.annotation.Annotation...-">newAnnotatedArrayType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;type,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.Iterable-">newAnnotatedArrayType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;type,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.AnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.annotation.Annotation...-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a>&nbsp;ownerType,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;rawType,
@@ -184,7 +200,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a> for a generic enclosed type.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.AnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.Iterable-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a>&nbsp;ownerType,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;rawType,
@@ -193,7 +209,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a> for a generic enclosed type.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.annotation.Annotation...-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;rawType,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&gt;&nbsp;typeArguments,
@@ -201,7 +217,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a> for a generic top-level or static type.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.Iterable-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;rawType,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&gt;&nbsp;typeArguments,
@@ -209,51 +225,81 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a> for a generic top-level or static type.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.annotation.Annotation...-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;type,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.Iterable-">newAnnotatedParameterizedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;type,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.Class-java.lang.annotation.Annotation...-">newAnnotatedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.Class-java.lang.Iterable-">newAnnotatedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.reflect.Type-java.lang.annotation.Annotation...-">newAnnotatedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.reflect.Type-java.lang.Iterable-">newAnnotatedType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedTypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedTypeVariable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedTypeVariable-java.lang.reflect.TypeVariable-java.lang.annotation.Annotation...-">newAnnotatedTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVariable,
                         <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedTypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedTypeVariable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedTypeVariable-java.lang.reflect.TypeVariable-java.lang.Iterable-">newAnnotatedTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVariable,
                         <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.annotation.Annotation...-">newAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;type,
+                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.Iterable-">newAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;type,
+                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newExtendsAnnotatedWildcardType-java.lang.reflect.AnnotatedType-java.lang.annotation.Annotation...-">newExtendsAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;bound,
                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with an upper bound, i.e.&nbsp;<code>? extends T</code>.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newExtendsAnnotatedWildcardType-java.lang.reflect.AnnotatedType-java.lang.Iterable-">newExtendsAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;bound,
                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newSuperAnnotatedWildcardType-java.lang.reflect.AnnotatedType-java.lang.annotation.Annotation...-">newSuperAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;bound,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</code>
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with a lower bound, i.e.&nbsp;<code>? super T</code>.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#newSuperAnnotatedWildcardType-java.lang.reflect.AnnotatedType-java.lang.Iterable-">newSuperAnnotatedWildcardType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;bound,
                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#replaceTypeVariable-java.lang.reflect.AnnotatedType-java.lang.reflect.TypeVariable-java.lang.reflect.AnnotatedType-">replaceTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type,
                    <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVariable,
@@ -262,7 +308,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  with a given value for that variable.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#replaceTypeVariables-java.lang.reflect.AnnotatedType-java.util.Map-">replaceTypeVariables</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type,
                     <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&gt;&nbsp;typeVariables)</code>
@@ -270,7 +316,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  with the given mapped values.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#resolveSuperType-java.lang.reflect.AnnotatedType-java.lang.Class-">resolveSuperType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type,
                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superClass)</code>
@@ -278,18 +324,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  class token.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#resolveType-java.lang.reflect.AnnotatedType-java.lang.reflect.Type-">resolveType</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;context,
            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;typeToResolve)</code>
 <div class="block">Resolves the given type in the context of another type.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#resolveTypeVariable-java.lang.reflect.AnnotatedType-java.lang.reflect.TypeVariable-">resolveTypeVariable</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;context,
                    <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;variable)</code>
 <div class="block">Resolves the given type variable in the context of the given type.</div>
+</td>
+</tr>
+<tr id="i33" class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/AnnotatedTypes.html#toString-java.lang.reflect.AnnotatedType-">toString</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type)</code>
+<div class="block">Constructs a string representation of the given type.</div>
 </td>
 </tr>
 </table>
@@ -396,6 +448,42 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>b</code> - another type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the two given types are equals; false otherwise</dd>
+</dl>
+</li>
+</ul>
+<a name="hashCode-java.lang.reflect.AnnotatedType-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>public static final&nbsp;int&nbsp;hashCode(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type)</pre>
+<div class="block">Computes a hash code for the given generic type. The generic type interfaces do not document
+ <code>equals(Object)</code> or <code>hashCode()</code> definitions. So this method computes a stable
+ hash, regardless of the underlying type implementation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - a generic type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a hash code for the given type</dd>
+</dl>
+</li>
+</ul>
+<a name="toString-java.lang.reflect.AnnotatedType-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;type)</pre>
+<div class="block">Constructs a string representation of the given type. Since the generic type interfaces do not
+ document a <code>toString()</code> definition, this method can be used to construct a suitable
+ string representation, regardless of the underlying type implementation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - a generic type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a string representation of the given type</dd>
 </dl>
 </li>
 </ul>
@@ -541,6 +629,26 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
+<a name="newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.annotation.Annotation...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedArrayType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a>&nbsp;newAnnotatedArrayType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;type,
+                                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedArrayType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedArrayType</a>&nbsp;newAnnotatedArrayType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;type,
+                                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
+</li>
+</ul>
 <a name="newAnnotatedArrayType-java.lang.reflect.AnnotatedType-java.lang.annotation.Annotation...-">
 <!--   -->
 </a>
@@ -601,6 +709,26 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
                                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</pre>
 </li>
 </ul>
+<a name="newAnnotatedType-java.lang.Class-java.lang.annotation.Annotation...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;newAnnotatedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedType-java.lang.Class-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;newAnnotatedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz,
+                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
+</li>
+</ul>
 <a name="newAnnotatedType-java.lang.reflect.Type-java.lang.Iterable-">
 <!--   -->
 </a>
@@ -609,6 +737,26 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>newAnnotatedType</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;newAnnotatedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
                                              <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.annotation.Annotation...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedParameterizedType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a>&nbsp;newAnnotatedParameterizedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;type,
+                                                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedParameterizedType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedParameterizedType</a>&nbsp;newAnnotatedParameterizedType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;type,
+                                                                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
 </li>
 </ul>
 <a name="newAnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.annotation.Annotation...-">
@@ -784,6 +932,26 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>newSuperAnnotatedWildcardType</h4>
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a>&nbsp;newSuperAnnotatedWildcardType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedType</a>&nbsp;bound,
                                                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.annotation.Annotation...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedWildcardType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a>&nbsp;newAnnotatedWildcardType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;type,
+                                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>...&nbsp;annotations)</pre>
+</li>
+</ul>
+<a name="newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.Iterable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newAnnotatedWildcardType</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect">AnnotatedWildcardType</a>&nbsp;newAnnotatedWildcardType(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;type,
+                                                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotations)</pre>
 </li>
 </ul>
 <a name="newAnnotatedTypeVariable-java.lang.reflect.TypeVariable-java.lang.annotation.Annotation...-">

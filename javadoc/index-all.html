@@ -378,13 +378,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/TriConsumer.html#accept-T-U-V-">accept(T, U, V)</a></span> - Method in interface com.apriori.function.<a href="com/apriori/function/TriConsumer.html" title="interface in com.apriori.function">TriConsumer</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/CoreReflectionPrimitiveType.html#accept-javax.lang.model.type.TypeVisitor-P-">accept(TypeVisitor&lt;R, P&gt;, P)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/CoreReflectionPrimitiveType.html" title="class in com.apriori.reflect.model">CoreReflectionPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#acceptsSelector-com.apriori.di.Key-">acceptsSelector(Key&lt;?&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#accumulateAndGet-T-boolean-com.apriori.function.BooleanBinaryOperator-">accumulateAndGet(T, boolean, BooleanBinaryOperator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Atomically updates the field of the given object managed by this updater with the results of
- applying the given function to the current and given values, returning the updated value.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Submits a mutation that will combine the atom's value with the given value, using the given
@@ -393,6 +390,36 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/SynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in interface com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a></dt>
 <dd>
 <div class="block">Combines the atom's value with the given value, using the given function.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#accumulateAndGet-int-java.util.function.IntBinaryOperator-">accumulateAndGet(int, IntBinaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#accumulateAndGet-long-java.util.function.LongBinaryOperator-">accumulateAndGet(long, LongBinaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#accumulateAndGet-V-java.util.function.BinaryOperator-">accumulateAndGet(V, BinaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#accumulateAndGet-T-int-java.util.function.IntBinaryOperator-">accumulateAndGet(T, int, IntBinaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#accumulateAndGet-T-long-java.util.function.LongBinaryOperator-">accumulateAndGet(T, long, LongBinaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#accumulateAndGet-T-V-java.util.function.BinaryOperator-">accumulateAndGet(T, V, BinaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the updated value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#accumulateAndGet-T-java.util.function.BinaryOperator-">accumulateAndGet(T, BinaryOperator&lt;T&gt;)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>
@@ -459,6 +486,10 @@
 <dd>
 <div class="block">A thread pool that runs multiple sequential streams.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-">ActorThreadPool(int)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Creates a new thread pool with the given size.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-int-">ActorThreadPool(int, int)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Creates a new thread pool with the given size.</div>
@@ -467,10 +498,26 @@
 <dd>
 <div class="block">Creates a new thread pool with the given size and keep-alive time.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-int-java.util.concurrent.ThreadFactory-">ActorThreadPool(int, int, ThreadFactory)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Creates a new thread pool with the given size and thread factory.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.ThreadFactory-">ActorThreadPool(int, int, long, TimeUnit, ThreadFactory)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Creates a new thread pool with the given size, keep-alive time, and thread factory.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.ThreadFactory-int-">ActorThreadPool(int, int, long, TimeUnit, ThreadFactory, int)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Creates a new thread pool with the given size, keep-alive time, thread factory, and maximum
+ batch size.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#ActorThreadPool-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.ThreadFactory-int-long-java.util.concurrent.TimeUnit-">ActorThreadPool(int, int, long, TimeUnit, ThreadFactory, int, long, TimeUnit)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Creates a new thread pool with the given size, keep-alive time, thread factory, and maximum
+ batch size and duration.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ActorThreadPool.Builder</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTask.html#actualStartTimeMillis--">actualStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a></dt>
 <dd>
 <div class="block">Returns the actual start time of this invocation, in milliseconds.</div>
@@ -615,6 +662,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/UnrolledLinkedList.html#add-int-E-">add(int, E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">UnrolledLinkedList</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html#add-com.apriori.concurrent.InterceptingExecutor.Interceptor-">add(InterceptingExecutor.Interceptor)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html#add-com.apriori.concurrent.InterceptingExecutor.Decorator-">add(InterceptingExecutor.Decorator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html#add-com.apriori.concurrent.InterceptingExecutorService.Interceptor-">add(InterceptingExecutorService.Interceptor)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html#add-com.apriori.concurrent.InterceptingExecutorService.Decorator-">add(InterceptingExecutorService.Decorator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/EnumType.Builder.html#add-java.lang.String-T-">add(String, T)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/EnumType.Builder.html" title="class in com.apriori.reflect">EnumType.Builder</a></dt>
 <dd>
 <div class="block">Adds an enum value with the given name.</div>
@@ -720,6 +775,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html#addAll-int-java.util.Collection-">addAll(int, Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayDeque.html#addAll-java.util.Collection-">addAll(Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayDeque.html#addAll-int-java.util.Collection-">addAll(int, Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomizedQueue.html#addAll-java.util.Collection-">addAll(Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections">RandomizedQueue</a></dt>
@@ -741,6 +798,24 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TreeList.html#addAll-int-java.util.Collection-">addAll(int, Collection&lt;? extends E&gt;)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/TreeList.html" title="class in com.apriori.collections">TreeList</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#addAndGet-int-">addAndGet(int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#addAndGet-long-">addAndGet(long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#addAndGet-T-int-">addAndGet(T, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value of the field of the given object managed
+ by this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#addAndGet-T-long-">addAndGet(T, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value of the field of the given object managed
+ by this updater.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#addAndGet-byte-">addAndGet(byte)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
 <div class="block">Adds the given amount to the variable.</div>
@@ -945,6 +1020,14 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinkedCycle.html#advanceBy-int-">advanceBy(int)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFailed-java.util.concurrent.Executor-java.lang.Runnable-java.lang.Throwable-">afterFailed(Executor, Runnable, Throwable)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html#afterFailed-java.util.concurrent.ExecutorService-java.util.concurrent.Callable-java.lang.Throwable-">afterFailed(ExecutorService, Callable&lt;?&gt;, Throwable)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutorService.Decorator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFinish-java.util.concurrent.Executor-java.lang.Runnable-">afterFinish(Executor, Runnable)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html#afterFinish-java.util.concurrent.ExecutorService-java.util.concurrent.Callable-T-">afterFinish(ExecutorService, Callable&lt;T&gt;, T)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutorService.Decorator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArRoundEnvironment.html#allClasses--">allClasses()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArRoundEnvironment.html" title="class in com.apriori.apt.reflect">ArRoundEnvironment</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArRoundEnvironment.html#allClasses-java.util.Set-">allClasses(Set&lt;ArClass.Kind&gt;)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArRoundEnvironment.html" title="class in com.apriori.apt.reflect">ArRoundEnvironment</a></dt>
@@ -1136,6 +1219,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Key.html#annotatedWith-java.lang.annotation.Annotation-">annotatedWith(Annotation)</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/Key.html" title="class in com.apriori.di">Key</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">AnnotationMirrors</span></a> - Class in <a href="com/apriori/reflect/model/package-summary.html">com.apriori.reflect.model</a></dt>
+<dd>
+<div class="block">Utility methods for constructing instances of <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/AnnotationMirror.html?is-external=true" title="class or interface in javax.lang.model.element"><code>AnnotationMirror</code></a> and
+ <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/AnnotationValue.html?is-external=true" title="class or interface in javax.lang.model.element"><code>AnnotationValue</code></a>.</div>
+</dd>
 <dt><a href="com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">AnnotationProcessorTestRunner</span></a> - Class in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
 <dd>
 <div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java compiler.</div>
@@ -1510,6 +1598,10 @@
 <dd>
 <div class="block">Returns the corresponding bit mask for this modifier.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html#asInterceptor-java.util.List-">asInterceptor(List&lt;InterceptingExecutor.Decorator&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html#asInterceptor-java.util.List-">asInterceptor(List&lt;InterceptingExecutorService.Decorator&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutorService.Decorator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitStream.html#asIntStream--">asIntStream()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitStream.html" title="interface in com.apriori.collections">BitStream</a></dt>
 <dd>
 <div class="block">Provides a view of this bit stream as an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html?is-external=true" title="class or interface in java.util.stream"><code>IntStream</code></a>.</div>
@@ -1801,15 +1893,6 @@
 <dd>
 <div class="block">Watches an atom for changes to its value.</div>
 </dd>
-<dt><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent"><span class="typeNameLink">AtomicBooleanFieldUpdater</span></a>&lt;<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="type parameter in AtomicBooleanFieldUpdater">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
-<dd>
-<div class="block">A reflection-based utility that enables atomic updates to designated <code>volatile boolean</code>
- fields of designated classes.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#AtomicBooleanFieldUpdater--">AtomicBooleanFieldUpdater()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Protected do-nothing constructor for use by subclasses.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AnnotationSpec.html#attributes--">attributes()</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/AnnotationSpec.html" title="class in com.apriori.di">AnnotationSpec</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PriorityQueues.AutoEntry.html#AutoEntry--">AutoEntry()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/PriorityQueues.AutoEntry.html" title="class in com.apriori.collections">PriorityQueues.AutoEntry</a></dt>
@@ -1874,6 +1957,10 @@
 <div class="block">Awaits the future event, blocking in a manner that cannot be interrupted up to the specified
  amount of time until the event occurs.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#awakeOneWorker-com.apriori.concurrent.ActorThreadPool.Worker-">awakeOneWorker(ActorThreadPool.Worker&lt;T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Awakens a single worker.</div>
+</dd>
 </dl>
 <a name="I:B">
 <!--   -->
@@ -1884,6 +1971,10 @@
 <dd>
 <div class="block">Constructs a new iterator.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html#beforeStart-java.util.concurrent.Executor-java.lang.Runnable-">beforeStart(Executor, Runnable)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html#beforeStart-java.util.concurrent.ExecutorService-java.util.concurrent.Callable-">beforeStart(ExecutorService, Callable&lt;?&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutorService.Decorator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TransformingCollection.Bidi.html#Bidi-java.util.Collection-java.util.function.Function-java.util.function.Function-">Bidi(Collection&lt;I&gt;, Function&lt;? super I, ? extends O&gt;, Function&lt;? super O, ? extends I&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/TransformingCollection.Bidi.html" title="class in com.apriori.collections">TransformingCollection.Bidi</a></dt>
 <dd>
 <div class="block">Constructs a new bidirectional transforming collection.</div>
@@ -2152,6 +2243,12 @@
 <dd>
 <div class="block">Builds the map.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#build--">build()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html#build--">build()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html#build--">build()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#build--">build()</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
 <dd>
 <div class="block">Builds a new <a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>TaskDefinition</code></a> using the current configuration.</div>
@@ -2560,6 +2657,14 @@
 <div class="block">Checks for concurrent modification by examining the underlying map's
  <a href="com/apriori/collections/AbstractNavigableMap.html#modCount"><code>modCount</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/SecureUtils.html#checkPackageAccess-java.lang.Class-">checkPackageAccess(Class&lt;?&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/SecureUtils.html" title="class in com.apriori.reflect">SecureUtils</a></dt>
+<dd>
+<div class="block">Checks package access on the given class.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/SecureUtils.html#checkPackageAccess-java.lang.String-">checkPackageAccess(String)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/SecureUtils.html" title="class in com.apriori.reflect">SecureUtils</a></dt>
+<dd>
+<div class="block">Checks package access on the given classname.</div>
+</dd>
 <dt><a href="com/apriori/choice/Choice.html" title="interface in com.apriori.choice"><span class="typeNameLink">Choice</span></a>&lt;<a href="com/apriori/choice/Choice.html" title="type parameter in Choice">A</a>,<a href="com/apriori/choice/Choice.html" title="type parameter in Choice">B</a>&gt; - Interface in <a href="com/apriori/choice/package-summary.html">com.apriori.choice</a></dt>
 <dd>
 <div class="block">An object that represents a choice between one of a few options.</div>
@@ -2628,6 +2733,8 @@
 <dd>
 <div class="block">Builder pattern for constructing <a href="com/apriori/reflect/ClassHierarchyScanner.html" title="class in com.apriori.reflect"><code>ClassHierarchyScanner</code></a> instances.</div>
 </dd>
+<dt><a href="com/apriori/reflect/ClassLoaders.html" title="class in com.apriori.reflect"><span class="typeNameLink">ClassLoaders</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.html" title="class in com.apriori.collections">AbstractNavigableMap</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.EntrySet.html#clear--">clear()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.EntrySet.html" title="class in com.apriori.collections">AbstractNavigableMap.EntrySet</a></dt>
 <dd>&nbsp;</dd>
@@ -2968,11 +3075,15 @@
 <dd>
 <div class="block">A set of classes for managing mutable thread-safe references.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a> - package com.apriori.concurrent.contended</dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/scheduler/package-summary.html">com.apriori.concurrent.scheduler</a> - package com.apriori.concurrent.scheduler</dt>
 <dd>
 <div class="block">A <a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a> API, which
  provides lots of scheduled task and job management functionality.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a> - package com.apriori.concurrent.unsafe</dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/di/package-summary.html">com.apriori.di</a> - package com.apriori.di</dt>
 <dd>
 <div class="block">An API for dependency injection that relies on static bindings and code generation
@@ -3006,6 +3117,10 @@
 <dt><a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a> - package com.apriori.reflect</dt>
 <dd>
 <div class="block">Utilities to aid in runtime type reflection code, including the use of proxies.</div>
+</dd>
+<dt><a href="com/apriori/reflect/model/package-summary.html">com.apriori.reflect.model</a> - package com.apriori.reflect.model</dt>
+<dd>
+<div class="block">Extensions of elements and type mirrors for use with core reflection.</div>
 </dd>
 <dt><a href="com/apriori/testing/package-summary.html">com.apriori.testing</a> - package com.apriori.testing</dt>
 <dd>
@@ -3165,7 +3280,37 @@
 <div class="block">An accurate and precise comparator of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Delayed.html?is-external=true" title="class or interface in java.util.concurrent"><code>Delayed</code></a> objects that will compare the scheduled
  nano-time if both objects are instances of <a href="com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent"><code>Scheduled</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#compareAndSet-T-boolean-boolean-">compareAndSet(T, boolean, boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#compareAndSet-boolean-boolean-">compareAndSet(boolean, boolean)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#compareAndSet-int-int-">compareAndSet(int, int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#compareAndSet-long-long-">compareAndSet(long, long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#compareAndSet-V-V-">compareAndSet(V, V)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#compareAndSet-T-int-int-">compareAndSet(T, int, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically sets the field of the given object managed by this updater to the given updated
+ value if the current value <code>==</code> the expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#compareAndSet-T-long-long-">compareAndSet(T, long, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically sets the field of the given object managed by this updater to the given updated
+ value if the current value <code>==</code> the expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#compareAndSet-T-V-V-">compareAndSet(T, V, V)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
 <dd>
 <div class="block">Atomically sets the field of the given object managed by this updater to the given updated
  value if the current value <code>==</code> the expected value.</div>
@@ -3177,8 +3322,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#compareTo-com.apriori.concurrent.Duration-">compareTo(Duration)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
-<div class="block">Returns a value less than zero, equal to zero, or greater than zero as this duration is shorter
- than, equal to, or longer than the specified duration.</div>
+<div class="block">Returns a value less than zero, equal to zero, or greater than zero as this duration is
+ shorter than, equal to, or longer than the specified duration.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledFutureTask.html#compareTo-java.util.concurrent.Delayed-">compareTo(Delayed)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
 <dd>&nbsp;</dd>
@@ -3774,6 +3919,58 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#containsVolume-java.lang.Object-">containsVolume(Object)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">ContendedBoolean</span></a> - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>
+<div class="block">Like an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicBoolean.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicBoolean</code></a>, except uses padding to reduce cache contention (aka false-sharing)
+ with writes to nearby memory locations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#ContendedBoolean-boolean-">ContendedBoolean(boolean)</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended"><code>ContendedBoolean</code></a> with the given initial value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#ContendedBoolean--">ContendedBoolean()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended"><code>ContendedBoolean</code></a> with initial value <code>false</code>.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">ContendedInteger</span></a> - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>
+<div class="block">Like an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicInteger.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicInteger</code></a>, except uses padding to reduce cache contention (aka false-sharing)
+ with writes to nearby memory locations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#ContendedInteger-int-">ContendedInteger(int)</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended"><code>ContendedInteger</code></a> with the given initial value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#ContendedInteger--">ContendedInteger()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended"><code>ContendedInteger</code></a> with initial value <code>0</code>.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">ContendedLong</span></a> - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>
+<div class="block">Like an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicLong</code></a>, except uses padding to reduce cache contention (aka false-sharing)
+ with writes to nearby memory locations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#ContendedLong-long-">ContendedLong(long)</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended"><code>ContendedLong</code></a> with the given initial value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#ContendedLong--">ContendedLong()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended"><code>ContendedLong</code></a> with initial value <code>0</code>.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">ContendedReference</span></a>&lt;<a href="com/apriori/concurrent/contended/ContendedReference.html" title="type parameter in ContendedReference">V</a>&gt; - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>
+<div class="block">Like an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReference.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReference</code></a>, except uses padding to reduce cache contention (aka
+ false-sharing) with writes to nearby memory locations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#ContendedReference-V-">ContendedReference(V)</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended"><code>ContendedReference</code></a> with the given initial value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#ContendedReference--">ContendedReference()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Creates a new <a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended"><code>ContendedReference</code></a> with null initial value.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/ContextPropagatingExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ContextPropagatingExecutor</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingExecutor.html#ContextPropagatingExecutor-java.util.concurrent.Executor-java.lang.Iterable-">ContextPropagatingExecutor(Executor, Iterable&lt;ContextPropagator&lt;?&gt;&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingExecutor.html" title="class in com.apriori.concurrent">ContextPropagatingExecutor</a></dt>
@@ -3873,6 +4070,8 @@
 <dd>
 <div class="block">Copies text data by reading from one stream and writing to another.</div>
 </dd>
+<dt><a href="com/apriori/reflect/model/CoreReflectionPrimitiveType.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">CoreReflectionPrimitiveType</span></a> - Class in <a href="com/apriori/reflect/model/package-summary.html">com.apriori.reflect.model</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/CircularBuffer.html#count--">count()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/CircularBuffer.html" title="class in com.apriori.collections">CircularBuffer</a></dt>
 <dd>
 <div class="block">Returns the number of items in the buffer.</div>
@@ -4129,6 +4328,24 @@
 <dd>
 <div class="block">Decorates the given callable, which is the operation (possibly already decorated) for the
  given graph and node.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#decrementAndGet--">decrementAndGet()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#decrementAndGet--">decrementAndGet()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#decrementAndGet-T-">decrementAndGet(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#decrementAndGet-T-">decrementAndGet(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value of the field of the given object managed by
+ this updater.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#decrementAndGet--">decrementAndGet()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
@@ -4503,7 +4720,7 @@
 <dd>
 <div class="block">A level of method visibility, for example <code>public</code>, <code>private</code>, etc.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#dividedBy-int-">dividedBy(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#dividedBy-long-">dividedBy(long)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
 <div class="block">Returns this duration divided by the specified number.</div>
 </dd>
@@ -4608,6 +4825,8 @@
 <dd>
 <div class="block">Gets the current implementation of utility methods relating to elements.</div>
 </dd>
+<dt><a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model"><span class="typeNameLink">Elements</span></a> - Interface in <a href="com/apriori/reflect/model/package-summary.html">com.apriori.reflect.model</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequences.html#empty--">empty()</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/BitSequences.html" title="class in com.apriori.collections">BitSequences</a></dt>
 <dd>
 <div class="block">Returns an empty sequence.</div>
@@ -5921,6 +6140,10 @@
 <dd>
 <div class="block">Returns a <a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a> that corresponds to the specified <a href="com/apriori/apt/reflect/ArType.html" title="interface in com.apriori.apt.reflect"><code>ArType</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypes.html#forType-java.lang.reflect.Type-">forType(Type)</a></span> - Static method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect">ArTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypes.html#forType-java.lang.reflect.Type-javax.lang.model.util.Elements-javax.lang.model.util.Types-">forType(Type, Elements, Types)</a></span> - Static method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect">ArTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#forType-java.lang.reflect.Type-">forType(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Constructs a type token that represents a specified <code>java.lang.reflect.Type</code>.</div>
@@ -6056,6 +6279,12 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Awaitable.html#fromCondition-java.util.concurrent.locks.Condition-java.util.concurrent.locks.Lock-java.util.function.BooleanSupplier-">fromCondition(Condition, Lock, BooleanSupplier)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#fromCoreReflection--">fromCoreReflection()</a></span> - Static method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#fromCoreReflection--">fromCoreReflection()</a></span> - Static method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#fromCoreReflection--">fromCoreReflection()</a></span> - Static method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Cycles.html#fromDeque-java.util.Deque-">fromDeque(Deque&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Cycles.html" title="class in com.apriori.collections">Cycles</a></dt>
 <dd>
 <div class="block">Returns a view of the specified double-ended queue as a cycle.</div>
@@ -6189,6 +6418,12 @@
 <div class="block">Returns a partial function that is backed by a map.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Optionals.html#fromPossible-com.apriori.possible.Possible-">fromPossible(Possible&lt;T&gt;)</a></span> - Static method in class com.apriori.possible.<a href="com/apriori/possible/Optionals.html" title="class in com.apriori.possible">Optionals</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">fromProcessingEnvironment(ProcessingEnvironment)</a></span> - Static method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">fromProcessingEnvironment(ProcessingEnvironment)</a></span> - Static method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">fromProcessingEnvironment(ProcessingEnvironment)</a></span> - Static method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/ScopeSpec.html#fromScoper-com.apriori.di.Scoper-">fromScoper(Scoper)</a></span> - Static method in class com.apriori.di.<a href="com/apriori/di/ScopeSpec.html" title="class in com.apriori.di">ScopeSpec</a></dt>
 <dd>&nbsp;</dd>
@@ -6404,10 +6639,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#get-long-java.util.concurrent.TimeUnit-">get(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#get-T-">get(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Gets the current value held in the field of the given object managed by this updater.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#get--">get()</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Retrieves the current value for this atom.</div>
@@ -6424,6 +6655,22 @@
 <dd>
 <div class="block">Retrieves the current value for this atom.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#get--">get()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Returns the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#get--">get()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Gets the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#get--">get()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Gets the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#get--">get()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Gets the current value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#get--">get()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#get-long-java.util.concurrent.TimeUnit-">get(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
@@ -6436,6 +6683,18 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SameThreadExecutor.html#get--">get()</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SameThreadExecutor.html" title="class in com.apriori.concurrent">SameThreadExecutor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#get-T-">get(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Gets the current value held in the field of the given object managed by this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#get-T-">get(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Gets the current value held in the field of the given object managed by this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#get-T-">get(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Gets the current value held in the field of the given object managed by this updater.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#get-java.lang.Class-">get(Class&lt;? extends T&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#get-com.apriori.di.Key-">get(Key&lt;? extends T&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
@@ -6539,16 +6798,41 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AmbiguousMethodException.html#getAmbiguousDispatchMethods--">getAmbiguousDispatchMethods()</a></span> - Method in exception com.apriori.reflect.<a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect">AmbiguousMethodException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndAccumulate-T-boolean-com.apriori.function.BooleanBinaryOperator-">getAndAccumulate(T, boolean, BooleanBinaryOperator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Atomically updates the field of the given object managed by this updater with the results of
- applying the given function to the current and given values, returning the previous value.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/SynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in interface com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/SynchronousAtom.html" title="interface in com.apriori.concurrent.atoms">SynchronousAtom</a></dt>
 <dd>
 <div class="block">Combines the atom's value with the given value, using the given function.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndAccumulate-int-java.util.function.IntBinaryOperator-">getAndAccumulate(int, IntBinaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndAccumulate-long-java.util.function.LongBinaryOperator-">getAndAccumulate(long, LongBinaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#getAndAccumulate-V-java.util.function.BinaryOperator-">getAndAccumulate(V, BinaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function to the
+ current and given values, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndAccumulate-T-int-java.util.function.IntBinaryOperator-">getAndAccumulate(T, int, IntBinaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndAccumulate-T-long-java.util.function.LongBinaryOperator-">getAndAccumulate(T, long, LongBinaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#getAndAccumulate-T-V-java.util.function.BinaryOperator-">getAndAccumulate(T, V, BinaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function to the current and given values, returning the previous value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#getAndAccumulate-T-java.util.function.BinaryOperator-">getAndAccumulate(T, BinaryOperator&lt;T&gt;)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>
@@ -6587,6 +6871,24 @@
 <dd>
 <div class="block">Accumulates the given value into  the variable using the given function.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndAdd-int-">getAndAdd(int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndAdd-long-">getAndAdd(long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndAdd-T-int-">getAndAdd(T, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value of the field of the given object managed
+ by this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndAdd-T-long-">getAndAdd(T, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically adds the given value to the current value of the field of the given object managed
+ by this updater.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#getAndAdd-byte-">getAndAdd(byte)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
 <div class="block">Adds the given amount to the variable.</div>
@@ -6602,6 +6904,24 @@
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableShort.html#getAndAdd-short-">getAndAdd(short)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableShort.html" title="class in com.apriori.vars">VariableShort</a></dt>
 <dd>
 <div class="block">Adds the given amount to the variable.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndDecrement--">getAndDecrement()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndDecrement--">getAndDecrement()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndDecrement-T-">getAndDecrement(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndDecrement-T-">getAndDecrement(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically decrements by one the current value of the field of the given object managed by
+ this updater.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#getAndDecrement--">getAndDecrement()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
@@ -6619,6 +6939,24 @@
 <dd>
 <div class="block">Decrements the variable by one.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndIncrement--">getAndIncrement()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndIncrement--">getAndIncrement()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndIncrement-T-">getAndIncrement(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndIncrement-T-">getAndIncrement(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#getAndIncrement--">getAndIncrement()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
 <div class="block">Increments the variable by one.</div>
@@ -6635,7 +6973,33 @@
 <dd>
 <div class="block">Increments the variable by one.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndSet-T-boolean-">getAndSet(T, boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#getAndSet-boolean-">getAndSet(boolean)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Atomically sets to the given value and returns the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndSet-int-">getAndSet(int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically sets to the given value and returns the old value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndSet-long-">getAndSet(long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically sets to the given value and returns the old value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#getAndSet-V-">getAndSet(V)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically sets to the given value and returns the old value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndSet-T-int-">getAndSet(T, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically sets the field of the given object managed by this updater to the given value and
+ returns the old value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndSet-T-long-">getAndSet(T, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically sets the field of the given object managed by this updater to the given value and
+ returns the old value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#getAndSet-T-V-">getAndSet(T, V)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
 <dd>
 <div class="block">Atomically sets the field of the given object managed by this updater to the given value and
  returns the old value.</div>
@@ -6676,11 +7040,6 @@
 <dd>
 <div class="block">Sets this variable's value, returning the previously held value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#getAndUpdate-T-com.apriori.function.BooleanUnaryOperator-">getAndUpdate(T, BooleanUnaryOperator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Atomically updates the field of the given object managed by this updater with the results of
- applying the given function, returning the previous value.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate(Function&lt;? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Applies a function to the atom's value.</div>
@@ -6692,6 +7051,36 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/TransactionalAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate(Function&lt;? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a></dt>
 <dd>
 <div class="block">Applies a function to the atom's value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#getAndUpdate-java.util.function.IntUnaryOperator-">getAndUpdate(IntUnaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#getAndUpdate-java.util.function.LongUnaryOperator-">getAndUpdate(LongUnaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#getAndUpdate-java.util.function.UnaryOperator-">getAndUpdate(UnaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#getAndUpdate-T-java.util.function.IntUnaryOperator-">getAndUpdate(T, IntUnaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#getAndUpdate-T-java.util.function.LongUnaryOperator-">getAndUpdate(T, LongUnaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#getAndUpdate-T-java.util.function.UnaryOperator-">getAndUpdate(T, UnaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the previous value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#getAndUpdate-java.util.function.UnaryOperator-">getAndUpdate(UnaryOperator&lt;T&gt;)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>
@@ -6757,6 +7146,10 @@
 <dd>
 <div class="block">Finds the given annotation on the given type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getAnnotationAsMirror-java.lang.annotation.Annotation-">getAnnotationAsMirror(Annotation)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getAnnotationAsValue-java.lang.annotation.Annotation-">getAnnotationAsValue(Annotation)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArAnnotation.html#getAnnotationAttributes--">getAnnotationAttributes()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotation.html" title="class in com.apriori.apt.reflect">ArAnnotation</a></dt>
 <dd>
 <div class="block">Returns the annotation's attributes and values, including undeclared
@@ -6782,6 +7175,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/ScopeSpec.html#getAnnotationSpec--">getAnnotationSpec()</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/ScopeSpec.html" title="class in com.apriori.di">ScopeSpec</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getAnnotationValue-java.lang.Object-">getAnnotationValue(Object)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/testing/InterfaceVerifier.MethodConfiguration.html#getArgumentCloners--">getArgumentCloners()</a></span> - Method in interface com.apriori.testing.<a href="com/apriori/testing/InterfaceVerifier.MethodConfiguration.html" title="interface in com.apriori.testing">InterfaceVerifier.MethodConfiguration</a></dt>
 <dd>
 <div class="block">Returns the list of argument cloners.</div>
@@ -6790,11 +7185,27 @@
 <dd>
 <div class="block">Returns the list of argument verifiers.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getArrayAnnotationValue-java.lang.Object-">getArrayAnnotationValue(Object)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getArrayAnnotationValue-java.lang.Object:A-">getArrayAnnotationValue(Object[])</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getArrayType-java.lang.Class-">getArrayType(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
 <div class="block">Gets the class token that represents an array of the given component type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.Class-">getArrayTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.reflect.AnnotatedArrayType-">getArrayTypeMirror(AnnotatedArrayType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.reflect.GenericArrayType-">getArrayTypeMirror(GenericArrayType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#getBatchCount--">getBatchCount()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
+<dd>
+<div class="block">Returns the total number of batches executed by this executor.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfBoolean.html#getBoolean-int-">getBoolean(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfBoolean.html" title="interface in com.apriori.collections">PrimitiveList.OfBoolean</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getBooleanAnnotationValue-boolean-">getBooleanAnnotationValue(boolean)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypeVariable.html#getBounds--">getBounds()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect">ArTypeVariable</a></dt>
 <dd>
@@ -6807,6 +7218,8 @@
 <div class="block">Retrieves a list element via its associative key.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfByte.html#getByte-int-">getByte(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfByte.html" title="interface in com.apriori.collections">PrimitiveList.OfByte</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getByteAnnotationValue-byte-">getByteAnnotationValue(byte)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#getByteContents--">getByteContents()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
 <dd>
@@ -6837,6 +7250,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/BlasterException.html#getCauses--">getCauses()</a></span> - Method in exception com.apriori.reflect.<a href="com/apriori/reflect/BlasterException.html" title="class in com.apriori.reflect">BlasterException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfChar.html#getChar-int-">getChar(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfChar.html" title="interface in com.apriori.collections">PrimitiveList.OfChar</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getCharAnnotationValue-char-">getCharAnnotationValue(char)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#getCharContent-boolean-">getCharContent(boolean)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
 <dd>&nbsp;</dd>
@@ -6990,6 +7405,8 @@
 <dd>
 <div class="block">Returns the list of declared methods for this class.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getDeclaredTypeMirror-java.lang.Class-">getDeclaredTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getDeclaringClass--">getDeclaringClass()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the enclosing class of which this class is a member.</div>
@@ -7028,9 +7445,13 @@
 <dd>
 <div class="block">Gets the sources from which the specified type is directly derived.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-">getDirectSupertypes(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Caster.html#getDispatchSettings--">getDispatchSettings()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/Caster.html" title="class in com.apriori.reflect">Caster</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfDouble.html#getDouble-int-">getDouble(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfDouble.html" title="interface in com.apriori.collections">PrimitiveList.OfDouble</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getDoubleAnnotationValue-double-">getDoubleAnnotationValue(double)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PriorityQueue.Entry.html#getElement--">getElement()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a></dt>
 <dd>
@@ -7086,6 +7507,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#getEntry-int-">getEntry(int)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getEnumAnnotationValue-java.lang.Enum-">getEnumAnnotationValue(Enum&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getEnumConstantElement-java.lang.Enum-">getEnumConstantElement(Enum&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getEnumConstants--">getEnumConstants()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the list of enum constants for this class.</div>
@@ -7110,6 +7535,8 @@
 <dd>
 <div class="block">Returns a collection containing threads that may be waiting to acquire in exclusive mode.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getExecutableElement-java.lang.reflect.Executable-">getExecutableElement(Executable)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArWildcardType.html#getExtendsBound--">getExtendsBound()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a></dt>
 <dd>
 <div class="block">Returns a bound that the wildcard type must extend.</div>
@@ -7134,6 +7561,8 @@
 <dd>
 <div class="block">Returns the public field with the specified name.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getFieldElement-java.lang.reflect.Field-">getFieldElement(Field)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getFields--">getFields()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the list of all public fields for this class, including those inherited from ancestor
@@ -7199,6 +7628,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfFloat.html#getFloat-int-">getFloat(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfFloat.html" title="interface in com.apriori.collections">PrimitiveList.OfFloat</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getFloatAnnotationValue-float-">getFloatAnnotationValue(float)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Choice.Ops4.html#getFourth--">getFourth()</a></span> - Method in interface com.apriori.choice.<a href="com/apriori/choice/Choice.Ops4.html" title="interface in com.apriori.choice">Choice.Ops4</a></dt>
 <dd>
 <div class="block">Retrieves the value of the fourth option, if it is present.</div>
@@ -7263,6 +7694,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfInt.html#getInt-int-">getInt(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfInt.html" title="interface in com.apriori.collections">PrimitiveList.OfInt</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getIntAnnotationValue-int-">getIntAnnotationValue(int)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getInterfaces--">getInterfaces()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the list of interfaces directly implemented by this class.</div>
@@ -7305,6 +7738,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Binding.TargetInstanceSource.html#getKind--">getKind()</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Binding.TargetInstanceSource.html" title="interface in com.apriori.di">Binding.TargetInstanceSource</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/CoreReflectionPrimitiveType.html#getKind--">getKind()</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/CoreReflectionPrimitiveType.html" title="class in com.apriori.reflect.model">CoreReflectionPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#getLargestPoolSize--">getLargestPoolSize()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Returns the largest observed size of the thread pool.</div>
@@ -7334,6 +7769,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/CallingClass.StackFrame.html#getLocationMethodName--">getLocationMethodName()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/CallingClass.StackFrame.html" title="class in com.apriori.util">CallingClass.StackFrame</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfLong.html#getLong-int-">getLong(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfLong.html" title="interface in com.apriori.collections">PrimitiveList.OfLong</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getLongAnnotationValue-long-">getLongAnnotationValue(long)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#getMaximumPoolSize--">getMaximumPoolSize()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
@@ -7486,6 +7923,8 @@
 <dd>
 <div class="block">Returns the package in which this class is declared.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getPackageElement-java.lang.Package-">getPackageElement(Package)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table3D.html#getPage-P-">getPage(P)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table3D.html" title="interface in com.apriori.collections">Table3D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table4D.html#getPage-S-P-">getPage(S, P)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table4D.html" title="interface in com.apriori.collections">Table4D</a></dt>
@@ -7506,6 +7945,12 @@
 <dd>
 <div class="block">Returns lists of parameter annotations, one list for each parameter.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getParameterElement-java.lang.reflect.Parameter-">getParameterElement(Parameter)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getParameterizedTypeMirror-java.lang.reflect.AnnotatedParameterizedType-">getParameterizedTypeMirror(AnnotatedParameterizedType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getParameterizedTypeMirror-java.lang.reflect.ParameterizedType-">getParameterizedTypeMirror(ParameterizedType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArExecutableMember.html#getParameters--">getParameters()</a></span> - Method in interface com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArExecutableMember.html" title="interface in com.apriori.apt.reflect">ArExecutableMember</a></dt>
 <dd>
 <div class="block">Returns the list of parameters declared for the method or constructor.</div>
@@ -7531,6 +7976,8 @@
 <div class="block">Returns a future that completes with the atom's value once all currently pending operations
  complete.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getPrimitiveTypeMirror-java.lang.Class-">getPrimitiveTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PriorityQueue.Entry.html#getPriority--">getPriority()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a></dt>
 <dd>
 <div class="block">Gets the priority associated with the element in this entry.</div>
@@ -7587,6 +8034,8 @@
 <dd>
 <div class="block">Finds the raw class token that best represents the given type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getReferenceTypeMirror-java.lang.Class-">getReferenceTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#getResult--">getResult()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#getResult--">getResult()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
@@ -7696,6 +8145,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfShort.html#getShort-int-">getShort(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfShort.html" title="interface in com.apriori.collections">PrimitiveList.OfShort</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getShortAnnotationValue-short-">getShortAnnotationValue(short)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/MethodCapturer.html#getSignature--">getSignature()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/MethodCapturer.html" title="class in com.apriori.reflect">MethodCapturer</a></dt>
 <dd>
 <div class="block">Returns the signature of the last method captured.</div>
@@ -7783,6 +8234,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Key.html#getType--">getType()</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/Key.html" title="class in com.apriori.di">Key</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getTypeAnnotationValue-java.lang.Class-">getTypeAnnotationValue(Class&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getTypeElement-java.lang.Class-">getTypeElement(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArGenericArrayType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArGenericArrayType.html" title="class in com.apriori.apt.reflect">ArGenericArrayType</a></dt>
@@ -7796,6 +8251,12 @@
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypeVariable.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypeVariable.html" title="class in com.apriori.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArWildcardType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArWildcardType.html" title="class in com.apriori.apt.reflect">ArWildcardType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getTypeMirror-java.lang.reflect.AnnotatedType-">getTypeMirror(AnnotatedType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getTypeMirror-java.lang.reflect.Type-">getTypeMirror(Type)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getTypeParameterElement-java.lang.reflect.TypeVariable-">getTypeParameterElement(TypeVariable&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#getTypeParameterNamed-java.lang.String-">getTypeParameterNamed(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
@@ -7818,6 +8279,10 @@
 <div class="block">Gets the <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect"><code>TypeVariable</code></a> from the given declaration site (class, method, or constructor)
  for the given name.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getTypeVariableMirror-java.lang.reflect.AnnotatedTypeVariable-">getTypeVariableMirror(AnnotatedTypeVariable)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getTypeVariableMirror-java.lang.reflect.TypeVariable-">getTypeVariableMirror(TypeVariable&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getTypeVariables--">getTypeVariables()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArGenericDeclaration.html#getTypeVariables--">getTypeVariables()</a></span> - Method in interface com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArGenericDeclaration.html" title="interface in com.apriori.apt.reflect">ArGenericDeclaration</a></dt>
@@ -7835,6 +8300,8 @@
 <div class="block">Returns the set of unchecked exceptions thrown by method calls as configured using
  <a href="com/apriori/testing/InterfaceVerifier.MethodConfiguration.html#uncheckedExceptions-java.lang.Class...-"><code>InterfaceVerifier.MethodConfiguration.uncheckedExceptions(java.lang.Class&lt;? extends java.lang.Throwable&gt;...)</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeUtils.html#getUnsafe--">getUnsafe()</a></span> - Static method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeUtils.html" title="class in com.apriori.concurrent.unsafe">UnsafeUtils</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table2D.Cell2D.html#getValue--">getValue()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table2D.Cell2D.html" title="interface in com.apriori.collections">Table2D.Cell2D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table3D.Cell3D.html#getValue--">getValue()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table3D.Cell3D.html" title="interface in com.apriori.collections">Table3D.Cell3D</a></dt>
@@ -7852,6 +8319,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#getVolume-L-">getVolume(L)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.Cell5D.html#getVolumeKey--">getVolumeKey()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.Cell5D.html" title="interface in com.apriori.collections">Table5D.Cell5D</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getWildcardTypeMirror-java.lang.reflect.AnnotatedWildcardType-">getWildcardTypeMirror(AnnotatedWildcardType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getWildcardTypeMirror-java.lang.reflect.WildcardType-">getWildcardTypeMirror(WildcardType)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#getWithSelector-java.lang.Class-java.lang.Object-">getWithSelector(Class&lt;? extends T&gt;, Object)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
@@ -8067,6 +8538,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Holder.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.possible.<a href="com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#hashCode-java.lang.reflect.AnnotatedType-">hashCode(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>
+<div class="block">Computes a hash code for the given generic type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Annotations.html#hashCode-T-">hashCode(T)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">Annotations</a></dt>
 <dd>
 <div class="block">Computes the hash code for an annotation as defined in the contract on <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>.</div>
@@ -8088,6 +8563,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#hashCode-java.lang.reflect.Type-">hashCode(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Computes a hash code for the given generic type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/Tuple.html#hashCode--">hashCode()</a></span> - Method in interface com.apriori.tuples.<a href="com/apriori/tuples/Tuple.html" title="interface in com.apriori.tuples">Tuple</a></dt>
 <dd>
 <div class="block">Returns the hash code value for this tuple.</div>
@@ -8423,6 +8902,24 @@
 <dd>
 <div class="block">Indicates that all interfaces implemented by a type will be included in the scan.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#incrementAndGet--">incrementAndGet()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#incrementAndGet--">incrementAndGet()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#incrementAndGet-T-">incrementAndGet(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#incrementAndGet-T-">incrementAndGet(T)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically increments by one the current value of the field of the given object managed by
+ this updater.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#incrementAndGet--">incrementAndGet()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>
 <div class="block">Increments the variable by one.</div>
@@ -8720,13 +9217,21 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.html#InterceptingExecutor-java.util.concurrent.Executor-java.lang.Iterable-">InterceptingExecutor(Executor, Iterable&lt;InterceptingExecutor.Interceptor&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.html" title="class in com.apriori.concurrent">InterceptingExecutor</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutor.Decorator</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutor.Interceptor</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutor.Interceptor.Builder</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.html#InterceptingExecutorService-java.util.concurrent.ExecutorService-java.lang.Iterable-">InterceptingExecutorService(ExecutorService, Iterable&lt;InterceptingExecutorService.Interceptor&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent">InterceptingExecutorService</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService.Decorator</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService.Interceptor</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService.Interceptor.Builder</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/testing/InterfaceVerifier.html" title="class in com.apriori.testing"><span class="typeNameLink">InterfaceVerifier</span></a>&lt;<a href="com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt; - Class in <a href="com/apriori/testing/package-summary.html">com.apriori.testing</a></dt>
 <dd>
@@ -8894,6 +9399,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Caster.html#isAllowingUnsupportedOperations--">isAllowingUnsupportedOperations()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/Caster.html" title="class in com.apriori.reflect">Caster</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/ClassLoaders.html#isAncestor-java.lang.ClassLoader-java.lang.ClassLoader-">isAncestor(ClassLoader, ClassLoader)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/ClassLoaders.html" title="class in com.apriori.reflect">ClassLoaders</a></dt>
+<dd>
+<div class="block">Returns true if the second classloader can be found in the first classloader's delegation
+ chain.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isAnnotation--">isAnnotation()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if this class object represents an annotation type.</div>
@@ -8939,9 +9449,7 @@
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignable(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>
-<div class="block">Determines if one type is assignable to another.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isAssignableFrom-com.apriori.apt.reflect.ArClass-">isAssignableFrom(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if the specified type is assignable to this type.</div>
@@ -8949,6 +9457,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isAssignableFrom-com.apriori.reflect.TypeRef-">isAssignableFrom(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Determines if this is a super type of the specified type token.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignableStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Determines if one type is assignable to another.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.Input.html#isAsync--">isAsync()</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.Input.html" title="class in com.apriori.graph">Node.Input</a></dt>
 <dd>
@@ -9246,6 +9758,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#isSameFile-javax.tools.FileObject-javax.tools.FileObject-">isSameFile(FileObject, FileObject)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSameType-java.lang.reflect.Type-java.lang.reflect.Type-">isSameType(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#isShutdown--">isShutdown()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Returns true if this executor is shutdown.</div>
@@ -9262,6 +9776,8 @@
 <dd>
 <div class="block">Returns whether the scheduled task has begun executing or not.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtype(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isSubTypeOf-com.apriori.apt.reflect.ArClass-">isSubTypeOf(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if this class is a sub-type of the specified class.</div>
@@ -9270,6 +9786,8 @@
 <dd>
 <div class="block">Determines if this is a sub-type of the specified type token.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#isSuccessful--">isSuccessful()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#isSuccessful--">isSuccessful()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
@@ -9714,7 +10232,33 @@
 <div class="block">Returns details for the most recently completed invocation of this task
  definition.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#lazySet-T-boolean-">lazySet(T, boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#lazySet-boolean-">lazySet(boolean)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Eventually sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#lazySet-int-">lazySet(int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Eventually sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#lazySet-long-">lazySet(long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Eventually sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#lazySet-V-">lazySet(V)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Eventually sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#lazySet-T-int-">lazySet(T, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Eventually sets the field of the given object managed by this updater to the given updated
+ value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#lazySet-T-long-">lazySet(T, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Eventually sets the field of the given object managed by this updater to the given updated
+ value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#lazySet-T-V-">lazySet(T, V)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
 <dd>
 <div class="block">Eventually sets the field of the given object managed by this updater to the given updated
  value.</div>
@@ -9739,6 +10283,14 @@
 <dd>
 <div class="block">Returns the lesser of two given durations.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/contended/LhsPaddedInteger.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">LhsPaddedInteger</span></a> - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/LhsPaddedInteger.html#LhsPaddedInteger--">LhsPaddedInteger()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/LhsPaddedInteger.html" title="class in com.apriori.concurrent.contended">LhsPaddedInteger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">LhsPaddedReference</span></a>&lt;<a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="type parameter in LhsPaddedReference">V</a>&gt; - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/LhsPaddedReference.html#LhsPaddedReference--">LhsPaddedReference()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="class in com.apriori.concurrent.contended">LhsPaddedReference</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/PartialFunctions.html#lift-com.apriori.function.PartialFunction-O-">lift(PartialFunction&lt;? super I, ? extends O&gt;, O)</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/PartialFunctions.html" title="class in com.apriori.function">PartialFunctions</a></dt>
 <dd>
 <div class="block">Lifts a partial function to a regular function via default value.</div>
@@ -10073,6 +10625,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/NoCopyGrowableArray.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/di/Main.html" title="annotation in com.apriori.di"><span class="typeNameLink">Main</span></a> - Annotation Type in <a href="com/apriori/di/package-summary.html">com.apriori.di</a></dt>
 <dd>
@@ -10592,12 +11146,20 @@
 <dd>
 <div class="block">Returns a predicate that represents the logical negation of this predicate.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.annotation.Annotation...-">newAnnotatedArrayType(GenericArrayType, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.GenericArrayType-java.lang.Iterable-">newAnnotatedArrayType(GenericArrayType, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.AnnotatedType-java.lang.annotation.Annotation...-">newAnnotatedArrayType(AnnotatedType, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedArrayType-java.lang.reflect.AnnotatedType-java.lang.Iterable-">newAnnotatedArrayType(AnnotatedType, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedArrayType</code></a> object with the given component type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.annotation.Annotation...-">newAnnotatedParameterizedType(ParameterizedType, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.ParameterizedType-java.lang.Iterable-">newAnnotatedParameterizedType(ParameterizedType, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedParameterizedType-java.lang.reflect.AnnotatedType-java.util.List-java.lang.annotation.Annotation...-">newAnnotatedParameterizedType(AnnotatedType, List&lt;? extends AnnotatedType&gt;, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Creates a new <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a> for a generic top-level or static type.</div>
@@ -10616,11 +11178,21 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.reflect.Type-java.lang.annotation.Annotation...-">newAnnotatedType(Type, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.Class-java.lang.annotation.Annotation...-">newAnnotatedType(Class&lt;?&gt;, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.Class-java.lang.Iterable-">newAnnotatedType(Class&lt;?&gt;, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedType-java.lang.reflect.Type-java.lang.Iterable-">newAnnotatedType(Type, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedTypeVariable-java.lang.reflect.TypeVariable-java.lang.annotation.Annotation...-">newAnnotatedTypeVariable(TypeVariable&lt;?&gt;, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedTypeVariable-java.lang.reflect.TypeVariable-java.lang.Iterable-">newAnnotatedTypeVariable(TypeVariable&lt;?&gt;, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.annotation.Annotation...-">newAnnotatedWildcardType(WildcardType, Annotation...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#newAnnotatedWildcardType-java.lang.reflect.WildcardType-java.lang.Iterable-">newAnnotatedWildcardType(WildcardType, Iterable&lt;? extends Annotation&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#newBuilder--">newBuilder()</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/ComputationFactory.html#newBuilder--">newBuilder()</a></span> - Static method in class com.apriori.graph.<a href="com/apriori/graph/ComputationFactory.html" title="class in com.apriori.graph">ComputationFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -10746,6 +11318,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#newLinkedHashTable5D--">newLinkedHashTable5D()</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.html#newList--">newList()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.html#newList--">newList()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutorService.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutorService.Interceptor</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/DoubleInstanceLock.html#newLock-T-">newLock(T)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a></dt>
 <dd>
 <div class="block">Constructs a new double instance lock around the given object.</div>
@@ -10809,14 +11385,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#newTreeTable5D--">newTreeTable5D()</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#newUpdater-java.lang.Class-java.lang.String-">newUpdater(Class&lt;U&gt;, String)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Creates and returns an updater for objects with the given field.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#newUpdater-java.lang.ClassLoader-java.lang.Class-java.lang.String-">newUpdater(ClassLoader, Class&lt;U&gt;, String)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Creates and returns an updater for objects with the given field.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next">next</a></span> - Variable in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html#next--">next()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.BaseIteratorImpl.html" title="class in com.apriori.collections">AbstractNavigableMap.BaseIteratorImpl</a></dt>
@@ -11630,6 +12198,21 @@
 <dd>
 <div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
  tasks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-int-">PipeliningExecutor(Executor, int)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
+<dd>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-long-java.util.concurrent.TimeUnit-">PipeliningExecutor(Executor, long, TimeUnit)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
+<dd>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs tasks in batches up to the given duration.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-int-long-java.util.concurrent.TimeUnit-">PipeliningExecutor(Executor, int, long, TimeUnit)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
+<dd>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch, for up to the given duration.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#plus-com.apriori.concurrent.Duration-">plus(Duration)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
@@ -12498,7 +13081,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Stopwatch.html#read-java.util.concurrent.TimeUnit-">read(TimeUnit)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></dt>
 <dd>
-<div class="block">Queries for the elapased time measured by the stopwatch, in the specified unit.</div>
+<div class="block">Queries for the elapsed time measured by the stopwatch, in the specified unit.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TransformingCollection.ReadOnly.html#ReadOnly-java.util.Collection-java.util.function.Function-">ReadOnly(Collection&lt;I&gt;, Function&lt;? super I, ? extends O&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/TransformingCollection.ReadOnly.html" title="class in com.apriori.collections">TransformingCollection.ReadOnly</a></dt>
 <dd>
@@ -13726,6 +14309,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#sectionKeySet--">sectionKeySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/reflect/SecureUtils.html" title="class in com.apriori.reflect"><span class="typeNameLink">SecureUtils</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>
+<div class="block">Several utility methods for checking security for reflective access.</div>
+</dd>
 <dt><a href="com/apriori/di/SelectionProvider.html" title="interface in com.apriori.di"><span class="typeNameLink">SelectionProvider</span></a>&lt;<a href="com/apriori/di/SelectionProvider.html" title="type parameter in SelectionProvider">T</a>&gt; - Interface in <a href="com/apriori/di/package-summary.html">com.apriori.di</a></dt>
 <dd>
 <div class="block">An object that provides an injected value given a selector.</div>
@@ -13842,10 +14429,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/UnrolledLinkedList.html#set-int-E-">set(int, E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">UnrolledLinkedList</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#set-T-boolean-">set(T, boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Sets the field of the given object managed by this updater to the given updated value.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#set-T-">set(T)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Submits a mutation that will set the atom to the specified value.</div>
@@ -13861,6 +14444,34 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/TransactionalAtom.html#set-T-">set(T)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a></dt>
 <dd>
 <div class="block">Sets the atom's value to the one specified and returns the previous value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#set-boolean-">set(boolean)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Unconditionally sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#set-int-">set(int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#set-long-">set(long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#set-V-">set(V)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Sets to the given value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#set-T-int-">set(T, int)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Sets the field of the given object managed by this updater to the given updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#set-T-long-">set(T, long)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Sets the field of the given object managed by this updater to the given updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#set-T-V-">set(T, V)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Sets the field of the given object managed by this updater to the given updated value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Holder.html#set-T-">set(T)</a></span> - Method in class com.apriori.possible.<a href="com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>
@@ -13936,6 +14547,8 @@
 <dd>
 <div class="block">Sets whether hash codes are verified after mutator methods are invoked.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setCorePoolSize-int-">setCorePoolSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#setCorePoolSize-int-">setCorePoolSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Changes the size of the core pool of worker threads.</div>
@@ -14024,6 +14637,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/RateLimiter.html#setJitter-double-">setJitter(double)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RateLimiter.html" title="class in com.apriori.concurrent">RateLimiter</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setKeepAlive-long-java.util.concurrent.TimeUnit-">setKeepAlive(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#setKeepAliveTime-long-java.util.concurrent.TimeUnit-">setKeepAliveTime(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Sets the duration for which idle (non-core) worker threads are kept alive.</div>
@@ -14032,11 +14647,19 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfLong.html#setLong-int-long-">setLong(int, long)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfLong.html" title="interface in com.apriori.collections">PrimitiveList.OfLong</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setMaxBatchDuration-long-java.util.concurrent.TimeUnit-">setMaxBatchDuration(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setMaxBatchSize-int-">setMaxBatchSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setMaximumPoolSize-int-">setMaximumPoolSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#setMaximumPoolSize-int-">setMaximumPoolSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Sets the maximum size for the pool of worker threads.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/RateLimiter.html#setMaxPermits-long-">setMaxPermits(long)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RateLimiter.html" title="class in com.apriori.concurrent">RateLimiter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setPoolSize-int-">setPoolSize(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PriorityQueue.Entry.html#setPriority-P-">setPriority(P)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PriorityQueue.Entry.html" title="interface in com.apriori.collections">PriorityQueue.Entry</a></dt>
 <dd>
@@ -14133,6 +14756,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/Tuple.Ops4.html#setThird-T-">setThird(T)</a></span> - Method in interface com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops4.html" title="interface in com.apriori.tuples">Tuple.Ops4</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/Tuple.Ops5.html#setThird-T-">setThird(T)</a></span> - Method in interface com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.Builder.html#setThreadFactory-java.util.concurrent.ThreadFactory-">setThreadFactory(ThreadFactory)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent">ActorThreadPool.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#setThreadFactory-java.util.concurrent.ThreadFactory-">setThreadFactory(ThreadFactory)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
@@ -14940,18 +15565,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#submit-java.util.concurrent.Callable-">submit(Callable&lt;T&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-T-">submit(Runnable, T)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-">submit(Runnable)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.util.concurrent.Callable-">submit(K, Callable&lt;T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
-<dd>
-<div class="block">Submits a task for the specified pipeline.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.lang.Runnable-T-">submit(K, Runnable, T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
-<dd>
-<div class="block">Submits a task for the specified pipeline.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.lang.Runnable-">submit(K, Runnable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">PipeliningExecutor</a></dt>
-<dd>
-<div class="block">Submits a task for the specified pipeline.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.util.concurrent.Callable-">submit(Callable&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-">submit(Runnable)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#submit-java.lang.Runnable-V-">submit(Runnable, V)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
@@ -15347,7 +15960,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Blaster.html#throwOnNullTarget--">throwOnNullTarget()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/Blaster.html" title="class in com.apriori.reflect">Blaster</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#times-int-">times(int)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#times-long-">times(long)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
 <div class="block">Returns this duration multiplied by the specified number of times.</div>
 </dd>
@@ -15863,6 +16476,22 @@
 <dd>
 <div class="block">Returns a string identifying this synchronizer, as well as its state.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#toString--">toString()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
+<dd>
+<div class="block">Returns the String representation of the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#toString--">toString()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Returns the String representation of the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#toString--">toString()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Returns the String representation of the current value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#toString--">toString()</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Returns the String representation of the current value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#toString--">toString()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AnnotationSpec.html#toString--">toString()</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/AnnotationSpec.html" title="class in com.apriori.di">AnnotationSpec</a></dt>
@@ -15873,6 +16502,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Holder.html#toString--">toString()</a></span> - Method in class com.apriori.possible.<a href="com/apriori/possible/Holder.html" title="class in com.apriori.possible">Holder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#toString-java.lang.reflect.AnnotatedType-">toString(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>
+<div class="block">Constructs a string representation of the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Annotations.html#toString-T-">toString(T)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">Annotations</a></dt>
 <dd>
 <div class="block">Returns a string representation of the specified annotation object.</div>
@@ -15893,6 +16526,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#toString--">toString()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#toString-java.lang.reflect.Type-">toString(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Constructs a string representation of the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/IoStreams.html#toString-java.lang.Readable-">toString(Readable)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/IoStreams.html" title="class in com.apriori.util">IoStreams</a></dt>
 <dd>
 <div class="block">Fully consumes the specified stream and returns the results as a string.</div>
@@ -16553,6 +17190,8 @@
 <dd>
 <div class="block">Gets the current implementation of utility methods relating to types.</div>
 </dd>
+<dt><a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model"><span class="typeNameLink">Types</span></a> - Interface in <a href="com/apriori/reflect/model/package-summary.html">com.apriori.reflect.model</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect"><span class="typeNameLink">Types</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
 <dd>
 <div class="block">Numerous utility methods for using, constructing, and inspecting generic types.</div>
@@ -16723,6 +17362,41 @@
 <div class="block">Constructs a new unrolled linked list with the specified unroll count, populated with the
  elements of the specified collection.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html" title="class in com.apriori.concurrent.unsafe"><span class="typeNameLink">UnsafeFieldUpdater</span></a>&lt;<a href="com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html" title="type parameter in UnsafeFieldUpdater">T</a>&gt; - Class in <a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a></dt>
+<dd>
+<div class="block">A base class for classes that provide unsafe access to atomic operations on fields of another
+ type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html#UnsafeFieldUpdater--">UnsafeFieldUpdater()</a></span> - Constructor for class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeFieldUpdater</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe"><span class="typeNameLink">UnsafeIntegerFieldUpdater</span></a>&lt;<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="type parameter in UnsafeIntegerFieldUpdater">T</a>&gt; - Class in <a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a></dt>
+<dd>
+<div class="block">Like <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicIntegerFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicIntegerFieldUpdater</code></a> except elides the per-access checks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#UnsafeIntegerFieldUpdater-java.lang.Class-java.lang.String-">UnsafeIntegerFieldUpdater(Class&lt;T&gt;, String)</a></span> - Constructor for class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Creates and returns an updater for objects with the given field.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe"><span class="typeNameLink">UnsafeLongFieldUpdater</span></a>&lt;<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="type parameter in UnsafeLongFieldUpdater">T</a>&gt; - Class in <a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a></dt>
+<dd>
+<div class="block">Like <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLongFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicLongFieldUpdater</code></a> except elides the per-access checks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#UnsafeLongFieldUpdater-java.lang.Class-java.lang.String-">UnsafeLongFieldUpdater(Class&lt;T&gt;, String)</a></span> - Constructor for class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Creates and returns an updater for objects with the given field.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe"><span class="typeNameLink">UnsafeReferenceFieldUpdater</span></a>&lt;<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>,<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt; - Class in <a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a></dt>
+<dd>
+<div class="block">Like <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReferenceFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReferenceFieldUpdater</code></a> except elides the per-access checks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#UnsafeReferenceFieldUpdater-java.lang.Class-java.lang.Class-java.lang.String-">UnsafeReferenceFieldUpdater(Class&lt;T&gt;, Class&lt;V&gt;, String)</a></span> - Constructor for class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Creates and returns an updater for objects with the given field.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/unsafe/UnsafeUtils.html" title="class in com.apriori.concurrent.unsafe"><span class="typeNameLink">UnsafeUtils</span></a> - Class in <a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a></dt>
+<dd>
+<div class="block">A utility class that enables access to <code>Unsafe</code>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractBinding.ScopeBuilder.html#unscoped--">unscoped()</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/AbstractBinding.ScopeBuilder.html" title="interface in com.apriori.di">AbstractBinding.ScopeBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/possible/Reference.html#unset--">unset()</a></span> - Static method in class com.apriori.possible.<a href="com/apriori/possible/Reference.html" title="class in com.apriori.possible">Reference</a></dt>
@@ -16737,11 +17411,6 @@
 <dd>
 <div class="block">Upcasts an reference to a super-type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#updateAndGet-T-com.apriori.function.BooleanUnaryOperator-">updateAndGet(T, BooleanUnaryOperator)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
-<dd>
-<div class="block">Atomically updates the field of the given object managed by this updater with the results of
- applying the given function, returning the updated value.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#updateAndGet-java.util.function.Function-">updateAndGet(Function&lt;? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Applies a function to the atom's value.</div>
@@ -16753,6 +17422,36 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-">updateAndGet(Function&lt;? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/TransactionalAtom.html" title="class in com.apriori.concurrent.atoms">TransactionalAtom</a></dt>
 <dd>
 <div class="block">Applies a function to the atom's value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#updateAndGet-java.util.function.IntUnaryOperator-">updateAndGet(IntUnaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#updateAndGet-java.util.function.LongUnaryOperator-">updateAndGet(LongUnaryOperator)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#updateAndGet-java.util.function.UnaryOperator-">updateAndGet(UnaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically updates the current value with the results of applying the given function,
+ returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html#updateAndGet-T-java.util.function.IntUnaryOperator-">updateAndGet(T, IntUnaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeIntegerFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeIntegerFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html#updateAndGet-T-java.util.function.LongUnaryOperator-">updateAndGet(T, LongUnaryOperator)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeLongFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeLongFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the updated value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#updateAndGet-T-java.util.function.UnaryOperator-">updateAndGet(T, UnaryOperator&lt;V&gt;)</a></span> - Method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeReferenceFieldUpdater</a></dt>
+<dd>
+<div class="block">Atomically updates the field of the given object managed by this updater with the results of
+ applying the given function, returning the updated value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#updateAndGet-java.util.function.UnaryOperator-">updateAndGet(UnaryOperator&lt;T&gt;)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>
@@ -17314,10 +18013,25 @@ the order they are declared.</div>
 </a>
 <h2 class="title">W</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html#weakCompareAndSet-T-boolean-boolean-">weakCompareAndSet(T, boolean, boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AtomicBooleanFieldUpdater.html" title="class in com.apriori.concurrent">AtomicBooleanFieldUpdater</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedBoolean.html#weakCompareAndSet-boolean-boolean-">weakCompareAndSet(boolean, boolean)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedBoolean.html" title="class in com.apriori.concurrent.contended">ContendedBoolean</a></dt>
 <dd>
-<div class="block">Atomically sets the field of the given object managed by this updater to the given updated
- value if the current value <code>==</code> the expected value.</div>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedInteger.html#weakCompareAndSet-int-int-">weakCompareAndSet(int, int)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedInteger.html" title="class in com.apriori.concurrent.contended">ContendedInteger</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedLong.html#weakCompareAndSet-long-long-">weakCompareAndSet(long, long)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedLong.html" title="class in com.apriori.concurrent.contended">ContendedLong</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/ContendedReference.html#weakCompareAndSet-V-V-">weakCompareAndSet(V, V)</a></span> - Method in class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/ContendedReference.html" title="class in com.apriori.concurrent.contended">ContendedReference</a></dt>
+<dd>
+<div class="block">Atomically sets the value to the given updated value if the current value <code>==</code> the
+ expected value.</div>
 </dd>
 <dt><a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections"><span class="typeNameLink">WeightBalancedTreeMap</span></a>&lt;<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="type parameter in WeightBalancedTreeMap">K</a>,<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="type parameter in WeightBalancedTreeMap">V</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>

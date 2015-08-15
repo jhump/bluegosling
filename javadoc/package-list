@@ -5,7 +5,9 @@ com.apriori.choice
 com.apriori.collections
 com.apriori.concurrent
 com.apriori.concurrent.atoms
+com.apriori.concurrent.contended
 com.apriori.concurrent.scheduler
+com.apriori.concurrent.unsafe
 com.apriori.di
 com.apriori.di.collections
 com.apriori.di.tools
@@ -14,6 +16,7 @@ com.apriori.generator
 com.apriori.graph
 com.apriori.possible
 com.apriori.reflect
+com.apriori.reflect.model
 com.apriori.testing
 com.apriori.tuples
 com.apriori.util

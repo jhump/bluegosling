@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -154,6 +154,30 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
  tasks.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-int-">PipeliningExecutor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                  int&nbsp;maxBatchSize)</code>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-int-long-java.util.concurrent.TimeUnit-">PipeliningExecutor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                  int&nbsp;maxBatchSize,
+                  long&nbsp;maxBatchDuration,
+                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch, for up to the given duration.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#PipeliningExecutor-java.util.concurrent.Executor-long-java.util.concurrent.TimeUnit-">PipeliningExecutor</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                  long&nbsp;maxBatchDuration,
+                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs tasks in batches up to the given duration.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -237,28 +261,6 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <div class="block">Creates a new service whose tasks are submitted to the specified pipeline.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.util.concurrent.Callable-">submit</a></span>(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>
-<div class="block">Submits a task for the specified pipeline.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.lang.Runnable-">submit</a></span>(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
-<div class="block">Submits a task for the specified pipeline.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/PipeliningExecutor.html#submit-K-java.lang.Runnable-T-">submit</a></span>(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-      T&nbsp;result)</code>
-<div class="block">Submits a task for the specified pipeline.</div>
-</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -272,7 +274,7 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a></h3>
-<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#newExecutorFor-K-">newExecutorFor</a></code></li>
+<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#newExecutorFor-K-">newExecutorFor</a>, <a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.util.concurrent.Callable-">submit</a>, <a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-">submit</a>, <a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-T-">submit</a></code></li>
 </ul>
 </li>
 </ul>
@@ -291,12 +293,70 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <a name="PipeliningExecutor-java.util.concurrent.Executor-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>PipeliningExecutor</h4>
 <pre>public&nbsp;PipeliningExecutor(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor)</pre>
 <div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
- tasks.</div>
+ tasks. Any given pipeline is allowed to process a batch of up to 32 tasks or process for
+ up to 500 milliseconds (whichever occurs first) before yielding.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor that will run individual tasks across all pipelines</dd>
+</dl>
+</li>
+</ul>
+<a name="PipeliningExecutor-java.util.concurrent.Executor-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PipeliningExecutor</h4>
+<pre>public&nbsp;PipeliningExecutor(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                          int&nbsp;maxBatchSize)</pre>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch. Any given pipeline is allowed to
+ process a batch of up to the given number or process for up to 500 milliseconds (whichever
+ occurs first) before yielding.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor that will run individual tasks across all pipelines</dd>
+</dl>
+</li>
+</ul>
+<a name="PipeliningExecutor-java.util.concurrent.Executor-long-java.util.concurrent.TimeUnit-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PipeliningExecutor</h4>
+<pre>public&nbsp;PipeliningExecutor(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                          long&nbsp;maxBatchDuration,
+                          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs tasks in batches up to the given duration. Any given pipeline is allowed to
+ process a batch of up to 32 tasks or process for up to the given duration (whichever occurs
+ first) before yielding.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>executor</code> - the executor that will run individual tasks across all pipelines</dd>
+</dl>
+</li>
+</ul>
+<a name="PipeliningExecutor-java.util.concurrent.Executor-int-long-java.util.concurrent.TimeUnit-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>PipeliningExecutor</h4>
+<pre>public&nbsp;PipeliningExecutor(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;executor,
+                          int&nbsp;maxBatchSize,
+                          long&nbsp;maxBatchDuration,
+                          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
+<div class="block">Constructs a new pipelining executor that uses the specified executor for actually running
+ tasks and runs up to the given number of tasks in a batch, for up to the given duration. Any
+ given pipeline is allowed to process a batch of up to the given number of tasks or process for
+ up to the given duration (whichever occurs first) before yielding.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>executor</code> - the executor that will run individual tasks across all pipelines</dd>
@@ -311,101 +371,6 @@ implements <a href="../../../com/apriori/concurrent/SerializingExecutor.html" ti
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="submit-java.lang.Object-java.util.concurrent.Callable-">
-<!--   -->
-</a><a name="submit-K-java.util.concurrent.Callable-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>submit</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-                                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</pre>
-<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
- submitted for different pipelines. It will not execute until all previously submitted tasks
- for the same pipeline have completed.
- 
- <p>If the task is accepted now but then later rejected by the underlying executor, the
- returned future will fail and the cause will be a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>RejectedExecutionException</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.util.concurrent.Callable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a>&lt;<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pipelineKey</code> - the key that identifies the pipeline</dd>
-<dd><code>task</code> - a task</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a future that represents the completion of the given task</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either the pipeline key or task is null</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>SerializingExecutor.execute(Object, Runnable)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="submit-java.lang.Object-java.lang.Runnable-java.lang.Object-">
-<!--   -->
-</a><a name="submit-K-java.lang.Runnable-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>submit</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-                                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                      T&nbsp;result)</pre>
-<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
- submitted for different pipelines. It will not execute until all previously submitted tasks
- for the same pipeline have completed.
- 
- <p>If the task is accepted now but then later rejected by the underlying executor, the
- returned future will fail and the cause will be a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>RejectedExecutionException</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-T-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a>&lt;<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pipelineKey</code> - the key that identifies the pipeline</dd>
-<dd><code>task</code> - a task</dd>
-<dd><code>result</code> - the result of the task when it completes</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a future that represents the completion of the given task</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either the pipeline key or task is null</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>SerializingExecutor.execute(Object, Runnable)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="submit-java.lang.Object-java.lang.Runnable-">
-<!--   -->
-</a><a name="submit-K-java.lang.Runnable-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>submit</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;submit(<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&nbsp;pipelineKey,
-                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
-<div class="block">Submits a task for the specified pipeline. The task can run concurrently with other tasks
- submitted for different pipelines. It will not execute until all previously submitted tasks
- for the same pipeline have completed.
- 
- <p>If the task is accepted now but then later rejected by the underlying executor, the
- returned future will fail and the cause will be a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RejectedExecutionException.html?is-external=true" title="class or interface in java.util.concurrent"><code>RejectedExecutionException</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../com/apriori/concurrent/SerializingExecutor.html#submit-K-java.lang.Runnable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a>&lt;<a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="type parameter in PipeliningExecutor">K</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pipelineKey</code> - the key that identifies the pipeline</dd>
-<dd><code>task</code> - a task</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a future that represents the completion of the given task</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either the pipeline key or task is null</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/concurrent/SerializingExecutor.html#execute-K-java.lang.Runnable-"><code>SerializingExecutor.execute(Object, Runnable)</code></a></dd>
-</dl>
-</li>
-</ul>
 <a name="execute-java.lang.Object-java.lang.Runnable-">
 <!--   -->
 </a><a name="execute-K-java.lang.Runnable-">
