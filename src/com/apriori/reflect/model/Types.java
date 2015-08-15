@@ -20,6 +20,18 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
+/**
+ * An extension of the standard {@link javax.lang.model.util.Types} interface that provides
+ * methods for inter-op with core reflection. For example, there are methods for querying for a
+ * {@link TypeMirror} corresponding to the various {@link #getTypeMirror(Type) Type} and
+ * {@link #getTypeMirror(AnnotatedType) AnnotatedType} implementations.
+ * 
+ * <p>This interface provides factory methods to return instances backed by an
+ * {@linkplain #fromProcessingEnvironment annotation processing environment} or by
+ * {@linkplain #fromCoreReflection core reflection}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public interface Types extends javax.lang.model.util.Types {
    TypeMirror getTypeMirror(AnnotatedType type);
    

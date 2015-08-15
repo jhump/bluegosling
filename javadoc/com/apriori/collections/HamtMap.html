@@ -95,10 +95,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">java.util.AbstractMap</a>&lt;K,V&gt;</li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">java.util.AbstractMap</a>&lt;K,V&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.apriori.collections.HamtMap&lt;K,V&gt;</li>
@@ -117,18 +117,18 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">HamtMap&lt;K,V&gt;</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;K,V&gt;
-implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
-<div class="block">An implementation of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> that uses a hash array-mapped trie (HAMT). Under the hood, this
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;K,V&gt;
+implements <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
+<div class="block">An implementation of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> that uses a hash array-mapped trie (HAMT). Under the hood, this
  structure is the same as an <a href="../../../com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections"><code>ArrayMappedBitwiseTrie</code></a> except that the key bits come from a
- key's <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hash value</a>. Like a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>, a
+ key's <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hash value</a>. Like a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>, a
  linked list is used to store values whose keys' hash values collide. But collisions are far less
- likely than in a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> because the full 32 bits of hash value are
+ likely than in a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> because the full 32 bits of hash value are
  used (vs. hash value modulo array size, which is typically far lower cardinality than the full
  32 bits).
  
@@ -137,12 +137,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
  
  <p>Since this structure doesn't use a fixed size array for the mappings, it never pays a penalty
  for resizing internal structures and re-hashing all of its contents (unlike a
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>). Also, since the full 32 bits of hash code are used to store
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a>). Also, since the full 32 bits of hash code are used to store
  entries, no alternative hashing is needed.
  
  <p>A <a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><code>HamtMap</code></a> supports both null keys and values, and it supports all optional operations
- in the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface. This implementation is not thread-safe and its iterators will
- attempt to fail fast, by throwing a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a> if improper
+ in the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> interface. This implementation is not thread-safe and its iterators will
+ attempt to fail fast, by throwing a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a> if improper
  concurrency is detected.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -164,15 +164,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleEntry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleImmutableEntry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleEntry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleImmutableEntry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -193,7 +193,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#HamtMap-java.util.Map-">HamtMap</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;map)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#HamtMap-java.util.Map-">HamtMap</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;map)</code>
 <div class="block">Constructs a new map populated with the mappings from the specified map.</div>
 </td>
 </tr>
@@ -222,23 +222,23 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#forEach-java.util.function.BiConsumer-">forEach</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;action)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#forEach-java.util.function.BiConsumer-">forEach</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;action)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#get-java.lang.Object-">get</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#get-java.lang.Object-">get</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -251,11 +251,11 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#remove-java.lang.Object-">remove</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#remove-java.lang.Object-">remove</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#replaceAll-java.util.function.BiFunction-">replaceAll</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;remapper)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/HamtMap.html#replaceAll-java.util.function.BiFunction-">replaceAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;remapper)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -266,22 +266,22 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#toString--" title="class or interface in java.util">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#toString--" title="class or interface in java.util">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#compute-K-java.util.function.BiFunction-" title="class or interface in java.util">compute</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfAbsent-K-java.util.function.Function-" title="class or interface in java.util">computeIfAbsent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfPresent-K-java.util.function.BiFunction-" title="class or interface in java.util">computeIfPresent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#getOrDefault-java.lang.Object-V-" title="class or interface in java.util">getOrDefault</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#merge-K-V-java.util.function.BiFunction-" title="class or interface in java.util">merge</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util">putIfAbsent</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-" title="class or interface in java.util">replace</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-V-" title="class or interface in java.util">replace</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#compute-K-java.util.function.BiFunction-" title="class or interface in java.util">compute</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfAbsent-K-java.util.function.Function-" title="class or interface in java.util">computeIfAbsent</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#computeIfPresent-K-java.util.function.BiFunction-" title="class or interface in java.util">computeIfPresent</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#getOrDefault-java.lang.Object-V-" title="class or interface in java.util">getOrDefault</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#merge-K-V-java.util.function.BiFunction-" title="class or interface in java.util">merge</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util">putIfAbsent</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-" title="class or interface in java.util">replace</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replace-K-V-V-" title="class or interface in java.util">replace</a></code></li>
 </ul>
 </li>
 </ul>
@@ -313,7 +313,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockListLast">
 <li class="blockList">
 <h4>HamtMap</h4>
-<pre>public&nbsp;HamtMap(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;map)</pre>
+<pre>public&nbsp;HamtMap(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;map)</pre>
 <div class="block">Constructs a new map populated with the mappings from the specified map.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -338,9 +338,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -353,9 +353,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -365,12 +365,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -380,12 +380,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre>public&nbsp;boolean&nbsp;containsValue(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -395,12 +395,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&nbsp;get(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&nbsp;get(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -416,9 +416,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
              <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -428,12 +428,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&nbsp;remove(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&nbsp;remove(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -446,9 +446,9 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -458,12 +458,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>entrySet</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&gt;&nbsp;entrySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -476,7 +476,7 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <pre>public&nbsp;<a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">HamtMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;clone()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clone--" title="class or interface in java.util">clone</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true#clone--" title="class or interface in java.util">clone</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -486,10 +486,10 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>forEach</h4>
-<pre>public&nbsp;void&nbsp;forEach(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;action)</pre>
+<pre>public&nbsp;void&nbsp;forEach(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html?is-external=true" title="class or interface in java.util.function">BiConsumer</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;action)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#forEach-java.util.function.BiConsumer-" title="class or interface in java.util">forEach</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#forEach-java.util.function.BiConsumer-" title="class or interface in java.util">forEach</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -499,10 +499,10 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializabl
 <ul class="blockListLast">
 <li class="blockList">
 <h4>replaceAll</h4>
-<pre>public&nbsp;void&nbsp;replaceAll(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;remapper)</pre>
+<pre>public&nbsp;void&nbsp;replaceAll(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,? super <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>,? extends <a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;&nbsp;remapper)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replaceAll-java.util.function.BiFunction-" title="class or interface in java.util">replaceAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#replaceAll-java.util.function.BiFunction-" title="class or interface in java.util">replaceAll</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">K</a>,<a href="../../../com/apriori/collections/HamtMap.html" title="type parameter in HamtMap">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

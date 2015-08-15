@@ -12,6 +12,18 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 
+/**
+ * An extension of the standard {@link javax.lang.model.util.Elements} interface that provides
+ * methods for inter-op with core reflection. For example, there are methods for querying for an
+ * {@link javax.lang.model.element.Element} corresponding to a {@link #getTypeElement(Class)
+ * java.lang.Class} or a {@link #getFieldElement(Field) java.lang.reflect.Field}.
+ * 
+ * <p>This interface provides factory methods to return instances backed by an
+ * {@linkplain #fromProcessingEnvironment annotation processing environment} or by
+ * {@linkplain #fromCoreReflection core reflection}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 public interface Elements extends javax.lang.model.util.Elements {
    TypeElement getTypeElement(Class<?> clazz);
    PackageElement getPackageElement(Package pkg);

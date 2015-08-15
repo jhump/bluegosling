@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/reflect/model/CoreReflectionPrimitiveType.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -99,12 +99,19 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">Elements</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></pre>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></pre>
+<div class="block">An extension of the standard <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Elements</code></a> interface that provides
+ methods for inter-op with core reflection. For example, there are methods for querying for an
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> corresponding to a <a href="../../../../com/apriori/reflect/model/Elements.html#getTypeElement-java.lang.Class-"><code>java.lang.Class</code></a> or a <a href="../../../../com/apriori/reflect/model/Elements.html#getFieldElement-java.lang.reflect.Field-"><code>java.lang.reflect.Field</code></a>.
+ 
+ <p>This interface provides factory methods to return instances backed by an
+ <a href="../../../../com/apriori/reflect/model/Elements.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">annotation processing environment</a> or by
+ <a href="../../../../com/apriori/reflect/model/Elements.html#fromCoreReflection--">core reflection</a>.</div>
 </li>
 </ul>
 </div>
@@ -129,43 +136,43 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">fromProcessingEnvironment</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">fromProcessingEnvironment</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>default <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getEnumConstantElement-java.lang.Enum-">getEnumConstantElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;en)</code>&nbsp;</td>
+<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getEnumConstantElement-java.lang.Enum-">getEnumConstantElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;en)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element">ExecutableElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getExecutableElement-java.lang.reflect.Executable-">getExecutableElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect">Executable</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element">ExecutableElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getExecutableElement-java.lang.reflect.Executable-">getExecutableElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect">Executable</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getFieldElement-java.lang.reflect.Field-">getFieldElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a>&nbsp;field)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getFieldElement-java.lang.reflect.Field-">getFieldElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/PackageElement.html?is-external=true" title="class or interface in javax.lang.model.element">PackageElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getPackageElement-java.lang.Package-">getPackageElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Package.html?is-external=true" title="class or interface in java.lang">Package</a>&nbsp;pkg)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/PackageElement.html?is-external=true" title="class or interface in javax.lang.model.element">PackageElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getPackageElement-java.lang.Package-">getPackageElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Package.html?is-external=true" title="class or interface in java.lang">Package</a>&nbsp;pkg)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getParameterElement-java.lang.reflect.Parameter-">getParameterElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect">Parameter</a>&nbsp;parameter)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getParameterElement-java.lang.reflect.Parameter-">getParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect">Parameter</a>&nbsp;parameter)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getTypeElement-java.lang.Class-">getTypeElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getTypeElement-java.lang.Class-">getTypeElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeParameterElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeParameterElement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getTypeParameterElement-java.lang.reflect.TypeVariable-">getTypeParameterElement</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeParameterElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeParameterElement</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Elements.html#getTypeParameterElement-java.lang.reflect.TypeVariable-">getTypeParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.javax.lang.model.util.Elements">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;javax.lang.model.util.<a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getAllAnnotationMirrors-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getAllAnnotationMirrors</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getAllMembers-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">getAllMembers</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getBinaryName-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">getBinaryName</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getConstantExpression-java.lang.Object-" title="class or interface in javax.lang.model.util">getConstantExpression</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getDocComment-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getDocComment</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getElementValuesWithDefaults-javax.lang.model.element.AnnotationMirror-" title="class or interface in javax.lang.model.util">getElementValuesWithDefaults</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getName-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getName</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getPackageElement-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getPackageElement</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getPackageOf-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getPackageOf</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getTypeElement-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getTypeElement</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#hides-javax.lang.model.element.Element-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">hides</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#isDeprecated-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">isDeprecated</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#isFunctionalInterface-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">isFunctionalInterface</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#overrides-javax.lang.model.element.ExecutableElement-javax.lang.model.element.ExecutableElement-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">overrides</a>, <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#printElements-java.io.Writer-javax.lang.model.element.Element...-" title="class or interface in javax.lang.model.util">printElements</a></code></li>
+<h3>Methods inherited from interface&nbsp;javax.lang.model.util.<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util">Elements</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getAllAnnotationMirrors-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getAllAnnotationMirrors</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getAllMembers-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">getAllMembers</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getBinaryName-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">getBinaryName</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getConstantExpression-java.lang.Object-" title="class or interface in javax.lang.model.util">getConstantExpression</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getDocComment-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getDocComment</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getElementValuesWithDefaults-javax.lang.model.element.AnnotationMirror-" title="class or interface in javax.lang.model.util">getElementValuesWithDefaults</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getName-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getName</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getPackageElement-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getPackageElement</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getPackageOf-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">getPackageOf</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#getTypeElement-java.lang.CharSequence-" title="class or interface in javax.lang.model.util">getTypeElement</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#hides-javax.lang.model.element.Element-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">hides</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#isDeprecated-javax.lang.model.element.Element-" title="class or interface in javax.lang.model.util">isDeprecated</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#isFunctionalInterface-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">isFunctionalInterface</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#overrides-javax.lang.model.element.ExecutableElement-javax.lang.model.element.ExecutableElement-javax.lang.model.element.TypeElement-" title="class or interface in javax.lang.model.util">overrides</a>, <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true#printElements-java.io.Writer-javax.lang.model.element.Element...-" title="class or interface in javax.lang.model.util">printElements</a></code></li>
 </ul>
 </li>
 </ul>
@@ -187,7 +194,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&nbsp;getTypeElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&nbsp;getTypeElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
 </li>
 </ul>
 <a name="getPackageElement-java.lang.Package-">
@@ -196,7 +203,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/PackageElement.html?is-external=true" title="class or interface in javax.lang.model.element">PackageElement</a>&nbsp;getPackageElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Package.html?is-external=true" title="class or interface in java.lang">Package</a>&nbsp;pkg)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/PackageElement.html?is-external=true" title="class or interface in javax.lang.model.element">PackageElement</a>&nbsp;getPackageElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Package.html?is-external=true" title="class or interface in java.lang">Package</a>&nbsp;pkg)</pre>
 </li>
 </ul>
 <a name="getParameterElement-java.lang.reflect.Parameter-">
@@ -205,7 +212,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getParameterElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getParameterElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect">Parameter</a>&nbsp;parameter)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getParameterElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect">Parameter</a>&nbsp;parameter)</pre>
 </li>
 </ul>
 <a name="getFieldElement-java.lang.reflect.Field-">
@@ -214,7 +221,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getFieldElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getFieldElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a>&nbsp;field)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getFieldElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect">Field</a>&nbsp;field)</pre>
 </li>
 </ul>
 <a name="getEnumConstantElement-java.lang.Enum-">
@@ -223,7 +230,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getEnumConstantElement</h4>
-<pre>default&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getEnumConstantElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;en)</pre>
+<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;getEnumConstantElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;en)</pre>
 </li>
 </ul>
 <a name="getExecutableElement-java.lang.reflect.Executable-">
@@ -232,7 +239,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getExecutableElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element">ExecutableElement</a>&nbsp;getExecutableElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect">Executable</a>&nbsp;element)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element">ExecutableElement</a>&nbsp;getExecutableElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect">Executable</a>&nbsp;element)</pre>
 </li>
 </ul>
 <a name="getTypeParameterElement-java.lang.reflect.TypeVariable-">
@@ -241,7 +248,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeParameterElement</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeParameterElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeParameterElement</a>&nbsp;getTypeParameterElement(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeParameterElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeParameterElement</a>&nbsp;getTypeParameterElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</pre>
 </li>
 </ul>
 <a name="fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">
@@ -250,7 +257,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 <ul class="blockList">
 <li class="blockList">
 <h4>fromProcessingEnvironment</h4>
-<pre>static&nbsp;<a href="../../../../com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a>&nbsp;fromProcessingEnvironment(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</pre>
+<pre>static&nbsp;<a href="../../../../com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a>&nbsp;fromProcessingEnvironment(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">ProcessingEnvironment</a>&nbsp;env)</pre>
 </li>
 </ul>
 <a name="fromCoreReflection--">
@@ -289,7 +296,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/apriori/reflect/model/CoreReflectionPrimitiveType.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

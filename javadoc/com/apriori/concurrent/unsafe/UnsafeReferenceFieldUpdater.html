@@ -95,7 +95,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">com.apriori.concurrent.unsafe.UnsafeFieldUpdater</a>&lt;T&gt;</li>
@@ -116,10 +116,10 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre><a href="../../../../com/apriori/util/IsDerivedFrom.html" title="annotation in com.apriori.util">@IsDerivedFrom</a>(<a href="../../../../com/apriori/util/IsDerivedFrom.html#value--">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReferenceFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic">java.util.concurrent.atomic.AtomicReferenceFieldUpdater.class</a>)
+<pre><a href="../../../../com/apriori/util/IsDerivedFrom.html" title="annotation in com.apriori.util">@IsDerivedFrom</a>(<a href="../../../../com/apriori/util/IsDerivedFrom.html#value--">value</a>=<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReferenceFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic">java.util.concurrent.atomic.AtomicReferenceFieldUpdater.class</a>)
 public class <span class="typeNameLabel">UnsafeReferenceFieldUpdater&lt;T,V&gt;</span>
 extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.html" title="class in com.apriori.concurrent.unsafe">UnsafeFieldUpdater</a>&lt;T&gt;</pre>
-<div class="block">Like <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReferenceFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReferenceFieldUpdater</code></a> except elides the per-access checks. This improves
+<div class="block">Like <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicReferenceFieldUpdater.html?is-external=true" title="class or interface in java.util.concurrent.atomic"><code>AtomicReferenceFieldUpdater</code></a> except elides the per-access checks. This improves
  performance but at the cost of safety (hence the name).
  
  <p>Without these checks, it is possible for classes to have access to fields they ought not per
@@ -145,9 +145,9 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#UnsafeReferenceFieldUpdater-java.lang.Class-java.lang.Class-java.lang.String-">UnsafeReferenceFieldUpdater</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&gt;&nbsp;tclass,
-                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;vclass,
-                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#UnsafeReferenceFieldUpdater-java.lang.Class-java.lang.Class-java.lang.String-">UnsafeReferenceFieldUpdater</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&gt;&nbsp;tclass,
+                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;vclass,
+                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
 <div class="block">Creates and returns an updater for objects with the given field.</div>
 </td>
 </tr>
@@ -170,7 +170,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#accumulateAndGet-T-V-java.util.function.BinaryOperator-">accumulateAndGet</a></span>(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
                 <a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;x,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</code>
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the updated value.</div>
 </td>
@@ -194,7 +194,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#getAndAccumulate-T-V-java.util.function.BinaryOperator-">getAndAccumulate</a></span>(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
                 <a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;x,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</code>
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the previous value.</div>
 </td>
@@ -210,7 +210,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#getAndUpdate-T-java.util.function.UnaryOperator-">getAndUpdate</a></span>(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
-            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</code>
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the previous value.</div>
 </td>
@@ -233,7 +233,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html#updateAndGet-T-java.util.function.UnaryOperator-">updateAndGet</a></span>(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
-            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</code>
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</code>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the updated value.</div>
 </td>
@@ -243,8 +243,8 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -266,9 +266,9 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <ul class="blockListLast">
 <li class="blockList">
 <h4>UnsafeReferenceFieldUpdater</h4>
-<pre>public&nbsp;UnsafeReferenceFieldUpdater(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&gt;&nbsp;tclass,
-                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;vclass,
-                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
+<pre>public&nbsp;UnsafeReferenceFieldUpdater(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&gt;&nbsp;tclass,
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;vclass,
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
 <div class="block">Creates and returns an updater for objects with the given field. The Class arguments are
  needed to check that reflective types and generic types match.</div>
 <dl>
@@ -277,9 +277,9 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <dd><code>vclass</code> - the field's type</dd>
 <dd><code>fieldName</code> - the name of the field to be updated</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the field is not a volatile field whose type matches
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the field is not a volatile field whose type matches
          <code>vclass</code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - with a nested reflection-based exception if the class does not hold
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - with a nested reflection-based exception if the class does not hold
          field or is the wrong type, or the field is inaccessible to the caller according to
          Java language access control</dd>
 </dl>
@@ -405,7 +405,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <li class="blockList">
 <h4>getAndUpdate</h4>
 <pre>public final&nbsp;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;getAndUpdate(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</pre>
+                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the previous value. The function should be
  side-effect-free, since it may be re-applied when attempted updates fail due to contention
@@ -428,7 +428,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <li class="blockList">
 <h4>updateAndGet</h4>
 <pre>public final&nbsp;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;updateAndGet(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</pre>
+                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function">UnaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;updateFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function, returning the updated value. The function should be
  side-effect-free, since it may be re-applied when attempted updates fail due to contention
@@ -452,7 +452,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <h4>getAndAccumulate</h4>
 <pre>public final&nbsp;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;getAndAccumulate(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
                                 <a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;x,
-                                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</pre>
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the previous value. The
  function should be side-effect-free, since it may be re-applied when attempted updates fail
@@ -478,7 +478,7 @@ extends <a href="../../../../com/apriori/concurrent/unsafe/UnsafeFieldUpdater.ht
 <h4>accumulateAndGet</h4>
 <pre>public final&nbsp;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;accumulateAndGet(<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">T</a>&nbsp;obj,
                                 <a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&nbsp;x,
-                                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</pre>
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BinaryOperator.html?is-external=true" title="class or interface in java.util.function">BinaryOperator</a>&lt;<a href="../../../../com/apriori/concurrent/unsafe/UnsafeReferenceFieldUpdater.html" title="type parameter in UnsafeReferenceFieldUpdater">V</a>&gt;&nbsp;accumulatorFunction)</pre>
 <div class="block">Atomically updates the field of the given object managed by this updater with the results of
  applying the given function to the current and given values, returning the updated value. The
  function should be side-effect-free, since it may be re-applied when attempted updates fail
