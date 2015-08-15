@@ -22,4 +22,7 @@ Please note that all of this code is in a Java package named `com.apriori`, howe
 owners of `apriori.com` (aPriori, a completely unrelated software company in Massachusetts). One of these days we'll do a
 refactor to rename/move everything into `com.bluegosling.apriori`...
 
-(Exported from http://code.google.com/p/bluegosling on 3/21/2015)
+# Docs
+Java Doc can be found here: https://rawgit.com/jhump/bluegosling/master/javadoc/index.html
+
+*(Exported from http://code.google.com/p/bluegosling on 3/21/2015)*
