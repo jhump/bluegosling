@@ -21,7 +21,12 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
-
+/**
+ * An implementation of {@link Types} backed by an annotation processing environment. This delegates
+ * most methods to a {@link javax.lang.model.util.Types} instance.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class ProcessingEnvironmentTypes implements Types {
    private final javax.lang.model.util.Types base;
    private final Elements elementUtils;

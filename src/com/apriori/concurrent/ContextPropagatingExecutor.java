@@ -8,14 +8,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-// TODO: doc
+/**
+ * An executor that allows for propagation of context from submitting threads to worker threads.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: tests
 public class ContextPropagatingExecutor extends WrappingExecutor {
    
    private final Collection<ContextPropagator<?>> propagators;
    
+   /**
+    * Constructs a new context propagating executor.
+    *
+    * @param delegate the underlying executor, for executing tasks
+    * @param propagators objects that manage and propagate context for each task submission
+    */
    public ContextPropagatingExecutor(Executor delegate,
-         Iterable<ContextPropagator<?>> propagators) {
+         Iterable<? extends ContextPropagator<?>> propagators) {
       super(delegate);
       this.propagators = Iterables.snapshot(propagators);
    }

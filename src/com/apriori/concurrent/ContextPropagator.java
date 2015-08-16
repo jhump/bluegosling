@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
+// TODO: tests for static methods
 public interface ContextPropagator<T> {
    /**
     * Captures the context from the current thread.
@@ -122,11 +122,13 @@ public interface ContextPropagator<T> {
     * @return a propagator that propagates the value of the given thread-local variable
     */
    public static <T> ContextPropagator<T> forTls(ThreadLocal<T> threadLocal) {
-      return create(threadLocal::get, (Function<T, T>) t -> {
-         T prev = threadLocal.get();
-         threadLocal.set(t);
-         return prev;
-      }, threadLocal::set);
+      return create(threadLocal::get,
+            (Function<T, T>) t -> {
+               T prev = threadLocal.get();
+               threadLocal.set(t);
+               return prev;
+            },
+            threadLocal::set);
    }
 
    /**

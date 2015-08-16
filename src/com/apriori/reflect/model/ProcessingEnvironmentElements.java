@@ -20,6 +20,12 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 
 
+/**
+ * An implementation of {@link Elements} backed by an annotation processing environment. This
+ * delegates most methods to an {@link javax.lang.model.util.Elements} instance.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class ProcessingEnvironmentElements implements Elements {
    private final javax.lang.model.util.Elements base;
    private final Types typeUtils;

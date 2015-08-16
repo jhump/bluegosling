@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.AbstractAnnotationValueVisitor8;
 
 /**
  * Utility methods for constructing instances of {@link AnnotationMirror} and
@@ -37,6 +39,13 @@ public class AnnotationMirrors {
    static final AnnotationMirrors CORE_REFLECTION_INSTANCE =
          new AnnotationMirrors(CoreReflectionElements.INSTANCE, CoreReflectionTypes.INSTANCE); 
 
+   /**
+    * Returns an {@link AnnotationMirrors} utility class that is backed by an annotation processing
+    * environment.
+    *
+    * @param env an annotation processing environment
+    * @return an {@link AnnotationMirrors} utility class backed by the given environment
+    */
    public static AnnotationMirrors fromProcessingEnvironment(ProcessingEnvironment env) {
       ProcessingEnvironmentElements elements;
       javax.lang.model.util.Elements base = env.getElementUtils();
@@ -48,10 +57,96 @@ public class AnnotationMirrors {
       return new AnnotationMirrors(elements, elements.getTypeUtils());
    }
    
+   /**
+    * Returns an {@link AnnotationMirrors} utility class that is backed by core reflection.
+    *
+    * @return an {@link AnnotationMirrors} utility class backed by core reflection
+    */
    public static AnnotationMirrors fromCoreReflection() {
       return CORE_REFLECTION_INSTANCE;
    }
 
+   /**
+    * The kind of an annotation value.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private enum ValueKind {
+      BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE,
+      STRING, TYPE, ENUM, ANNOTATION, ARRAY;
+      
+      /**
+       * A visitor that returns the kind of a given annotation value.
+       */
+      static AnnotationValueVisitor<ValueKind, Void> VISITOR =
+            new AbstractAnnotationValueVisitor8<ValueKind, Void>() {
+               @Override
+               public ValueKind visitBoolean(boolean b, Void p) {
+                  return ValueKind.BOOLEAN;
+               }
+
+               @Override
+               public ValueKind visitByte(byte b, Void p) {
+                  return ValueKind.BYTE;
+               }
+
+               @Override
+               public ValueKind visitChar(char c, Void p) {
+                  return ValueKind.CHAR;
+               }
+
+               @Override
+               public ValueKind visitDouble(double d, Void p) {
+                  return ValueKind.DOUBLE;
+               }
+
+               @Override
+               public ValueKind visitFloat(float f, Void p) {
+                  return ValueKind.FLOAT;
+               }
+
+               @Override
+               public ValueKind visitInt(int i, Void p) {
+                  return ValueKind.INT;
+               }
+
+               @Override
+               public ValueKind visitLong(long i, Void p) {
+                  return ValueKind.LONG;
+               }
+
+               @Override
+               public ValueKind visitShort(short s, Void p) {
+                  return ValueKind.SHORT;
+               }
+
+               @Override
+               public ValueKind visitString(String s, Void p) {
+                  return ValueKind.STRING;
+               }
+
+               @Override
+               public ValueKind visitType(TypeMirror t, Void p) {
+                  return ValueKind.TYPE;
+               }
+
+               @Override
+               public ValueKind visitEnumConstant(VariableElement c, Void p) {
+                  return ValueKind.ENUM;
+               }
+
+               @Override
+               public ValueKind visitAnnotation(AnnotationMirror a, Void p) {
+                  return ValueKind.ANNOTATION;
+               }
+
+               @Override
+               public ValueKind visitArray(List<? extends AnnotationValue> vals, Void p) {
+                  return ValueKind.ARRAY;
+               }
+            };
+   }
+   
    private final Elements elementUtils;
    private final Types typeUtils;
    
@@ -59,7 +154,18 @@ public class AnnotationMirrors {
       this.elementUtils = elementUtils;
       this.typeUtils = typeUtils;
    }
-   
+
+   /**
+    * Returns an annotation value for the given object. Only primitives (including boxed types),
+    * strings, class tokens, enum constants, annotation instances, and arrays or lists thereof are
+    * allowed. Arrays and lists cannot be heterogenous (for example, cannot have both booleans and
+    * bytes) and cannot be greater than 1 dimension (e.g. no arrays of arrays). 
+    *
+    * @param o an object
+    * @return an annotation value for the given object
+    * @throws IllegalArgumentException if the given object cannot be represented as an annotation
+    *       value
+    */
    public AnnotationValue getAnnotationValue(Object o) {
       requireNonNull(o);
       if (o instanceof Boolean) {
@@ -78,32 +184,64 @@ public class AnnotationMirrors {
          return getFloatAnnotationValue((Float) o);
       } else if (o instanceof Double) {
          return getDoubleAnnotationValue((Double) o);
+      } else if (o instanceof String) {
+         return getStringAnnotationValue((String) o);
+      } else if (o instanceof Class) {
+         return getTypeAnnotationValue((Class<?>) o);
       } else if (o instanceof Enum) {
          return getEnumAnnotationValue((Enum<?>) o);
       } else if (o instanceof Annotation) {
          return getAnnotationAsValue((Annotation) o);
       } else if (o.getClass().isArray()) {
          return getArrayAnnotationValue(o);
+      } else if (o instanceof List) {
+         return getArrayAnnotationValue((List<?>) o);
       } else {
          throw new IllegalArgumentException(
                String.valueOf(o) + " is not a valid value for an annotation field");
       }
    }
    
+   /**
+    * Returns an annotation value for the given boolean.
+    *
+    * @param b a boolean value
+    * @return an annotation value for the given boolean
+    */
    public AnnotationValue getBooleanAnnotationValue(boolean b) {
-      return new AnnotationValue() {
-         @Override
-         public Object getValue() {
-            return b;
-         }
-         
-         @Override
-         public <R, P> R accept(AnnotationValueVisitor<R, P> v, P p) {
-            return v.visitBoolean(b, p);
-         }
-      };
+      return b ? BooleanAnnotationValue.TRUE : BooleanAnnotationValue.FALSE;
+   }
+   
+   /**
+    * Enumeration of the two possible annotation values for booleans.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private enum BooleanAnnotationValue implements AnnotationValue {
+      TRUE(true), FALSE(false);
+      
+      private final boolean b;
+      BooleanAnnotationValue(boolean b) {
+         this.b = b;
+      }
+
+      @Override
+      public Object getValue() {
+         return b;
+      }
+      
+      @Override
+      public <R, P> R accept(AnnotationValueVisitor<R, P> v, P p) {
+         return v.visitBoolean(b, p);
+      }
    }
 
+   /**
+    * Returns an annotation value for the given byte.
+    *
+    * @param b a byte value
+    * @return an annotation value for the given byte
+    */
    public AnnotationValue getByteAnnotationValue(byte b) {
       return new AnnotationValue() {
          @Override
@@ -118,6 +256,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given short.
+    *
+    * @param sh a short value
+    * @return an annotation value for the given short
+    */
    public AnnotationValue getShortAnnotationValue(short sh) {
       return new AnnotationValue() {
          @Override
@@ -132,6 +276,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given character.
+    *
+    * @param ch a char value
+    * @return an annotation value for the given character
+    */
    public AnnotationValue getCharAnnotationValue(char ch) {
       return new AnnotationValue() {
          @Override
@@ -146,6 +296,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given integer.
+    *
+    * @param i an int value
+    * @return an annotation value for the given integer
+    */
    public AnnotationValue getIntAnnotationValue(int i) {
       return new AnnotationValue() {
          @Override
@@ -160,6 +316,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given long.
+    *
+    * @param l a long value
+    * @return an annotation value for the given long
+    */
    public AnnotationValue getLongAnnotationValue(long l) {
       return new AnnotationValue() {
          @Override
@@ -174,6 +336,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given float.
+    *
+    * @param f a float value
+    * @return an annotation value for the given float
+    */
    public AnnotationValue getFloatAnnotationValue(float f) {
       return new AnnotationValue() {
          @Override
@@ -188,6 +356,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given double.
+    *
+    * @param d a double value
+    * @return an annotation value for the given double
+    */
    public AnnotationValue getDoubleAnnotationValue(double d) {
       return new AnnotationValue() {
          @Override
@@ -202,7 +376,39 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given string.
+    *
+    * @param s a string value
+    * @return an annotation value for the given string
+    */
+   public AnnotationValue getStringAnnotationValue(String s) {
+      return new AnnotationValue() {
+         @Override
+         public Object getValue() {
+            return s;
+         }
+         
+         @Override
+         public <R, P> R accept(AnnotationValueVisitor<R, P> v, P p) {
+            return v.visitString(s, p);
+         }
+      };
+   }
+
+   /**
+    * Returns an annotation value for the given array or list.
+    *
+    * @param a an array or list
+    * @return an annotation value for the given object
+    * @throws IllegalArgumentException if the given value is neither an array nor a list
+    * @throws IllegalArgumentException if the given array or list contains other arrays or lists or
+    *       if it is heterogenous (e.g. mixed types of contained values)
+    */
    public AnnotationValue getArrayAnnotationValue(Object a) {
+      if (a instanceof List) {
+         return getArrayAnnotationValue((List<?>) a);
+      }
       Class<?> aType = a.getClass();
       if (aType.isArray()) {
          throw new IllegalArgumentException("Given object " + a + " is not an array");
@@ -210,7 +416,6 @@ public class AnnotationMirrors {
       if (Object[].class.isAssignableFrom(aType)) {
          return getArrayAnnotationValue((Object[]) a);
       }
-      
       Class<?> component = aType.getComponentType();
       assert component.isPrimitive() && component != void.class;
       int len = Array.getLength(a);
@@ -267,10 +472,34 @@ public class AnnotationMirrors {
       };
    }
 
-   public AnnotationValue getArrayAnnotationValue(Object[] a) {
-      List<AnnotationValue> values = new ArrayList<>(a.length);
+   /**
+    * Returns an annotation value for the given list.
+    *
+    * @param a a list
+    * @return an annotation value for the given list
+    * @throws IllegalArgumentException if the given list contains other arrays or lists or if it is
+    *       heterogenous (e.g. mixed types of contained values)
+    */
+   public AnnotationValue getArrayAnnotationValue(List<?> a) {
+      List<AnnotationValue> values = new ArrayList<>(a.size());
+      ValueKind arrayKind = null;
       for (Object o : a) {
-         values.add(getAnnotationValue(o));
+         AnnotationValue v = getAnnotationValue(o);
+         ValueKind elementKind = ValueKind.VISITOR.visit(v);
+         if (arrayKind == null) {
+            if (elementKind == ValueKind.ARRAY) {
+               throw new IllegalArgumentException("Array within array found. Only 1-dimensional "
+                     + "arrays are supported as annotation values");
+            }
+            arrayKind = elementKind;
+         } else {
+            if (elementKind != arrayKind) {
+               throw new IllegalArgumentException("Array with multiple element kinds found: "
+                     + arrayKind.name() + " and " + elementKind.name() + ". Only homogenous "
+                     + "arrays are supported as annotation values");
+            }
+         }
+         values.add(v);
       }
 
       List<AnnotationValue> results = Collections.unmodifiableList(values);
@@ -287,6 +516,24 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given array.
+    *
+    * @param a an array
+    * @return an annotation value for the given array
+    * @throws IllegalArgumentException if the given array contains other arrays or lists or if it is
+    *       heterogenous (e.g. mixed types of contained values)
+    */
+   public AnnotationValue getArrayAnnotationValue(Object[] a) {
+      return getArrayAnnotationValue(Arrays.asList(a));
+   }
+
+   /**
+    * Returns an annotation value for the given enum.
+    *
+    * @param en an enum
+    * @return an annotation value for the given enum
+    */
    public AnnotationValue getEnumAnnotationValue(Enum<?> en) {
       Field f;
       try {
@@ -308,6 +555,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given class token.
+    *
+    * @param cl a class token
+    * @return an annotation value for the given type
+    */
    public AnnotationValue getTypeAnnotationValue(Class<?> cl) {
       TypeMirror typeMirror = elementUtils.getTypeElement(cl).asType();
       return new AnnotationValue() {
@@ -323,6 +576,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation value for the given annotation.
+    *
+    * @param a an annotation
+    * @return an annotation value for the given annotation
+    */
    public AnnotationValue getAnnotationAsValue(Annotation a) {
       AnnotationMirror mirror = getAnnotationAsMirror(a);
       return new AnnotationValue() {
@@ -338,6 +597,12 @@ public class AnnotationMirrors {
       };
    }
 
+   /**
+    * Returns an annotation mirror that represents the given annotation.
+    *
+    * @param a an annotation
+    * @return an annotation mirror that represents the given annotation
+    */
    public AnnotationMirror getAnnotationAsMirror(Annotation a) {
       DeclaredType type =
             typeUtils.getDeclaredType(elementUtils.getTypeElement(a.annotationType()));

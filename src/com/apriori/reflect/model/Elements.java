@@ -22,14 +22,50 @@ import javax.lang.model.element.VariableElement;
  * {@linkplain #fromProcessingEnvironment annotation processing environment} or by
  * {@linkplain #fromCoreReflection core reflection}.
  *
+ * @see #fromProcessingEnvironment(ProcessingEnvironment)
+ * @see #fromCoreReflection()
+ * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public interface Elements extends javax.lang.model.util.Elements {
+   /**
+    * Returns a type element for the given class token.
+    *
+    * @param clazz a class
+    * @return a type element for the given class
+    */
    TypeElement getTypeElement(Class<?> clazz);
+
+   /**
+    * Returns a package element for the given package.
+    *
+    * @param pkg a package
+    * @return a package element for the given package
+    */
    PackageElement getPackageElement(Package pkg);
+   
+   /**
+    * Returns a variable element for the given parameter.
+    *
+    * @param parameter a parameter
+    * @return a variable element for the given parameter
+    */
    VariableElement getParameterElement(Parameter parameter);
+   
+   /**
+    * Returns a variable element for the given field.
+    *
+    * @param field a field
+    * @return a variable element for the given field
+    */
    VariableElement getFieldElement(Field field);
    
+   /**
+    * Returns a variable element for the given enum constant.
+    *
+    * @param field a field
+    * @return a variable element for the given enum constant
+    */
    default VariableElement getEnumConstantElement(Enum<?> en) {
       Field f;
       try {
@@ -40,9 +76,29 @@ public interface Elements extends javax.lang.model.util.Elements {
       return getFieldElement(f);
    }
    
-   ExecutableElement getExecutableElement(Executable element);
+   /**
+    * Returns an executable element for the given executable.
+    *
+    * @param executable an executable (either a method or a constructor)
+    * @return an executable element for the given executable
+    */
+   ExecutableElement getExecutableElement(Executable executable);
+
+   /**
+    * Returns an executable element for the given executable.
+    *
+    * @param executable an executable
+    * @return an executable element for the given executable
+    */
    TypeParameterElement getTypeParameterElement(TypeVariable<?> typeVar);
    
+   /**
+    * Returns an {@link Elements} utility class that is backed by an annotation processing
+    * environment.
+    *
+    * @param env an annotation processing environment
+    * @return an {@link Elements} utility class backed by the given environment
+    */
    static Elements fromProcessingEnvironment(ProcessingEnvironment env) {
       javax.lang.model.util.Elements base = env.getElementUtils();
       if (base instanceof Elements) {
@@ -51,6 +107,11 @@ public interface Elements extends javax.lang.model.util.Elements {
       return new ProcessingEnvironmentElements(env);
    }
    
+   /**
+    * Returns an {@link Elements} utility class that is backed by core reflection.
+    *
+    * @return an {@link Elements} utility class backed by core reflection
+    */
    static Elements fromCoreReflection() {
       return CoreReflectionElements.INSTANCE;
    }

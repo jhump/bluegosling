@@ -9,12 +9,23 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-//TODO: doc
+/**
+ * An executor service that allows for propagation of context from submitting threads to worker
+ * threads.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 //TODO: tests
 public class ContextPropagatingExecutorService extends WrappingExecutorService {
    
    private final Collection<ContextPropagator<?>> propagators;
    
+   /**
+    * Constructs a new context propagating executor service.
+    *
+    * @param delegate the underlying executor service, for executing tasks
+    * @param propagators objects that manage and propagate context for each task submission
+    */
    public ContextPropagatingExecutorService(ExecutorService delegate,
          Iterable<ContextPropagator<?>> propagators) {
       super(delegate);
