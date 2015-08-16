@@ -118,6 +118,18 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">InterceptingExecutor</span>
 extends <a href="../../../com/apriori/concurrent/WrappingExecutor.html" title="class in com.apriori.concurrent">WrappingExecutor</a></pre>
+<div class="block">An executor that provides an interceptor pattern, to apply cross-cutting concerns in the course
+ of executing tasks.
+ 
+ <p>Two different styles of interceptor are supported:
+ <ul>
+ <li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent"><code>InterceptingExecutor.Interceptor</code></a>: Can intercept all invocations of tasks and even choose to short-circuit
+    their execution.</li>
+ <li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent"><code>InterceptingExecutor.Decorator</code></a>: Can decorate invocations with actions that are performed before and after
+    the execution of a task. Short-circuiting actual execution is not directly supported.
+    Execution of multiple decorators can be done in a single stack-frame, so their use can lead
+    to friendlier stack traces than the use of interceptors.</li>
+ </ul></div>
 </li>
 </ul>
 </div>
@@ -138,11 +150,15 @@ extends <a href="../../../com/apriori/concurrent/WrappingExecutor.html" title="c
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></span></code>
+<div class="block">A decorator, that can perform actions before and after each task.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a></span></code>
+<div class="block">An interceptor for tasks.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -160,7 +176,9 @@ extends <a href="../../../com/apriori/concurrent/WrappingExecutor.html" title="c
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.html#InterceptingExecutor-java.util.concurrent.Executor-java.lang.Iterable-">InterceptingExecutor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&gt;&nbsp;interceptors)</code>&nbsp;</td>
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&gt;&nbsp;interceptors)</code>
+<div class="block">Constructs a new intercepting executor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -219,7 +237,13 @@ extends <a href="../../../com/apriori/concurrent/WrappingExecutor.html" title="c
 <li class="blockList">
 <h4>InterceptingExecutor</h4>
 <pre>public&nbsp;InterceptingExecutor(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
-                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&gt;&nbsp;interceptors)</pre>
+                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&gt;&nbsp;interceptors)</pre>
+<div class="block">Constructs a new intercepting executor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor, for executing tasks</dd>
+<dd><code>interceptors</code> - the interceptors that are applied to each task executed</dd>
+</dl>
 </li>
 </ul>
 </li>

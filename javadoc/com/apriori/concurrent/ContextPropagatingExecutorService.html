@@ -123,6 +123,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">ContextPropagatingExecutorService</span>
 extends <a href="../../../com/apriori/concurrent/WrappingExecutorService.html" title="class in com.apriori.concurrent">WrappingExecutorService</a></pre>
+<div class="block">An executor service that allows for propagation of context from submitting threads to worker
+ threads.</div>
 </li>
 </ul>
 </div>
@@ -142,7 +144,9 @@ extends <a href="../../../com/apriori/concurrent/WrappingExecutorService.html" t
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ContextPropagatingExecutorService.html#ContextPropagatingExecutorService-java.util.concurrent.ExecutorService-java.lang.Iterable-">ContextPropagatingExecutorService</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;delegate,
-                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;?&gt;&gt;&nbsp;propagators)</code>&nbsp;</td>
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;?&gt;&gt;&nbsp;propagators)</code>
+<div class="block">Constructs a new context propagating executor service.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -237,6 +241,12 @@ extends <a href="../../../com/apriori/concurrent/WrappingExecutorService.html" t
 <h4>ContextPropagatingExecutorService</h4>
 <pre>public&nbsp;ContextPropagatingExecutorService(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;delegate,
                                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;?&gt;&gt;&nbsp;propagators)</pre>
+<div class="block">Constructs a new context propagating executor service.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor service, for executing tasks</dd>
+<dd><code>propagators</code> - objects that manage and propagate context for each task submission</dd>
+</dl>
 </li>
 </ul>
 </li>

@@ -47,8 +47,8 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Decorator.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.ListBuilder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/InterceptingExecutorService.Interceptor.html" target="_top">Frames</a></li>
@@ -101,9 +101,18 @@ var activeTableTab = "activeTableTab";
 <dt>Enclosing class:</dt>
 <dd><a href="../../../com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent">InterceptingExecutorService</a></dd>
 </dl>
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
 <br>
-<pre>public static interface <span class="typeNameLabel">InterceptingExecutorService.Interceptor</span></pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
+public static interface <span class="typeNameLabel">InterceptingExecutorService.Interceptor</span></pre>
+<div class="block">An interceptor for tasks. Interceptor implementations can perform actions before and after
+ running the task. Interceptors are expected to invoke <code>task.call()</code>, unless they are
+ choosing to block execution of the given task. Interceptors can also modify the result of the
+ call by returning a value other than what the task produced.</div>
 </li>
 </ul>
 </div>
@@ -124,7 +133,9 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.ListBuilder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.ListBuilder</a></span></code>
+<div class="block">Builds a list of interceptors.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -144,11 +155,16 @@ var activeTableTab = "activeTableTab";
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.html#intercept-java.util.concurrent.ExecutorService-java.util.concurrent.Callable-">intercept</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;delegate,
-         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>&nbsp;</td>
+         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)</code>
+<div class="block">Intercepts the given task.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.html#newList--">newList</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.ListBuilder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.ListBuilder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.html#newList--">newList</a></span>()</code>
+<div class="block">Returns a new builder, for building a list of interceptors from both interceptor and
+ decorator instances.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -174,7 +190,14 @@ var activeTableTab = "activeTableTab";
 <pre>&lt;T&gt;&nbsp;T&nbsp;intercept(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;delegate,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&nbsp;task)
          throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<div class="block">Intercepts the given task. Implementations should call <code>task.run()</code> to proceed to
+ the next interceptor in the chain and run the task.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor that is executing the task</dd>
+<dd><code>task</code> - the task to run, which may be a wrapper that invokes subsequent interceptors</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of the task</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
 </dl>
@@ -186,7 +209,13 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>newList</h4>
-<pre>static&nbsp;<a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.Builder</a>&nbsp;newList()</pre>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.ListBuilder.html" title="class in com.apriori.concurrent">InterceptingExecutorService.Interceptor.ListBuilder</a>&nbsp;newList()</pre>
+<div class="block">Returns a new builder, for building a list of interceptors from both interceptor and
+ decorator instances.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new list builder</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -216,8 +245,8 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Decorator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Decorator.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutorService.Interceptor.ListBuilder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/InterceptingExecutorService.Interceptor.html" target="_top">Frames</a></li>

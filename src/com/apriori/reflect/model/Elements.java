@@ -63,7 +63,7 @@ public interface Elements extends javax.lang.model.util.Elements {
    /**
     * Returns a variable element for the given enum constant.
     *
-    * @param field a field
+    * @param en an enum constant
     * @return a variable element for the given enum constant
     */
    default VariableElement getEnumConstantElement(Enum<?> en) {
@@ -85,10 +85,10 @@ public interface Elements extends javax.lang.model.util.Elements {
    ExecutableElement getExecutableElement(Executable executable);
 
    /**
-    * Returns an executable element for the given executable.
+    * Returns a type parameter for the given type variable.
     *
-    * @param executable an executable
-    * @return an executable element for the given executable
+    * @param typeVar a type variable
+    * @return a type parameter element for the given type variable
     */
    TypeParameterElement getTypeParameterElement(TypeVariable<?> typeVar);
    

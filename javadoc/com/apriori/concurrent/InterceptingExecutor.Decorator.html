@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18,"i2":17,"i3":18};
+var methods = {"i0":18,"i1":18,"i2":17,"i3":18,"i4":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/InterceptingExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/InterceptingExecutor.Decorator.html" target="_top">Frames</a></li>
@@ -72,7 +72,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -104,12 +104,34 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static interface <span class="typeNameLabel">InterceptingExecutor.Decorator</span></pre>
+<div class="block">A decorator, that can perform actions before and after each task.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Interface and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Decorator.Builder</a></span></code>
+<div class="block">Builds a decorator, composing up to three functional interfaces.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -126,21 +148,35 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFailed-java.util.concurrent.Executor-java.lang.Runnable-java.lang.Throwable-">afterFailed</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;cause)</code>&nbsp;</td>
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;cause)</code>
+<div class="block">Performs actions after the given task has failed.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFinish-java.util.concurrent.Executor-java.lang.Runnable-">afterFinish</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
-           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Performs actions after the given task has completed successfully.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#asInterceptor-java.util.List-">asInterceptor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a>&gt;&nbsp;decorators)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#asInterceptor-java.util.List-">asInterceptor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a>&gt;&nbsp;decorators)</code>
+<div class="block">Converts a list of decorators into a single interceptor.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#beforeStart-java.util.concurrent.Executor-java.lang.Runnable-">beforeStart</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
-           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>&nbsp;</td>
+           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<div class="block">Performs actions before the given task.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Decorator.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#builder--">builder</a></span>()</code>
+<div class="block">Returns a new builder, for creating a decorator from simple lambda expressions.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -165,6 +201,12 @@ var activeTableTab = "activeTableTab";
 <h4>beforeStart</h4>
 <pre>default&nbsp;void&nbsp;beforeStart(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Performs actions before the given task. Implementations should not call <code>task.run()</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor that is executing the task</dd>
+<dd><code>task</code> - the task that is running</dd>
+</dl>
 </li>
 </ul>
 <a name="afterFinish-java.util.concurrent.Executor-java.lang.Runnable-">
@@ -175,6 +217,12 @@ var activeTableTab = "activeTableTab";
 <h4>afterFinish</h4>
 <pre>default&nbsp;void&nbsp;afterFinish(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<div class="block">Performs actions after the given task has completed successfully.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor that is executing the task</dd>
+<dd><code>task</code> - the task that ran</dd>
+</dl>
 </li>
 </ul>
 <a name="afterFailed-java.util.concurrent.Executor-java.lang.Runnable-java.lang.Throwable-">
@@ -186,6 +234,27 @@ var activeTableTab = "activeTableTab";
 <pre>default&nbsp;void&nbsp;afterFailed(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>&nbsp;delegate,
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;cause)</pre>
+<div class="block">Performs actions after the given task has failed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delegate</code> - the underlying executor that is executing the task</dd>
+<dd><code>task</code> - the task that failed</dd>
+<dd><code>cause</code> - the cause of failure</dd>
+</dl>
+</li>
+</ul>
+<a name="builder--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>builder</h4>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.Builder.html" title="class in com.apriori.concurrent">InterceptingExecutor.Decorator.Builder</a>&nbsp;builder()</pre>
+<div class="block">Returns a new builder, for creating a decorator from simple lambda expressions.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new builder</dd>
+</dl>
 </li>
 </ul>
 <a name="asInterceptor-java.util.List-">
@@ -194,7 +263,23 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>asInterceptor</h4>
-<pre>static&nbsp;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&nbsp;asInterceptor(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a>&gt;&nbsp;decorators)</pre>
+<pre>static&nbsp;<a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Interceptor</a>&nbsp;asInterceptor(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a>&gt;&nbsp;decorators)</pre>
+<div class="block">Converts a list of decorators into a single interceptor. The interceptor invokes each
+ decorator before the task, in the order they appear in the list. After the task, the
+ decorators are invoked in the opposite order.
+ 
+ <p>Execution of the task is short-circuited if a decorator throws an exception from its
+ <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#beforeStart-java.util.concurrent.Executor-java.lang.Runnable-"><code>beforeStart(java.util.concurrent.Executor, java.lang.Runnable)</code></a> action. In such an event, subsequent decorators are
+ skipped. For every invocation of <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#beforeStart-java.util.concurrent.Executor-java.lang.Runnable-"><code>beforeStart(java.util.concurrent.Executor, java.lang.Runnable)</code></a>, either <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFinish-java.util.concurrent.Executor-java.lang.Runnable-"><code>afterFinish(java.util.concurrent.Executor, java.lang.Runnable)</code></a> or
+ <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFailed-java.util.concurrent.Executor-java.lang.Runnable-java.lang.Throwable-"><code>afterFailed(java.util.concurrent.Executor, java.lang.Runnable, java.lang.Throwable)</code></a> will be invoked. So, if a decorator throws an exception,
+ short-circuiting task execution, any decorators already invoked will have their
+ <a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.html#afterFailed-java.util.concurrent.Executor-java.lang.Runnable-java.lang.Throwable-"><code>afterFailed(java.util.concurrent.Executor, java.lang.Runnable, java.lang.Throwable)</code></a> action invoked.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>decorators</code> - a list of decorators</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an interceptor that invokes the given decorators</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -225,7 +310,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../com/apriori/concurrent/InterceptingExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Interceptor.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../com/apriori/concurrent/InterceptingExecutor.Decorator.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?com/apriori/concurrent/InterceptingExecutor.Decorator.html" target="_top">Frames</a></li>
@@ -249,7 +334,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
