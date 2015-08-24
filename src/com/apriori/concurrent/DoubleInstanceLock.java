@@ -193,7 +193,7 @@ public class DoubleInstanceLock<T> {
          int s1 = s2 == LEFT ? RIGHT : LEFT;
          T val = values[s1];
          if (sync.resetSnapshot(s1)) {
-            values[s1] = val = cloner.clone(values[s1]);
+            values[s1] = val = cloner.clone(val);
          }
          action.apply(val); // write the first side!
          
@@ -203,7 +203,7 @@ public class DoubleInstanceLock<T> {
          sync.awaitDrain(s2); // make sure readers have drained
          val = values[s2];
          if (sync.resetSnapshot(s2)) {
-            values[s2] = val = cloner.clone(values[s2]);
+            values[s2] = val = cloner.clone(val);
          }
          return action.apply(val); // write the second side!
       } finally {
@@ -402,7 +402,7 @@ public class DoubleInstanceLock<T> {
        * @return the side that is being used by readers, as encoded in the state value
        */
       private int leftOrRight(long s) { 
-         return (int) ((s & LEFT_OR_RIGHT) >> LEFT_OR_RIGHT_SHIFT) & 1;
+         return (int) (s >> LEFT_OR_RIGHT_SHIFT) & 1;
       }
 
       /**

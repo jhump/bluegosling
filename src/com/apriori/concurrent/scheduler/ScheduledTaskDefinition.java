@@ -16,18 +16,30 @@ import java.util.List;
  */
 public interface ScheduledTaskDefinition<V> extends TaskDefinition<V>, Cancellable {
    /**
-    * Returns the timestamp, in milliseconds, that this task definition was submitted
+    * Returns the timestamp, in milliseconds, when this task definition was submitted
     * to a {@link ScheduledTaskManager}. This is measured as milliseconds elapsed since
     * midnight, January 1, 1970 UTC.
     * 
     * @return the time the task definition was submitted
     */
    long submitTimeMillis();
-   
-   //TODO: javadoc
+
+   /**
+    * Returns the timestamp, in milliseconds, when this task is scheduled to execute. This is
+    * measured in milliseconds elapsed since midnight, January 1, 1970 UTC. If this is a repeating
+    * task, the value is the timestamp when the first occurrence is scheduled to execute.
+    *
+    * @return the time the task is scheduled to execute
+    */
    long scheduledStartTimeMillis();
    
-   // TODO: javadoc
+   /**
+    * Returns the time, in {@linkplain System#nanoTime() system nanos}, when this task is scheduled
+    * to execute. If this is a repeating task, the value is the time when the first occurrence is
+    * scheduled to execute.
+    *
+    * @return the time the task is scheduled to execute
+    */
    long scheduledStartNanoTime();
    
    /**

@@ -241,8 +241,7 @@ final class ListenableExecutors {
          for (Future<T> future : results) {
             try {
                future.get();
-            } catch (CancellationException ignore) {
-            } catch (ExecutionException ignore) {
+            } catch (CancellationException | ExecutionException ignore) {
             }
          }
          return results;
@@ -268,8 +267,7 @@ final class ListenableExecutors {
             } catch (TimeoutException e) {
                future.cancel(true);
                timedOut = true;
-            } catch (CancellationException ignore) {
-            } catch (ExecutionException ignore) {
+            } catch (CancellationException | ExecutionException ignore) {
             }
          }
          return results;

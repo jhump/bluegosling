@@ -1,6 +1,7 @@
 package com.apriori.concurrent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +36,8 @@ import java.util.concurrent.TimeUnit;
  */
 // TODO: javadoc
 // TODO: tests
+// TODO: can this be made lock-free? or closer to it (e.g. reduce contention over queue)?
+// TODO: batching -- let a virtual thread run several sequential tasks before yielding
 public class ThreadLimitingExecutorService extends AbstractExecutorService
       implements ListenableExecutorService {
 
@@ -125,37 +127,60 @@ public class ThreadLimitingExecutorService extends AbstractExecutorService
 
    @Override
    public void execute(Runnable command) {
+      VirtualThread t;
       synchronized (lock) {
          if (shutdown) {
             throw new RejectedExecutionException();
          }
-         if (activeThreads.size() < threadLimit) {
-            VirtualThread t = new VirtualThread();
-            activeThreads.add(t);
-            t.run(command);
-         } else {
+         if (activeThreads.size() == threadLimit) {
             queue.add(command);
+            return;
+         } else {
+            t = new VirtualThread();
+            activeThreads.add(t);
          }
       }
+      t.run(command);
    }
    
-   void removeThread(VirtualThread thread) {
-      List<Runnable> outstanding;
-      synchronized (lock) {
-         activeThreads.remove(thread);
-         if (!isTerminated()) {
-            return;
-         }
-         // time to terminate the service
-         outstanding = new ArrayList<>(queue);
-         queue.clear();
-         // notify any threads waiting for termination
-         lock.notifyAll();
-      }
+   void removeAndCleanupThread(VirtualThread thread) {
+      List<Runnable> outstanding = removeThread(thread);
       // VirtualThreads only remove themselves while queue is not empty when they encounter
       // RejectedExecutionExceptions. If that happened to last thread, just cancel all outstanding
       // tasks. (No need to be holding lock while doing this.)
-      for (Runnable r : outstanding) {
+      abort(outstanding);
+   }
+   
+   List<Runnable> removeThread(VirtualThread thread) {
+      synchronized (lock) {
+         activeThreads.remove(thread);
+         if (isTerminated()) {
+            return Collections.emptyList();
+         }
+         // time to terminate the service
+         List<Runnable> outstanding = new ArrayList<>(queue);
+         queue.clear();
+         // notify any threads waiting for termination
+         lock.notifyAll();
+         return outstanding;
+      }
+   }
+   
+   Runnable pollNext(VirtualThread runner) {
+      List<Runnable> outstanding;
+      synchronized (lock) {
+         Runnable next = queue.poll();
+         if (next != null) {
+            return next;
+         }
+         outstanding = removeThread(runner);
+      }
+      abort(outstanding);
+      return null;
+   }
+   
+   private static void abort(List<Runnable> aborted) {
+      for (Runnable r : aborted) {
          if (r instanceof Future) {
             ((Future<?>) r).cancel(false);
          } else if (r instanceof Cancellable) {
@@ -191,24 +216,29 @@ public class ThreadLimitingExecutorService extends AbstractExecutorService
    
    private class VirtualThread {
       private boolean interrupted;
-      private FutureTask<?> current;
+      private Thread current;
       
       VirtualThread() {
       }
       
-      boolean run(Runnable r) {
+      void run(Runnable r) {
          synchronized (this) {
             if (!interrupted) {
-               current = new FutureTask<>(() -> {
-                  try {
-                     r.run();
-                  } finally {
-                     runNext();
-                  }
-               }, null);
                try {
-                  executor.execute(current);
-                  return true;
+                  executor.execute(() -> {
+                     synchronized (this) {
+                        current = Thread.currentThread();
+                     }
+                     try {
+                        r.run();
+                     } finally {
+                        synchronized (this) {
+                           current = null;
+                        }
+                        runNext();
+                     }
+                  });
+                  return;
                } catch (RejectedExecutionException ree) {
                   rejectTask(r, ree);
                }
@@ -218,8 +248,7 @@ public class ThreadLimitingExecutorService extends AbstractExecutorService
          // will acquire the enclosing object's lock. But acquisition order must always be the
          // enclosing object's lock first, before the VirtualThread's monitor. Otherwise, deadlock
          // could occur. 
-         removeThread(this);
-         return false;
+         removeAndCleanupThread(this);
       }
       
       private void rejectTask(Runnable failed, Throwable t) {
@@ -235,20 +264,16 @@ public class ThreadLimitingExecutorService extends AbstractExecutorService
       }
       
       private void runNext() {
-         synchronized (ThreadLimitingExecutorService.this.lock) {
-            Runnable next = queue.poll();
-            if (next == null) {
-               removeThread(this);
-            } else {
-               run(next);
-            }
+         Runnable next = pollNext(this);
+         if (next != null) {
+            run(next);
          }
       }
       
       synchronized void interrupt() {
          interrupted = true;
          if (current != null) {
-            current.cancel(true);
+            current.interrupt();
          }
       }
    }

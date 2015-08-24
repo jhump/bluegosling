@@ -42,14 +42,14 @@ public class ScheduledTaskImplTest extends ListenableScheduledFutureTaskTest {
    @Override
    protected ScheduledTaskDefinitionImpl<String>.ScheduledTaskImpl makeFuture(
          long scheduledStartNanoTime, Clock clock) {
-      return create(TaskDefinition.Builder.forCallable(underlyingTask()).build(),
+      return create(TaskDefinition.forCallable(underlyingTask()).build(),
             scheduledStartNanoTime, clock);
    }
 
    @Override
    protected ScheduledTaskDefinitionImpl<String>.ScheduledTaskImpl makeFuture(
          long scheduledStartNanoTime) {
-      TaskDefinition<String> taskDef = TaskDefinition.Builder.forCallable(underlyingTask()).build();
+      TaskDefinition<String> taskDef = TaskDefinition.forCallable(underlyingTask()).build();
       ScheduledTaskDefinitionImpl<String> task =
             new ScheduledTaskDefinitionImpl<String>(taskDef, taskManager);
       return task.scheduleTask(scheduledStartNanoTime);

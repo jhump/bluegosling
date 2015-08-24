@@ -18,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -32,33 +31,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * optics into the results of executions of the tasks. It is API-compatible with the standard
  * {@link ScheduledExecutorService}, so it should behave the same if using only the standard API
  * and not any of the extensions herein.
- * 
- * <h3>Key Interfaces</h3>
- * <dl>
- *  <dt>{@link TaskDefinition}</dt>
- *    <dd>The definition of a scheduled task. This defines when a task runs, if it is repeated and
- *    how often, what actual code is executed when the task is run, etc.</dd>
- *  <dt>{@link ScheduledTaskDefinition}</dt>
- *    <dd>A {@link TaskDefinition} that has been scheduled for execution with a
- *    {@link ScheduledTaskManager}. This provides additional API for inspecting the status of task
- *    invocations and controlling the task, like pausing/suspending executions and canceling the
- *    task.</dd>
- *  <dt>{@link ScheduledTask}</dt>
- *    <dd>A single invocation of a {@link ScheduledTaskDefinition}. If the task is defined as a
- *    repeating task, there will be multiple such invocations of this task over time. This interface
- *    is also a {@link ScheduledFuture} and is returned when submitting scheduled tasks to the
- *    executor service.</dd>
- *  <dt>{@link RepeatingScheduledTask}</dt>
- *    <dd>Represents all invocations of a repeating {@link ScheduledTaskDefinition}. This is for
- *    API and behavioral compatibility with the {@link ScheduledFuture}s returned by the standard
- *    {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} and
- *    {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
- *    methods.</dd>
- * </dl>
- * 
- * <p>Client code uses a {@link TaskDefinition.Builder} to construct a task and define all of the
- * parameters for its execution. It is then {@linkplain #schedule(TaskDefinition) scheduled} with 
- * the {@link ScheduledTaskManager} for execution.
  * 
  * <h3>Features</h3>
  * <p>The main features in this service, not available with the standard scheduled executor API,
@@ -96,7 +68,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: move this and related classes/interfaces into sub-package
 // TODO: tests!
 public class ScheduledTaskManager implements ListenableScheduledExecutorService {
    
@@ -104,9 +75,8 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    
    @SuppressWarnings("unchecked") // we'll only put Runnables into it, promise
    private static BlockingQueue<Runnable> createWorkQueue() {
-      @SuppressWarnings("rawtypes") // needed for unchecked cast in return statement
-      BlockingQueue queue = new DelayQueue<Delayed>();
-      return queue;
+      BlockingQueue<?> queue = new DelayQueue<Delayed>();
+      return (BlockingQueue<Runnable>) queue;
    }
    
    /**
@@ -167,7 +137,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    @Override
    public <V> ScheduledTask<V> schedule(Callable<V> task, long delay, TimeUnit unit) {
       return scheduleInternal(
-            TaskDefinition.Builder.forCallable(task).withInitialDelay(delay, unit).build())
+            TaskDefinition.forCallable(task).withInitialDelay(delay, unit).build())
             .scheduleFirst();
    }
    
@@ -179,7 +149,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    @Override
    public ScheduledTask<Void> schedule(Runnable task, long delay, TimeUnit unit) {
       return scheduleInternal(
-            TaskDefinition.Builder.forRunnable(task).withInitialDelay(delay, unit).build())
+            TaskDefinition.forRunnable(task).withInitialDelay(delay, unit).build())
             .scheduleFirst();
    }
 
@@ -209,13 +179,14 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     */
    public <V> RepeatingScheduledTask<V> scheduleAtFixedRate(Callable<V> task,
          long initialDelay, long period, TimeUnit unit) {
-      ScheduledTaskDefinitionImpl<V> taskDef = scheduleInternal(
-            TaskDefinition.Builder.forCallable(task).withInitialDelay(initialDelay, unit)
-            .repeatAtFixedRate(period, unit)
-            // for API compatibility with normal ScheduledExecutorService, we only continue
-            // scheduling instances of the task if it succeeds
-            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
-            .build());
+      ScheduledTaskDefinitionImpl<V> taskDef = 
+            scheduleInternal(TaskDefinition.forCallable(task)
+                  .withInitialDelay(initialDelay, unit)
+                  .repeatAtFixedRate(period, unit)
+                  // for API compatibility with normal ScheduledExecutorService, we only continue
+                  // scheduling instances of the task if it succeeds
+                  .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+                  .build());
       taskDef.scheduleFirst();
       return new RepeatingScheduledTaskImpl<V>(taskDef);
    }
@@ -223,13 +194,14 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    @Override
    public RepeatingScheduledTask<Void> scheduleAtFixedRate(Runnable task, long initialDelay,
          long period, TimeUnit unit) {
-      ScheduledTaskDefinitionImpl<Void> taskDef = scheduleInternal(
-            TaskDefinition.Builder.forRunnable(task).withInitialDelay(initialDelay, unit)
-            .repeatAtFixedRate(period, unit)
-            // for API compatibility with normal ScheduledExecutorService, we only continue
-            // scheduling instances of the task if it succeeds
-            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
-            .build());
+      ScheduledTaskDefinitionImpl<Void> taskDef =
+            scheduleInternal(TaskDefinition.forRunnable(task)
+                  .withInitialDelay(initialDelay, unit)
+                  .repeatAtFixedRate(period, unit)
+                  // for API compatibility with normal ScheduledExecutorService, we only continue
+                  // scheduling instances of the task if it succeeds
+                  .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+                  .build());
       taskDef.scheduleFirst();
       return new RepeatingScheduledTaskImpl<Void>(taskDef);
    }
@@ -257,13 +229,14 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     */
    public <V> RepeatingScheduledTask<V> scheduleWithFixedDelay(Callable<V> task,
          long initialDelay, long delay, TimeUnit unit) {
-      ScheduledTaskDefinitionImpl<V> taskDef = scheduleInternal(
-            TaskDefinition.Builder.forCallable(task).withInitialDelay(initialDelay, unit)
-            .repeatWithFixedDelay(delay, unit)
-            // for API compatibility with normal ScheduledExecutorService, we only continue
-            // scheduling instances of the task if it succeeds
-            .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
-            .build());
+      ScheduledTaskDefinitionImpl<V> taskDef =
+            scheduleInternal(TaskDefinition.forCallable(task)
+                  .withInitialDelay(initialDelay, unit)
+                  .repeatWithFixedDelay(delay, unit)
+                  // for API compatibility with normal ScheduledExecutorService, we only continue
+                  // scheduling instances of the task if it succeeds
+                  .withScheduleNextTaskPolicy(ScheduleNextTaskPolicies.ON_SUCCESS)
+                  .build());
       taskDef.scheduleFirst();
       return new RepeatingScheduledTaskImpl<V>(taskDef);
    }
@@ -272,7 +245,8 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    public RepeatingScheduledTask<Void> scheduleWithFixedDelay(Runnable task, long initialDelay,
          long delay, TimeUnit unit) {
       ScheduledTaskDefinitionImpl<Void> taskDef = scheduleInternal(
-            TaskDefinition.Builder.forRunnable(task).withInitialDelay(initialDelay, unit)
+            TaskDefinition.forRunnable(task)
+            .withInitialDelay(initialDelay, unit)
             .repeatWithFixedDelay(delay, unit)
             // for API compatibility with normal ScheduledExecutorService, we only continue
             // scheduling instances of the task if it succeeds
@@ -313,7 +287,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     */
    @Override
    public <V> ScheduledTask<V> submit(Callable<V> task) {
-      return scheduleInternal(TaskDefinition.Builder.forCallable(task).build())
+      return scheduleInternal(TaskDefinition.forCallable(task).build())
             .scheduleFirst();
    }
 
@@ -326,7 +300,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     */
    @Override
    public ScheduledTask<Void> submit(Runnable task) {
-      return scheduleInternal(TaskDefinition.Builder.forRunnable(task).build())
+      return scheduleInternal(TaskDefinition.forRunnable(task).build())
             .scheduleFirst();
    }
 
@@ -340,7 +314,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     */
    @Override
    public <V> ScheduledTask<V> submit(Runnable task, V result) {
-      return scheduleInternal(TaskDefinition.Builder.forRunnable(task, result).build())
+      return scheduleInternal(TaskDefinition.forRunnable(task, result).build())
             .scheduleFirst();
    }
    

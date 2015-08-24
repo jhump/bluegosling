@@ -1,7 +1,6 @@
 package com.apriori.concurrent.scheduler;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -111,7 +110,8 @@ public abstract class TaskImplementation<V> implements Callable<V> {
          
          @Override
          public V call() throws Exception {
-            return Executors.callable(runnable, result).call();
+            runnable.run();
+            return result;
          }
       };
    }
@@ -122,7 +122,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
     * @param source the source that will underlie this task
     * @return a task that represents the specified source
     */
-   public static <V> TaskImplementation<V> forSource(final Supplier<V> source) {
+   public static <V> TaskImplementation<V> forSupplier(final Supplier<V> source) {
       return new TaskImplementation<V>() {
          @Override
          public <R> R visit(Visitor<R, ? super V> visitor) {

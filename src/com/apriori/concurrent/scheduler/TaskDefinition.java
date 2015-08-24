@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * The definition for a task that will be executed by a {@link ScheduledTaskManager}.
@@ -45,8 +46,13 @@ public interface TaskDefinition<V> {
     * @return {@code true} if this is a repeating task; {@code false} otherwise
     */
    boolean isRepeating();
-   
-   // TODO: javadoc
+
+   /**
+    * Returns the rescheduler, used to compute the start time for subsequent invocations of a
+    * repeating task. 
+    *
+    * @return the rescheduler or {@code null} if this is not a repeating task
+    */
    Rescheduler<? super V> rescheduler();
    
    /**
@@ -120,45 +126,56 @@ public interface TaskDefinition<V> {
    int DEFAULT_MAX_HISTORY_SIZE = 100;
    
    /**
+    * Returns a new builder for a task definition whose underlying task is a
+    * {@link Callable}.
+    * 
+    * @param callable the underlying task
+    * @return a new builder
+    */
+   static <V> Builder<V> forCallable(Callable<V> callable) {
+      return new Builder<>(TaskImplementation.forCallable(callable));
+   }
+
+   /**
+    * Returns a new builder for a task definition whose underlying task is a
+    * {@link Callable}.
+    * 
+    * @param callable the underlying task
+    * @return a new builder
+    */
+   static <V> Builder<V> forSupplier(Supplier<V> supplier) {
+      return new Builder<>(TaskImplementation.forSupplier(supplier));
+   }
+
+   /**
+    * Returns a new builder for a task definition whose underlying task is a
+    * {@link Runnable}.
+    * 
+    * @param runnable the underlying task
+    * @return a new builder
+    */
+   static Builder<Void> forRunnable(Runnable runnable) {
+      return forRunnable(runnable, null);
+   }
+
+   /**
+    * Returns a new builder for a task definition whose underlying task is a
+    * {@link Runnable} that has an associated result value.
+    * 
+    * @param runnable the underlying task
+    * @param result the result returned upon completion of this task
+    * @return a new builder
+    */
+   static <V> Builder<V> forRunnable(final Runnable runnable, final V result) {
+      return new Builder<>(TaskImplementation.forRunnable(runnable, result));
+   }
+   
+   /**
     * A builder for configuring {@link TaskDefinition} instances.
     * 
     * @param <V> the type of value returned upon completion of the task
     */
-   public class Builder<V> {
-      /**
-       * Returns a new builder for a task definition whose underlying task is a
-       * {@link Callable}.
-       * 
-       * @param callable the underlying task
-       * @return a new builder
-       */
-      public static <V> Builder<V> forCallable(Callable<V> callable) {
-         return new Builder<V>(TaskImplementation.forCallable(callable));
-      }
-      
-      /**
-       * Returns a new builder for a task definition whose underlying task is a
-       * {@link Runnable}.
-       * 
-       * @param runnable the underlying task
-       * @return a new builder
-       */
-      public static Builder<Void> forRunnable(Runnable runnable) {
-         return forRunnable(runnable, null);
-      }
-
-      /**
-       * Returns a new builder for a task definition whose underlying task is a
-       * {@link Runnable} that has an associated result value.
-       * 
-       * @param runnable the underlying task
-       * @param result the result returned upon completion of this task
-       * @return a new builder
-       */
-      public static <V> Builder<V> forRunnable(final Runnable runnable, final V result) {
-         return new Builder<V>(TaskImplementation.forRunnable(runnable, result));
-      }
-
+   class Builder<V> {
       private final TaskImplementation<V> task;
       private final Set<ScheduledTaskListener<? super V>> listeners;
       private int maxHistorySize = DEFAULT_MAX_HISTORY_SIZE;
@@ -172,7 +189,7 @@ public interface TaskDefinition<V> {
        * 
        * @param task the underlying task
        */
-      private Builder(TaskImplementation<V> task) {
+      Builder(TaskImplementation<V> task) {
          this.task = task;
          this.listeners = new LinkedHashSet<ScheduledTaskListener<? super V>>();
       }
@@ -185,6 +202,9 @@ public interface TaskDefinition<V> {
        * @return {@code this}, for method chaining
        */
       public Builder<V> keepHistoryFor(int numExecutions) {
+         if (numExecutions < 1) {
+            throw new IllegalArgumentException("History must allow at least one execution");
+         }
          this.maxHistorySize = numExecutions;
          return this;
       }
@@ -244,7 +264,13 @@ public interface TaskDefinition<V> {
          return this;
       }
       
-      //TODO: javadoc
+      /**
+       * Configures the task to recur using the given rescheduler for computing when subsequent
+       * invocations will start.
+       *
+       * @param nextTaskScheduler computes when subsequent invocations will start
+       * @return {@code this}, for method chaining
+       */
       public Builder<V> repeat(Rescheduler<? super V> nextTaskScheduler) {
          this.rescheduler = nextTaskScheduler;
          return this;

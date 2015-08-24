@@ -1523,7 +1523,6 @@ public final class Types {
       }
       Class<?> actualInterfaces[] = clazz.getInterfaces();
       Type genericInterfaces[] = clazz.getGenericInterfaces();
-      assert actualInterfaces.length > 0;
       Class<?> actualSuper = null;
       Type genericSuper = null;
       Type ret = null;
@@ -1861,14 +1860,17 @@ public final class Types {
                   + " is static so cannot have a parameterized owner type");
          }
          owner = ownerType;
-      } else if (typeArguments.isEmpty()) {
+      } else if (copyOfArguments.isEmpty()) {
          throw new IllegalArgumentException("Parameterized type must either have type arguments or "
                + "have a parameterized owner type");
       } else {
          Class<?> clazz = rawType;
          Class<?> ownerClass = null;
-         while (clazz != null && !Modifier.isStatic(clazz.getModifiers())) {
+         while (clazz != null) {
             ownerClass = clazz.getDeclaringClass();
+            if (Modifier.isStatic(clazz.getModifiers())) {
+               break;
+            }
             if (ownerClass != null && ownerClass.getTypeParameters().length > 0) {
                throw new IllegalArgumentException("Non-static parameterized type "
                   + rawType.getTypeName() + " must have parameterized owner");
@@ -1883,10 +1885,6 @@ public final class Types {
          throw new IllegalArgumentException("Given type " + rawType.getTypeName() + " has " + len
                + " type variable(s), but " + copyOfArguments.size()
                + " argument(s) were specified");
-      }
-      if (ownerType == null && len == 0) {
-         throw new IllegalArgumentException("A ParameterizedType must have either a parameterized"
-               + " owner or its own type parameters");
       }
       Map<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
       if (ownerType != null) {

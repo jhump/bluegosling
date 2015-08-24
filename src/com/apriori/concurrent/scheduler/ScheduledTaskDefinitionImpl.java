@@ -71,21 +71,33 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
          @SuppressWarnings("synthetic-access") // anonymous class access private fields
          @Override
          public V call() throws Exception {
-            lock.lock();
             try {
-               if (paused && current == null && task.get().isCancelled()) {
-                  // Task was paused and cancelled this instance because it hadn't yet
-                  // started. Let's honor that intent by not actually do anything.
-                  return null;
+               lock.lock();
+               try {
+                  if (paused && current == null && task.get().isCancelled()) {
+                     // Task was paused and cancelled this instance because it hadn't yet
+                     // started. Let's honor that intent by not actually do anything.
+                     return null;
+                  }
+                  taskStart.set(System.currentTimeMillis());
+               } finally {
+                  lock.unlock();
                }
-               taskStart.set(System.currentTimeMillis());
-            } finally {
-               lock.unlock();
-            }
-            try {
-               return taskDef.task().call();
-            } finally {
-               taskEnd.set(System.currentTimeMillis());
+               try {
+                  return taskDef.task().call();
+               } finally {
+                  taskEnd.set(System.currentTimeMillis());
+               }
+            } catch (Exception | Error e) {
+               UncaughtExceptionHandler handler = uncaughtExceptionHandler();
+               if (handler != null) {
+                  try {
+                     handler.uncaughtException(Thread.currentThread(), e);
+                  } catch (Throwable th2) {
+                     // TODO: log?
+                  }
+               }
+               throw e;
             }
          }
       };

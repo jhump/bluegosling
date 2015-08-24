@@ -615,28 +615,12 @@ public class Duration implements Comparable<Duration> {
       int c = unit.compareTo(o.unit);
       if (c == 0) {
          return Long.compare(length, o.length);
-      } else if (c <= 0) {
+      } else if (c > 0) {
          long theirs = unit.convert(o.length, o.unit);
-         if (theirs == Long.MAX_VALUE) {
-            // other value must be larger
-            return -1;
-         } else if (theirs == Long.MIN_VALUE) {
-            // other value must be smaller
-            return 1;
-         } else {
-            return Long.compare(length, theirs);
-         }
+         return Long.compare(length, theirs);
       } else {
          long ours = o.unit.convert(length, unit);
-         if (ours == Long.MAX_VALUE) {
-            // this value must be larger
-            return 1;
-         } else if (ours == Long.MIN_VALUE) {
-            // this value must be smaller
-            return -1;
-         } else {
-            return Long.compare(ours, o.length);
-         }
+         return Long.compare(ours, o.length);
       }
    }
 
