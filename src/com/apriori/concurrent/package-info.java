@@ -1,5 +1,6 @@
 /**
- * Classes that extend and enhance the API provided by the {@code java.util.concurrent} package.
+ * Classes that extend and enhance the API provided by the {@code java.util.concurrent} package. Of
+ * particular note:
  * 
  * <h3>{@link com.apriori.concurrent.ListenableFuture}</h3>
  * This interface is a {@code Future} that allows completion callbacks to be registered. This means
@@ -8,10 +9,13 @@
  * improve the ease of use of futures. This interface is accompanied by several classes with useful
  * static methods to further expand the types of tasks you can perform using futures.
  * 
- * <h3>{@link com.apriori.concurrent.PipeliningExecutor}</h3>
- * An executor service that maintains multiple "pipelines" for sequential processing. Tasks
- * associated with the same pipeline run sequentially. Tasks for multiple pipelines run
- * concurrently.
+ * <h3>{@link com.apriori.concurrent.SerializingExecutor}</h3>
+ * An executor that maintains multiple queues, each identified by a "key". Tasks associated with the
+ * same key run sequentially. Tasks associated different keys can run concurrently. There are two
+ * implementations provided. {@linkplain com.apriori.concurrent.PipeliningExecutor One} that wraps a
+ * given executor and enforces the parallelism and sequencing independent of the underlying
+ * execution mechanism, and {@linkplain com.apriori.concurrent.ActorThreadPool another} that is a
+ * novel thread pool implementation.
  * 
  * <h3>{@link com.apriori.concurrent.HierarchicalLock}</h3>
  * A lock that is similar to a {@code ReadWriteLock} except that it also provides a lock hierarchy.
@@ -21,6 +25,7 @@
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: add references to other key APIs? ThreadLimitingExecutorService, TreiberStack,
+// TODO: add references to other key APIs? Duration, NonReentrantLock, DoubleInstanceLock,
+// ManagedBlockers, CompletableExecutorService, RateLimiter, ThreadLimitingExecutorService,
 // AbstractQueuedReferenceSynchronizer?
 package com.apriori.concurrent;

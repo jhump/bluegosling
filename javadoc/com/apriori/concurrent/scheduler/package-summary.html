@@ -194,7 +194,36 @@
  functionality. The API here allows introspection on the status and history of scheduled tasks and
  allows tasks to be configured with custom exception handling strategies. It also provides more
  control over scheduling of subsequent instances for recurring tasks, the ability to pause/resume
- recurring tasks, and cancel individual instances of recurring tasks.</div>
+ recurring tasks, and cancel individual instances of recurring tasks.
+ 
+ <h3>Key Interfaces</h3>
+ <dl>
+  <dt><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>TaskDefinition</code></a></dt>
+    <dd>The definition of a scheduled task. This defines when a task runs, if it is repeated and
+    how often, what actual code is executed when the task is run, etc.</dd>
+  <dt><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTaskDefinition</code></a></dt>
+    <dd>A <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>TaskDefinition</code></a> that has been scheduled for
+    execution with a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a>. This provides
+    additional API for inspecting the status of task invocations and controlling the task, like
+    pausing/suspending executions and canceling the task.</dd>
+  <dt><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a></dt>
+    <dd>A single invocation of a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTaskDefinition</code></a>.
+    If the task is defined as a repeating task, there will be multiple such invocations of this
+    task over time. This interface is also a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> and is
+    returned when submitting scheduled tasks to the executor service.</dd>
+  <dt><a href="../../../../com/apriori/concurrent/scheduler/RepeatingScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>RepeatingScheduledTask</code></a></dt>
+    <dd>Represents all invocations of a repeating
+    <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTaskDefinition</code></a>. This is for API and
+    behavioral compatibility with the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a>s returned by
+    the standard <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService.scheduleAtFixedRate(Runnable, long, long, TimeUnit)</code></a>
+    and <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService.scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</code></a>
+    methods.</dd>
+ </dl>
+ 
+ <p>Client code uses a <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler"><code>TaskDefinition.Builder</code></a> to
+ construct a task and define all of the parameters for its execution. It is then
+ <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-com.apriori.concurrent.scheduler.TaskDefinition-">scheduled</a>
+ with the <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a> for execution.</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

@@ -1988,9 +1988,13 @@
 <div class="block">Handles errors that occur during a mutation operation on an atom.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/Rescheduler.html#atFixedRate-long-java.util.concurrent.TimeUnit-">atFixedRate(long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a rescheduler that schedules tasks at a fixed rate.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/Rescheduler.html#atFixedRateSkippingMissedOccurrences-long-java.util.concurrent.TimeUnit-">atFixedRateSkippingMissedOccurrences(long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a rescheduler that schedules tasks at a fixed rate.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms"><span class="typeNameLink">Atom</span></a>&lt;<a href="com/apriori/concurrent/atoms/Atom.html" title="type parameter in Atom">T</a>&gt; - Interface in <a href="com/apriori/concurrent/atoms/package-summary.html">com.apriori.concurrent.atoms</a></dt>
 <dd>
 <div class="block">A thread-safe reference type.</div>
@@ -6034,7 +6038,7 @@
 <dd>
 <div class="block">Returns a converter that converts bytes into streams of eight bits.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#forCallable-java.util.concurrent.Callable-">forCallable(Callable&lt;V&gt;)</a></span> - Static method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.html#forCallable-java.util.concurrent.Callable-">forCallable(Callable&lt;V&gt;)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></dt>
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
@@ -6222,12 +6226,12 @@
 <dd>
 <div class="block">Creates a listener that will execute the specified task when the future completes.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#forRunnable-java.lang.Runnable-">forRunnable(Runnable)</a></span> - Static method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-">forRunnable(Runnable)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></dt>
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#forRunnable-java.lang.Runnable-V-">forRunnable(Runnable, V)</a></span> - Static method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-V-">forRunnable(Runnable, V)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></dt>
 <dd>
 <div class="block">Returns a new builder for a task definition whose underlying task is a
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> that has an associated result value.</div>
@@ -6262,10 +6266,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/collections/CollectionBinding.html#forSortedSet--">forSortedSet()</a></span> - Static method in class com.apriori.di.collections.<a href="com/apriori/di/collections/CollectionBinding.html" title="class in com.apriori.di.collections">CollectionBinding</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskImplementation.html#forSource-java.util.function.Supplier-">forSource(Supplier&lt;V&gt;)</a></span> - Static method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a></dt>
-<dd>
-<div class="block">Returns a task for the specified source implementation.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitConverters.html#forString--">forString()</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/BitConverters.html" title="class in com.apriori.collections">BitConverters</a></dt>
 <dd>
 <div class="block">Returns a converter that converts strings into streams of bits.</div>
@@ -6274,6 +6274,15 @@
 <dd>
 <div class="block">Returns a converter that converts strings into streams of bits using the specifed character
  encoding.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.html#forSupplier-java.util.function.Supplier-">forSupplier(Supplier&lt;V&gt;)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></dt>
+<dd>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function"><code>Supplier</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskImplementation.html#forSupplier-java.util.function.Supplier-">forSupplier(Supplier&lt;V&gt;)</a></span> - Static method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a></dt>
+<dd>
+<div class="block">Returns a task for the specified source implementation.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/testing/ObjectVerifiers.html#forTesting-java.lang.Class-">forTesting(Class&lt;T&gt;)</a></span> - Static method in class com.apriori.testing.<a href="com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing">ObjectVerifiers</a></dt>
 <dd>
@@ -7843,9 +7852,13 @@
 <div class="block">Gets the first queued thread.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/Rescheduler.html#getFixedDelayNanos-com.apriori.concurrent.scheduler.Rescheduler-">getFixedDelayNanos(Rescheduler&lt;?&gt;)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the fixed delay, in nanoseconds, used by the given rescheduler.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/Rescheduler.html#getFixedRatePeriodNanos-com.apriori.concurrent.scheduler.Rescheduler-">getFixedRatePeriodNanos(Rescheduler&lt;?&gt;)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the fixed period, in nanoseconds, used by the given rescheduler.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfFloat.html#getFloat-int-">getFloat(int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfFloat.html" title="interface in com.apriori.collections">PrimitiveList.OfFloat</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/model/AnnotationMirrors.html#getFloatAnnotationValue-float-">getFloatAnnotationValue(float)</a></span> - Method in class com.apriori.reflect.model.<a href="com/apriori/reflect/model/AnnotationMirrors.html" title="class in com.apriori.reflect.model">AnnotationMirrors</a></dt>
@@ -14050,7 +14063,10 @@
 <div class="block">Unregisters a watcher.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#repeat-com.apriori.concurrent.scheduler.Rescheduler-">repeat(Rescheduler&lt;? super V&gt;)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Configures the task to recur using the given rescheduler for computing when subsequent
+ invocations will start.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#repeatAtFixedRate-long-java.util.concurrent.TimeUnit-">repeatAtFixedRate(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>
 <dd>
 <div class="block">Configures the task to repeat on a fixed rate schedule.</div>
@@ -14152,7 +14168,10 @@
 <div class="block">Handles rescheduling a periodic task.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.html#rescheduler--">rescheduler()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the rescheduler, used to compute the start time for subsequent invocations of a
+ repeating task.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/ProcessingEnvironments.html#reset--">reset()</a></span> - Static method in class com.apriori.apt.<a href="com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt">ProcessingEnvironments</a></dt>
 <dd>
 <div class="block">Resets the current thread, clearing thread-local state related to the current environment.</div>
@@ -14514,13 +14533,18 @@
  at which instances are scheduled.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartNanoTime--">scheduledStartNanoTime()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskDefinition</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the time, in <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#nanoTime--" title="class or interface in java.lang">system nanos</a>, when this task is scheduled
+ to execute.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTask.html#scheduledStartTimeMillis--">scheduledStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTask</a></dt>
 <dd>
 <div class="block">Returns the scheduled start time of this invocation, in milliseconds.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartTimeMillis--">scheduledStartTimeMillis()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskDefinition</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the timestamp, in milliseconds, when this task is scheduled to execute.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">ScheduledTask</span></a>&lt;<a href="com/apriori/concurrent/scheduler/ScheduledTask.html" title="type parameter in ScheduledTask">V</a>&gt; - Interface in <a href="com/apriori/concurrent/scheduler/package-summary.html">com.apriori.concurrent.scheduler</a></dt>
 <dd>
 <div class="block">The type of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledFuture</code></a> returned by submissions to a
@@ -15900,7 +15924,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#submitTimeMillis--">submitTimeMillis()</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskDefinition</a></dt>
 <dd>
-<div class="block">Returns the timestamp, in milliseconds, that this task definition was submitted
+<div class="block">Returns the timestamp, in milliseconds, when this task definition was submitted
  to a <a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.html#subSequence-int-int-">subSequence(int, int)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BitSequence.html" title="interface in com.apriori.collections">BitSequence</a></dt>
@@ -18462,7 +18486,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Variant5.html#withFirst-A-">withFirst(A)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/Variant5.html" title="class in com.apriori.choice">Variant5</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/Rescheduler.html#withFixedDelay-long-java.util.concurrent.TimeUnit-">withFixedDelay(long, TimeUnit)</a></span> - Static method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a rescheduler that schedules tasks with a fixed delay between the end of one task
+ and the beginning of the next.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/AnyOfFive.html#withFourth-D-">withFourth(D)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/AnyOfFive.html" title="class in com.apriori.choice">AnyOfFive</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/AnyOfFour.html#withFourth-D-">withFourth(D)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/AnyOfFour.html" title="class in com.apriori.choice">AnyOfFour</a></dt>

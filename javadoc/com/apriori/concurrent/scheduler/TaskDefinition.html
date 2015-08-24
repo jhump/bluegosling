@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":17,"i1":17,"i2":17,"i3":17,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -166,67 +166,99 @@ var activeTableTab = "activeTableTab";
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forCallable-java.util.concurrent.Callable-">forCallable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</code>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-">forRunnable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-V-">forRunnable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+           V&nbsp;result)</code>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> that has an associated result value.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forSupplier-java.util.function.Supplier-">forSupplier</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;V&gt;&nbsp;supplier)</code>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function"><code>Supplier</code></a>.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#initialDelay-java.util.concurrent.TimeUnit-">initialDelay</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Returns the delay, in the specified unit, from the time the task is submitted to
  the time the first instance of the task should be invoked.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isFixedRate--">isFixedRate</a></span>()</code>
 <div class="block">Returns whether or not a repeating task is scheduled based on a fixed
  rate or with fixed delays between invocations.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isRepeating--">isRepeating</a></span>()</code>
 <div class="block">Returns whether or not this is a repeating task vs.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskListener.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskListener</a>&lt;? super <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#listeners--">listeners</a></span>()</code>
 <div class="block">Returns the set of listeners for this task.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#maxHistorySize--">maxHistorySize</a></span>()</code>
 <div class="block">Returns the maximum size of invocation history to maintain for this task.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#periodDelay-java.util.concurrent.TimeUnit-">periodDelay</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
 <div class="block">Returns the period (for fixed rate tasks) or delay (for fixed delay tasks)
  for this task.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#rescheduler--">rescheduler</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#rescheduler--">rescheduler</a></span>()</code>
+<div class="block">Returns the rescheduler, used to compute the start time for subsequent invocations of a
+ repeating task.</div>
+</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler">ScheduleNextTaskPolicy</a>&lt;? super <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#scheduleNextTaskPolicy--">scheduleNextTaskPolicy</a></span>()</code>
 <div class="block">Returns the <a href="../../../../com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduleNextTaskPolicy</code></a> for this repeating task.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/apriori/concurrent/scheduler/TaskImplementation.html" title="class in com.apriori.concurrent.scheduler">TaskImplementation</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#task--">task</a></span>()</code>
 <div class="block">Returns the implementation of the task.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#uncaughtExceptionHandler--">uncaughtExceptionHandler</a></span>()</code>
 <div class="block">Returns the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task.</div>
@@ -326,6 +358,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>rescheduler</h4>
 <pre><a href="../../../../com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler">Rescheduler</a>&lt;? super <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="type parameter in TaskDefinition">V</a>&gt;&nbsp;rescheduler()</pre>
+<div class="block">Returns the rescheduler, used to compute the start time for subsequent invocations of a
+ repeating task.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the rescheduler or <code>null</code> if this is not a repeating task</dd>
+</dl>
 </li>
 </ul>
 <a name="isFixedRate--">
@@ -419,7 +457,7 @@ var activeTableTab = "activeTableTab";
 <a name="uncaughtExceptionHandler--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>uncaughtExceptionHandler</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;uncaughtExceptionHandler()</pre>
@@ -432,6 +470,78 @@ var activeTableTab = "activeTableTab";
 <dd>the <code>UncaughtExceptionHandler</code> for this task</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true#getUncaughtExceptionHandler--" title="class or interface in java.lang"><code>Thread.getUncaughtExceptionHandler()</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="forCallable-java.util.concurrent.Callable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forCallable</h4>
+<pre>static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;&nbsp;forCallable(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;callable)</pre>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent"><code>Callable</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>callable</code> - the underlying task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new builder</dd>
+</dl>
+</li>
+</ul>
+<a name="forSupplier-java.util.function.Supplier-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forSupplier</h4>
+<pre>static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;&nbsp;forSupplier(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;V&gt;&nbsp;supplier)</pre>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function"><code>Supplier</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>supplier</code> - the underlying task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new builder</dd>
+</dl>
+</li>
+</ul>
+<a name="forRunnable-java.lang.Runnable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forRunnable</h4>
+<pre>static&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;forRunnable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</pre>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>runnable</code> - the underlying task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new builder</dd>
+</dl>
+</li>
+</ul>
+<a name="forRunnable-java.lang.Runnable-java.lang.Object-">
+<!--   -->
+</a><a name="forRunnable-java.lang.Runnable-V-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>forRunnable</h4>
+<pre>static&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;V&gt;&nbsp;forRunnable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable,
+                                                 V&nbsp;result)</pre>
+<div class="block">Returns a new builder for a task definition whose underlying task is a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>Runnable</code></a> that has an associated result value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>runnable</code> - the underlying task</dd>
+<dd><code>result</code> - the result returned upon completion of this task</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new builder</dd>
 </dl>
 </li>
 </ul>

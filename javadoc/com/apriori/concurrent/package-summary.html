@@ -470,7 +470,8 @@
 <!--   -->
 </a>
 <h2 title="Package com.apriori.concurrent Description">Package com.apriori.concurrent Description</h2>
-<div class="block">Classes that extend and enhance the API provided by the <code>java.util.concurrent</code> package.
+<div class="block">Classes that extend and enhance the API provided by the <code>java.util.concurrent</code> package. Of
+ particular note:
  
  <h3><a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a></h3>
  This interface is a <code>Future</code> that allows completion callbacks to be registered. This means
@@ -479,10 +480,13 @@
  improve the ease of use of futures. This interface is accompanied by several classes with useful
  static methods to further expand the types of tasks you can perform using futures.
  
- <h3><a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent"><code>PipeliningExecutor</code></a></h3>
- An executor service that maintains multiple "pipelines" for sequential processing. Tasks
- associated with the same pipeline run sequentially. Tasks for multiple pipelines run
- concurrently.
+ <h3><a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent"><code>SerializingExecutor</code></a></h3>
+ An executor that maintains multiple queues, each identified by a "key". Tasks associated with the
+ same key run sequentially. Tasks associated different keys can run concurrently. There are two
+ implementations provided. <a href="../../../com/apriori/concurrent/PipeliningExecutor.html" title="class in com.apriori.concurrent">One</a> that wraps a
+ given executor and enforces the parallelism and sequencing independent of the underlying
+ execution mechanism, and <a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">another</a> that is a
+ novel thread pool implementation.
  
  <h3><a href="../../../com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent"><code>HierarchicalLock</code></a></h3>
  A lock that is similar to a <code>ReadWriteLock</code> except that it also provides a lock hierarchy.

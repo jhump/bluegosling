@@ -138,9 +138,9 @@ public interface TaskDefinition<V> {
 
    /**
     * Returns a new builder for a task definition whose underlying task is a
-    * {@link Callable}.
+    * {@link Supplier}.
     * 
-    * @param callable the underlying task
+    * @param supplier the underlying task
     * @return a new builder
     */
    static <V> Builder<V> forSupplier(Supplier<V> supplier) {

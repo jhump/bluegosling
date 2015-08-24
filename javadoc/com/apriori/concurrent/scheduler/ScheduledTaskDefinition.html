@@ -251,16 +251,21 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartNanoTime--">scheduledStartNanoTime</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartNanoTime--">scheduledStartNanoTime</a></span>()</code>
+<div class="block">Returns the time, in <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#nanoTime--" title="class or interface in java.lang">system nanos</a>, when this task is scheduled
+ to execute.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartTimeMillis--">scheduledStartTimeMillis</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#scheduledStartTimeMillis--">scheduledStartTimeMillis</a></span>()</code>
+<div class="block">Returns the timestamp, in milliseconds, when this task is scheduled to execute.</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#submitTimeMillis--">submitTimeMillis</a></span>()</code>
-<div class="block">Returns the timestamp, in milliseconds, that this task definition was submitted
+<div class="block">Returns the timestamp, in milliseconds, when this task definition was submitted
  to a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a>.</div>
 </td>
 </tr>
@@ -277,7 +282,7 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.concurrent.scheduler.<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">TaskDefinition</a></h3>
-<code><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#initialDelay-java.util.concurrent.TimeUnit-">initialDelay</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isFixedRate--">isFixedRate</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isRepeating--">isRepeating</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#listeners--">listeners</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#maxHistorySize--">maxHistorySize</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#periodDelay-java.util.concurrent.TimeUnit-">periodDelay</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#rescheduler--">rescheduler</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#scheduleNextTaskPolicy--">scheduleNextTaskPolicy</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#task--">task</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#uncaughtExceptionHandler--">uncaughtExceptionHandler</a></code></li>
+<code><a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forCallable-java.util.concurrent.Callable-">forCallable</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-">forRunnable</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forRunnable-java.lang.Runnable-V-">forRunnable</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#forSupplier-java.util.function.Supplier-">forSupplier</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#initialDelay-java.util.concurrent.TimeUnit-">initialDelay</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isFixedRate--">isFixedRate</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#isRepeating--">isRepeating</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#listeners--">listeners</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#maxHistorySize--">maxHistorySize</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#periodDelay-java.util.concurrent.TimeUnit-">periodDelay</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#rescheduler--">rescheduler</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#scheduleNextTaskPolicy--">scheduleNextTaskPolicy</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#task--">task</a>, <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.html#uncaughtExceptionHandler--">uncaughtExceptionHandler</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.concurrent.Cancellable">
@@ -307,7 +312,7 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <li class="blockList">
 <h4>submitTimeMillis</h4>
 <pre>long&nbsp;submitTimeMillis()</pre>
-<div class="block">Returns the timestamp, in milliseconds, that this task definition was submitted
+<div class="block">Returns the timestamp, in milliseconds, when this task definition was submitted
  to a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a>. This is measured as milliseconds elapsed since
  midnight, January 1, 1970 UTC.</div>
 <dl>
@@ -323,6 +328,13 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <li class="blockList">
 <h4>scheduledStartTimeMillis</h4>
 <pre>long&nbsp;scheduledStartTimeMillis()</pre>
+<div class="block">Returns the timestamp, in milliseconds, when this task is scheduled to execute. This is
+ measured in milliseconds elapsed since midnight, January 1, 1970 UTC. If this is a repeating
+ task, the value is the timestamp when the first occurrence is scheduled to execute.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the time the task is scheduled to execute</dd>
+</dl>
 </li>
 </ul>
 <a name="scheduledStartNanoTime--">
@@ -332,6 +344,13 @@ extends <a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.htm
 <li class="blockList">
 <h4>scheduledStartNanoTime</h4>
 <pre>long&nbsp;scheduledStartNanoTime()</pre>
+<div class="block">Returns the time, in <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#nanoTime--" title="class or interface in java.lang">system nanos</a>, when this task is scheduled
+ to execute. If this is a repeating task, the value is the time when the first occurrence is
+ scheduled to execute.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the time the task is scheduled to execute</dd>
+</dl>
 </li>
 </ul>
 <a name="executor--">
