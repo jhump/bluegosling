@@ -194,7 +194,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>
+<div class="block">Returns true if this queue is tentatively empty.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html" title="type parameter in LockFreeArrayBlockingQueue">E</a>&gt;</code></td>
@@ -234,7 +236,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>
+<div class="block">Returns the tentative remaining capacity in the queue.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -424,9 +428,15 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.
 <li class="blockList">
 <h4>isTentativelyEmpty</h4>
 <pre>protected&nbsp;boolean&nbsp;isTentativelyEmpty()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#isTentativelyEmpty--">AbstractLockFreeBlockingQueue</a></code></span></div>
+<div class="block">Returns true if this queue is tentatively empty. If different from <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util"><code>AbstractCollection.isEmpty()</code></a>, then
+ this returns true if the queue is empty after considering incomplete operations whereas the
+ other returns if the queue is "confirmed" empty, considering only completed operations.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a>&lt;<a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html" title="type parameter in LockFreeArrayBlockingQueue">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if this queue is tentatively empty</dd>
 </dl>
 </li>
 </ul>
@@ -467,9 +477,16 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.
 <li class="blockList">
 <h4>tentativeRemainingCapacity</h4>
 <pre>protected&nbsp;int&nbsp;tentativeRemainingCapacity()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#tentativeRemainingCapacity--">AbstractLockFreeBlockingQueue</a></code></span></div>
+<div class="block">Returns the tentative remaining capacity in the queue. If different from
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#remainingCapacity--" title="class or interface in java.util.concurrent"><code>BlockingQueue.remainingCapacity()</code></a>, then this returns a capacity after considering incomplete
+ operations whereas the other returns "confirmed" remaining capacity, considering only
+ completed operations.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a>&lt;<a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html" title="type parameter in LockFreeArrayBlockingQueue">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the tentative remaining capacity in the queue</dd>
 </dl>
 </li>
 </ul>

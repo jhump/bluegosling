@@ -109,6 +109,18 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block">A map that defines two-way mappings and whose values are unique.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/BiMap.BiEntry.html" title="interface in com.apriori.collections">BiMap.BiEntry</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block">An entry in a <code>BiMap</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/BitConverter.html" title="interface in com.apriori.collections">BitConverter</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">Decomposes objects into a sequence of bits.</div>
@@ -538,13 +550,16 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An abstract blocking deque, useful for building deque implementations that do not rely on locks
+ for thread-safey.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">An abstract blocking queue, useful for building queue implementations that do not rely on locks
- for thread-safey.</div>
+ for thread-safety.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -817,124 +832,124 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections">HashCompositeTrie</a>&lt;K,C,V&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/collections/HashBiMap.html" title="class in com.apriori.collections">HashBiMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections">HashSequenceTrie</a>&lt;K,V&gt;</td>
+<td class="colFirst"><a href="../../../com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections">HashCompositeTrie</a>&lt;K,C,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections">HashSequenceTrie</a>&lt;K,V&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/Immutables.html" title="class in com.apriori.collections">Immutables</a></td>
 <td class="colLast">
 <div class="block">Utility methods for creating immutable collections and maps and for viewing immutable collections
  and maps using the standard JCF collection and map interfaces.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></td>
 <td class="colLast">
 <div class="block">Utility methods for working with instances of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang"><code>Iterable</code></a> and <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a>&lt;K,V&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LinkedCycle.html" title="class in com.apriori.collections">LinkedCycle</a>&lt;E&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LinkedPersistentList.html" title="class in com.apriori.collections">LinkedPersistentList</a>&lt;E&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LockFreeArrayBlockingQueue.html" title="class in com.apriori.collections">LockFreeArrayBlockingQueue</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A blocking queue that is backed by an array and is lock-free.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LockFreeLinkedBlockingDeque.html" title="class in com.apriori.collections">LockFreeLinkedBlockingDeque</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A lock-free implementation of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a>, backed by a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentLinkedDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentLinkedDeque</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LockFreeLinkedBlockingQueue.html" title="class in com.apriori.collections">LockFreeLinkedBlockingQueue</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A lock-free implementation of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingQueue</code></a>, backed by a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentLinkedQueue</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/LockFreeSkipListBlockingQueue.html" title="class in com.apriori.collections">LockFreeSkipListBlockingQueue</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A blocking ordered queue that uses a concurrent skip list to store elements.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/MapFromCollection.html" title="class in com.apriori.collections">MapFromCollection</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/NoCopyGrowableArray.html" title="class in com.apriori.collections">NoCopyGrowableArray</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">A growable array that does not require doubling and copying an underlying array.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ParallelSort.html" title="class in com.apriori.collections">ParallelSort</a></td>
 <td class="colLast">
 <div class="block">A utility for sorting large lists using multiple CPUs/cores.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/ParallelSort2.html" title="class in com.apriori.collections">ParallelSort2</a></td>
 <td class="colLast">
 <div class="block">A utility for sorting large lists using multiple CPUs/cores.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentListBackedConcurrentList.html" title="class in com.apriori.collections">PersistentListBackedConcurrentList</a>&lt;E&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a>&lt;K,V&gt;</td>
 <td class="colLast">
 <div class="block">A concurrent map that is backed by a persistent map.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/PriorityQueues.html" title="class in com.apriori.collections">PriorityQueues</a></td>
 <td class="colLast">
 <div class="block">Utility methods for working with instances of <a href="../../../com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><code>PriorityQueue</code></a> (not to be mistaken for
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?is-external=true" title="class or interface in java.util"><code>PriorityQueue</code></a>).</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections">RadixTrieMap</a>&lt;V&gt;</td>
 <td class="colLast">
 <div class="block">A structure that can be used to perform radix sort and can be used to efficiently represent very
  sparse arrays.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a> implementation based on a <a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections"><code>RandomAccessArrayDeque</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomAccessArrayDeque.html" title="class in com.apriori.collections">RandomAccessArrayDeque</a>&lt;E&gt;</td>
 <td class="colLast">
 <div class="block">A double-ended queue that is backed by an array and, in addition to standard <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util"><code>Deque</code></a>
  operations, also exposes random access operations on its contents.</div>
 </td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../com/apriori/collections/RandomizedMeldableQueue.html" title="class in com.apriori.collections">RandomizedMeldableQueue</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections">RandomizedQueue</a>&lt;E&gt;</td>
@@ -989,7 +1004,9 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;E&gt;</td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">An ordered queue backed by a <a href="https://en.wikipedia.org/wiki/Skew_heap">Skew Heap</a>.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../com/apriori/collections/SlowParallelSort.html" title="class in com.apriori.collections">SlowParallelSort</a></td>

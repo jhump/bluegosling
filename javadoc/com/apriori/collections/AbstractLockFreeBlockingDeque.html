@@ -121,6 +121,10 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>E</code> - the type of element held in the queue</dd>
+</dl>
+<dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent">BlockingDeque</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;</dd>
 </dl>
@@ -133,6 +137,14 @@ var activeTableTab = "activeTableTab";
 <pre>public abstract class <span class="typeNameLabel">AbstractLockFreeBlockingDeque&lt;E&gt;</span>
 extends <a href="../../../com/apriori/collections/AbstractDeque.html" title="class in com.apriori.collections">AbstractDeque</a>&lt;E&gt;
 implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent">BlockingDeque</a>&lt;E&gt;</pre>
+<div class="block">An abstract blocking deque, useful for building deque implementations that do not rely on locks
+ for thread-safey. This class provides a custom wait/notify mechanism that does not need locks
+ (no <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true" title="class or interface in java.util.concurrent.locks"><code>Condition</code></a> queues, no intrinsic locks/monitors).
+ 
+ <p>Sub-classes must invoke <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotEmpty--"><code>signalNotEmpty()</code></a> when their implementation of
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerFirst-E-" title="class or interface in java.util"><code>Deque.offerFirst(Object)</code></a>/<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerLast-E-" title="class or interface in java.util"><code>Deque.offerLast(Object)</code></a> adds an element to a previously empty
+ queue. Similarly, they must invoke <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotFull--"><code>signalNotFull()</code></a> when their implementation of
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollFirst--" title="class or interface in java.util"><code>Deque.pollFirst()</code></a>/<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollLast--" title="class or interface in java.util"><code>Deque.pollLast()</code></a> removes an element from a previously full queue.</div>
 </li>
 </ul>
 </div>
@@ -179,7 +191,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>
+<div class="block">Returns true if this deque is tentatively empty.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -195,7 +209,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the head of the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -205,7 +221,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the tail of the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a></code></td>
@@ -219,7 +237,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly</a></span>()</code>
+<div class="block">Removes the first element in the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a></code></td>
@@ -228,7 +248,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly</a></span>()</code>
+<div class="block">Removes the last element in the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -244,11 +266,15 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotEmpty--">signalNotEmpty</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotEmpty--">signalNotEmpty</a></span>()</code>
+<div class="block">Signals a waiting thread that the deque is no longer empty.</div>
+</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotFull--">signalNotFull</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotFull--">signalNotFull</a></span>()</code>
+<div class="block">Signals a waiting thread that the deque is no longer full.</div>
+</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a></code></td>
@@ -264,7 +290,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>
+<div class="block">Returns the tentative remaining capacity in the deque.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -448,9 +476,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>pollFirstInterruptibly</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;pollFirstInterruptibly()
                             throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Removes the first element in the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollFirst--" title="class or interface in java.util"><code>Deque.pollFirst()</code></a> (and thus not be interruptible),
+ this method typically need not be overridden. But if any operations are interruptible, this
+ method should be implemented to propagate that interruption, whereas the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollFirst--" title="class or interface in java.util"><code>Deque.pollFirst()</code></a>
+ method (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the item removed from the deque or <code>null</code> if the deque is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -462,9 +497,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>pollLastInterruptibly</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;pollLastInterruptibly()
                            throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Removes the last element in the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollLast--" title="class or interface in java.util"><code>Deque.pollLast()</code></a> (and thus not be interruptible),
+ this method typically need not be overridden. But if any operations are interruptible, this
+ method should be implemented to propagate that interruption, whereas the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollLast--" title="class or interface in java.util"><code>Deque.pollLast()</code></a>
+ method (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the item removed from the deque or <code>null</code> if the deque is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -478,9 +520,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>offerFirstInterruptibly</h4>
 <pre>protected&nbsp;boolean&nbsp;offerFirstInterruptibly(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)
                                    throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Adds an element to the head of the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerFirst-E-" title="class or interface in java.util"><code>Deque.offerFirst(Object)</code></a> (and thus not be
+ interruptible), this method typically need not be overridden. But if any operations are
+ interruptible, this method should be implemented to propagate that interruption, whereas the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerFirst-E-" title="class or interface in java.util"><code>Deque.offerFirst(Object)</code></a> method (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the element was accepted or false if the deque is full</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -494,9 +543,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>offerLastInterruptibly</h4>
 <pre>protected&nbsp;boolean&nbsp;offerLastInterruptibly(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&nbsp;e)
                                   throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Adds an element to the tail of the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerLast-E-" title="class or interface in java.util"><code>Deque.offerLast(Object)</code></a> (and thus not be
+ interruptible), this method typically need not be overridden. But if any operations are
+ interruptible, this method should be implemented to propagate that interruption, whereas the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerLast-E-" title="class or interface in java.util"><code>Deque.offerLast(Object)</code></a> method (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the element was accepted or false if the deque is full</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -507,6 +563,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>signalNotEmpty</h4>
 <pre>protected final&nbsp;void&nbsp;signalNotEmpty()</pre>
+<div class="block">Signals a waiting thread that the deque is no longer empty. An operation that transitions the
+ deque from empty to not empty <em>must</em> call this method in case there are threads waiting
+ to take an element.</div>
 </li>
 </ul>
 <a name="signalNotFull--">
@@ -516,6 +575,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>signalNotFull</h4>
 <pre>protected final&nbsp;void&nbsp;signalNotFull()</pre>
+<div class="block">Signals a waiting thread that the deque is no longer full. An operation that transitions the
+ deque from full to not full <em>must</em> call this method in case there are threads waiting
+ to add an element.</div>
 </li>
 </ul>
 <a name="putFirst-java.lang.Object-">
@@ -694,6 +756,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>tentativeRemainingCapacity</h4>
 <pre>protected&nbsp;int&nbsp;tentativeRemainingCapacity()</pre>
+<div class="block">Returns the tentative remaining capacity in the deque. If different from
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#remainingCapacity--" title="class or interface in java.util.concurrent"><code>BlockingQueue.remainingCapacity()</code></a>, then this returns a capacity after considering incomplete
+ operations whereas the other returns "confirmed" remaining capacity, considering only
+ completed operations.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the tentative remaining capacity in the deque</dd>
+</dl>
 </li>
 </ul>
 <a name="isTentativelyEmpty--">
@@ -703,6 +773,13 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>isTentativelyEmpty</h4>
 <pre>protected&nbsp;boolean&nbsp;isTentativelyEmpty()</pre>
+<div class="block">Returns true if this deque is tentatively empty. If different from <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util"><code>AbstractCollection.isEmpty()</code></a>, then
+ this returns true if the deque is empty after considering incomplete operations whereas the
+ other returns if the deque is "confirmed" empty, considering only completed operations.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if this deque is tentatively empty</dd>
+</dl>
 </li>
 </ul>
 </li>

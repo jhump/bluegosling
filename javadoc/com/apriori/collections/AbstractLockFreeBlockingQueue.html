@@ -133,7 +133,7 @@ var activeTableTab = "activeTableTab";
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;E&gt;
 implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true" title="class or interface in java.util.concurrent">BlockingQueue</a>&lt;E&gt;</pre>
 <div class="block">An abstract blocking queue, useful for building queue implementations that do not rely on locks
- for thread-safey. This class provides a custom wait/notify mechanism that does not need locks
+ for thread-safety. This class provides a custom wait/notify mechanism that does not need locks
  (no <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html?is-external=true" title="class or interface in java.util.concurrent.locks"><code>Condition</code></a> queues, no intrinsic locks/monitors).
  
  <p>Sub-classes must invoke <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotEmpty--"><code>signalNotEmpty()</code></a> when their implementation of
@@ -186,7 +186,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty</a></span>()</code>
+<div class="block">Returns true if this queue is tentatively empty.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -196,7 +198,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#offerInterruptibly-E-">offerInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#offerInterruptibly-E-">offerInterruptibly</a></span>(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the tail of the queue, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a></code></td>
@@ -205,7 +209,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#pollInterruptibly--">pollInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#pollInterruptibly--">pollInterruptibly</a></span>()</code>
+<div class="block">Removes the first element in the queue, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -213,11 +219,15 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotEmpty--">signalNotEmpty</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotEmpty--">signalNotEmpty</a></span>()</code>
+<div class="block">Signals a waiting thread that the queue is no longer empty.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotFull--">signalNotFull</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotFull--">signalNotFull</a></span>()</code>
+<div class="block">Signals a waiting thread that the queue is no longer full.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a></code></td>
@@ -225,7 +235,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity</a></span>()</code>
+<div class="block">Returns the tentative remaining capacity in the queue.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -316,9 +328,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>pollInterruptibly</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a>&nbsp;pollInterruptibly()
                        throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Removes the first element in the queue, allowing interruption. Since most lock-free queues
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util"><code>Queue.poll()</code></a> (and thus not be interruptible), this
+ method typically need not be overridden. But if any operations are interruptible, this method
+ should be implemented to propagate that interruption, whereas the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util"><code>Queue.poll()</code></a> method
+ (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the item removed from the queue or <code>null</code> if the queue is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -332,9 +351,16 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <h4>offerInterruptibly</h4>
 <pre>protected&nbsp;boolean&nbsp;offerInterruptibly(<a href="../../../com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a>&nbsp;e)
                               throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block">Adds an element to the tail of the queue, allowing interruption. Since most lock-free queues
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#offer-E-" title="class or interface in java.util"><code>Queue.offer(Object)</code></a> (and thus not be interruptible),
+ this method typically need not be overridden. But if any operations are interruptible, this
+ method should be implemented to propagate that interruption, whereas the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#offer-E-" title="class or interface in java.util"><code>Queue.offer(Object)</code></a> method (due to its signature) must suppress it.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the element was accepted or false if the queue is full</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -345,6 +371,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>signalNotEmpty</h4>
 <pre>protected final&nbsp;void&nbsp;signalNotEmpty()</pre>
+<div class="block">Signals a waiting thread that the queue is no longer empty. An operation that transitions the
+ queue from empty to not empty <em>must</em> call this method in case there are threads waiting
+ to take an element.</div>
 </li>
 </ul>
 <a name="signalNotFull--">
@@ -354,6 +383,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>signalNotFull</h4>
 <pre>protected final&nbsp;void&nbsp;signalNotFull()</pre>
+<div class="block">Signals a waiting thread that the queue is no longer full. An operation that transitions the
+ queue from full to not full <em>must</em> call this method in case there are threads waiting
+ to add an element.</div>
 </li>
 </ul>
 <a name="put-java.lang.Object-">
@@ -461,6 +493,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>tentativeRemainingCapacity</h4>
 <pre>protected&nbsp;int&nbsp;tentativeRemainingCapacity()</pre>
+<div class="block">Returns the tentative remaining capacity in the queue. If different from
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html?is-external=true#remainingCapacity--" title="class or interface in java.util.concurrent"><code>BlockingQueue.remainingCapacity()</code></a>, then this returns a capacity after considering incomplete
+ operations whereas the other returns "confirmed" remaining capacity, considering only
+ completed operations.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the tentative remaining capacity in the queue</dd>
+</dl>
 </li>
 </ul>
 <a name="isTentativelyEmpty--">
@@ -470,6 +510,13 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurre
 <li class="blockList">
 <h4>isTentativelyEmpty</h4>
 <pre>protected&nbsp;boolean&nbsp;isTentativelyEmpty()</pre>
+<div class="block">Returns true if this queue is tentatively empty. If different from <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util"><code>AbstractCollection.isEmpty()</code></a>, then
+ this returns true if the queue is empty after considering incomplete operations whereas the
+ other returns if the queue is "confirmed" empty, considering only completed operations.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if this queue is tentatively empty</dd>
+</dl>
 </li>
 </ul>
 </li>

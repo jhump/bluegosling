@@ -69,6 +69,10 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;com.apriori.concurrent.unsafe</h1>
+<div class="docSummary">
+<div class="block">Utility classes for unsafe things.</div>
+</div>
+<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
 <ul class="blockList">
@@ -115,6 +119,18 @@
 </table>
 </li>
 </ul>
+<a name="package.description">
+<!--   -->
+</a>
+<h2 title="Package com.apriori.concurrent.unsafe Description">Package com.apriori.concurrent.unsafe Description</h2>
+<div class="block">Utility classes for unsafe things. This includes a way to access and use <code>Unsafe</code>.
+ 
+ <p>It also includes several classes that provide atomic access to fields within a class (like
+ using <code>java.util.concurrent.atomic</code>, but being able to lay the fields out inside of an
+ object instead of chasing a pointer). These are similar to the field updaters in
+ <code>java.util.concurrent.atomic</code> but they can be unsafe in that they rely on the compiler's
+ enforcement of the type system and do not perform per-access runtime checks. If unchecked casts
+ are used with them, for example, the heap could be irreparably damaged/corrupted.</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

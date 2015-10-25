@@ -101,7 +101,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">java.util.AbstractQueue</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.apriori.collections.SkewHeapOrderedQueue&lt;E&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -111,14 +116,25 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>E</code> - the type of element in the queue</dd>
+</dl>
+<dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;</dd>
+<dd><a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">SkewHeapOrderedQueue&lt;E&gt;</span>
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;E&gt;
-implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;? extends E&gt;&gt;</pre>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;E&gt;
+implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" title="interface in com.apriori.collections">MeldableOrderedQueue</a>&lt;E,<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;? extends E&gt;&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang">Cloneable</a></pre>
+<div class="block">An ordered queue backed by a <a href="https://en.wikipedia.org/wiki/Skew_heap">Skew Heap</a>.
+ This structure is a simple binary tree (a self-adjusting variant of a Leftist Heap) that allows
+ efficient and simple merging of two queues.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../serialized-form.html#com.apriori.collections.SkewHeapOrderedQueue">Serialized Form</a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -137,20 +153,33 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue--">SkewHeapOrderedQueue</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue--">SkewHeapOrderedQueue</a></span>()</code>
+<div class="block">Constructs a new, empty queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to
+ determine order.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Collection-">SkewHeapOrderedQueue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;coll)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Collection-">SkewHeapOrderedQueue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;coll)</code>
+<div class="block">Constructs a new queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to determine
+ order and contains the given elements.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Collection-java.util.Comparator-">SkewHeapOrderedQueue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;coll,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>&nbsp;</td>
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>
+<div class="block">Constructs a new queue that uses the given comparator to determine order and contains the
+ given elements.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Comparator-">SkewHeapOrderedQueue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Comparator-">SkewHeapOrderedQueue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</code>
+<div class="block">Constructs a new, empty queue that uses the given comparator to determine order.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-com.apriori.collections.OrderedQueue-">SkewHeapOrderedQueue</a></span>(<a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;other)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-com.apriori.collections.OrderedQueue-">SkewHeapOrderedQueue</a></span>(<a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;other)</code>
+<div class="block">Creates a new queue that duplicates the given queue.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -168,12 +197,12 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#add-E-">add</a></span>(<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&nbsp;e)</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#clear--">clear</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html#clone--">clone</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></td>
@@ -217,18 +246,25 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractQueue">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractCollection">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.com.apriori.collections.OrderedQueue">
@@ -236,6 +272,13 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 </a>
 <h3>Methods inherited from interface&nbsp;com.apriori.collections.<a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a></h3>
 <code><a href="../../../com/apriori/collections/OrderedQueue.html#fromJrePriorityQueue-java.util.PriorityQueue-">fromJrePriorityQueue</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.util.Queue">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
@@ -272,6 +315,8 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList">
 <h4>SkewHeapOrderedQueue</h4>
 <pre>public&nbsp;SkewHeapOrderedQueue()</pre>
+<div class="block">Constructs a new, empty queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to
+ determine order.</div>
 </li>
 </ul>
 <a name="SkewHeapOrderedQueue-java.util.Comparator-">
@@ -281,6 +326,11 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList">
 <h4>SkewHeapOrderedQueue</h4>
 <pre>public&nbsp;SkewHeapOrderedQueue(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
+<div class="block">Constructs a new, empty queue that uses the given comparator to determine order.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>comp</code> - a comparator</dd>
+</dl>
 </li>
 </ul>
 <a name="SkewHeapOrderedQueue-java.util.Collection-">
@@ -290,6 +340,12 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList">
 <h4>SkewHeapOrderedQueue</h4>
 <pre>public&nbsp;SkewHeapOrderedQueue(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;coll)</pre>
+<div class="block">Constructs a new queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to determine
+ order and contains the given elements.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>coll</code> - the initial contents of the new queue</dd>
+</dl>
 </li>
 </ul>
 <a name="SkewHeapOrderedQueue-java.util.Collection-java.util.Comparator-">
@@ -300,6 +356,13 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <h4>SkewHeapOrderedQueue</h4>
 <pre>public&nbsp;SkewHeapOrderedQueue(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;coll,
                             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super <a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;comp)</pre>
+<div class="block">Constructs a new queue that uses the given comparator to determine order and contains the
+ given elements.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>coll</code> - the initial contents of the new queue</dd>
+<dd><code>comp</code> - a comparator</dd>
+</dl>
 </li>
 </ul>
 <a name="SkewHeapOrderedQueue-com.apriori.collections.OrderedQueue-">
@@ -309,6 +372,12 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <li class="blockList">
 <h4>SkewHeapOrderedQueue</h4>
 <pre>public&nbsp;SkewHeapOrderedQueue(<a href="../../../com/apriori/collections/OrderedQueue.html" title="interface in com.apriori.collections">OrderedQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;other)</pre>
+<div class="block">Creates a new queue that duplicates the given queue. The new queue will have the same contents
+ as the given queue and also use the same comparator.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>other</code> - a queue to be duplicated</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -319,6 +388,19 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="clone--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clone</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;&nbsp;clone()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="comparator--">
 <!--   -->
 </a>
@@ -339,25 +421,6 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the comparator used to compare elements or null if elements are compared according to
        their natural ordering</dd>
-</dl>
-</li>
-</ul>
-<a name="add-java.lang.Object-">
-<!--   -->
-</a><a name="add-E-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>add</h4>
-<pre>public&nbsp;boolean&nbsp;add(<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&nbsp;e)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -386,6 +449,8 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -412,6 +477,8 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true#element--" title="class or interface in java.util">element</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true#element--" title="class or interface in java.util">element</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -439,7 +506,7 @@ implements <a href="../../../com/apriori/collections/MeldableOrderedQueue.html" 
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;<a href="../../../com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

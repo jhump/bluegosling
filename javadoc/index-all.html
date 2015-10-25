@@ -175,13 +175,16 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#AbstractListenableFuture--">AbstractListenableFuture()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractLockFreeBlockingDeque</span></a>&lt;<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="type parameter in AbstractLockFreeBlockingDeque">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An abstract blocking deque, useful for building deque implementations that do not rely on locks
+ for thread-safey.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#AbstractLockFreeBlockingDeque--">AbstractLockFreeBlockingDeque()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">AbstractLockFreeBlockingQueue</span></a>&lt;<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="type parameter in AbstractLockFreeBlockingQueue">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">An abstract blocking queue, useful for building queue implementations that do not rely on locks
- for thread-safey.</div>
+ for thread-safety.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#AbstractLockFreeBlockingQueue--">AbstractLockFreeBlockingQueue()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
 <dd>&nbsp;</dd>
@@ -632,8 +635,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomizedQueue.html#add-E-">add(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections">RandomizedQueue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SetFromCollection.html#add-E-">add(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SetFromCollection.html" title="class in com.apriori.collections">SetFromCollection</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#add-E-">add(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SortedArraySet.html#add-E-">add(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TransformingCollection.html#add-O-">add(O)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/TransformingCollection.html" title="class in com.apriori.collections">TransformingCollection</a></dt>
@@ -2023,6 +2024,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFutureTask.html#await-long-java.util.concurrent.TimeUnit-">await(long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFutureTask.html" title="class in com.apriori.concurrent">ListenableFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#await--">await()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#await-long-java.util.concurrent.TimeUnit-">await(long, TimeUnit)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Awaitable</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">An object that represents a future event.</div>
@@ -2155,12 +2160,24 @@
 <dd>
 <div class="block">A list iterator that also implements <a href="com/apriori/collections/BidiIterator.html" title="interface in com.apriori.collections"><code>BidiIterator</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#biEntrySet--">biEntrySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>
+<div class="block">Returns the entry set.</div>
+</dd>
 <dt><a href="com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections"><span class="typeNameLink">BigIntRadixTrieMap</span></a>&lt;<a href="com/apriori/collections/BigIntRadixTrieMap.html" title="type parameter in BigIntRadixTrieMap">V</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">Like a <a href="com/apriori/collections/RadixTrieMap.html" title="class in com.apriori.collections"><code>RadixTrieMap</code></a>, but with <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html?is-external=true" title="class or interface in java.math"><code>BigInteger</code></a> keys.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BigIntRadixTrieMap.html#BigIntRadixTrieMap--">BigIntRadixTrieMap()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/BigIntRadixTrieMap.html" title="class in com.apriori.collections">BigIntRadixTrieMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections"><span class="typeNameLink">BiMap</span></a>&lt;<a href="com/apriori/collections/BiMap.html" title="type parameter in BiMap">K</a>,<a href="com/apriori/collections/BiMap.html" title="type parameter in BiMap">V</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>
+<div class="block">A map that defines two-way mappings and whose values are unique.</div>
+</dd>
+<dt><a href="com/apriori/collections/BiMap.BiEntry.html" title="interface in com.apriori.collections"><span class="typeNameLink">BiMap.BiEntry</span></a>&lt;<a href="com/apriori/collections/BiMap.BiEntry.html" title="type parameter in BiMap.BiEntry">K</a>,<a href="com/apriori/collections/BiMap.BiEntry.html" title="type parameter in BiMap.BiEntry">V</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>
+<div class="block">An entry in a <code>BiMap</code>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractBinding.html#bind-com.apriori.di.Key-">bind(Key&lt;T&gt;)</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/AbstractBinding.html" title="class in com.apriori.di">AbstractBinding</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractBinding.html#bind-java.lang.Class-">bind(Class&lt;T&gt;)</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/AbstractBinding.html" title="class in com.apriori.di">AbstractBinding</a></dt>
@@ -3042,6 +3059,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HamtMap.html#clone--">clone()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">HamtMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#clone--">clone()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SortedArraySet.html#clone--">clone()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TreeList.html#clone--">clone()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/TreeList.html" title="class in com.apriori.collections">TreeList</a></dt>
@@ -3236,14 +3255,19 @@
 <div class="block">A set of classes for managing mutable thread-safe references.</div>
 </dd>
 <dt><a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a> - package com.apriori.concurrent.contended</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Classes that provide similar functionality to <code>com java.util.concurrent.atomic</code>, except
+ using padded values to prevent cache contention (false sharing).</div>
+</dd>
 <dt><a href="com/apriori/concurrent/scheduler/package-summary.html">com.apriori.concurrent.scheduler</a> - package com.apriori.concurrent.scheduler</dt>
 <dd>
 <div class="block">A <a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler"><code>ScheduledTaskManager</code></a> API, which
  provides lots of scheduled task and job management functionality.</div>
 </dd>
 <dt><a href="com/apriori/concurrent/unsafe/package-summary.html">com.apriori.concurrent.unsafe</a> - package com.apriori.concurrent.unsafe</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Utility classes for unsafe things.</div>
+</dd>
 <dt><a href="com/apriori/di/package-summary.html">com.apriori.di</a> - package com.apriori.di</dt>
 <dd>
 <div class="block">An API for dependency injection that relies on static bindings and code generation
@@ -3807,6 +3831,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractPrimitiveList.OfShort.html#contains-java.lang.Object-">contains(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractPrimitiveList.OfShort.html" title="class in com.apriori.collections">AbstractPrimitiveList.OfShort</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#contains-K-V-">contains(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>
+<div class="block">Returns true if the map contains the given mapping.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ConcurrentSortedArraySet.html#contains-java.lang.Object-">contains(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ConcurrentSortedArraySet.html" title="class in com.apriori.collections">ConcurrentSortedArraySet</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/FilteringCollection.html#contains-java.lang.Object-">contains(Object)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections">FilteringCollection</a></dt>
 <dd>&nbsp;</dd>
@@ -5050,6 +5078,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html#entrySet--">entrySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayMappedBitwiseTrie.html#entrySet--">entrySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#entrySet--">entrySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/CompactBitwiseTrie.html#entrySet--">entrySet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/CompactBitwiseTrie.html" title="class in com.apriori.collections">CompactBitwiseTrie</a></dt>
 <dd>&nbsp;</dd>
@@ -6986,6 +7016,10 @@
 <div class="block">Determine the set of <em>all</em> exceptions thrown from the method signature configured by
  this object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getAllScanExceptions--">getAllScanExceptions()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns all exceptions encountered while trying to scan and resolve classes.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AmbiguousMethodException.html#getAmbiguousDispatchMethods--">getAmbiguousDispatchMethods()</a></span> - Method in exception com.apriori.reflect.<a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect">AmbiguousMethodException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
@@ -7482,6 +7516,12 @@
 <div class="block">Returns a set of all public member types for this class, including those that may have been
  inherited from ancestor classes.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getClassesFound-java.lang.String-">getClassesFound(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the set of classes found in this path that are in the given package.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getClassesFound-java.lang.String-">getClassesFound(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#getClassKind--">getClassKind()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the kind of this class object.</div>
@@ -7963,6 +8003,10 @@
 <dd>
 <div class="block">Returns the duration for which idle (non-core) worker threads are kept alive.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#getKey-V-">getKey(V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>
+<div class="block">Gets the key that is associated with the given value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TransformingMapEntry.html#getKey--">getKey()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/TransformingMapEntry.html" title="class in com.apriori.collections">TransformingMapEntry</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AssociativeArrayList.html#getKeyIndex-K-">getKeyIndex(K)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AssociativeArrayList.html" title="class in com.apriori.collections">AssociativeArrayList</a></dt>
@@ -8160,10 +8204,20 @@
 <dd>
 <div class="block">Returns the package in which this class is declared.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getPackage-java.lang.String-">getPackage(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>
+<div class="block">TODO: document me!</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Elements.html#getPackageElement-java.lang.Package-">getPackageElement(Package)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Elements.html" title="interface in com.apriori.reflect.model">Elements</a></dt>
 <dd>
 <div class="block">Returns a package element for the given package.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getPackagesFound--">getPackagesFound()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the set of package names found in this path.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getPackagesFound--">getPackagesFound()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table3D.html#getPage-P-">getPage(P)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table3D.html" title="interface in com.apriori.collections">Table3D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table4D.html#getPage-S-P-">getPage(S, P)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table4D.html" title="interface in com.apriori.collections">Table4D</a></dt>
@@ -8216,6 +8270,18 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/HierarchicalLock.html#getParent--">getParent()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a></dt>
 <dd>
 <div class="block">Gets the lock's parent.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getPathResult-java.lang.String-">getPathResult(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>
+<div class="block">Returns the result of scanning the given path.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getPathScanned--">getPathScanned()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the path that was scanned.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getPathsScanned--">getPathsScanned()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>
+<div class="block">Returns the set of paths scanned.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getPending--">getPending()</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
@@ -8336,6 +8402,22 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#getRows-R-">getRows(R)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getScanDuration-java.util.concurrent.TimeUnit-">getScanDuration(TimeUnit)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the amount of time elapsed during the scan of this path, in the given unit.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#getScanDuration-java.util.concurrent.TimeUnit-">getScanDuration(TimeUnit)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>
+<div class="block">Returns the amount of time elapsed during this scan, in the given unit.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getScanException-java.lang.String-">getScanException(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the exception associated with given searched path.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getScanExceptionSources--">getScanExceptionSources()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">Returns the set of paths that were found in this path but could not be scanned or resolved.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledFutureTask.html#getScheduledNanoTime--">getScheduledNanoTime()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Scheduled.html#getScheduledNanoTime--">getScheduledNanoTime()</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent">Scheduled</a></dt>
@@ -8711,6 +8793,10 @@
 <div class="block">An object that verifies that the test object is equal to the reference object by checking that
  their hash codes are the same.</div>
 </dd>
+<dt><a href="com/apriori/collections/HashBiMap.html" title="class in com.apriori.collections"><span class="typeNameLink">HashBiMap</span></a>&lt;<a href="com/apriori/collections/HashBiMap.html" title="type parameter in HashBiMap">K</a>,<a href="com/apriori/collections/HashBiMap.html" title="type parameter in HashBiMap">V</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/HashBiMap.html#HashBiMap--">HashBiMap()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/HashBiMap.html" title="class in com.apriori.collections">HashBiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArAnnotation.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArAnnotation.html" title="class in com.apriori.apt.reflect">ArAnnotation</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
@@ -9173,6 +9259,51 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/PrimeIterator.html#inc-T-">inc(T)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/PrimeIterator.html" title="class in com.apriori.util">PrimeIterator</a></dt>
 <dd>
 <div class="block">Returns the specified value, incremented by one.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeAllDefaults--">includeAllDefaults()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes all several default locations that correspond to paths from which the JVM can load
+ classes.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeBootClasspaths--">includeBootClasspaths()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes JVM boot paths in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeClasspath--">includeClasspath()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes this JVM's class path in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeDefaultClassLoaders--">includeDefaultClassLoaders()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes a few default class loaders in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeJarsFromDirectory-java.lang.String-">includeJarsFromDirectory(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes any JAR files found in the given directory.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includePath-java.lang.String-">includePath(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes the given path in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#includesPackage-java.lang.String-">includesPackage(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
+<dd>
+<div class="block">TODO: document me!</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#includesPackage-java.lang.String-">includesPackage(String)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>
+<div class="block">Determines whether the given package was encountered in this scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeURLClassLoader-java.net.URLClassLoader-">includeURLClassLoader(URLClassLoader)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes the given class loader in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeURLClassLoaders-java.net.URLClassLoader...-">includeURLClassLoaders(URLClassLoader...)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes the given class loaders in the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#includeURLClassLoaders-java.lang.Iterable-">includeURLClassLoaders(Iterable&lt;URLClassLoader&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Includes the given class loaders in the scan.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/ClassHierarchyScanner.Builder.html#includingInterfaces--">includingInterfaces()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/ClassHierarchyScanner.Builder.html" title="class in com.apriori.reflect">ClassHierarchyScanner.Builder</a></dt>
 <dd>
@@ -9673,6 +9804,8 @@
 <div class="block">Gets the function used to transform elements from the "output" domain to the "input"
  domain.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#invert--">invert()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutorService.html#invokeAll-java.util.Collection-">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-">invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt;)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a></dt>
@@ -9754,12 +9887,24 @@
 <dd>
 <div class="block">Returns true if the given type represents an array type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#isAssignable-java.lang.reflect.AnnotatedType-java.lang.reflect.AnnotatedType-com.apriori.reflect.TypeAnnotationChecker-">isAssignable(AnnotatedType, AnnotatedType, TypeAnnotationChecker)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>
+<div class="block">Determines if a given annotated type is assignable from another.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#isAssignable-java.lang.reflect.AnnotatedType-java.util.List-java.lang.reflect.AnnotatedType-java.util.List-com.apriori.reflect.TypeAnnotationChecker-boolean-">isAssignable(AnnotatedType, List&lt;Annotation&gt;, AnnotatedType, List&lt;Annotation&gt;, TypeAnnotationChecker, boolean)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-">isAssignable(Collection&lt;? extends Annotation&gt;, Collection&lt;? extends Annotation&gt;)</a></span> - Method in interface com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect">TypeAnnotationChecker</a></dt>
 <dd>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.lang.annotation.Annotation:A-java.lang.annotation.Annotation:A-">isAssignable(Annotation[], Annotation[])</a></span> - Method in interface com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect">TypeAnnotationChecker</a></dt>
+<dd>
+<div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignable(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Determines if one type is assignable to another.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isAssignableFrom-com.apriori.apt.reflect.ArClass-">isAssignableFrom(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if the specified type is assignable to this type.</div>
@@ -9768,9 +9913,13 @@
 <dd>
 <div class="block">Determines if this is a super type of the specified type token.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#isAssignableStrict-java.lang.reflect.AnnotatedType-java.lang.reflect.AnnotatedType-com.apriori.reflect.TypeAnnotationChecker-">isAssignableStrict(AnnotatedType, AnnotatedType, TypeAnnotationChecker)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>
+<div class="block">Determines if a given annotated type is strictly assignable to another.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignableStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
-<div class="block">Determines if one type is assignable to another.</div>
+<div class="block">Determines if one type is assignable to another, with restrictions.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.Input.html#isAsync--">isAsync()</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.Input.html" title="class in com.apriori.graph">Node.Input</a></dt>
 <dd>
@@ -9831,6 +9980,8 @@
 <dd>
 <div class="block">Returns true if the event has occurred.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ScanResult.html#isDone--">isDone()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect">PackageScanner.ScanResult</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableCollection.html#isEmpty--">isEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableCollection.html" title="class in com.apriori.collections">AbstractImmutableCollection</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractImmutableMap.html#isEmpty--">isEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractImmutableMap.html" title="class in com.apriori.collections">AbstractImmutableMap</a></dt>
@@ -10121,9 +10272,13 @@
 <div class="block">Returns true if exceptions will be suppressed during method invocations.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#isTentativelyEmpty--">isTentativelyEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns true if this deque is tentatively empty.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns true if this queue is tentatively empty.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LockFreeArrayBlockingQueue.html#isTentativelyEmpty--">isTentativelyEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LockFreeArrayBlockingQueue.html" title="class in com.apriori.collections">LockFreeArrayBlockingQueue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#isTerminated--">isTerminated()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
@@ -10273,7 +10428,7 @@
 <dd>
 <div class="block">Joins multiple futures into one future list.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#join-java.lang.Iterable-">join(Iterable&lt;ListenableFuture&lt;? extends T&gt;&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#join-java.lang.Iterable-">join(Iterable&lt;? extends ListenableFuture&lt;? extends T&gt;&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Joins a list of futures into one future list.</div>
 </dd>
@@ -10593,14 +10748,6 @@
 <dd>
 <div class="block">Returns the lesser of two given durations.</div>
 </dd>
-<dt><a href="com/apriori/concurrent/contended/LhsPaddedInteger.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">LhsPaddedInteger</span></a> - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/LhsPaddedInteger.html#LhsPaddedInteger--">LhsPaddedInteger()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/LhsPaddedInteger.html" title="class in com.apriori.concurrent.contended">LhsPaddedInteger</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="class in com.apriori.concurrent.contended"><span class="typeNameLink">LhsPaddedReference</span></a>&lt;<a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="type parameter in LhsPaddedReference">V</a>&gt; - Class in <a href="com/apriori/concurrent/contended/package-summary.html">com.apriori.concurrent.contended</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/concurrent/contended/LhsPaddedReference.html#LhsPaddedReference--">LhsPaddedReference()</a></span> - Constructor for class com.apriori.concurrent.contended.<a href="com/apriori/concurrent/contended/LhsPaddedReference.html" title="class in com.apriori.concurrent.contended">LhsPaddedReference</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/PartialFunctions.html#lift-com.apriori.function.PartialFunction-O-">lift(PartialFunction&lt;? super I, ? extends O&gt;, O)</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/PartialFunctions.html" title="class in com.apriori.function">PartialFunctions</a></dt>
 <dd>
 <div class="block">Lifts a partial function to a regular function via default value.</div>
@@ -10942,6 +11089,8 @@
 <dd>
 <div class="block">A marker for an injectable static main method.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#main-java.lang.String:A-">main(String[])</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SetFromCollection.html#make-java.util.Collection-">make(Collection&lt;E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/SetFromCollection.html" title="class in com.apriori.collections">SetFromCollection</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableExecutorService.html#makeCompletable-java.util.concurrent.ExecutorService-">makeCompletable(ExecutorService)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableExecutorService.html" title="interface in com.apriori.concurrent">CompletableExecutorService</a></dt>
@@ -12126,11 +12275,15 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/UnrolledLinkedList.html#offerFirst-E-">offerFirst(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">UnrolledLinkedList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds an element to the head of the deque, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayBlockingDeque.html" title="class in com.apriori.collections">ArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#offerInterruptibly-E-">offerInterruptibly(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds an element to the tail of the queue, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLast-E-long-java.util.concurrent.TimeUnit-">offerLast(E, long, TimeUnit)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayBackedLinkedList.html#offerLast-E-">offerLast(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayBackedLinkedList.html" title="class in com.apriori.collections">ArrayBackedLinkedList</a></dt>
@@ -12147,7 +12300,9 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/UnrolledLinkedList.html#offerLast-E-">offerLast(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/UnrolledLinkedList.html" title="class in com.apriori.collections">UnrolledLinkedList</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds an element to the tail of the deque, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayBlockingDeque.html" title="class in com.apriori.collections">ArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractPrimitiveList.OfFloat.html#OfFloat--">OfFloat()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractPrimitiveList.OfFloat.html" title="class in com.apriori.collections">AbstractPrimitiveList.OfFloat</a></dt>
@@ -12331,6 +12486,22 @@
 </a>
 <h2 class="title">P</h2>
 <dl>
+<dt><a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect"><span class="typeNameLink">PackageScanner</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>
+<div class="block">Scans directories and JARs for classes, indexing them by package.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#PackageScanner--">PackageScanner()</a></span> - Constructor for class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Creates a new package scanner.</div>
+</dd>
+<dt><a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect"><span class="typeNameLink">PackageScanner.PathResult</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>
+<div class="block">The results of scanning a single path.</div>
+</dd>
+<dt><a href="com/apriori/reflect/PackageScanner.ScanResult.html" title="class in com.apriori.reflect"><span class="typeNameLink">PackageScanner.ScanResult</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>
+<div class="block">The results of a scan.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table4D.html#pageIndex--">pageIndex()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table4D.html" title="interface in com.apriori.collections">Table4D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#pageIndex--">pageIndex()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
@@ -12623,11 +12794,15 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#pollFirstEntry--">pollFirstEntry()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Removes the first element in the deque, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayBlockingDeque.html" title="class in com.apriori.collections">ArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#pollInterruptibly--">pollInterruptibly()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Removes the first element in the queue, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLast-long-java.util.concurrent.TimeUnit-">pollLast(long, TimeUnit)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractNavigableMap.KeySet.html#pollLast--">pollLast()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractNavigableMap.KeySet.html" title="class in com.apriori.collections">AbstractNavigableMap.KeySet</a></dt>
@@ -12665,7 +12840,9 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/WeightBalancedTreeMap.html#pollLastEntry--">pollLastEntry()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/WeightBalancedTreeMap.html" title="class in com.apriori.collections">WeightBalancedTreeMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Removes the last element in the deque, allowing interruption.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayBlockingDeque.html" title="class in com.apriori.collections">ArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractDeque.html#pop--">pop()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractDeque.html" title="class in com.apriori.collections">AbstractDeque</a></dt>
@@ -13126,6 +13303,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayMappedBitwiseTrie.html#put-K-V-">put(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#put-K-V-">put(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/CompactBitwiseTrie.html#put-K-V-">put(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/CompactBitwiseTrie.html" title="class in com.apriori.collections">CompactBitwiseTrie</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/DoubleInstanceLockedTreeMap.html#put-K-V-">put(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/DoubleInstanceLockedTreeMap.html" title="class in com.apriori.collections">DoubleInstanceLockedTreeMap</a></dt>
@@ -13227,6 +13406,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html#putFirst-E-">putFirst(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/DoubleInstanceLockedTreeMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/DoubleInstanceLockedTreeMap.html" title="class in com.apriori.collections">DoubleInstanceLockedTreeMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LinearHashingMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a></dt>
@@ -13235,9 +13416,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html#putIfAbsent-K-V-">putIfAbsent(K, V)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/PersistentMapBackedConcurrentMap.html" title="class in com.apriori.collections">PersistentMapBackedConcurrentMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#putIfBothAbsent-K-V-">putIfBothAbsent(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#putLast-E-">putLast(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html#putLast-E-">putLast(E)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/RandomAccessArrayBlockingDeque.html" title="class in com.apriori.collections">RandomAccessArrayBlockingDeque</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#putValue-V-K-">putValue(V, K)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#putValueIfAbsent-V-K-">putValueIfAbsent(V, K)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a name="I:Q">
@@ -13323,10 +13510,6 @@
 <dd>
 <div class="block">Constructs a new sub-map view with the given bounds.</div>
 </dd>
-<dt><a href="com/apriori/collections/RandomizedMeldableQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">RandomizedMeldableQueue</span></a>&lt;<a href="com/apriori/collections/RandomizedMeldableQueue.html" title="type parameter in RandomizedMeldableQueue">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/collections/RandomizedMeldableQueue.html#RandomizedMeldableQueue--">RandomizedMeldableQueue()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/RandomizedMeldableQueue.html" title="class in com.apriori.collections">RandomizedMeldableQueue</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">RandomizedQueue</span></a>&lt;<a href="com/apriori/collections/RandomizedQueue.html" title="type parameter in RandomizedQueue">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/RandomizedQueue.html#RandomizedQueue--">RandomizedQueue()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/RandomizedQueue.html" title="class in com.apriori.collections">RandomizedQueue</a></dt>
@@ -13399,6 +13582,10 @@
 <dd>
 <div class="block">Queries for the elapsed time measured by the stopwatch, in the specified unit.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#readOnly-java.lang.Iterable-">readOnly(Iterable&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/Iterables.html#readOnly-java.util.Iterator-">readOnly(Iterator&lt;? extends E&gt;)</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/Iterables.html" title="class in com.apriori.collections">Iterables</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/TransformingCollection.ReadOnly.html#ReadOnly-java.util.Collection-java.util.function.Function-">ReadOnly(Collection&lt;I&gt;, Function&lt;? super I, ? extends O&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/TransformingCollection.ReadOnly.html" title="class in com.apriori.collections">TransformingCollection.ReadOnly</a></dt>
 <dd>
 <div class="block">Constructs a new read-only transforming collection.</div>
@@ -14058,6 +14245,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/Tuple.Ops5.html#removeThird--">removeThird()</a></span> - Method in interface com.apriori.tuples.<a href="com/apriori/tuples/Tuple.Ops5.html" title="interface in com.apriori.tuples">Tuple.Ops5</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#removeValue-V-">removeValue(V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>
+<div class="block">Removes the mapping with the given value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/Atom.html#removeWatcher-com.apriori.concurrent.atoms.Atom.Watcher-">removeWatcher(Atom.Watcher&lt;? super T&gt;)</a></span> - Method in interface com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Atom.html" title="interface in com.apriori.concurrent.atoms">Atom</a></dt>
 <dd>
 <div class="block">Unregisters a watcher.</div>
@@ -14079,6 +14270,10 @@
 <dd>
 <div class="block">Configures the task to repeat with a fixed delay between invocations.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#replace-K-V-">replace(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#replace-K-V-V-">replace(K, V, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ConcurrentList.html#replace-int-E-E-">replace(int, E, E)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/ConcurrentList.html" title="interface in com.apriori.collections">ConcurrentList</a></dt>
 <dd>
 <div class="block">Replaces the given value at the given index.</div>
@@ -14141,6 +14336,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfShort.html#replaceAll-com.apriori.function.ShortUnaryOperator-">replaceAll(ShortUnaryOperator)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfShort.html" title="interface in com.apriori.collections">PrimitiveList.OfShort</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#replaceIfBothPresent-K-V-">replaceIfBothPresent(K, V)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#replaceTypeVariable-java.lang.reflect.AnnotatedType-java.lang.reflect.TypeVariable-java.lang.reflect.AnnotatedType-">replaceTypeVariable(AnnotatedType, TypeVariable&lt;?&gt;, AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Computes a new version of the given type by replacing all occurrences of a given type variable
@@ -14161,6 +14358,10 @@
 <div class="block">Computes a new version of the given type by replacing all occurrences of mapped type variables
  with the given mapped values.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#replaceValue-V-K-">replaceValue(V, K)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#replaceValue-V-K-K-">replaceValue(V, K, K)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Injector.html#requiresSelector-com.apriori.di.Key-">requiresSelector(Key&lt;?&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Injector.html" title="interface in com.apriori.di">Injector</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="interface in com.apriori.concurrent.scheduler"><span class="typeNameLink">Rescheduler</span></a>&lt;<a href="com/apriori/concurrent/scheduler/Rescheduler.html" title="type parameter in Rescheduler">T</a>&gt; - Interface in <a href="com/apriori/concurrent/scheduler/package-summary.html">com.apriori.concurrent.scheduler</a></dt>
@@ -14970,6 +15171,10 @@
 <dd>
 <div class="block">Sets the duration for which idle (non-core) worker threads are kept alive.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.BiEntry.html#setKey-K-">setKey(K)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.BiEntry.html" title="interface in com.apriori.collections">BiMap.BiEntry</a></dt>
+<dd>
+<div class="block">Changes the key for this entry.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractPrimitiveList.OfLong.html#setLong-int-long-">setLong(int, long)</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractPrimitiveList.OfLong.html" title="class in com.apriori.collections">AbstractPrimitiveList.OfLong</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/PrimitiveList.OfLong.html#setLong-int-long-">setLong(int, long)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/PrimitiveList.OfLong.html" title="interface in com.apriori.collections">PrimitiveList.OfLong</a></dt>
@@ -15238,13 +15443,21 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingExecutorService.html#shutdownNow--">shutdownNow()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingExecutorService.html" title="class in com.apriori.concurrent">WrappingExecutorService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotEmpty--">signalNotEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Signals a waiting thread that the deque is no longer empty.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotEmpty--">signalNotEmpty()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Signals a waiting thread that the queue is no longer empty.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#signalNotFull--">signalNotFull()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Signals a waiting thread that the deque is no longer full.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#signalNotFull--">signalNotFull()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Signals a waiting thread that the queue is no longer full.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/atoms/SimpleAtom.html" title="class in com.apriori.concurrent.atoms"><span class="typeNameLink">SimpleAtom</span></a>&lt;<a href="com/apriori/concurrent/atoms/SimpleAtom.html" title="type parameter in SimpleAtom">T</a>&gt; - Class in <a href="com/apriori/concurrent/atoms/package-summary.html">com.apriori.concurrent.atoms</a></dt>
 <dd>
 <div class="block">An atom with a volatile value.</div>
@@ -15483,17 +15696,32 @@
 <div class="block">An iterable that described a fixed number of elements.</div>
 </dd>
 <dt><a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections"><span class="typeNameLink">SkewHeapOrderedQueue</span></a>&lt;<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="type parameter in SkewHeapOrderedQueue">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An ordered queue backed by a <a href="https://en.wikipedia.org/wiki/Skew_heap">Skew Heap</a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue--">SkewHeapOrderedQueue()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new, empty queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to
+ determine order.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Comparator-">SkewHeapOrderedQueue(Comparator&lt;? super E&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new, empty queue that uses the given comparator to determine order.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Collection-">SkewHeapOrderedQueue(Collection&lt;? extends E&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new queue that uses elements' <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">natural order</a> to determine
+ order and contains the given elements.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-java.util.Collection-java.util.Comparator-">SkewHeapOrderedQueue(Collection&lt;? extends E&gt;, Comparator&lt;? super E&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a new queue that uses the given comparator to determine order and contains the
+ given elements.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SkewHeapOrderedQueue.html#SkewHeapOrderedQueue-com.apriori.collections.OrderedQueue-">SkewHeapOrderedQueue(OrderedQueue&lt;E&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/SkewHeapOrderedQueue.html" title="class in com.apriori.collections">SkewHeapOrderedQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a new queue that duplicates the given queue.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/ClassHierarchyScanner.Builder.html#skippingInterfaces--">skippingInterfaces()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/ClassHierarchyScanner.Builder.html" title="class in com.apriori.reflect">ClassHierarchyScanner.Builder</a></dt>
 <dd>
 <div class="block">Indicates that interfaces are skipped during the scan.</div>
@@ -15692,6 +15920,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/generator/UncheckedGenerator.html#start--">start()</a></span> - Method in class com.apriori.generator.<a href="com/apriori/generator/UncheckedGenerator.html" title="class in com.apriori.generator">UncheckedGenerator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#start--">start()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Starts the scan.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/Stopwatch.html#start--">start()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/Stopwatch.html" title="class in com.apriori.util">Stopwatch</a></dt>
 <dd>
 <div class="block">Starts the stopwatch.</div>
@@ -16010,6 +16242,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Variant2.html#swap--">swap()</a></span> - Method in class com.apriori.choice.<a href="com/apriori/choice/Variant2.html" title="class in com.apriori.choice">Variant2</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/tuples/Pair.html#swap--">swap()</a></span> - Method in class com.apriori.tuples.<a href="com/apriori/tuples/Pair.html" title="class in com.apriori.tuples">Pair</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table2D.html#synchronizedTable-com.apriori.collections.Table2D-">synchronizedTable(Table2D&lt;R, C, V&gt;)</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/Table2D.html" title="interface in com.apriori.collections">Table2D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table3D.html#synchronizedTable-com.apriori.collections.Table3D-">synchronizedTable(Table3D&lt;P, R, C, V&gt;)</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/Table3D.html" title="interface in com.apriori.collections">Table3D</a></dt>
@@ -16189,9 +16423,13 @@
 <div class="block">A visitor, for accessing the underlying task implementation using the visitor pattern.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html#tentativeRemainingCapacity--">tentativeRemainingCapacity()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the tentative remaining capacity in the deque.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractLockFreeBlockingQueue.html" title="class in com.apriori.collections">AbstractLockFreeBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the tentative remaining capacity in the queue.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/LockFreeArrayBlockingQueue.html#tentativeRemainingCapacity--">tentativeRemainingCapacity()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/LockFreeArrayBlockingQueue.html" title="class in com.apriori.collections">LockFreeArrayBlockingQueue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/Functions.html#ternary--">ternary()</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/Functions.html" title="class in com.apriori.function">Functions</a></dt>
@@ -17500,7 +17738,9 @@
 <div class="block">Returns the type of the key.</div>
 </dd>
 <dt><a href="com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect"><span class="typeNameLink">TypeAnnotationChecker</span></a> - Interface in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Checks if a given set of type annotations is assignable to another set.</div>
+</dd>
 <dt><a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect"><span class="typeNameLink">TypeAnnotationChecker.Builder</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
 <dd>
 <div class="block">A builder for creating instances of <a href="com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect"><code>TypeAnnotationChecker</code></a>.</div>
@@ -17958,6 +18198,8 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html#values--">values()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/AbstractRandomAccessNavigableMap.html" title="class in com.apriori.collections">AbstractRandomAccessNavigableMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayMappedBitwiseTrie.html#values--">values()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/BiMap.html#values--">values()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/BiMap.html" title="interface in com.apriori.collections">BiMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitSequence.BitOrder.html#values--">values()</a></span> - Static method in enum com.apriori.collections.<a href="com/apriori/collections/BitSequence.BitOrder.html" title="enum in com.apriori.collections">BitSequence.BitOrder</a></dt>
 <dd>
@@ -18720,6 +18962,10 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AnnotationSpec.html#withoutAttributes--">withoutAttributes()</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/AnnotationSpec.html" title="class in com.apriori.di">AnnotationSpec</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#withParallelism-int-">withParallelism(int)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
+<dd>
+<div class="block">Sets the parallelism of the scan.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractBinding.BindBuilder.html#withResolver-java.lang.Class-">withResolver(Class&lt;? extends ConflictResolver&lt;? super T&gt;&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/AbstractBinding.BindBuilder.html" title="interface in com.apriori.di">AbstractBinding.BindBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html#withScheduleNextTaskPolicy-com.apriori.concurrent.scheduler.ScheduleNextTaskPolicy-">withScheduleNextTaskPolicy(ScheduleNextTaskPolicy&lt;? super V&gt;)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a></dt>

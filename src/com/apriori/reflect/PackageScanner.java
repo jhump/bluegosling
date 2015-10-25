@@ -194,7 +194,7 @@ public class PackageScanner {
     * <p>When attempting to load classes for files found in these paths, the given class loader
     * is used.
     *
-    * @param cls the class loaders
+    * @param cl the class loader
     * @return {@code this}, for method chaining
     * @throws IllegalStateException if the scan has already been started
     */
@@ -478,7 +478,7 @@ public class PackageScanner {
        * @param source a path that is the source of an exception
        * @return the exception thrown while trying to scan or resolve the given path or
        *       {@code null} if no exception was thrown or the given name was never scanned
-       * @see #getScanExceptionClassNames()
+       * @see #getScanExceptionSources()
        */
       public synchronized Throwable getScanException(String source) {
          String packageName = getPackageName(source);
@@ -488,12 +488,12 @@ public class PackageScanner {
       
       /**
        * Returns all exceptions encountered while trying to scan and resolve classes. This may
-       * include any {@linkplain #getScanException() I/O exception} encountered while reading from
+       * include any {@linkplain #getScanException I/O exception} encountered while reading from
        * this path. It will also include any exceptions thrown while trying to scan and resolve
        * individual classes in this path. 
        *
        * @return all exceptions encountered while trying to scan and resolve classes
-       * @see #getScanExceptionClassNames()
+       * @see #getScanExceptionSources()
        * @see #getScanException(String)
        */
       public Collection<Throwable> getAllScanExceptions() {

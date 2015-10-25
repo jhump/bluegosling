@@ -209,7 +209,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly</a></span>(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly</a></span>(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the head of the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -217,7 +219,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly</a></span>(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly</a></span>(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)</code>
+<div class="block">Adds an element to the tail of the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a></code></td>
@@ -233,7 +237,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly</a></span>()</code>
+<div class="block">Removes the first element in the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a></code></td>
@@ -241,7 +247,9 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/ArrayBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly</a></span>()</code>
+<div class="block">Removes the last element in the deque, allowing interruption.</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -375,11 +383,19 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 <h4>pollFirstInterruptibly</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;pollFirstInterruptibly()
                             throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollFirstInterruptibly--">AbstractLockFreeBlockingDeque</a></code></span></div>
+<div class="block">Removes the first element in the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollFirst--" title="class or interface in java.util"><code>Deque.pollFirst()</code></a> (and thus not be interruptible),
+ this method typically need not be overridden. But if any operations are interruptible, this
+ method should be implemented to propagate that interruption, whereas the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollFirst--" title="class or interface in java.util"><code>Deque.pollFirst()</code></a>
+ method (due to its signature) must suppress it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollFirstInterruptibly--">pollFirstInterruptibly</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a>&lt;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the item removed from the deque or <code>null</code> if the deque is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -400,11 +416,19 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 <h4>pollLastInterruptibly</h4>
 <pre>protected&nbsp;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;pollLastInterruptibly()
                            throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLastInterruptibly--">AbstractLockFreeBlockingDeque</a></code></span></div>
+<div class="block">Removes the last element in the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollLast--" title="class or interface in java.util"><code>Deque.pollLast()</code></a> (and thus not be interruptible),
+ this method typically need not be overridden. But if any operations are interruptible, this
+ method should be implemented to propagate that interruption, whereas the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#pollLast--" title="class or interface in java.util"><code>Deque.pollLast()</code></a>
+ method (due to its signature) must suppress it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#pollLastInterruptibly--">pollLastInterruptibly</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a>&lt;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the item removed from the deque or <code>null</code> if the deque is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -447,11 +471,19 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 <h4>offerFirstInterruptibly</h4>
 <pre>protected&nbsp;boolean&nbsp;offerFirstInterruptibly(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)
                                    throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerFirstInterruptibly-E-">AbstractLockFreeBlockingDeque</a></code></span></div>
+<div class="block">Adds an element to the head of the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerFirst-E-" title="class or interface in java.util"><code>Deque.offerFirst(Object)</code></a> (and thus not be
+ interruptible), this method typically need not be overridden. But if any operations are
+ interruptible, this method should be implemented to propagate that interruption, whereas the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerFirst-E-" title="class or interface in java.util"><code>Deque.offerFirst(Object)</code></a> method (due to its signature) must suppress it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerFirstInterruptibly-E-">offerFirstInterruptibly</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a>&lt;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the element was accepted or false if the deque is full</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>
@@ -476,11 +508,19 @@ extends <a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.
 <h4>offerLastInterruptibly</h4>
 <pre>protected&nbsp;boolean&nbsp;offerLastInterruptibly(<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&nbsp;e)
                                   throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLastInterruptibly-E-">AbstractLockFreeBlockingDeque</a></code></span></div>
+<div class="block">Adds an element to the tail of the deque, allowing interruption. Since most lock-free deques
+ won't have blocking operations during <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerLast-E-" title="class or interface in java.util"><code>Deque.offerLast(Object)</code></a> (and thus not be
+ interruptible), this method typically need not be overridden. But if any operations are
+ interruptible, this method should be implemented to propagate that interruption, whereas the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html?is-external=true#offerLast-E-" title="class or interface in java.util"><code>Deque.offerLast(Object)</code></a> method (due to its signature) must suppress it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html#offerLastInterruptibly-E-">offerLastInterruptibly</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/apriori/collections/AbstractLockFreeBlockingDeque.html" title="class in com.apriori.collections">AbstractLockFreeBlockingDeque</a>&lt;<a href="../../../com/apriori/collections/ArrayBlockingDeque.html" title="type parameter in ArrayBlockingDeque">E</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the element was accepted or false if the deque is full</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the operation was interrupted</dd>
 </dl>
 </li>
 </ul>

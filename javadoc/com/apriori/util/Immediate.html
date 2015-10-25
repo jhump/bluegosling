@@ -117,8 +117,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <a href="../../../com/apriori/vars/Variable.html" title="class in com.apriori.vars"><code>Variable</code></a>, it can represent either a successful result value or a cause of failure.
  
  <p>Its API closely resembles that of <a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a> except that, since the value is
- immediately available, no methods ever block. So methods for determining if the value is complete
- and those that block until it's complete are unnecessary.</div>
+ immediately available, no methods ever block. So methods such as <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#isDone--" title="class or interface in java.util.concurrent"><code>isDone()</code></a> or <a href="../../../com/apriori/concurrent/Awaitable.html#await--"><code>await()</code></a> are unnecessary and thus absent.</div>
 </li>
 </ul>
 </div>

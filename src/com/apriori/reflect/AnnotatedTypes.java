@@ -404,8 +404,8 @@ public final class AnnotatedTypes {
    
    /**
     * Determines if a given annotated type is strictly assignable to another. This is just like
-    * {@link #isAssignable(AnnotatedType, AnnotatedType)} except that it is more restrictive. In
-    * particular, it uses the same rules as {@link Class#isAssignableFrom} and
+    * {@link #isAssignable(AnnotatedType, AnnotatedType, TypeAnnotationChecker)} except that it is
+    * more restrictive. In particular, it uses the same rules as {@link Class#isAssignableFrom} and
     * {@link Types#isAssignableStrict}, which only consider Identity Conversion (JLS 5.1.1) and
     * Widening Reference Conversion (JLS 5.1.4) when determining if a type can be assigned to
     * another.

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6};
+var methods = {"i0":18,"i1":18,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -105,6 +105,13 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
 public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
+<div class="block">Checks if a given set of type annotations is assignable to another set. If an annotation
+ <code>A1</code> is assignable from annotation <code>A2</code>, then a given annotated type <code>@A1 T1</code>
+ is assignable from another type <code>@A2 T2</code> as long as <code>T1</code> is assignable from
+ <code>T2</code> according to the Java type system. (See <a href="../../../com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isAssignable(java.lang.reflect.Type, java.lang.reflect.Type)</code></a> for more info.)
+  
+ This provides functionality similar to the Checker Framework, except that it works at runtime
+ instead of compile-time and is backed by core reflection.</div>
 </li>
 </ul>
 </div>
@@ -151,6 +158,13 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.lang.annotation.Annotation:A-java.lang.annotation.Annotation:A-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;target,
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;source)</code>
+<div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;target,
             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;source)</code>
@@ -189,7 +203,32 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
  <p>Note that two "equivalent" types are mutually assignable. So if two annotations indicate
  the same type, then this method should return true regardless of the order of arguments.
  
- <p>An empty collection is passed if the corresponding type is not annotated.</div>
+ <p>An argument that is empty indicates the absence of any type annotations.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>target</code> - annotations that appear on the type of the assignment target (LHS)</dd>
+<dd><code>source</code> - annotations that appear on the type of the assignment source (RHS)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if a type annotated with <code>target</code> annotations is assignable from a type
+       annotated with <code>source</code> annotations</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either collection of annotations represents an illegal
+       combination of type annotations (for example, contains both <code>NotNull</code> and
+       <code>Nullable</code>)</dd>
+</dl>
+</li>
+</ul>
+<a name="isAssignable-java.lang.annotation.Annotation:A-java.lang.annotation.Annotation:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAssignable</h4>
+<pre>default&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;target,
+                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;source)</pre>
+<div class="block">Determines if the first given annotations are "assignable from" the second given annotations.
+ This is a convenience method for use with core reflection, where most methods that query
+ annotations return arrays, not collections.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>target</code> - annotations that appear on the type of the assignment target (LHS)</dd>
