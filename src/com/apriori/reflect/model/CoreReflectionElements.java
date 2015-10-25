@@ -25,7 +25,11 @@ enum CoreReflectionElements implements Elements {
 
    @Override
    public PackageElement getPackageElement(CharSequence name) {
-      Package pkg = Package.getPackage(name.toString());
+      String packageName = name.toString();
+      if (!CoreReflectionPackages.doesPackageExist(packageName)) {
+         return null;
+      }
+      Package pkg = CoreReflectionPackages.getPackage(packageName);
       return pkg == null
             ? new CoreReflectionSyntheticPackageElement(name.toString())
             : new CoreReflectionPackageElement(pkg);

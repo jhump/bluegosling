@@ -105,7 +105,9 @@ final class ArrayUtils {
    }
    
    /**
-    * Grows the array if necessary to accommodate additional items.
+    * Grows the array if necessary to accommodate additional items. This tries to grow the array by
+    * 50%, so that repeated calls will have an amortized runtime complexity of O(1). It will grow
+    * the array by more than 50% if necessary to accommodate the indicated extra capacity.
     * 
     * @param array the array
     * @param actualSize the used size of the array, which may be less than its actual length

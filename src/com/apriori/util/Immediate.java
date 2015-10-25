@@ -15,8 +15,8 @@ import java.util.concurrent.Future;
  * {@link Variable}, it can represent either a successful result value or a cause of failure.
  * 
  * <p>Its API closely resembles that of {@link ListenableFuture} except that, since the value is
- * immediately available, no methods ever block. So methods for determining if the value is complete
- * and those that block until it's complete are unnecessary.
+ * immediately available, no methods ever block. So methods such as {@link ListenableFuture#isDone()
+ * isDone()} or {@link ListenableFuture#await() await()} are unnecessary and thus absent.
  * 
  * @param <T> the type of value
  */

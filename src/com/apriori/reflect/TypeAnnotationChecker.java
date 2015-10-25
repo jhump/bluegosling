@@ -4,6 +4,7 @@ import com.apriori.collections.FilteringCollection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,17 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Checks if a given set of type annotations is assignable to another set. If an annotation
+ * {@code A1} is assignable from annotation {@code A2}, then a given annotated type {@code @A1 T1}
+ * is assignable from another type {@code @A2 T2} as long as {@code T1} is assignable from
+ * {@code T2} according to the Java type system. (See {@link Types#isAssignable} for more info.)
+ *  
+ * This provides functionality similar to the Checker Framework, except that it works at runtime
+ * instead of compile-time and is backed by core reflection.
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: more doc, examples, comparisons with checker framework
 // TODO: tests
 @FunctionalInterface
@@ -28,7 +40,7 @@ public interface TypeAnnotationChecker {
     * <p>Note that two "equivalent" types are mutually assignable. So if two annotations indicate
     * the same type, then this method should return true regardless of the order of arguments.
     * 
-    * <p>An empty collection is passed if the corresponding type is not annotated.
+    * <p>An argument that is empty indicates the absence of any type annotations.
     *
     * @param target annotations that appear on the type of the assignment target (LHS)
     * @param source annotations that appear on the type of the assignment source (RHS)
@@ -40,6 +52,23 @@ public interface TypeAnnotationChecker {
     */
    boolean isAssignable(Collection<? extends Annotation> target,
          Collection<? extends Annotation> source);
+   
+   /**
+    * Determines if the first given annotations are "assignable from" the second given annotations.
+    * This is a convenience method for use with core reflection, where most methods that query
+    * annotations return arrays, not collections.
+    *
+    * @param target annotations that appear on the type of the assignment target (LHS)
+    * @param source annotations that appear on the type of the assignment source (RHS)
+    * @return true if a type annotated with {@code target} annotations is assignable from a type
+    *       annotated with {@code source} annotations
+    * @throws IllegalArgumentException if either collection of annotations represents an illegal
+    *       combination of type annotations (for example, contains both {@code NotNull} and
+    *       {@code Nullable})
+    */
+   default boolean isAssignable(Annotation[] target, Annotation[] source) {
+      return isAssignable(Arrays.asList(target), Arrays.asList(source));
+   }
   
    /**
     * Combines two checkers into one. Sets of annotations are only assignable if both this and the
@@ -52,7 +81,7 @@ public interface TypeAnnotationChecker {
    default TypeAnnotationChecker and(TypeAnnotationChecker other) {
       return (a1, a2) -> this.isAssignable(a1, a2) && other.isAssignable(a1, a2);
    }
-   
+
    /**
     * A builder for creating instances of {@link TypeAnnotationChecker}. This provides a simple
     * API for defining assignment compatibility of type annotations. Assignability is defined in

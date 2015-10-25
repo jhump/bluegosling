@@ -1,6 +1,6 @@
 package com.apriori.reflect;
 
-import com.apriori.tuples.Pair;
+import com.apriori.vars.VariableInt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -191,8 +191,7 @@ public abstract class EnumType<T> implements Comparator<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    public static class Builder<T> {
-      private final List<Pair<String, T>> elements = new ArrayList<>();
-      private final Set<String> names = new HashSet<>();
+      private final Map<String, T> elements = new LinkedHashMap<>();
       private final Set<T> values = new HashSet<>();
       
       Builder() {
@@ -209,17 +208,16 @@ public abstract class EnumType<T> implements Comparator<T> {
        *       has already been added
        */
       public Builder<T> add(String name, T value) {
-         if (names.contains(name)) {
+         if (elements.containsKey(name)) {
             throw new IllegalStateException("Enum type already contains an element named " + name);
          }
          if (values.contains(value)) {
             throw new IllegalStateException("Enum type already contains the value " + value);
          }
-         boolean added = names.add(name);
+         boolean added = values.add(value);
          assert added;
-         added = values.add(value);
-         assert added;
-         elements.add(Pair.create(name, value));
+         T old = elements.put(name, value);
+         assert old == null;
          return this;
       }
       
@@ -251,20 +249,20 @@ public abstract class EnumType<T> implements Comparator<T> {
       private final Map<String, BuiltEnumElement<T>> elementsByName;
       private final Map<T, BuiltEnumElement<T>> elementsByValue;
       
-      BuiltEnumType(List<Pair<String, T>> elements) {
+      BuiltEnumType(Map<String, T> elements) {
          int len = elements.size();
          @SuppressWarnings("unchecked")
          BuiltEnumElement<T> array[] = new BuiltEnumElement[len];
          this.elementsByName = new LinkedHashMap<>(len * 4 / 3);
          this.elementsByValue = new LinkedHashMap<>(len * 4 / 3);
-         for (int i = 0; i < len; i++) {
-            Pair<String, T> pair = elements.get(i);
-            BuiltEnumElement<T> element =
-                  new BuiltEnumElement<>(this, pair.getFirst(), i, pair.getSecond());
-            array[i] = element;
+         VariableInt i = new VariableInt();
+         elements.forEach((k, v) -> {
+            int ordinal = i.getAndIncrement();
+            BuiltEnumElement<T> element = new BuiltEnumElement<>(this, k, ordinal, v);
+            array[ordinal] = element;
             elementsByName.put(element.name, element);
             elementsByValue.put(element.value, element);
-         }
+         });
          this.elements = Collections.unmodifiableList(Arrays.asList(array));
       }
       

@@ -25,7 +25,7 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
 
    static {
       try {
-         valueOffset = unsafe.objectFieldOffset(ContendedReference.class.getDeclaredField("value"));
+         valueOffset = unsafe.objectFieldOffset(LhsPaddedReference.class.getDeclaredField("value"));
       } catch (Exception ex) {
          throw new Error(ex);
       }

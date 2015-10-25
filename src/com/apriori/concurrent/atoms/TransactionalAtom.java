@@ -226,9 +226,9 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
     * @return the atom's value at the specified version
     */
    T getValue(long version) {
-      Version<T> node = latest;
       Transaction transaction = committer.get();
-      if (transaction != null && version > latest.version) {
+      Version<T> node = latest;
+      if (transaction != null && version > node.version) {
          transaction.awaitCommit(version);
          node = latest; // re-read latest now that commit is complete
       }

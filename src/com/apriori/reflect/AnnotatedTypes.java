@@ -21,10 +21,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -369,6 +371,276 @@ public final class AnnotatedTypes {
             sb.append(" ");
          }
          sb.append(Types.toString(type.getType()));
+      }
+   }
+   
+   /**
+    * Determines if a given annotated type is assignable from another. This uses the same rules as
+    * {@link Types#isAssignable} (Assignment Conversions, JLS 5.2) for determining whether the types
+    * are assignable and uses {@linkplain TypeAnnotationChecker#isAssignable(Collection, Collection)
+    * the checker} for determining whether the types' annotations are also assignable.
+    * 
+    * <p>This crawls the types recursively, testing for assignment-compatibility of enclosed
+    * annotated types where appropriate. For example, if given parameterized types,
+    * {@code Collection<@NotNull String>} and {@code List<@Nullable String>}, the actual type
+    * arguments (and their annotations) are examined. In the example, assuming this checker
+    * disallows assigning {@code @Nullable} to {@code NotNull}, false would be returned because the
+    * type arguments are not compatible.
+    * 
+    * <p>Similarly, this crawls up a type's hierarchy. So if a type were declared using
+    * {@code class TypeA extends @Blah TypeB}, then {@code TypeA} implicitly is annotated with
+    * {@code @Blah}, even if that annotation is not present on the given {@link AnnotatedType}. 
+    *
+    * @param target the LHS of assignment
+    * @param source the RHS of assignment
+    * @param checker a type annotation checker
+    * @return true if the assignment is allowed
+    */
+   public static boolean isAssignable(AnnotatedType target, AnnotatedType source,
+         TypeAnnotationChecker checker) {
+      // TODO
+      return false;
+   }
+   
+   /**
+    * Determines if a given annotated type is strictly assignable to another. This is just like
+    * {@link #isAssignable(AnnotatedType, AnnotatedType)} except that it is more restrictive. In
+    * particular, it uses the same rules as {@link Class#isAssignableFrom} and
+    * {@link Types#isAssignableStrict}, which only consider Identity Conversion (JLS 5.1.1) and
+    * Widening Reference Conversion (JLS 5.1.4) when determining if a type can be assigned to
+    * another.
+    * 
+    * @param target the LHS of assignment
+    * @param source the RHS of assignment
+    * @param checker a type annotation checker
+    * @return true if the assignment is allowed
+    */
+   public static boolean isAssignableStrict(AnnotatedType target, AnnotatedType source,
+         TypeAnnotationChecker checker) {
+      return isAssignable(target, Collections.emptyList(), source, Collections.emptyList(), checker,
+            false);
+   }
+
+   public static boolean isAssignable(AnnotatedType target, List<Annotation> extraTargetAnnotations,
+         AnnotatedType source, List<Annotation> extraSourceAnnotations,
+         TypeAnnotationChecker checker, boolean allowUncheckedConverion) {
+      if (requireNonNull(target) == requireNonNull(source)) {
+         return true;
+      }
+      Type targetType = target.getType();
+      Type sourceType = source.getType();
+      if (targetType instanceof Class && sourceType instanceof Class) {
+         return ((Class<?>) targetType).isAssignableFrom((Class<?>) sourceType);
+      } else if (targetType == Object.class) {
+         return checkAnnotations(target, extraTargetAnnotations, source, extraSourceAnnotations,
+               checker);
+      } else if (source instanceof AnnotatedWildcardType
+            || source instanceof AnnotatedTypeVariable) {
+         AnnotatedType bounds[] = source instanceof AnnotatedWildcardType
+               ? ((AnnotatedWildcardType) source).getAnnotatedUpperBounds()
+               : ((AnnotatedTypeVariable) source).getAnnotatedBounds();
+         // TODO: what about annotations on the wildcard/variable?
+         for (AnnotatedType bound : bounds) {
+            if (isAssignable(target, extraTargetAnnotations,
+                  bound, join(extraSourceAnnotations, source.getAnnotations()),
+                  checker, allowUncheckedConverion)) {
+               return true;
+            }
+         }
+         // they might still be assignable if they refer to the same type variable 
+         return source instanceof AnnotatedTypeVariable && target instanceof AnnotatedTypeVariable
+               && Types.equals(target.getType(), source.getType());
+      } else if (target instanceof AnnotatedParameterizedType) {
+         AnnotatedParameterizedType toParamType = (AnnotatedParameterizedType) target;
+         Class<?> toRawType = Types.getRawType(targetType);
+         if (sourceType instanceof Class) {
+            Class<?> fromClass = (Class<?>) sourceType;
+            if (fromClass.getTypeParameters().length > 0) {
+               // Both types are generic, but RHS has no type arguments (e.g. raw). This requires
+               // an unchecked cast, so no go
+               return false;
+            }
+            if (!toRawType.isAssignableFrom(fromClass)) {
+               // Raw types aren't even compatible? Abort!
+               return false;
+            }
+         } else if (sourceType instanceof ParameterizedType) {
+            ParameterizedType fromParamType = (ParameterizedType) sourceType;
+            Class<?> fromRawType = (Class<?>) fromParamType.getRawType();
+            if (!toRawType.isAssignableFrom(fromRawType)) {
+               // Raw types aren't even compatible? Abort!
+               return false;
+            }
+         } else {
+            // We handle "from" being a WildcardType or TypeVariable above. If it's
+            // a GenericArrayType (only remaining option), return false since arrays
+            // cannot be parameterized (only their component types can be).
+            return false;
+         }
+         AnnotatedType resolvedToType = resolveSuperType(source, toRawType);
+         AnnotatedType args[] = toParamType.getAnnotatedActualTypeArguments();
+         AnnotatedType resolvedArgs[] = getActualTypeArguments(resolvedToType);
+         if (resolvedArgs.length == 0) {
+            // assigning from raw type to parameterized type requires unchecked cast, so no go
+            return false;
+         }
+         assert args.length == resolvedArgs.length;
+         // check each type argument
+         for (int i = 0, len = args.length; i < len; i++) {
+            AnnotatedType toArg = args[i];
+            AnnotatedType fromArg = resolvedArgs[i];
+            if (toArg instanceof AnnotatedWildcardType) {
+               AnnotatedWildcardType wildcardArg = (AnnotatedWildcardType) toArg;
+               for (AnnotatedType upperBound : wildcardArg.getAnnotatedUpperBounds()) {
+                  if (!isAssignable(upperBound, Collections.emptyList(), fromArg,
+                        Collections.emptyList(), checker, allowUncheckedConverion)) {
+                     return false;
+                  }
+               }
+               for (AnnotatedType lowerBound : wildcardArg.getAnnotatedLowerBounds()) {
+                  if (!isAssignable(fromArg, Collections.emptyList(), lowerBound, 
+                        Collections.emptyList(), checker, allowUncheckedConverion)) {
+                     return false;
+                  }
+               }
+            } else if (!equals(toArg, fromArg)) {
+               return false;
+            }
+         }
+         return true;
+      } else if (target instanceof AnnotatedArrayType) {
+         AnnotatedArrayType toArrayType = (AnnotatedArrayType) target;
+         if (!checkAnnotations(target, extraTargetAnnotations, source, extraSourceAnnotations,
+               checker)) {
+            return false;
+         }
+         if (sourceType instanceof Class) {
+            Class<?> fromClass = (Class<?>) sourceType;
+            return fromClass.isArray() && isAssignable(
+                  toArrayType.getAnnotatedGenericComponentType(), Collections.emptyList(),
+                  newAnnotatedType(fromClass), Collections.emptyList(), checker,
+                  allowUncheckedConverion);
+         } else if (source instanceof AnnotatedArrayType) {
+            return isAssignable(toArrayType.getAnnotatedGenericComponentType(),
+                  Collections.emptyList(),
+                  ((AnnotatedArrayType) source).getAnnotatedGenericComponentType(),
+                  Collections.emptyList(), checker, allowUncheckedConverion);
+         } else {
+            return false;
+         }
+      } else if (target instanceof AnnotatedWildcardType) {
+         AnnotatedWildcardType toWildcard = (AnnotatedWildcardType) target;
+         AnnotatedType lowerBounds[] = toWildcard.getAnnotatedLowerBounds();
+         if (lowerBounds.length == 0) {
+            // Can only assign to a wildcard type based on its lower bounds
+            return false;
+         }
+         assert toWildcard.getAnnotatedUpperBounds().length == 1;
+         assert toWildcard.getAnnotatedUpperBounds()[0].getType() == Object.class;
+         assert toWildcard.getAnnotatedUpperBounds()[0].getAnnotations().length == 0;
+         for (AnnotatedType bound : lowerBounds) {
+            if (!isAssignable(bound, join(extraTargetAnnotations, target.getAnnotations()), source,
+                  extraSourceAnnotations, checker, allowUncheckedConverion)) {
+               return false;
+            }
+         }
+         return true;
+      } else if (target instanceof AnnotatedTypeVariable) {
+         // We don't actually know the type bound to this variable. So we can only assign to it from
+         // another instance of the same type variable or some other variable or wildcard that
+         // extends it. Both of those cases are handled above (check for `from` being a TypeVariable
+         // or WildcardType). So if we get here, it's not assignable.
+         return false;
+      } else {
+         Class<?> toClass = (Class<?>) target.getType();
+         if (source instanceof AnnotatedArrayType) {
+            if (toClass == Cloneable.class || toClass == Serializable.class) {
+               if (!checkAnnotations(target, extraTargetAnnotations, source, extraSourceAnnotations,
+                     checker)) {
+                  return false;
+               }
+               return true;
+            }
+            AnnotatedArrayType fromArrayType = (AnnotatedArrayType) target;
+            return toClass.isArray()
+                  && isAssignableStrict(newAnnotatedType(toClass.getComponentType()),
+                        fromArrayType.getAnnotatedGenericComponentType(), checker);
+         } else if (target instanceof AnnotatedParameterizedType) {
+            // TODO: fix this
+            Class<?> fromRaw = Types.getRawType(((AnnotatedParameterizedType) target).getType());
+            return toClass.isAssignableFrom(fromRaw);
+         } else {
+            return false;
+         }
+      }
+   }
+   
+   private static <T> List<T> join(List<T> head, T[] tail) {
+      return new AbstractList<T>() {
+         @Override
+         public T get(int index) {
+            int s = head.size();
+            return index < s ? head.get(index) : tail[index - s];
+         }
+
+         @Override
+         public int size() {
+            return head.size() + tail.length;
+         }
+      };
+   }
+
+   private static boolean checkAnnotations(
+         AnnotatedType target, List<Annotation> extraTargetAnnotations,
+         AnnotatedType source, List<Annotation> extraSourceAnnotations,
+         TypeAnnotationChecker checker) {
+      return checker.isAssignable(getAllAnnotations(target, extraTargetAnnotations),
+            getAllAnnotations(source, extraSourceAnnotations));
+   }
+   
+   private static Collection<Annotation> getAllAnnotations(AnnotatedType type,
+         List<Annotation> extras) {
+      Map<Class<? extends Annotation>, Annotation> allAnnotations = new HashMap<>();
+      extras.forEach(a -> allAnnotations.putIfAbsent(a.annotationType(), a));
+      addAllAnnotationsFromHierarchy(type, allAnnotations);
+      return allAnnotations.values();
+   }
+   
+   private static void addAllAnnotationsFromHierarchy(AnnotatedType type,
+         Map<Class<? extends Annotation>, Annotation> allAnnotations) {
+      addAll(type.getAnnotations(), allAnnotations);
+      if (type instanceof AnnotatedWildcardType) {
+         // add annotations for upper bounds
+         AnnotatedType[] bounds = ((AnnotatedWildcardType) type).getAnnotatedUpperBounds();
+         for (AnnotatedType b : bounds) {
+            addAllAnnotationsFromHierarchy(b, allAnnotations);
+         }
+      } else if (type instanceof AnnotatedTypeVariable) {
+         // add annotations for bounds
+         AnnotatedTypeVariable typeVar = (AnnotatedTypeVariable) type;
+         AnnotatedType[] bounds = typeVar.getAnnotatedBounds();
+         for (AnnotatedType b : bounds) {
+            addAllAnnotationsFromHierarchy(b, allAnnotations);
+         }
+         // as well as annotations present on the type variable declaration
+         addAll(((TypeVariable<?>) typeVar.getType()).getAnnotations(), allAnnotations); 
+      } else {
+         // add annotations for super-types
+         Class<?> raw = Types.getRawType(type.getType());
+         AnnotatedType s = raw.getAnnotatedSuperclass();
+         if (s != null) {
+            addAllAnnotationsFromHierarchy(s, allAnnotations);
+         }
+         for (AnnotatedType i : raw.getAnnotatedInterfaces()) {
+            addAllAnnotationsFromHierarchy(i, allAnnotations);
+         }
+      }
+   }
+   
+   private static void addAll(Annotation[] annotations,
+         Map<Class<? extends Annotation>, Annotation> allAnnotations) {
+      for (Annotation a : annotations) {
+         allAnnotations.putIfAbsent(a.annotationType(), a);
       }
    }
    

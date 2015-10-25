@@ -56,7 +56,7 @@ public class UnrolledLinkedList<E> extends AbstractSequentialList<E> implements 
    }
    
    /**
-    * The default number of nodes to store in each linked list node.
+    * The default number of elements to store in each linked list node.
     */
    private static final int DEFAULT_UNROLL_COUNT = 16;
    

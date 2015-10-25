@@ -36,8 +36,8 @@ import java.util.Set;
  * correctly implement a {@link java.util.concurrent.ConcurrentNavigableMap ConcurrentNavigableMap}.
  * 
  * <p>Because the {@link NavigableMap} interface is so much broader (and thus different) than the
- * plain {@link Map} interface, this class (and its usage by sub-classes) bear little resemblance to
- * the JRE's {@link java.util.AbstractMap AbstractMap} base class. As such, this class does
+ * plain {@link Map} interface, this class (and its usage by sub-classes) bears little resemblance
+ * to the JRE's {@link java.util.AbstractMap AbstractMap} base class. As such, this class does
  * <em>not</em> extend {@link java.util.AbstractMap AbstractMap}.
  * 
  * <p>Although this base class does not implement {@link Serializable}, it does provide basic

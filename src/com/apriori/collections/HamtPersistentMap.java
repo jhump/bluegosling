@@ -228,7 +228,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       /**
        * The array of children. Its size is always the number of actual children.
        * 
-       * <p>Implementation detail: Since this data structure is immutable, case must be taken to
+       * <p>Implementation detail: Since this data structure is immutable, care must be taken to
        * ensure that the array is never updated after the trie node is built.
        */
       final TrieNode<K, V> children[];

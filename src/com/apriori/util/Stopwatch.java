@@ -332,12 +332,12 @@ public class Stopwatch {
       } else if (nanos <= TimeUnit.MINUTES.toNanos(90)) {
          long min = TimeUnit.NANOSECONDS.toMinutes(nanos);
          long sec = TimeUnit.NANOSECONDS.toSeconds(nanos) % 60;
-         return String.format("%d:%d", min, sec);
+         return String.format("%d:%02d", min, sec);
       } else {
          long hr = TimeUnit.NANOSECONDS.toHours(nanos);
          long min = TimeUnit.NANOSECONDS.toMinutes(nanos) % 60;
          long sec = TimeUnit.NANOSECONDS.toSeconds(nanos) % 60;
-         return String.format("%d:%d:%d", hr, min, sec);
+         return String.format("%d:%02d:%02d", hr, min, sec);
       }
    }
 }

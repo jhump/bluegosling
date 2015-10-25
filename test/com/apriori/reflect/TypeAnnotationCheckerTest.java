@@ -15,6 +15,9 @@ import com.apriori.collections.MapBuilder;
 
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
+import java.util.Collection;
+
 public class TypeAnnotationCheckerTest {
    
    @interface Nullable {
@@ -29,25 +32,20 @@ public class TypeAnnotationCheckerTest {
             .assignable(Nullable.class, NotNull.class)
             .build();
 
-      assertTrue(checker.isAssignable(emptyList(), emptyList()));
-      
+      assertEquivalent(checker, emptyList(), emptyList());
+
       Nullable nullable = create(Nullable.class, emptyMap());
       Nullable otherNullable = create(Nullable.class, emptyMap());
       
-      assertTrue(checker.isAssignable(emptyList(), singleton(nullable)));
-      assertTrue(checker.isAssignable(singleton(nullable), emptyList()));
-      assertTrue(checker.isAssignable(singleton(nullable), singleton(otherNullable)));
-      assertTrue(checker.isAssignable(singleton(otherNullable), singleton(nullable)));
+      assertEquivalent(checker, emptyList(), singleton(nullable));
+      assertEquivalent(checker, singleton(nullable), singleton(otherNullable));
 
       NotNull notNull = create(NotNull.class, emptyMap());
       NotNull otherNotNull = create(NotNull.class, emptyMap());
       
-      assertTrue(checker.isAssignable(singleton(nullable), singleton(notNull)));
-      assertFalse(checker.isAssignable(singleton(notNull), singleton(nullable)));
-      assertTrue(checker.isAssignable(emptyList(), singleton(notNull)));
-      assertFalse(checker.isAssignable(singleton(notNull), emptyList()));
-      assertTrue(checker.isAssignable(singleton(notNull), singleton(otherNotNull)));
-      assertTrue(checker.isAssignable(singleton(otherNotNull), singleton(notNull)));
+      assertAssignable(checker, singleton(nullable), singleton(notNull));
+      assertAssignable(checker, emptyList(), singleton(notNull));
+      assertEquivalent(checker, singleton(notNull), singleton(otherNotNull));
    }
    
    @interface LevelA {
@@ -121,20 +119,49 @@ public class TypeAnnotationCheckerTest {
       LevelB_0 levelB0 = create(LevelB_0.class, emptyMap());
       LevelA_0_0 levelA00 = create(LevelA_0_0.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "abc").put("str", "def").build());
-      LevelA_0_0 levelA00_some = create(LevelA_0_0.class, MapBuilder.<String, Object>forHashMap()
+      LevelA_0_0 levelA00_same = create(LevelA_0_0.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "abc").put("str", "def").build());
       LevelA_0_0 levelA00_other = create(LevelA_0_0.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "xyz").put("str", "foo").build());
       LevelA_0_1 levelA01 = create(LevelA_0_1.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "abc").put("nums", asList(1, 2, 3, 4, 5)).build());
-      LevelA_0_1 levelA01_some = create(LevelA_0_1.class, MapBuilder.<String, Object>forHashMap()
+      LevelA_0_1 levelA01_same = create(LevelA_0_1.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "abc").put("nums", asList(1, 2, 3, 4, 5)).build());
       LevelA_0_1 levelA01_other = create(LevelA_0_1.class, MapBuilder.<String, Object>forHashMap()
             .put("value", "bar").put("nums", asList(1, 2, 3)).build());
       // add _same and _other
-      LevelA_1_0 levelA10 = create(LevelA_1_0.class, singletonMap("value", asList(Number.class)));
+      LevelA_1_0 levelA10 = create(LevelA_1_0.class,
+            singletonMap("value", asList(Object.class, Integer.class)));
+      LevelA_1_0 levelA10_same = create(LevelA_1_0.class,
+            singletonMap("value", asList(Object.class, Integer.class)));
+      LevelA_1_0 levelA10_other = create(LevelA_1_0.class,
+            singletonMap("value", asList(String.class)));
       LevelA_1_1 levelA11 = create(LevelA_1_1.class, MapBuilder.<String, Object>forHashMap()
-            .put("value", asList(Boolean.class, Void.class))
+            .put("value", asList(Object.class, Integer.class))
+            .put("i", 100)
+            .put("d", 3.14)
+            .put("f", 5.01f)
+            .put("bits", asList(true, false, true, false))
+            .put("a01s", asList(levelA01))
+            .build());
+      LevelA_1_1 levelA11_same = create(LevelA_1_1.class, MapBuilder.<String, Object>forHashMap()
+            .put("value", asList(Object.class, Integer.class))
+            .put("i", 100)
+            .put("d", 3.14)
+            .put("f", 5.01f)
+            .put("bits", asList(true, false, true, false))
+            .put("a01s", asList(levelA01_same))
+            .build());
+      LevelA_1_1 levelA11_other1 = create(LevelA_1_1.class, MapBuilder.<String, Object>forHashMap()
+            .put("value", asList(Object.class, Integer.class))
+            .put("i", 100)
+            .put("d", 3.14)
+            .put("f", 5.01f)
+            .put("bits", asList(true, false, true, false))
+            .put("a01s", asList(levelA01_other)) // only differs by this field
+            .build());
+      LevelA_1_1 levelA11_other2 = create(LevelA_1_1.class, MapBuilder.<String, Object>forHashMap()
+            .put("value", asList(String.class)) // only differs by this field
             .put("i", 100)
             .put("d", 3.14)
             .put("f", 5.01f)
@@ -142,7 +169,118 @@ public class TypeAnnotationCheckerTest {
             .put("a01s", asList(levelA01))
             .build());
       LevelB_0_0 levelB00 = create(LevelB_0_0.class, singletonMap("value", 10101));
+      LevelB_0_0 levelB00_same = create(LevelB_0_0.class, singletonMap("value", 10101));
+      LevelB_0_0 levelB00_other = create(LevelB_0_0.class, singletonMap("value", 9999));
       
-      // TODO!!
+      // null <-> LevelA
+      assertEquivalent(checker, emptyList(), singleton(levelA));
+
+      // LevelA <-- LevelA_0
+      assertAssignable(checker, singleton(levelA), singleton(levelA0));
+      assertAssignable(checker, emptyList(), singleton(levelA0));
+      assertAssignable(checker, singleton(levelA), singleton(levelA0_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA0_other));
+      assertEquivalent(checker, singleton(levelA0), singleton(levelA0_same));
+      assertNotAssignable(checker, singleton(levelA0), singleton(levelA0_other));
+
+      // LevelA_0 <-- LevelA_0_0
+      assertAssignable(checker, singleton(levelA0), singleton(levelA00));
+      assertAssignable(checker, singleton(levelA0), singleton(levelA00_same));
+      assertNotAssignable(checker, singleton(levelA0), singleton(levelA00_other));
+      assertEquivalent(checker, singleton(levelA00), singleton(levelA00_same));
+      assertNotAssignable(checker, singleton(levelA00), singleton(levelA00_other));
+      // LevelA <-- LevelA_0_0
+      assertAssignable(checker, singleton(levelA), singleton(levelA00));
+      assertAssignable(checker, emptyList(), singleton(levelA00));
+      assertAssignable(checker, singleton(levelA), singleton(levelA00_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA00_other));
+
+      // LevelA_0 <-- LevelA_0_1
+      assertAssignable(checker, singleton(levelA0), singleton(levelA01));
+      assertAssignable(checker, singleton(levelA0), singleton(levelA01_same));
+      assertNotAssignable(checker, singleton(levelA0), singleton(levelA01_other));
+      assertEquivalent(checker, singleton(levelA01), singleton(levelA01_same));
+      assertNotAssignable(checker, singleton(levelA01), singleton(levelA01_other));
+      // LevelA <-- LevelA_0_1
+      assertAssignable(checker, singleton(levelA), singleton(levelA01));
+      assertAssignable(checker, emptyList(), singleton(levelA01));
+      assertAssignable(checker, singleton(levelA), singleton(levelA01_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA01_other));
+
+      // LevelA <-- LevelA_1
+      assertAssignable(checker, singleton(levelA), singleton(levelA1));
+      assertAssignable(checker, emptyList(), singleton(levelA1));
+      assertAssignable(checker, singleton(levelA), singleton(levelA1_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA1_other));
+      assertEquivalent(checker, singleton(levelA1), singleton(levelA1_same));
+      assertNotAssignable(checker, singleton(levelA1), singleton(levelA1_other));
+      
+      // LevelA_1 <-- LevelA_1_0
+      assertAssignable(checker, singleton(levelA1), singleton(levelA10));
+      assertAssignable(checker, singleton(levelA1), singleton(levelA10_same));
+      assertNotAssignable(checker, singleton(levelA1), singleton(levelA10_other));
+      assertEquivalent(checker, singleton(levelA10), singleton(levelA10_same));
+      assertNotAssignable(checker, singleton(levelA10), singleton(levelA10_other));
+      // LevelA <-- LevelA_1_0
+      assertAssignable(checker, singleton(levelA), singleton(levelA10));
+      assertAssignable(checker, emptyList(), singleton(levelA10));
+      assertAssignable(checker, singleton(levelA), singleton(levelA10_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA10_other));
+
+      // LevelA_1 <-- LevelA_1_1
+      assertAssignable(checker, singleton(levelA1), singleton(levelA11));
+      assertAssignable(checker, singleton(levelA1), singleton(levelA11_same));
+      assertAssignable(checker, singleton(levelA1), singleton(levelA11_other1));
+      assertNotAssignable(checker, singleton(levelA1), singleton(levelA11_other2));
+      assertEquivalent(checker, singleton(levelA11), singleton(levelA11_same));
+      assertNotAssignable(checker, singleton(levelA11), singleton(levelA11_other1));
+      assertNotAssignable(checker, singleton(levelA11), singleton(levelA11_other2));
+      // LevelA <-- LevelA_1_1
+      assertAssignable(checker, singleton(levelA), singleton(levelA11));
+      assertAssignable(checker, emptyList(), singleton(levelA11));
+      assertAssignable(checker, singleton(levelA), singleton(levelA11_same));
+      assertAssignable(checker, singleton(levelA), singleton(levelA11_other1));
+      assertAssignable(checker, singleton(levelA), singleton(levelA11_other2));
+
+      // LevelA_0 -!- LevelA_1
+      assertNotAssignable(checker, singleton(levelA0), singleton(levelA1));
+      assertNotAssignable(checker, singleton(levelA0_other), singleton(levelA1_other));
+      // LevelA_0_0 -!- LevelA_0_1
+      assertNotAssignable(checker, singleton(levelA00), singleton(levelA01));
+      assertNotAssignable(checker, singleton(levelA00_other), singleton(levelA01_other));
+      // LevelA_1_0 -!- LevelA_1_1
+      assertNotAssignable(checker, singleton(levelA10), singleton(levelA11));
+      assertNotAssignable(checker, singleton(levelA10_other), singleton(levelA11_other2));
+
+      // null <-- LevelB
+      assertAssignable(checker, emptyList(), singleton(levelB));
+      // LevelB <-- LevelB_0
+      assertAssignable(checker, singleton(levelB), singleton(levelB0));
+      assertAssignable(checker, emptyList(), singleton(levelB0));
+      // LevelB_0 <-- LevelB_0_0
+      assertAssignable(checker, singleton(levelB0), singleton(levelB00));
+      assertAssignable(checker, emptyList(), singleton(levelB00));
+      assertAssignable(checker, singleton(levelB0), singleton(levelB00_same));
+      assertAssignable(checker, singleton(levelB0), singleton(levelB00_other));
+      assertEquivalent(checker, singleton(levelB00), singleton(levelB00_same));
+      assertNotAssignable(checker, singleton(levelB00), singleton(levelB00_other));
+   }
+   
+   private void assertAssignable(TypeAnnotationChecker checker,
+         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
+      assertTrue(checker.isAssignable(target, source));
+      assertFalse(checker.isAssignable(source, target));
+   }
+
+   private void assertNotAssignable(TypeAnnotationChecker checker,
+         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
+      assertFalse(checker.isAssignable(target, source));
+      assertFalse(checker.isAssignable(source, target));
+   }
+   
+   private void assertEquivalent(TypeAnnotationChecker checker,
+         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
+      assertTrue(checker.isAssignable(target, source));
+      assertTrue(checker.isAssignable(source, target));
    }
 }

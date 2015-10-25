@@ -890,10 +890,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
 
          @Override
          public V getValue() {
-            if (!refreshNode()) {
-               return memoizedValue;
-            }
-            return listNode.value;
+            return refreshNode() ? listNode.value : memoizedValue;
          }
 
          @Override
@@ -903,8 +900,7 @@ public class HamtMap<K, V> extends AbstractMap<K, V> implements Serializable, Cl
                throw new ConcurrentModificationException();
             }
             V ret = listNode.value;
-            listNode.value = value;
-            memoizedValue = value;
+            memoizedValue = listNode.value = value;
             return ret;
          }
          

@@ -711,7 +711,7 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future list whose elements are the values from the specified futures
     */
    static <T> ListenableFuture<List<T>> join(
-         final Iterable<ListenableFuture<? extends T>> futures) {
+         final Iterable<? extends ListenableFuture<? extends T>> futures) {
       List<ListenableFuture<? extends T>> futureList = snapshot(futures);
       if (futureList.isEmpty()) {
          return completedFuture(Collections.emptyList());

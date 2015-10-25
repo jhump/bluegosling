@@ -162,8 +162,8 @@ class CoreReflectionTypeElement extends CoreReflectionBaseElement implements Typ
       }
       Package pkg = base().getPackage();
       return pkg == null
-            ? CoreReflectionElements.INSTANCE.getPackageElement(determinePackageName(base()))
-            : CoreReflectionElements.INSTANCE.getPackageElement(pkg);
+            ? new CoreReflectionSyntheticPackageElement(determinePackageName(base()))
+            : new CoreReflectionPackageElement(pkg);
    }
    
    private static String determinePackageName(Class<?> clazz) {

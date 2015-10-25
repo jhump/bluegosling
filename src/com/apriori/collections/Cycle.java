@@ -13,9 +13,9 @@ import java.util.Objects;
  * element.
  * 
  * <p>Optionally, a sequence may maintain a notion of "first" item, and the sequence can be reset so
- * that the current element is that first item. The first item is the first element added to an empty cycle.
- * When new elements are added to the front of the sequence while the current element is set to the
- * first element, the first element is adjusted and becomes the newly added item.
+ * that the current element is that first item. The first item is the first element added to an
+ * empty cycle. When new elements are added to the front of the sequence while the current element
+ * is set to the first element, the first element is adjusted and becomes the newly added item.
  * 
  * <p>The size of the collection is the number of items added to it. This is the number of elements
  * one can traverse before the sequence starts over.

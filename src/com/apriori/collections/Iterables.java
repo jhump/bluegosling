@@ -204,6 +204,26 @@ public final class Iterables {
    public static <E> Iterator<E> singletonIterator(E element, Runnable onRemove) {
       return new SingletonIterator<E>(element, onRemove);
    }
+   
+   public static <E> Iterable<E> readOnly(Iterable<? extends E> iter) {
+      return () -> readOnly(iter.iterator());
+   }
+   
+   public static <E> Iterator<E> readOnly(Iterator<? extends E> iter) {
+      return new Iterator<E>() {
+         @Override
+         public boolean hasNext() {
+            return iter.hasNext();
+         }
+
+         @Override
+         public E next() {
+            return iter.next();
+         }
+         
+         // default remove() throws UnsupportedOperationException, hence making this read-only
+      };
+   }
 
    /**
     * Returns an iterator that omits duplicates from the given iterator. Note that the tracking of

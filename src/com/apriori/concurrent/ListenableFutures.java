@@ -142,7 +142,7 @@ final class ListenableFutures {
     * @param values values to snapshot
     * @return a snapshot of the given iterable, as a list
     */
-   static <T> List<T> snapshot(Iterable<T> values) {
+   static <T> List<T> snapshot(Iterable<? extends T> values) {
       ArrayList<T> ret = new ArrayList<T>(Iterables.trySize(values).orElse(16));
       Iterables.addTo(values, ret);
       return Collections.unmodifiableList(ret);

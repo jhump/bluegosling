@@ -108,7 +108,7 @@ public interface BitStream {
    
    /**
     * Provides a view of this bit stream as an {@link IntStream}. This allows code to operate on
-    * the stream in a functional way. The elements of the int streams as just bits, so each value
+    * the stream in a functional way. The elements of the int streams are just bits, so each value
     * in the stream is a zero or one.
     *
     * @return a view of the bits as an {@link IntStream}

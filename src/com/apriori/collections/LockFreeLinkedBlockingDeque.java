@@ -27,7 +27,6 @@ import java.util.concurrent.locks.Lock;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: extend AbstractLockFreeBlockingDeque
 public class LockFreeLinkedBlockingDeque<E> extends AbstractLockFreeBlockingDeque<E> {
 
    /**

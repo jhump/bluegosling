@@ -222,4 +222,9 @@ public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Seria
    public boolean test(BiPredicate<? super A, ? super B> predicate) {
       return predicate.test(a, b);
    }
+   
+   // TODO: doc, test
+   public Pair<B, A> swap() {
+      return Pair.create(b, a);
+   }
 }

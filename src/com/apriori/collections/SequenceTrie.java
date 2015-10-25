@@ -21,8 +21,8 @@ public interface SequenceTrie<K, V> extends Map<List<K>, V> {
     * <p><strong>Note</strong>, the iteration order of the given key determines where the value is
     * stored in the trie. Keys made up of the same components but in different orders are considered
     * distinct, unequal keys. So using collections with non-deterministic ordering, like a
-    * {@code Set}, is not advised because you could query the trie later using an equal set key, but
-    * not get the right value due to different iteration order.
+    * {@code HashSet}, is not advised because you could query the trie later using an equal set key,
+    * but not get the right value due to different iteration order.
     * 
     * <p>Instead, this method is intended to be used with iterables whose elements represent a
     * finite, ordered sequence, but that may not implement the full {@link List} interface.

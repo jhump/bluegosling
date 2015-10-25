@@ -10,7 +10,7 @@ import java.util.concurrent.locks.LockSupport;
 
 /**
  * An abstract blocking queue, useful for building queue implementations that do not rely on locks
- * for thread-safey. This class provides a custom wait/notify mechanism that does not need locks
+ * for thread-safety. This class provides a custom wait/notify mechanism that does not need locks
  * (no {@link Condition} queues, no intrinsic locks/monitors).
  * 
  * <p>Sub-classes must invoke {@link #signalNotEmpty()} when their implementation of
@@ -26,40 +26,91 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       implements BlockingQueue<E> {
    
    /**
+    * Represents a thread waiting to poll or add an element to the queue.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class WaitingThread {
+      /**
+       * The thread that is waiting.
+       */
+      final Thread thread;
+      
+      /**
+       * Indicates whether the thread has already been removed from its associated wait queue.
+       */
+      volatile boolean dequeued;
+      
+      WaitingThread(Thread thread) {
+         this.thread = thread;
+      }
+   }
+   
+   /**
     * The threads that are waiting for an element. These threads are signaled when this blocking
     * queue becomes non-empty. 
     */
-   private final ConcurrentLinkedQueue<Thread> awaitingElement =
-         new ConcurrentLinkedQueue<>();
+   private final ConcurrentLinkedQueue<WaitingThread> awaitingElement = new ConcurrentLinkedQueue<>();
    
    /**
     * The threads that are waiting for available capacity. These threads are signaled when this
     * blocking queue is no longer full. 
     */
-   private final ConcurrentLinkedQueue<Thread> awaitingCapacity =
-         new ConcurrentLinkedQueue<>();
+   private final ConcurrentLinkedQueue<WaitingThread> awaitingCapacity = new ConcurrentLinkedQueue<>();
 
+   /**
+    * Removes the first element in the queue, allowing interruption. Since most lock-free queues
+    * won't have blocking operations during {@link #poll()} (and thus not be interruptible), this
+    * method typically need not be overridden. But if any operations are interruptible, this method
+    * should be implemented to propagate that interruption, whereas the {@link #poll()} method
+    * (due to its signature) must suppress it. 
+    *
+    * @return the item removed from the queue or {@code null} if the queue is empty
+    * @throws InterruptedException if the operation was interrupted
+    */
    @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected E pollInterruptibly() throws InterruptedException {
       return poll();
    }
 
+   /**
+    * Adds an element to the tail of the queue, allowing interruption. Since most lock-free queues
+    * won't have blocking operations during {@link #offer(Object)} (and thus not be interruptible),
+    * this method typically need not be overridden. But if any operations are interruptible, this
+    * method should be implemented to propagate that interruption, whereas the
+    * {@link #offer(Object)} method (due to its signature) must suppress it. 
+    *
+    * @return true if the element was accepted or false if the queue is full
+    * @throws InterruptedException if the operation was interrupted
+    */
    @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected boolean offerInterruptibly(E e) throws InterruptedException {
       return offer(e);
    }
    
+   /**
+    * Signals a waiting thread that the queue is no longer empty. An operation that transitions the
+    * queue from empty to not empty <em>must</em> call this method in case there are threads waiting
+    * to take an element.
+    */
    protected final void signalNotEmpty() {
-      Thread th = awaitingElement.peek();
-      if (th != null) {
-         LockSupport.unpark(th);
+      WaitingThread w = awaitingElement.poll();
+      if (w != null) {
+         w.dequeued = true;
+         LockSupport.unpark(w.thread);
       }
    }
 
+   /**
+    * Signals a waiting thread that the queue is no longer full. An operation that transitions the
+    * queue from full to not full <em>must</em> call this method in case there are threads waiting
+    * to add an element.
+    */
    protected final void signalNotFull() {
-      Thread th = awaitingCapacity.peek();
-      if (th != null) {
-         LockSupport.unpark(th);
+      WaitingThread w = awaitingCapacity.poll();
+      if (w != null) {
+         w.dequeued = true;
+         LockSupport.unpark(w.thread);
       }
    }
 
@@ -71,7 +122,7 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       if (offerInterruptibly(e)) {
          return;
       }
-      Thread th = Thread.currentThread();
+      WaitingThread th = new WaitingThread(Thread.currentThread());
       awaitingCapacity.add(th);
       try {
          while (true) {
@@ -82,10 +133,15 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
             if (Thread.interrupted()) {
                throw new InterruptedException();
             }
+            if (th.dequeued) {
+               th.dequeued = false;
+               awaitingCapacity.add(th);
+            }
          }
       } finally {
-         boolean removed = awaitingCapacity.remove(th);
-         assert removed;
+         if (!th.dequeued) {
+            awaitingCapacity.remove(th);
+         }
          if (tentativeRemainingCapacity() > 0) {
             signalNotFull();
          }
@@ -102,7 +158,7 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       }
       long start = System.nanoTime();
       long nanos = unit.toNanos(timeout);
-      Thread th = Thread.currentThread();
+      WaitingThread th = new WaitingThread(Thread.currentThread());
       awaitingCapacity.add(th);
       try {
          while (true) {
@@ -119,10 +175,15 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
             long now = System.nanoTime();
             nanos -= now - start;
             start = now;
+            if (th.dequeued) {
+               th.dequeued = false;
+               awaitingCapacity.add(th);
+            }
          }
       } finally {
-         boolean removed = awaitingCapacity.remove(th);
-         assert removed;
+         if (!th.dequeued) {
+            awaitingCapacity.remove(th);
+         }
          if (tentativeRemainingCapacity() > 0) {
             signalNotFull();
          }
@@ -138,7 +199,7 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       if ((ret = pollInterruptibly()) != null) {
          return ret;
       }
-      Thread th = Thread.currentThread();
+      WaitingThread th = new WaitingThread(Thread.currentThread());
       awaitingElement.add(th);
       try {
          while (true) {
@@ -149,10 +210,15 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
             if (Thread.interrupted()) {
                throw new InterruptedException();
             }
+            if (th.dequeued) {
+               th.dequeued = false;
+               awaitingElement.add(th);
+            }
          }
       } finally {
-         boolean removed = awaitingElement.remove(th);
-         assert removed;
+         if (!th.dequeued) {
+            awaitingElement.remove(th);
+         }
          if (!isTentativelyEmpty()) {
             signalNotEmpty();
          }
@@ -170,7 +236,7 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       }
       long start = System.nanoTime();
       long nanos = unit.toNanos(timeout);
-      Thread th = Thread.currentThread();
+      WaitingThread th = new WaitingThread(Thread.currentThread());
       awaitingElement.add(th);
       try {
          while (true) {
@@ -187,10 +253,15 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
             long now = System.nanoTime();
             nanos -= now - start;
             start = now;
+            if (th.dequeued) {
+               th.dequeued = false;
+               awaitingElement.add(th);
+            }
          }
       } finally {
-         boolean removed = awaitingElement.remove(th);
-         assert removed;
+         if (!th.dequeued) {
+            awaitingElement.remove(th);
+         }
          if (!isTentativelyEmpty()) {
             signalNotEmpty();
          }
@@ -222,10 +293,25 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
       return numRemoved;
    }
    
+   /**
+    * Returns the tentative remaining capacity in the queue. If different from
+    * {@link #remainingCapacity()}, then this returns a capacity after considering incomplete
+    * operations whereas the other returns "confirmed" remaining capacity, considering only
+    * completed operations.
+    *
+    * @return the tentative remaining capacity in the queue
+    */
    protected int tentativeRemainingCapacity() {
       return remainingCapacity();
    }
 
+   /**
+    * Returns true if this queue is tentatively empty. If different from {@link #isEmpty()}, then
+    * this returns true if the queue is empty after considering incomplete operations whereas the
+    * other returns if the queue is "confirmed" empty, considering only completed operations.
+    *
+    * @return true if this queue is tentatively empty
+    */
    protected boolean isTentativelyEmpty() {
       return isEmpty();
    }

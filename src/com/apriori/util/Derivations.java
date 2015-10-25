@@ -2,7 +2,7 @@ package com.apriori.util;
 
 import static com.apriori.reflect.Annotations.findAnnotation;
 
-import com.apriori.reflect.TypeRef;
+import com.apriori.reflect.Types;
 
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayDeque;
@@ -26,16 +26,14 @@ public final class Derivations {
    private Derivations() {
    }
 
-   private static final String TYPE_VAR_NAME = getTypeVarName();
-   
-   private static String getTypeVarName() {
-      @SuppressWarnings("rawtypes") // compiler can't get type args from class token
-      TypeVariable<Class<DerivedFrom>> vars[] = DerivedFrom.class.getTypeParameters();
+   private static final TypeVariable<?> TYPE_VAR;
+   static {
+      TypeVariable<?> vars[] = DerivedFrom.class.getTypeParameters();
       if (vars.length != 1) {
          throw new AssertionError("DerivedFrom should have exactly one type parameter, not "
                + vars.length);
       }
-      return vars[0].getName();
+      TYPE_VAR = vars[0];
    }
    
    /**
@@ -109,9 +107,9 @@ public final class Derivations {
       if (type.equals(derivedType)) {
          return true;
       }
-      Class<?> source1 = derivedFromInterface(derivedType);
-      Class<?> source2;
-      return (source1 != null && isDerivedFrom(source1, type))
+      Class<?> source1, source2;
+      return ((source1 = derivedFromInterface(derivedType)) != null
+                  && isDerivedFrom(source1, type))
             || ((source2 = derivedFromAnnotation(derivedType)) != null
                   && isDerivedFrom(source2, type));
    }
@@ -120,14 +118,7 @@ public final class Derivations {
       if (!DerivedFrom.class.isAssignableFrom(derivedType)) {
          return null;
       }
-      @SuppressWarnings("unchecked") // we just checked the type, so we're okay
-      TypeRef<? extends DerivedFrom<?>> derivedTypeRef =
-            (TypeRef<? extends DerivedFrom<?>>) TypeRef.forClass(derivedType);
-      @SuppressWarnings("rawtypes") // can only get raw type from class token...
-      TypeRef<DerivedFrom> derivedFrom =
-            TypeRef.resolveSuperTypeRef(derivedTypeRef, DerivedFrom.class);
-      TypeRef<?> var = derivedFrom.resolveTypeParameterNamed(TYPE_VAR_NAME);
-      return var.isResolved() ? var.asClass() : null;
+      return Types.getRawType(Types.resolveTypeVariable(derivedType, TYPE_VAR));
    }
 
    private static Class<?> derivedFromAnnotation(Class<?> derivedType) {

@@ -39,13 +39,23 @@ public class SimpleTreiberStack<T> implements Stack<T> {
     */
    private static class Node<T> {
       final T value;
-      final Node<T> next;
-      final int size;
+      Node<T> next;
+      int size;
       
-      Node(T value, Node<T> next, int size) {
+      Node(T value) {
          this.value = value;
+      }
+      
+      /**
+       * Sets the next node in the list rooted at this node. This can only be called prior to the
+       * node being CAS'ed into a list. Once this node is added to a list, it must be frozen and
+       * immutable thereafter.
+       *
+       * @param next the node that will become this node's successor
+       */
+      void setNext(Node<T> next) {
          this.next = next;
-         this.size = size;
+         this.size = next != null ? next.size + 1 : 1;
       }
    }
    
@@ -88,9 +98,10 @@ public class SimpleTreiberStack<T> implements Stack<T> {
 
    @Override
    public void push(T value) {
+      Node<T> newNode = new Node<T>(value);
       while (true) {
          Node<T> oldNode = head;
-         Node<T> newNode = new Node<T>(value, oldNode, oldNode != null ? oldNode.size + 1 : 1);
+         newNode.setNext(oldNode);
          if (headUpdater.compareAndSet(this, oldNode, newNode)) {
             break;
          }

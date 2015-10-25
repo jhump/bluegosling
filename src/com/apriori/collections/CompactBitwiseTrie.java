@@ -42,7 +42,8 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       this(bitConverter, (Comparator<? super K>) null);
    }
 
-   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter,
+         Comparator<? super K> comparator) {
       if (bitConverter == null) {
          throw new NullPointerException();
       }
@@ -54,13 +55,14 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
       }
    }
 
-   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Map<? extends K, ? extends V> map) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter,
+         Map<? extends K, ? extends V> map) {
       this(bitConverter);
       putAll(map);
    }
    
-   public CompactBitwiseTrie(BitConverter<? super K> bitConverter, Comparator<? super K> comparator,
-         Map<? extends K, ? extends V> map) {
+   public CompactBitwiseTrie(BitConverter<? super K> bitConverter,
+         Comparator<? super K> comparator, Map<? extends K, ? extends V> map) {
       this(bitConverter, comparator);
       putAll(map);
    }
@@ -70,25 +72,31 @@ public class CompactBitwiseTrie<K, V> implements NavigableCompositeTrie<K, Boole
    }
    
    private ValueNode<K, V> firstNode(TrieNode<K, V> node) {
-      if (node.value != null) {
-         return node.value;
-      } else {
-         return node.s0 != null ? firstNode(node.s0.node) : firstNode(node.s1.node);
+      // Go down lowest (left-most) path until we encounter a value.
+      while (node != null && node.value != null) {
+         node = node.s0 != null ? node.s0.node : node.s1.node;
       }
+      // Return first value node in the linked list.
+      return node != null ? node.value : null;
    }
 
    private ValueNode<K, V> lastNode(TrieNode<K, V> node) {
-      if (node.s1 != null) {
-         return lastNode(node.s1.node);
-      } else if (node.s0 != null) {
-         return lastNode(node.s0.node);
-      } else {
-         ValueNode<K, V> result = node.value;
-         while (result.next != null) {
-            result = result.next;
+      // Descend down highest (right-most) path to a leaf.
+      while (true) {
+         if (node.s1 != null) {
+            node = node.s1.node;
+         } else if (node.s0 != null) {
+            node = node.s0.node;
+         } else {
+            break;
          }
-         return result;
       }
+      // Return the last value node in the linked list.
+      ValueNode<K, V> result = node.value;
+      while (result.next != null) {
+         result = result.next;
+      }
+      return result;
    }
    
    BitStream stream(K key) {

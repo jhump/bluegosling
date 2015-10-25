@@ -10,10 +10,10 @@ import com.apriori.concurrent.SettableFuture;
 import com.apriori.tuples.Pair;
 import com.apriori.tuples.Trio;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -57,6 +57,15 @@ import java.util.function.Function;
  */
 // TODO: tests
 public class Transaction {
+   
+   // NB: Several fields/variables that store version numbers use boxed Longs instead of longs. This
+   // is because the values will eventually need to be boxed (for instance, used as keys in a
+   // HashMap lookup). So keeping a reference to a boxed value means auto-boxing won't need to
+   // create many boxed instances. Similarly, -1 is place holder and frequently used. So we use the
+   // BOXED_NEGATIVE_ONE constant to short-circuit boxing it. The value -1 is cached in Long, but
+   // using a constant lets us even skip the cache lookup for it.
+   
+   private static final Long BOXED_NEGATIVE_ONE = -1L;
    
    /**
     * The isolation level of a transaction.
@@ -162,7 +171,7 @@ public class Transaction {
     * @return a computation that will execute the task and return {@code null}
     */
    static <X extends Throwable> Computation<Void, X> asComputation(Task<X> task) {
-      return (t) -> { task.execute(t); return null; };
+      return t -> { task.execute(t); return null; };
    }
    
    /**
@@ -455,7 +464,7 @@ public class Transaction {
     *
     * @param version the version to pin
     */
-   private static void pinVersion(long version) {
+   private static void pinVersion(Long version) {
       while (true) {
          AtomicInteger count = pinnedVersions.get(version);
          if (count == null) {
@@ -487,7 +496,7 @@ public class Transaction {
     *
     * @param version the version to unpin
     */
-   static void unpinVersion(long version) {
+   static void unpinVersion(Long version) {
       if (pinnedVersions.get(version).decrementAndGet() == 0) {
          pinnedVersions.remove(version);
       }
@@ -506,7 +515,7 @@ public class Transaction {
       // a value, then get a new version number for this transaction and pin it, and then release
       // old pin. That way we will never accidentally use a version number for which we have no
       // data.
-      long last = currentVersion();
+      Long last = currentVersion();
       pinVersion(last);
       long ret = versionNumber.incrementAndGet();
       pinVersion(ret);
@@ -639,7 +648,7 @@ public class Transaction {
        * has been applied.
        */
       final Queue<Pair<Function<? super T, ? extends T>, SettableFuture<T>>> commutes =
-            new ArrayDeque<Pair<Function<? super T, ? extends T>, SettableFuture<T>>>();
+            new LinkedList<Pair<Function<? super T, ? extends T>, SettableFuture<T>>>();
       
       /**
        * The previous lock state for this atom. If this information is rolled back, the atom's lock
@@ -734,7 +743,7 @@ public class Transaction {
        * transaction is committed.
        */
       final Queue<Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>>> asyncActions =
-            new ArrayDeque<Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>>>();
+            new LinkedList<Pair<AsynchronousAtom<?>, RunnableListenableFuture<?>>>();
       
       /**
        * Information about atoms modified in the scope of this savepoint.
@@ -745,12 +754,13 @@ public class Transaction {
       /**
        * This savepoint's predecessor.
        */
-      Savepoint predecessor;
+      final Savepoint predecessor;
       
       /**
        * Constructs a new savepoint.
        */
       Savepoint() {
+         predecessor = null;
       }
       
       /**
@@ -846,7 +856,7 @@ public class Transaction {
     * isolation level of {@link IsolationLevel#READ_COMMITTED}, this value is never identified and
     * all reads take an atom's most recent committed value.
     */
-   private long readVersion = -1;
+   private Long readVersion = BOXED_NEGATIVE_ONE;
    
    /**
     * The current savepoint. This is a linked list, with each savepoint holding a reference to its
@@ -920,7 +930,7 @@ public class Transaction {
       int isolationFailures = 0;
       int deadlocks = 0;
       while (true) {
-         readVersion = -1;
+         readVersion = BOXED_NEGATIVE_ONE;
          currentTransaction.set(this);
          try {
             T ret = computation.compute(this);
@@ -1049,7 +1059,7 @@ public class Transaction {
       // to successfully complete the transaction
       if (readVersion != -1) {
          unpinVersion(readVersion);
-         readVersion = -1;
+         readVersion = BOXED_NEGATIVE_ONE;
       }
       
       // After we generate the commit version, there's a race where concurrent transactions could

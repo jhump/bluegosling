@@ -534,8 +534,6 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
       }
       
       public List<K> createKeyList() {
-         // TODO: Use AmtPersistentList instead of ArrayDeque so we don't need to create a new
-         // list every time? Then we could instead just return a "view" of the persistent list.
          List<K> ret = new ArrayList<>(frames.size() - 1);
          boolean isFirst = true;
          for (Iterator<StackFrame<K, X, V, N>> iter = frames.descendingIterator();

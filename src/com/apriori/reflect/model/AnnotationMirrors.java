@@ -492,12 +492,10 @@ public class AnnotationMirrors {
                      + "arrays are supported as annotation values");
             }
             arrayKind = elementKind;
-         } else {
-            if (elementKind != arrayKind) {
-               throw new IllegalArgumentException("Array with multiple element kinds found: "
-                     + arrayKind.name() + " and " + elementKind.name() + ". Only homogenous "
-                     + "arrays are supported as annotation values");
-            }
+         } else if (elementKind != arrayKind) {
+            throw new IllegalArgumentException("Array with multiple element kinds found: "
+                  + arrayKind.name() + " and " + elementKind.name() + ". Only homogenous "
+                  + "arrays are supported as annotation values");
          }
          values.add(v);
       }

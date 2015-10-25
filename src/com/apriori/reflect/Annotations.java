@@ -556,7 +556,9 @@ public final class Annotations {
    
    private static Object getAnnotationFieldValue(Method annotationField, Annotation annotation) {
       try {
-         annotationField.setAccessible(true);
+         if (!annotationField.isAccessible()) {
+            annotationField.setAccessible(true);
+         }
          return annotationField.invoke(annotation);
       } catch (Exception e) {
          if (e instanceof RuntimeException) {

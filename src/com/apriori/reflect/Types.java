@@ -788,15 +788,68 @@ public final class Types {
    }
    
    /**
-    * Determines if one type is assignable to another. This is true when the RHS is a sub-type
-    * of the LHS (co-variance). This is effectively the same as {@link Class#isAssignableFrom(Class)
-    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types. To that
-    * end, it returns true if {@code from} can be assigned to {@code to} using either Identity
-    * Conversion (JLS 5.1.1) or Widening Reference Conversion (JLS 5.1.4). See {@link #isAssignable}
-    * (the non-strict form) to instead check for compatibility via Assignment Conversion (JLS 5.2).
+    * Determines if one type is assignable to another. This is true when the RHS is the same type or
+    * a sub-type of the LHS (co-variance), but also true when the RHS is compatible with the LHS
+    * after possible assigmnment conversions. The possible conversions include Widening Primitive
+    * Conversions (JLS 5.1.3), Boxing and Unboxing Conversions (JLS 5.1.7 and 5.1.8), and Unchecked
+    * Conversions (JLS 5.1.9).
     * 
-    * <p>For an assignment that would require an unchecked cast, this function returns false, as in
-    * this example:
+    * <p>There is also a {@linkplain #isAssignableStrict stricter version}, that behaves more like
+    * {@link Class#isAssignableFrom(Class) to.isAssignableFrom(from)} but supporting generic types
+    * instead of only raw types.
+    *
+    * @param to the LHS of assignment
+    * @param from the RHS of assignment
+    * @return true if the assignment is allowed
+    */
+   public static boolean isAssignable(Type to, Type from) {
+      // This helper will test identity conversions, widening reference conversions, and unchecked
+      // conversions.
+      if (isAssignable(to, from, true)) {
+         return true;
+      }
+      // If that fails, we still need to try widening primitive conversion and boxing/unboxing
+      // conversion. All of these require from to be a raw class token (either a primitive type OR a
+      // boxed primitive type, none which of are generic).
+      if (from instanceof Class) {
+         Class<?> fromClass = (Class<?>) from;
+         if (to instanceof ParameterizedType && fromClass.isPrimitive()) {
+            // try a boxing conversion.
+            Class<?> boxedFromClass = box(fromClass);
+            return boxedFromClass != fromClass && isAssignable(to, boxedFromClass, true); 
+         } else if (to instanceof Class) {
+            Class<?> toClass = (Class<?>) to;
+            if (fromClass.isPrimitive()) {
+               if (toClass.isPrimitive()) {
+                  // primitive widening conversions
+                  return isPrimitiveSubtype(toClass, fromClass);
+               }
+               // boxing conversion
+               return toClass.isAssignableFrom(box(fromClass));
+            } else if (toClass.isPrimitive()) {
+               // unboxing conversion
+               return toClass.isAssignableFrom(unbox(fromClass));
+            }
+         }
+      }
+      return false;
+   }
+   
+   /**
+    * Determines if one type is assignable to another, with restrictions. This is true when the RHS
+    * is the same type or a sub-type of the LHS (co-variance).
+    * 
+    * <p>This is effectively the same as {@link Class#isAssignableFrom(Class)
+    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types. To that end,
+    * it returns true if {@code from} can be assigned to {@code to} using either Identity Conversion
+    * (JLS 5.1.1) or Widening Reference Conversion (JLS 5.1.4). Of particular note, this method does
+    * <em>not</em> check for assignability via Widening Primitive Conversion (JLS 5.1.3), Boxing and
+    * Unboxing Conversions (JLS 5.1.7 and 5.1.8), or Unchecked Conversions (JLS 5.1.9). To instead
+    * test assignment compatibility using all of these (e.g. Assignment Conversion, JLS 5.2), see
+    * the {@linkplain #isAssignable non-strict form}.
+    * 
+    * <p>It follows that, for an assignment that would require an unchecked cast, this function
+    * returns false, as in this example:
     * <pre>
     * Type genericType = new TypeRef&lt;List&lt;String&gt;&gt;() {}.asTypes();
     * Type rawType = List.class;
@@ -809,15 +862,19 @@ public final class Types {
     * </pre>
     * 
     * <p>Similarly, even though the Java language allows an assignment of an {@code int} value to a
-    * {@code long} variable, this function returns false in this case since {@code int} is not a
-    * sub-type of {@code long}. In other words {@code Types.isAssignableFrom(long.class, int.class)}
-    * returns false.
+    * {@code long} variable, this function returns false in this case since it does not perform
+    * widening primitive conversion. This is analogous to the observation that {@code
+    * long.class.isAssignableFrom(int.class)} returns false.
     *
     * @param to the LHS of assignment
     * @param from the RHS of assignment
     * @return true if the assignment is allowed
     */
    public static boolean isAssignableStrict(Type to, Type from) {
+      return isAssignable(to, from, false);
+   }
+   
+   private static boolean isAssignable(Type to, Type from, boolean allowUncheckedConversion) {
       if (requireNonNull(to) == requireNonNull(from)) {
          return true;
       } else if (to instanceof Class && from instanceof Class) {
@@ -829,7 +886,7 @@ public final class Types {
                ? ((WildcardType) from).getUpperBounds()
                : ((TypeVariable<?>) from).getBounds();
          for (Type bound : bounds) {
-            if (isAssignableStrict(to, bound)) {
+            if (isAssignable(to, bound, allowUncheckedConversion)) {
                return true;
             }
          }
@@ -842,8 +899,8 @@ public final class Types {
                return true;
             }
             GenericArrayType fromArrayType = (GenericArrayType) from;
-            return toClass.isArray() && isAssignableStrict(toClass.getComponentType(),
-                  fromArrayType.getGenericComponentType());
+            return toClass.isArray() && isAssignable(toClass.getComponentType(),
+                  fromArrayType.getGenericComponentType(), allowUncheckedConversion);
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
             return toClass.isAssignableFrom(fromRaw);
@@ -852,17 +909,17 @@ public final class Types {
          }
       } else if (to instanceof ParameterizedType) {
          ParameterizedType toParamType = (ParameterizedType) to;
-         Class<?> toRawType = (Class<?>) toParamType.getRawType();
+         Class<?> toRawType = getRawType(toParamType.getRawType());
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
-            if (fromClass.getTypeParameters().length > 0) {
-               // Both types are generic, but RHS has no type arguments (e.g. raw). This requires
-               // an unchecked cast, so no go
-               return false;
-            }
             if (!toRawType.isAssignableFrom(fromClass)) {
                // Raw types aren't even compatible? Abort!
                return false;
+            }
+            if (fromClass.getTypeParameters().length > 0) {
+               // Both types are generic, but RHS has no type arguments (e.g. raw). This requires
+               // an unchecked conversion.
+               return allowUncheckedConversion;
             }
          } else if (from instanceof ParameterizedType) {
             ParameterizedType fromParamType = (ParameterizedType) from;
@@ -881,8 +938,8 @@ public final class Types {
          Type args[] = toParamType.getActualTypeArguments();
          Type resolvedArgs[] = getActualTypeArguments(resolvedToType);
          if (resolvedArgs.length == 0) {
-            // assigning from raw type to parameterized type requires unchecked cast, so no go
-            return false;
+            // assigning from raw type to parameterized type requires unchecked conversion
+            return allowUncheckedConversion;
          }
          assert args.length == resolvedArgs.length;
          // check each type argument
@@ -892,12 +949,12 @@ public final class Types {
             if (toArg instanceof WildcardType) {
                WildcardType wildcardArg = (WildcardType) toArg;
                for (Type upperBound : wildcardArg.getUpperBounds()) {
-                  if (!isAssignableStrict(upperBound, fromArg)) {
+                  if (!isAssignable(upperBound, fromArg, allowUncheckedConversion)) {
                      return false;
                   }
                }
                for (Type lowerBound : wildcardArg.getLowerBounds()) {
-                  if (!isAssignableStrict(fromArg, lowerBound)) {
+                  if (!isAssignable(fromArg, lowerBound, allowUncheckedConversion)) {
                      return false;
                   }
                }
@@ -910,11 +967,11 @@ public final class Types {
          GenericArrayType toArrayType = (GenericArrayType) to;
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
-            return fromClass.isArray() && isAssignableStrict(toArrayType.getGenericComponentType(),
-                  fromClass.getComponentType());
+            return fromClass.isArray() && isAssignable(toArrayType.getGenericComponentType(),
+                  fromClass.getComponentType(), allowUncheckedConversion);
          } else if (from instanceof GenericArrayType) {
-            return isAssignableStrict(toArrayType.getGenericComponentType(),
-                  ((GenericArrayType) from).getGenericComponentType());
+            return isAssignable(toArrayType.getGenericComponentType(),
+                  ((GenericArrayType) from).getGenericComponentType(), allowUncheckedConversion);
          } else {
             return false;
          }
@@ -928,7 +985,7 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignableStrict(bound, from)) {
+            if (!isAssignable(bound, from, allowUncheckedConversion)) {
                return false;
             }
          }
@@ -946,18 +1003,6 @@ public final class Types {
    
    // TODO: doc!!
    
-   // JLS 5.2
-   public static boolean isAssignable(Type to, Type from) {
-      // TODO
-      return false;
-   }
-
-   // JLS 4.10.2, 4.10.3 (no sub-typing for primitives)
-   public static boolean isSubtypeStrict(Type aType, Type possibleSubtype) {
-      // TODO
-      return false;
-   }
-
    private static final Map<Class<?>, Class<?>> PRIMITIVE_DIRECT_SUPERTYPES;
    private static final Map<Class<?>, Set<Class<?>>> PRIMITIVE_SUBTYPES;
    static {
@@ -1011,12 +1056,20 @@ public final class Types {
       if (!(aType instanceof Class) || !(possibleSubtype instanceof Class)) {
          return false;
       }
-      Class<?> a = (Class<?>) aType;
-      Class<?> b = (Class<?>) possibleSubtype;
-      Set<Class<?>> subTypes = PRIMITIVE_SUBTYPES.get(a);
-      return subTypes != null && subTypes.contains(b);
+      return isPrimitiveSubtype((Class<?>) aType, (Class<?>) possibleSubtype);
    }
    
+   private static boolean isPrimitiveSubtype(Class<?> aClass, Class<?> possibleSubclass) {
+      Set<Class<?>> subTypes = PRIMITIVE_SUBTYPES.get(aClass);
+      return subTypes != null && subTypes.contains(possibleSubclass);
+   }
+   
+   // JLS 4.10.2, 4.10.3 (no sub-typing for primitives)
+   public static boolean isSubtypeStrict(Type aType, Type possibleSubtype) {
+      return isAssignableStrict(aType, possibleSubtype)
+            && !isSameType(aType, possibleSubtype);
+   }
+
    // JLS 5.1.1: like equals() except that two equal wildcard types are not considered the same
    public static boolean isSameType(Type a, Type b) {
       if (requireNonNull(a) == requireNonNull(b)) {

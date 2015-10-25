@@ -78,8 +78,7 @@ class CoreReflectionSyntheticPackageElement implements PackageElement {
 
    @Override
    public List<? extends Element> getEnclosedElements() {
-      // TODO: implement me
-      return null;
+      return CoreReflectionPackages.getTopLevelTypesAsElements(qualifiedName.toString());
    }
 
    @Override
