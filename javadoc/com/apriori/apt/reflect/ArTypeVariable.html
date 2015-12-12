@@ -390,7 +390,10 @@ implements <a href="../../../../com/apriori/apt/reflect/ArType.html" title="inte
 <h4>getGenericDeclaration</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/apt/reflect/ArTypeVariable.html" title="type parameter in ArTypeVariable">D</a>&nbsp;getGenericDeclaration()</pre>
 <div class="block">Returns the declaration for this type variable. This will be either a <code>Class</code>,
- <a href="../../../../com/apriori/apt/reflect/ArMethod.html" title="class in com.apriori.apt.reflect"><code>ArMethod</code></a>, or <a href="../../../../com/apriori/apt/reflect/ArConstructor.html" title="class in com.apriori.apt.reflect"><code>ArConstructor</code></a>, depending on where the type variable was declared.</div>
+ <a href="../../../../com/apriori/apt/reflect/ArMethod.html" title="class in com.apriori.apt.reflect"><code>ArMethod</code></a>, or <a href="../../../../com/apriori/apt/reflect/ArConstructor.html" title="class in com.apriori.apt.reflect"><code>ArConstructor</code></a>, depending on where the type variable was declared.
+ 
+ <p>If the type variable is a <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true#capture-javax.lang.model.type.TypeMirror-" title="class or interface in javax.lang.model.util">captured wildcard</a> then this method
+ returns <code>null</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the generic declaration that declared this type variable</dd>

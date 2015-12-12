@@ -707,8 +707,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <p>The snapshot is created with as little overhead as possible using a strategy like used by
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a>, except using linked nodes of arrays (each larger than the previous) instead
  of resizing a single array (so no copies need be made when the initial array gets full). The
- initial array is sized based on the given iterable's <a href="../../../com/apriori/collections/Iterables.html#trySize-java.lang.Iterable-">trySize(Iterable)</a> size or
- 16 if the size is unknown.</div>
+ initial array is sized based on the given iterable's <a href="../../../com/apriori/collections/Iterables.html#trySize-java.lang.Iterable-">size</a> (16
+ if the size is unknown).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>iterable</code> - an iterable</dd>

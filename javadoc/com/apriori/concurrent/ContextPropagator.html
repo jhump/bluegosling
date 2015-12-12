@@ -167,14 +167,14 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ContextPropagator.html#forTls-java.lang.ThreadLocal-">forTls</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ContextPropagator.html#forThreadLocal-java.lang.ThreadLocal-">forThreadLocal</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</code>
 <div class="block">Creates a <a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><code>ContextPropagator</code></a> that propagates the value of the given thread-local
  variable.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ContextPropagator.html#forTlsRemoveAfterTask-java.lang.ThreadLocal-">forTlsRemoveAfterTask</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/concurrent/ContextPropagator.html#forThreadLocalClearAfterTask-java.lang.ThreadLocal-">forThreadLocalClearAfterTask</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</code>
 <div class="block">Creates a <a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><code>ContextPropagator</code></a> that propagates the value of the given thread-local
  variable, clearing thread-local state after each task.</div>
 </td>
@@ -321,13 +321,13 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="forTls-java.lang.ThreadLocal-">
+<a name="forThreadLocal-java.lang.ThreadLocal-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>forTls</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;&nbsp;forTls(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</pre>
+<h4>forThreadLocal</h4>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;&nbsp;forThreadLocal(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</pre>
 <div class="block">Creates a <a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><code>ContextPropagator</code></a> that propagates the value of the given thread-local
  variable.</div>
 <dl>
@@ -338,16 +338,16 @@ var activeTableTab = "activeTableTab";
 </dl>
 </li>
 </ul>
-<a name="forTlsRemoveAfterTask-java.lang.ThreadLocal-">
+<a name="forThreadLocalClearAfterTask-java.lang.ThreadLocal-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>forTlsRemoveAfterTask</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;&nbsp;forTlsRemoveAfterTask(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</pre>
+<h4>forThreadLocalClearAfterTask</h4>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent">ContextPropagator</a>&lt;T&gt;&nbsp;forThreadLocalClearAfterTask(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang">ThreadLocal</a>&lt;T&gt;&nbsp;threadLocal)</pre>
 <div class="block">Creates a <a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><code>ContextPropagator</code></a> that propagates the value of the given thread-local
  variable, clearing thread-local state after each task. This differs from
- <a href="../../../com/apriori/concurrent/ContextPropagator.html#forTls-java.lang.ThreadLocal-"><code>forTls(ThreadLocal)</code></a> in that the <code>restore</code> step simply
+ <a href="../../../com/apriori/concurrent/ContextPropagator.html#forThreadLocal-java.lang.ThreadLocal-"><code>forThreadLocal(ThreadLocal)</code></a> in that the <code>restore</code> step simply
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html?is-external=true#remove--" title="class or interface in java.lang">clears</a> the value instead of restoring any previous value.
  Similarly, the <code>install</code> step of the returned propagator always returns <code>null</code>.</div>
 <dl>
