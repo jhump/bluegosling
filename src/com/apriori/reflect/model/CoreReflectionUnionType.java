@@ -15,7 +15,7 @@ import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 
 
-class CoreReflectionUnionType implements UnionType {
+class CoreReflectionUnionType implements CoreReflectionMarker, UnionType {
 
    private final List<TypeMirror> alternatives;
    

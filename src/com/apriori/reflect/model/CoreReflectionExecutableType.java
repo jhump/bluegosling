@@ -11,15 +11,11 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
-class CoreReflectionExecutableType extends CoreReflectionBase implements ExecutableType {
+class CoreReflectionExecutableType extends CoreReflectionBase<Executable>
+implements ExecutableType {
    
    CoreReflectionExecutableType(Executable executable) {
       super(executable);
-   }
-   
-   @Override
-   protected Executable base() {
-      return (Executable) super.base();
    }
    
    @Override

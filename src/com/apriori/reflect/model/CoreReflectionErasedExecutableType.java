@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 
-
+/**
+ * Represents an {@link ExecutableType} with all generic type information erased. This is the result
+ * of {@linkplain Types#erasure(TypeMirror) erasing} a {@link CoreReflectionExecutableType}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionErasedExecutableType extends CoreReflectionExecutableType {
 
    CoreReflectionErasedExecutableType(Executable executable) {

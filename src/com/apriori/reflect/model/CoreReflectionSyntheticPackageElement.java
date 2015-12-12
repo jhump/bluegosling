@@ -16,7 +16,7 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionSyntheticPackageElement implements PackageElement {
+class CoreReflectionSyntheticPackageElement implements CoreReflectionMarker, PackageElement {
    private final Name qualifiedName;
    private final Name simpleName;
    

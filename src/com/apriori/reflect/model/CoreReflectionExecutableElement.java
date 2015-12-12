@@ -23,19 +23,19 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
-
-class CoreReflectionExecutableElement extends CoreReflectionBaseElement
+/**
+ * An {@link ExecutableElement} backed by a core reflection {@link Executable}. This represents
+ * either a method or a constructor.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+class CoreReflectionExecutableElement extends CoreReflectionBaseElement<Executable>
 implements ExecutableElement {
 
    CoreReflectionExecutableElement(Executable executable) {
       super(executable, executable instanceof Constructor ? "<init>" : executable.getName());
    }
    
-   @Override
-   protected Executable base() {
-      return (Executable) super.base();
-   }
-
    @Override
    public TypeMirror asType() {
       return new CoreReflectionExecutableType(base());

@@ -146,7 +146,7 @@ public abstract class PrimeIterator<T extends Number & Comparable<T>> implements
     * <p>32-bit floats have 24 mantissa bits. Not coincidentally, the largest integral value is
     * 2<sup>24</sup>.
     */
-   static float MAX_FLOAT = 16777216f;
+   static float MAX_FLOAT = 16_777_216f;
 
    /**
     * Constructs an iterator of {@code float}s that are prime. There are enough primes in this range
@@ -183,7 +183,7 @@ public abstract class PrimeIterator<T extends Number & Comparable<T>> implements
     * <p>64-bit floats have 53 mantissa bits. Not coincidentally, the largest integral value is
     * 2<sup>53</sup>.
     */
-   static double MAX_DOUBLE = 9007199254740992.0;
+   static double MAX_DOUBLE = 9_007_199_254_740_992.0;
 
    /**
     * Constructs an iterator of {@code double}s that are prime. There are enough primes in this

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Types;
 
 /**
  * A type variable. Type variables are declared on generic classes and interfaces and then used in
@@ -108,6 +110,9 @@ public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
     * Returns the declaration for this type variable. This will be either a {@code Class},
     * {@link ArMethod}, or {@link ArConstructor}, depending on where the type variable was declared.
     * 
+    * <p>If the type variable is a {@linkplain Types#capture captured wildcard} then this method
+    * returns {@code null}.
+    * 
     * @return the generic declaration that declared this type variable
     */
    public D getGenericDeclaration() {
@@ -115,6 +120,11 @@ public class ArTypeVariable<D extends ArGenericDeclaration> implements ArType {
       D decl =
          (D) ReflectionVisitors.GENERIC_DECLARATION_VISITOR.visit(element.getGenericElement());
       if (decl == null) {
+         if (element.getKind() == ElementKind.OTHER
+               && element.getSimpleName().toString().toLowerCase().contains("capture")) {
+            // captured wildcard
+            return null;
+         }
          throw new AssertionError("Unable to determine generic declaration for type variable");
       }
       return decl;

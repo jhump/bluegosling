@@ -23,15 +23,10 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionTypeElement extends CoreReflectionBaseElement implements TypeElement {
+class CoreReflectionTypeElement extends CoreReflectionBaseElement<Class<?>> implements TypeElement {
 
    CoreReflectionTypeElement(Class<?> clazz) {
       super(clazz, clazz.getSimpleName());
-   }
-   
-   @Override
-   protected Class<?> base() {
-      return (Class<?>) super.base();
    }
    
    @Override

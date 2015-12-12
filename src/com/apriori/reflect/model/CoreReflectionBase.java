@@ -8,15 +8,21 @@ import java.util.List;
 import javax.lang.model.AnnotatedConstruct;
 import javax.lang.model.element.AnnotationMirror;
 
-
-abstract class CoreReflectionBase implements AnnotatedConstruct {
-   private final AnnotatedElement base;
+/**
+ * An abstract base type for {@link AnnotatedConstruct}s backed by core reflection. The construct is
+ * backed by a core reflection {@link AnnotatedElement}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+abstract class CoreReflectionBase<E extends AnnotatedElement>
+implements CoreReflectionMarker, AnnotatedConstruct {
+   private final E base;
    
-   CoreReflectionBase(AnnotatedElement base) {
+   CoreReflectionBase(E base) {
       this.base = base;
    }
    
-   protected AnnotatedElement base() {
+   protected E base() {
       return base;
    }
 
@@ -48,7 +54,7 @@ abstract class CoreReflectionBase implements AnnotatedConstruct {
       if (o.getClass() != getClass()) {
          return false;
       }
-      CoreReflectionBase other = (CoreReflectionBase) o;
+      CoreReflectionBase<?> other = (CoreReflectionBase<?>) o;
       return base.equals(other.base);
    }
    

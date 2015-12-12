@@ -128,7 +128,7 @@ public class AnnotationProcessorTestRunnerTest {
    }
    
    @SupportedAnnotationTypes("*")
-   @SupportedSourceVersion(SourceVersion.RELEASE_6)
+   @SupportedSourceVersion(SourceVersion.RELEASE_8)
    static class TestProcessor extends AbstractProcessor {
       int initCount;
       

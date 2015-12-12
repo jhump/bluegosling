@@ -306,4 +306,10 @@ public abstract class Immediate<T> {
          visitor.cancelled();
       }
    }
+   
+   public ListenableFuture<T> asFuture() {
+      return isFailed()
+            ? ListenableFuture.failedFuture(getFailure())
+            : ListenableFuture.completedFuture(getResult());
+   }
 }

@@ -7,7 +7,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
 
-class CoreReflectionVoidType extends CoreReflectionBaseTypeMirror implements NoType {
+class CoreReflectionVoidType extends CoreReflectionBaseTypeMirror<AnnotatedType> implements NoType {
 
    CoreReflectionVoidType(AnnotatedType base) {
       super(base);

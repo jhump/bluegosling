@@ -7,9 +7,11 @@ import java.lang.reflect.AnnotatedParameterizedType;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.AnnotatedTypeVariable;
 import java.lang.reflect.AnnotatedWildcardType;
+import java.lang.reflect.Executable;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +28,11 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
-
+/**
+ * The implementation of {@link Types} that is backed by core reflection.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 enum CoreReflectionTypes implements Types {
    INSTANCE;
 
@@ -58,6 +64,7 @@ enum CoreReflectionTypes implements Types {
          return false;
       } else if (k == TypeKind.ARRAY || k == TypeKind.DECLARED || k == TypeKind.TYPEVAR
             || k == TypeKind.WILDCARD) {
+         
          // TODO: implement me
          return false;
       } else {
@@ -105,18 +112,38 @@ enum CoreReflectionTypes implements Types {
       } else if (t.getKind() == TypeKind.PACKAGE) {
          throw new IllegalArgumentException("Invalid kind has no erasure: " + t.getKind());
       } else if (t.getKind() == TypeKind.EXECUTABLE) {
-         return new CoreReflectionErasedExecutableType(((CoreReflectionExecutableType) t).base());
+         Executable e = ((CoreReflectionExecutableType) t).base();
+         boolean generic = e.getTypeParameters().length > 0
+               || isGeneric(e.getAnnotatedReturnType().getType())
+               || isGeneric(e.getAnnotatedReceiverType().getType())
+               || isAnyGeneric(e.getGenericParameterTypes())
+               || isAnyGeneric(e.getGenericExceptionTypes());
+         // return the same object if there is nothing to erase
+         return generic ? new CoreReflectionErasedExecutableType(e) : t;
       } else if (t.getKind() == TypeKind.INTERSECTION) {
          return erasure(((CoreReflectionIntersectionType) t).getBounds().get(0));
       } else if (t.getKind() == TypeKind.UNION) {
          // TODO
          return null;
       } else {
-         AnnotatedType at = ((CoreReflectionBaseTypeMirror) t).base();
+         AnnotatedType at = ((CoreReflectionBaseTypeMirror<?>) t).base();
          Class<?> erased = com.apriori.reflect.Types.getRawType(at.getType());
          return CoreReflectionTypes.INSTANCE.getTypeMirror(
                AnnotatedTypes.newAnnotatedType(erased, at.getAnnotations()));
       }
+   }
+   
+   private static boolean isGeneric(Type t) {
+      return !(t instanceof Class);
+   }
+
+   private static boolean isAnyGeneric(Type[] types) {
+      for (Type t : types) {
+         if (isGeneric(t)) {
+            return true;
+         }
+      }
+      return false;
    }
 
    @Override
@@ -163,8 +190,38 @@ enum CoreReflectionTypes implements Types {
 
    @Override
    public TypeMirror capture(TypeMirror t) {
-      // TODO: implement me
-      return null;
+      AnnotatedType type = asAnnotatedType(t, "captured type");
+      if (!(type instanceof AnnotatedParameterizedType)) {
+         return t;
+      }
+      AnnotatedParameterizedType pType = (AnnotatedParameterizedType) type.getType();
+      AnnotatedType[] args = pType.getAnnotatedActualTypeArguments();
+      boolean needCapture = false;
+      for (AnnotatedType arg : args) {
+         if (arg instanceof AnnotatedWildcardType) {
+            needCapture = true;
+            break;
+         }
+      }
+      if (!needCapture) {
+         return t;
+      }
+      List<AnnotatedType> capturedArgs = new ArrayList<>(args.length);
+      for (AnnotatedType arg : args) {
+         if (arg instanceof AnnotatedWildcardType) {
+            capturedArgs.add(new AnnotatedCapturedType((AnnotatedWildcardType) arg));
+         } else {
+            capturedArgs.add(arg);
+         }
+      }
+      // TODO: fix once AnnotatedParameterizedType supports getting annotated owner type
+      ParameterizedType pt = (ParameterizedType) pType.getType();
+      Type ownerType = pt.getOwnerType();
+      AnnotatedParameterizedType owner = ownerType instanceof ParameterizedType
+            ? AnnotatedTypes.newAnnotatedParameterizedType((ParameterizedType) ownerType)
+            : null;
+      AnnotatedType raw = AnnotatedTypes.newAnnotatedType(pt.getRawType(), type.getAnnotations());
+      return new CoreReflectionDeclaredType(owner, raw, capturedArgs);
    }
 
    @Override
@@ -172,35 +229,35 @@ enum CoreReflectionTypes implements Types {
       switch (kind) {
          case BOOLEAN:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(boolean.class),
+                  AnnotatedTypes.newAnnotatedType(boolean.class),
                   TypeKind.BOOLEAN);
          case BYTE:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(byte.class),
+                  AnnotatedTypes.newAnnotatedType(byte.class),
                   TypeKind.BYTE);
          case SHORT:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(short.class),
+                  AnnotatedTypes.newAnnotatedType(short.class),
                   TypeKind.SHORT);
          case CHAR:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(char.class),
+                  AnnotatedTypes.newAnnotatedType(char.class),
                   TypeKind.CHAR);
          case INT:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(int.class),
+                  AnnotatedTypes.newAnnotatedType(int.class),
                   TypeKind.INT);
          case LONG:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(long.class),
+                  AnnotatedTypes.newAnnotatedType(long.class),
                   TypeKind.LONG);
          case FLOAT:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(float.class),
+                  AnnotatedTypes.newAnnotatedType(float.class),
                   TypeKind.FLOAT);
          case DOUBLE:
             return new CoreReflectionPrimitiveType(
-                  com.apriori.reflect.AnnotatedTypes.newAnnotatedType(double.class),
+                  AnnotatedTypes.newAnnotatedType(double.class),
                   TypeKind.DOUBLE);
          default:
             throw new IllegalArgumentException("kind is not a valid primitive type: " + kind);
@@ -215,8 +272,7 @@ enum CoreReflectionTypes implements Types {
    @Override
    public NoType getNoType(TypeKind kind) {
       if (kind == TypeKind.VOID) {
-         return new CoreReflectionVoidType(
-               com.apriori.reflect.AnnotatedTypes.newAnnotatedType(void.class));
+         return new CoreReflectionVoidType(AnnotatedTypes.newAnnotatedType(void.class));
       } else if (kind == TypeKind.NONE) {
          return CoreReflectionNoneType.INSTANCE;
       } else {
@@ -226,19 +282,27 @@ enum CoreReflectionTypes implements Types {
 
    @Override
    public ArrayType getArrayType(TypeMirror componentType) {
-      if (!(componentType instanceof CoreReflectionBaseTypeMirror)) {
-         throw new IllegalArgumentException("Invalid kind of type argument: " + componentType);
-      }
-      AnnotatedType component = ((CoreReflectionBaseTypeMirror) componentType).base();
-      AnnotatedTypes.newAnnotatedArrayType(component);
-      // TODO: implement me
-      return null;
+      AnnotatedType component = asAnnotatedType(componentType, "component type");
+      return new CoreReflectionArrayType(AnnotatedTypes.newAnnotatedArrayType(component));
    }
 
    @Override
    public WildcardType getWildcardType(TypeMirror extendsBound, TypeMirror superBound) {
-      // TODO: implement me
-      return null;
+      if ((extendsBound == null) == (superBound == null)) {
+         throw new IllegalArgumentException("Exactly one of extends or super bound should be "
+               + "present, but found " + (extendsBound == null ? "none": "both"));
+      }
+      if (extendsBound != null) {
+         assert superBound == null;
+         AnnotatedType extendsType = asAnnotatedType(extendsBound, "extends bound");
+         return new CoreReflectionWildcardType(
+               AnnotatedTypes.newExtendsAnnotatedWildcardType(extendsType));
+      } else {
+         assert superBound != null;
+         AnnotatedType superType = asAnnotatedType(superBound, "super bound");
+         return new CoreReflectionWildcardType(
+               AnnotatedTypes.newSuperAnnotatedWildcardType(superType));
+      }
    }
 
    @Override
@@ -249,22 +313,68 @@ enum CoreReflectionTypes implements Types {
    @Override
    public DeclaredType getDeclaredType(DeclaredType containing, TypeElement typeElem,
          TypeMirror... typeArgs) {
-      
-      AnnotatedType owner = containing == null
-            ? null : ((CoreReflectionDeclaredType) containing).base();
-      Class<?> rawType = ((CoreReflectionTypeElement) typeElem).base();
+      AnnotatedType owner = containing != null
+            ? asAnnotatedType(containing, CoreReflectionDeclaredType.class, "containing type")
+            : null;
+      Class<?> rawType = checkType(typeElem, CoreReflectionTypeElement.class, "given type").base();
       if (typeArgs.length != rawType.getTypeParameters().length) {
          throw new IllegalArgumentException("wrong number of type arguments: expecting "
                + rawType.getTypeParameters().length + " but received " + Arrays.toString(typeArgs));
       }
       AnnotatedType[] args = new AnnotatedType[typeArgs.length];
       for (int i = 0; i < typeArgs.length; i++) {
-         if (!(typeArgs[i] instanceof CoreReflectionBaseTypeMirror)) {
-            throw new IllegalArgumentException("Invalid kind of type argument: " + typeArgs[i]);
-         }
-         args[i] = ((CoreReflectionBaseTypeMirror) typeArgs[i]).base();
+         args[i] = asAnnotatedType(typeArgs[i], "type argument");
       }
       return new CoreReflectionDeclaredType(owner, AnnotatedTypes.newAnnotatedType(rawType), args);
+   }
+
+   private AnnotatedType asAnnotatedType(TypeMirror mirror, String description) {
+      // ugly type gymnastics to work around issues with class tokens for generic types...
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      Class<CoreReflectionBaseTypeMirror<AnnotatedType>> type =
+            (Class) CoreReflectionBaseTypeMirror.class;
+      return asAnnotatedType(mirror, type, description);
+   }
+   
+   private <T extends AnnotatedType> T asAnnotatedType(TypeMirror mirror,
+         Class<? extends CoreReflectionBaseTypeMirror<? extends T>> expectedType,
+         String description) {
+      T result = asAnnotatedTypeAllowVoid(mirror, expectedType, description);
+      if (((AnnotatedType) result).getType() == void.class) {
+         throw new IllegalArgumentException("Invalid kind of " + description + ": " + mirror);
+      }
+      return result;
+   }
+   
+   private <T> T asAnnotatedTypeAllowVoid(TypeMirror mirror,
+         Class<? extends CoreReflectionBaseTypeMirror<? extends T>> expectedType,
+         String description) {
+      return checkType(mirror, expectedType, description).base();
+   }
+   
+   private <M extends CoreReflectionBase<?>> M checkType(Object obj, Class<M> expectedType,
+         String description) {
+      if (!expectedType.isInstance(obj)) {
+         if (!(obj instanceof CoreReflectionMarker)) {
+            throw new IllegalArgumentException(
+                  initCap(description) + " is not backed by core reflection: " + obj);
+         } else {
+            // when expectedType is CoreReflectionBaseTypeMirror, this error will occur for
+            // TypeKinds EXECUTABLE, PACKAGE, NONE, NULL, INTERSECTION, and UNION
+            throw new IllegalArgumentException(
+                  "Invalid kind of " + description + ": " + obj);
+         }
+      }
+      return expectedType.cast(obj);
+   }
+
+   private String initCap(String string) {
+      if (string.isEmpty()) {
+         return string;
+      }
+      StringBuilder sb = new StringBuilder(string);
+      sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+      return sb.toString();
    }
 
    @Override
@@ -316,11 +426,10 @@ enum CoreReflectionTypes implements Types {
          return new CoreReflectionDeclaredType(annotatedOwner, type);
       }
    }
-
+   
    @Override
    public ArrayType getArrayTypeMirror(AnnotatedArrayType arrayType) {
-      // TODO: implement me
-      return null;
+      return new CoreReflectionArrayType(arrayType);
    }
 
    @Override
@@ -344,12 +453,13 @@ enum CoreReflectionTypes implements Types {
 
    @Override
    public WildcardType getWildcardTypeMirror(AnnotatedWildcardType wildcardType) {
-      // TODO: implement me
-      return null;
+      return new CoreReflectionWildcardType(wildcardType);
    }
 
    @Override
    public TypeVariable getTypeVariableMirror(AnnotatedTypeVariable typeVar) {
-      return new CoreReflectionTypeVariable(typeVar);
+      return typeVar.getType() instanceof AnnotatedCapturedType.CapturedTypeVariable
+            ? new CoreReflectionCapturedType(typeVar)
+            : new CoreReflectionTypeVariable(typeVar);
    }
 }

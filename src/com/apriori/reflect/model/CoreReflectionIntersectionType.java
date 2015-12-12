@@ -15,7 +15,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVisitor;
 
 
-class CoreReflectionIntersectionType implements IntersectionType {
+class CoreReflectionIntersectionType implements CoreReflectionMarker, IntersectionType {
 
    private final List<TypeMirror> bounds;
    

@@ -121,20 +121,14 @@ public interface ContextPropagator<T> {
     * @param threadLocal the thread-local variable whose value is propagated
     * @return a propagator that propagates the value of the given thread-local variable
     */
-   public static <T> ContextPropagator<T> forTls(ThreadLocal<T> threadLocal) {
-      return create(threadLocal::get,
-            (Function<T, T>) t -> {
-               T prev = threadLocal.get();
-               threadLocal.set(t);
-               return prev;
-            },
-            threadLocal::set);
+   public static <T> ContextPropagator<T> forThreadLocal(ThreadLocal<T> threadLocal) {
+      return create(threadLocal::get, threadLocal::set);
    }
 
    /**
     * Creates a {@link ContextPropagator} that propagates the value of the given thread-local
     * variable, clearing thread-local state after each task. This differs from
-    * {@link #forTls(ThreadLocal)} in that the {@code restore} step simply
+    * {@link #forThreadLocal(ThreadLocal)} in that the {@code restore} step simply
     * {@linkplain ThreadLocal#remove() clears} the value instead of restoring any previous value.
     * Similarly, the {@code install} step of the returned propagator always returns {@code null}.
     *
@@ -142,7 +136,7 @@ public interface ContextPropagator<T> {
     * @return a propagator that propagates the value of the given thread-local variable, but clears
     *       it on finish instead of trying to restore a prior value
     */
-   public static <T> ContextPropagator<T> forTlsRemoveAfterTask(ThreadLocal<T> threadLocal) {
+   public static <T> ContextPropagator<T> forThreadLocalClearAfterTask(ThreadLocal<T> threadLocal) {
       return create(threadLocal::get,
             t -> { threadLocal.set(t); return null; },
             t -> threadLocal.remove());

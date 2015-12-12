@@ -7,7 +7,8 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
 
-class CoreReflectionPrimitiveType extends CoreReflectionBaseTypeMirror implements PrimitiveType {
+class CoreReflectionPrimitiveType extends CoreReflectionBaseTypeMirror<AnnotatedType>
+implements PrimitiveType {
    
    private final TypeKind kind;
 

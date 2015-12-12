@@ -390,8 +390,8 @@ public final class Iterables {
     * <p>The snapshot is created with as little overhead as possible using a strategy like used by
     * {@link ArrayList}, except using linked nodes of arrays (each larger than the previous) instead
     * of resizing a single array (so no copies need be made when the initial array gets full). The
-    * initial array is sized based on the given iterable's {@linkplain #trySize(Iterable)} size or
-    * 16 if the size is unknown.
+    * initial array is sized based on the given iterable's {@linkplain #trySize(Iterable) size} (16
+    * if the size is unknown).
     *
     * @param iterable an iterable
     * @return a snapshot of the iterable's contents in an unmodifiable collection
@@ -588,6 +588,11 @@ public final class Iterables {
       while (iter.hasNext()) {
          if (currentIndex == chunkLimit) {
             head.size += currentIndex;
+            if (head.size < 0) {
+               // overflow
+               throw new IllegalStateException(
+                     "Too many elements. Max supported is " + Integer.MAX_VALUE);
+            }
             int newSize;
             if (sized != null && (newSize = sized.getAsInt()) > head.size) {
                chunkLimit = newSize - head.size + 1;

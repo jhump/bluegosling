@@ -10,7 +10,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
 
-class CoreReflectionPackageType implements NoType {
+class CoreReflectionPackageType implements CoreReflectionMarker, NoType {
    
    private final PackageElement pkg;
    

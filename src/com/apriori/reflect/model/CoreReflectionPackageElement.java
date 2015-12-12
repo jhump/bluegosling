@@ -13,7 +13,8 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionPackageElement extends CoreReflectionBaseElement implements PackageElement {
+class CoreReflectionPackageElement extends CoreReflectionBaseElement<Package>
+implements PackageElement {
    private final Name qualifiedName;
 
    CoreReflectionPackageElement(Package pkg) {

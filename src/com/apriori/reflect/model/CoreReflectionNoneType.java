@@ -11,7 +11,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
 
-enum CoreReflectionNoneType implements NoType {
+enum CoreReflectionNoneType implements CoreReflectionMarker, NoType {
    INSTANCE;
    
    @Override

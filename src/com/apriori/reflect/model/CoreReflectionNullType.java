@@ -11,7 +11,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
 
-enum CoreReflectionNullType implements NullType {
+enum CoreReflectionNullType implements CoreReflectionMarker, NullType {
    INSTANCE;
    
    @Override

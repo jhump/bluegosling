@@ -13,17 +13,13 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionFieldElement extends CoreReflectionBaseElement implements VariableElement {
+class CoreReflectionFieldElement extends CoreReflectionBaseElement<Field>
+implements VariableElement {
    
    CoreReflectionFieldElement(Field field) {
       super(field, field.getName());
    }
    
-   @Override
-   protected Field base() {
-      return (Field) super.base();
-   }
-
    @Override
    public TypeMirror asType() {
       return CoreReflectionTypes.INSTANCE.getTypeMirror(base().getAnnotatedType());

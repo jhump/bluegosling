@@ -19,7 +19,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 
-
+/**
+ * The implementation of {@link Elements} that is backed by core reflection.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 enum CoreReflectionElements implements Elements {
    INSTANCE;
 

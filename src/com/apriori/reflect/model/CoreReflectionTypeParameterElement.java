@@ -21,21 +21,26 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionTypeParameterElement extends CoreReflectionBaseElement
+class CoreReflectionTypeParameterElement extends CoreReflectionBaseElement<TypeVariable<?>>
 implements TypeParameterElement {
+   
+   private final CoreReflectionTypeVariable typeVar;
 
    CoreReflectionTypeParameterElement(TypeVariable<?> base) {
       super(base, base.getName());
+      this.typeVar =
+            new CoreReflectionTypeVariable(this, AnnotatedTypes.newAnnotatedTypeVariable(base));
    }
    
-   @Override
-   protected TypeVariable<?> base() {
-      return (TypeVariable<?>) super.base();
+   CoreReflectionTypeParameterElement(CoreReflectionTypeVariable typeMirror,
+         TypeVariable<?> base) {
+      super(base, base.getName());
+      this.typeVar = typeMirror;
    }
 
    @Override
    public TypeMirror asType() {
-      return new CoreReflectionTypeVariable(AnnotatedTypes.newAnnotatedTypeVariable(base()));
+      return typeVar;
    }
 
    @Override

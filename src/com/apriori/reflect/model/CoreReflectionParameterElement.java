@@ -13,17 +13,13 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
 
-class CoreReflectionParameterElement extends CoreReflectionBaseElement implements VariableElement {
+class CoreReflectionParameterElement extends CoreReflectionBaseElement<Parameter>
+implements VariableElement {
    
    CoreReflectionParameterElement(Parameter param) {
       super(param, param.getName());
    }
    
-   @Override
-   protected Parameter base() {
-      return (Parameter) super.base();
-   }
-
    @Override
    public TypeMirror asType() {
       return CoreReflectionTypes.INSTANCE.getTypeMirror(base().getAnnotatedType());

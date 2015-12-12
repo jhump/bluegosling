@@ -10,15 +10,22 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
 
-class CoreReflectionTypeVariable extends CoreReflectionBaseTypeMirror implements TypeVariable {
-
+class CoreReflectionTypeVariable extends CoreReflectionBaseTypeMirror<AnnotatedTypeVariable>
+implements TypeVariable {
+   
+   private final CoreReflectionTypeParameterElement element;
+   
    CoreReflectionTypeVariable(AnnotatedTypeVariable base) {
       super(base);
+      assert !(base.getType() instanceof AnnotatedCapturedType.CapturedTypeVariable);
+      this.element = new CoreReflectionTypeParameterElement(this,
+            (java.lang.reflect.TypeVariable<?>) base.getType());
    }
-   
-   @Override
-   protected AnnotatedTypeVariable base() {
-      return (AnnotatedTypeVariable) super.base();
+
+   CoreReflectionTypeVariable(CoreReflectionTypeParameterElement element,
+         AnnotatedTypeVariable base) {
+      super(base);
+      this.element = element;
    }
 
    @Override
@@ -33,8 +40,7 @@ class CoreReflectionTypeVariable extends CoreReflectionBaseTypeMirror implements
 
    @Override
    public Element asElement() {
-      return new CoreReflectionTypeParameterElement(
-            (java.lang.reflect.TypeVariable<?>) base().getType());
+      return element;
    }
 
    @Override
