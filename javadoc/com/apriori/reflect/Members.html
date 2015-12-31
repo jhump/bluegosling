@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -173,6 +173,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  member visibility in the Java language.</div>
 </td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Members.html#isMoreSpecific-java.lang.reflect.Method-java.lang.reflect.Method-">isMoreSpecific</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;method,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;other)</code>
+<div class="block">Returns true if the first specified method is more specific than the second.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -195,6 +202,28 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isMoreSpecific-java.lang.reflect.Method-java.lang.reflect.Method-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isMoreSpecific</h4>
+<pre>public static&nbsp;boolean&nbsp;isMoreSpecific(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;method,
+                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;other)</pre>
+<div class="block">Returns true if the first specified method is more specific than the second. It only looks at
+ argument types, checking if the types of one method are sub-types of corresponding types of
+ the other. If the two methods have a different number of arguments then <code>false</code> will
+ always be returned.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>method</code> - the first method</dd>
+<dd><code>other</code> - the second method</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the first method is "more specific" than the second (based solely on argument
+       types)</dd>
+</dl>
+</li>
+</ul>
 <a name="findMethod-java.lang.Class-java.lang.String-java.lang.Class...-">
 <!--   -->
 </a>
