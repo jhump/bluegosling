@@ -100,7 +100,7 @@ public class MethodSignature {
          else {
             sb.append(", ");
          }
-         sb.append(argType.getName());
+         sb.append(argType.getTypeName());
       }
       sb.append(")");
       return sb.toString();

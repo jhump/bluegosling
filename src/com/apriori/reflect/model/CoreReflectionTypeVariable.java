@@ -9,10 +9,15 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * A {@link TypeVariable} that is backed by a core reflection {@link AnnotatedTypeVariable}.
+ *
+ * @see CoreReflectionCapturedType
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionTypeVariable extends CoreReflectionBaseTypeMirror<AnnotatedTypeVariable>
 implements TypeVariable {
-   
    private final CoreReflectionTypeParameterElement element;
    
    CoreReflectionTypeVariable(AnnotatedTypeVariable base) {
@@ -58,6 +63,6 @@ implements TypeVariable {
 
    @Override
    public TypeMirror getLowerBound() {
-      return null;
+      return CoreReflectionNullType.INSTANCE;
    }
 }

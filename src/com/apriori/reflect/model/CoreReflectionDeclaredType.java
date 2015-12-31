@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -67,7 +66,7 @@ implements DeclaredType {
    }
 
    @Override
-   public Element asElement() {
+   public TypeElement asElement() {
       return element;
    }
 

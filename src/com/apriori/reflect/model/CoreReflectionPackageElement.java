@@ -12,14 +12,18 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.type.TypeMirror;
 
-
+/**
+ * A {@link PackageElement} backed by a core reflection {@link Package}. 
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionPackageElement extends CoreReflectionBaseElement<Package>
 implements PackageElement {
    private final Name qualifiedName;
 
    CoreReflectionPackageElement(Package pkg) {
       super(pkg, extractSimpleName(pkg.getName()));
-      this.qualifiedName = new CoreReflectionName(pkg.getName());
+      this.qualifiedName = CoreReflectionName.of(pkg.getName());
    }
    
    private static String extractSimpleName(String qualifiedName) {

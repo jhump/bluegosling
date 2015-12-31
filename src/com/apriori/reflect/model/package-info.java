@@ -14,9 +14,9 @@
  * <li>From the runtime of a standard java application, using models backed by core reflection.</li>
  * </ul>
  * <p>This package should be a suitable implementation for
- * <a href="http://openjdk.java.net/jeps/119">JEP 119</a> except that it does not expose extra
- * reflective operations, such as instantiating objects, invoking methods, or querying/updating
- * field values.
+ * <a href="http://openjdk.java.net/jeps/119">JEP 119</a>. However, unlike the proposed JEP, this
+ * package does not expose extra reflective operations, such as instantiating objects, invoking
+ * methods, or querying/updating field values.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

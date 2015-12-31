@@ -11,6 +11,12 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
+/**
+ * An {@link ExecutableType} backed by a core reflection {@link Executable}. This represents either
+ * a method or a constructor.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionExecutableType extends CoreReflectionBase<Executable>
 implements ExecutableType {
    

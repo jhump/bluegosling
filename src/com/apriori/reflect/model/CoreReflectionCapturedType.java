@@ -1,7 +1,9 @@
 package com.apriori.reflect.model;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.AnnotatedTypeVariable;
+import java.lang.reflect.AnnotatedWildcardType;
 import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.List;
@@ -13,21 +15,33 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * A type mirror for a {@linkplain Types#capture(TypeMirror) captured} type that is backed by core
+ * reflection. The actual {@link AnnotatedTypeVariable} behind this mirror will be a
+ * {@link AnnotatedCapturedType.CapturedTypeVariable}.
+ *
+ * @see CoreReflectionTypeVariable
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionCapturedType extends CoreReflectionBaseTypeMirror<AnnotatedTypeVariable>
 implements TypeVariable {
    
    private final CapturedTypeParameterElement element;
+   private final AnnotatedWildcardType capturedWildcard;
    
    CoreReflectionCapturedType(AnnotatedTypeVariable captureVariable) {
       super(captureVariable);
-      assert captureVariable.getType() instanceof AnnotatedCapturedType.CapturedTypeVariable;
+      AnnotatedCapturedType.CapturedTypeVariable typeVar =
+            (AnnotatedCapturedType.CapturedTypeVariable) captureVariable.getType();
+      this.capturedWildcard = typeVar.capturedWildcard();
       this.element = new CapturedTypeParameterElement(this, captureVariable);
    }
    
@@ -42,25 +56,44 @@ implements TypeVariable {
    }
 
    @Override
-   public Element asElement() {
+   public TypeParameterElement asElement() {
       return element;
    }
 
    @Override
    public TypeMirror getUpperBound() {
-      // TODO: implement me
-      return null;
+      AnnotatedType[] upperBound = capturedWildcard.getAnnotatedUpperBounds();
+      if (upperBound.length > 1) {
+         return new CoreReflectionIntersectionType(upperBound);
+      } else if (upperBound.length == 1) {
+         return CoreReflectionTypes.INSTANCE.getTypeMirror(upperBound[0]);
+      } else {
+         // this probably isn't possible: well-behaved wildcards should return Object.class...
+         return CoreReflectionTypes.INSTANCE.getTypeMirror(Object.class);
+      }
    }
 
    @Override
    public TypeMirror getLowerBound() {
-      // TODO: implement me
-      return null;
+      AnnotatedType[] lowerBound = capturedWildcard.getAnnotatedLowerBounds();
+      if (lowerBound.length > 1) {
+         // Maybe assert that this never happens? (It really shouldn't be possible...)
+         return new CoreReflectionIntersectionType(lowerBound);
+      } else if (lowerBound.length == 1) {
+         return CoreReflectionTypes.INSTANCE.getTypeMirror(lowerBound[0]);
+      } else {
+         return CoreReflectionNullType.INSTANCE;
+      }
    }
    
+   /**
+    * A type parameter element that represents a captured wildcard.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class CapturedTypeParameterElement
    extends CoreReflectionBase<AnnotatedTypeVariable> implements TypeParameterElement {
-      private static Name CAPTURED_NAME = new CoreReflectionName("<captured wildcard>");
+      private static Name CAPTURED_NAME = CoreReflectionName.of("<captured wildcard>");
       
       private final CoreReflectionCapturedType mirror;
       private final Element genericElement;
@@ -113,14 +146,18 @@ implements TypeVariable {
 
       @Override
       public Element getEnclosingElement() {
-         // TODO: implement me
-         return null;
+         return genericElement;
       }
    }
    
+   /**
+    * The generic element that declared a captured type variable. Since the captured type variable
+    * is not actually declared like real type variables, this is a dummy element that is implemented
+    * to behave in the same was as an annotation processing environment.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private static class DummyGenericElement implements CoreReflectionMarker, Element {
-      private static Name DUMMY_NAME = new CoreReflectionName("");
-      
       private final TypeMirror type;
       
       DummyGenericElement(TypeMirror type) {
@@ -155,7 +192,62 @@ implements TypeVariable {
 
       @Override
       public Name getSimpleName() {
-         return DUMMY_NAME;
+         return CoreReflectionName.EMPTY;
+      }
+
+      @Override
+      public Element getEnclosingElement() {
+         return DummyPackageElement.INSTANCE;
+      }
+
+      @Override
+      public List<? extends Element> getEnclosedElements() {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public List<? extends AnnotationMirror> getAnnotationMirrors() {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public <R, P> R accept(ElementVisitor<R, P> v, P p) {
+         return v.visitUnknown(this, p);
+      }
+   }
+
+   private enum DummyPackageElement implements CoreReflectionMarker, PackageElement {
+      INSTANCE;
+      
+      @Override
+      public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
+         return null;
+      }
+
+      @SuppressWarnings("unchecked")
+      @Override
+      public <A extends Annotation> A[] getAnnotationsByType(Class<A> annotationType) {
+         return (A[]) Array.newInstance(annotationType, 0);
+      }
+
+      @Override
+      public TypeMirror asType() {
+         return new CoreReflectionPackageType(this);
+      }
+
+      @Override
+      public ElementKind getKind() {
+         return ElementKind.OTHER;
+      }
+
+      @Override
+      public Set<Modifier> getModifiers() {
+         return Collections.emptySet();
+      }
+
+      @Override
+      public Name getSimpleName() {
+         return CoreReflectionName.EMPTY;
       }
 
       @Override
@@ -175,7 +267,20 @@ implements TypeVariable {
 
       @Override
       public <R, P> R accept(ElementVisitor<R, P> v, P p) {
-         return v.visitUnknown(this, p);
+         return v.visitPackage(this, p);
+      }
+
+      @Override
+      public Name getQualifiedName() {
+         return CoreReflectionName.EMPTY;
+      }
+
+      @Override
+      public boolean isUnnamed() {
+         // NB: matches behavior of processing environment, wherein only the real unnamed package
+         // returns true and other dummy objects (like the packages that contain unknown generic
+         // declarations) return false even though their qualified name is empty. 
+         return false;
       }
    }
 }

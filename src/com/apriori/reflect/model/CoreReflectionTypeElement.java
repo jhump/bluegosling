@@ -22,7 +22,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.TypeMirror;
 
-
+/**
+ * A {@link TypeElement} that is backed by a core reflection {@linkplain Class class token}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionTypeElement extends CoreReflectionBaseElement<Class<?>> implements TypeElement {
 
    CoreReflectionTypeElement(Class<?> clazz) {
@@ -113,7 +117,7 @@ class CoreReflectionTypeElement extends CoreReflectionBaseElement<Class<?>> impl
       if (n == null) {
          n = "";
       }
-      return new CoreReflectionName(n);
+      return CoreReflectionName.of(n);
    }
 
    @Override
@@ -171,10 +175,10 @@ class CoreReflectionTypeElement extends CoreReflectionBaseElement<Class<?>> impl
       }
       String n = clazz.getCanonicalName();
       String s = clazz.getSimpleName();
-      assert n.endsWith(s);
       if (n.equals(s)) {
          return "";
       } else {
+         assert n.endsWith("." + s);
          int p = n.length() - s.length() - 1;
          assert p > 0;
          assert n.charAt(p) == '.';

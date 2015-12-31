@@ -1,14 +1,27 @@
 package com.apriori.reflect.model;
 
+import java.lang.reflect.Member;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
 import javax.lang.model.element.Modifier;
 
-
+/**
+ * Utility methods for converting between representations of modifiers in
+ * {@linkplain java.lang.reflect.Modifier core reflection} and in a
+ * {@link Modifier processing environment}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionModifiers {
    
+   /**
+    * Adds modifiers in the given bitmask (core reflection representation) to the given set.
+    *
+    * @param modifiers a bitmask of modifiers (for example, from {@link Member#getModifiers()})
+    * @param modifierSet a set of modifiers
+    */
    static void addToSet(int modifiers, Set<Modifier> modifierSet) {
       if (java.lang.reflect.Modifier.isAbstract(modifiers)) {
          modifierSet.add(Modifier.ABSTRACT);
@@ -45,6 +58,12 @@ class CoreReflectionModifiers {
       }
    }
    
+   /**
+    * Converts the given bitmask of modifiers (core reflection representation) into a set.
+    *
+    * @param modifiers a bitmask of modifiers (for example, from {@link Member#getModifiers()})
+    * @return a set of the modifiers indicated in the given bitmask
+    */
    static Set<Modifier> asSet(int modifiers) {
       EnumSet<Modifier> result = EnumSet.noneOf(Modifier.class);
       addToSet(modifiers, result);

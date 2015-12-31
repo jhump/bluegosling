@@ -14,11 +14,12 @@ import javax.lang.model.element.Name;
  */
 abstract class CoreReflectionBaseElement<E extends AnnotatedElement> extends CoreReflectionBase<E>
 implements Element {
+   
    private final Name name;
    
    CoreReflectionBaseElement(E base, String name) {
       super(base);
-      this.name = new CoreReflectionName(name);
+      this.name = CoreReflectionName.of(name);
    }
    
    @Override

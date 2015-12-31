@@ -21,6 +21,33 @@ public final class Members {
    private Members() {}
 
    /**
+    * Returns true if the first specified method is more specific than the second. It only looks at
+    * argument types, checking if the types of one method are sub-types of corresponding types of
+    * the other. If the two methods have a different number of arguments then {@code false} will
+    * always be returned.
+    * 
+    * @param method the first method
+    * @param other the second method
+    * @return true if the first method is "more specific" than the second (based solely on argument
+    *       types)
+    */
+   public static boolean isMoreSpecific(Method method, Method other) {
+      Class<?> argTypes1[] = method.getParameterTypes();
+      Class<?> argTypes2[] = other.getParameterTypes();
+      if (argTypes1.length != argTypes2.length) {
+         return false;
+      } else {
+         for (int i = 0, len = argTypes1.length; i < len; i++) {
+            if (argTypes1[i].isAssignableFrom(argTypes2[i])
+                  && !argTypes1[i].equals(argTypes2[i])) {
+               return false;
+            }
+         }
+         return true;
+      }
+   }
+   
+   /**
     * Finds an instance method on the specified class with the specified signature. Unlike
     * {@link Class#getMethod(String, Class...)}, it will find non-public methods. Unlike
     * {@link Class#getDeclaredMethod(String, Class...)}, it will find any method for the class,

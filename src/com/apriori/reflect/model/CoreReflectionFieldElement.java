@@ -12,7 +12,11 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
-
+/**
+ * A {@link VariableElement} backed by a core reflection {@link Field}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionFieldElement extends CoreReflectionBaseElement<Field>
 implements VariableElement {
    

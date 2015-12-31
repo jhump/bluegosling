@@ -6,12 +6,17 @@ import javax.lang.model.type.NoType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * A {@linkplain TypeKind#VOID void type} that is backed by a core reflection {@link AnnotatedType}.
+ * The {@linkplain AnnotatedType#getType() underlying type} is {@code void.class}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionVoidType extends CoreReflectionBaseTypeMirror<AnnotatedType> implements NoType {
 
    CoreReflectionVoidType(AnnotatedType base) {
       super(base);
-      assert ((Class<?>) base.getType()) == void.class;
+      assert base.getType() == void.class;
    }
 
    @Override

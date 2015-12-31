@@ -18,7 +18,7 @@ public final class ArrayUtils {
    }
 
    /**
-    * Constructs a new array of the given <em>non-primitive</em> component type and length.  This is
+    * Constructs a new array of the given <em>non-primitive</em> component type and length. This is
     * a convenient wrapper around {@link Array#newInstance(Class, int)} that provides a more useful
     * return type for reference component types: no cast required.
     *
@@ -34,6 +34,47 @@ public final class ArrayUtils {
       @SuppressWarnings("unchecked")
       T ret[] = (T[]) Array.newInstance(elementType, len);
       return ret;
+   }
+   
+   /**
+    * Clones the given array object. This is useful when the object is known to be an array, but its
+    * concrete type (e.g. an array of reference types vs. a {@code byte[]}) is not known.
+    *
+    * @param array an array
+    * @return a clone of the given array
+    */
+   public static <T> T clone(T array) {
+      Class<?> arrayType = array.getClass();
+      if (!arrayType.isArray()) {
+         throw new IllegalArgumentException("specified object is not an array");
+      }
+      Class<?> componentType = arrayType.getComponentType();
+      Object ret;
+      if (!componentType.isPrimitive()) {
+         ret = ((Object[]) array).clone();
+      } else if (componentType == boolean.class) {
+         ret = ((boolean[]) array).clone();
+      } else if (componentType == byte.class) {
+         ret = ((byte[]) array).clone();
+      } else if (componentType == short.class) {
+         ret = ((short[]) array).clone();
+      } else if (componentType == char.class) {
+         ret = ((char[]) array).clone();
+      } else if (componentType == int.class) {
+         ret = ((int[]) array).clone();
+      } else if (componentType == long.class) {
+         ret = ((long[]) array).clone();
+      } else if (componentType == float.class) {
+         ret = ((float[]) array).clone();
+      } else if (componentType == double.class) {
+         ret = ((double[]) array).clone();
+      } else {
+         throw new AssertionError("Unrecognized primitive type: " + componentType);
+      }
+      // We used Object#clone() to create this value, so we know its type is correct
+      @SuppressWarnings("unchecked")
+      T t = (T) ret;
+      return t;
    }
    
    /**

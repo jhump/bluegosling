@@ -33,8 +33,8 @@ public class DispatchSettings {
       PACKAGE_PRIVATE() {
          @Override
          public boolean isVisible(int modifiers) {
-            return (modifiers & PROTECTED_OR_HIGHER) != 0
-                  || (modifiers & NOT_PACKAGE_PRIVATE) == 0;
+            // if not private, then it is package-private or higher
+            return !Modifier.isPrivate(modifiers);
          }
       },
       
@@ -44,7 +44,7 @@ public class DispatchSettings {
       PROTECTED() {
          @Override
          public boolean isVisible(int modifiers) {
-            return (modifiers & PROTECTED_OR_HIGHER) != 0;
+            return Modifier.isPublic(modifiers) || Modifier.isProtected(modifiers);
          }
       },
       
@@ -57,9 +57,6 @@ public class DispatchSettings {
             return Modifier.isPublic(modifiers);
          }
       };
-      
-      private static final int PROTECTED_OR_HIGHER = Modifier.PUBLIC | Modifier.PROTECTED;
-      private static final int NOT_PACKAGE_PRIVATE = PROTECTED_OR_HIGHER | Modifier.PRIVATE;
       
       /**
        * Returns true if the given modifiers indicate a method that has this level of visibility

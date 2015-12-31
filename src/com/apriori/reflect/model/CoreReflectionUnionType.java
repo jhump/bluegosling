@@ -14,9 +14,12 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 
-
+/**
+ * A {@link UnionType} that is backed by multiple core reflection {@link AnnotatedType}s.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionUnionType implements CoreReflectionMarker, UnionType {
-
    private final List<TypeMirror> alternatives;
    
    CoreReflectionUnionType(AnnotatedType[] bounds) {

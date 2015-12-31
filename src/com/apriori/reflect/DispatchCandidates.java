@@ -43,7 +43,7 @@ class DispatchCandidates {
       public void add(Method m) {
          for (List<Method> category : methods) {
             Method other = category.get(0);
-            if (ProxyUtils.isMoreSpecific(m, other) || ProxyUtils.isMoreSpecific(other,  m)) {
+            if (Members.isMoreSpecific(m, other) || Members.isMoreSpecific(other,  m)) {
                category.add(m);
             }
          }
@@ -74,9 +74,9 @@ class DispatchCandidates {
             Collections.sort(groupCopy, new Comparator<Method>() {
                @Override
                public int compare(Method o1, Method o2) {
-                  if (ProxyUtils.isMoreSpecific(o1, o2)) {
+                  if (Members.isMoreSpecific(o1, o2)) {
                      return -1;
-                  } else if (ProxyUtils.isMoreSpecific(o2, o1)) {
+                  } else if (Members.isMoreSpecific(o2, o1)) {
                      return 1;
                   } else {
                      return 0;

@@ -9,7 +9,13 @@ import javax.lang.model.type.NoType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * A {@linkplain TypeKind#PACKAGE package type}. This may be backed by a core reflection
+ * {@link Package} or by a {@linkplain CoreReflectionSyntheticPackageElement synthetic package
+ * element} (if no package could be loaded).
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionPackageType implements CoreReflectionMarker, NoType {
    
    private final PackageElement pkg;

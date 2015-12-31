@@ -59,6 +59,7 @@ public final class Annotations {
          return annotation;
       }
       // if not @Inherited, then look at super-type(s)
+      // (if inherited, no need to do this since Class#getAnnotation will have already done so)
       if (annotationType.getAnnotation(Inherited.class) == null) {
          for (Class<?> ancestor = clazz.getSuperclass(); ancestor != null;
                ancestor = ancestor.getSuperclass()) {
@@ -69,9 +70,10 @@ public final class Annotations {
          }
       }
       // Still not found? Now we move on to inspecting implemented interfaces. We do a breadth-first
-      // search so that interfaces that are "closer" to the specified class as preferred (e.g. we
+      // search so that interfaces that are "closer" to the specified class are preferred (e.g. we
       // prefer an interface implemented directly by the class vs. by a super-class, and we prefer
-      // an interface declared directly on the class vs. annotations on one a super-interface)
+      // annotations on an interface implemented directly by the class vs. annotations on a
+      // super-interface).
       Set<Class<?>> interfacesChecked = new HashSet<Class<?>>(); 
       ArrayDeque<Class<?>> queue = new ArrayDeque<Class<?>>();
       while (clazz != null) {
@@ -117,9 +119,8 @@ public final class Annotations {
       if (!annotationType.isAnnotation()) {
          throw new IllegalArgumentException(annotationType + " is not an annotation");
       }
-      final Map<String, Object> resolvedAttributes =
-            new HashMap<String, Object>((attributes.size() << 2) / 3, 0.75f);
-      Set<String> keys = new HashSet<String>(attributes.keySet());
+      final Map<String, Object> resolvedAttributes = new HashMap<>((attributes.size() << 2) / 3);
+      Set<String> keys = new HashSet<>(attributes.keySet());
       for (Method m : annotationType.getDeclaredMethods()) {
          if (!keys.remove(m.getName())) {
             Object value = m.getDefaultValue();
@@ -174,7 +175,8 @@ public final class Annotations {
                         throw new UnsupportedOperationException(method.getName());
                      }
                   }
-                  return val;
+                  // arrays are defensively copied
+                  return val.getClass().isArray() ? ArrayUtils.clone(val) : val;
                }
             });
       return ret;
@@ -246,11 +248,13 @@ public final class Annotations {
    
    private static Object getArrayValue(Class<?> arrayType, Type genericArrayType, Object value) {
       if (arrayType.isInstance(value)) {
-         return value;
+         return ArrayUtils.clone(value); // defensive copy
       }
       if (value.getClass().isArray()) {
-         value = ArrayUtils.asList(value);
+         value = ArrayUtils.clone(value); // defensive copy
+         value = ArrayUtils.asList(value); // then wrap in List interface
       }
+      
       if (value instanceof List) {
          Class<?> componentType = arrayType.getComponentType();
          Type genericComponentType = Types.getComponentType(genericArrayType);

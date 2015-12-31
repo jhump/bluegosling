@@ -10,8 +10,14 @@ import java.util.Set;
 
 import javax.lang.model.element.Element;
 
-
+/**
+ * Utility functions for performing a package scan (via reflection over the class path), for
+ * discovering packages and associated classes.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 final class CoreReflectionPackages {
+   /** Lazy holder pattern, for thread-safe initialization of the package scan. */
    private static class ScanResultHolder {
       static final ScanResult SCAN_RESULTS = new PackageScanner().includeAllDefaults().start();
    }

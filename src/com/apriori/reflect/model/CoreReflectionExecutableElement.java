@@ -68,6 +68,8 @@ implements ExecutableElement {
 
    @Override
    public ElementKind getKind() {
+      // NB: Core reflection does not provide access to instance and static initializer blocks, so
+      // the only kinds available are constructor and method.
       return base() instanceof Constructor ? ElementKind.CONSTRUCTOR : ElementKind.METHOD;
    }
 

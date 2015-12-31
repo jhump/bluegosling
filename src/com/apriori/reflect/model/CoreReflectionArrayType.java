@@ -7,9 +7,14 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * An {@link ArrayType} backed by a core reflection {@link AnnotatedArrayType}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionArrayType extends CoreReflectionBaseTypeMirror<AnnotatedArrayType>
 implements ArrayType {
+   
    private final TypeMirror component;
    
    CoreReflectionArrayType(AnnotatedArrayType base) {

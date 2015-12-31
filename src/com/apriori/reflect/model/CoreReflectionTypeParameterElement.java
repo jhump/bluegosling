@@ -20,7 +20,11 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.type.TypeMirror;
 
-
+/**
+ * A {@link TypeParameterElement} that is backed by a core reflection {@link TypeVariable}.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionTypeParameterElement extends CoreReflectionBaseElement<TypeVariable<?>>
 implements TypeParameterElement {
    

@@ -15,18 +15,23 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.type.TypeMirror;
 
-
+/**
+ * A {@link PackageElement} for which no {@link Package} object can be loaded. This basically
+ * represents the package name; it will have no annotations.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionSyntheticPackageElement implements CoreReflectionMarker, PackageElement {
    private final Name qualifiedName;
    private final Name simpleName;
    
    CoreReflectionSyntheticPackageElement(String packageName) {
-      qualifiedName = new CoreReflectionName(packageName);
+      qualifiedName = CoreReflectionName.of(packageName);
       int pos = packageName.lastIndexOf('.');
       if (pos == -1) {
          simpleName = qualifiedName;
       } else {
-         simpleName = new CoreReflectionName(packageName.substring(0, pos));
+         simpleName = CoreReflectionName.of(packageName.substring(0, pos));
       }
    }
 
@@ -91,5 +96,19 @@ class CoreReflectionSyntheticPackageElement implements CoreReflectionMarker, Pac
       return null;
    }
    
-   // TODO: equals, hashCode, toString
+   @Override
+   public boolean equals(Object o) {
+      return o instanceof CoreReflectionSyntheticPackageElement
+            && qualifiedName.equals(((CoreReflectionSyntheticPackageElement) o).qualifiedName);
+   }
+   
+   @Override
+   public int hashCode() {
+      return qualifiedName.hashCode();
+   }
+   
+   @Override
+   public String toString() {
+      return "package " + qualifiedName;
+   }
 }

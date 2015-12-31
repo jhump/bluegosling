@@ -16,6 +16,7 @@ import javax.lang.model.element.AnnotationMirror;
  */
 abstract class CoreReflectionBase<E extends AnnotatedElement>
 implements CoreReflectionMarker, AnnotatedConstruct {
+   
    private final E base;
    
    CoreReflectionBase(E base) {

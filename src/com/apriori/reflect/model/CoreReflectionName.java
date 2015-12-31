@@ -4,10 +4,21 @@ import static java.util.Objects.requireNonNull;
 
 import javax.lang.model.element.Name;
 
-class CoreReflectionName implements Name {
+/**
+ * A {@link Name} that is simply backed by a string.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+class CoreReflectionName implements Name { 
+   static final Name EMPTY = new CoreReflectionName("");
+   
+   static Name of(String s) {
+      return s.isEmpty() ? EMPTY : new CoreReflectionName(s);
+   }
+   
    private final String s;
    
-   CoreReflectionName(String s) {
+   private CoreReflectionName(String s) {
       this.s = requireNonNull(s);
    }
 
@@ -33,11 +44,8 @@ class CoreReflectionName implements Name {
    
    @Override
    public boolean equals(Object o) {
-      if (o instanceof CoreReflectionName) {
-         CoreReflectionName other = (CoreReflectionName) o;
-         return s.equals(other.s);
-      }
-      return false;
+      return o instanceof CoreReflectionName
+            && s.equals(((CoreReflectionName) o).s);
    }
    
    @Override

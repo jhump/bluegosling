@@ -150,7 +150,7 @@ public class AnnotationMirrors {
    private final Elements elementUtils;
    private final Types typeUtils;
    
-   private AnnotationMirrors(Elements elementUtils, Types typeUtils) {
+   AnnotationMirrors(Elements elementUtils, Types typeUtils) {
       this.elementUtils = elementUtils;
       this.typeUtils = typeUtils;
    }

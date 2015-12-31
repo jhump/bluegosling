@@ -790,22 +790,30 @@ public final class Types {
    /**
     * Determines if one type is assignable to another. This is true when the RHS is the same type or
     * a sub-type of the LHS (co-variance), but also true when the RHS is compatible with the LHS
-    * after possible assigmnment conversions. The possible conversions include Widening Primitive
-    * Conversions (JLS 5.1.3), Boxing and Unboxing Conversions (JLS 5.1.7 and 5.1.8), and Unchecked
-    * Conversions (JLS 5.1.9).
+    * after possible assignment conversions. The possible conversions include <em>Widening Primitive
+    * Conversions</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.3">JLS
+    * 5.1.3</a>), <em>Boxing and Unboxing Conversions</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.7">JLS
+    * 5.1.7</a> and <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.8">
+    * 5.1.8</a>), and <em>Unchecked Conversions</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.9">JLS
+    * 5.1.9</a>).
     * 
     * <p>There is also a {@linkplain #isAssignableStrict stricter version}, that behaves more like
-    * {@link Class#isAssignableFrom(Class) to.isAssignableFrom(from)} but supporting generic types
-    * instead of only raw types.
+    * {@link Class#isAssignableFrom(Class)}, but supporting generic types instead of only raw types.
     *
     * @param to the LHS of assignment
     * @param from the RHS of assignment
     * @return true if the assignment is allowed
+    * 
+    * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.2">
+    *       JLS 5.2: Assignment Contexts</a>
     */
    public static boolean isAssignable(Type to, Type from) {
       // This helper will test identity conversions, widening reference conversions, and unchecked
       // conversions.
-      if (isAssignable(to, from, true)) {
+      if (isAssignableReference(to, from, true)) {
          return true;
       }
       // If that fails, we still need to try widening primitive conversion and boxing/unboxing
@@ -816,7 +824,7 @@ public final class Types {
          if (to instanceof ParameterizedType && fromClass.isPrimitive()) {
             // try a boxing conversion.
             Class<?> boxedFromClass = box(fromClass);
-            return boxedFromClass != fromClass && isAssignable(to, boxedFromClass, true); 
+            return boxedFromClass != fromClass && isAssignableReference(to, boxedFromClass, true); 
          } else if (to instanceof Class) {
             Class<?> toClass = (Class<?>) to;
             if (fromClass.isPrimitive()) {
@@ -839,14 +847,24 @@ public final class Types {
     * Determines if one type is assignable to another, with restrictions. This is true when the RHS
     * is the same type or a sub-type of the LHS (co-variance).
     * 
-    * <p>This is effectively the same as {@link Class#isAssignableFrom(Class)
-    * to.isAssignableFrom(from)}, but supports generic types instead of only raw types. To that end,
-    * it returns true if {@code from} can be assigned to {@code to} using either Identity Conversion
-    * (JLS 5.1.1) or Widening Reference Conversion (JLS 5.1.4). Of particular note, this method does
-    * <em>not</em> check for assignability via Widening Primitive Conversion (JLS 5.1.3), Boxing and
-    * Unboxing Conversions (JLS 5.1.7 and 5.1.8), or Unchecked Conversions (JLS 5.1.9). To instead
-    * test assignment compatibility using all of these (e.g. Assignment Conversion, JLS 5.2), see
-    * the {@linkplain #isAssignable non-strict form}.
+    * <p>This is effectively the same as {@link Class#isAssignableFrom(Class)} but supports generic
+    * types instead of only raw types. To that end, it returns true if {@code from} can be assigned
+    * to {@code to} using either <em>Identity Conversion</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.1">JLS
+    * 5.1.1</a>) or <em>Widening Reference Conversion</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.4">JLS
+    * 5.1.4</a>).
+    * 
+    * <p>Of particular note, this method does <strong>not</strong> check for assignability via
+    * <em>Widening Primitive Conversion</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.3">JLS
+    * 5.1.3</a>), <em>Boxing and Unboxing Conversions</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.7">JLS
+    * 5.1.7</a> and <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.8">
+    * 5.1.8</a>), or <em>Unchecked Conversions</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.9">JLS
+    * 5.1.9</a>). To instead test assignment compatibility using all of these, see the
+    * {@linkplain #isAssignable non-strict form}.
     * 
     * <p>It follows that, for an assignment that would require an unchecked cast, this function
     * returns false, as in this example:
@@ -871,10 +889,21 @@ public final class Types {
     * @return true if the assignment is allowed
     */
    public static boolean isAssignableStrict(Type to, Type from) {
-      return isAssignable(to, from, false);
+      return isAssignableReference(to, from, false);
    }
    
-   private static boolean isAssignable(Type to, Type from, boolean allowUncheckedConversion) {
+   /**
+    * A helper method that tests for reference type assignability, optionally including unchecked
+    * conversions.
+    *
+    * @param to the LHS of assignment
+    * @param from the RHS of assignment
+    * @param allowUncheckedConversion if true then unchecked conversions are considered when
+    *       decising if the types are assignable
+    * @return true if the assignment is allowed
+    */
+   private static boolean isAssignableReference(Type to, Type from,
+         boolean allowUncheckedConversion) {
       if (requireNonNull(to) == requireNonNull(from)) {
          return true;
       } else if (to instanceof Class && from instanceof Class) {
@@ -886,7 +915,7 @@ public final class Types {
                ? ((WildcardType) from).getUpperBounds()
                : ((TypeVariable<?>) from).getBounds();
          for (Type bound : bounds) {
-            if (isAssignable(to, bound, allowUncheckedConversion)) {
+            if (isAssignableReference(to, bound, allowUncheckedConversion)) {
                return true;
             }
          }
@@ -899,7 +928,7 @@ public final class Types {
                return true;
             }
             GenericArrayType fromArrayType = (GenericArrayType) from;
-            return toClass.isArray() && isAssignable(toClass.getComponentType(),
+            return toClass.isArray() && isAssignableReference(toClass.getComponentType(),
                   fromArrayType.getGenericComponentType(), allowUncheckedConversion);
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
@@ -949,12 +978,12 @@ public final class Types {
             if (toArg instanceof WildcardType) {
                WildcardType wildcardArg = (WildcardType) toArg;
                for (Type upperBound : wildcardArg.getUpperBounds()) {
-                  if (!isAssignable(upperBound, fromArg, allowUncheckedConversion)) {
+                  if (!isAssignableReference(upperBound, fromArg, allowUncheckedConversion)) {
                      return false;
                   }
                }
                for (Type lowerBound : wildcardArg.getLowerBounds()) {
-                  if (!isAssignable(fromArg, lowerBound, allowUncheckedConversion)) {
+                  if (!isAssignableReference(fromArg, lowerBound, allowUncheckedConversion)) {
                      return false;
                   }
                }
@@ -967,10 +996,11 @@ public final class Types {
          GenericArrayType toArrayType = (GenericArrayType) to;
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
-            return fromClass.isArray() && isAssignable(toArrayType.getGenericComponentType(),
-                  fromClass.getComponentType(), allowUncheckedConversion);
+            return fromClass.isArray()
+                  && isAssignableReference(toArrayType.getGenericComponentType(),
+                        fromClass.getComponentType(), allowUncheckedConversion);
          } else if (from instanceof GenericArrayType) {
-            return isAssignable(toArrayType.getGenericComponentType(),
+            return isAssignableReference(toArrayType.getGenericComponentType(),
                   ((GenericArrayType) from).getGenericComponentType(), allowUncheckedConversion);
          } else {
             return false;
@@ -985,7 +1015,7 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignable(bound, from, allowUncheckedConversion)) {
+            if (!isAssignableReference(bound, from, allowUncheckedConversion)) {
                return false;
             }
          }
@@ -1001,11 +1031,29 @@ public final class Types {
       }
    }
    
-   // TODO: doc!!
-   
+   /**
+    * A map of primitive types to their direct supertype for purposes of primitive widening
+    * conversions. For example, the super-type for {@code byte} is {@code short}, for {@code int}
+    * is {@code long}, and for {@code float} is {@code double}.
+    * 
+    * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">
+    *       JLS 4.10.1: Subtyping among Primitive Types</a>
+    */
    private static final Map<Class<?>, Class<?>> PRIMITIVE_DIRECT_SUPERTYPES;
+   
+   /**
+    * A map of primitive types to all their primitive subtypes. If a primitive type has no
+    * sub-types (for example {@code byte} and {@code boolean}) then it will have no key in this
+    * map.
+    * 
+    * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">
+    *       JLS 4.10.1: Subtyping among Primitive Types</a>
+    */
    private static final Map<Class<?>, Set<Class<?>>> PRIMITIVE_SUBTYPES;
+   
    static {
+      // NB: map and set capacities below are specified so that the underlying hash tables will
+      // fit all elements without needing to incur an internal resize (using default load factor)
       Map<Class<?>, Class<?>> primitiveSuperTypes = new HashMap<>(8);
       primitiveSuperTypes.put(byte.class, short.class);
       primitiveSuperTypes.put(short.class, int.class);
@@ -1048,6 +1096,7 @@ public final class Types {
       PRIMITIVE_SUBTYPES = Collections.unmodifiableMap(primitiveSubTypes);
    }
 
+   // TODO: javadoc
    // JLS 4.10
    public static boolean isSubtype(Type aType, Type possibleSubtype) {
       if (isSubtypeStrict(aType, possibleSubtype)) {
@@ -1064,12 +1113,14 @@ public final class Types {
       return subTypes != null && subTypes.contains(possibleSubclass);
    }
    
+   // TODO: javadoc
    // JLS 4.10.2, 4.10.3 (no sub-typing for primitives)
    public static boolean isSubtypeStrict(Type aType, Type possibleSubtype) {
       return isAssignableStrict(aType, possibleSubtype)
             && !isSameType(aType, possibleSubtype);
    }
 
+   // TODO: javadoc
    // JLS 5.1.1: like equals() except that two equal wildcard types are not considered the same
    public static boolean isSameType(Type a, Type b) {
       if (requireNonNull(a) == requireNonNull(b)) {
@@ -1134,6 +1185,7 @@ public final class Types {
       }
    }
    
+   // TODO: javadoc
    // JLS 4.10
    public static Type[] getDirectSupertypes(Type type) {
       if (type instanceof Class) {

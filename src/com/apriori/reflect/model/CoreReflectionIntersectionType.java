@@ -14,7 +14,11 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVisitor;
 
-
+/**
+ * An {@link IntersectionType} that is backed by multiple core reflection {@link AnnotatedType}s.
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class CoreReflectionIntersectionType implements CoreReflectionMarker, IntersectionType {
 
    private final List<TypeMirror> bounds;
