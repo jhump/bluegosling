@@ -38,7 +38,7 @@ implements ExecutableElement {
    
    @Override
    public TypeMirror asType() {
-      return new CoreReflectionExecutableType(base());
+      return new CoreReflectionExecutableType(ExecutableSignature.of(base()));
    }
 
    @Override

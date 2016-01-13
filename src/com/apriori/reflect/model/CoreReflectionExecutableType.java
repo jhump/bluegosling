@@ -12,18 +12,19 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 
 /**
- * An {@link ExecutableType} backed by a core reflection {@link Executable}. This represents either
- * a method or a constructor.
+ * An {@link ExecutableType} backed by an {@link ExecutableSignature}. The signatures themselves are
+ * typically derived from a core reflection {@link Executable}, which represents either a method or
+ * a constructor.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-class CoreReflectionExecutableType extends CoreReflectionBase<Executable>
+class CoreReflectionExecutableType extends CoreReflectionBase<ExecutableSignature>
 implements ExecutableType {
-   
-   CoreReflectionExecutableType(Executable executable) {
+
+   CoreReflectionExecutableType(ExecutableSignature executable) {
       super(executable);
    }
-   
+
    @Override
    public TypeKind getKind() {
       return TypeKind.EXECUTABLE;
@@ -76,6 +77,6 @@ implements ExecutableType {
    
    @Override
    public String toString() {
-      return base().toGenericString();
+      return base().toString();
    }
 }

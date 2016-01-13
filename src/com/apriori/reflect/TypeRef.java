@@ -2,6 +2,7 @@ package com.apriori.reflect;
 
 import static java.util.Objects.requireNonNull;
 
+import com.apriori.collections.TransformingCollection;
 import com.apriori.collections.TransformingList;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +29,10 @@ import java.util.stream.Collectors;
  * methods to do interesting things related to generic types. In a way, it takes the static utility
  * methods from {@link Types} and incorporates them into a type-safe and object-oriented API.
  * 
- * <p>This class implements {@link AnnotatedElement}, but the annotations do not represent
- * annotations on type uses. Rather, they represent annotations on the declared types that a given
- * {@link TypeRef} represents (see {@link Types#getAnnotations(Type)}). For annotations on type
- * use, you instead want {@link AnnotatedTypeRef}.
+ * <p>This class implements {@link AnnotatedElement}, but the annotations <em>do not represent
+ * annotations on type uses</em>. Rather, they represent annotations on the declared types that a
+ * given {@link TypeRef} represents (see {@link Types#getAnnotations(Type)}). For annotations on
+ * type use, you instead want {@link AnnotatedTypeRef}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
@@ -122,6 +124,8 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     */
    // Constraints on type variables mean this should be safe. Limitations in Java generics prevent
    // this from being possible, without unchecked cast, as a non-static method
+   // TODO: should this return TypeRef<? extends S> instead since parameterized type is a subtype
+   // of the raw type represented by given class token?
    @SuppressWarnings("unchecked")
    public static <S, T extends S> TypeRef<S> resolveSuperTypeRef(TypeRef<T> subType,
          Class<S> superType) {
@@ -232,46 +236,51 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    /**
     * Returns true if this type token is resolved, which means that the actual type is known.
     * Resolved types have an underlying type that is a class, a generic array type, or a
-    * parameterized type. Other types (wildcard types and type variables) are unresolved.
+    * parameterized type. Other types (wildcard types and type variables) are unresolved. A raw type
+    * use of a parameterized type is considered unresolved.
     *
     * @return true if this type token is resolved or false otherwise
     */
    public boolean isResolved() {
-      return type instanceof Class || type instanceof GenericArrayType
+      if (type instanceof Class) {
+         return ((Class<?>) type).getTypeParameters().length == 0;
+      }
+      return type instanceof GenericArrayType
             || type instanceof ParameterizedType;
    }
 
    /**
     * Returns true if this type token is fully resolved, which means that this type {@linkplain
-    * #isFullyResolved() is resolved} and so are the values for all type arguments.
+    * #isResolved() is resolved} and so are the values for all type arguments (if it is a
+    * parameterized type) or for the component type (if it is an array type). A raw type use of a
+    * parameterized type is considered unresolved.
     * 
     * @return true if this type token is fully resolved or false otherwise
     */
    public boolean isFullyResolved() {
+      return isFullyResolved(type);
+   }
+   
+   private static boolean isFullyResolved(Type type) {
       if (type instanceof Class) {
          return ((Class<?>) type).getTypeParameters().length == 0;
       } else if (type instanceof ParameterizedType) {
-         for (Type arg : ((ParameterizedType) type).getActualTypeArguments()) {
-            TypeRef<?> argRef = forTypeInternal(arg);
-            if (!argRef.isFullyResolved()) {
+         ParameterizedType pType = (ParameterizedType) type;
+         Type owner = pType.getOwnerType();
+         if (owner != null && !isFullyResolved(owner)) {
+            return false;
+         }
+         for (Type arg : pType.getActualTypeArguments()) {
+            if (!isFullyResolved(arg)) {
                return false;
             }
          }
+         return true;
       } else if (type instanceof GenericArrayType) {
-         return getComponentTypeRef().isFullyResolved();
+         return isFullyResolved(((GenericArrayType) type).getGenericComponentType());
       } else {
          return false;
       }
-      if (!isResolved()) {
-         return false;
-      }
-      for (Type arg : Types.getActualTypeArguments(type)) {
-         TypeRef<?> argRef = forTypeInternal(arg);
-         if (!argRef.isFullyResolved()) {
-            return false;
-         }
-      }
-      return true;
    }
 
    /**
@@ -501,8 +510,13 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @param ref a {@code Type Ref}
     * @return true if this represents a sub-type of {@code ref}
     */
-   public boolean isSubTypeOf(TypeRef<?> ref) {
-      return Types.isAssignableStrict(ref.type, this.type);
+   public boolean isSubtypeOf(TypeRef<?> ref) {
+      return Types.isAssignable(ref.type, this.type);
+   }
+
+   // TODO: doc
+   public boolean isSubtypeStrictOf(TypeRef<?> ref) {
+      return Types.isSubtypeStrict(ref.type, this.type);
    }
 
    /**
@@ -516,8 +530,28 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @return true if this represents a super type of {@code ref}
     * @see Types#isAssignableStrict(Type, Type)
     */
-   public boolean isAssignableFrom(TypeRef<?> ref) {
+   public boolean isAssignableStrictFrom(TypeRef<?> ref) {
       return Types.isAssignableStrict(this.type, ref.type);
+   }
+
+   // TODO: docs
+
+   public boolean isAssignableFrom(TypeRef<?> ref) {
+      return Types.isAssignable(this.type, ref.type);
+   }
+
+   public Collection<TypeRef<? super T>> getDirectSupertypeTypeRefs() {
+      Type[] supertypes = Types.getDirectSupertypes(this.type);
+      return new TransformingCollection.ReadOnly<>(Arrays.asList(supertypes),
+            t -> {
+               @SuppressWarnings("unchecked") // all of these types are supertypes of T
+               TypeRef<? super T> tr = (TypeRef<? super T>) TypeRef.forType(t);
+               return tr;
+            });
+   }
+   
+   public boolean isFunctionalInterface() {
+      return Types.isFunctionalInterface(type);
    }
 
    /**

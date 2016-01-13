@@ -1,7 +1,6 @@
 package com.apriori.reflect.model;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.AnnotatedTypeVariable;
 import java.lang.reflect.AnnotatedWildcardType;
 import java.lang.reflect.Array;
@@ -36,6 +35,8 @@ implements TypeVariable {
    
    private final CapturedTypeParameterElement element;
    private final AnnotatedWildcardType capturedWildcard;
+   private final TypeMirror extendsBound;
+   private final TypeMirror superBound;
    
    CoreReflectionCapturedType(AnnotatedTypeVariable captureVariable) {
       super(captureVariable);
@@ -43,6 +44,10 @@ implements TypeVariable {
             (AnnotatedCapturedType.CapturedTypeVariable) captureVariable.getType();
       this.capturedWildcard = typeVar.capturedWildcard();
       this.element = new CapturedTypeParameterElement(this, captureVariable);
+      this.extendsBound = CoreReflectionTypes.toTypeMirrorOrObject
+            (capturedWildcard.getAnnotatedUpperBounds());
+      this.superBound = CoreReflectionTypes.toTypeMirrorOrNull(
+            capturedWildcard.getAnnotatedUpperBounds()); 
    }
    
    @Override
@@ -62,28 +67,12 @@ implements TypeVariable {
 
    @Override
    public TypeMirror getUpperBound() {
-      AnnotatedType[] upperBound = capturedWildcard.getAnnotatedUpperBounds();
-      if (upperBound.length > 1) {
-         return new CoreReflectionIntersectionType(upperBound);
-      } else if (upperBound.length == 1) {
-         return CoreReflectionTypes.INSTANCE.getTypeMirror(upperBound[0]);
-      } else {
-         // this probably isn't possible: well-behaved wildcards should return Object.class...
-         return CoreReflectionTypes.INSTANCE.getTypeMirror(Object.class);
-      }
+      return extendsBound;
    }
 
    @Override
    public TypeMirror getLowerBound() {
-      AnnotatedType[] lowerBound = capturedWildcard.getAnnotatedLowerBounds();
-      if (lowerBound.length > 1) {
-         // Maybe assert that this never happens? (It really shouldn't be possible...)
-         return new CoreReflectionIntersectionType(lowerBound);
-      } else if (lowerBound.length == 1) {
-         return CoreReflectionTypes.INSTANCE.getTypeMirror(lowerBound[0]);
-      } else {
-         return CoreReflectionNullType.INSTANCE;
-      }
+      return superBound;
    }
    
    /**
@@ -237,7 +226,7 @@ implements TypeVariable {
 
       @Override
       public ElementKind getKind() {
-         return ElementKind.OTHER;
+         return ElementKind.PACKAGE;
       }
 
       @Override

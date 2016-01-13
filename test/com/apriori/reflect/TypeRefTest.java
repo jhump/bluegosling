@@ -692,8 +692,8 @@ public class TypeRefTest extends TestCase {
    }
 
    /**
-    * Tests that {@link TypeRef#getSuperclassTypeRef()} returns {@code null} for interfaces, {@code Object},
-    * primitives, and {@code void}.
+    * Tests that {@link TypeRef#getSuperclassTypeRef()} returns {@code null} for interfaces,
+    * {@code Object}, primitives, and {@code void}.
     */
    public void testSuperTypeRefNull() {
       // root of hierarchy
@@ -717,34 +717,34 @@ public class TypeRefTest extends TestCase {
       TypeRef<ArrayList<Map<String, String>>> ref =
             new TypeRef<ArrayList<Map<String, String>>>() {};
             
-      assertTrue(ref.isSubTypeOf(ref));
+      assertTrue(ref.isSubtypeOf(ref));
 
       TypeRef<Serializable> subRef1 = new TypeRef<Serializable>() {};
       TypeRef<List<Map<String, String>>> subRef2 = new TypeRef<List<Map<String, String>>>() {};
       TypeRef<ArrayList<Map<String, String>>> subRef3 =
             new TypeRef<ArrayList<Map<String, String>>>() {};
       TypeRef<List<?>> subRef4 = new TypeRef<List<?>>() {};
-      TypeRef<ArrayList> subRef5 = new TypeRef<ArrayList>() {};
+      TypeRef<ArrayList<?>> subRef5 = new TypeRef<ArrayList<?>>() {};
       
-      assertTrue(ref.isSubTypeOf(subRef1));
-      assertTrue(ref.isSubTypeOf(subRef2));
-      assertTrue(ref.isSubTypeOf(subRef3));
-      assertTrue(ref.isSubTypeOf(subRef4));
-      assertTrue(ref.isSubTypeOf(subRef5));
+      assertTrue(ref.isSubtypeOf(subRef1));
+      assertTrue(ref.isSubtypeOf(subRef2));
+      assertTrue(ref.isSubtypeOf(subRef3));
+      assertTrue(ref.isSubtypeOf(subRef4));
+      assertTrue(ref.isSubtypeOf(subRef5));
       
       TypeRef<List<Map<?, String>>> notSubRef1 = new TypeRef<List<Map<?, String>>>() {};
       TypeRef<List<Map<String, Object>>> notSubRef2 = new TypeRef<List<Map<String, Object>>>() {};
       TypeRef<Set<?>> notSubRef3 = new TypeRef<Set<?>>() {};
       TypeRef<Double> notSubRef4 = new TypeRef<Double>() {};
 
-      assertFalse(ref.isSubTypeOf(notSubRef1));
-      assertFalse(ref.isSubTypeOf(notSubRef2));
-      assertFalse(ref.isSubTypeOf(notSubRef3));
-      assertFalse(ref.isSubTypeOf(notSubRef4));
+      assertFalse(ref.isSubtypeOf(notSubRef1));
+      assertFalse(ref.isSubtypeOf(notSubRef2));
+      assertFalse(ref.isSubtypeOf(notSubRef3));
+      assertFalse(ref.isSubtypeOf(notSubRef4));
       
       // sneak one more useful one in here:
       abstract class StringList implements List<String> {}
-      assertTrue(new TypeRef<StringList>() {}.isSubTypeOf(new TypeRef<List<String>>() {}));
+      assertTrue(new TypeRef<StringList>() {}.isSubtypeOf(new TypeRef<List<String>>() {}));
    }
 
    /**
@@ -755,13 +755,13 @@ public class TypeRefTest extends TestCase {
       TypeRef<Object[]> ref2 = new TypeRef<Object[]>() {};
       TypeRef<Collection<String>[]> ref3 = new TypeRef<Collection<String>[]>() {};
       
-      assertTrue(ref2.isSubTypeOf(ref1));
-      assertTrue(ref3.isSubTypeOf(ref1));
-      assertTrue(ref3.isSubTypeOf(ref2));
+      assertTrue(ref2.isSubtypeOf(ref1));
+      assertTrue(ref3.isSubtypeOf(ref1));
+      assertTrue(ref3.isSubtypeOf(ref2));
 
-      assertFalse(ref1.isSubTypeOf(ref2));
-      assertFalse(ref1.isSubTypeOf(ref3));
-      assertFalse(ref2.isSubTypeOf(ref3));
+      assertFalse(ref1.isSubtypeOf(ref2));
+      assertFalse(ref1.isSubtypeOf(ref3));
+      assertFalse(ref2.isSubtypeOf(ref3));
    }
       
    /**
@@ -772,7 +772,7 @@ public class TypeRefTest extends TestCase {
             new TypeRef<ArrayList<? extends Comparable<? extends Number>>>() {};
             
       try {
-         assertFalse(ref.isSubTypeOf(null));
+         assertFalse(ref.isSubtypeOf(null));
          fail();
       } catch (NullPointerException expected) {
       }

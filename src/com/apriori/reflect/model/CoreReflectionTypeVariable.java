@@ -1,6 +1,5 @@
 package com.apriori.reflect.model;
 
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.AnnotatedTypeVariable;
 
 import javax.lang.model.element.Element;
@@ -19,18 +18,27 @@ import javax.lang.model.type.TypeVisitor;
 class CoreReflectionTypeVariable extends CoreReflectionBaseTypeMirror<AnnotatedTypeVariable>
 implements TypeVariable {
    private final CoreReflectionTypeParameterElement element;
+   private final TypeMirror bound;
    
    CoreReflectionTypeVariable(AnnotatedTypeVariable base) {
       super(base);
-      assert !(base.getType() instanceof AnnotatedCapturedType.CapturedTypeVariable);
-      this.element = new CoreReflectionTypeParameterElement(this,
-            (java.lang.reflect.TypeVariable<?>) base.getType());
+      java.lang.reflect.TypeVariable<?> typeVar =
+            (java.lang.reflect.TypeVariable<?>) base.getType();
+      assert !(typeVar instanceof AnnotatedCapturedType.CapturedTypeVariable);
+      
+      this.element = new CoreReflectionTypeParameterElement(this, typeVar);
+      this.bound = CoreReflectionTypes.toTypeMirrorOrObject(typeVar.getAnnotatedBounds());
    }
 
    CoreReflectionTypeVariable(CoreReflectionTypeParameterElement element,
          AnnotatedTypeVariable base) {
       super(base);
       this.element = element;
+
+      java.lang.reflect.TypeVariable<?> typeVar =
+            (java.lang.reflect.TypeVariable<?>) base.getType();
+      assert !(typeVar instanceof AnnotatedCapturedType.CapturedTypeVariable);
+      this.bound = CoreReflectionTypes.toTypeMirrorOrObject(typeVar.getAnnotatedBounds());
    }
 
    @Override
@@ -50,15 +58,7 @@ implements TypeVariable {
 
    @Override
    public TypeMirror getUpperBound() {
-      java.lang.reflect.TypeVariable<?> typeVar =
-            (java.lang.reflect.TypeVariable<?>) base().getType();
-      AnnotatedType[] bounds = typeVar.getAnnotatedBounds();
-      if (bounds.length > 1) {
-         return new CoreReflectionIntersectionType(bounds);
-      } else {
-         assert bounds.length == 1;
-         return CoreReflectionTypes.INSTANCE.getTypeMirror(bounds[0]);
-      }
+      return bound;
    }
 
    @Override

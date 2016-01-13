@@ -1,7 +1,5 @@
 package com.apriori.reflect.model;
 
-import com.apriori.reflect.AnnotatedTypes;
-
 import java.lang.reflect.AnnotatedArrayType;
 import java.lang.reflect.AnnotatedParameterizedType;
 import java.lang.reflect.AnnotatedType;
@@ -29,6 +27,13 @@ import javax.lang.model.type.WildcardType;
  * <p>This interface provides factory methods to return instances backed by an
  * {@linkplain #fromProcessingEnvironment annotation processing environment} or by
  * {@linkplain #fromCoreReflection core reflection}.
+ * 
+ * <p><strong>Note:</strong> An instance backed by an annotation processing environment will <em>not
+ * retain annotations</em> when converting {@link AnnotatedType} objects into {@link TypeMirror}s.
+ * So, in such an environment, {@link #getTypeMirror(AnnotatedType)} and
+ * {@link #getTypeMirror(Type)} will return the same type mirror. This is due to a limitation in the 
+ * underlying {@link javax.lang.model.util.Types} API, which provides no means to manufacture type
+ * mirror instances that have annotations.
  *
  * @see #fromProcessingEnvironment(ProcessingEnvironment)
  * @see #fromCoreReflection()
@@ -50,9 +55,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @param type a type
     * @return a type mirror that represents the same type as given
     */
-   default TypeMirror getTypeMirror(Type type) {
-      return getTypeMirror(AnnotatedTypes.newAnnotatedType(type));
-   }
+   TypeMirror getTypeMirror(Type type);
 
    /**
     * Returns a type mirror that represents the same type as the given reference type. If the given
@@ -62,12 +65,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @return a type mirror that represents the same type as the given class token
     * @throws IllegalArgumentException if the given class token does not represent a reference type
     */
-   default ReferenceType getReferenceTypeMirror(Class<?> clazz) {
-      if (clazz.isPrimitive()) {
-         throw new IllegalArgumentException("Given class is a primitive: " + clazz.getName());
-      }
-      return (ReferenceType) getTypeMirror(AnnotatedTypes.newAnnotatedType(clazz));
-   }
+   ReferenceType getReferenceTypeMirror(Class<?> clazz);
 
    /**
     * Returns a type mirror that represents the same type as the given declared type. If the given
@@ -77,14 +75,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @return a type mirror that represents the same type as the given class token
     * @throws IllegalArgumentException if the given class token does not represent a declared type
     */
-   default DeclaredType getDeclaredTypeMirror(Class<?> clazz) {
-      if (clazz.isPrimitive()) {
-         throw new IllegalArgumentException("Given class is a primitive: " + clazz.getName());
-      } else if (clazz.isArray()) {
-         throw new IllegalArgumentException("Given class is an array: " + clazz.getName());
-      }
-      return (DeclaredType) getTypeMirror(AnnotatedTypes.newAnnotatedType(clazz));
-   }
+   DeclaredType getDeclaredTypeMirror(Class<?> clazz);
    
    /**
     * Returns a type mirror that represents the same type as the given primitive type. If the given
@@ -94,12 +85,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @return a type mirror that represents the same type as the given class token
     * @throws IllegalArgumentException if the given class token does not represent a primitive type
     */
-   default PrimitiveType getPrimitiveTypeMirror(Class<?> clazz) {
-      if (!clazz.isPrimitive()) {
-         throw new IllegalArgumentException("Given class is not a primitive: " + clazz.getName());
-      }
-      return (PrimitiveType) getTypeMirror(AnnotatedTypes.newAnnotatedType(clazz));
-   }
+   PrimitiveType getPrimitiveTypeMirror(Class<?> clazz);
    
    /**
     * Returns a type mirror that represents the same type as the given array type. If the given
@@ -109,12 +95,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @return a type mirror that represents the same type as the given class token
     * @throws IllegalArgumentException if the given class token does not represent an array type
     */
-   default ArrayType getArrayTypeMirror(Class<?> clazz) {
-      if (!clazz.isArray()) {
-         throw new IllegalArgumentException("Given class is not an array: " + clazz.getName());
-      }
-      return getArrayTypeMirror((AnnotatedArrayType) AnnotatedTypes.newAnnotatedType(clazz));
-   }
+   ArrayType getArrayTypeMirror(Class<?> clazz);
 
    /**
     * Returns an array type mirror that represents the same type and has the same annotations as
@@ -131,9 +112,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @param arrayType an array type
     * @return a type mirror that represents the same type as given
     */
-   default ArrayType getArrayTypeMirror(GenericArrayType arrayType) {
-      return getArrayTypeMirror(AnnotatedTypes.newAnnotatedArrayType(arrayType));
-   }
+   ArrayType getArrayTypeMirror(GenericArrayType arrayType);
    
    /**
     * Returns a declared type mirror that represents the same type and has the same annotations as
@@ -150,10 +129,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @param parameterizedType a parameterized type
     * @return a type mirror that represents the same type as given
     */
-   default DeclaredType getParameterizedTypeMirror(ParameterizedType parameterizedType) {
-      return getParameterizedTypeMirror(
-            AnnotatedTypes.newAnnotatedParameterizedType(parameterizedType));
-   }
+   DeclaredType getParameterizedTypeMirror(ParameterizedType parameterizedType);
    
    /**
     * Returns a wildcard type mirror that represents the same type and has the same annotations as
@@ -170,9 +146,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @param wildcardType a wildcard type
     * @return a type mirror that represents the same type as given
     */
-   default WildcardType getWildcardTypeMirror(java.lang.reflect.WildcardType wildcardType) {
-      return getWildcardTypeMirror(AnnotatedTypes.newAnnotatedWildcardType(wildcardType)); 
-   }
+   WildcardType getWildcardTypeMirror(java.lang.reflect.WildcardType wildcardType);
    
    /**
     * Returns a type variable mirror that represents the same type and has the same annotations as
@@ -189,9 +163,7 @@ public interface Types extends javax.lang.model.util.Types {
     * @param typeVar a type variable
     * @return a type mirror that represents the same type as given
     */
-   default TypeVariable getTypeVariableMirror(java.lang.reflect.TypeVariable<?> typeVar) {
-      return getTypeVariableMirror(AnnotatedTypes.newAnnotatedTypeVariable(typeVar));
-   }
+   TypeVariable getTypeVariableMirror(java.lang.reflect.TypeVariable<?> typeVar);
 
    /**
     * Returns a {@link Types} utility class that is backed by an annotation processing

@@ -91,7 +91,7 @@ public interface TypeAnnotationChecker {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class Builder {
+   class Builder {
       private static final Method[] EMPTY_METHODS = new Method[0];
       
       /**

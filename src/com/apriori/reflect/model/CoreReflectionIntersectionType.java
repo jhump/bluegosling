@@ -22,9 +22,9 @@ import javax.lang.model.type.TypeVisitor;
 class CoreReflectionIntersectionType implements CoreReflectionMarker, IntersectionType {
 
    private final List<TypeMirror> bounds;
-   
+
    CoreReflectionIntersectionType(AnnotatedType[] bounds) {
-      List<TypeMirror> list = new ArrayList<>();
+      List<TypeMirror> list = new ArrayList<>(bounds.length);
       for (AnnotatedType at : bounds) {
          list.add(CoreReflectionTypes.INSTANCE.getTypeMirror(at));
       }

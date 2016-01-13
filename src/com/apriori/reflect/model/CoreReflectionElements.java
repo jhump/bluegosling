@@ -232,7 +232,6 @@ enum CoreReflectionElements implements Elements {
    @Override
    public void printElements(Writer w, Element... elements) {
       // TODO: implement me
-      
    }
 
    @Override
@@ -242,8 +241,8 @@ enum CoreReflectionElements implements Elements {
    
    @Override
    public boolean isFunctionalInterface(TypeElement type) {
-      // TODO: implement me
-      return false;
+      Class<?> clazz = ((CoreReflectionTypeElement) type).base();
+      return com.apriori.reflect.Types.isFunctionalInterface(clazz);
    }
 
    @Override

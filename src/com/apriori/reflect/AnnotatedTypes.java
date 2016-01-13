@@ -47,8 +47,9 @@ public final class AnnotatedTypes {
    static final AnnotatedType OBJECT = newAnnotatedType(Object.class);
    static final AnnotatedType EMPTY_TYPES[] = new AnnotatedType[0];
    private static final AnnotatedTypeVariable EMPTY_TYPE_VARIABLES[] = new AnnotatedTypeVariable[0];
-   private static final Class<?> ARRAY_INTERFACES[] =
-         new Class<?>[] { Cloneable.class, Serializable.class };
+   private static final AnnotatedType ARRAY_INTERFACES[] = new AnnotatedType[] {
+      newAnnotatedType(Cloneable.class), newAnnotatedType(Serializable.class)
+   };
    private static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
 
    private AnnotatedTypes() {}
@@ -80,6 +81,10 @@ public final class AnnotatedTypes {
       // type is not an array type
       return null;
    }
+   
+   public static AnnotatedType getErasedType(AnnotatedType type) {
+      return newAnnotatedType(Types.getRawType(type.getType()), type.getDeclaredAnnotations());
+   }
 
    /**
     * Returns the generic superclass of the given type. If the given type is one of the eight
@@ -87,8 +92,9 @@ public final class AnnotatedTypes {
     * {@code null} is returned. If the given type is an array type then {@code Object} is the
     * returned superclass.
     * 
-    * <p>If the given type is a wildcard or type variable (and is not an interface) then its first
-    * upper bound is its superclass.
+    * <p>If the given type is a wildcard or type variable then its first upper bound, if not an
+    * interface, is its superclass. If the first upper bound is an interface then, like other
+    * interface types, {@code null} is returned.
     *
     * @param type a generic type
     * @return the superclass of the given type
@@ -169,6 +175,27 @@ public final class AnnotatedTypes {
 //      }
    }
 
+   // TODO: javadoc
+   // JLS 4.10
+   public static AnnotatedType[] getAnnotatedDirectSupertypes(AnnotatedType type) {
+      // TODO: implement me!
+      return null;
+   }
+
+   // TODO: javadoc
+   // JLS 4.10.4
+   public static AnnotatedType[] getAnnotatedLeastUpperBounds(AnnotatedType... types) {
+      return getAnnotatedLeastUpperBounds(Arrays.asList(types));
+   }
+
+   // TODO: javadoc
+   // JLS 4.10.4
+   public static AnnotatedType[] getAnnotatedLeastUpperBounds(
+         Iterable<? extends AnnotatedType> types) {
+      // TODO: implement me!
+      return null;
+   }
+
 //   /**
 //    * Returns the owner of the given type. The owner is the type's declaring class. If the given
 //    * type is a top-level type then the owner is {@code null}. Array types, wildcard types, and
@@ -205,11 +232,85 @@ public final class AnnotatedTypes {
     * @return true if the two given types are equals; false otherwise
     */
    public static boolean equals(AnnotatedType a, AnnotatedType b) {
-      // TODO: needs to be more complex and recursive to capture other annotations
-      // (e.g. annotations on 
-      return requireNonNull(a) == requireNonNull(b)
-            || (Types.equals(a.getType(), b.getType())
-                  && Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations()));
+      if (requireNonNull(a) == requireNonNull(b)) {
+         return true;
+      } else if (a instanceof AnnotatedParameterizedType) {
+         if (!(b instanceof AnnotatedParameterizedType)) {
+            return false;
+         }
+         AnnotatedParameterizedType p1 = (AnnotatedParameterizedType) a;
+         AnnotatedParameterizedType p2 = (AnnotatedParameterizedType) b;
+         // TODO: improve this when there's a way to access annotated owner type
+         ParameterizedType pt1 = (ParameterizedType) p1.getType();
+         ParameterizedType pt2 = (ParameterizedType) p2.getType();
+         Type owner1 = pt1.getOwnerType();
+         Type owner2 = pt2.getOwnerType();
+         if (!(owner1 == null ? owner2 == null : Types.equals(owner1, owner2))) {
+            return false;
+         }
+         if (!Types.equals(pt1.getRawType(), pt2.getRawType())) {
+            return false;
+         }
+         if (!Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations())) {
+            return false;
+         }
+         AnnotatedType[] args1 = p1.getAnnotatedActualTypeArguments();
+         AnnotatedType[] args2 = p2.getAnnotatedActualTypeArguments();
+         if (args1.length != args2.length) {
+            return false;
+         }
+         for (int i = 0; i < args1.length; i++) {
+            if (!equals(args1[i], args2[i])) {
+               return false;
+            }
+         }
+         return true;
+      } else if (a instanceof AnnotatedArrayType) {
+         if (!(b instanceof AnnotatedArrayType)) {
+            return false;
+         }
+         AnnotatedArrayType a1 = (AnnotatedArrayType) a;
+         AnnotatedArrayType a2 = (AnnotatedArrayType) b;
+         return Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations())
+               && equals(a1.getAnnotatedGenericComponentType(),
+                     a2.getAnnotatedGenericComponentType());
+      } else if (a instanceof AnnotatedWildcardType) {
+         if (!(b instanceof AnnotatedWildcardType)) {
+            return false;
+         }
+         AnnotatedWildcardType w1 = (AnnotatedWildcardType) a;
+         AnnotatedWildcardType w2 = (AnnotatedWildcardType) b;
+         if (!Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations())) {
+            return false;
+         }
+         AnnotatedType[] bounds1 = w1.getAnnotatedLowerBounds();
+         AnnotatedType[] bounds2 = w2.getAnnotatedLowerBounds();
+         if (bounds1.length != bounds2.length) {
+            return false;
+         }
+         for (int i = 0; i < bounds1.length; i++) {
+            if (!equals(bounds1[i], bounds2[i])) {
+               return false;
+            }
+         }
+         bounds1 = w1.getAnnotatedUpperBounds();
+         bounds2 = w2.getAnnotatedUpperBounds();
+         if (bounds1.length != bounds2.length) {
+            return false;
+         }
+         for (int i = 0; i < bounds1.length; i++) {
+            if (!equals(bounds1[i], bounds2[i])) {
+               return false;
+            }
+         }
+         return true;
+      } else if (a instanceof AnnotatedTypeVariable) {
+         return b instanceof AnnotatedTypeVariable && Types.equals(a.getType(), b.getType())
+               && Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations());
+      } else {
+         return Types.equals(a.getType(), b.getType())
+               && Arrays.equals(a.getDeclaredAnnotations(), b.getDeclaredAnnotations());
+      }
    }
    
    /**
@@ -241,7 +342,6 @@ public final class AnnotatedTypes {
          return hash ^ hashCode(wt.getAnnotatedLowerBounds())
                ^ hashCode(wt.getAnnotatedUpperBounds());
       } else {
-         // WTF?
          return hash;
       }      
    }
@@ -272,7 +372,7 @@ public final class AnnotatedTypes {
    private static void toStringBuilder(AnnotatedType type, StringBuilder sb) {
       if (type instanceof AnnotatedParameterizedType) {
          AnnotatedParameterizedType pt = (AnnotatedParameterizedType) type;
-         // NB: AnnotatedParameterizedType exposes no way to get owner type annotations!
+         // TODO: improve when there is a way to get owner type annotations
          Type owner = Types.getOwnerType(pt.getType());
          if (owner == null) {
             for (Annotation a : type.getDeclaredAnnotations()) {
@@ -421,7 +521,7 @@ public final class AnnotatedTypes {
             false);
    }
 
-   public static boolean isAssignable(AnnotatedType target, List<Annotation> extraTargetAnnotations,
+   private static boolean isAssignable(AnnotatedType target, List<Annotation> extraTargetAnnotations,
          AnnotatedType source, List<Annotation> extraSourceAnnotations,
          TypeAnnotationChecker checker, boolean allowUncheckedConverion) {
       if (requireNonNull(target) == requireNonNull(source)) {
@@ -704,7 +804,7 @@ public final class AnnotatedTypes {
     * @param typeToResolve the generic type to resolve
     * @return the resolved type
     */
-   public static AnnotatedType resolveType(AnnotatedType context, Type typeToResolve) {
+   public static AnnotatedType resolveType(AnnotatedType context, AnnotatedType typeToResolve) {
       // TODO: implement and revise doc!
       return null;
 //      Map<TypeVariableWrapper, Type> resolvedVariableValues = new HashMap<>();
@@ -1528,15 +1628,8 @@ public final class AnnotatedTypes {
       
       AnnotatedTypeImpl(Type type, Iterable<? extends Annotation> annotations) {
          this.type = type;
-         if (annotations instanceof Collection) {
-            Collection<? extends Annotation> coll = (Collection<? extends Annotation>) annotations; 
-            this.annotations = coll.toArray(new Annotation[coll.size()]);            
-         } else {
-            Object array[] = Iterables.toArray(annotations);
-            this.annotations = new Annotation[array.length];
-            // TODO: eliminate this copy step
-            System.arraycopy(array, 0, this.annotations, 0, array.length);
-         }
+         this.annotations = Iterables.toArray(annotations,
+               new Annotation[Iterables.trySize(annotations).orElse(0)]);
       }
 
       @Override
