@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":17,"i1":17,"i2":6,"i3":18,"i4":18,"i5":18,"i6":6,"i7":18,"i8":18,"i9":18,"i10":6,"i11":18,"i12":6,"i13":18,"i14":6,"i15":18};
+var methods = {"i0":17,"i1":17,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -112,7 +112,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
  
  <p>This interface provides factory methods to return instances backed by an
  <a href="../../../../com/apriori/reflect/model/Types.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-">annotation processing environment</a> or by
- <a href="../../../../com/apriori/reflect/model/Types.html#fromCoreReflection--">core reflection</a>.</div>
+ <a href="../../../../com/apriori/reflect/model/Types.html#fromCoreReflection--">core reflection</a>.
+ 
+ <p><strong>Note:</strong> An instance backed by an annotation processing environment will <em>not
+ retain annotations</em> when converting <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a> objects into <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type"><code>TypeMirror</code></a>s.
+ So, in such an environment, <a href="../../../../com/apriori/reflect/model/Types.html#getTypeMirror-java.lang.reflect.AnnotatedType-"><code>getTypeMirror(AnnotatedType)</code></a> and
+ <a href="../../../../com/apriori/reflect/model/Types.html#getTypeMirror-java.lang.reflect.Type-"><code>getTypeMirror(Type)</code></a> will return the same type mirror. This is due to a limitation in the 
+ underlying <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Types</code></a> API, which provides no means to manufacture type
+ mirror instances that have annotations.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/apriori/reflect/model/Types.html#fromProcessingEnvironment-javax.annotation.processing.ProcessingEnvironment-"><code>fromProcessingEnvironment(ProcessingEnvironment)</code></a>, 
@@ -157,19 +164,19 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.Class-">getArrayTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>
 <div class="block">Returns a type mirror that represents the same type as the given array type.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.reflect.GenericArrayType-">getArrayTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;arrayType)</code>
 <div class="block">Returns an array type mirror that represents the same type as given.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getDeclaredTypeMirror-java.lang.Class-">getDeclaredTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>
 <div class="block">Returns a type mirror that represents the same type as the given declared type.</div>
 </td>
@@ -182,19 +189,19 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getParameterizedTypeMirror-java.lang.reflect.ParameterizedType-">getParameterizedTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;parameterizedType)</code>
 <div class="block">Returns a declared type mirror that represents the same type as given.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/PrimitiveType.html?is-external=true" title="class or interface in javax.lang.model.type">PrimitiveType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/PrimitiveType.html?is-external=true" title="class or interface in javax.lang.model.type">PrimitiveType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getPrimitiveTypeMirror-java.lang.Class-">getPrimitiveTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>
 <div class="block">Returns a type mirror that represents the same type as the given primitive type.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ReferenceType.html?is-external=true" title="class or interface in javax.lang.model.type">ReferenceType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ReferenceType.html?is-external=true" title="class or interface in javax.lang.model.type">ReferenceType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getReferenceTypeMirror-java.lang.Class-">getReferenceTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>
 <div class="block">Returns a type mirror that represents the same type as the given reference type.</div>
 </td>
@@ -206,7 +213,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getTypeMirror-java.lang.reflect.Type-">getTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns a type mirror that represents the same type as given.</div>
 </td>
@@ -219,7 +226,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 </td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeVariable.html?is-external=true" title="class or interface in javax.lang.model.type">TypeVariable</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeVariable.html?is-external=true" title="class or interface in javax.lang.model.type">TypeVariable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getTypeVariableMirror-java.lang.reflect.TypeVariable-">getTypeVariableMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</code>
 <div class="block">Returns a type variable mirror that represents the same type as given.</div>
 </td>
@@ -232,7 +239,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/WildcardType.html?is-external=true" title="class or interface in javax.lang.model.type">WildcardType</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/WildcardType.html?is-external=true" title="class or interface in javax.lang.model.type">WildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/reflect/model/Types.html#getWildcardTypeMirror-java.lang.reflect.WildcardType-">getWildcardTypeMirror</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;wildcardType)</code>
 <div class="block">Returns a wildcard type mirror that represents the same type as given.</div>
 </td>
@@ -281,7 +288,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a>&nbsp;getTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type">TypeMirror</a>&nbsp;getTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
 <div class="block">Returns a type mirror that represents the same type as given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -297,7 +304,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getReferenceTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ReferenceType.html?is-external=true" title="class or interface in javax.lang.model.type">ReferenceType</a>&nbsp;getReferenceTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ReferenceType.html?is-external=true" title="class or interface in javax.lang.model.type">ReferenceType</a>&nbsp;getReferenceTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
 <div class="block">Returns a type mirror that represents the same type as the given reference type. If the given
  class token represents a primitive type then an exception is thrown.</div>
 <dl>
@@ -316,7 +323,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getDeclaredTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a>&nbsp;getDeclaredTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a>&nbsp;getDeclaredTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
 <div class="block">Returns a type mirror that represents the same type as the given declared type. If the given
  class token represents a primitive type or an array type then an exception is thrown.</div>
 <dl>
@@ -335,7 +342,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getPrimitiveTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/PrimitiveType.html?is-external=true" title="class or interface in javax.lang.model.type">PrimitiveType</a>&nbsp;getPrimitiveTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/PrimitiveType.html?is-external=true" title="class or interface in javax.lang.model.type">PrimitiveType</a>&nbsp;getPrimitiveTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
 <div class="block">Returns a type mirror that represents the same type as the given primitive type. If the given
  class token does not represent a primitive type then an exception is thrown.</div>
 <dl>
@@ -354,7 +361,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getArrayTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a>&nbsp;getArrayTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a>&nbsp;getArrayTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
 <div class="block">Returns a type mirror that represents the same type as the given array type. If the given
  class token does not represent an array type then an exception is thrown.</div>
 <dl>
@@ -390,7 +397,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getArrayTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a>&nbsp;getArrayTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;arrayType)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type">ArrayType</a>&nbsp;getArrayTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect">GenericArrayType</a>&nbsp;arrayType)</pre>
 <div class="block">Returns an array type mirror that represents the same type as given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -423,7 +430,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getParameterizedTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a>&nbsp;getParameterizedTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;parameterizedType)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type">DeclaredType</a>&nbsp;getParameterizedTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect">ParameterizedType</a>&nbsp;parameterizedType)</pre>
 <div class="block">Returns a declared type mirror that represents the same type as given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -456,7 +463,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getWildcardTypeMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/WildcardType.html?is-external=true" title="class or interface in javax.lang.model.type">WildcardType</a>&nbsp;getWildcardTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;wildcardType)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/WildcardType.html?is-external=true" title="class or interface in javax.lang.model.type">WildcardType</a>&nbsp;getWildcardTypeMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;wildcardType)</pre>
 <div class="block">Returns a wildcard type mirror that represents the same type as given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -489,7 +496,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeVariableMirror</h4>
-<pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeVariable.html?is-external=true" title="class or interface in javax.lang.model.type">TypeVariable</a>&nbsp;getTypeVariableMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeVariable.html?is-external=true" title="class or interface in javax.lang.model.type">TypeVariable</a>&nbsp;getTypeVariableMirror(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">TypeVariable</a>&lt;?&gt;&nbsp;typeVar)</pre>
 <div class="block">Returns a type variable mirror that represents the same type as given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

@@ -1375,6 +1375,10 @@
 <dd>
 <div class="block">Applies the specified predicate to the held value, if present.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#apply-java.lang.Class-T-">apply(Class&lt;? extends T&gt;, T)</a></span> - Method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Returns a hashing wrapper for the given object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/BooleanBinaryOperator.html#applyAsBoolean-boolean-boolean-">applyAsBoolean(boolean, boolean)</a></span> - Method in interface com.apriori.function.<a href="com/apriori/function/BooleanBinaryOperator.html" title="interface in com.apriori.function">BooleanBinaryOperator</a></dt>
 <dd>
 <div class="block">Applies this operator to the given operands.</div>
@@ -5282,6 +5286,10 @@
 <dd>
 <div class="block">Compares this tuple with the specified object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#equals-T-T-">equals(T, T)</a></span> - Method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Determines if the given two objects are equal.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableBoolean.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableBoolean.html" title="class in com.apriori.vars">VariableBoolean</a></dt>
@@ -6190,6 +6198,14 @@
 <dd>
 <div class="block">Create an <a href="com/apriori/reflect/EnumType.html" title="class in com.apriori.reflect"><code>EnumType</code></a> that represent an actual <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">enum class</a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#forFields-java.util.function.Function...-">forFields(Function&lt;? super T, ?&gt;...)</a></span> - Static method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Returns a hasher that uses the given functions to extract field values.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#forFields-java.util.List-">forFields(List&lt;? extends Function&lt;? super T, ?&gt;&gt;)</a></span> - Static method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Returns a hasher that uses the given functions to extract field values.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/BitConverters.html#forFloat--">forFloat()</a></span> - Static method in class com.apriori.collections.<a href="com/apriori/collections/BitConverters.html" title="class in com.apriori.collections">BitConverters</a></dt>
 <dd>
 <div class="block">Returns a converter that converts floats into streams of 32 bits.</div>
@@ -6358,6 +6374,11 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#forType-java.lang.reflect.Type-">forType(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Constructs a type token that represents a specified <code>java.lang.reflect.Type</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#forType-java.lang.Class-">forType(Class&lt;? extends T&gt;)</a></span> - Method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Returns a function that can be applied to any object to return a
+ <a href="com/apriori/util/Hasher.html#apply-java.lang.Class-T-">hashing wrapper</a> for that object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#forTypeMirror-javax.lang.model.type.TypeMirror-">forTypeMirror(TypeMirror)</a></span> - Static method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
@@ -7026,6 +7047,10 @@
 <dd>
 <div class="block">Returns all exceptions encountered while trying to scan and resolve classes.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getAllSupertypes-java.lang.reflect.Type-">getAllSupertypes(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Returns the set of all supertypes for the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AmbiguousMethodException.html#getAmbiguousDispatchMethods--">getAmbiguousDispatchMethods()</a></span> - Method in exception com.apriori.reflect.<a href="com/apriori/reflect/AmbiguousMethodException.html" title="class in com.apriori.reflect">AmbiguousMethodException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate(T, BiFunction&lt;? super T, ? super T, ? extends T&gt;)</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
@@ -7348,10 +7373,16 @@
 <dd>
 <div class="block">Updates the variable using the given function.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getAnnotatedDirectSupertypes-java.lang.reflect.AnnotatedType-">getAnnotatedDirectSupertypes(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getAnnotatedInterfaces-java.lang.reflect.AnnotatedType-">getAnnotatedInterfaces(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Returns the generic interfaces implemented by the given type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getAnnotatedLeastUpperBounds-java.lang.reflect.AnnotatedType...-">getAnnotatedLeastUpperBounds(AnnotatedType...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getAnnotatedLeastUpperBounds-java.lang.Iterable-">getAnnotatedLeastUpperBounds(Iterable&lt;? extends AnnotatedType&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getAnnotatedSuperclass-java.lang.reflect.AnnotatedType-">getAnnotatedSuperclass(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Returns the generic superclass of the given type.</div>
@@ -7711,6 +7742,10 @@
 <div class="block">Gets the sources from which the specified type is directly derived.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-">getDirectSupertypes(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Returns the set of direct supertypes for the given type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#getDirectSupertypeTypeRefs--">getDirectSupertypeTypeRefs()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Caster.html#getDispatchSettings--">getDispatchSettings()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/Caster.html" title="class in com.apriori.reflect">Caster</a></dt>
 <dd>&nbsp;</dd>
@@ -7786,6 +7821,8 @@
 <dd>
 <div class="block">Returns the list of enum constants for this class.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getErasedType-java.lang.reflect.AnnotatedType-">getErasedType(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--">getErrorHandler()</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Returns the atom's error handler.</div>
@@ -8045,6 +8082,14 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#getLastModified--">getLastModified()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getLeastUpperBounds-java.lang.reflect.Type...-">getLeastUpperBounds(Type...)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Computes least upper bounds for the given array of types.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getLeastUpperBounds-java.lang.Iterable-">getLeastUpperBounds(Iterable&lt;Type&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Computes least upper bounds for the given types.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/CallingClass.StackFrame.html#getLocationClass--">getLocationClass()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/CallingClass.StackFrame.html" title="class in com.apriori.util">CallingClass.StackFrame</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/util/CallingClass.StackFrame.html#getLocationClassName--">getLocationClassName()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/CallingClass.StackFrame.html" title="class in com.apriori.util">CallingClass.StackFrame</a></dt>
@@ -8939,6 +8984,10 @@
 <dd>
 <div class="block">Returns the hash code value for this tuple.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#hashCode-T-">hashCode(T)</a></span> - Method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Computes a hash code for the given value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/Variable.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/Variable.html" title="class in com.apriori.vars">Variable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableBoolean.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableBoolean.html" title="class in com.apriori.vars">VariableBoolean</a></dt>
@@ -8961,6 +9010,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HashCompositeTrie.html#HashCompositeTrie-com.apriori.collections.Componentizer-">HashCompositeTrie(Componentizer&lt;? super K, ? extends C&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/HashCompositeTrie.html" title="class in com.apriori.collections">HashCompositeTrie</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util"><span class="typeNameLink">Hasher</span></a>&lt;<a href="com/apriori/util/Hasher.html" title="type parameter in Hasher">T</a>&gt; - Interface in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
+<dd>
+<div class="block">Allows adding/overriding <code>hashCode</code> and <code>equals</code> behavior for an object.</div>
+</dd>
 <dt><a href="com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections"><span class="typeNameLink">HashSequenceTrie</span></a>&lt;<a href="com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">K</a>,<a href="com/apriori/collections/HashSequenceTrie.html" title="type parameter in HashSequenceTrie">V</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/HashSequenceTrie.html#HashSequenceTrie--">HashSequenceTrie()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/HashSequenceTrie.html" title="class in com.apriori.collections">HashSequenceTrie</a></dt>
@@ -9897,8 +9950,6 @@
 <dd>
 <div class="block">Determines if a given annotated type is assignable from another.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#isAssignable-java.lang.reflect.AnnotatedType-java.util.List-java.lang.reflect.AnnotatedType-java.util.List-com.apriori.reflect.TypeAnnotationChecker-boolean-">isAssignable(AnnotatedType, List&lt;Annotation&gt;, AnnotatedType, List&lt;Annotation&gt;, TypeAnnotationChecker, boolean)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-">isAssignable(Collection&lt;? extends Annotation&gt;, Collection&lt;? extends Annotation&gt;)</a></span> - Method in interface com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect">TypeAnnotationChecker</a></dt>
 <dd>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
@@ -9916,9 +9967,7 @@
 <div class="block">Returns true if the specified type is assignable to this type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isAssignableFrom-com.apriori.reflect.TypeRef-">isAssignableFrom(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
-<dd>
-<div class="block">Determines if this is a super type of the specified type token.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#isAssignableStrict-java.lang.reflect.AnnotatedType-java.lang.reflect.AnnotatedType-com.apriori.reflect.TypeAnnotationChecker-">isAssignableStrict(AnnotatedType, AnnotatedType, TypeAnnotationChecker)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Determines if a given annotated type is strictly assignable to another.</div>
@@ -9926,6 +9975,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignableStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
 <div class="block">Determines if one type is assignable to another, with restrictions.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isAssignableStrictFrom-com.apriori.reflect.TypeRef-">isAssignableStrictFrom(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
+<dd>
+<div class="block">Determines if this is a super type of the specified type token.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.Input.html#isAsync--">isAsync()</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.Input.html" title="class in com.apriori.graph">Node.Input</a></dt>
 <dd>
@@ -10108,7 +10161,22 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isFullyResolved--">isFullyResolved()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Returns true if this type token is fully resolved, which means that this type <a href="com/apriori/reflect/TypeRef.html#isFullyResolved--">is resolved</a> and so are the values for all type arguments.</div>
+<div class="block">Returns true if this type token is fully resolved, which means that this type <a href="com/apriori/reflect/TypeRef.html#isResolved--">is resolved</a> and so are the values for all type arguments (if it is a
+ parameterized type) or for the component type (if it is an array type).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isFunctionalInterface--">isFunctionalInterface()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isFunctionalInterface-java.lang.reflect.Type-">isFunctionalInterface(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Returns true if the given type represents a functional interface.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isGeneric-java.lang.reflect.Type-">isGeneric(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Determines if the given type is a generic type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isGeneric-java.lang.Class-">isGeneric(Class&lt;?&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Determines if the given class is generic.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/DispatchSettings.html#isIgnoringAmbiguities--">isIgnoringAmbiguities()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/DispatchSettings.html" title="class in com.apriori.reflect">DispatchSettings</a></dt>
 <dd>&nbsp;</dd>
@@ -10230,7 +10298,9 @@
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#isSameFile-javax.tools.FileObject-javax.tools.FileObject-">isSameFile(FileObject, FileObject)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSameType-java.lang.reflect.Type-java.lang.reflect.Type-">isSameType(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Determines whether two given types represent the same type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#isShutdown--">isShutdown()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Returns true if this executor is shutdown.</div>
@@ -10248,16 +10318,22 @@
 <div class="block">Returns whether the scheduled task has begun executing or not.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtype(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Determines if one type is a subtype of another.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isSubTypeOf-com.apriori.apt.reflect.ArClass-">isSubTypeOf(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns true if this class is a sub-type of the specified class.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubTypeOf-com.apriori.reflect.TypeRef-">isSubTypeOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubtypeOf-com.apriori.reflect.TypeRef-">isSubtypeOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Determines if this is a sub-type of the specified type token.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Determines if one type is a subtype of another, with restrictions.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubtypeStrictOf-com.apriori.reflect.TypeRef-">isSubtypeStrictOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#isSuccessful--">isSuccessful()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
@@ -12223,6 +12299,11 @@
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Key.html#of-com.apriori.reflect.TypeRef-java.lang.Object-">of(TypeRef&lt;T&gt;, Object)</a></span> - Static method in class com.apriori.graph.<a href="com/apriori/graph/Key.html" title="class in com.apriori.graph">Key</a></dt>
 <dd>
 <div class="block">Returns a qualified key for the given type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/Hasher.html#of-java.util.function.ToIntFunction-java.util.function.BiPredicate-">of(ToIntFunction&lt;? super T&gt;, BiPredicate&lt;? super T, ? super T&gt;)</a></span> - Static method in interface com.apriori.util.<a href="com/apriori/util/Hasher.html" title="interface in com.apriori.util">Hasher</a></dt>
+<dd>
+<div class="block">Returns a hasher that composes the given functional interfaces to implement <code>hashCode</code>
+ and <code>equals</code>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/AbstractPrimitiveList.OfBoolean.html#OfBoolean--">OfBoolean()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/AbstractPrimitiveList.OfBoolean.html" title="class in com.apriori.collections">AbstractPrimitiveList.OfBoolean</a></dt>
 <dd>&nbsp;</dd>
@@ -14439,7 +14520,7 @@
 <dd>
 <div class="block">Returns a super type of the current type, as a <code>TypeRef</code>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#resolveType-java.lang.reflect.AnnotatedType-java.lang.reflect.Type-">resolveType(AnnotatedType, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#resolveType-java.lang.reflect.AnnotatedType-java.lang.reflect.AnnotatedType-">resolveType(AnnotatedType, AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
 <div class="block">Resolves the given type in the context of another type.</div>
 </dd>
