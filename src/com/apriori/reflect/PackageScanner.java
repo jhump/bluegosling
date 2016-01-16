@@ -25,11 +25,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -116,13 +117,13 @@ public class PackageScanner {
     * Sets the parallelism of the scan. This is the maximum number of threads that will be used to
     * perform the scan in parallel.
     *
-    * @param parallelism the maximum number of threads used to perform the scan
+    * @param parallel the maximum number of threads used to perform the scan
     * @return {@code this}, for method chaining
     * @throws IllegalStateException if the scan has already been started
     */
-   public synchronized PackageScanner withParallelism(int parallelism) {
+   public synchronized PackageScanner withParallelism(int parallel) {
       checkNotStarted();
-      this.parallelism = parallelism;
+      this.parallelism = parallel;
       return this;
    }
    
@@ -360,6 +361,86 @@ public class PackageScanner {
       return result;
    }
    
+   // TODO: doc
+   public static class ClassInfo {
+      private final ClassLoader classLoader;
+      private final String packageName;
+      private final String name;
+      private volatile Object clazzOrException;
+      
+      ClassInfo(ClassLoader classLoader, String packageName, String className) {
+         assert packageName.isEmpty() || className.startsWith(packageName + ".");
+         this.classLoader = classLoader;
+         this.packageName = packageName;
+         this.name = className;
+      }
+      
+      public String getPackageName() {
+         return packageName;
+      }
+      
+      public String getName() {
+         return name;
+      }
+      
+      public String getUnqualifiedName() {
+         return packageName.isEmpty() ? name : name.substring(packageName.length() + 1);
+      }
+      
+      /**
+       * 
+       * TODO: document me!
+       *
+       * @return
+       * @throws LinkageError if the linkage fails
+       * @throws ClassNotFoundException if the class cannot be located by
+       *       the specified class loader
+       */
+      public Class<?> asClass() throws ClassNotFoundException {
+         Object c = clazzOrException;
+         if (c == null) {
+            try {
+               c = clazzOrException = classLoader == null
+                     ? Class.forName(name, false, PackageScanner.class.getClassLoader())
+                     : Class.forName(name, false, classLoader);
+            } catch (Throwable th) {
+               if (th instanceof Error || th instanceof RuntimeException
+                     || th instanceof ClassNotFoundException) {
+                  c = clazzOrException = th;
+               } else {
+                  c = clazzOrException = new RuntimeException(th);
+               }
+            }
+         }
+         if (c instanceof Class) {
+            return (Class<?>) c;
+         } else if (c instanceof Error) {
+            throw (Error) c;
+         } else if (c instanceof ClassNotFoundException) {
+            throw (ClassNotFoundException) c;
+         } else {
+            throw (RuntimeException) c;
+         }
+      }
+      
+      @Override public boolean equals(Object o) {
+         if (o instanceof ClassInfo) {
+            ClassInfo other = (ClassInfo) o;
+            return Objects.equals(classLoader, other.classLoader)
+                  && name.equals(other.name);
+         }
+         return false;
+      }
+      
+      @Override public int hashCode() {
+         return Objects.hash(classLoader, name);
+      }
+      
+      @Override public String toString() {
+         return name;
+      }
+   }
+   
    /**
     * The results of scanning a single path.
     *
@@ -369,17 +450,32 @@ public class PackageScanner {
       private final String pathScanned;
       private final ClassLoader classLoader;
       private final Stopwatch elapsed;
-      private final Map<String, List<String>> unresolvedPackages;
-      private final Map<String, Set<Class<?>>> packageIndex;
+      private final Map<String, Set<ClassInfo>> packageIndex;
       private final Map<String, Throwable> exceptions;
+      private volatile boolean done;
       
       PathResult(String pathScanned, ClassLoader classLoader, Stopwatch elapsed) {
          this.pathScanned = pathScanned;
          this.classLoader = classLoader;
          this.elapsed = elapsed;
-         this.unresolvedPackages = new HashMap<>();
          this.packageIndex = new HashMap<>();
          this.exceptions = new HashMap<>();
+      }
+      
+      private void checkNotDone() {
+         if (done) {
+            throw new IllegalStateException("scan is already complete");
+         }
+      }
+
+      private void checkDone() {
+         if (!done) {
+            throw new IllegalStateException("scan is still in progress");
+         }
+      }
+      
+      void done() {
+         done = true;
       }
       
       /**
@@ -390,17 +486,39 @@ public class PackageScanner {
        * @param pathName the name of the path encountered
        */
       void addResult(String pathName) {
+         checkNotDone();
          if (!pathName.toLowerCase().endsWith(".class")) {
             return;
          }
-         String className = pathName.substring(0, pathName.length() - ".class".length())
-               .replace('/', '.').replace('\\', '.');
+         int start = pathName.charAt(0) == '/' || pathName.charAt(0) == '\\' ? 1 : 0;
+         String className = pathName.substring(start, pathName.length() - ".class".length())
+               .replace('\\', '/');
+         boolean first = true;
+         for (int i = 0; i < className.length(); i++) {
+            char ch = className.charAt(i);
+            if (ch == '/') {
+               first = true;
+               continue;
+            }
+            // if the package or class name is invalid, discard
+            if (first) {
+               first = false;
+               if (!Character.isJavaIdentifierStart(ch)) {
+                  return;
+               }
+            } else if (!Character.isJavaIdentifierPart(ch)) {
+               return;
+            }
+         }
+         className = className.replace('/', '.');
+         
          // we don't synchronize because this is only called from single thread, before this
          // result is published to the larger scan result
-         unresolvedPackages.computeIfAbsent(getPackageName(className).toLowerCase(),
-               k -> new ArrayList<>()).add(className);
+         String packageName = getPackageName(className);
+         packageIndex.computeIfAbsent(packageName,
+               k -> new LinkedHashSet<>()).add(new ClassInfo(classLoader, packageName, className));
       }
-      
+
       /**
        * Adds an exception for this path. The given string is the encountered path (relative) that
        * induced the exception. It may be an I/O exception, but it could also be a link error if
@@ -410,8 +528,7 @@ public class PackageScanner {
        * @param e the exception
        */
       void addException(String pathName, Throwable e) {
-         // we don't synchronize because this is only called from single thread, before this
-         // result is published to the larger scan result
+         checkNotDone();
          exceptions.put(pathName.replace('/', '.').replace('\\', '.'), e);
       }
       
@@ -431,8 +548,8 @@ public class PackageScanner {
        * @param packageName
        * @return
        */
-      public synchronized boolean includesPackage(String packageName) {
-         resolve(packageName);
+      public boolean includesPackage(String packageName) {
+         checkDone();
          return packageIndex.containsKey(packageName);
       }
       
@@ -442,9 +559,7 @@ public class PackageScanner {
        * @return the set of package names found
        */
       public Set<String> getPackagesFound() {
-         // method does not need to be synchronized because resolveAll will synchronize and this
-         // object is effectively immutable after resolveAll completes
-         resolveAll();
+         checkDone();
          return packageIndex.keySet();
       }
       
@@ -454,9 +569,9 @@ public class PackageScanner {
        * @param packageName the package name
        * @return the set of classes found in this path that are in the given package
        */
-      public synchronized Set<Class<?>> getClassesFound(String packageName) {
-         resolve(packageName);
-         Set<Class<?>> classes = packageIndex.get(packageName);
+      public Set<ClassInfo> getClassesFound(String packageName) {
+         checkDone();
+         Set<ClassInfo> classes = packageIndex.get(packageName);
          return classes == null ? Collections.emptySet() : Collections.unmodifiableSet(classes);
       }
       
@@ -481,8 +596,7 @@ public class PackageScanner {
        * @see #getScanExceptionSources()
        */
       public synchronized Throwable getScanException(String source) {
-         String packageName = getPackageName(source);
-         resolve(packageName);
+         checkDone();
          return exceptions.get(requireNonNull(source));
       }
       
@@ -497,9 +611,7 @@ public class PackageScanner {
        * @see #getScanException(String)
        */
       public Collection<Throwable> getAllScanExceptions() {
-         // method does not need to be synchronized because resolveAll will synchronize and this
-         // object is effectively immutable after resolveAll completes
-         resolveAll();
+         checkDone();
          return Collections.unmodifiableCollection(exceptions.values());
       }
 
@@ -510,40 +622,8 @@ public class PackageScanner {
        * @return the set of paths that were found in this path but could not be scanned or resolved
        */
       public Set<String> getScanExceptionSources() {
-         // method does not need to be synchronized because resolveAll will synchronize and this
-         // object is effectively immutable after resolveAll completes
-         resolveAll();
+         checkDone();
          return Collections.unmodifiableSet(exceptions.keySet());
-      }
-      
-      private synchronized void resolveAll() {
-         for (Iterator<List<String>> iter = unresolvedPackages.values().iterator();
-               iter.hasNext(); ) {
-            List<String> classNames = iter.next();
-            doResolve(classNames);
-            iter.remove();
-         }
-      }
-      
-      private synchronized void resolve(String packageName) {
-         List<String> names = unresolvedPackages.remove(packageName);
-         if (names != null) {
-            doResolve(names);
-         }
-      }
-      
-      private void doResolve(List<String> classNames) {
-         for (String name : classNames) {
-            try {
-               Class<?> clazz = classLoader == null
-                     ? Class.forName(name, false, PackageScanner.class.getClassLoader())
-                     : Class.forName(name, false, classLoader);
-               packageIndex.computeIfAbsent(getPackageName(clazz.getName()),k -> new HashSet<>())
-                     .add(clazz);
-            } catch (Throwable th) {
-               exceptions.put(name, th);
-            }
-         }
       }
    }
    
@@ -565,7 +645,7 @@ public class PackageScanner {
    public static class ScanResult implements Awaitable {
       private final Stopwatch elapsed = new Stopwatch();
       private final Map<String, ListenableFuture<PathResult>> results = new HashMap<>();
-      private final ListenableFuture<Map<String, Set<Class<?>>>> operation;
+      private final ListenableFuture<Map<String, Set<ClassInfo>>> operation;
       
       ScanResult(int parallelism, Map<String, ClassLoader> pathsToScan,
             CustomClassLoader customLoader) {
@@ -601,9 +681,9 @@ public class PackageScanner {
                throw new AssertionError(e); // should we ignore instead?
             }
             future = future.recover(th -> {
-               th.printStackTrace();
                PathResult r = new PathResult(file.getAbsolutePath(), cl, fileElapsed.stop());
                r.addException("", th);
+               r.done();
                return r;
             });
             results.put(path, future);
@@ -614,7 +694,7 @@ public class PackageScanner {
          customLoader.setURLs(urls);
          
          operation = ListenableFuture.join(results.values()).chainTo(r -> {
-            Map<String, Set<Class<?>>> map = new HashMap<>();
+            Map<String, Set<ClassInfo>> map = new HashMap<>();
             for (PathResult result : r) {
                for (String packageName : result.getPackagesFound()) {
                   map.computeIfAbsent(packageName, k -> new HashSet<>())
@@ -691,8 +771,12 @@ public class PackageScanner {
       public Package getPackage(String packageName) {
          for (ListenableFuture<PathResult> future : results.values()) {
             future.awaitUninterruptibly();
-            for (Class<?> clazz : future.getResult().getClassesFound(packageName)) {
-               return clazz.getPackage();
+            for (ClassInfo classInfo : future.getResult().getClassesFound(packageName)) {
+               try {
+                  return classInfo.asClass().getPackage();
+               } catch (Throwable th) {
+                  continue;
+               }
             }
          }
          return null;
@@ -703,9 +787,9 @@ public class PackageScanner {
          return Collections.unmodifiableSet(operation.getResult().keySet());
       }
       
-      public Set<Class<?>> getClassesFound(String packageName) {
+      public Set<ClassInfo> getClassesFound(String packageName) {
          awaitUninterruptibly();
-         Set<Class<?>> classes = operation.getResult().get(packageName);
+         Set<ClassInfo> classes = operation.getResult().get(packageName);
          return classes == null ? Collections.emptySet() : Collections.unmodifiableSet(classes);
       }
 
@@ -725,13 +809,14 @@ public class PackageScanner {
       }
       
       private PathResult scanDirectory(File dir, ClassLoader cl, Stopwatch dirElapsed) {
+         PathResult pathResult = new PathResult(dir.getAbsolutePath(), cl, dirElapsed.start());
          try {
-            PathResult result = new PathResult(dir.getAbsolutePath(), cl, dirElapsed.start());
-            scanDirectory("", result, dir, cl);
-            return result;
+            scanDirectory("", pathResult, dir, cl);
          } finally {
+            pathResult.done();
             dirElapsed.stop();
          }
+         return pathResult;
       }
       
       private void scanDirectory(String prefix, PathResult pathResult, File dir,
@@ -764,6 +849,7 @@ public class PackageScanner {
          } catch (Throwable t) {
             pathResult.addException("", t);
          } finally {
+            pathResult.done();
             zipElapsed.stop();
          }
          return pathResult;
@@ -815,12 +901,21 @@ public class PackageScanner {
       System.out.println("\n\n");
       List<String> packages = new ArrayList<>(result.getPackagesFound());
       packages.sort(Comparator.naturalOrder());
+      int numClasses = 0;
+      int failedToLoad = 0;
       for (String pkg : packages) {
          System.out.println(pkg + ":");
-         List<Class<?>> classes = new ArrayList<>(result.getClassesFound(pkg));
-         classes.sort(Comparator.comparing(Class::getName));
-         for (Class<?> cls : classes) {
-            System.out.println("    " + cls.getName());
+         List<ClassInfo> classes = new ArrayList<>(result.getClassesFound(pkg));
+         classes.sort(Comparator.comparing(ClassInfo::getName));
+         for (ClassInfo cls : classes) {
+            try {
+               cls.asClass();
+               System.out.println("    " + cls.getName());
+            } catch (ClassNotFoundException e) {
+               failedToLoad++;
+               System.out.println("  ! " + cls.getName());
+            }
+            numClasses++;
          }
       }
       System.out.println("\n\n");
@@ -831,5 +926,8 @@ public class PackageScanner {
             r.getScanException(source).printStackTrace(System.out);
          }
       }
+      
+      System.out.println(numClasses + " classes scanned, "
+            + failedToLoad + " of which could not be loaded");
    }
 }

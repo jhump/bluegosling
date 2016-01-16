@@ -32,6 +32,7 @@ import java.util.Map.Entry;
 import java.util.OptionalInt;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -46,8 +47,8 @@ public final class Types {
    
    static final Type EMPTY_TYPES[] = new Type[0];
    static final Type JUST_OBJECT[] = new Type[] { Object.class };
+   static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
    
-   private static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
    private static final Class<?> ARRAY_INTERFACES[] =
          new Class<?>[] { Cloneable.class, Serializable.class };
    private static final Type ARRAY_SUPERTYPES[] =
@@ -700,7 +701,7 @@ public final class Types {
       }
    }
    
-   private static int hashCode(Type types[]) {
+   static int hashCode(Type types[]) {
       int result = 1;
       for (Type type : types) {
          result = 31 * result + (type == null ? 0 : hashCode(type));
@@ -820,17 +821,17 @@ public final class Types {
     * <p>There is also a {@linkplain #isAssignableStrict stricter version}, that behaves more like
     * {@link Class#isAssignableFrom(Class)}, but supporting generic types instead of only raw types.
     *
-    * @param to the LHS of assignment
     * @param from the RHS of assignment
+    * @param to the LHS of assignment
     * @return true if the assignment is allowed
     * 
     * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.2">
     *       JLS 5.2: Assignment Contexts</a>
     */
-   public static boolean isAssignable(Type to, Type from) {
+   public static boolean isAssignable(Type from, Type to) {
       // This helper will test identity conversions, widening reference conversions, and unchecked
       // conversions.
-      if (isAssignableReference(to, from, true)) {
+      if (isAssignableReference(from, to, true)) {
          return true;
       }
       // If that fails, we still need to try widening primitive conversion and boxing/unboxing
@@ -841,13 +842,13 @@ public final class Types {
          if (to instanceof ParameterizedType && fromClass.isPrimitive()) {
             // try a boxing conversion.
             Class<?> boxedFromClass = box(fromClass);
-            return boxedFromClass != fromClass && isAssignableReference(to, boxedFromClass, true); 
+            return boxedFromClass != fromClass && isAssignableReference(boxedFromClass, to, true); 
          } else if (to instanceof Class) {
             Class<?> toClass = (Class<?>) to;
             if (fromClass.isPrimitive()) {
                if (toClass.isPrimitive()) {
                   // primitive widening conversions
-                  return isPrimitiveSubtype(toClass, fromClass);
+                  return isPrimitiveSubtype(fromClass, toClass);
                }
                // boxing conversion
                return toClass.isAssignableFrom(box(fromClass));
@@ -901,26 +902,24 @@ public final class Types {
     * widening primitive conversion. This is analogous to the observation that {@code
     * long.class.isAssignableFrom(int.class)} returns false.
     *
-    * @param to the LHS of assignment
     * @param from the RHS of assignment
+    * @param to the LHS of assignment
     * @return true if the assignment is allowed
     */
-   public static boolean isAssignableStrict(Type to, Type from) {
-      return isAssignableReference(to, from, false);
+   public static boolean isAssignableStrict(Type from, Type to) {
+      return isAssignableReference(from, to, false);
    }
    
    /**
     * Tests for reference type assignability, optionally including unchecked conversions.
     *
-    * @param to the LHS of assignment
     * @param from the RHS of assignment
+    * @param to the LHS of assignment
     * @param allowUncheckedConversion if true then unchecked conversions are considered when
     *       decising if the types are assignable
     * @return true if the assignment is allowed
     */
-   private static boolean isAssignableReference(Type to, Type from,
-         boolean allowUncheckedConversion) {
-      assert !isPrimitive(to) && !isPrimitive(from);
+   static boolean isAssignableReference(Type from, Type to, boolean allowUncheckedConversion) {
       if (requireNonNull(to) == requireNonNull(from)) {
          return true;
       } else if (to instanceof Class && from instanceof Class) {
@@ -932,7 +931,7 @@ public final class Types {
                ? ((WildcardType) from).getUpperBounds()
                : ((TypeVariable<?>) from).getBounds();
          for (Type bound : bounds) {
-            if (isAssignableReference(to, bound, allowUncheckedConversion)) {
+            if (isAssignableReference(bound, to, allowUncheckedConversion)) {
                return true;
             }
          }
@@ -945,8 +944,9 @@ public final class Types {
                return true;
             }
             GenericArrayType fromArrayType = (GenericArrayType) from;
-            return toClass.isArray() && isAssignableReference(toClass.getComponentType(),
-                  fromArrayType.getGenericComponentType(), allowUncheckedConversion);
+            return toClass.isArray() && isAssignableReference(
+                  fromArrayType.getGenericComponentType(), toClass.getComponentType(),
+                  allowUncheckedConversion);
          } else if (from instanceof ParameterizedType) {
             Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
             return toClass.isAssignableFrom(fromRaw);
@@ -995,12 +995,12 @@ public final class Types {
             if (toArg instanceof WildcardType) {
                WildcardType wildcardArg = (WildcardType) toArg;
                for (Type upperBound : wildcardArg.getUpperBounds()) {
-                  if (!isAssignableReference(upperBound, fromArg, allowUncheckedConversion)) {
+                  if (!isAssignableReference(fromArg, upperBound, allowUncheckedConversion)) {
                      return false;
                   }
                }
                for (Type lowerBound : wildcardArg.getLowerBounds()) {
-                  if (!isAssignableReference(fromArg, lowerBound, allowUncheckedConversion)) {
+                  if (!isAssignableReference(lowerBound, fromArg, allowUncheckedConversion)) {
                      return false;
                   }
                }
@@ -1014,11 +1014,11 @@ public final class Types {
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
             return fromClass.isArray()
-                  && isAssignableReference(toArrayType.getGenericComponentType(),
-                        fromClass.getComponentType(), allowUncheckedConversion);
+                  && isAssignableReference(fromClass.getComponentType(), 
+                        toArrayType.getGenericComponentType(), allowUncheckedConversion);
          } else if (from instanceof GenericArrayType) {
-            return isAssignableReference(toArrayType.getGenericComponentType(),
-                  ((GenericArrayType) from).getGenericComponentType(), allowUncheckedConversion);
+            return isAssignableReference(((GenericArrayType) from).getGenericComponentType(),
+                  toArrayType.getGenericComponentType(), allowUncheckedConversion);
          } else {
             return false;
          }
@@ -1032,7 +1032,7 @@ public final class Types {
          assert toWildcard.getUpperBounds().length == 1;
          assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
-            if (!isAssignableReference(bound, from, allowUncheckedConversion)) {
+            if (!isAssignableReference(from, bound, allowUncheckedConversion)) {
                return false;
             }
          }
@@ -1114,59 +1114,69 @@ public final class Types {
    }
 
    /**
-    * Determines if one type is a subtype of another. This uses the rules in <em>Subtyping</em>
+    * Determines if one type is a <em>proper</em> subtype of another. This uses the rules in
+    * <em>Subtyping</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10">JLS
     * 4.10</a>) to decide if one type is a subtype of the other.
+    * 
+    * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+    * the two types are the same. To check if a type is the same or a subtype, consider using
+    * {@link #isAssignable(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
     *
-    * @param aType a type
     * @param possibleSubtype another type
+    * @param aType a type
     * @return true if the second type is a subtype of the first
     */
-   public static boolean isSubtype(Type aType, Type possibleSubtype) {
-      if (isSubtypeStrict(aType, possibleSubtype)) {
+   public static boolean isSubtype(Type possibleSubtype, Type aType) {
+      if (isSubtypeStrict(possibleSubtype, aType)) {
          return true;
       }
       if (!(aType instanceof Class) || !(possibleSubtype instanceof Class)) {
          return false;
       }
-      return isPrimitiveSubtype((Class<?>) aType, (Class<?>) possibleSubtype);
+      return isPrimitiveSubtype((Class<?>) possibleSubtype, (Class<?>) aType);
    }
    
    /**
-    * Determines if the given possible subclass is a subtype of the other given class according to
-    * the rules of <em>Subtyping among Primitive Types</em>
+    * Determines if the given possible subclass is a <em>proper</em> subtype of the other given
+    * class according to the rules of <em>Subtyping among Primitive Types</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-4.10.1">JLS
     * 4.10.1</a>).
     *
-    * @param aClass a class, possibly a primitive type
     * @param possibleSubclass another class, possibly a sub-type of the other
+    * @param aClass a class, possibly a primitive type
     * @return true if the one class is a subtype of the other per primitive subtyping
     */
-   private static boolean isPrimitiveSubtype(Class<?> aClass, Class<?> possibleSubclass) {
+   private static boolean isPrimitiveSubtype(Class<?> possibleSubclass, Class<?> aClass) {
       Set<Class<?>> subTypes = PRIMITIVE_SUBTYPES.get(aClass);
       return subTypes != null && subTypes.contains(possibleSubclass);
    }
    
    /**
-    * Determines if one type is a subtype of another, with restrictions. The restrictions are the
-    * same as those observed in calls to {@link Class#isAssignableFrom(Class)}: primitive subtyping
-    * rules are ignored. So this will return false if given {code int} and {@code short} (even
-    * though {@code short} is a subtype of {@code int} per primitive subtyping rules).
+    * Determines if one type is a <em>proper</em> subtype of another, with restrictions. The
+    * restrictions are the same as those observed in calls to {@link Class#isAssignableFrom(Class)}:
+    * primitive subtyping rules are ignored. So this will return false if given {@code int} and
+    * {@code short} (even though {@code short} is a subtype of {@code int} per primitive subtyping
+    * rules).
     * 
     * <p>So only the rules defined in <em>Subtyping among Class and Interface Types</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.2">JLS
     * 4.10.2</a>) and <em>Subtyping among Array Types</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.3">JLS
-    * 4.10.3</a>) are consulted.
+    * 4.10.3</a>) are used.
+    * 
+    * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+    * the two types are the same. To check if a type is the same or a subtype, consider using
+    * {@link #isAssignableStrict(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
     *
-    * @param aType a type
     * @param possibleSubtype another type
+    * @param aType a type
     * @return true if the second type is a subtype of the first (but not according to primitive
     *       subtyping rules)
     */
-   public static boolean isSubtypeStrict(Type aType, Type possibleSubtype) {
-      return isAssignableStrict(aType, possibleSubtype)
-            && !isSameType(aType, possibleSubtype);
+   public static boolean isSubtypeStrict(Type possibleSubtype, Type aType) {
+      return isAssignableStrict(possibleSubtype, aType)
+            && !isSameType(possibleSubtype, aType);
    }
 
    /**
@@ -1557,7 +1567,7 @@ public final class Types {
             if (t1 == t2) {
                continue;
             }      
-            if (isSubtype(t2, t1)) {
+            if (isSubtype(t1, t2)) {
                csIter.remove();
                break;
             }
@@ -1802,18 +1812,70 @@ public final class Types {
       // types via least-upper-bounds. So an attempt to intersect String and Class results in
       // Serializable since String & Class is not possible. Similarly, an attempt to intersect
       // List<String> and List<Class<?>> results in List<? extends Serializable>.
+      Set<Type> interfaceBounds = new LinkedHashSet<>((bounds.length + 1) * 4 / 3);
+      boolean interfacesNeedReduction = false;
+      Type classBound = null;
+      boolean newIsClass = !isInterface(newBound);
+      boolean existingHasClass = !isInterface(bounds[0]);
       
-      Set<Type> asSet = new LinkedHashSet<>((bounds.length + 1) * 4 / 3);
-      for (Type t : bounds) {
-         asSet.add(t);
-      }
-      asSet.add(newBound);
-      if (asSet.size() == 1) {
-         return new Type[] { newBound };
+      // Merge the given bounds array and the new bound into an optional class bound and zero or
+      // more interface bounds.
+      if (newIsClass && existingHasClass) {
+         for (int i = 1; i < bounds.length; i++) {
+            interfaceBounds.add(bounds[i]);
+         }
+         // compute least upper bounds for possibly-conflicting class types
+         Type lubs[] = getLeastUpperBounds(bounds[0], newBound);
+         if (!isInterface(lubs[0])) {
+            classBound = lubs[0];
+            if (lubs.length > 1) {
+               interfacesNeedReduction = !interfaceBounds.isEmpty();
+               for (int i = 1; i < lubs.length; i++) {
+                  interfaceBounds.add(lubs[i]);
+               }
+            }
+         } else {
+            interfacesNeedReduction = !interfaceBounds.isEmpty();
+            for (Type t : lubs) {
+               interfaceBounds.add(t);
+            }
+         }
       } else {
+         if (newIsClass) {
+            classBound = newBound;
+            for (Type t : bounds) {
+               interfaceBounds.add(t);
+            }
+         } else if (existingHasClass) {
+            classBound = bounds[0];
+            if (bounds.length > 1) {
+               interfacesNeedReduction = true;
+               for (int i = 1; i < bounds.length; i++) {
+                  interfaceBounds.add(bounds[i]);
+               }
+            }
+            interfaceBounds.add(newBound);
+         }
+      }
+      
+      Type[] reducedInterfaces;
+      if (interfacesNeedReduction) {
          // instead of gathering super-types and reducing to least upper bounds, the last argument
          // being "true" means this will just reduce the given input types
-         return leastUpperBounds(asSet, new HashSet<>(), true);
+         reducedInterfaces = leastUpperBounds(interfaceBounds, new HashSet<>(), true);
+      } else {
+         reducedInterfaces = interfaceBounds.toArray(new Type[interfaceBounds.size()]);
+      }
+      
+      if (classBound == null) {
+         return reducedInterfaces;
+      } else if (reducedInterfaces.length == 0) {
+         return new Type[] { classBound };
+      } else {
+         Type[] ret = new Type[reducedInterfaces.length + 1];
+         ret[0] = classBound;
+         System.arraycopy(reducedInterfaces, 0, ret, 1, reducedInterfaces.length);
+         return ret;
       }
    }
 
@@ -1822,24 +1884,123 @@ public final class Types {
     * interface type that has exactly one abstract method. Default methods on an interface are not
     * counted as abstract.
     * 
-    * <p>This applies the rules defined in 
+    * <p>This applies the rules defined in <em>Functional Interfaces</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.8">JLS
+    * 9.8</a>).
     *
-    * @param type
-    * @return
+    * @param type a type
+    * @return true if the given type is a functional interface (i.e. has a single abstract method)
     */
-   // TODO: javadoc
-   // JLS 9.8
    public static boolean isFunctionalInterface(Type type) {
       if (!(type instanceof Class || type instanceof ParameterizedType)) {
          return false;
       }
-      if (!isInterface(type)) {
+      Class<?> clazz = getRawType(type);
+      if (!clazz.isInterface()) {
          return false;
       }
-      // TODO: implement me!
+      Set<GenericSignature> options = new HashSet<>();
+      Type contextType = clazz == type ? null : type;
+      if (ClassHierarchyScanner.scanWith(clazz, options, new FunctionalSignatureCollector(contextType))
+            != null) {
+         // non-null return is sentinel that means scan aborted due to multiple erased signatures
+         return false;
+      }
+      if (options.isEmpty()) {
+         return false;
+      }
+      for (GenericSignature m1 : options) {
+         boolean match = true;
+         for (GenericSignature m2 : options) {
+            if (!m1.isSubsignature(m2) || !m1.isReturnTypeSubstitutable(m2)) {
+               match = false;
+               break;
+            }
+         }
+         if (match) {
+            return true;
+         }
+      }
       return false;
    }
-
+   
+   /**
+    * Sentinel returned to cancel a class hierarchy scan.
+    * @see FunctionalSignatureCollector
+    */
+   private enum Aborted {
+      INSTANCE;
+   }
+   
+   /**
+    * The public methods on {@link Object.class}. If an interface declares methods with the same
+    * signature, they are ignored when deciding if the interface is functional.
+    */
+   static final Set<MethodSignature> PUBLIC_OBJECT_METHODS;
+   static {
+      Set<MethodSignature> objMethods = new HashSet<>();
+      for (Method method : Object.class.getDeclaredMethods()) {
+         int mods = method.getModifiers();
+         if (!Modifier.isStatic(mods) && !Modifier.isAbstract(mods) && Modifier.isPublic(mods)) {
+            boolean added = objMethods.add(new MethodSignature(method));
+            assert added;
+         }
+      }
+      PUBLIC_OBJECT_METHODS = objMethods;
+   }
+   
+   /**
+    * A function used with {@link ClassHierarchyScanner} to collect method signatures for the class
+    * hierarchy of a possibly functional interface.
+    * 
+    * <p>If it can be determined during the scan that the interface is not functional, the scan is
+    * aborted. This is done by returning a non-null sentinel when visiting a given class. While
+    * scanning, all visited method signatures are collected in the function's second argument.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class FunctionalSignatureCollector
+   implements BiFunction<Class<?>, Set<GenericSignature>, Aborted> {
+      private final Type type;
+      private String name;
+      private int argCount;
+      
+      FunctionalSignatureCollector(Type type) {
+         this.type = type;
+      }
+      
+      @Override
+      public Aborted apply(Class<?> cl, Set<GenericSignature> set) {
+         if (cl == Object.class) {
+            return null;
+         }
+         for (Method m : cl.getDeclaredMethods()) {
+            int mods = m.getModifiers();
+            if (Modifier.isStatic(mods) || !Modifier.isAbstract(mods) || m.isDefault()) {
+               continue;
+            }
+            if (PUBLIC_OBJECT_METHODS.contains(new MethodSignature(m))) {
+               continue;
+            }
+            
+            if (name == null) {
+               name = m.getName();
+               argCount = m.getParameterCount();
+            } else if (!name.equals(m.getName()) || argCount != m.getParameterCount()) {
+               // We found a method that is clearly a second method? Then this can't be a
+               // functional interface so abort.
+               return Aborted.INSTANCE;
+            }
+            GenericSignature sig = new GenericSignature(m);
+            if (type != null) {
+               sig = sig.resolve(type);
+            }
+            set.add(sig);
+         }
+         return null;
+      }
+   };
+   
    /**
     * Resolves the given type variable in the context of the given type. For example, if the given
     * type variable is {@code Collection.<E>} and the given type is the parameterized type
@@ -2100,7 +2261,7 @@ public final class Types {
          // bounds, where a bound references its type variable). If any type variables cannot be
          // resolved, substitute them with an appropriate wildcard
          bound = replaceTypeVariablesInternal(bound, resolvedVariables, true);
-         if (!isAssignableStrict(bound, argument)) {
+         if (!isAssignableStrict(argument, bound)) {
             throw new IllegalArgumentException("Argument" + id + ", "
                   + argument.getTypeName() + " does not extend bound "+ bound.getTypeName());
          }
@@ -2469,7 +2630,7 @@ public final class Types {
     * type parameters (only their bounds, e.g. super-types, can).
     *
     * @param type a generic type
-    * @return the type parameters for the given type; an empty array if the type ha no parameters
+    * @return the type parameters for the given type; an empty array if the type has no parameters
     */
    public static TypeVariable<Class<?>>[] getTypeParameters(Type type) {
       requireNonNull(type);
@@ -2949,6 +3110,206 @@ public final class Types {
       @Override
       public String toString() {
          return Types.toString(this);
+      }
+   }
+   
+   /**
+    * Represents the generic signature of a method. Similar to {@link MethodSignature} except this
+    * represents generic types (not just class tokens) and also includes type parameters and return
+    * type of a method.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class GenericSignature {
+      private final String name;
+      private final Type returnType;
+      private final TypeVariable<?>[] typeVariables;
+      private final Type[] parameterTypes;
+      
+      /**
+       * Constructs a signature that represents the given method.
+       *
+       * @param m a method
+       */
+      GenericSignature(Method m) {
+         this(m.getName(), m.getGenericReturnType(), m.getTypeParameters(),
+               m.getGenericParameterTypes());
+      }
+
+      /**
+       * Constructs a signature.
+       *
+       * @param name the name of the method
+       * @param returnType the return type of the method
+       * @param typeVars the method's type variables
+       * @param paramTypes the generic types of the method's parameters
+       */
+      GenericSignature(String name, Type returnType, TypeVariable<?>[] typeVars, Type[] paramTypes) {
+         this.name = name;
+         this.returnType = returnType;
+         this.typeVariables = typeVars;
+         this.parameterTypes = paramTypes;
+      }
+      
+      /**
+       * Resolves types in this signature given a context type.
+       *
+       * @param context a context type
+       * @return a new signature with return and parameter types resolved
+       * 
+       * @see Types#resolveType(Type, Type)
+       */
+      public GenericSignature resolve(Type context) {
+         Type[] newParams = new Type[parameterTypes.length];
+         for (int i = 0; i < parameterTypes.length; i++) {
+            newParams[i] = resolveType(context, parameterTypes[i]);
+         }
+         return new GenericSignature(name, resolveType(context, returnType), typeVariables, newParams);
+      }
+      
+      /**
+       * Determines if this signature is the same as the given signature. This differs from
+       * {@link #equals(Object)} in that it doesn't simply compare the fields of the signature but
+       * instead applies rules described in the JLS, section 8.4.2.
+       * 
+       * <p>Note, this does not consider the methods' return types when determining if the two
+       * signatures are the same.
+       *
+       * @param other a signature
+       * @return true if the this signature is the same as the given one
+       */
+      public boolean isSameSignature(GenericSignature other) {
+         if (typeVariables.length != other.typeVariables.length
+               || parameterTypes.length != other.parameterTypes.length
+               || !name.equals(other.name)) {
+            return false;
+         }
+         
+         Type[] parameters;
+         if (typeVariables.length > 0) {
+            Map<TypeVariable<?>, Type> adaptedTypeVariables =
+                  new HashMap<>(typeVariables.length * 4 / 3);
+            for (int i = 0; i < typeVariables.length; i++) {
+               adaptedTypeVariables.put(typeVariables[i], other.typeVariables[i]);
+            }
+            
+            // adapt type bounds and then verify they match
+            for (int i = 0; i < typeVariables.length; i++) {
+               Type[] bounds = typeVariables[i].getBounds();
+               Type[] otherBounds = other.typeVariables[i].getBounds();
+               if (bounds.length != otherBounds.length) {
+                  return false;
+               }
+               for (int j = 0; j < bounds.length; j++) {
+                  Type b = Types.replaceTypeVariables(bounds[j], adaptedTypeVariables);
+                  if (!Types.equals(b, otherBounds[j])) {
+                     return false;
+                  }
+               }
+            }
+            
+            // adapt parameter types
+            parameters = new Type[parameterTypes.length];
+            for (int i = 0; i < parameterTypes.length; i++) {
+               parameters[i] = Types.replaceTypeVariables(parameterTypes[i], adaptedTypeVariables);
+            }
+
+         } else {
+            // no type variables to check and thus no need to adapt parameter types
+            parameters = parameterTypes;
+         }
+         
+         for (int i = 0; i < parameters.length; i++) {
+            if (!Types.equals(parameters[i], other.parameterTypes[i])) {
+               return false;
+            }
+         }
+         
+         return true;
+      }
+      
+      /**
+       * Determines if this signature is a subsignature of the given signature. This applies the
+       * rules described in the JLS, section 8.4.2.
+       *
+       * @param other a signature
+       * @return true if the this signature is a subsignature of the given one
+       */
+      public boolean isSubsignature(GenericSignature other) {
+         return isSameSignature(other) || isSameSignature(other.erased());
+      }
+      
+      /**
+       * Returns the erasure of this signature. The erased signature has no type parameters and only
+       * raw (non-generic) return and parameter types.
+       *
+       * @param other a signature
+       * @return true if the this signature is a subsignature of the given one
+       */
+      public GenericSignature erased() {
+         Type[] erasedParamTypes = new Type[parameterTypes.length];
+         for (int i = 0; i < parameterTypes.length; i++) {
+            erasedParamTypes[i] = getRawType(parameterTypes[i]);
+         }
+         return new GenericSignature(name, getRawType(returnType), EMPTY_TYPE_VARIABLES,
+               erasedParamTypes);
+      }
+      
+      /**
+       * Determines if this signature is return-type-substitutable for the given signature. This
+       * applies the rules in the JLS, section 8.4.5.
+       *
+       * @param other a signature
+       * @return true if this signature is return-type-substitutable for the given one
+       */
+      public boolean isReturnTypeSubstitutable(GenericSignature other) {
+         Type adapted;
+         if (typeVariables.length > 0) {
+            Map<TypeVariable<?>, Type> adaptedTypeVariables =
+                  new HashMap<>(typeVariables.length * 4 / 3);
+            for (int i = 0; i < typeVariables.length; i++) {
+               adaptedTypeVariables.put(typeVariables[i], other.typeVariables[i]);
+            }
+            adapted = replaceTypeVariables(returnType, adaptedTypeVariables);
+         } else {
+            // no type variables to adapt...
+            adapted = returnType;
+         }
+         return isAssignableReference(adapted, other.returnType, true);
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         if (o instanceof GenericSignature) {
+            GenericSignature other = (GenericSignature) o;
+            if (typeVariables.length != other.typeVariables.length
+                  || parameterTypes.length != other.parameterTypes.length
+                  || !name.equals(other.name)
+                  || !Types.equals(returnType, other.returnType)) {
+               return false;
+            }
+            for (int i = 0; i < typeVariables.length; i++) {
+               if (!Types.equals(typeVariables[i], other.typeVariables[i])) {
+                  return false;
+               }
+            }
+            for (int i = 0; i < parameterTypes.length; i++) {
+               if (!Types.equals(parameterTypes[i], other.parameterTypes[i])) {
+                  return false;
+               }
+            }
+            return true;
+         }
+         return false;
+      }
+
+      @Override
+      public int hashCode() {
+         int hash = name.hashCode();
+         hash = 31 * hash + Types.hashCode(returnType);
+         hash = 31 * hash + Types.hashCode(typeVariables);
+         hash = 31 * hash + Types.hashCode(parameterTypes);
+         return hash;
       }
    }
 }

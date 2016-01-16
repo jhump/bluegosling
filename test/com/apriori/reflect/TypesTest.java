@@ -204,7 +204,7 @@ public class TypesTest {
       assertNotEquals(Types.hashCode(WILDCARD_ARRAY), Types.hashCode(WILDCARD_EXTENDS));
       assertNotEquals(Types.hashCode(PARAM_TYPE), Types.hashCode(GENERIC_ARRAY_TYPE));
       
-      assertThrows(NullPointerException.class, () -> Types.hashCode(null));
+      assertThrows(NullPointerException.class, () -> Types.hashCode((Type) null));
       assertEquals(InvalidType.INSTANCE.hashCode(), Types.hashCode(InvalidType.INSTANCE));
    }
    
@@ -278,76 +278,79 @@ public class TypesTest {
    
    @Test public void isAssignable_toObject() {
       // anything assignable to Object
-      assertIsAssignable(Object.class, Integer.class);
-      assertIsAssignable(Object.class, Object[].class);
-      assertIsAssignable(Object.class, GENERIC_ARRAY_TYPE);
-      assertIsAssignable(Object.class, GENERIC_ARRAY_TYPE_VARIABLE);
-      assertIsAssignable(Object.class, WILDCARD_EXTENDS);
-      assertIsAssignable(Object.class, WILDCARD_SUPER);
-      assertIsAssignable(Object.class, WILDCARD_ARRAY);
-      assertIsAssignable(Object.class, TYPE_VAR_T);
-      assertIsAssignable(Object.class, TYPE_VAR_Z);
-      assertIsAssignable(Object.class, PARAM_TYPE);
-      assertIsAssignable(Object.class, InvalidType.INSTANCE);
+      assertIsAssignable(Integer.class, Object.class);
+      assertIsAssignable(Object[].class, Object.class);
+      assertIsAssignable(GENERIC_ARRAY_TYPE, Object.class);
+      assertIsAssignable(GENERIC_ARRAY_TYPE_VARIABLE, Object.class);
+      assertIsAssignable(WILDCARD_EXTENDS, Object.class);
+      assertIsAssignable(WILDCARD_SUPER, Object.class);
+      assertIsAssignable(WILDCARD_ARRAY, Object.class);
+      assertIsAssignable(TYPE_VAR_T, Object.class);
+      assertIsAssignable(TYPE_VAR_Z, Object.class);
+      assertIsAssignable(PARAM_TYPE, Object.class);
+      assertIsAssignable(InvalidType.INSTANCE, Object.class);
       // except primitives
-      assertIsNotAssignable(Object.class, boolean.class);
-      assertIsNotAssignable(Object.class, byte.class);
-      assertIsNotAssignable(Object.class, char.class);
-      assertIsNotAssignable(Object.class, short.class);
-      assertIsNotAssignable(Object.class, int.class);
-      assertIsNotAssignable(Object.class, long.class);
-      assertIsNotAssignable(Object.class, float.class);
-      assertIsNotAssignable(Object.class, double.class);
-      assertIsNotAssignable(Object.class, void.class);
+      assertIsNotAssignable(boolean.class, Object.class);
+      assertIsNotAssignable(byte.class, Object.class);
+      assertIsNotAssignable(char.class, Object.class);
+      assertIsNotAssignable(short.class, Object.class);
+      assertIsNotAssignable(int.class, Object.class);
+      assertIsNotAssignable(long.class, Object.class);
+      assertIsNotAssignable(float.class, Object.class);
+      assertIsNotAssignable(double.class, Object.class);
+      assertIsNotAssignable(void.class, Object.class);
       // primitive arrays are assignable though
-      assertIsAssignable(Object.class, boolean[].class);
-      assertIsAssignable(Object.class, byte[].class);
-      assertIsAssignable(Object.class, char[].class);
-      assertIsAssignable(Object.class, short[].class);
-      assertIsAssignable(Object.class, int[].class);
-      assertIsAssignable(Object.class, long[].class);
-      assertIsAssignable(Object.class, float[].class);
-      assertIsAssignable(Object.class, double[].class);
+      assertIsAssignable(boolean[].class, Object.class);
+      assertIsAssignable(byte[].class, Object.class);
+      assertIsAssignable(char[].class, Object.class);
+      assertIsAssignable(short[].class, Object.class);
+      assertIsAssignable(int[].class, Object.class);
+      assertIsAssignable(long[].class, Object.class);
+      assertIsAssignable(float[].class, Object.class);
+      assertIsAssignable(double[].class, Object.class);
    }
    
    @Test public void isAssignable_toObjectArray() {
       // if not an array, not assignable
-      assertIsNotAssignable(Object[].class, Integer.class);
-      assertIsNotAssignable(Object[].class, WILDCARD_EXTENDS);
-      assertIsNotAssignable(Object[].class, WILDCARD_SUPER);
-      assertIsNotAssignable(Object[].class, TYPE_VAR_T);
-      assertIsNotAssignable(Object[].class, TYPE_VAR_Z);
-      assertIsNotAssignable(Object[].class, PARAM_TYPE);
-      assertIsNotAssignable(Object[].class, InvalidType.INSTANCE);
-      // all array types are assignable
+      assertIsNotAssignable(Integer.class, Object[].class);
+      assertIsNotAssignable(WILDCARD_EXTENDS, Object[].class);
+      assertIsNotAssignable(WILDCARD_SUPER, Object[].class);
+      assertIsNotAssignable(TYPE_VAR_T, Object[].class);
+      assertIsNotAssignable(TYPE_VAR_Z, Object[].class);
+      assertIsNotAssignable(PARAM_TYPE, Object[].class);
+      assertIsNotAssignable(InvalidType.INSTANCE, Object[].class);
+      // all array types are assignable to Object[]
       assertIsAssignable(Object[].class, Object[].class);
-      assertIsAssignable(Object[].class, GENERIC_ARRAY_TYPE);
-      assertIsAssignable(Object[].class, GENERIC_ARRAY_TYPE_VARIABLE);
-      assertIsAssignable(Object[].class, WILDCARD_ARRAY);
-      assertIsAssignable(Object[].class, fabricateTypeVarThatExtends(Integer[].class));
+      assertIsAssignable(GENERIC_ARRAY_TYPE, Object[].class);
+      assertIsAssignable(GENERIC_ARRAY_TYPE_VARIABLE, Object[].class);
+      assertIsAssignable(WILDCARD_ARRAY, Object[].class);
+      assertIsAssignable(fabricateTypeVarThatExtends(Integer[].class), Object[].class);
       // except primitive arrays
-      assertIsNotAssignable(Object[].class, boolean[].class);
-      assertIsNotAssignable(Object[].class, byte[].class);
-      assertIsNotAssignable(Object[].class, char[].class);
-      assertIsNotAssignable(Object[].class, short[].class);
-      assertIsNotAssignable(Object[].class, int[].class);
-      assertIsNotAssignable(Object[].class, long[].class);
-      assertIsNotAssignable(Object[].class, float[].class);
-      assertIsNotAssignable(Object[].class, double[].class);
+      assertIsNotAssignable(boolean[].class, Object[].class);
+      assertIsNotAssignable(byte[].class, Object[].class);
+      assertIsNotAssignable(char[].class, Object[].class);
+      assertIsNotAssignable(short[].class, Object[].class);
+      assertIsNotAssignable(int[].class, Object[].class);
+      assertIsNotAssignable(long[].class, Object[].class);
+      assertIsNotAssignable(float[].class, Object[].class);
+      assertIsNotAssignable(double[].class, Object[].class);
    }
    
    @Test public void isAssignable_toClass() {
       // parameterized type can be assigned to raw type if raw types are compatible
-      assertIsAssignable(List.class, Types.newParameterizedType(List.class, String.class));
-      assertIsAssignable(Collection.class, Types.newParameterizedType(List.class, String.class));
-      assertIsNotAssignable(List.class, Types.newParameterizedType(Collection.class, String.class));
+      assertIsAssignable(Types.newParameterizedType(List.class, String.class), List.class);
+      assertIsAssignable(Types.newParameterizedType(List.class, String.class), Collection.class);
+      assertIsNotAssignable(Types.newParameterizedType(Collection.class, String.class), List.class);
       // similarly for generic array types
-      assertIsAssignable(List[].class,
-            Types.newGenericArrayType(Types.newParameterizedType(List.class, String.class)));
-      assertIsAssignable(Collection[].class,
-            Types.newGenericArrayType(Types.newParameterizedType(List.class, String.class)));
-      assertIsNotAssignable(List[].class,
-            Types.newGenericArrayType(Types.newParameterizedType(Collection.class, String.class)));
+      assertIsAssignable(
+            Types.newGenericArrayType(Types.newParameterizedType(List.class, String.class)),
+            List[].class);
+      assertIsAssignable(
+            Types.newGenericArrayType(Types.newParameterizedType(List.class, String.class)),
+            Collection[].class);
+      assertIsNotAssignable(
+            Types.newGenericArrayType(Types.newParameterizedType(Collection.class, String.class)),
+            List[].class);
       // primitives only assignable from themselves
       Class<?> primitives[] = { boolean.class, byte.class, char.class, short.class, int.class,
             long.class, float.class, double.class, void.class };
@@ -357,35 +360,35 @@ public class TypesTest {
          }
       }
       // other raw types assignable if compatible (just like Class.isAssignableFrom)
-      assertIsAssignable(CharSequence.class, String.class);
-      assertIsAssignable(Number.class, Integer.class);
-      assertIsNotAssignable(Number.class, String.class);
-      assertIsNotAssignable(CharSequence.class, Double.class);
+      assertIsAssignable(String.class, CharSequence.class);
+      assertIsAssignable(Integer.class, Number.class);
+      assertIsNotAssignable(String.class, Number.class);
+      assertIsNotAssignable(Double.class, CharSequence.class);
       assertIsAssignable(List.class, List.class);
-      assertIsAssignable(Collection.class, List.class);
-      assertIsNotAssignable(String.class, List.class);
+      assertIsAssignable(List.class, Collection.class);
+      assertIsNotAssignable(List.class, String.class);
       // same for simple array types
-      assertIsAssignable(CharSequence[].class, String[].class);
-      assertIsAssignable(Number[].class, Integer[].class);
-      assertIsNotAssignable(Number[].class, String[].class);
-      assertIsNotAssignable(CharSequence[].class, Double[].class);
+      assertIsAssignable(String[].class, CharSequence[].class);
+      assertIsAssignable(Integer[].class, Number[].class);
+      assertIsNotAssignable(String[].class, Number[].class);
+      assertIsNotAssignable(Double[].class, CharSequence[].class);
       assertIsAssignable(List[].class, List[].class);
-      assertIsAssignable(Collection[].class, List[].class);
-      assertIsNotAssignable(String[].class, List[].class);
-      assertIsNotAssignable(String[][].class, String[].class);
+      assertIsAssignable(List[].class, Collection[].class);
+      assertIsNotAssignable(List[].class, String[].class);
       assertIsNotAssignable(String[].class, String[][].class);
+      assertIsNotAssignable(String[][].class, String[].class);
       // cannot assign from super-bounded wildcard (except to Object.class)
-      assertIsNotAssignable(List.class, WILDCARD_SUPER);
-      assertIsNotAssignable(Collection.class, WILDCARD_SUPER);
+      assertIsNotAssignable(WILDCARD_SUPER, List.class);
+      assertIsNotAssignable(WILDCARD_SUPER, Collection.class);
       // but can from extends-bounded wildcards
-      assertIsAssignable(Number.class, WILDCARD_EXTENDS);
-      assertIsAssignable(List[].class, WILDCARD_ARRAY);
+      assertIsAssignable(WILDCARD_EXTENDS, Number.class);
+      assertIsAssignable(WILDCARD_ARRAY, List[].class);
       // and type variables, too
-      assertIsAssignable(Map.class, TYPE_VAR_Z);
-      assertIsAssignable(Serializable.class, TYPE_VAR_Z);
-      assertIsAssignable(Cloneable.class, TYPE_VAR_Z);
-      assertIsNotAssignable(String.class, TYPE_VAR_Z);
-      assertIsNotAssignable(List.class, TYPE_VAR_Z);
+      assertIsAssignable(TYPE_VAR_Z, Map.class);
+      assertIsAssignable(TYPE_VAR_Z, Serializable.class);
+      assertIsAssignable(TYPE_VAR_Z, Cloneable.class);
+      assertIsNotAssignable(TYPE_VAR_Z, String.class);
+      assertIsNotAssignable(TYPE_VAR_Z, List.class);
    }
 
    interface SimpleStringList extends List<String> {
@@ -399,67 +402,76 @@ public class TypesTest {
       assertIsAssignable(PARAM_TYPE, PARAM_TYPE);
       // compatible types, too
       Type listOfString = Types.newParameterizedType(List.class, String.class);
-      assertIsAssignable(listOfString, Types.newParameterizedType(ArrayList.class, String.class));
-      assertIsAssignable(Types.newParameterizedType(Iterable.class, String.class), listOfString);
-      assertIsNotAssignable(listOfString, Types.newParameterizedType(Iterable.class, String.class));
-      assertIsNotAssignable(Types.newParameterizedType(ArrayList.class, String.class), listOfString);
+      assertIsAssignable(Types.newParameterizedType(ArrayList.class, String.class), listOfString);
+      assertIsAssignable(listOfString, Types.newParameterizedType(Iterable.class, String.class));
+      assertIsNotAssignable(Types.newParameterizedType(Iterable.class, String.class), listOfString);
+      assertIsNotAssignable(listOfString, Types.newParameterizedType(ArrayList.class, String.class));
       // array types cannot be parameterized
-      assertIsNotAssignable(PARAM_TYPE, List[].class);
-      assertIsNotAssignable(PARAM_TYPE, Map[].class);
-      assertIsNotAssignable(PARAM_TYPE, Types.newGenericArrayType(
-            Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)));
+      assertIsNotAssignable(List[].class, PARAM_TYPE);
+      assertIsNotAssignable(Map[].class, PARAM_TYPE);
+      assertIsNotAssignable(Types.newGenericArrayType(
+            Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)),
+            PARAM_TYPE);
       // raw types cannot be assigned to parameterized types (without unchecked cast)
-      assertIsNotAssignable(PARAM_TYPE, Collection.class);
-      assertIsNotAssignable(PARAM_TYPE, List.class);
-      assertIsNotAssignable(PARAM_TYPE, ArrayList.class);
-      assertIsNotAssignable(PARAM_TYPE, Types.newParameterizedType(List.class, Map.class));
+      assertIsNotAssignable(Collection.class, PARAM_TYPE);
+      assertIsNotAssignable(List.class, PARAM_TYPE);
+      assertIsNotAssignable(ArrayList.class, PARAM_TYPE);
+      assertIsNotAssignable(Types.newParameterizedType(List.class, Map.class), PARAM_TYPE);
       // without wildcard as actual type arg, require exact match on parameters
-      assertIsNotAssignable(PARAM_TYPE, Types.newParameterizedType(List.class,
+      assertIsNotAssignable(Types.newParameterizedType(List.class,
             Types.newParameterizedType(Map.class,
-                  Types.getTypeVariable("T", Dummy.class), Number.class)));
-      assertIsNotAssignable(PARAM_TYPE, Types.newParameterizedType(List.class,
+                  Types.getTypeVariable("T", Dummy.class), Number.class)),
+            PARAM_TYPE);
+      assertIsNotAssignable(Types.newParameterizedType(List.class,
             Types.newParameterizedType(Map.class,
-                  Types.newExtendsWildcardType(TYPE_VAR_T), Integer.class)));
-      assertIsAssignable(PARAM_TYPE, Types.newParameterizedType(List.class,
-            Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)));
+                  Types.newExtendsWildcardType(TYPE_VAR_T), Integer.class)),
+            PARAM_TYPE);
+      assertIsAssignable(Types.newParameterizedType(List.class,
+            Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)),
+            PARAM_TYPE);
       // if super-type includes raw type reference to generic type, we lose type information and
       // would require unchecked casts, so not allowed
-      assertIsNotAssignable(listOfString, TypedStringList.class);
+      assertIsNotAssignable(TypedStringList.class, listOfString);
       // but any type arg suffices
-      assertIsAssignable(listOfString,
-            Types.newParameterizedType(TypedStringList.class, Object.class));
-      assertIsAssignable(listOfString,
-            Types.newParameterizedType(TypedStringList.class, Number.class));
+      assertIsAssignable(Types.newParameterizedType(TypedStringList.class, Object.class),
+            listOfString);
+      assertIsAssignable(Types.newParameterizedType(TypedStringList.class, Number.class),
+            listOfString);
       // simpler case: "from" raw type needs no type args
-      assertIsAssignable(listOfString, SimpleStringList.class);
+      assertIsAssignable(SimpleStringList.class, listOfString);
       // must be exact match
-      assertIsNotAssignable(Types.newParameterizedType(List.class, CharSequence.class),
-            SimpleStringList.class);
+      assertIsNotAssignable(SimpleStringList.class,
+            Types.newParameterizedType(List.class, CharSequence.class));
       // unless assignment target has wildcard bound
-      assertIsAssignable(Types.newParameterizedType(List.class,
-            Types.newExtendsWildcardType(CharSequence.class)), SimpleStringList.class);
+      assertIsAssignable(SimpleStringList.class,
+            Types.newParameterizedType(List.class,
+                  Types.newExtendsWildcardType(CharSequence.class)));
       // covariance when nested parameterized types have wildcard arguments
       // List<? extends Map<?, ? extends Number>>
       Type listOfWildcardMap = Types.newParameterizedType(List.class,
             Types.newExtendsWildcardType(Types.newParameterizedType(Map.class,
                   Types.extendsAnyWildcard(), Types.newExtendsWildcardType(Number.class))));
-      assertIsAssignable(listOfWildcardMap, PARAM_TYPE);
-      assertIsAssignable(listOfWildcardMap, Types.newParameterizedType(ArrayList.class,
-            Types.newParameterizedType(HashMap.class, String.class, Double.class)));
+      assertIsAssignable(PARAM_TYPE, listOfWildcardMap);
+      assertIsAssignable(Types.newParameterizedType(ArrayList.class,
+            Types.newParameterizedType(HashMap.class, String.class, Double.class)),
+            listOfWildcardMap);
       // not assignable if type args don't match wildcard bounds
-      assertIsNotAssignable(listOfWildcardMap, Types.newParameterizedType(ArrayList.class,
-            Types.newParameterizedType(HashMap.class, String.class, String.class)));
+      assertIsNotAssignable(Types.newParameterizedType(ArrayList.class,
+            Types.newParameterizedType(HashMap.class, String.class, String.class)),
+            listOfWildcardMap);
       // if type argument has no wildcard, but nested type arg does, still invariant
       Type listOfMapWildcards = Types.newParameterizedType(List.class,
             Types.newParameterizedType(Map.class,
                   Types.extendsAnyWildcard(), Types.extendsAnyWildcard()));
-      assertIsNotAssignable(listOfMapWildcards, PARAM_TYPE);
-      assertIsNotAssignable(listOfMapWildcards, Types.newParameterizedType(List.class,
+      assertIsNotAssignable(PARAM_TYPE, listOfMapWildcards);
+      assertIsNotAssignable(Types.newParameterizedType(List.class,
             Types.newParameterizedType(HashMap.class,
-                  Types.extendsAnyWildcard(), Types.extendsAnyWildcard())));
-      assertIsAssignable(listOfMapWildcards, Types.newParameterizedType(ArrayList.class,
+                  Types.extendsAnyWildcard(), Types.extendsAnyWildcard())),
+            listOfMapWildcards);
+      assertIsAssignable(Types.newParameterizedType(ArrayList.class,
             Types.newParameterizedType(Map.class,
-                  Types.extendsAnyWildcard(), Types.extendsAnyWildcard())));
+                  Types.extendsAnyWildcard(), Types.extendsAnyWildcard())),
+            listOfMapWildcards);
    }
    
    @Test public void isAssignable_toGenericArrayType() {
@@ -468,44 +480,44 @@ public class TypesTest {
 
    @Test public void isAssignable_toWildcardType() {
       // nothing can be assigned to an extends wildcard
-      assertIsNotAssignable(WILDCARD_EXTENDS, Number.class);
-      assertIsNotAssignable(WILDCARD_EXTENDS, Integer.class);
+      assertIsNotAssignable(Number.class, WILDCARD_EXTENDS);
+      assertIsNotAssignable(Integer.class, WILDCARD_EXTENDS);
       // unless they are the exact *same* type
       assertIsAssignable(WILDCARD_EXTENDS, WILDCARD_EXTENDS);
       // merely *equal* doesn't cut it
       WildcardType w = Types.newExtendsWildcardType(Number.class);
-      assertEquals(WILDCARD_EXTENDS, w);
-      assertIsNotAssignable(WILDCARD_EXTENDS, w);
+      assertEquals(w, WILDCARD_EXTENDS);
+      assertIsNotAssignable(w, WILDCARD_EXTENDS);
       
       // but super wildcard can be assigned from the bound or a sub-type thereof
-      assertIsAssignable(WILDCARD_SUPER, Types.newParameterizedType(List.class, TYPE_VAR_T));
-      assertIsAssignable(WILDCARD_SUPER, Types.newParameterizedType(ArrayList.class, TYPE_VAR_T));
+      assertIsAssignable(Types.newParameterizedType(List.class, TYPE_VAR_T), WILDCARD_SUPER);
+      assertIsAssignable(Types.newParameterizedType(ArrayList.class, TYPE_VAR_T), WILDCARD_SUPER);
       // but nothing above
-      assertIsNotAssignable(WILDCARD_SUPER,
-            Types.newParameterizedType(Collection.class, TYPE_VAR_T));
-      assertIsNotAssignable(WILDCARD_SUPER, Types.newParameterizedType(Iterable.class, TYPE_VAR_T));
+      assertIsNotAssignable(Types.newParameterizedType(Collection.class, TYPE_VAR_T),
+            WILDCARD_SUPER);
+      assertIsNotAssignable(Types.newParameterizedType(Iterable.class, TYPE_VAR_T), WILDCARD_SUPER);
    }
 
    @Test public void isAssignable_toTypeVariable() {
       // only a value of the *same* type may be assigned (e.g. reference to same type variable or
       // wildcard/type var that extends it)
-      assertIsNotAssignable(TYPE_VAR_T, fabricateTypeVarThatExtends(Object.class));
-      assertIsNotAssignable(TYPE_VAR_T, TYPE_VAR_Z);
-      assertIsAssignable(TYPE_VAR_T, Types.getTypeVariable("T", Dummy.class));
-      assertIsAssignable(TYPE_VAR_T, fabricateTypeVar("T", Dummy.class, Object.class));
+      assertIsNotAssignable(fabricateTypeVarThatExtends(Object.class), TYPE_VAR_T);
+      assertIsNotAssignable(TYPE_VAR_Z, TYPE_VAR_T);
+      assertIsAssignable(Types.getTypeVariable("T", Dummy.class), TYPE_VAR_T);
+      assertIsAssignable(fabricateTypeVar("T", Dummy.class, Object.class), TYPE_VAR_T);
    }
    
    /**
     * Asserts the given {@code from} type is assignable to the {@code to} type. This will also check
     * that wildcards and type variables that extend the {@code from} are also assignable.
     */
-   private void assertIsAssignable(Type to, Type from) {
-      assertTrue(Types.isAssignableStrict(to, from));
+   private void assertIsAssignable(Type from, Type to) {
+      assertTrue(Types.isAssignableStrict(from, to));
       // if we can, check that wildcard or type var that extends given type is also assignable
       // (can't have a wildcard or type var that extends a primitive or other wildcard)
       if (!Types.isPrimitive(from) && !(from instanceof WildcardType)) {
-         assertTrue(Types.isAssignableStrict(to, Types.newExtendsWildcardType(from)));
-         assertTrue(Types.isAssignableStrict(to, fabricateTypeVarThatExtends(from)));
+         assertTrue(Types.isAssignableStrict(Types.newExtendsWildcardType(from), to));
+         assertTrue(Types.isAssignableStrict(fabricateTypeVarThatExtends(from), to));
       }
       // if we can, do similar check for arrays of the given types (cannot create arrays of
       // wildcard type, void, or unknown type impls)
@@ -517,9 +529,9 @@ public class TypesTest {
          Type toArray = to instanceof Class
                ? Types.getArrayType((Class<?>) to)
                : Types.newGenericArrayType(to);
-         assertTrue(Types.isAssignableStrict(toArray, fromArray));
-         assertTrue(Types.isAssignableStrict(toArray, Types.newExtendsWildcardType(fromArray)));
-         assertTrue(Types.isAssignableStrict(toArray, fabricateTypeVarThatExtends(fromArray)));
+         assertTrue(Types.isAssignableStrict(fromArray, toArray));
+         assertTrue(Types.isAssignableStrict(Types.newExtendsWildcardType(fromArray), toArray));
+         assertTrue(Types.isAssignableStrict(fabricateTypeVarThatExtends(fromArray), toArray));
       }
    }
 
@@ -528,15 +540,15 @@ public class TypesTest {
     * will also check that wildcards and type variables that extend the {@code from} are also not
     * assignable.
     */
-   private void assertIsNotAssignable(Type to, Type from) {
-      assertFalse(Types.isAssignableStrict(to, from));
+   private void assertIsNotAssignable(Type from, Type to) {
+      assertFalse(Types.isAssignableStrict(from, to));
       if (Types.isPrimitive(from) || from instanceof WildcardType) {
          // no more checks can be made (can't have a wildcard or type var that
          // extends a primitive or wildcard type)
          return;
       }
-      assertFalse(Types.isAssignableStrict(to, Types.newExtendsWildcardType(from)));
-      assertFalse(Types.isAssignableStrict(to, fabricateTypeVarThatExtends(from)));
+      assertFalse(Types.isAssignableStrict(Types.newExtendsWildcardType(from), to));
+      assertFalse(Types.isAssignableStrict(fabricateTypeVarThatExtends(from), to));
    }
 
    private Type fabricateTypeVarThatExtends(Type... t) {

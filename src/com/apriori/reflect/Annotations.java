@@ -115,13 +115,14 @@ public final class Annotations {
     *       keys
     */
    public static <T extends Annotation> T create(final Class<T> annotationType,
-         Map<String, Object> attributes) {
+         Map<String, ?> attributes) {
       if (!annotationType.isAnnotation()) {
          throw new IllegalArgumentException(annotationType + " is not an annotation");
       }
-      final Map<String, Object> resolvedAttributes = new HashMap<>((attributes.size() << 2) / 3);
+      Method[] methods = annotationType.getDeclaredMethods();
+      final Map<String, Object> resolvedAttributes = new HashMap<>(methods.length * 4 / 3);
       Set<String> keys = new HashSet<>(attributes.keySet());
-      for (Method m : annotationType.getDeclaredMethods()) {
+      for (Method m : methods) {
          if (!keys.remove(m.getName())) {
             Object value = m.getDefaultValue();
             if (value == null) {
@@ -230,16 +231,16 @@ public final class Annotations {
          return badType(returnType, value.getClass());
       }
       Class<?> classValue = (Class<?>) value;
-      // Using int.class as the value for an annotation method that returns List<Integer>, or
-      // even List<? extends Number>, is (surprisingly?) legit since int.class is actually a
-      // List<Integer>. So we box the types before checking assignability.
+      // Using int.class as the value for an annotation method that returns Class<Integer>, or
+      // even Class<? extends Number>, is (surprisingly?) legit since int.class is actually a
+      // Class<Integer>. So we box the types before checking assignability.
       Type actualTypeArg = Types.box(classValue);
       if (returnType instanceof Class) {
          // not a parameterized type, so any Class value will do
          return classValue;
       } else {
-         if (!Types.isAssignableStrict(returnType,
-               Types.newParameterizedType(Class.class, actualTypeArg))) {
+         if (!Types.isAssignableStrict(Types.newParameterizedType(Class.class, actualTypeArg), 
+               returnType)) {
             badClassType(returnType, classValue);
          }
          return classValue;
@@ -285,7 +286,7 @@ public final class Annotations {
             }
          }
          @SuppressWarnings("unchecked") // we just checked the keys, so this will be okay
-         Map<String, Object> typedMap = (Map<String, Object>) subMap;
+         Map<String, ?> typedMap = (Map<String, ?>) subMap;
          // recursively create annotation field value
          return create(annotationType, typedMap);
       } else {
@@ -337,6 +338,8 @@ public final class Annotations {
     * have a sane equals implementation).
     * 
     * @param annotation the annotation
+    * @param includeAnnotationType if true, the map will have a key named "annotationType" whose
+    *       value is the class token returned from calling {@code annotation.annotationType()}
     * @return a map of values where keys are the annotation method names and values are the
     *       values returned by those methods (methods that return other annotations will result in
     *       map values that are sub-maps, constructed from the other annotation using this same

@@ -13,6 +13,7 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
 
+import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,17 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.TypeParameterElement;
+import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
 
 import junit.framework.AssertionFailedError;
 
@@ -70,6 +81,10 @@ public class AnnotationProcessorTestRunnerTest {
     * @throws AssertionFailedError always
     */
    private static AssertionFailedError consolidate(List<Throwable> errors) {
+      for (Throwable t : errors) {
+         t.printStackTrace();
+      }
+      
       if (errors.size() == 1) {
          // single exception
          Throwable t = errors.get(0);
@@ -140,7 +155,87 @@ public class AnnotationProcessorTestRunnerTest {
 
       @Override
       public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+         processingEnv.getElementUtils().printElements(new OutputStreamWriter(System.out), annotations.toArray(new Element[0]));
+         
+         TypeElement list = processingEnv.getElementUtils().getTypeElement("java.util.List");
+         for (Element e : list.getEnclosedElements()) {
+            if (e.getKind() != ElementKind.METHOD) {
+               continue;
+            }
+            ExecutableElement ee = (ExecutableElement) e;
+            if (!ee.getSimpleName().toString().equals("addAll") || ee.getParameters().size() != 1) {
+               continue;
+            }
+            VariableElement parm = ((ExecutableElement) e).getParameters().get(0);
+            for (int i = 0; i < 2; i++) {
+               TypeMirror captured = processingEnv.getTypeUtils().capture(parm.asType());
+               assertSame(TypeKind.DECLARED, captured.getKind());
+               TypeMirror arg = ((DeclaredType) captured).getTypeArguments().get(0);
+               assertSame(TypeKind.TYPEVAR, arg.getKind());
+               TypeVariable var = (TypeVariable) arg;
+               TypeParameterElement varElement = (TypeParameterElement) var.asElement();
+               dumpElement(varElement.getSimpleName().toString(), varElement);
+               dumpElement("generic declaration", varElement.getGenericElement());
+               dumpElement("enclosing", varElement.getEnclosingElement());
+               PackageElement pkg = processingEnv.getElementUtils().getPackageElement("");
+               dumpElement("unnamed package", pkg);
+            }
+         }
+         
          return false;
+      }
+
+      private void dumpElement(String title, Element element) {
+         System.out.println(title);
+         System.out.println("--------");
+         dumpElementRecursive(element, "");
+         System.out.println();
+      }
+
+      private void dumpElementRecursive(Element element, String indent) {
+         dumpElementShallow(element, indent);
+         System.out.print(indent + "Enclosing: ");
+         Element enclosing = element.getEnclosingElement();
+         if (enclosing == null) {
+            System.out.println("null");
+         } else {
+            System.out.println();
+            dumpElementRecursive(enclosing, indent + "    ");
+         }
+         System.out.print(indent + "Enclosed: ");
+         Throwable thrown = null;
+         List<? extends Element> enclosed;
+         try {
+            enclosed = element.getEnclosedElements();
+         } catch (Throwable t) {
+            thrown = t;
+            enclosed = null;
+         }
+         if (thrown != null) {
+            System.out.println(thrown);
+         }
+         else if (enclosed == null) {
+            System.out.println("null!!");
+         } else if (enclosed.isEmpty()) {
+            System.out.println("none");
+         } else {
+            System.out.println();
+            for (Element e : enclosed) {
+               dumpElementShallow(e, indent + "    ");
+            }
+         }
+      }
+      
+      private void dumpElementShallow(Element element, String indent) {
+         System.out.println(indent + "Object: " + element.getClass().getName()
+               + " @ " + System.identityHashCode(element));
+         System.out.println(indent + "Name: " + processingEnv.getElementUtils()
+               .getConstantExpression(element.getSimpleName().toString()));
+         System.out.println(indent + "Kind: " + element.getKind());
+         if (element.getKind() == ElementKind.PACKAGE) {
+            System.out.println(indent + "Full Name: " + ((PackageElement) element).getQualifiedName());
+            System.out.println(indent + "Unnamed? " + ((PackageElement) element).isUnnamed());
+         }
       }
    }
    
@@ -150,6 +245,7 @@ public class AnnotationProcessorTestRunnerTest {
       public TestProcessorUnderTest() {}
       @Test public void test(TestEnvironment testEnv) {
          assertEquals(1, ((TestProcessor) testEnv.processorUnderTest()).initCount);
+         testEnv.invokeProcessor();
       }
    }
    

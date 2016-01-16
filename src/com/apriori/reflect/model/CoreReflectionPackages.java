@@ -1,6 +1,7 @@
 package com.apriori.reflect.model;
 
 import com.apriori.reflect.PackageScanner;
+import com.apriori.reflect.PackageScanner.ClassInfo;
 import com.apriori.reflect.PackageScanner.ScanResult;
 
 import java.util.ArrayList;
@@ -39,12 +40,18 @@ final class CoreReflectionPackages {
    }
    
    public static List<Element> getTopLevelTypesAsElements(String packageName) {
-      Set<Class<?>> classes = get().getClassesFound(packageName);
+      Set<ClassInfo> classes = get().getClassesFound(packageName);
       if (classes.isEmpty()) {
          return Collections.emptyList();
       }
       List<Element> results = new ArrayList<>(classes.size());
-      for (Class<?> cl : classes) {
+      for (ClassInfo classInfo : classes) {
+         Class<?> cl;
+         try {
+            cl = classInfo.asClass();
+         } catch (ClassNotFoundException | LinkageError e) {
+            continue; // skip unloadable entries
+         }
          if (!cl.isAnonymousClass() && !cl.isLocalClass() && !cl.isMemberClass()) {
             results.add(new CoreReflectionTypeElement(cl));
          }

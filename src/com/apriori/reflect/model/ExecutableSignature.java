@@ -13,13 +13,15 @@ import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Represents a method or constructor signature, including annotations. Technically, a signature
  * just includes the method's (or constructor's) name, type arguments, and parameters. However, this
  * class also includes details for the return type, optional receiver type (for non-static methods
  * and constructors of non-static nested classes), and thrown exception types.
+ * 
+ * <p>This class implements {@link AnnotatedElement} so usages can query for annotations that are
+ * present on the method or constructor from which this signature was created.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -254,8 +256,7 @@ class ExecutableSignature implements AnnotatedElement {
     * @return true if this executable signature is a subsignature of the given one
     */
    public boolean isSubsignatureOf(ExecutableSignature other) {
-      return isSameSignature(other)
-            || isSameSignature(other.erased());
+      return isSameSignature(other) || isSameSignature(other.erased());
    }
    
    /**
@@ -309,11 +310,32 @@ class ExecutableSignature implements AnnotatedElement {
 
    @Override
    public int hashCode() {
-      return Objects.hash(name, Arrays.asList(paramTypes), Arrays.asList(thrownTypes),
-            Arrays.asList(typeParameters), receiverType, returnType,
-            Arrays.asList(annotationSource.getDeclaredAnnotations()));
+      int hash = name.hashCode();
+      hash = 31 * hash + Arrays.hashCode(annotationSource.getDeclaredAnnotations());
+      hash = 31 * hash + AnnotatedTypes.hashCode(returnType);
+      hash = 31 * hash + (receiverType == null ? 0 : AnnotatedTypes.hashCode(receiverType));
+      hash = 31 * hash + hashCode(typeParameters);
+      hash = 31 * hash + hashCode(paramTypes);
+      hash = 31 * hash + hashCode(thrownTypes);
+      return hash;
+   }
+   
+   private int hashCode(AnnotatedType[] types) {
+      int result = 1;
+      for (AnnotatedType type : types) {
+         result = 31 * result + (type == null ? 0 : AnnotatedTypes.hashCode(type));
+      }
+      return result;
    }
 
+   private int hashCode(Type[] types) {
+      int result = 1;
+      for (Type type : types) {
+         result = 31 * result + (type == null ? 0 : com.apriori.reflect.Types.hashCode(type));
+      }
+      return result;
+   }
+   
    @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();

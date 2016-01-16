@@ -12,6 +12,7 @@ import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -286,7 +287,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    /**
     * Returns a {@code Class} representation of this type. Unlike using normal class tokens (e.g.
     * {@code MyType.class}), this token can encode type arguments. This type can only be represented
-    * as a class if it {@linkplain #isResolved() is resolved}.
+    * as a class if it is neither a wildcard nor a type variable.
     * 
     * <p>This is a convenience for using generic types with APIs that require class tokens:
     * <pre>
@@ -307,10 +308,11 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * distinguished. So use caution when, where, and how you use this method.
     * 
     * @return a {@code Class}
-    * @throws IllegalStateException if this type is not resolved
+    * @throws IllegalStateException if this type is a wildcard or a type variable
+    * @see #getRawType()
     */
    public Class<T> asClass() {
-      if (!isResolved()) {
+      if (type instanceof WildcardType || type instanceof TypeVariable) {
          throw new IllegalStateException("Unresolved type cannot be represented as a class");
       }
       @SuppressWarnings("unchecked") // kind of sort of unsafe, but we intentionally allow it...
@@ -501,43 +503,38 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    }
 
    /**
-    * Determines if this is a sub-type of the specified type token. This has the same caveats as
-    * does {@link #equals(Object)} in that wildcard and type variables are not "captured" and
-    * wildcard bounds are not checked for compatibility. If either this type token or the specified
-    * other token is not fully resolved then this will return false, even if the Java compiler might
-    * treat it as a sub-type due to compatible bounds.
+    * Determines if this is a <em>proper</em> sub-type of the specified type token.
     * 
     * @param ref a {@code Type Ref}
-    * @return true if this represents a sub-type of {@code ref}
+    * @return true if this represents a sub-type of the given type
+    * @see Types#isSubtype(Type, Type)
     */
    public boolean isSubtypeOf(TypeRef<?> ref) {
-      return Types.isAssignable(ref.type, this.type);
+      return Types.isSubtype(this.type, ref.type);
    }
 
    // TODO: doc
    public boolean isSubtypeStrictOf(TypeRef<?> ref) {
-      return Types.isSubtypeStrict(ref.type, this.type);
+      return Types.isSubtypeStrict(this.type, ref.type);
    }
 
    /**
-    * Determines if this is a super type of the specified type token. This has the same caveats as
-    * does {@link #equals(Object)} in that wildcard and type variables are not "captured" and 
-    * wildcard bounds are not checked for compatibility. If either this type token or the specified
-    * other token are is fully resolved then this will return false, even if the Java compiler might
-    * treat it as a super type due to compatible bounds.
+    * Determines if the type this token represents can be assigned from the given type. This does
+    * not consider assignment conversions other than reference widening conversion, so this can be
+    * used to determine if this type is a supertype of the given type.
     * 
     * @param ref a {@code TypeRef}
-    * @return true if this represents a super type of {@code ref}
+    * @return true if this type is assignable from the given type
     * @see Types#isAssignableStrict(Type, Type)
     */
    public boolean isAssignableStrictFrom(TypeRef<?> ref) {
-      return Types.isAssignableStrict(this.type, ref.type);
+      return Types.isAssignableStrict(ref.type, this.type);
    }
 
    // TODO: docs
 
    public boolean isAssignableFrom(TypeRef<?> ref) {
-      return Types.isAssignable(this.type, ref.type);
+      return Types.isAssignable(ref.type, this.type);
    }
 
    public Collection<TypeRef<? super T>> getDirectSupertypeTypeRefs() {

@@ -77,6 +77,6 @@ class CoreReflectionUnionType implements CoreReflectionMarker, UnionType {
    
    @Override
    public String toString() {
-      return alternatives.stream().map(Object::toString).collect(Collectors.joining(" | "));
+      return alternatives.stream().map(Object::toString).collect(Collectors.joining("|"));
    }
 }

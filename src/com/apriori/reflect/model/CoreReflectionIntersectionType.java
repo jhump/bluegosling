@@ -78,6 +78,6 @@ class CoreReflectionIntersectionType implements CoreReflectionMarker, Intersecti
    
    @Override
    public String toString() {
-      return bounds.stream().map(Object::toString).collect(Collectors.joining(" & "));
+      return bounds.stream().map(Object::toString).collect(Collectors.joining("&"));
    }
 }

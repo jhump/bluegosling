@@ -152,7 +152,7 @@ enum CoreReflectionTypes implements Types {
 
       AnnotatedType at1 = asAnnotatedTypeAllowVoid(t1, "first type");
       AnnotatedType at2 = asAnnotatedTypeAllowVoid(t1, "second type");
-      return com.apriori.reflect.Types.isSubtype(at2.getType(), at1.getType());
+      return com.apriori.reflect.Types.isSubtype(at1.getType(), at2.getType());
    }
 
    @Override
@@ -199,7 +199,7 @@ enum CoreReflectionTypes implements Types {
 
       AnnotatedType at1 = asAnnotatedTypeAllowVoid(t1, "first type");
       AnnotatedType at2 = asAnnotatedTypeAllowVoid(t1, "second type");
-      return com.apriori.reflect.Types.isAssignable(at2.getType(), at1.getType());
+      return com.apriori.reflect.Types.isAssignable(at1.getType(), at2.getType());
    }
 
    @Override

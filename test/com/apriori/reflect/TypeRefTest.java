@@ -711,40 +711,40 @@ public class TypeRefTest extends TestCase {
    }
 
    /**
-    * Tests {@link TypeRef#isSubTypeOf(TypeRef)} under normal conditions.
+    * Tests {@link TypeRef#isAssignableFrom(TypeRef)} under normal conditions.
     */
    public void testIsSubTypeOf() {
       TypeRef<ArrayList<Map<String, String>>> ref =
             new TypeRef<ArrayList<Map<String, String>>>() {};
             
-      assertTrue(ref.isSubtypeOf(ref));
+      assertTrue(ref.isAssignableFrom(ref));
 
-      TypeRef<Serializable> subRef1 = new TypeRef<Serializable>() {};
-      TypeRef<List<Map<String, String>>> subRef2 = new TypeRef<List<Map<String, String>>>() {};
-      TypeRef<ArrayList<Map<String, String>>> subRef3 =
+      TypeRef<Serializable> supRef1 = new TypeRef<Serializable>() {};
+      TypeRef<List<Map<String, String>>> supRef2 = new TypeRef<List<Map<String, String>>>() {};
+      TypeRef<ArrayList<Map<String, String>>> supRef3 =
             new TypeRef<ArrayList<Map<String, String>>>() {};
-      TypeRef<List<?>> subRef4 = new TypeRef<List<?>>() {};
-      TypeRef<ArrayList<?>> subRef5 = new TypeRef<ArrayList<?>>() {};
+      TypeRef<List<?>> supRef4 = new TypeRef<List<?>>() {};
+      TypeRef<ArrayList<?>> supRef5 = new TypeRef<ArrayList<?>>() {};
       
-      assertTrue(ref.isSubtypeOf(subRef1));
-      assertTrue(ref.isSubtypeOf(subRef2));
-      assertTrue(ref.isSubtypeOf(subRef3));
-      assertTrue(ref.isSubtypeOf(subRef4));
-      assertTrue(ref.isSubtypeOf(subRef5));
+      assertTrue(supRef1.isAssignableFrom(ref));
+      assertTrue(supRef2.isAssignableFrom(ref));
+      assertTrue(supRef3.isAssignableFrom(ref));
+      assertTrue(supRef4.isAssignableFrom(ref));
+      assertTrue(supRef5.isAssignableFrom(ref));
       
-      TypeRef<List<Map<?, String>>> notSubRef1 = new TypeRef<List<Map<?, String>>>() {};
-      TypeRef<List<Map<String, Object>>> notSubRef2 = new TypeRef<List<Map<String, Object>>>() {};
-      TypeRef<Set<?>> notSubRef3 = new TypeRef<Set<?>>() {};
-      TypeRef<Double> notSubRef4 = new TypeRef<Double>() {};
+      TypeRef<List<Map<?, String>>> notSupRef1 = new TypeRef<List<Map<?, String>>>() {};
+      TypeRef<List<Map<String, Object>>> notSupRef2 = new TypeRef<List<Map<String, Object>>>() {};
+      TypeRef<Set<?>> notSupRef3 = new TypeRef<Set<?>>() {};
+      TypeRef<Double> notSupRef4 = new TypeRef<Double>() {};
 
-      assertFalse(ref.isSubtypeOf(notSubRef1));
-      assertFalse(ref.isSubtypeOf(notSubRef2));
-      assertFalse(ref.isSubtypeOf(notSubRef3));
-      assertFalse(ref.isSubtypeOf(notSubRef4));
+      assertFalse(notSupRef1.isAssignableFrom(ref));
+      assertFalse(notSupRef2.isAssignableFrom(ref));
+      assertFalse(notSupRef3.isAssignableFrom(ref));
+      assertFalse(notSupRef4.isAssignableFrom(ref));
       
       // sneak one more useful one in here:
       abstract class StringList implements List<String> {}
-      assertTrue(new TypeRef<StringList>() {}.isSubtypeOf(new TypeRef<List<String>>() {}));
+      assertTrue(new TypeRef<List<String>>() {}.isAssignableFrom(new TypeRef<StringList>() {}));
    }
 
    /**
