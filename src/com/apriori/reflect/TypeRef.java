@@ -160,7 +160,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @throws IllegalArgumentException if the generic type parameter is not specified
     */
    protected TypeRef() {
-      Type genericType = Types.resolveSuperType(getClass().getGenericSuperclass(), TypeRef.class);
+      Type genericType = Types.resolveSupertype(getClass().getGenericSuperclass(), TypeRef.class);
       assert genericType != null;
       if (genericType instanceof Class) {
          throw new IllegalArgumentException("No type argument given");
@@ -326,12 +326,12 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * will be their first upper bound.
     *
     * @return the raw type that corresponds to this generic type
-    * @see Types#getRawType(Type)
+    * @see Types#getErasure(Type)
     */
    public Class<? super T> getRawType() {
       // this eyesore is to make the compiler let us cast our Class<?> to a Class<? super T>
       @SuppressWarnings({ "unchecked", "rawtypes" })
-      Class<? super T> ret = (Class) Types.getRawType(type);
+      Class<? super T> ret = (Class) Types.getErasure(type);
       return ret;
    }
 
@@ -491,10 +491,10 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * @throws NullPointerException if the specified type is {@code null}
     * @throws IllegalArgumentException if the specified type is not actually a super type of the
     *       current type
-    * @see Types#resolveSuperType(Type, Class)
+    * @see Types#resolveSupertype(Type, Class)
     */
    public TypeRef<? super T> resolveSuperTypeRef(Class<?> superclass) {
-      Type superType = Types.resolveSuperType(type, superclass);
+      Type superType = Types.resolveSupertype(type, superclass);
       if (superType == null) {
          throw new IllegalArgumentException(
                Types.toString(superclass) + " is not a super type of " + this);

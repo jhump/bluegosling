@@ -118,7 +118,7 @@ public final class Derivations {
       if (!DerivedFrom.class.isAssignableFrom(derivedType)) {
          return null;
       }
-      return Types.getRawType(Types.resolveTypeVariable(derivedType, TYPE_VAR));
+      return Types.getErasure(Types.resolveTypeVariable(derivedType, TYPE_VAR));
    }
 
    private static Class<?> derivedFromAnnotation(Class<?> derivedType) {

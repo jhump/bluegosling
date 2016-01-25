@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -42,18 +41,16 @@ class TestMethodProcessor extends AbstractProcessor {
    private final Object test;
    private final TestJavaFileManager fileManager;
    private final CategorizingDiagnosticCollector diagnosticCollector;
-   private final AtomicReference<Throwable> errorRef;
    private final Processor processor;
    private int invocationCount;
    
    TestMethodProcessor(FrameworkMethod method, Object test, TestJavaFileManager fileManager,
-         CategorizingDiagnosticCollector diagnosticCollector, AtomicReference<Throwable> errorRef)
+         CategorizingDiagnosticCollector diagnosticCollector)
          throws NoSuchFieldException, IllegalAccessException, InstantiationException {
       this.method = method;
       this.test = test;
       this.fileManager = fileManager;
       this.diagnosticCollector = diagnosticCollector;
-      this.errorRef = errorRef;
       this.processor = determineProcessorUnderTest(method, test);
    }
    
@@ -218,8 +215,7 @@ class TestMethodProcessor extends AbstractProcessor {
          }
          return false;
       } catch (Throwable t) {
-         errorRef.set(t);
-         throw new TestMethodInvocationException(t);
+         throw new ProcessorInvocationException(t);
       }
    }
    

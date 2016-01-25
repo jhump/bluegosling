@@ -83,7 +83,7 @@ public final class AnnotatedTypes {
    }
    
    public static AnnotatedType getErasedType(AnnotatedType type) {
-      return newAnnotatedType(Types.getRawType(type.getType()), type.getDeclaredAnnotations());
+      return newAnnotatedType(Types.getErasure(type.getType()), type.getDeclaredAnnotations());
    }
 
    /**
@@ -379,7 +379,7 @@ public final class AnnotatedTypes {
                sb.append(Annotations.toString(a));
                sb.append(" ");
             }
-            sb.append(Types.toString(Types.getRawType(pt.getType())));
+            sb.append(Types.toString(Types.getErasure(pt.getType())));
          } else {
             sb.append(Types.toString(owner));
             sb.append(".");
@@ -387,7 +387,7 @@ public final class AnnotatedTypes {
                sb.append(Annotations.toString(a));
                sb.append(" ");
             }
-            Class<?> rawType = Types.getRawType(pt.getType());
+            Class<?> rawType = Types.getErasure(pt.getType());
             String simpleName = rawType.getSimpleName();
             if (simpleName.isEmpty()) {
                // Anonymous class? This shouldn't really be possible: the Java language doesn't
@@ -552,7 +552,7 @@ public final class AnnotatedTypes {
                && Types.equals(target.getType(), source.getType());
       } else if (target instanceof AnnotatedParameterizedType) {
          AnnotatedParameterizedType toParamType = (AnnotatedParameterizedType) target;
-         Class<?> toRawType = Types.getRawType(targetType);
+         Class<?> toRawType = Types.getErasure(targetType);
          if (sourceType instanceof Class) {
             Class<?> fromClass = (Class<?>) sourceType;
             if (fromClass.getTypeParameters().length > 0) {
@@ -667,7 +667,7 @@ public final class AnnotatedTypes {
                         fromArrayType.getAnnotatedGenericComponentType(), checker);
          } else if (target instanceof AnnotatedParameterizedType) {
             // TODO: fix this
-            Class<?> fromRaw = Types.getRawType(((AnnotatedParameterizedType) target).getType());
+            Class<?> fromRaw = Types.getErasure(((AnnotatedParameterizedType) target).getType());
             return toClass.isAssignableFrom(fromRaw);
          } else {
             return false;
@@ -726,7 +726,7 @@ public final class AnnotatedTypes {
          addAll(((TypeVariable<?>) typeVar.getType()).getAnnotations(), allAnnotations); 
       } else {
          // add annotations for super-types
-         Class<?> raw = Types.getRawType(type.getType());
+         Class<?> raw = Types.getErasure(type.getType());
          AnnotatedType s = raw.getAnnotatedSuperclass();
          if (s != null) {
             addAllAnnotationsFromHierarchy(s, allAnnotations);
@@ -1703,7 +1703,7 @@ public final class AnnotatedTypes {
       
       AnnotatedArrayTypeImpl(AnnotatedType componentType,
             Iterable<? extends Annotation> annotations) {
-         super(Types.arrayTypeOf(componentType.getType()), annotations);
+         super(Types.getArrayType(componentType.getType()), annotations);
          this.componentType = componentType;
       }
       

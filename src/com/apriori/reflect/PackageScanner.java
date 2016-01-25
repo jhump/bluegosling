@@ -51,10 +51,10 @@ public class PackageScanner {
     * The default number of threads used to scan: 4. This value is fixed: it need not scale with the
     * number of available CPU resources since the process is I/O bound. While the scan is faster
     * with multiple threads working in parallel, this goes only up to a point, after which disk
-    * seeks from competing threads will deteriorate performance.
+    * seeks from competing threads could deteriorate performance.
     * 
-    * <p>Even with a solid-state disk, performance improvements going from 4 to 16 threads were
-    * non-existent.
+    * <p>Even with a solid-state disk, where disk seeks aren't a factor, performance improvements
+    * going from 4 to 16 threads were non-existent.
     */
    private static final int DEFAULT_SCAN_PARALLELISM = 4;
    
@@ -775,7 +775,7 @@ public class PackageScanner {
                try {
                   return classInfo.asClass().getPackage();
                } catch (Throwable th) {
-                  continue;
+                  // intentional fall-through to next loop iteration
                }
             }
          }

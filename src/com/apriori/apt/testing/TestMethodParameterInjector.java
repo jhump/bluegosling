@@ -5,8 +5,8 @@ import java.util.List;
 
 /**
  * Utility for injecting arguments into test methods. This allows tests to define various incoming
- * parameters to receive information about the processing environment. This methods on this
- * interface are used to inject values for the parameters at runtime.
+ * parameters to receive information about the processing environment. The methods on this interface
+ * are used to inject values for the parameters at runtime.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 

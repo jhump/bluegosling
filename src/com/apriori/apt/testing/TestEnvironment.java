@@ -16,11 +16,11 @@ import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
 
 /**
- * Information about the current test, processing, and round environments. This represents the context
- * of a test run by an {@link AnnotationProcessorTestRunner}. It includes references to the current
- * {@link ProcessingEnvironment}, {@link RoundEnvironment}, {@link JavaFileManager}, etc. An instance
- * of this class can be injected into a test method so that the test logic can interact with the
- * environment.
+ * Information about the current test, processing, and round environments. This represents the
+ * context of a test run by an {@link AnnotationProcessorTestRunner}. It includes references to the
+ * current {@link ProcessingEnvironment}, {@link RoundEnvironment}, {@link JavaFileManager}, etc. An
+ * instance of this class can be injected into a test method so that the test logic can interact
+ * with the environment.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -34,9 +34,10 @@ public class TestEnvironment {
    private final Processor processorUnderTest;
    private final Object testObject;
    
-   TestEnvironment(TestJavaFileManager fileManager, CategorizingDiagnosticCollector diagnosticCollector,
-         ProcessingEnvironment processingEnv, RoundEnvironment roundEnv, int roundNumber,
-         Set<? extends TypeElement> annotationTypes, Processor processorUnderTest, Object testObject) {
+   TestEnvironment(TestJavaFileManager fileManager,
+         CategorizingDiagnosticCollector diagnosticCollector, ProcessingEnvironment processingEnv,
+         RoundEnvironment roundEnv, int roundNumber, Set<? extends TypeElement> annotationTypes,
+         Processor processorUnderTest, Object testObject) {
       this.fileManager = fileManager;
       this.diagnosticCollector = diagnosticCollector;
       this.processingEnv = processingEnv;
@@ -57,7 +58,8 @@ public class TestEnvironment {
    }
 
    /**
-    * Gets the current collector of diagnostics emitted by the compiler and by annotation processors.
+    * Gets the current collector of diagnostics emitted by the compiler and by annotation
+    * processors.
     * 
     * @return the diagnostic collector
     */
@@ -98,9 +100,10 @@ public class TestEnvironment {
     * {@link InitializeProcessorField @InitializeProcessorField} annotations), then this will be
     * filtered to just the annotations supported by that processor.
     * 
-    * <p>If no processor is defined, this will be all annotations in the current set of classes and input
-    * files to process. If a processor is later created programmatically inside of a test method, this set
-    * can then be filtered to only the supported annotation types using {@link #filterAnnotationTypesFor(Processor)}.
+    * <p>If no processor is defined, this will be all annotations in the current set of classes and
+    * input files to process. If a processor is later created programmatically inside of a test
+    * method, this set can then be filtered to only the supported annotation types using
+    * {@link #filterAnnotationTypesFor(Processor)}.
     * 
     * @return the set of annotation types for the current round of processing
     * 
@@ -112,7 +115,8 @@ public class TestEnvironment {
    }
    
    /**
-    * Filters the current set of annotation types to only those supported by the specified processor.
+    * Filters the current set of annotation types to only those supported by the specified
+    * processor.
     * 
     * @param processor the processor
     * @return the filtered set of annotation types for the current round of processing
@@ -140,8 +144,9 @@ public class TestEnvironment {
    }
    
    /**
-    * Invokes the current processor under test by calling its {@link Processor#process(Set, RoundEnvironment)}
-    * method. The current round environment and annotation types are passed to this method.
+    * Invokes the current processor under test by calling its {@link Processor#process(Set,
+    * RoundEnvironment)} method. The current round environment and annotation types are passed to
+    * this method.
     * 
     * @return the result returned by the processor
     * @throws NullPointerException if there is no current processor under test
@@ -153,14 +158,15 @@ public class TestEnvironment {
    }
    
    /**
-    * Validates the contents of the specified file by comparing them to the contents of the specified resource.
-    * This method compares character contents vs. raw binary contents, so calling this method is equivalent to
-    * the following:
-    * <pre> testEnv.validateGeneratedFile(file, resourcePath, false);</pre>
+    * Validates the contents of the specified file by comparing them to the contents of the
+    * specified resource. This method compares character contents vs. raw binary contents, so
+    * calling this method is equivalent to the following:
+    * <pre>testEnv.validateGeneratedFile(file, resourcePath, false);</pre>
     * 
     * @param file the output file to validate
     * @param resourcePath the resource that contains the "golden" contents
-    * @throws IOException if an exception occurs while reading the specified file or the specified resource
+    * @throws IOException if an exception occurs while reading the specified file or the specified
+    *       resource
     * 
     * @see ValidateGeneratedFiles
     */
@@ -169,17 +175,21 @@ public class TestEnvironment {
    }
    
    /**
-    * Validates the contents of the specified file by comparing them to the contents of the specified resource.
+    * Validates the contents of the specified file by comparing them to the contents of the
+    * specified resource.
     * 
     * @param file the output file to validate
     * @param resourcePath the resource that contains the "golden" contents
-    * @param binary if true then the raw byte contents of the specified file and resource are compared; otherwise
-    *       the files are interpreted as character data and the result strings are compared
-    * @throws IOException if an exception occurs while reading the specified file or the specified resource
+    * @param binary if true then the raw byte contents of the specified file and resource are
+    *       compared; otherwise the files are interpreted as character data and the result strings
+    *       are compared
+    * @throws IOException if an exception occurs while reading the specified file or the specified
+    *       resource
     * 
     * @see ValidateGeneratedFiles
     */
-   public void validateGeneratedFile(FileObject file, String resourcePath, boolean binary) throws IOException {
+   public void validateGeneratedFile(FileObject file, String resourcePath, boolean binary)
+         throws IOException {
       InputStream in = testObject.getClass().getResourceAsStream(resourcePath);
       if (in == null) {
          throw new IllegalArgumentException("Resource not found: " + resourcePath);
@@ -198,14 +208,14 @@ public class TestEnvironment {
                   goldenIn.close();
                }
             }
-            org.junit.Assert.assertArrayEquals(
-                  "Output " + file.getName() + " does not match contents of resource " + resourcePath,
+            org.junit.Assert.assertArrayEquals("Output " + file.getName()
+                  + " does not match contents of resource " + resourcePath,
                   genBytes, 
                   goldenBytes);
          } else {
-            org.junit.Assert.assertEquals(
-                  "Output " + file.getName() + " does not match contents of resource " + resourcePath,
-                  IoStreams.toString(in, TestJavaFileObject.UTF8_CHARSET), 
+            org.junit.Assert.assertEquals("Output " + file.getName()
+                  + " does not match contents of resource " + resourcePath,
+                  IoStreams.toString(in, TestJavaFileObject.DEFAULT_CHARSET), 
                   file.getCharContent(true));
          }
       } finally {

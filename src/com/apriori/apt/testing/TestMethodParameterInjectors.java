@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -39,25 +40,28 @@ final class TestMethodParameterInjectors {
     * @param m the method
     * @param argIndex the index of the argument with a bad type
     * @param supportedTypes the set of supported types
+    * @param includesProcessor true if the types supported include {@link Processor} (or any
+    *       subtype thereof)
     * @return the exception with a detailed message of the offending argument
     */
    static IllegalArgumentException badArgumentType(Method m, int argIndex,
-         Set<TypeRef<?>> supportedTypes) {
+         Set<TypeRef<?>> supportedTypes, boolean includesProcessor) {
       StringBuilder sb = new StringBuilder();
       sb.append("Argument #").append(argIndex + 1).append(" of method ").append(m.getName())
-            .append("\nin class ").append(m.getDeclaringClass().getName())
-            .append("\nhas unsupported type:")
+            .append(" in class ").append(m.getDeclaringClass().getName())
+            .append(" has unsupported type:")
             .append("\n  ").append(TypeRef.forType(m.getGenericParameterTypes()[argIndex]))
             .append("\nSupported types include:");
       for (TypeRef<?> typeRef : supportedTypes) {
          sb.append("\n  ").append(typeRef);
       }
-      // TODO: figure a way to get this into supportedTypes since that's where it belongs...
-      sb.append("\n  ? extends ").append(Processor.class.getName());
+      if (includesProcessor) {
+         sb.append("\n  ? extends ").append(Processor.class.getName());
+      }
       return new IllegalArgumentException(sb.toString());
    }
 
-   // For test and after methods:
+   // For test and before methods:
    
    /**
     * An interface for providing an injected value for a given {@link TestEnvironment}.
@@ -66,91 +70,29 @@ final class TestMethodParameterInjectors {
     *
     * @param <T> the type of value injected
     */
-   private interface Provider<T> {
-      T getValueFrom(TestEnvironment env);
+   private interface Provider<T> extends Function<TestEnvironment, T> {
    }
    
    static final Map<TypeRef<?>, Provider<?>> providers = new LinkedHashMap<TypeRef<?>, Provider<?>>();
    static {
       // update javadoc for AnnotationProcessorTestRunner whenever you add anything new here!!!
-      addProvider(new TypeRef<TestEnvironment>() {}, new Provider<TestEnvironment>() {
-         @Override
-         public TestEnvironment getValueFrom(TestEnvironment env) {
-            return env;
-         }
-      });
-      addProvider(new TypeRef<TestJavaFileManager>() {}, new Provider<TestJavaFileManager>() {
-         @Override
-         public TestJavaFileManager getValueFrom(TestEnvironment env) {
-            return env.fileManager();
-         }
-      });
-      addProvider(new TypeRef<JavaFileManager>() {}, new Provider<JavaFileManager>() {
-         @Override
-         public JavaFileManager getValueFrom(TestEnvironment env) {
-            return env.fileManager();
-         }
-      });
-      addProvider(new TypeRef<CategorizingDiagnosticCollector>() {}, new Provider<CategorizingDiagnosticCollector>() {
-         @Override
-         public CategorizingDiagnosticCollector getValueFrom(TestEnvironment env) {
-            return env.diagnosticCollector();
-         }
-      });
-      addProvider(new TypeRef<ProcessingEnvironment>() {}, new Provider<ProcessingEnvironment>() {
-         @Override
-         public ProcessingEnvironment getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment();
-         }
-      });
-      addProvider(new TypeRef<Elements>() {}, new Provider<Elements>() {
-         @Override
-         public Elements getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getElementUtils();
-         }
-      });
-      addProvider(new TypeRef<Types>() {}, new Provider<Types>() {
-         @Override
-         public Types getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getTypeUtils();
-         }
-      });
-      addProvider(new TypeRef<Filer>() {}, new Provider<Filer>() {
-         @Override
-         public Filer getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getFiler();
-         }
-      });
-      addProvider(new TypeRef<Messager>() {}, new Provider<Messager>() {
-         @Override
-         public Messager getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getMessager();
-         }
-      });
-      addProvider(new TypeRef<SourceVersion>() {}, new Provider<SourceVersion>() {
-         @Override
-         public SourceVersion getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getSourceVersion();
-         }
-      });
-      addProvider(new TypeRef<Map<String, String>>() {}, new Provider<Map<String, String>>() {
-         @Override
-         public Map<String, String> getValueFrom(TestEnvironment env) {
-            return env.processingEnvironment().getOptions();
-         }
-      });
-      addProvider(new TypeRef<RoundEnvironment>() {}, new Provider<RoundEnvironment>() {
-         @Override
-         public RoundEnvironment getValueFrom(TestEnvironment env) {
-            return env.roundEnvironment();
-         }
-      });
-      addProvider(new TypeRef<Set<TypeElement>>() {}, new Provider<Set<TypeElement>>() {
-         @Override
-         public Set<TypeElement> getValueFrom(TestEnvironment env) {
-            return Collections.unmodifiableSet(new LinkedHashSet<TypeElement>(env.annotationTypes()));
-         }
-      });
+      addProvider(new TypeRef<TestEnvironment>() {}, env -> env);
+      addProvider(new TypeRef<TestJavaFileManager>() {}, env -> env.fileManager());
+      addProvider(new TypeRef<JavaFileManager>() {}, env -> env.fileManager());
+      addProvider(new TypeRef<CategorizingDiagnosticCollector>() {},
+            env -> env.diagnosticCollector());
+      addProvider(new TypeRef<ProcessingEnvironment>() {}, env -> env.processingEnvironment());
+      addProvider(new TypeRef<Elements>() {}, env -> env.processingEnvironment().getElementUtils());
+      addProvider(new TypeRef<Types>() {}, env -> env.processingEnvironment().getTypeUtils());
+      addProvider(new TypeRef<Filer>() {}, env -> env.processingEnvironment().getFiler());
+      addProvider(new TypeRef<Messager>() {}, env -> env.processingEnvironment().getMessager());
+      addProvider(new TypeRef<SourceVersion>() {},
+            env -> env.processingEnvironment().getSourceVersion());
+      addProvider(new TypeRef<Map<String, String>>() {},
+            env -> env.processingEnvironment().getOptions());
+      addProvider(new TypeRef<RoundEnvironment>() {}, env -> env.roundEnvironment());
+      addProvider(new TypeRef<Set<TypeElement>>() {}, 
+            env -> Collections.unmodifiableSet(new LinkedHashSet<>(env.annotationTypes())));
       // update javadoc for AnnotationProcessorTestRunner whenever you add anything new here!!!
    }
 
@@ -159,7 +101,7 @@ final class TestMethodParameterInjectors {
    }
 
    /**
-    * TODO: doc me!
+    * An injector that can be used to inject parameters into methods under test.
     */
    public static TestMethodParameterInjector<TestEnvironment> FOR_TEST_METHODS =
          new TestMethodParameterInjector<TestEnvironment>() {
@@ -172,16 +114,17 @@ final class TestMethodParameterInjectors {
                   Type t = argTypes[i];
                   Provider<?> provider = providers.get(TypeRef.forType(t));
                   if (provider != null) {
-                     ret[i] = provider.getValueFrom(testEnv);
+                     ret[i] = provider.apply(testEnv);
                   } else if (!Processor.class.isAssignableFrom(argClasses[i])) {
-                        throw badArgumentType(m, i, providers.keySet());
+                        throw badArgumentType(m, i, providers.keySet(), true);
                   } else {
                      Processor p = testEnv.processorUnderTest();
                      if (p != null && !argClasses[i].isInstance(p)) {
-                        throw new ClassCastException("Argument #" + (i + 1) + " of method " + m.getName()
-                              + "\nin class " + m.getDeclaringClass().getName()
-                              + "\nexpecting type " + argClasses[i].getName()
-                              + "\nbut got " + p.getClass().getName());
+                        throw new ClassCastException(
+                              "Argument #" + (i + 1) + " of method "+ m.getName()
+                              + " in class " + m.getDeclaringClass().getName()
+                              + " expecting type " + argClasses[i].getName()
+                              + " but got " + p.getClass().getName());
                      }
                      ret[i] = p;
                   }
@@ -196,7 +139,7 @@ final class TestMethodParameterInjectors {
                   Type t = argTypes[i];
                   if (!providers.containsKey(TypeRef.forType(t))) {
                      if (!Processor.class.isAssignableFrom(argClasses[i])) {
-                        errors.add(badArgumentType(m, i, providers.keySet()));
+                        errors.add(badArgumentType(m, i, providers.keySet(), true));
                      }
                   }
                }
@@ -205,15 +148,15 @@ final class TestMethodParameterInjectors {
    
    // For before methods:
 
-   static Set<Class<?>> allowedBeforeClasses =
-         new HashSet<Class<?>>(Arrays.<Class<?>> asList(TestJavaFileManager.class, JavaFileManager.class));
+   static Set<Class<?>> allowedBeforeClasses = new HashSet<>(
+         Arrays.<Class<?>>asList(TestJavaFileManager.class, JavaFileManager.class));
       
    static Set<TypeRef<?>> allowedBeforeTypes =
-         new TransformingSet<Class<?>, TypeRef<?>>(allowedBeforeClasses,
-               (clazz) -> TypeRef.forClass(clazz));
+         new TransformingSet<>(allowedBeforeClasses, clazz -> TypeRef.forClass(clazz));
          
    /**
-    * TODO: doc me!
+    * An injector that can be used to inject parameters into "before" methods (those run before the
+    * method under test, typically to perform setup that applies to all methods).
     */
    public static TestMethodParameterInjector<TestJavaFileManager> FOR_BEFORE_METHODS =
          new TestMethodParameterInjector<TestJavaFileManager>() {
@@ -225,7 +168,7 @@ final class TestMethodParameterInjectors {
                   if (allowedBeforeClasses.contains(argClasses[i])) {
                      ret[i] = fileManager;
                   } else {
-                     throw badArgumentType(m, i, allowedBeforeTypes);
+                     throw badArgumentType(m, i, allowedBeforeTypes, false);
                   }
                }
                return ret;
@@ -235,7 +178,7 @@ final class TestMethodParameterInjectors {
                Class<?> argClasses[] = m.getParameterTypes();
                for (int i = 0, len = argClasses.length; i < len; i++) {
                   if (!allowedBeforeClasses.contains(argClasses[i])) {
-                     errors.add(badArgumentType(m, i, allowedBeforeTypes));
+                     errors.add(badArgumentType(m, i, allowedBeforeTypes, false));
                   }
                }
             }

@@ -41,6 +41,11 @@ public class CategorizingDiagnosticCollector {
       allDiagnostics = new ArrayList<Diagnostic<JavaFileObject>>();
       categorizedDiagnostics = new HashMap<Diagnostic.Kind, List<Diagnostic<JavaFileObject>>>();
    }
+   
+   public void reset() {
+      allDiagnostics.clear();
+      categorizedDiagnostics.clear();
+   }
 
    /**
     * Returns a {@link DiagnosticListener} that prints diagnostic messages and records

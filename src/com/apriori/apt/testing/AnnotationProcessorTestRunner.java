@@ -25,7 +25,6 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -39,113 +38,118 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.tools.Diagnostic;
 import javax.tools.DiagnosticListener;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
-import javax.tools.ToolProvider;
 
 /**
- * A test runner for executing tests inside the context of the annotation processing phase of a Java compiler.
+ * A test runner for executing tests inside the context of the annotation processing phase of a Java
+ * compiler.
  * 
- * <p>The environment of the test is setup using annotations, either on the class or on the test method.
+ * <p>
+ * The environment of the test is setup using annotations, either on the class or on the test
+ * method.
  * 
  * <p><strong>On the test class:</strong>
  * <ul>
- * <li>{@link ProcessorUnderTest @ProcessorUnderTest}: Indicates the class of the processor under test.</li>
- * <li>{@link InitializeProcessorField @InitializeProcessorField}: Indicates the name of a field on the test
- * class that has the processor under test. The processor must be instantiated and the field set in a set-up
- * step (i.e. {@code @Before} method). If neither this annotation nor {@link ProcessorUnderTest} is present,
- * no processor is setup. If a test methods needs to invoke methods on an instance of a processor, it will have
- * to instantiate the processor itself.</li>
- * <li>{@link OptionsForProcessing @OptionsForProcessing}: Indicates the sequence of options (like command-line
- * options) that are provided to the Java compiler. These can include options interpreted by the processor
- * under test.</li>
- * <li>{@link FilesToProcess @FilesToProcess}: Indicates the set of input files (like source and resource files)
- * for the Java compiler and the annotaiton processor.</li>
- * <li>{@link ClassesToProcess @ClassesToProcess}: Indicates the set of classes to process. These classes will
- * be included in the root elements on each round of processing, even if there are no input files to process.</li>
- * <li>{@link ValidateGeneratedFiles @ValidateGeneratedFiles}: Indicates a set of "golden" output files. When
- * the processor completes, the test runner will verify that the processor produced the correct output by
- * comparing it to these files.</li>
- * <li>{@link SupportedSourceVersion @SupportedSourceVersion}: Usually the supported source version comes from
- * the processor under test. But if neither {@link ProcessorUnderTest} nor {@link InitializeProcessorField} is
- * used, then you can use this annotation on the test class to provide this information.<br>
- * <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined  {@linkplain Inherited
- * inherited}, this test runner will interpret the value as inherited. So if you sub-class a test that has the
- * annotation, it is not necessary re-annotate the sub-class.</li>
- * <li>{@link SupportedAnnotationTypes @SupportedAnnotationTypes}: Same remarks as for {@link SupportedSourceVersion}.
- * If a test does not otherwise define a processor for testing, this annotation can be used to provide this
- * information to the environment. Also same notes about inheritance of this annotation.</li>
- * <li>{@link SupportedOptions @SupportedOptions}: Same remarks again as for {@link SupportedSourceVersion} and
- * {@link SupportedAnnotationTypes}.</li>
+ * <li>{@link ProcessorUnderTest @ProcessorUnderTest}: Indicates the class of the processor under
+ * test.</li>
+ * <li>{@link InitializeProcessorField @InitializeProcessorField}: Indicates the name of a field on
+ * the test class that has the processor under test. The processor must be instantiated and the
+ * field set in a set-up step (i.e. {@code @Before} method). If neither this annotation nor
+ * {@link ProcessorUnderTest} is present, no processor is setup. If a test methods needs to invoke
+ * methods on an instance of a processor, it will have to instantiate the processor itself.</li>
+ * <li>{@link OptionsForProcessing @OptionsForProcessing}: Indicates the sequence of options (like
+ * command-line options) that are provided to the Java compiler. These can include options
+ * interpreted by the processor under test.</li>
+ * <li>{@link FilesToProcess @FilesToProcess}: Indicates the set of input files (like source and
+ * resource files) for the Java compiler and the annotaiton processor.</li>
+ * <li>{@link ClassesToProcess @ClassesToProcess}: Indicates the set of classes to process. These
+ * classes will be included in the root elements on each round of processing, even if there are no
+ * input files to process.</li>
+ * <li>{@link ValidateGeneratedFiles @ValidateGeneratedFiles}: Indicates a set of "golden" output
+ * files. When the processor completes, the test runner will verify that the processor produced the
+ * correct output by comparing it to these files.</li>
+ * <li>{@link SupportedSourceVersion @SupportedSourceVersion}: Usually the supported source version
+ * comes from the processor under test. But if neither {@link ProcessorUnderTest} nor
+ * {@link InitializeProcessorField} is used, then you can use this annotation on the test class to
+ * provide this information.<br>
+ * <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined
+ * {@linkplain Inherited inherited}, this test runner will interpret the value as inherited. So if
+ * you sub-class a test that has the annotation, it is not necessary re-annotate the sub-class.</li>
+ * <li>{@link SupportedAnnotationTypes @SupportedAnnotationTypes}: Same remarks as for
+ * {@link SupportedSourceVersion}. If a test does not otherwise define a processor for testing, this
+ * annotation can be used to provide this information to the environment. Also same notes about
+ * inheritance of this annotation.</li>
+ * <li>{@link SupportedOptions @SupportedOptions}: Same remarks again as for
+ * {@link SupportedSourceVersion} and {@link SupportedAnnotationTypes}.</li>
  * </ul>
  * 
  * <p><strong>On the test method:</strong>
  * <ul>
- * <li>{@link NoProcess @NoProcess}: Indicates that a given method is a normal test method. The processing
- * environment will not be setup for this method.</li>
- * <li>{@link Reentrant @Reentrant}: Indicates that a given method can be called more than once if the processing
- * phase results in multiple rounds. So the method may be called more than once during the course of a single
- * test case, once for each round.</li>
- * <li>{@link ProcessorUnderTest @ProcessorUnderTest}: This is the same as used on the class, except that it
- * overrides the processor to test for a single method.</li>
- * <li>{@link OptionsForProcessing @OptionsForProcessing}: This is the same as used on the class, except that it
- * overrides the options for a single method. It can also be used to <em>add to</em> the options that are defined
- * on the class.</li>
- * <li>{@link FilesToProcess @FilesToProcess}: This is the same as used on the class, except that it overrides
- * the files used for a single method. It can also be used to <em>add to</em> the set of files that are defined
- * on the class.</li>
- * <li>{@link ClassesToProcess @ClassesToProcess}: This is the same as used on the class, except that it overrides
- * the classes processed for a single method. It can also be used to <em>add to</em> the set of classes that are
- * defined on the test class.</li>
- * <li>{@link ValidateGeneratedFiles @ValidateGeneratedFiles}: This is the same as used on the class, except that
- * it overrides the output files to validate for a single method. It can also be used to <em>add to</em> the set
- * of validated output files that are defined on the class.</li>
+ * <li>{@link NoProcess @NoProcess}: Indicates that a given method is a normal test method. The
+ * processing environment will not be setup for this method.</li>
+ * <li>{@link Reentrant @Reentrant}: Indicates that a given method can be called more than once if
+ * the processing phase results in multiple rounds. So the method may be called more than once
+ * during the course of a single test case, once for each round.</li>
+ * <li>{@link ProcessorUnderTest @ProcessorUnderTest}: This is the same as used on the class, except
+ * that it overrides the processor to test for a single method.</li>
+ * <li>{@link OptionsForProcessing @OptionsForProcessing}: This is the same as used on the class,
+ * except that it overrides the options for a single method. It can also be used to <em>add to</em>
+ * the options that are defined on the class.</li>
+ * <li>{@link FilesToProcess @FilesToProcess}: This is the same as used on the class, except that it
+ * overrides the files used for a single method. It can also be used to <em>add to</em> the set of
+ * files that are defined on the class.</li>
+ * <li>{@link ClassesToProcess @ClassesToProcess}: This is the same as used on the class, except
+ * that it overrides the classes processed for a single method. It can also be used to
+ * <em>add to</em> the set of classes that are defined on the test class.</li>
+ * <li>{@link ValidateGeneratedFiles @ValidateGeneratedFiles}: This is the same as used on the
+ * class, except that it overrides the output files to validate for a single method. It can also be
+ * used to <em>add to</em> the set of validated output files that are defined on the class.</li>
  * </ul>
  * 
- * <p>Unlike normal test methods, tests run by {@link AnnotationProcessorTestRunner} can accept arguments. That
- * is how the test method gets access to the processing environment. Test methods' can have arguments of the
- * following types:
+ * <p>Unlike normal test methods, tests run by {@link AnnotationProcessorTestRunner} can accept
+ * arguments. That is how the test method gets access to the processing environment. Test methods'
+ * can have arguments of the following types:
  * <ul>
- * <li>{@link TestEnvironment}: a reference to the test environment, including accessor methods for everything
- * else and a few extra utility methods, too. This is really the only thing any test method <em>needs</em>, but
- * the other types are supported for convenience.</li>
- * <li>{@link TestJavaFileManager} or {@link JavaFileManager}: a reference to the Java compiler's file manager.</li>
- * <li>{@link CategorizingDiagnosticCollector}: a reference to the collector of diagnostics emitted by the Java
- * compiler. (See {@link DiagnosticListener}.)</li>
+ * <li>{@link TestEnvironment}: a reference to the test environment, including accessor methods for
+ * everything else and a few extra utility methods, too. This is really the only thing any test
+ * method <em>needs</em>, but the other types are supported for convenience.</li>
+ * <li>{@link TestJavaFileManager} or {@link JavaFileManager}: a reference to the Java compiler's
+ * file manager.</li>
+ * <li>{@link CategorizingDiagnosticCollector}: a reference to the collector of diagnostics emitted
+ * by the Java compiler. (See {@link DiagnosticListener}.)</li>
  * <li>{@link ProcessingEnvironment}: a reference to the processing environment.</li>
  * <li>{@link Elements}: a reference to the utility class for working with elements. (See
  * {@link ProcessingEnvironment#getElementUtils()}).</li>
  * <li>{@link Types}: a reference to the utility class for working with type mirrors. (See
  * {@link ProcessingEnvironment#getTypeUtils()}).</li>
- * <li>{@link Filer}: a reference to the interface used by an annotation processor to read and write files.
- * (See {@link ProcessingEnvironment#getFiler()}).</li>
- * <li>{@link Messager}: a reference to the interfaced used by an annotation processor to emit messages and/or
- * diagnostics. (See {@link ProcessingEnvironment#getMessager()}).</li>
- * <li>{@link SourceVersion}: a reference to the current version of the source code being processed. See
- * {@link ProcessingEnvironment#getSourceVersion()}).</li>
+ * <li>{@link Filer}: a reference to the interface used by an annotation processor to read and write
+ * files. (See {@link ProcessingEnvironment#getFiler()}).</li>
+ * <li>{@link Messager}: a reference to the interfaced used by an annotation processor to emit
+ * messages and/or diagnostics. (See {@link ProcessingEnvironment#getMessager()}).</li>
+ * <li>{@link SourceVersion}: a reference to the current version of the source code being processed.
+ * See {@link ProcessingEnvironment#getSourceVersion()}).</li>
  * <li>{@code Map<String, String>}: a reference to the current options. See
  * {@link ProcessingEnvironment#getOptions()}).</li>
  * <li>{@link RoundEnvironment}: a reference to the current round environment.</li>
- * <li><code>Set&lt;{@link TypeElement}&gt;</code>: a reference to the set of annotation types for the current
- * round of processing.</li>
- * <li>{@code ? extends} {@link Processor}: a reference to the processor under test. If the method accepts a
- * sub-class or sub-interface of {@link Processor} that is not compatible with the actual processor instance
- * under test, the test method will fail with a {@link ClassCastException}.</li>
+ * <li><code>Set&lt;{@link TypeElement}&gt;</code>: a reference to the set of annotation types for
+ * the current round of processing.</li>
+ * <li>{@code ? extends} {@link Processor}: a reference to the processor under test. If the method
+ * accepts a sub-class or sub-interface of {@link Processor} that is not compatible with the actual
+ * processor instance under test, the test method will fail with a {@link ClassCastException}.</li>
  * </ul>
- * Test methods are also allowed to return {@code boolean}, which represents the return value of executing
- * {@link Processor#process(Set, RoundEnvironment)} and indicates whether the annotations for that round were
- * consumed by the processor.
+ * Test methods are also allowed to return {@code boolean}, which represents the return value of
+ * executing {@link Processor#process(Set, RoundEnvironment)} and indicates whether the annotations
+ * for that round were consumed by the processor.
  * 
- * <p>Note that a method annotated with {@link NoProcess @NoProcess} must accept no arguments and return void
- * since it is run as a normal test method.
+ * <p>Note that a method annotated with {@link NoProcess @NoProcess} must accept no arguments and
+ * return void since it is run as a normal test method.
  * 
  * <p>Here is a short example of a test.
- * 
  * <pre>
  * {@literal @}RunWith(AnnotationProcessorTestRunner.class)
  * {@literal @}FilesToProcess({@literal @}InputFiles({"test/my/package/MyClass1.java", "test/my/package/MyClass2.java"}))
@@ -179,15 +183,25 @@ import javax.tools.ToolProvider;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: add validation to check config and verify invariants prior to running a test case, like checking
-// that all referenced resources are present and verifying annotation compatibility (for example,
-// @ProcessorUnderTest and @NoProcess not allowed on same method)
+// TODO: add validation to check config and verify invariants prior to running a test case, like
+// checking that all referenced resources are present and verifying annotation compatibility (for
+// example, @ProcessorUnderTest and @NoProcess not allowed on same method)
 public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
 
    private static final Set<Class<?>> ALLOWED_PROCESS_RETURN_TYPES =
          new HashSet<Class<?>>(Arrays.asList(void.class, boolean.class, Boolean.class));
    
    private static final Set<Class<?>> ALLOWED_NO_PROCESS_RETURN_TYPES = new HashSet<Class<?>>(Arrays.asList(void.class));
+   
+   /**
+    * The current compilation context. This must be re-created for each test method to prevent
+    * inputs from one test case (like source files to process) from contaminating the state for the
+    * next.
+    *
+    * @see #getCurrentContext()
+    * @see #clearCurrentContext()
+    */
+   private CompilationContext currentContext;
    
    public AnnotationProcessorTestRunner(Class<?> klass) throws InitializationError {
       super(klass);
@@ -215,6 +229,18 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       };
    }
    
+   CompilationContext getCurrentContext() {
+      // won't be accessed from multiple threads, so we don't need anything fancy here
+      if (currentContext == null) {
+         currentContext = new CompilationContext();
+      }
+      return currentContext;
+   }
+
+   void clearCurrentContext() {
+      currentContext = null;
+   }
+   
    @Override
    protected Statement methodInvoker(final FrameworkMethod method, final Object test) {
      if (method.getMethod().isAnnotationPresent(Before.class)) {
@@ -223,7 +249,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
            @Override
            public void evaluate() throws Throwable {
               Object parms[] = TestMethodParameterInjectors.FOR_BEFORE_METHODS
-                    .getInjectedParameters(method.getMethod(), currentContext.get().getFileManager());
+                    .getInjectedParameters(method.getMethod(), getCurrentContext().getFileManager());
               method.invokeExplosively(test, parms);
            }
         };
@@ -242,45 +268,26 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
             @SuppressWarnings("synthetic-access")
             @Override
             public void evaluate() throws Throwable {
-               CompilationContext context = currentContext.get();
+               CompilationContext context = getCurrentContext();
                try {
-                  JavaCompiler compiler = context.getCompiler();
-                  CategorizingDiagnosticCollector diagnosticCollector = context.getDiagnosticCollector();
                   TestJavaFileManager fileManager = context.getFileManager();
                   List<String> options = options(method.getMethod(), test.getClass());
-                  Collection<String> classNames = classNamesToProcess(method.getMethod(), test.getClass());
+                  Collection<Class<?>> classes =
+                        classesToProcess(method.getMethod(), test.getClass());
                   Iterable<JavaFileObject> files = filesToProcess(method.getMethod(), test.getClass(), fileManager);
-                  if (!files.iterator().hasNext() && classNames.isEmpty()) {
+                  if (!files.iterator().hasNext() && classes.isEmpty()) {
                      // If no files or classes are specified, then we need to add a file in order to avoid
                      // compilation failure (otherwise javac complains that there it has nothing to do)
                      // so we'll just process the test class itself
-                     classNames = Collections.singletonList(test.getClass().getCanonicalName());
+                     classes = Collections.singletonList(test.getClass());
                   }
-                  JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
-                        diagnosticCollector.getListener(), options, classNames, files);
-                  // The compiler eats everything thrown by an annotation processor. So we'll use this reference to
-                  // communicate the source exception up here so we can re-throw it (that way, junit indicates the
-                  // original assertion or test exception instead of just a generic CompilationFailedException)
-                  AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
-                  TestMethodProcessor processor = new TestMethodProcessor(method, test, fileManager, diagnosticCollector, errorRef);
-                  task.setProcessors(Arrays.asList(processor));
-                  try {
-                     boolean success = task.call();
-                     Throwable t = errorRef.get();
-                     if (t != null) {
-                        throw t;
-                     } else if (!success) {
-                        throw new CompilationFailedException("Compilation task failed",
-                              diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
-                     } else if (processor.getInvocationCount() == 0) {
-                        throw new CompilationFailedException("Compilation never invoked processor",
-                              diagnosticCollector.getDiagnostics(Diagnostic.Kind.ERROR));
-                     }
-                  } catch (TestMethodInvocationException e) {
-                     throw e.getCause();
-                  }
+                  Processor testProcessor = new TestMethodProcessor(method, test, fileManager,
+                        context.getDiagnosticCollector());
+                  context.newTask().withOptions(options).processingClasses(classes)
+                        .processingFiles(files).withProcessor(testProcessor).run();
                } finally {
-                  currentContext.remove();
+                  // clean up so we don't contaminate next test method
+                  clearCurrentContext();
                }
             }
          };
@@ -408,27 +415,24 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
     * 
     * @see JavaCompiler#getTask(java.io.Writer, JavaFileManager, DiagnosticListener, Iterable, Iterable, Iterable)
     */
-   private Collection<String> classNamesToProcess(Method method, Class<?> clazz) {
-      HashSet<String> classNames = new HashSet<String>();
+   private Collection<Class<?>> classesToProcess(Method method, Class<?> clazz) {
+      HashSet<Class<?>> classes = new HashSet<>();
       ClassesToProcess forMethod = method.getAnnotation(ClassesToProcess.class);
       boolean includeClass = true;
       if (forMethod != null) {
          if (!forMethod.incremental()) {
             includeClass = false;
          }
-         for (Class<?> classToProcess : forMethod.value()) {
-            classNames.add(classToProcess.getCanonicalName());
-         }
+         classes.addAll(Arrays.asList(forMethod.value()));
       }
       if (includeClass) {
          ClassesToProcess forClass = clazz.getAnnotation(ClassesToProcess.class);
          if (forClass != null) {
-            for (Class<?> classToProcess : forClass.value()) {
-               classNames.add(classToProcess.getCanonicalName());
-            }
+            classes.addAll(Arrays.asList(forClass.value()));
          }
+         
       }
-      return Collections.unmodifiableSet(classNames);
+      return Collections.unmodifiableSet(classes);
    }
    
    /**
@@ -487,39 +491,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
          in.close();
       }
    }
-   
-   private static class CompilationContext {
-      private final JavaCompiler compiler;
-      private final CategorizingDiagnosticCollector diagnosticCollector;
-      private final TestJavaFileManager fileManager;
-      
-      public CompilationContext() {
-         compiler = ToolProvider.getSystemJavaCompiler();
-         diagnosticCollector = new CategorizingDiagnosticCollector();
-         fileManager = new TestJavaFileManager(
-               compiler.getStandardFileManager(diagnosticCollector.getListener(), null, null));
-      }
-      
-      public JavaCompiler getCompiler() {
-         return compiler;
-      }
-      
-      public CategorizingDiagnosticCollector getDiagnosticCollector() {
-         return diagnosticCollector;
-      }
-      
-      public TestJavaFileManager getFileManager() {
-         return fileManager;
-      }
-   }
-   
-   final ThreadLocal<CompilationContext> currentContext =
-         new ThreadLocal<CompilationContext>() {
-            @Override
-            protected CompilationContext initialValue() {
-               return new CompilationContext();
-            }
-         };
+
    
    // TODO: Remove this junk. But keep the useful bits as some of this cruft could be
    // useful as the basis for AnnotationProcessorTestRunnerTest!

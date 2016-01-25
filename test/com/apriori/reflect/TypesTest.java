@@ -21,34 +21,127 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.collections.AssociativeArrayList;
 import com.apriori.reflect.TypeTesting.Dummy;
 import com.apriori.reflect.TypeTesting.InvalidType;
-import com.apriori.util.IoStreams;
 
 import org.junit.Test;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
+import java.util.AbstractCollection;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.function.BiPredicate;
 
 public class TypesTest {
 
+   @Test public void isInterface() {
+      assertFalse(Types.isInterface(void.class));
+      assertFalse(Types.isInterface(long.class));
+      assertFalse(Types.isInterface(Class.class));
+      assertFalse(Types.isInterface(Object[].class));
+      assertTrue(Types.isInterface(List.class));
+      assertTrue(Types.isInterface(Override.class)); // annotations are interfaces, too
+      assertTrue(Types.isInterface(PARAM_TYPE));
+      assertFalse(Types.isInterface(GENERIC_ARRAY_TYPE));
+      assertFalse(Types.isInterface(GENERIC_ARRAY_TYPE_VARIABLE));
+      assertFalse(Types.isInterface(TYPE_VAR_Z));
+      assertFalse(Types.isInterface(TYPE_VAR_T));
+      assertFalse(Types.isInterface(WILDCARD_EXTENDS));
+      assertFalse(Types.isInterface(WILDCARD_SUPER));
+      assertFalse(Types.isInterface(WILDCARD_ARRAY));
+      assertFalse(Types.isInterface(COMPLEX_TYPE));
+      // wildcards and type variables aren't known types, so isInterface returns false
+      // regardless of the bounds
+      assertFalse(Types.isInterface(Types.newExtendsWildcardType(List.class)));
+      assertFalse(Types.isInterface(fabricateTypeVarThatExtends(List.class)));
+      
+      assertThrows(NullPointerException.class, () -> Types.isInterface(null));
+      assertThrows(UnknownTypeException.class, () -> Types.isInterface(InvalidType.INSTANCE));      
+   }
+
+   @Test public void isAnnotation() {
+      assertTrue(Types.isAnnotation(Override.class));
+      
+      assertFalse(Types.isAnnotation(void.class));
+      assertFalse(Types.isAnnotation(long.class));
+      assertFalse(Types.isAnnotation(Class.class));
+      assertFalse(Types.isAnnotation(Object[].class));
+      assertFalse(Types.isAnnotation(List.class));
+      assertFalse(Types.isAnnotation(PARAM_TYPE));
+      assertFalse(Types.isAnnotation(GENERIC_ARRAY_TYPE));
+      assertFalse(Types.isAnnotation(GENERIC_ARRAY_TYPE_VARIABLE));
+      assertFalse(Types.isAnnotation(TYPE_VAR_Z));
+      assertFalse(Types.isAnnotation(TYPE_VAR_T));
+      assertFalse(Types.isAnnotation(WILDCARD_EXTENDS));
+      assertFalse(Types.isAnnotation(WILDCARD_SUPER));
+      assertFalse(Types.isAnnotation(WILDCARD_ARRAY));
+      assertFalse(Types.isAnnotation(COMPLEX_TYPE));
+      // wildcards and type variables aren't known types, so isAnnotation returns false
+      // regardless of the bounds
+      assertFalse(Types.isAnnotation(Types.newExtendsWildcardType(List.class)));
+      assertFalse(Types.isAnnotation(fabricateTypeVarThatExtends(List.class)));
+      
+      assertThrows(NullPointerException.class, () -> Types.isAnnotation(null));
+      assertThrows(UnknownTypeException.class, () -> Types.isAnnotation(InvalidType.INSTANCE));      
+   }
+   
+   @Test public void isEnum() {
+      assertTrue(Types.isEnum(RetentionPolicy.class));
+      // if a wildcard or type variable has an enum as upper-bound, the type must be an enum
+      assertTrue(Types.isEnum(Types.newExtendsWildcardType(RetentionPolicy.class)));
+      assertTrue(Types.isEnum(Types.newExtendsWildcardType(Enum.class)));
+      assertTrue(Types.isEnum(Types.newExtendsWildcardType(
+            Types.newParameterizedType(Enum.class, Types.extendsAnyWildcard()))));
+      assertTrue(Types.isEnum(fabricateTypeVarThatExtends(RetentionPolicy.class)));
+      assertTrue(Types.isEnum(fabricateTypeVarThatExtends(Enum.class)));
+      assertTrue(Types.isEnum(fabricateTypeVarThatExtends(
+            Types.newParameterizedType(Enum.class, Types.extendsAnyWildcard()))));
+      
+      assertFalse(Types.isEnum(void.class));
+      assertFalse(Types.isEnum(long.class));
+      assertFalse(Types.isEnum(Class.class));
+      assertFalse(Types.isEnum(Object[].class));
+      assertFalse(Types.isEnum(List.class));
+      assertFalse(Types.isEnum(Override.class));
+      assertFalse(Types.isEnum(PARAM_TYPE));
+      assertFalse(Types.isEnum(GENERIC_ARRAY_TYPE));
+      assertFalse(Types.isEnum(GENERIC_ARRAY_TYPE_VARIABLE));
+      assertFalse(Types.isEnum(TYPE_VAR_Z));
+      assertFalse(Types.isEnum(TYPE_VAR_T));
+      assertFalse(Types.isEnum(WILDCARD_EXTENDS));
+      assertFalse(Types.isEnum(WILDCARD_SUPER));
+      assertFalse(Types.isEnum(WILDCARD_ARRAY));
+      assertFalse(Types.isEnum(COMPLEX_TYPE));
+      
+      assertThrows(NullPointerException.class, () -> Types.isEnum(null));
+      assertThrows(UnknownTypeException.class, () -> Types.isEnum(InvalidType.INSTANCE));      
+   }
+   
    @Test public void isArray() {
       assertFalse(Types.isArray(void.class));
       assertFalse(Types.isArray(long.class));
@@ -67,7 +160,7 @@ public class TypesTest {
       assertThrows(NullPointerException.class, () -> Types.isArray(null));
       assertFalse(Types.isArray(InvalidType.INSTANCE));
    }
-
+   
    @Test public void getComponentType() {
       assertNull(Types.getComponentType(void.class));
       assertNull(Types.getComponentType(long.class));
@@ -102,22 +195,22 @@ public class TypesTest {
    }
 
    @Test public void getRawType() {
-      assertEquals(void.class, Types.getRawType(void.class));
-      assertEquals(long.class, Types.getRawType(long.class));
-      assertEquals(Class.class, Types.getRawType(Class.class));
-      assertEquals(Object[].class, Types.getRawType(Object[].class));
-      assertEquals(List.class, Types.getRawType(PARAM_TYPE));
-      assertEquals(Map[].class, Types.getRawType(GENERIC_ARRAY_TYPE));
-      assertEquals(CharSequence[].class, Types.getRawType(GENERIC_ARRAY_TYPE_VARIABLE));
-      assertEquals(Map.class, Types.getRawType(TYPE_VAR_Z));
-      assertEquals(Object.class, Types.getRawType(TYPE_VAR_T));
-      assertEquals(Number.class, Types.getRawType(WILDCARD_EXTENDS));
-      assertEquals(Object.class, Types.getRawType(WILDCARD_SUPER));
-      assertEquals(List[].class, Types.getRawType(WILDCARD_ARRAY));
-      assertEquals(Map[].class, Types.getRawType(COMPLEX_TYPE));
+      assertEquals(void.class, Types.getErasure(void.class));
+      assertEquals(long.class, Types.getErasure(long.class));
+      assertEquals(Class.class, Types.getErasure(Class.class));
+      assertEquals(Object[].class, Types.getErasure(Object[].class));
+      assertEquals(List.class, Types.getErasure(PARAM_TYPE));
+      assertEquals(Map[].class, Types.getErasure(GENERIC_ARRAY_TYPE));
+      assertEquals(CharSequence[].class, Types.getErasure(GENERIC_ARRAY_TYPE_VARIABLE));
+      assertEquals(Map.class, Types.getErasure(TYPE_VAR_Z));
+      assertEquals(Object.class, Types.getErasure(TYPE_VAR_T));
+      assertEquals(Number.class, Types.getErasure(WILDCARD_EXTENDS));
+      assertEquals(Object.class, Types.getErasure(WILDCARD_SUPER));
+      assertEquals(List[].class, Types.getErasure(WILDCARD_ARRAY));
+      assertEquals(Map[].class, Types.getErasure(COMPLEX_TYPE));
 
-      assertThrows(NullPointerException.class, () -> Types.getRawType(null));
-      assertThrows(UnknownTypeException.class, () -> Types.getRawType(InvalidType.INSTANCE));
+      assertThrows(NullPointerException.class, () -> Types.getErasure(null));
+      assertThrows(UnknownTypeException.class, () -> Types.getErasure(InvalidType.INSTANCE));
    }
    
    @Test public void getActualTypeArguments() {
@@ -151,6 +244,37 @@ public class TypesTest {
             Types.getTypeParameters(Map.class));
 
       assertThrows(NullPointerException.class, () -> Types.getTypeParameters(null));
+   }
+   
+   @Test public void isSameType() {
+      assertTrue(Types.isSameType(Class.class, Class.class));
+      assertTrue(Types.isSameType(Object[].class, Types.getArrayType(Object.class)));
+      assertTrue(Types.isSameType(
+            Types.newGenericArrayType(
+                  Types.newParameterizedType(Map.class, String.class, Number.class)),
+            GENERIC_ARRAY_TYPE));
+      assertTrue(Types.isSameType(Types.getTypeVariable("T", Dummy.class), TYPE_VAR_T));
+
+      // two wildcards are not same type, even if same instance
+      assertFalse(Types.isSameType(WILDCARD_EXTENDS, WILDCARD_EXTENDS));
+      assertFalse(Types.isSameType(Types.newExtendsWildcardType(Number.class), WILDCARD_EXTENDS));
+      assertFalse(Types.isSameType(WILDCARD_SUPER, WILDCARD_SUPER));
+      assertFalse(Types.isSameType(
+            Types.newSuperWildcardType(Types.newParameterizedType(List.class, TYPE_VAR_T)),
+            WILDCARD_SUPER));
+
+      assertFalse(Types.isSameType(Types.newParameterizedType(Map.class, String.class, Number.class),
+            GENERIC_ARRAY_TYPE));
+      assertFalse(Types.isSameType(Class.class, Class[].class));
+      assertFalse(Types.isSameType(int.class, Integer.class));
+      assertFalse(Types.isSameType(TYPE_VAR_T, TYPE_VAR_Z));
+      assertFalse(Types.isSameType(WILDCARD_ARRAY, WILDCARD_EXTENDS));
+      assertFalse(Types.isSameType(PARAM_TYPE, GENERIC_ARRAY_TYPE));
+      
+      assertThrows(NullPointerException.class, () -> Types.isSameType(Class.class, null));
+      assertThrows(NullPointerException.class, () -> Types.isSameType(null, Class.class));
+      assertThrows(NullPointerException.class, () -> Types.isSameType(null, null));
+      assertFalse(Types.isSameType(InvalidType.INSTANCE, Object.class));
    }
    
    @Test public void testEquals() {
@@ -289,16 +413,16 @@ public class TypesTest {
       assertIsAssignable(TYPE_VAR_Z, Object.class);
       assertIsAssignable(PARAM_TYPE, Object.class);
       assertIsAssignable(InvalidType.INSTANCE, Object.class);
-      // except primitives
-      assertIsNotAssignable(boolean.class, Object.class);
-      assertIsNotAssignable(byte.class, Object.class);
-      assertIsNotAssignable(char.class, Object.class);
-      assertIsNotAssignable(short.class, Object.class);
-      assertIsNotAssignable(int.class, Object.class);
-      assertIsNotAssignable(long.class, Object.class);
-      assertIsNotAssignable(float.class, Object.class);
-      assertIsNotAssignable(double.class, Object.class);
-      assertIsNotAssignable(void.class, Object.class);
+      // primitives cannot be assigned "strictly", but non-strict allows boxing conversion
+      assertIsAssignableButNotStrict(boolean.class, Object.class);
+      assertIsAssignableButNotStrict(byte.class, Object.class);
+      assertIsAssignableButNotStrict(char.class, Object.class);
+      assertIsAssignableButNotStrict(short.class, Object.class);
+      assertIsAssignableButNotStrict(int.class, Object.class);
+      assertIsAssignableButNotStrict(long.class, Object.class);
+      assertIsAssignableButNotStrict(float.class, Object.class);
+      assertIsAssignableButNotStrict(double.class, Object.class);
+      assertIsAssignableButNotStrict(void.class, Object.class);
       // primitive arrays are assignable though
       assertIsAssignable(boolean[].class, Object.class);
       assertIsAssignable(byte[].class, Object.class);
@@ -335,7 +459,7 @@ public class TypesTest {
       assertIsNotAssignable(float[].class, Object[].class);
       assertIsNotAssignable(double[].class, Object[].class);
    }
-   
+
    @Test public void isAssignable_toClass() {
       // parameterized type can be assigned to raw type if raw types are compatible
       assertIsAssignable(Types.newParameterizedType(List.class, String.class), List.class);
@@ -351,12 +475,19 @@ public class TypesTest {
       assertIsNotAssignable(
             Types.newGenericArrayType(Types.newParameterizedType(Collection.class, String.class)),
             List[].class);
-      // primitives only assignable from themselves
+      // primitives only strictly assignable from themselves
       Class<?> primitives[] = { boolean.class, byte.class, char.class, short.class, int.class,
             long.class, float.class, double.class, void.class };
       for (int i = 0; i < primitives.length; i++) {
          for (int j = 0; j < primitives.length; j++) {
-            assertEquals(i == j, Types.isAssignableStrict(primitives[i], primitives[j]));
+            if (i == j) {
+               assertIsAssignable(primitives[i], primitives[j]);
+            } else if (Types.getAllSupertypes(primitives[i]).contains(primitives[j])) {
+               // strict assignment does not check primitive subtyping rules
+               assertIsAssignableButNotStrict(primitives[i], primitives[j], true);
+            } else {
+               assertIsNotAssignable(primitives[i], primitives[j]);
+            }
          }
       }
       // other raw types assignable if compatible (just like Class.isAssignableFrom)
@@ -413,10 +544,14 @@ public class TypesTest {
             Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)),
             PARAM_TYPE);
       // raw types cannot be assigned to parameterized types (without unchecked cast)
-      assertIsNotAssignable(Collection.class, PARAM_TYPE);
-      assertIsNotAssignable(List.class, PARAM_TYPE);
-      assertIsNotAssignable(ArrayList.class, PARAM_TYPE);
+      // to not "strictly" assignable (assignment conversion, however, allows such a cast)
+      // (PARAM_TYPE is a List, so it can be assiged fr
+      assertIsAssignableButNotStrict(List.class, PARAM_TYPE);
+      assertIsAssignableButNotStrict(ArrayList.class, PARAM_TYPE);
+      // but parameterized types still invariant (e.g. unchecked conversion does not allow
+      // assigning List<Map> to List<Map<T, Integer>>)
       assertIsNotAssignable(Types.newParameterizedType(List.class, Map.class), PARAM_TYPE);
+      assertIsNotAssignable(Collection.class, PARAM_TYPE); // narrowing conversion not allowed
       // without wildcard as actual type arg, require exact match on parameters
       assertIsNotAssignable(Types.newParameterizedType(List.class,
             Types.newParameterizedType(Map.class,
@@ -430,8 +565,8 @@ public class TypesTest {
             Types.newParameterizedType(Map.class, TYPE_VAR_T, Integer.class)),
             PARAM_TYPE);
       // if super-type includes raw type reference to generic type, we lose type information and
-      // would require unchecked casts, so not allowed
-      assertIsNotAssignable(TypedStringList.class, listOfString);
+      // would require unchecked casts
+      assertIsAssignableButNotStrict(TypedStringList.class, listOfString);
       // but any type arg suffices
       assertIsAssignable(Types.newParameterizedType(TypedStringList.class, Object.class),
             listOfString);
@@ -473,10 +608,9 @@ public class TypesTest {
                   Types.extendsAnyWildcard(), Types.extendsAnyWildcard())),
             listOfMapWildcards);
    }
-   
-   @Test public void isAssignable_toGenericArrayType() {
-      // TODO!!!
-   }
+
+   // NB: There is no isAssignable_toGenericArrayType because all of the other tests
+   // implicitly test that
 
    @Test public void isAssignable_toWildcardType() {
       // nothing can be assigned to an extends wildcard
@@ -512,26 +646,64 @@ public class TypesTest {
     * that wildcards and type variables that extend the {@code from} are also assignable.
     */
    private void assertIsAssignable(Type from, Type to) {
-      assertTrue(Types.isAssignableStrict(from, to));
+      doAssertAssignable(from, to, Types::isAssignable);
+      doAssertAssignable(from, to, Types::isAssignableStrict);
+      if (!Types.equals(from, to)) {
+         doAssertAssignable(from, to, Types::isSubtype);
+         doAssertAssignable(from, to, Types::isSubtypeStrict);
+      } else {
+         // can't do the whole doAssertNotAssignable battery, but we know if they are equal
+         // then they cannot be a subtype of one another
+         assertFalse(Types.isSubtype(from, to));
+         assertFalse(Types.isSubtypeStrict(from, to));
+         assertFalse(Types.isSubtype(to, from));
+         assertFalse(Types.isSubtypeStrict(to, from));
+      }
+   }
+
+   private void assertIsAssignableButNotStrict(Type from, Type to) {
+      assertIsAssignableButNotStrict(from, to, false);
+   }
+
+   private void assertIsAssignableButNotStrict(Type from, Type to, boolean isPrimitiveSubtype) {
+      doAssertAssignable(from, to, Types::isAssignable);
+      doAssertNotAssignable(from, to, Types::isAssignableStrict);
+      // sub-typing does not use assignment conversions (like boxing/unboxing, unchecked, etc)
+      // if not strictly assignable, not a subtype either
+      if (isPrimitiveSubtype) {
+         doAssertAssignable(from, to, Types::isSubtype);
+      } else {
+         doAssertNotAssignable(from, to, Types::isSubtype);
+      }
+      doAssertNotAssignable(from, to, Types::isSubtypeStrict);
+   }
+
+   private void doAssertAssignable(Type from, Type to, BiPredicate<Type, Type> a) {
+      assertTrue(a.test(from, to));
       // if we can, check that wildcard or type var that extends given type is also assignable
       // (can't have a wildcard or type var that extends a primitive or other wildcard)
       if (!Types.isPrimitive(from) && !(from instanceof WildcardType)) {
-         assertTrue(Types.isAssignableStrict(Types.newExtendsWildcardType(from), to));
-         assertTrue(Types.isAssignableStrict(fabricateTypeVarThatExtends(from), to));
+         assertTrue(a.test(Types.newExtendsWildcardType(from), to));
+         assertTrue(a.test(fabricateTypeVarThatExtends(from), to));
       }
       // if we can, do similar check for arrays of the given types (cannot create arrays of
       // wildcard type, void, or unknown type impls)
       if (from != void.class && !(from instanceof WildcardType) && from != InvalidType.INSTANCE
             && to != void.class && !(to instanceof WildcardType)) {
-         Type fromArray = from instanceof Class
-               ? Types.getArrayType((Class<?>) from)
-               : Types.newGenericArrayType(from);
-         Type toArray = to instanceof Class
-               ? Types.getArrayType((Class<?>) to)
-               : Types.newGenericArrayType(to);
-         assertTrue(Types.isAssignableStrict(fromArray, toArray));
-         assertTrue(Types.isAssignableStrict(Types.newExtendsWildcardType(fromArray), toArray));
-         assertTrue(Types.isAssignableStrict(fabricateTypeVarThatExtends(fromArray), toArray));
+         Type fromArray = Types.getArrayType(from);
+         Type toArray = Types.getArrayType(to);
+         if ((Types.getErasure(from).isPrimitive() || Types.getErasure(to).isPrimitive())
+               && from != to) {
+            // assignment conversion allows boxing/unboxing, but not on array components
+            // also, primitive subtyping rules do not extend to array covariance
+            assertFalse(a.test(fromArray, toArray));
+            assertFalse(a.test(Types.newExtendsWildcardType(fromArray), toArray));
+            assertFalse(a.test(fabricateTypeVarThatExtends(fromArray), toArray));
+         } else {
+            assertTrue(a.test(fromArray, toArray));
+            assertTrue(a.test(Types.newExtendsWildcardType(fromArray), toArray));
+            assertTrue(a.test(fabricateTypeVarThatExtends(fromArray), toArray));
+         }
       }
    }
 
@@ -541,14 +713,31 @@ public class TypesTest {
     * assignable.
     */
    private void assertIsNotAssignable(Type from, Type to) {
-      assertFalse(Types.isAssignableStrict(from, to));
+      doAssertNotAssignable(from, to, Types::isAssignable);
+      doAssertNotAssignable(from, to, Types::isAssignableStrict);
+      doAssertNotAssignable(from, to, Types::isSubtype);
+      doAssertNotAssignable(from, to, Types::isSubtypeStrict);
+   }
+   
+   private void doAssertNotAssignable(Type from, Type to, BiPredicate<Type, Type> a) {
+      assertFalse(a.test(from, to));
+      // if we can, do similar check for arrays of the given types (cannot create arrays of
+      // wildcard type, void, or unknown type impls)
+      if (from != void.class && !(from instanceof WildcardType) && from != InvalidType.INSTANCE
+            && to != void.class && !(to instanceof WildcardType)) {
+         Type fromArray = Types.getArrayType(from);
+         Type toArray = Types.getArrayType(to);
+         assertFalse(a.test(fromArray, toArray));
+         assertFalse(a.test(Types.newExtendsWildcardType(fromArray), toArray));
+         assertFalse(a.test(fabricateTypeVarThatExtends(fromArray), toArray));
+      }
       if (Types.isPrimitive(from) || from instanceof WildcardType) {
          // no more checks can be made (can't have a wildcard or type var that
          // extends a primitive or wildcard type)
          return;
       }
-      assertFalse(Types.isAssignableStrict(Types.newExtendsWildcardType(from), to));
-      assertFalse(Types.isAssignableStrict(fabricateTypeVarThatExtends(from), to));
+      assertFalse(a.test(Types.newExtendsWildcardType(from), to));
+      assertFalse(a.test(fabricateTypeVarThatExtends(from), to));
    }
 
    private Type fabricateTypeVarThatExtends(Type... t) {
@@ -609,7 +798,7 @@ public class TypesTest {
       };
    }
 
-   @Test public void resolveSuperType() {
+   @Test public void resolveSupertype() {
       // TODO!!!
    }
 
@@ -627,6 +816,205 @@ public class TypesTest {
 
    @Test public void replaceTypeVariables() {
       // TODO!!!
+   }
+   
+   @Test public void getDirectSupertypes_primitives() {
+      assertEquals(Collections.emptySet(), asSet(Types.getDirectSupertypes(boolean.class)));
+      assertEquals(asSet(short.class), asSet(Types.getDirectSupertypes(byte.class)));
+      assertEquals(asSet(int.class), asSet(Types.getDirectSupertypes(short.class)));
+      assertEquals(asSet(int.class), asSet(Types.getDirectSupertypes(char.class)));
+      assertEquals(asSet(long.class), asSet(Types.getDirectSupertypes(int.class)));
+      assertEquals(asSet(float.class), asSet(Types.getDirectSupertypes(long.class)));
+      assertEquals(asSet(double.class), asSet(Types.getDirectSupertypes(float.class)));
+      assertEquals(Collections.emptySet(), asSet(Types.getDirectSupertypes(double.class)));
+      assertEquals(Collections.emptySet(), asSet(Types.getDirectSupertypes(void.class)));
+   }
+
+   // test types for testing getDirectSupertypes
+   
+   interface TestSerialized extends Serializable, Cloneable {
+   }
+   interface GenericInterface<E> extends Collection<E> {
+   }
+   interface GenericInterfaceWithoutSuperinterface<E> {
+   }
+   
+   abstract class GenericClass<E> extends AbstractCollection<E>
+   implements Queue<E>, Comparable<GenericClass<? extends E>> {
+   }
+   abstract class GenericClassWithoutSuperclass<E> implements Iterable<E> {
+   }
+   class GenericClassWithoutsupertype<K, V> {
+   }
+   
+   class ClassWithoutSupertype {
+   }
+   abstract class ClassWithoutSuperclass implements Cloneable, List<String> {
+   }
+   class ClassWithSuperclass extends ClassWithoutSupertype {
+   }
+   abstract class ClassWithSupertypes extends ClassWithSuperclass implements Comparator<Number> {
+   }
+
+   @Test public void getDirectSupertypes_rawTypes() {
+      // Interface with super-interfaces
+      assertEquals(asSet(Serializable.class, Cloneable.class),
+            asSet(Types.getDirectSupertypes(TestSerialized.class)));
+      // Interface without super-interfaces - direct supertype is Object
+      assertEquals(Collections.singleton(Object.class),
+            asSet(Types.getDirectSupertypes(Cloneable.class)));
+      // Raw type use of generic interface - direct supertype will be raw, too
+      assertEquals(Collections.singleton(Collection.class),
+            asSet(Types.getDirectSupertypes(GenericInterface.class)));
+      // Raw type use of generic class
+      assertEquals(asSet(AbstractCollection.class, Queue.class, Comparable.class),
+            asSet(Types.getDirectSupertypes(GenericClass.class)));
+      // Non-generic classes
+      assertEquals(
+            asSet(ClassWithSuperclass.class,
+                  Types.newParameterizedType(Comparator.class, Number.class)),
+            asSet(Types.getDirectSupertypes(ClassWithSupertypes.class)));
+      assertEquals(Collections.singleton(ClassWithoutSupertype.class),
+            asSet(Types.getDirectSupertypes(ClassWithSuperclass.class)));
+      assertEquals(Collections.singleton(Object.class),
+            asSet(Types.getDirectSupertypes(ClassWithoutSupertype.class)));
+      // Object has no supertypes
+      assertEquals(Collections.emptySet(), asSet(Types.getDirectSupertypes(Object.class)));
+   }
+
+   @Test public void getDirectSupertypes_wildcardsAndTypeVariables() {
+      assertEquals(Collections.emptySet(), asSet(Types.getDirectSupertypes(Object.class)));
+      
+      // TODO!!!
+   }
+
+   @Test public void getDirectSupertypes_arrays() {
+      // TODO!!!
+   }
+
+   @Test public void getDirectSupertypes_parameterizedTypes() {
+      // Generic interface
+      assertEquals(
+            asSet(GenericInterface.class,
+                  Types.newParameterizedType(Collection.class, String.class)),
+            asSet(Types.getDirectSupertypes(
+                  Types.newParameterizedType(GenericInterface.class, String.class))));
+      // Generic class
+      assertEquals(
+            asSet(GenericClass.class,
+                  Types.newParameterizedType(AbstractCollection.class, Number.class),
+                  Types.newParameterizedType(Queue.class, Number.class),
+                  Types.newParameterizedType(Comparable.class,
+                        Types.newParameterizedType(GenericClass.class,
+                              Types.newExtendsWildcardType(Number.class)))),
+            asSet(Types.getDirectSupertypes(
+                  Types.newParameterizedType(GenericClass.class, Number.class))));
+   }
+   
+   @Test public void getGenericSuperclass() {
+      // TODO!!!
+   }
+
+   @Test public void getGenericInterfaces() {
+      // TODO!!!
+   }
+
+   @Test public void getAllSupertypes_primitives() {
+      assertEquals(Collections.emptySet(), Types.getAllSupertypes(boolean.class));
+      assertEquals(asSet(short.class, int.class, long.class, float.class, double.class),
+            Types.getAllSupertypes(byte.class));
+      assertEquals(asSet(int.class, long.class, float.class, double.class),
+            Types.getAllSupertypes(short.class));
+      assertEquals(asSet(int.class, long.class, float.class, double.class),
+            Types.getAllSupertypes(char.class));
+      assertEquals(asSet(long.class, float.class, double.class), Types.getAllSupertypes(int.class));
+      assertEquals(asSet(float.class, double.class), Types.getAllSupertypes(long.class));
+      assertEquals(asSet(double.class), Types.getAllSupertypes(float.class));
+      assertEquals(Collections.emptySet(), Types.getAllSupertypes(double.class));
+      assertEquals(Collections.emptySet(), Types.getAllSupertypes(void.class));
+   }
+   
+   @Test public void getAllSupertypes() {
+      // ensure that getAllSupertypes agrees with getDirectSupertypes
+      checkAllSupertypes(Class.class);
+      checkAllSupertypes(Object[].class);
+      checkAllSupertypes(List.class);
+      checkAllSupertypes(Override.class);
+      checkAllSupertypes(RetentionPolicy.class);
+      checkAllSupertypes(PARAM_TYPE);
+      checkAllSupertypes(GENERIC_ARRAY_TYPE);
+      checkAllSupertypes(GENERIC_ARRAY_TYPE_VARIABLE);
+      checkAllSupertypes(TYPE_VAR_Z);
+      checkAllSupertypes(TYPE_VAR_T);
+      checkAllSupertypes(WILDCARD_EXTENDS);
+      checkAllSupertypes(WILDCARD_SUPER);
+      checkAllSupertypes(WILDCARD_ARRAY);
+      checkAllSupertypes(COMPLEX_TYPE);
+   }
+   
+   private void checkAllSupertypes(Type type) {
+      // check that Types.getAllSupertypes agrees with recursive calls to Types.getDirectSupertypes
+      Set<Type> supertypes = new LinkedHashSet<>();
+      findAllSupertypesRecursive(type, supertypes);
+      
+      assertEquals(supertypes, Types.getAllSupertypes(type));
+   }
+
+   private void findAllSupertypesRecursive(Type type, Set<Type> soFar) {
+      Type[] directSupertypes = Types.getDirectSupertypes(type);
+      for (Type s : directSupertypes) {
+         soFar.add(s);
+         // we always recurse, even if soFar.add(...) returned false (meaning we've seen this type
+         // already), to ensure there are no cycles (e.g. we should never see stack overflow).
+         findAllSupertypesRecursive(s, soFar);
+      }
+   }
+   
+   @Test public void getLeastUpperBounds() {
+      // nothing in common but root type
+      assertEquals(Collections.singleton(Object.class),
+            asSet(Types.getLeastUpperBounds(Object.class, TYPE_VAR_T, String.class)));
+      
+      assertEquals(
+            asSet(Types.newParameterizedType(Comparable.class, Types.extendsAnyWildcard()),
+                  Serializable.class),
+            asSet(Types.getLeastUpperBounds(Integer.class, String.class)));
+      
+      // one type is raw, so least upper bound is also raw (e.g. no type args)
+      assertEquals(asSet(Collection.class),
+            asSet(Types.getLeastUpperBounds(GenericClass.class,
+                  Types.newParameterizedType(List.class, String.class))));
+
+      // induce a complex wildcard in parameterized upper bound
+      assertEquals(
+            asSet(Types.newParameterizedType(Collection.class,
+                  new Types.WildcardTypeImpl(Arrays.asList(
+                        Types.newParameterizedType(Comparable.class, Types.extendsAnyWildcard()),
+                        Serializable.class), Collections.emptyList()))),
+            asSet(Types.getLeastUpperBounds(
+                  Types.newParameterizedType(GenericClass.class, Double.class),
+                  Types.newParameterizedType(List.class, String.class))));
+      
+      WildcardType extendsCharSequence = new Types.WildcardTypeImpl(
+            Arrays.asList(Serializable.class, CharSequence.class), Collections.emptyList());
+      assertEquals(
+            asSet(Types.newParameterizedType(AbstractCollection.class, extendsCharSequence),
+                  Types.newParameterizedType(Deque.class, extendsCharSequence),
+                  Cloneable.class, Serializable.class),
+            asSet(Types.getLeastUpperBounds(
+                  Types.newParameterizedType(LinkedList.class, String.class),
+                  Types.newParameterizedType(ArrayDeque.class, StringBuilder.class))));
+      
+      // primitive types have no shared bound with references types
+      for (Type primitive : Arrays.asList(boolean.class, byte.class, short.class, char.class,
+            int.class, long.class, float.class, double.class, void.class)) {
+         assertEquals(Collections.emptySet(),
+               asSet(Types.getLeastUpperBounds(primitive, Object.class)));
+      }
+   }
+
+   @Test public void getLeastUpperBounds_glbProducesBadIntersection() {
+      // TODO
    }
 
    static class Owner<A, B, C> {
@@ -765,6 +1153,74 @@ public class TypesTest {
             () -> Types.newParameterizedType(owner, Owner.Owned.class, (List<Type>) null));
    }
    
+   static class MutuallyRecursiveComparable1 implements Comparable<MutuallyRecursiveComparable2> {
+      @Override public int compareTo(MutuallyRecursiveComparable2 o) {
+         return 0;
+      }
+   }
+   static class MutuallyRecursiveComparable2 implements Comparable<MutuallyRecursiveComparable1> {
+      @Override public int compareTo(MutuallyRecursiveComparable1 o) {
+         return 0;
+      }
+   }
+   
+   @Test public void newParameterizedType_boundsChecksWildcardsAndNestedParameterizedTypes() {
+      class Test<T extends List<String>> {
+      }
+      @SuppressWarnings("serial")
+      class TestList extends ArrayList<String> {
+      }
+      
+      class AnotherTest<T extends List<HashMap<String, ? extends Number>>> {
+      }
+
+      // successful bounds checks
+      Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(TestList.class));
+      Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(
+            Types.newParameterizedType(AssociativeArrayList.class,
+                  Types.extendsAnyWildcard(), Types.extendsAnyWildcard())));
+      Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(List.class));
+      Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(
+            Types.newParameterizedType(List.class, Types.extendsAnyWildcard())));
+
+      Types.newParameterizedType(AnotherTest.class, Types.newExtendsWildcardType(
+            Types.newParameterizedType(ArrayList.class, Types.extendsAnyWildcard())));
+      Types.newParameterizedType(AnotherTest.class, Types.newExtendsWildcardType(
+            Types.newParameterizedType(ArrayList.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(Map.class, String.class,
+                        Types.newExtendsWildcardType(Double.class))))));
+
+      // unsuccessful checks:
+      // Collection<Number> conflicts with bound List<String> 
+      assertThrows(IllegalArgumentException.class, () ->
+            Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(Collection.class, Number.class))));
+      // AssociativeArrayList<Object, ?> conflicts with bound List<String> 
+      assertThrows(IllegalArgumentException.class, () ->
+            Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(AssociativeArrayList.class, Object.class,
+                        Types.extendsAnyWildcard()))));
+      // List<? extends Comparator> conflicts with bound List<String> 
+      assertThrows(IllegalArgumentException.class, () ->
+            Types.newParameterizedType(Test.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(List.class,
+                        Types.newExtendsWildcardType(Comparator.class)))));
+      // In Map bound, key type ? extends List<?> conflicts with bound String 
+      assertThrows(IllegalArgumentException.class, () ->
+            Types.newParameterizedType(AnotherTest.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(ArrayList.class, Types.newExtendsWildcardType(
+                        Types.newParameterizedType(Map.class,
+                              Types.newExtendsWildcardType(Types.newParameterizedType(List.class,
+                                    Types.extendsAnyWildcard())),
+                              Types.newExtendsWildcardType(Double.class)))))));
+      // In Map bound, ? extends LinkedHashMap conflicts with (invariant) HashMap
+      assertThrows(IllegalArgumentException.class, () ->
+            Types.newParameterizedType(AnotherTest.class, Types.newExtendsWildcardType(
+                  Types.newParameterizedType(ArrayList.class, Types.newExtendsWildcardType(
+                        Types.newParameterizedType(LinkedHashMap.class, String.class,
+                              Types.newExtendsWildcardType(Double.class)))))));
+   }
+   
    @Test public void newParameterizedType_boundsChecks() {
       class OneBound<T extends Number> {
       }
@@ -782,6 +1238,8 @@ public class TypesTest {
          @Override public int compareTo(Integer o) {
             return 0;
          }
+      }
+      class MutuallyRecursiveBound<T extends Comparable<S>, S extends Comparable<T>> {
       }
       
       // type var with a single bound
@@ -811,6 +1269,24 @@ public class TypesTest {
       assertSame(RecursiveBound.class, paramType.getRawType());
       assertArrayEquals(new Type[] { Integer.class, listParam },
             paramType.getActualTypeArguments());
+
+      // type var with mutually recursive bounds (cyclic)
+      paramType = Types.newParameterizedType(MutuallyRecursiveBound.class,
+            String.class, String.class);
+      assertNull(paramType.getOwnerType());
+      assertSame(MutuallyRecursiveBound.class, paramType.getRawType());
+      assertArrayEquals(new Type[] { String.class, String.class },
+            paramType.getActualTypeArguments());
+
+      paramType = Types.newParameterizedType(MutuallyRecursiveBound.class,
+            MutuallyRecursiveComparable1.class, MutuallyRecursiveComparable2.class);
+      assertNull(paramType.getOwnerType());
+      assertSame(MutuallyRecursiveBound.class, paramType.getRawType());
+      assertArrayEquals(
+            new Type[] {
+                  MutuallyRecursiveComparable1.class, MutuallyRecursiveComparable2.class },
+            paramType.getActualTypeArguments());
+      
       // T doesn't match its bounds
       assertThrows(IllegalArgumentException.class,
             () -> Types.newParameterizedType(RecursiveBound.class, BadBound.class,
@@ -822,6 +1298,18 @@ public class TypesTest {
       // bounds don't agree on T
       assertThrows(IllegalArgumentException.class,
             () -> Types.newParameterizedType(RecursiveBound.class, Double.class, listParam));
+      // mutual bounds don't hold
+      assertThrows(IllegalArgumentException.class,
+            () -> Types.newParameterizedType(MutuallyRecursiveBound.class, String.class,
+                  Integer.class));
+      assertThrows(IllegalArgumentException.class,
+            () -> Types.newParameterizedType(MutuallyRecursiveBound.class, BadBound.class,
+                  Integer.class));
+      assertThrows(IllegalArgumentException.class,
+            () -> Types.newParameterizedType(MutuallyRecursiveBound.class,
+                  MutuallyRecursiveComparable1.class,
+                  Types.newParameterizedType(Comparable.class,
+                        MutuallyRecursiveComparable2.class)));
 
       // must be able to match references to owner type's parameters
       ParameterizedType owner =
@@ -964,61 +1452,10 @@ public class TypesTest {
       assertEquals(Object[][][][][][][][].class, Types.getArrayType(Object[][][][][][][].class));
       assertEquals(Types[].class, Types.getArrayType(Types.class));
       assertEquals(TypesTest[].class, Types.getArrayType(TypesTest.class));
-
-      // try with customer class loaders
-      class Ldr extends ClassLoader {
-         Ldr() {
-         }
-
-         Ldr(ClassLoader parent) {
-            super(parent);
-         }
-      }
-      Object o1 = Proxy.newProxyInstance(new Ldr(), new Class<?>[] { List.class },
-            (proxy, method, args) -> null);
-      assertEquals(o1.getClass(), Types.getArrayType(o1.getClass()).getComponentType());
-      Object o2 = Proxy.newProxyInstance(new Ldr(Types.class.getClassLoader()),
-            new Class<?>[] { List.class }, (proxy, method, args) -> null);
-      assertEquals(o2.getClass(), Types.getArrayType(o2.getClass()).getComponentType());
-      
-      // try with some local/anonymous classes, too
-      assertEquals(Ldr[].class, Types.getArrayType(Ldr.class));
-      Object o3 = new Cloneable() {};
-      assertEquals(o3.getClass(), Types.getArrayType(o3.getClass()).getComponentType());
-      
-      // failure cases
-      assertThrows(IllegalArgumentException.class, () -> Types.getArrayType(void.class));
-      assertThrows(NullPointerException.class, () -> Types.getArrayType(null));
    }
    
-   @Test public void getArrayType_multipleClassLoaders() throws Exception {
-      byte typesTestClassBytes[] = IoStreams.toByteArray(TypesTest.class.getClassLoader()
-            .getResourceAsStream(TypesTest.class.getName().replace('.', '/') + ".class"));
-      class Ldr extends ClassLoader {
-         Class<?> getUniqueClass() {
-            return defineClass(TypesTest.class.getName(), typesTestClassBytes, 0,
-                  typesTestClassBytes.length);
-         }
-      }
-      
-      Class<?> class1 = new Ldr().getUniqueClass();
-      Class<?> class2 = new Ldr().getUniqueClass();
-      Class<?> class3 = new Ldr().getUniqueClass();
-      // We now have three different classes, but all have the same name
-      assertNotEquals(class1, class2);
-      assertNotEquals(class2, class3);
-      assertNotEquals(class1, class3);
-      assertEquals(class1.getName(), class2.getName());
-      assertEquals(class2.getName(), class3.getName());
-      // Make sure this doesn't trip up Types.getArrayType()
-      Class<?> arrayClass1 = Types.getArrayType(class1);
-      Class<?> arrayClass2 = Types.getArrayType(class2);
-      Class<?> arrayClass3 = Types.getArrayType(class3);
-      assertNotEquals(arrayClass1, arrayClass2);
-      assertNotEquals(arrayClass2, arrayClass3);
-      assertNotEquals(arrayClass1, arrayClass3);
-      assertSame(class1, arrayClass1.getComponentType());
-      assertSame(class2, arrayClass2.getComponentType());
-      assertSame(class3, arrayClass3.getComponentType());
+   @SafeVarargs
+   private static <T> Set<T> asSet(T... array) {
+      return new LinkedHashSet<>(Arrays.asList(array));
    }
 }

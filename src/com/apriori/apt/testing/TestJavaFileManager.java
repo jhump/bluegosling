@@ -3,6 +3,7 @@ package com.apriori.apt.testing;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,30 +22,36 @@ import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
 
 /**
- * An in-memory file manager. This can be used, for example, to run compilation and annotation processor
- * tasks from a unit test.
+ * An in-memory file manager. This can be used, for example, to run compilation and annotation
+ * processor tasks from a unit test.
  * 
  * <p>Client code will instantiate a {@link TestJavaFileManager}, optionally providing a parent
  * {@link ClassLoader} (for use when {@linkplain #getClassLoader creating class loaders}). Then the
- * code defines all necessary input files using {@link #createFileObject(JavaFileManager.Location, String, String, byte[])
- * createFileObject} or {@link #createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, byte[])
- * createJavaFileObject} (each of these methods is overloaded to easily define either text file contents or binary
- * file contents). Finally, the new file manager can be used for new {@linkplain JavaCompiler#getTask compilation
+ * code defines all necessary input files using {@link #createFileObject(JavaFileManager.Location,
+ * String, String, byte[]) createFileObject} or {@link #createJavaFileObject(
+ * JavaFileManager.Location, String, JavaFileObject.Kind, byte[]) createJavaFileObject} (each of
+ * these methods is overloaded to easily define either text file contents or binary file contents).
+ * Finally, the new file manager can be used for new {@linkplain JavaCompiler#getTask compilation
  * tasks}.
  * 
- * <p>{@link FileObject}s returned by this class are all in-memory. Changes made to these file contents
- * by {@link OutputStream}s and {@link Writer}s are only seen after they've been flushed. Closing streams
- * automatically flushes them. All open streams can also be flushed using the file manager's
- * {@link #flush()} method.
+ * <p>{@link FileObject}s returned by this class are all in-memory. Changes made to these file
+ * contents by {@link OutputStream}s and {@link Writer}s are only seen after they've been flushed.
+ * Closing streams automatically flushes them. All open streams can also be flushed using the file
+ * manager's {@link #flush()} method.
  * 
- * <p>This file manager cannot be used after it has been {@linkplain #close() closed}. Methods that impact
- * the in-memory file system will throw {@link IOException}s.
+ * <p>This file manager cannot be used after it has been {@linkplain #close() closed}. Methods that
+ * impact the in-memory file system will throw {@link IOException}s.
  * 
  * <p>This file manager does not have any supported options.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class TestJavaFileManager implements JavaFileManager {
+
+   /**
+    * The default character set when defining file contents as text: UTF-8.
+    */
+   static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
    /**
     * A regular expression pattern for finding a sequence of one or more forward slashes.
@@ -70,9 +77,7 @@ public class TestJavaFileManager implements JavaFileManager {
    private final Set<TestJavaFileObject> openedForWriting = new HashSet<TestJavaFileObject>();
    
    private final JavaFileManager platformFileManager;
-   
    private final ClassLoader parentClassLoader;
-   
    private boolean closed;
    
    /**
@@ -81,10 +86,15 @@ public class TestJavaFileManager implements JavaFileManager {
     * manager}.
     * 
     * @param platformFileManager the platform file manager
-    *    (see {@link JavaCompiler#getStandardFileManager})
+    * @see JavaCompiler#getStandardFileManager
     */
    public TestJavaFileManager(JavaFileManager platformFileManager) {
-      this(platformFileManager, Thread.currentThread().getContextClassLoader());
+      this(platformFileManager, getDefaultClassLoader());
+   }
+   
+   private static ClassLoader getDefaultClassLoader() {
+      ClassLoader loader = Thread.currentThread().getContextClassLoader();
+      return loader == null ? ClassLoader.getSystemClassLoader() : loader;
    }
    
    /**
@@ -165,14 +175,16 @@ public class TestJavaFileManager implements JavaFileManager {
     * @param relativeFileName the path to the file, relative to the package folder
     * @return an absolute and canonical path for the specified file
     */
-   private static String canonicalName(Location location, String packageName, String relativeFileName) {
-      String path = location.getName() + "/" + packageName.replace('.', '/') + "/" + relativeFileName;
+   private static String canonicalName(Location location, String packageName,
+         String relativeFileName) {
+      String path = location.getName() + "/" + packageName.replace('.', '/') + "/"
+         + relativeFileName;
       return removeMultipleSlashes(path);
    }
    
    /**
-    * Removes sequences of multiple slashes. Such a sequence is stripped down to a single
-    * slash. So {@code "//"} or {@code "////"} both become {@code "/"}. This is useful for constructing
+    * Removes sequences of multiple slashes. Such a sequence is stripped down to a single slash. So
+    * {@code "//"} or {@code "////"} both become {@code "/"}. This is useful for constructing
     * canonical file paths.
     * 
     * @param input an input string
@@ -191,7 +203,9 @@ public class TestJavaFileManager implements JavaFileManager {
          @Override
          public Class<?> findClass(String name) throws ClassNotFoundException {
             try {
-               byte classContents[] = ((TestJavaFileObject) getJavaFileForInput(location, name, Kind.CLASS)).getByteContents();
+               byte classContents[] =
+                     ((TestJavaFileObject) getJavaFileForInput(location, name, Kind.CLASS))
+                           .getByteContents();
                return defineClass(name, classContents, 0, classContents.length);
             } catch (IOException e) {
                throw new ClassNotFoundException(name, e);
@@ -201,8 +215,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
 
    @Override
-   public synchronized Iterable<JavaFileObject> list(Location location, String packageName, Set<Kind> kinds,
-         boolean recurse) throws IOException {
+   public synchronized Iterable<JavaFileObject> list(Location location, String packageName,
+         Set<Kind> kinds, boolean recurse) throws IOException {
       if (location == StandardLocation.PLATFORM_CLASS_PATH) {
          return platformFileManager.list(location, packageName, kinds, recurse);
       }
@@ -214,12 +228,15 @@ public class TestJavaFileManager implements JavaFileManager {
          // the prefix so we're only returning the one level in the hierarchy
          if (entry.getKey().startsWith(pathPrefix)
                && kinds.contains(TestJavaFileObject.determineKind(entry.getKey()))
-               && (recurse || END_OF_PATH.matcher(entry.getKey().substring(pathPrefix.length() + 1)).matches())) {
+               && (recurse
+                     || END_OF_PATH.matcher(entry.getKey().substring(pathPrefix.length() + 1))
+                           .matches())) {
             list.add(entry.getValue());
          }
       }
       if (location == StandardLocation.CLASS_PATH) {
-         for (JavaFileObject fileObj : platformFileManager.list(location,  packageName, kinds, recurse)) {
+         for (JavaFileObject fileObj
+               : platformFileManager.list(location,  packageName, kinds, recurse)) {
             list.add(fileObj);
          }
       }
@@ -228,7 +245,8 @@ public class TestJavaFileManager implements JavaFileManager {
 
    @Override
    public String inferBinaryName(Location location, JavaFileObject file) {
-      if (location != StandardLocation.PLATFORM_CLASS_PATH && !closed && file instanceof TestJavaFileObject) {
+      if (location != StandardLocation.PLATFORM_CLASS_PATH && !closed
+            && file instanceof TestJavaFileObject) {
          TestJavaFileObject fileObj = (TestJavaFileObject) file;
          String pathPrefix = canonicalName(location, "");
          String fileName = fileObj.getName();
@@ -251,8 +269,8 @@ public class TestJavaFileManager implements JavaFileManager {
          }
          // finally, convert slashes to dots
          return fileName.replace('/', '.');
-      } else if ((location == StandardLocation.PLATFORM_CLASS_PATH || location == StandardLocation.CLASS_PATH)
-            && !(file instanceof TestJavaFileObject)) {
+      } else if ((location == StandardLocation.PLATFORM_CLASS_PATH
+            || location == StandardLocation.CLASS_PATH) && !(file instanceof TestJavaFileObject)) {
          return platformFileManager.inferBinaryName(location, file);
       }
       return null;
@@ -277,7 +295,8 @@ public class TestJavaFileManager implements JavaFileManager {
       return true;
    }
    
-   private synchronized TestJavaFileObject getFile(String filePath, boolean createIfNotFound, boolean readOnly) {
+   private synchronized TestJavaFileObject getFile(String filePath, boolean createIfNotFound,
+         boolean readOnly) {
       TestJavaFileObject file = files.get(filePath);
       if (file == null) {
          if (!createIfNotFound) {
@@ -289,11 +308,12 @@ public class TestJavaFileManager implements JavaFileManager {
       return file;
    }
    
-   private synchronized TestJavaFileObject createFile(String filePath, String contents) {
+   private synchronized TestJavaFileObject createFile(String filePath, String contents,
+         Charset charset) {
       if (files.containsKey(filePath)) {
          throw new IllegalArgumentException("File "+ filePath + " already created!");
       }
-      TestJavaFileObject file = new TestJavaFileObject(this, filePath, contents);
+      TestJavaFileObject file = new TestJavaFileObject(this, filePath, contents, charset);
       files.put(filePath, file);
       return file;
    }
@@ -311,8 +331,8 @@ public class TestJavaFileManager implements JavaFileManager {
     * Resets the file system. Resetting the file system deletes all files and invalidates
     * any open streams for writing files. After a reset, input files will need to be
     * re-seeded using {@link #createFileObject(JavaFileManager.Location, String, String, byte[])
-    * createFileObject} or {@link #createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, byte[])
-    * createJavaFileObject}
+    * createFileObject} or {@link #createJavaFileObject(JavaFileManager.Location, String, 
+    * JavaFileObject.Kind, byte[]) createJavaFileObject}
     */
    public synchronized void reset() {
       openedForWriting.clear();
@@ -332,6 +352,28 @@ public class TestJavaFileManager implements JavaFileManager {
     * @param className the name of the class
     * @param kind the kind of file
     * @param contents the contents of the new file
+    * @param charset the character set used to encode the file
+    * @return the newly created file
+    * @throws IllegalArgumentException if the specified file already exists or the specified
+    *    destination is the {@link StandardLocation#PLATFORM_CLASS_PATH}
+    * 
+    * @see #createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, byte[])
+    */
+   public synchronized TestJavaFileObject createJavaFileObject(Location location, String className,
+         Kind kind, String contents, Charset charset) {
+         if (location == StandardLocation.PLATFORM_CLASS_PATH) {
+         throw new IllegalArgumentException("Cannot create files in the platform class path");
+      }
+      return createFile(canonicalName(location, className, kind), contents, charset);
+   }
+
+   /**
+    * Creates a new java file that has text contents (UTF-8 encoded) in the in-memory file system.
+    * 
+    * @param location the location of the file
+    * @param className the name of the class
+    * @param kind the kind of file
+    * @param contents the contents of the new file
     * @return the newly created file
     * @throws IllegalArgumentException if the specified file already exists or the specified
     *    destination is the {@link StandardLocation#PLATFORM_CLASS_PATH}
@@ -340,10 +382,7 @@ public class TestJavaFileManager implements JavaFileManager {
     */
    public synchronized TestJavaFileObject createJavaFileObject(Location location, String className,
          Kind kind, String contents) {
-      if (location == StandardLocation.PLATFORM_CLASS_PATH) {
-         throw new IllegalArgumentException("Cannot create files in the platform class path");
-      }
-      return createFile(canonicalName(location, className, kind), contents);
+      return createJavaFileObject(location, className, kind, contents, DEFAULT_CHARSET);
    }
 
    /**
@@ -374,6 +413,28 @@ public class TestJavaFileManager implements JavaFileManager {
     * @param packageName the package that contains the file
     * @param relativeName the path to the file, relative to the package folder
     * @param contents the contents of the new file
+    * @param charset the character set used to encode the file
+    * @return the newly created file
+    * @throws IllegalArgumentException if the specified file already exists or the specified
+    *    destination is the {@link StandardLocation#PLATFORM_CLASS_PATH}
+    *    
+    * @see #createFileObject(javax.tools.JavaFileManager.Location, String, String, byte[])
+    */
+   public synchronized TestJavaFileObject createFileObject(Location location, String packageName,
+         String relativeName, String contents, Charset charset) {
+      if (location == StandardLocation.PLATFORM_CLASS_PATH) {
+         throw new IllegalArgumentException("Cannot create files in the platform class path");
+      }
+      return createFile(canonicalName(location, packageName, relativeName), contents, charset);
+   }
+   
+   /**
+    * Creates a new text file (UTF-8 encoded) in the in-memory file system.
+    * 
+    * @param location the location of the file
+    * @param packageName the package that contains the file
+    * @param relativeName the path to the file, relative to the package folder
+    * @param contents the contents of the new file
     * @return the newly created file
     * @throws IllegalArgumentException if the specified file already exists or the specified
     *    destination is the {@link StandardLocation#PLATFORM_CLASS_PATH}
@@ -382,10 +443,7 @@ public class TestJavaFileManager implements JavaFileManager {
     */
    public synchronized TestJavaFileObject createFileObject(Location location, String packageName,
          String relativeName, String contents) {
-      if (location == StandardLocation.PLATFORM_CLASS_PATH) {
-         throw new IllegalArgumentException("Cannot create files in the platform class path");
-      }
-      return createFile(canonicalName(location, packageName, relativeName), contents);
+      return createFileObject(location, packageName, relativeName, contents, DEFAULT_CHARSET);
    }
 
    /**
@@ -410,8 +468,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
 
    @Override
-   public synchronized JavaFileObject getJavaFileForInput(Location location, String className, Kind kind)
-         throws IOException {
+   public synchronized JavaFileObject getJavaFileForInput(Location location, String className,
+         Kind kind) throws IOException {
       if (location == StandardLocation.PLATFORM_CLASS_PATH) {
          return platformFileManager.getJavaFileForInput(location, className, kind);
       }
@@ -428,8 +486,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
 
    @Override
-   public synchronized TestJavaFileObject getJavaFileForOutput(Location location, String className, Kind kind,
-         FileObject sibling) throws IOException {
+   public synchronized TestJavaFileObject getJavaFileForOutput(Location location, String className,
+         Kind kind, FileObject sibling) throws IOException {
       checkState();
       if (!location.isOutputLocation()) {
          throw new IOException("Specified location is for input files");
@@ -438,8 +496,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
 
    @Override
-   public synchronized FileObject getFileForInput(Location location, String packageName, String relativeName)
-         throws IOException {
+   public synchronized FileObject getFileForInput(Location location, String packageName,
+         String relativeName) throws IOException {
       if (location == StandardLocation.PLATFORM_CLASS_PATH) {
          return platformFileManager.getFileForInput(location, packageName, relativeName);
       }
@@ -456,8 +514,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
 
    @Override
-   public synchronized TestJavaFileObject getFileForOutput(Location location, String packageName, String relativeName,
-         FileObject sibling) throws IOException {
+   public synchronized TestJavaFileObject getFileForOutput(Location location, String packageName,
+         String relativeName, FileObject sibling) throws IOException {
       checkState();
       if (!location.isOutputLocation()) {
          throw new IOException("Specified location is for input files");

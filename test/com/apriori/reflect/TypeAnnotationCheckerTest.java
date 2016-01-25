@@ -29,7 +29,7 @@ public class TypeAnnotationCheckerTest {
    @Test public void simpleHierarchy() {
       TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
             .equivalent(null, Nullable.class)
-            .assignable(Nullable.class, NotNull.class)
+            .assignable(NotNull.class, Nullable.class)
             .build();
 
       assertEquivalent(checker, emptyList(), emptyList());
@@ -43,8 +43,8 @@ public class TypeAnnotationCheckerTest {
       NotNull notNull = create(NotNull.class, emptyMap());
       NotNull otherNotNull = create(NotNull.class, emptyMap());
       
-      assertAssignable(checker, singleton(nullable), singleton(notNull));
-      assertAssignable(checker, emptyList(), singleton(notNull));
+      assertAssignable(checker, singleton(notNull), singleton(nullable));
+      assertAssignable(checker, singleton(notNull), emptyList());
       assertEquivalent(checker, singleton(notNull), singleton(otherNotNull));
    }
    
@@ -95,15 +95,15 @@ public class TypeAnnotationCheckerTest {
    @Test public void moreComplicatedHierarchy() {
       TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
             .equivalent(null, LevelA.class)
-            .assignable(LevelA.class, LevelA_0.class)
-            .assignable(LevelA_0.class, LevelA_0_0.class)
-            .assignable(LevelA_0.class, LevelA_0_1.class)
-            .assignable(LevelA.class, LevelA_1.class)
-            .assignable(LevelA_1.class, LevelA_1_0.class)
-            .assignable(LevelA_1.class, LevelA_1_1.class)
-            .assignable(null, LevelB.class)
-            .assignable(LevelB.class, LevelB_0.class)
-            .assignable(LevelB_0.class, LevelB_0_0.class)
+            .assignable(LevelA_0.class, LevelA.class)
+            .assignable(LevelA_0_0.class, LevelA_0.class)
+            .assignable(LevelA_0_1.class, LevelA_0.class)
+            .assignable(LevelA_1.class, LevelA.class)
+            .assignable(LevelA_1_0.class, LevelA_1.class)
+            .assignable(LevelA_1_1.class, LevelA_1.class)
+            .assignable(LevelB.class, null)
+            .assignable(LevelB_0.class, LevelB.class)
+            .assignable(LevelB_0_0.class, LevelB_0.class)
             .build();
       
       LevelA levelA = create(LevelA.class, emptyMap());
@@ -176,111 +176,111 @@ public class TypeAnnotationCheckerTest {
       assertEquivalent(checker, emptyList(), singleton(levelA));
 
       // LevelA <-- LevelA_0
-      assertAssignable(checker, singleton(levelA), singleton(levelA0));
-      assertAssignable(checker, emptyList(), singleton(levelA0));
-      assertAssignable(checker, singleton(levelA), singleton(levelA0_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA0_other));
+      assertAssignable(checker, singleton(levelA0), singleton(levelA));
+      assertAssignable(checker, singleton(levelA0), emptyList());
+      assertAssignable(checker, singleton(levelA0_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA0_other), singleton(levelA));
       assertEquivalent(checker, singleton(levelA0), singleton(levelA0_same));
-      assertNotAssignable(checker, singleton(levelA0), singleton(levelA0_other));
+      assertNotAssignable(checker, singleton(levelA0_other), singleton(levelA0));
 
       // LevelA_0 <-- LevelA_0_0
-      assertAssignable(checker, singleton(levelA0), singleton(levelA00));
-      assertAssignable(checker, singleton(levelA0), singleton(levelA00_same));
-      assertNotAssignable(checker, singleton(levelA0), singleton(levelA00_other));
+      assertAssignable(checker, singleton(levelA00), singleton(levelA0));
+      assertAssignable(checker, singleton(levelA00_same), singleton(levelA0));
+      assertNotAssignable(checker, singleton(levelA00_other), singleton(levelA0));
       assertEquivalent(checker, singleton(levelA00), singleton(levelA00_same));
-      assertNotAssignable(checker, singleton(levelA00), singleton(levelA00_other));
+      assertNotAssignable(checker, singleton(levelA00_other), singleton(levelA00));
       // LevelA <-- LevelA_0_0
-      assertAssignable(checker, singleton(levelA), singleton(levelA00));
-      assertAssignable(checker, emptyList(), singleton(levelA00));
-      assertAssignable(checker, singleton(levelA), singleton(levelA00_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA00_other));
+      assertAssignable(checker, singleton(levelA00), singleton(levelA));
+      assertAssignable(checker, singleton(levelA00), emptyList());
+      assertAssignable(checker, singleton(levelA00_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA00_other), singleton(levelA));
 
       // LevelA_0 <-- LevelA_0_1
-      assertAssignable(checker, singleton(levelA0), singleton(levelA01));
-      assertAssignable(checker, singleton(levelA0), singleton(levelA01_same));
-      assertNotAssignable(checker, singleton(levelA0), singleton(levelA01_other));
+      assertAssignable(checker, singleton(levelA01), singleton(levelA0));
+      assertAssignable(checker, singleton(levelA01_same), singleton(levelA0));
+      assertNotAssignable(checker, singleton(levelA01_other), singleton(levelA0));
       assertEquivalent(checker, singleton(levelA01), singleton(levelA01_same));
-      assertNotAssignable(checker, singleton(levelA01), singleton(levelA01_other));
+      assertNotAssignable(checker, singleton(levelA01_other), singleton(levelA01));
       // LevelA <-- LevelA_0_1
-      assertAssignable(checker, singleton(levelA), singleton(levelA01));
-      assertAssignable(checker, emptyList(), singleton(levelA01));
-      assertAssignable(checker, singleton(levelA), singleton(levelA01_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA01_other));
+      assertAssignable(checker, singleton(levelA01), singleton(levelA));
+      assertAssignable(checker, singleton(levelA01), emptyList());
+      assertAssignable(checker, singleton(levelA01_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA01_other), singleton(levelA));
 
       // LevelA <-- LevelA_1
-      assertAssignable(checker, singleton(levelA), singleton(levelA1));
-      assertAssignable(checker, emptyList(), singleton(levelA1));
-      assertAssignable(checker, singleton(levelA), singleton(levelA1_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA1_other));
+      assertAssignable(checker, singleton(levelA1), singleton(levelA));
+      assertAssignable(checker, singleton(levelA1), emptyList());
+      assertAssignable(checker, singleton(levelA1_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA1_other), singleton(levelA));
       assertEquivalent(checker, singleton(levelA1), singleton(levelA1_same));
-      assertNotAssignable(checker, singleton(levelA1), singleton(levelA1_other));
+      assertNotAssignable(checker, singleton(levelA1_other), singleton(levelA1));
       
       // LevelA_1 <-- LevelA_1_0
-      assertAssignable(checker, singleton(levelA1), singleton(levelA10));
-      assertAssignable(checker, singleton(levelA1), singleton(levelA10_same));
-      assertNotAssignable(checker, singleton(levelA1), singleton(levelA10_other));
+      assertAssignable(checker, singleton(levelA10), singleton(levelA1));
+      assertAssignable(checker, singleton(levelA10_same), singleton(levelA1));
+      assertNotAssignable(checker, singleton(levelA10_other), singleton(levelA1));
       assertEquivalent(checker, singleton(levelA10), singleton(levelA10_same));
-      assertNotAssignable(checker, singleton(levelA10), singleton(levelA10_other));
+      assertNotAssignable(checker, singleton(levelA10_other), singleton(levelA10));
       // LevelA <-- LevelA_1_0
-      assertAssignable(checker, singleton(levelA), singleton(levelA10));
-      assertAssignable(checker, emptyList(), singleton(levelA10));
-      assertAssignable(checker, singleton(levelA), singleton(levelA10_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA10_other));
+      assertAssignable(checker, singleton(levelA10), singleton(levelA));
+      assertAssignable(checker, singleton(levelA10), emptyList());
+      assertAssignable(checker, singleton(levelA10_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA10_other), singleton(levelA));
 
       // LevelA_1 <-- LevelA_1_1
-      assertAssignable(checker, singleton(levelA1), singleton(levelA11));
-      assertAssignable(checker, singleton(levelA1), singleton(levelA11_same));
-      assertAssignable(checker, singleton(levelA1), singleton(levelA11_other1));
-      assertNotAssignable(checker, singleton(levelA1), singleton(levelA11_other2));
+      assertAssignable(checker, singleton(levelA11), singleton(levelA1));
+      assertAssignable(checker, singleton(levelA11_same), singleton(levelA1));
+      assertAssignable(checker, singleton(levelA11_other1), singleton(levelA1));
+      assertNotAssignable(checker, singleton(levelA11_other2), singleton(levelA1));
       assertEquivalent(checker, singleton(levelA11), singleton(levelA11_same));
-      assertNotAssignable(checker, singleton(levelA11), singleton(levelA11_other1));
-      assertNotAssignable(checker, singleton(levelA11), singleton(levelA11_other2));
+      assertNotAssignable(checker, singleton(levelA11_other1), singleton(levelA11));
+      assertNotAssignable(checker, singleton(levelA11_other2), singleton(levelA11));
       // LevelA <-- LevelA_1_1
-      assertAssignable(checker, singleton(levelA), singleton(levelA11));
-      assertAssignable(checker, emptyList(), singleton(levelA11));
-      assertAssignable(checker, singleton(levelA), singleton(levelA11_same));
-      assertAssignable(checker, singleton(levelA), singleton(levelA11_other1));
-      assertAssignable(checker, singleton(levelA), singleton(levelA11_other2));
+      assertAssignable(checker, singleton(levelA11), singleton(levelA));
+      assertAssignable(checker, singleton(levelA11), emptyList());
+      assertAssignable(checker, singleton(levelA11_same), singleton(levelA));
+      assertAssignable(checker, singleton(levelA11_other1), singleton(levelA));
+      assertAssignable(checker, singleton(levelA11_other2), singleton(levelA));
 
       // LevelA_0 -!- LevelA_1
-      assertNotAssignable(checker, singleton(levelA0), singleton(levelA1));
-      assertNotAssignable(checker, singleton(levelA0_other), singleton(levelA1_other));
+      assertNotAssignable(checker, singleton(levelA1), singleton(levelA0));
+      assertNotAssignable(checker, singleton(levelA1_other), singleton(levelA0_other));
       // LevelA_0_0 -!- LevelA_0_1
-      assertNotAssignable(checker, singleton(levelA00), singleton(levelA01));
-      assertNotAssignable(checker, singleton(levelA00_other), singleton(levelA01_other));
+      assertNotAssignable(checker, singleton(levelA01), singleton(levelA00));
+      assertNotAssignable(checker, singleton(levelA01_other), singleton(levelA00_other));
       // LevelA_1_0 -!- LevelA_1_1
-      assertNotAssignable(checker, singleton(levelA10), singleton(levelA11));
-      assertNotAssignable(checker, singleton(levelA10_other), singleton(levelA11_other2));
+      assertNotAssignable(checker, singleton(levelA11), singleton(levelA10));
+      assertNotAssignable(checker, singleton(levelA11_other2), singleton(levelA10_other));
 
       // null <-- LevelB
-      assertAssignable(checker, emptyList(), singleton(levelB));
+      assertAssignable(checker, singleton(levelB), emptyList());
       // LevelB <-- LevelB_0
-      assertAssignable(checker, singleton(levelB), singleton(levelB0));
-      assertAssignable(checker, emptyList(), singleton(levelB0));
+      assertAssignable(checker, singleton(levelB0), singleton(levelB));
+      assertAssignable(checker, singleton(levelB0), emptyList());
       // LevelB_0 <-- LevelB_0_0
-      assertAssignable(checker, singleton(levelB0), singleton(levelB00));
-      assertAssignable(checker, emptyList(), singleton(levelB00));
-      assertAssignable(checker, singleton(levelB0), singleton(levelB00_same));
-      assertAssignable(checker, singleton(levelB0), singleton(levelB00_other));
+      assertAssignable(checker, singleton(levelB00), singleton(levelB0));
+      assertAssignable(checker, singleton(levelB00), emptyList());
+      assertAssignable(checker, singleton(levelB00_same), singleton(levelB0));
+      assertAssignable(checker, singleton(levelB00_other), singleton(levelB0));
       assertEquivalent(checker, singleton(levelB00), singleton(levelB00_same));
-      assertNotAssignable(checker, singleton(levelB00), singleton(levelB00_other));
+      assertNotAssignable(checker, singleton(levelB00_other), singleton(levelB00));
    }
    
    private void assertAssignable(TypeAnnotationChecker checker,
-         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
-      assertTrue(checker.isAssignable(target, source));
-      assertFalse(checker.isAssignable(source, target));
+         Collection<? extends Annotation> from, Collection<? extends Annotation> to) {
+      assertTrue(checker.isAssignable(from, to));
+      assertFalse(checker.isAssignable(to, from));
    }
 
    private void assertNotAssignable(TypeAnnotationChecker checker,
-         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
-      assertFalse(checker.isAssignable(target, source));
-      assertFalse(checker.isAssignable(source, target));
+         Collection<? extends Annotation> from, Collection<? extends Annotation> to) {
+      assertFalse(checker.isAssignable(from, to));
+      assertFalse(checker.isAssignable(to, from));
    }
    
    private void assertEquivalent(TypeAnnotationChecker checker,
-         Collection<? extends Annotation> target, Collection<? extends Annotation> source) {
-      assertTrue(checker.isAssignable(target, source));
-      assertTrue(checker.isAssignable(source, target));
+         Collection<? extends Annotation> from, Collection<? extends Annotation> to) {
+      assertTrue(checker.isAssignable(from, to));
+      assertTrue(checker.isAssignable(to, from));
    }
 }

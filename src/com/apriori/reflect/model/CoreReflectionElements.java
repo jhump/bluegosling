@@ -7,6 +7,7 @@ import com.apriori.util.IndentingPrintWriter;
 
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Field;
@@ -56,7 +57,7 @@ import javax.lang.model.util.SimpleTypeVisitor8;
  */
 enum CoreReflectionElements implements Elements {
    INSTANCE;
-
+   
    @Override
    public PackageElement getPackageElement(CharSequence name) {
       String packageName = name.toString();
@@ -71,11 +72,22 @@ enum CoreReflectionElements implements Elements {
 
    @Override
    public TypeElement getTypeElement(CharSequence name) {
-      try {
-         return new CoreReflectionTypeElement(Class.forName(name.toString()));
-      } catch (ClassNotFoundException e) {
-         return null;
+      StringBuilder sb = new StringBuilder(name);
+      int p = sb.length();
+      // Dots in the name could be separators between enclosing and nested class names. The actual
+      // binary name for such a class would have a dollar sign, not a dot. So we first try the given
+      // name, as is. Then we start replacing dots with dollars, starting from the end.
+      while (p >= 0) {
+         if (p < sb.length()) {
+            sb.setCharAt(p, '$');
+         }
+         try {
+            return new CoreReflectionTypeElement(Class.forName(name.toString()));
+         } catch (ClassNotFoundException e) {
+            p = sb.lastIndexOf(".", p);
+         }
       }
+      return null;
    }
 
    @Override
@@ -158,42 +170,170 @@ enum CoreReflectionElements implements Elements {
 
    @Override
    public List<? extends AnnotationMirror> getAllAnnotationMirrors(Element e) {
-      // TODO: implement me
-      return null;
+      if (!e.getKind().isClass()) {
+         // only classes can inherit annotations
+         return e.getAnnotationMirrors();
+      }
+      CoreReflectionTypeElement type = (CoreReflectionTypeElement) e;
+      // Class#getAnnotations retrieves all annotations (including inherited ones)
+      Annotation annotations[] = type.base().getAnnotations();
+      List<AnnotationMirror> mirrors = new ArrayList<>(annotations.length);
+      for (Annotation a : annotations) {
+         mirrors.add(AnnotationMirrors.CORE_REFLECTION_INSTANCE.getAnnotationAsMirror(a));
+      }
+      return Collections.unmodifiableList(mirrors);
    }
-         
+   
    @Override
    public boolean hides(Element hider, Element hidden) {
+      if (!hider.getSimpleName().equals(hidden.getSimpleName())) {
+         // an element cannot hide another if they don't have the same name
+         return false;
+      }
+      if (hider.equals(hidden)) {
+         // an element does not hide itself
+         return false;
+      }
       return hider.accept(HIDES_VISITOR, hidden);
    }
 
    private static final ElementVisitor<Boolean, Element> HIDES_VISITOR =
-         new ElementKindVisitor8<Boolean, Element>() {
-            @Override
-            public Boolean defaultAction(Element e, Element hidden) {
-               return false;
-            }
-            
+         new ElementKindVisitor8<Boolean, Element>(false) {
             @Override
             public Boolean visitVariableAsEnumConstant(VariableElement e, Element hidden) {
                return visitVariableAsField(e, hidden);
             }
 
             @Override
-            public Boolean visitVariableAsField(VariableElement e, Element p) {
-               // TODO: implement me
-               return false;
+            public Boolean visitVariableAsField(VariableElement e, Element hidden) {
+               return checkField(e, hidden, false);
+            }
+            
+            @Override
+            public Boolean visitVariableAsParameter(VariableElement e, Element hidden) {
+               Element member = e.getEnclosingElement();
+               assert member instanceof CoreReflectionExecutableElement;
+               return checkField(e.getEnclosingElement(), hidden, true);
+            }
+            
+            // NB: We don't need to handle other VariableElements -- e.g. local variables, caught
+            // exception variables, resource variables -- because core reflection has no way to
+            // represent them. 
+            
+            private boolean checkField(Element memberElement, Element hidden,
+                  boolean includeGivenType) {
+               // variables can hide fields on supertypes, and optionally on the given type too
+               if (!hidden.getKind().isField()) {
+                  return false;
+               }
+               Field hid = ((CoreReflectionFieldElement) hidden).base();
+               Class<?> hidType = hid.getDeclaringClass();
+               Class<?> hidingType =
+                     ((CoreReflectionTypeElement) memberElement.getEnclosingElement()).base();
+               if (!hidType.isAssignableFrom(hidingType)) {
+                  return false;
+               }
+               if (!includeGivenType && hidType == hidingType) {
+                  return false;
+               }
+               // Only remaining check is for visibility -- if hid is not visible from hiding, then
+               // it cannot be hidden.
+               if (java.lang.reflect.Modifier.isPublic(hid.getModifiers())
+                     || java.lang.reflect.Modifier.isProtected(hid.getModifiers())) {
+                  return true;
+               }
+               if (java.lang.reflect.Modifier.isPrivate(hid.getModifiers())) {
+                  return false;
+               }
+               // Hidden field is package private. So declarer of hiding must be in same package.
+               return hidType.getPackage().getName().equals(hidingType.getPackage().getName());
+            }
+            
+            @Override
+            public Boolean visitExecutableAsMethod(ExecutableElement e, Element hidden) {
+               if (hidden.getKind() != ElementKind.METHOD) {
+                  return false;
+               }
+               Method hiding = (Method) ((CoreReflectionExecutableElement) e).base();
+               Method hid = (Method) ((CoreReflectionExecutableElement) hidden).base();
+               if (!java.lang.reflect.Modifier.isStatic(hiding.getModifiers())
+                     || !java.lang.reflect.Modifier.isStatic(hid.getModifiers())) {
+                  // only static methods can hide other methods (instance methods "override")
+                  return false;
+               }
+               Class<?> hidDeclarer = hid.getDeclaringClass();
+               Class<?> hidingDeclarer = hiding.getDeclaringClass();
+               if (!hidDeclarer.isAssignableFrom(hidingDeclarer)) {
+                  // a method can only hide methods on supertypes
+                  return false;
+               }
+               assert !hiding.equals(hid);
+               if (!ExecutableSignature.of(hiding).isSubsignatureOf(ExecutableSignature.of(hid))) {
+                  return false;
+               }
+               // Only remaining check is for visibility -- if hid is not visible from hiding, then
+               // it cannot be hidden.
+               if (java.lang.reflect.Modifier.isPublic(hid.getModifiers())
+                     || java.lang.reflect.Modifier.isProtected(hid.getModifiers())) {
+                  return true;
+               }
+               if (java.lang.reflect.Modifier.isPrivate(hid.getModifiers())) {
+                  return false;
+               }
+               // Hidden method is package private. So the declarer of hiding must be in the same
+               // package, or it must have a supertype (that is a subtype of the declarer of hid)
+               // that overrides it and broadens its visibility.
+               String packageName = hidDeclarer.getPackage().getName();
+               if (hidingDeclarer.getPackage().getName().equals(packageName)) {
+                  return true;
+               }
+               assert !hidDeclarer.isInterface() && !hidingDeclarer.isInterface();
+               String name = hid.getName();
+               Class<?>[] paramTypes = hid.getParameterTypes();
+               while (true) {
+                  hidingDeclarer = hidingDeclarer.getSuperclass();
+                  if (hidingDeclarer == hidDeclarer) {
+                     // hid is not visible
+                     return false;
+                  }
+                  try {
+                     Method m = hidingDeclarer.getDeclaredMethod(name, paramTypes);
+                     if (java.lang.reflect.Modifier.isPublic(m.getModifiers())
+                           || java.lang.reflect.Modifier.isProtected(m.getModifiers())) {
+                        // hid is visible!
+                        return true;
+                     }
+                  } catch (NoSuchMethodException ex) {
+                     // fall-through to next iteration of loop
+                  }
+               }
             }
 
             @Override
-            public Boolean visitExecutableAsMethod(ExecutableElement e, Element p) {
-               // TODO: implement me
-               return false;
+            public Boolean visitTypeParameter(TypeParameterElement e, Element hidden) {
+               return checkType(e.getGenericElement(), hidden);
             }
-
+            
             @Override
             public Boolean visitType(TypeElement e, Element hidden) {
-               // TODO: implement me
+               if (e.getNestingKind() != NestingKind.MEMBER) {
+                  return false;
+               }
+               return checkType(e, hidden);
+            }
+            
+            private boolean checkType(Element memberElement, Element hidden) {
+               // Member types (and type parameters on members) can hide other member types on
+               // the enclosing types (or the enclosing types' supertypes). They can also hide
+               // type variables on the enclosing types if they are non-static members (or type
+               // variables on non-static members).
+               if (!hidden.getKind().isClass() && !hidden.getKind().isInterface()
+                     && hidden.getKind() != ElementKind.TYPE_PARAMETER) {
+                  return false;
+               }
+               Class<?> enclosingType =
+                     ((CoreReflectionTypeElement) memberElement.getEnclosingElement()).base();
+               // TODO: implement me!
                return false;
             }
          };
@@ -201,10 +341,75 @@ enum CoreReflectionElements implements Elements {
    @Override
    public boolean overrides(ExecutableElement overrider, ExecutableElement overridden,
          TypeElement type) {
-      // TODO: implement me
-      return false;
+      if (overrider.getKind() != ElementKind.METHOD || overridden.getKind() != ElementKind.METHOD) {
+         return false;
+      }
+      Method overriderMethod = (Method) ((CoreReflectionExecutableElement) overrider).base();
+      Method overriddenMethod = (Method) ((CoreReflectionExecutableElement) overridden).base();
+      if (java.lang.reflect.Modifier.isStatic(overriderMethod.getModifiers())
+            || java.lang.reflect.Modifier.isStatic(overriddenMethod.getModifiers())) {
+         // static methods cannot override (they hide)
+         return false;
+      }
+      Class<?> overriderType = overriderMethod.getDeclaringClass();
+      Class<?> overriddenType = overriddenMethod.getDeclaringClass();
+      Class<?> clazz = ((CoreReflectionTypeElement) type).base();
+      if (!overriderType.isAssignableFrom(clazz)) {
+         return false;
+      }
+      if (!overriddenType.isAssignableFrom(clazz)) {
+         return false;
+      }
+      if (!overriddenType.isAssignableFrom(overriderType)
+            && (overriderType.isInterface() || !overriddenType.isInterface())) {
+         // Overridden type should usually be a supertype of the overriding type. If that's not
+         // the case, the only way it can override is if the overrider is a class and overridden
+         // is an interface. In this case, the given type, being a subtype of both, inherits the
+         // overrider and thus implements (e.g. overrides) the overridden.
+         return false;
+      }
+      if (!ExecutableSignature.of(overriderMethod)
+            .isSubsignatureOf(ExecutableSignature.of(overriddenMethod))) {
+         return false;
+      }
+      // Only remaining check is for visibility -- if overridden is not visible from overrider, then
+      // it cannot be overriding.
+      if (java.lang.reflect.Modifier.isPublic(overriddenMethod.getModifiers())
+            || java.lang.reflect.Modifier.isProtected(overriddenMethod.getModifiers())) {
+         return true;
+      }
+      if (java.lang.reflect.Modifier.isPrivate(overriddenMethod.getModifiers())) {
+         return false;
+      }
+      // Overridden method is package private. So the declarer of overrider must be in the same
+      // package, or it must have a supertype (that is a subtype of the declarer of overridden)
+      // that overrides it and broadens its visibility.
+      String packageName = overriddenType.getPackage().getName();
+      if (overriderType.getPackage().getName().equals(packageName)) {
+         return true;
+      }
+      assert !overriddenType.isInterface() && !overriderType.isInterface();
+      String name = overriddenMethod.getName();
+      Class<?>[] paramTypes = overriddenMethod.getParameterTypes();
+      while (true) {
+         overriderType = overriderType.getSuperclass();
+         if (overriderType == overriddenType) {
+            // hid is not visible
+            return false;
+         }
+         try {
+            Method m = overriderType.getDeclaredMethod(name, paramTypes);
+            if (java.lang.reflect.Modifier.isPublic(m.getModifiers())
+                  || java.lang.reflect.Modifier.isProtected(m.getModifiers())) {
+               // hid is visible!
+               return true;
+            }
+         } catch (NoSuchMethodException ex) {
+            // fall-through to next iteration of loop
+         }
+      }
    }
-
+   
    @Override
    public String getConstantExpression(Object value) {
       if (value instanceof String) {
@@ -219,7 +424,7 @@ enum CoreReflectionElements implements Elements {
       } else if (value instanceof Boolean) {
          return ((Boolean) value) ? "true" : "false";
       } else if (value instanceof Byte) {
-         return "(byte)" + ((Byte) value).toString();
+         return "(byte)0x" + Integer.toHexString(((Byte) value).intValue() & 0xff);
       } else if (value instanceof Character) {
          StringBuilder sb = new StringBuilder();
          sb.append('\'');
@@ -235,23 +440,19 @@ enum CoreReflectionElements implements Elements {
       } else if (value instanceof Float) {
          Float f = (Float) value;
          if (f.isNaN()) {
-            return "java.lang.Float.NaN";
+            return "0.0F/0.0F";
          }
          if (f.isInfinite()) {
-            return f > 0
-                  ? "java.lang.Float.POSITIVE_INFINITY"
-                  : "java.lang.Float.NEGATIVE_INFINITY";
+            return f > 0 ? "1.0F/0.0F" : "-1.0F/0.0F";
          }
          return f.toString() + "F";
       } else if (value instanceof Double) {
          Double d = (Double) value;
          if (d.isNaN()) {
-            return "java.lang.Double.NaN";
+            return "0.0/0.0";
          }
          if (d.isInfinite()) {
-            return d > 0
-                  ? "java.lang.Double.POSITIVE_INFINITY"
-                  : "java.lang.Double.NEGATIVE_INFINITY";
+            return d > 0 ? "1.0/0.0" : "-1.0/0.0";
          }
          return d.toString();
       } else {
@@ -263,8 +464,8 @@ enum CoreReflectionElements implements Elements {
    private void encodeChar(char ch, boolean inDoubleQuotes, StringBuilder sb) {
       // Unicode characters are allowed in Java source. But, to be conservative, we'll only directly
       // emit ASCII printable characters and use escapes for the rest. 
-      if ((ch > 31 && ch < 127 && ch != '\\') || (ch == '\'' && inDoubleQuotes)
-            || (ch == '"' && !inDoubleQuotes)) {
+      if ((ch > 31 && ch < 127 && ch != '\\' && ch != '\'' && ch != '"')
+            || (ch == '\'' && inDoubleQuotes) || (ch == '"' && !inDoubleQuotes)) {
          sb.append(ch);
       } else {
          // escape sequences, JLS 3.10.6

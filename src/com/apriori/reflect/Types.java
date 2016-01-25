@@ -7,6 +7,7 @@ import com.apriori.collections.Iterables;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
@@ -55,28 +56,14 @@ public final class Types {
          new Type[] { Object.class, Serializable.class, Cloneable.class };
    private static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
    private static final WildcardType EXTENDS_ANY = newExtendsWildcardType(Object.class);
-   private static final Method CLASS_FORNAME0;
-   
-   static {
-      Method m;
-      try {
-         m = Class.class.getDeclaredMethod("forName0", String.class, boolean.class,
-               ClassLoader.class);
-         m.setAccessible(true);
-      } catch (Exception e) {
-         m = null;
-      }
-      CLASS_FORNAME0 = m;
-   }
    
    private Types() {}
 
    /**
-    * Finds the raw class token that best represents the given type. If the type is a class then it
-    * is returned. If it is a parameterized type, the parameterized type's raw type is returned. If
-    * it is a generic array type, an class token representing an array of the component type is
-    * returned. Finally, if it is either a wildcard type or type variable, its first upper bound is
-    * returned.
+    * Determines the erasure for the given type. If the type is a class then it is returned. If it
+    * is a parameterized type, the parameterized type's raw type is returned. If it is a generic
+    * array type, a class token representing an array of the component type is returned. Finally, if
+    * it is either a wildcard type or type variable, its first upper bound is returned.
     * 
     * <p>These are the same rules as defined in <em>Type Erasure</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.6">JLS
@@ -85,23 +72,38 @@ public final class Types {
     * @param type a generic type
     * @return a raw class token that best represents the given generic type
     */
-   public static Class<?> getRawType(Type type) {
+   public static Class<?> getErasure(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
          return (Class<?>) type;
       } else if (type instanceof ParameterizedType) {
-         return getRawType(((ParameterizedType) type).getRawType());
+         return getErasure(((ParameterizedType) type).getRawType());
       } else if (type instanceof GenericArrayType) {
-         return getArrayType(getRawType(((GenericArrayType) type).getGenericComponentType()));
+         return getArrayType(getErasure(((GenericArrayType) type).getGenericComponentType()));
       } else if (type instanceof TypeVariable) {
          Type bounds[] = ((TypeVariable<?>) type).getBounds();
-         return bounds.length > 0 ? getRawType(bounds[0]) : Object.class;
+         return bounds.length > 0 ? getErasure(bounds[0]) : Object.class;
       } else if (type instanceof WildcardType) {
          Type bounds[] = ((WildcardType) type).getUpperBounds();
-         return bounds.length > 0 ? getRawType(bounds[0]) : Object.class;
+         return bounds.length > 0 ? getErasure(bounds[0]) : Object.class;
       } else {
          throw new UnknownTypeException(type);
       }
+   }
+   
+   /**
+    * Determines the raw type of the given type. If the given type is a wildcard or a type variable
+    * then the actual type is unknown and this method returns {@code null}. Otherwise, this method
+    * returns the {@linkplain #getErasure(Type) erasure} of the given type.
+    *
+    * @param t a type
+    * @return a class token representing the given type or {@code null} if the type is not known
+    */
+   private static Class<?> getRawType(Type t) {
+      if (t instanceof WildcardType || t instanceof TypeVariable) {
+         return null;
+      }
+      return getErasure(t);
    }
 
    /**
@@ -154,13 +156,15 @@ public final class Types {
    }
    
    /**
-    * Determines if the given type is an interface type.
+    * Determines if the given type is an interface type. If the type is a wildcard or type variable
+    * then its actual type isn't known, so this method returns false regardless of bounds.
     *
     * @param type a generic type
     * @return true if the given type is an interface type; false otherwise
     */
    public static boolean isInterface(Type type) {
-      return getRawType(type).isInterface();
+      Class<?> cl = getRawType(type);
+      return cl != null && cl.isInterface();
    }
    
    /**
@@ -170,17 +174,19 @@ public final class Types {
     * @return true if the given type is an enum type; false otherwise
     */
    public static boolean isEnum(Type type) {
-      return getRawType(type).isEnum();
+      return Enum.class.isAssignableFrom(getErasure(type));
    }
    
    /**
-    * Determines if the given type is an annotation type.
+    * Determines if the given type is an annotation type. If the type is a wildcard or type variable
+    * then its actual type isn't known, so this method returns false regardless of bounds.
     *
     * @param type a generic type
     * @return true if the given type is an annotation type; false otherwise
     */
    public static boolean isAnnotation(Type type) {
-      return getRawType(type).isAnnotation();
+      Class<?> cl = getRawType(type);
+      return cl != null && cl.isAnnotation();
    }
    
    /**
@@ -193,7 +199,16 @@ public final class Types {
       return requireNonNull(type) instanceof Class && ((Class<?>) type).isPrimitive();
    }
    
+   /**
+    * A map that can be used to lookup boxed primitive types. The keys are primitive types and the
+    * values are the boxed reference type corresponding to the key.
+    */
    private static final Map<Class<?>, Class<?>> BOX;
+
+   /**
+    * A map that can be used to lookup unboxed primitive types. The keys are boxed reference types
+    * and the values are the primitive type corresponding to the key.
+    */
    private static final Map<Class<?>, Class<?>> UNBOX;
    static {
       Map<Class<?>, Class<?>> box = new HashMap<>();
@@ -293,14 +308,14 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getSuperclass();
       } else if (type instanceof ParameterizedType) {
-         return getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
+         return getErasure(((ParameterizedType) type).getRawType()).getSuperclass();
       } else if (type instanceof GenericArrayType) {
          return Object.class;
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          Type bounds[] = type instanceof WildcardType ? ((WildcardType) type).getUpperBounds()
                : ((TypeVariable<?>) type).getBounds();
          assert bounds.length > 0;
-         Class<?> superclass = getRawType(bounds[0]);
+         Class<?> superclass = getErasure(bounds[0]);
          return superclass.isInterface() ? null : superclass;
       } else {
          throw new UnknownTypeException(type);
@@ -328,7 +343,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getInterfaces();
       } else if (type instanceof ParameterizedType) {
-         return getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
+         return getErasure(((ParameterizedType) type).getRawType()).getInterfaces();
       } else if (type instanceof GenericArrayType) {
          return ARRAY_INTERFACES;
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
@@ -336,7 +351,7 @@ public final class Types {
                : ((TypeVariable<?>) type).getBounds();
          assert bounds.length > 0;
          List<Class<?>> interfaceBounds = Arrays.stream(bounds)
-               .map(Types::getRawType).filter(Class::isInterface).collect(Collectors.toList());
+               .map(Types::getErasure).filter(Class::isInterface).collect(Collectors.toList());
          return interfaceBounds.toArray(new Class<?>[interfaceBounds.size()]);
       } else {
          throw new UnknownTypeException(type);
@@ -357,6 +372,16 @@ public final class Types {
     * type (e.g. {@code class MyClass extends ArrayList<String>}) then a parameterized type is
     * returned. 
     *
+    * <p>This can differ from the classes that may be present in {@link #getDirectSupertypes(Type)}.
+    * This method is similar to {@link Class#getGenericSuperclass()} in how array and primitive
+    * types are handled: all array types return {@code Object}, and all primitive types return
+    * {@code null}. Whereas {@link #getDirectSupertypes(Type)} uses the rules defined in
+    * <em>Subtyping among Primitive Types</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">JLS
+    * 4.10.1</a>) and <em>Subtyping among Array Types</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.3">JLS
+    * 4.10.3</a>) 
+    * 
     * @param type a generic type
     * @return the superclass of the given type
     * 
@@ -367,11 +392,11 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getGenericSuperclass();
       } else if (type instanceof ParameterizedType) {
-         Class<?> superClass = getRawType(((ParameterizedType) type).getRawType()).getSuperclass();
+         Class<?> superClass = getErasure(((ParameterizedType) type).getRawType()).getSuperclass();
          if (superClass == null) {
             return null;
          }
-         Type superType = resolveSuperType(type, superClass);
+         Type superType = resolveSupertype(type, superClass);
          assert superType != null;
          return superType;
       } else if (type instanceof GenericArrayType) {
@@ -399,7 +424,13 @@ public final class Types {
     * <p>This differs from {@link #getInterfaces(Type)} in that it can return a non-raw type. For
     * example if a wildcard type has an interface bound that is a parameterized type or if a class
     * implements a parameterized type (e.g. {@code class MyClass implements List<String>}) then a
-    * parameterized type is returned. 
+    * parameterized type is returned.
+    * 
+    * <p>This can differ from the interfaces present in {@link #getDirectSupertypes(Type)}. This
+    * method is similar to {@link Class#getGenericInterfaces()} in how array types are handled: all
+    * array types return {@code Cloneable} and {@code Serializable}. Whereas
+    * {@link #getDirectSupertypes(Type)} returns no interfaces unless {@code Object[]} or a
+    * primitive array type is given.
     *
     * @param type a generic type
     * @return the interfaces directly implemented by the given type
@@ -412,14 +443,14 @@ public final class Types {
          return ((Class<?>) type).getGenericInterfaces();
       } else if (type instanceof ParameterizedType) {
          Class<?> interfaces[] =
-               getRawType(((ParameterizedType) type).getRawType()).getInterfaces();
+               getErasure(((ParameterizedType) type).getRawType()).getInterfaces();
          if (interfaces.length == 0) {
             return interfaces;
          }
          int len = interfaces.length;
          Type genericInterfaces[] = new Type[len];
          for (int i = 0; i < len; i++) {
-            genericInterfaces[i] = resolveSuperType(type, interfaces[i]);
+            genericInterfaces[i] = resolveSupertype(type, interfaces[i]);
             assert genericInterfaces[i] != null;
          }
          return genericInterfaces;
@@ -429,9 +460,7 @@ public final class Types {
          Type bounds[] = type instanceof WildcardType ? ((WildcardType) type).getUpperBounds()
                : ((TypeVariable<?>) type).getBounds();
          assert bounds.length > 0;
-         List<Type> interfaceBounds =
-               Arrays.stream(bounds).filter(Types::isInterface).collect(Collectors.toList());
-         return interfaceBounds.toArray(new Type[interfaceBounds.size()]);
+         return Arrays.stream(bounds).filter(Types::isInterface).toArray(sz -> new Type[sz]);
       } else {
          throw new UnknownTypeException(type);
       }
@@ -460,7 +489,7 @@ public final class Types {
          ParameterizedType parameterizedType = (ParameterizedType) type; 
          Type ownerType = parameterizedType.getOwnerType();
          return ownerType != null
-               ? ownerType : getRawType(parameterizedType.getRawType()).getDeclaringClass();
+               ? ownerType : getErasure(parameterizedType.getRawType()).getDeclaringClass();
       }
       return null;
    }
@@ -488,7 +517,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getAnnotation(annotationType);
       } else if (type instanceof ParameterizedType) {
-         Class<?> annotatedClass = getRawType(((ParameterizedType) type).getOwnerType());
+         Class<?> annotatedClass = getErasure(((ParameterizedType) type).getOwnerType());
          return annotatedClass.getAnnotation(annotationType);
       } else if (type instanceof GenericArrayType) {
          return Object[].class.getAnnotation(annotationType);
@@ -523,7 +552,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getAnnotations();
       } else if (type instanceof ParameterizedType) {
-         Class<?> annotatedClass = getRawType(((ParameterizedType) type).getOwnerType());
+         Class<?> annotatedClass = getErasure(((ParameterizedType) type).getOwnerType());
          return annotatedClass.getAnnotations();
       } else if (type instanceof GenericArrayType) {
          return Object[].class.getAnnotations();
@@ -562,7 +591,7 @@ public final class Types {
       if (type instanceof Class) {
          return ((Class<?>) type).getDeclaredAnnotations();
       } else if (type instanceof ParameterizedType) {
-         Class<?> annotatedClass = getRawType(((ParameterizedType) type).getOwnerType());
+         Class<?> annotatedClass = getErasure(((ParameterizedType) type).getOwnerType());
          return annotatedClass.getDeclaredAnnotations();
       } else if (type instanceof GenericArrayType || type instanceof WildcardType
             || type instanceof TypeVariable) {
@@ -724,7 +753,7 @@ public final class Types {
       return sb.toString();
    }
    
-   private static void toStringBuilder(Type type, StringBuilder sb) {
+   static void toStringBuilder(Type type, StringBuilder sb) {
       if (type instanceof Class) {
          Class<?> clazz = (Class<?>) type;
          // prefer canonical name, fall back to basic name if no canonical name available
@@ -745,7 +774,7 @@ public final class Types {
          } else {
             toStringBuilder(owner, sb);
             sb.append(".");
-            Class<?> rawType = getRawType(pt.getRawType());
+            Class<?> rawType = getErasure(pt.getRawType());
             String simpleName = rawType.getSimpleName();
             if (simpleName.isEmpty()) {
                // Anonymous class? This shouldn't really be possible: the Java language doesn't
@@ -784,7 +813,7 @@ public final class Types {
             sb.append("? super ");
          } else {
             bounds = wc.getUpperBounds();
-            if (bounds.length == 1 && bounds[0] == Object.class) {
+            if (isExtendsAny(bounds)) {
                sb.append("?");
                return;
             }
@@ -807,7 +836,7 @@ public final class Types {
    
    /**
     * Determines if one type is assignable to another. This is true when the RHS is the same type or
-    * a sub-type of the LHS (co-variance), but also true when the RHS is compatible with the LHS
+    * a subtype of the LHS (co-variance), but also true when the RHS is compatible with the LHS
     * after possible assignment conversions. The possible conversions include <em>Widening Primitive
     * Conversions</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.3">JLS
@@ -955,7 +984,7 @@ public final class Types {
          }
       } else if (to instanceof ParameterizedType) {
          ParameterizedType toParamType = (ParameterizedType) to;
-         Class<?> toRawType = getRawType(toParamType.getRawType());
+         Class<?> toRawType = getErasure(toParamType.getRawType());
          if (from instanceof Class) {
             Class<?> fromClass = (Class<?>) from;
             if (!toRawType.isAssignableFrom(fromClass)) {
@@ -980,7 +1009,7 @@ public final class Types {
             // cannot be parameterized (only their component types can be).
             return false;
          }
-         Type resolvedToType = resolveSuperType(from, toRawType);
+         Type resolvedToType = resolveSupertype(from, toRawType);
          Type args[] = toParamType.getActualTypeArguments();
          Type resolvedArgs[] = getActualTypeArguments(resolvedToType);
          if (resolvedArgs.length == 0) {
@@ -1026,11 +1055,9 @@ public final class Types {
          WildcardType toWildcard = (WildcardType) to;
          Type lowerBounds[] = toWildcard.getLowerBounds();
          if (lowerBounds.length == 0) {
-            // Can only assign to a wildcard type based on its lower bounds
+            // Can only assign to a wildcard type based on its lower bounds.
             return false;
          }
-         assert toWildcard.getUpperBounds().length == 1;
-         assert toWildcard.getUpperBounds()[0] == Object.class;
          for (Type bound : lowerBounds) {
             if (!isAssignableReference(from, bound, allowUncheckedConversion)) {
                return false;
@@ -1050,7 +1077,7 @@ public final class Types {
    
    /**
     * A map of primitive types to their direct supertype for purposes of primitive widening
-    * conversions. For example, the super-type for {@code byte} is {@code short}, for {@code int}
+    * conversions. For example, the supertype for {@code byte} is {@code short}, for {@code int}
     * is {@code long}, and for {@code float} is {@code double}.
     * 
     * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">
@@ -1060,7 +1087,7 @@ public final class Types {
    
    /**
     * A map of primitive types to all their primitive subtypes. If a primitive type has no
-    * sub-types (for example {@code byte} and {@code boolean}) then it will have no key in this
+    * subtypes (for example {@code byte} and {@code boolean}) then it will have no key in this
     * map.
     * 
     * @see <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">
@@ -1071,14 +1098,14 @@ public final class Types {
    static {
       // NB: map and set capacities below are specified so that the underlying hash tables will
       // fit all elements without needing to incur an internal resize (using default load factor)
-      Map<Class<?>, Class<?>> primitiveSuperTypes = new HashMap<>(8);
-      primitiveSuperTypes.put(byte.class, short.class);
-      primitiveSuperTypes.put(short.class, int.class);
-      primitiveSuperTypes.put(char.class, int.class);
-      primitiveSuperTypes.put(int.class, long.class);
-      primitiveSuperTypes.put(long.class, float.class);
-      primitiveSuperTypes.put(float.class, double.class);
-      PRIMITIVE_DIRECT_SUPERTYPES = Collections.unmodifiableMap(primitiveSuperTypes);
+      Map<Class<?>, Class<?>> primitiveSupertypes = new HashMap<>(8);
+      primitiveSupertypes.put(byte.class, short.class);
+      primitiveSupertypes.put(short.class, int.class);
+      primitiveSupertypes.put(char.class, int.class);
+      primitiveSupertypes.put(int.class, long.class);
+      primitiveSupertypes.put(long.class, float.class);
+      primitiveSupertypes.put(float.class, double.class);
+      PRIMITIVE_DIRECT_SUPERTYPES = Collections.unmodifiableMap(primitiveSupertypes);
       
       Map<Class<?>, Set<Class<?>>> primitiveSubTypes = new HashMap<>(8);
       Set<Class<?>> subTypes = new HashSet<>(2);
@@ -1143,7 +1170,7 @@ public final class Types {
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-4.10.1">JLS
     * 4.10.1</a>).
     *
-    * @param possibleSubclass another class, possibly a sub-type of the other
+    * @param possibleSubclass another class, possibly a subtype of the other
     * @param aClass a class, possibly a primitive type
     * @return true if the one class is a subtype of the other per primitive subtyping
     */
@@ -1175,8 +1202,8 @@ public final class Types {
     *       subtyping rules)
     */
    public static boolean isSubtypeStrict(Type possibleSubtype, Type aType) {
-      return isAssignableStrict(possibleSubtype, aType)
-            && !isSameType(possibleSubtype, aType);
+      return !equals(possibleSubtype, aType)
+            && isAssignableStrict(possibleSubtype, aType);
    }
 
    /**
@@ -1197,66 +1224,7 @@ public final class Types {
     * @return true if they represent the same type
     */
    public static boolean isSameType(Type a, Type b) {
-      if (requireNonNull(a) == requireNonNull(b)) {
-         return true;
-      } else if (a instanceof Class) {
-         return b instanceof Class && a.equals(b);
-      } else if (a instanceof ParameterizedType) {
-         if (!(b instanceof ParameterizedType)) {
-            return false;
-         }
-         ParameterizedType ptA = (ParameterizedType) a;
-         ParameterizedType ptB = (ParameterizedType) b;
-         Type ownerA = ptA.getOwnerType();
-         Type ownerB = ptB.getOwnerType();
-         if ((ownerA == null) != (ownerB == null)) {
-            return false;
-         }
-         if ((ownerA != null && !isSameType(ownerA, ownerB))
-               || !isSameType(ptA.getRawType(), ptB.getRawType())) {
-            return false;
-         }
-         Type argsA[] = ptA.getActualTypeArguments();
-         Type argsB[] = ptB.getActualTypeArguments();
-         int len = argsA.length;
-         if (len != argsB.length) {
-            return false;
-         }
-         for (int i = 0; i < len; i++) {
-            // Recursive call uses equals() instead of isSameType(), after ruling out wildcards.
-            // If either/both have a wildcard argument, e.g. List<? extends Number>, then they
-            // are not the same type (even with same bounds, since the actual type represented
-            // by the wildcard is unknown). But with the wildcard pushed down further, they can
-            // be the same type. E.g. two types, both List<Class<?>>, are the same type. 
-            if (argsA[i] instanceof WildcardType || argsB[i] instanceof WildcardType
-                  || !equals(argsA[i], argsB[i])) {
-               return false;
-            }
-         }
-         return true;
-      } else if (a instanceof GenericArrayType) {
-         if (!(b instanceof GenericArrayType)) {
-            return false;
-         }
-         GenericArrayType gatA = (GenericArrayType) a;
-         GenericArrayType gatB = (GenericArrayType) b;
-         return isSameType(gatA.getGenericComponentType(), gatB.getGenericComponentType());
-      } else if (a instanceof TypeVariable) {
-         if (!(b instanceof TypeVariable)) {
-            return false;
-         }
-         TypeVariable<?> tvA = (TypeVariable<?>) a;
-         TypeVariable<?> tvB = (TypeVariable<?>) b;
-         // if we know these refer to the same variable on the same declaration, then we don't
-         // need to also check that the type bounds match
-         return tvA.getGenericDeclaration().equals(tvB.getGenericDeclaration())
-               && tvA.getName().equals(tvB.getName());
-      } else if (a instanceof WildcardType) {
-         return false;
-      } else {
-         // WTF?
-         return a.equals(b);
-      }
+      return !(a instanceof WildcardType || b instanceof WildcardType) && equals(a, b);
    }
    
    /**
@@ -1281,14 +1249,14 @@ public final class Types {
       
       if (isArray(type)) {
          Type componentType = getComponentType(type);
-         if (componentType == Object.class) {
-            // base case supertypes for Object[]
+         if (componentType == Object.class || isPrimitive(componentType)) {
+            // base case supertypes for Object[] and primitive arrays
             return ARRAY_SUPERTYPES.clone();
          }
          // create array types for all of the element's supertypes
          Type[] superTypes = getDirectSupertypes(componentType);
          for (int i = 0; i < superTypes.length; i++) {
-            superTypes[i] = arrayTypeOf(superTypes[i]);
+            superTypes[i] = getArrayType(superTypes[i]);
          }
          return superTypes;
       }
@@ -1312,7 +1280,7 @@ public final class Types {
          superClass = getGenericSuperclass(type);
          superInterfaces = getGenericInterfaces(type);
          // a raw type is a supertype of a parameterized type 
-         rawType = type instanceof ParameterizedType ? getRawType(type) : null;
+         rawType = type instanceof ParameterizedType ? getErasure(type) : null;
       }
       if (superClass == null && superInterfaces.length == 0 && isInterface(type)) {
          // direct supertype of an interface that has no direct super-interfaces is Object
@@ -1405,20 +1373,19 @@ public final class Types {
     * @param erased if true, only erasures for the supertypes are included in the returned set
     * @return the set of all of the given type's supertypes
     */
-   private static Set<Type> getAllSupertypesInternal(Type type, boolean includeType,
-         boolean erased) {
+   static Set<Type> getAllSupertypesInternal(Type type, boolean includeType, boolean erased) {
       Queue<Type> pending = new ArrayDeque<>();
       if (erased) {
-         type = getRawType(type);
+         type = getErasure(type);
       }
       pending.add(type);
       Set<Type> results = new LinkedHashSet<>();
       while (!pending.isEmpty()) {
          Type t = pending.poll();
-         if ((t == type && !includeType) || results.add(t)) {
+         if ((t == type && !includeType) || results.add(wrap(t))) {
             Type[] superTypes = getDirectSupertypes(t);
             for (Type st : superTypes) {
-               pending.add(erased ? getRawType(st) : st);
+               pending.add(erased ? getErasure(st) : st);
             }
          }
       }
@@ -1457,9 +1424,12 @@ public final class Types {
     * 
     * <p>The JLS indicates that recursive types, which could result in infinite recursion in
     * computing the last upper bounds, should result in cyclic data structures. Core reflection type
-    * interfaces are not designed to model such cycles. So if the computed least upper bound
+    * interfaces are generally not expected to be cyclic. So if the computed least upper bound
     * {@code `lub`} were, for example, to result in {@code Comparable<`lub`>} then a non-cyclic
     * type, {@code Comparable<?>} would be returned instead.
+    * 
+    * <p>If a mix of reference and primitive types are given, an empty array is returned since
+    * primitive types and reference types have no shared bound.
     *
     * @param types the types whose least upper bounds are computed
     * @return the least upper bounds for the given types
@@ -1479,14 +1449,16 @@ public final class Types {
       // we have a defensive copy of the set for all subsequent operations.
       OptionalInt numTypes = Iterables.trySize(types);
       Set<Type> typesSet = new LinkedHashSet<>(numTypes.orElse(6) * 4 / 3);
-      typesSet.add(first);
-      Iterables.addTo(iter, typesSet);
+      typesSet.add(wrap(first));
+      while (iter.hasNext()) {
+         typesSet.add(wrap(iter.next()));
+      }
       if (typesSet.size() == 1) {
          // all other types were duplicates of the first, so least upper bound is the one type
          return new Type[] { first };
       }
       
-      return leastUpperBounds(typesSet, new HashSet<>());
+      return leastUpperBounds(typesSet, new HashMap<>());
    }
 
    /**
@@ -1494,10 +1466,11 @@ public final class Types {
     * prevent recursive types from causing infinite recursion.
     *
     * @param types the types whose least upper bounds are computed
-    * @param setsSeen sets of types already observed, to prevent infinite recursion
+    * @param setsSeen sets of types already observed, mapped to memoized results (to prevent
+    *       duplicated work during recursion and also to prevent infinite recursion)
     * @return the least upper bounds for the given types
     */
-   private static Type[] leastUpperBounds(Set<Type> types, Set<Set<Type>> setsSeen) {
+   private static Type[] leastUpperBounds(Set<Type> types, Map<Set<Type>, Type[]> setsSeen) {
       return leastUpperBounds(types, setsSeen, false);
    }
 
@@ -1514,31 +1487,34 @@ public final class Types {
     * returned instead of trying to construct cyclic data structures.
     *
     * @param types the types whose least upper bounds are computed (or are reduced)
-    * @param setsSeen sets of types already observed, to prevent infinite recursion
+    * @param setsSeen sets of types already observed, mapped to memoized results (to prevent
+    *       duplicated work during recursion and also to prevent infinite recursion)
     * @param reduceTypesDirectly if true, just reduce the given types instead of computing their
     *       least upper bounds
     * @return the least upper bounds for the given types (or the reduction of the given types using
     *       similar logic)
     */
-   private static Type[] leastUpperBounds(Set<Type> types, Set<Set<Type>> setsSeen,
+   private static Type[] leastUpperBounds(Set<Type> types, Map<Set<Type>, Type[]> setsSeen,
          boolean reduceTypesDirectly) {
-      if (!setsSeen.add(types)) {
-         // Already seen these types? That means we have recursive types, like
-         // Foo extends Comparable<Foo>, and the least upper bound wants to also be recursive
-         // (e.g. `lub` == Comparable<`lub`>). The JLS says compilers must model this situation
-         // with cyclic data structures. But this is core reflection, not a compiler. We don't
-         // want cyclic types because they'd likely cause infinite recursion with algorithms that
-         // expect (for good reason) reflection types to be a dag or a tree. So instead of a cyclic
-         // data structure, we terminate the cycle with the mother-of-all-upper-bounds: Object
-         return JUST_OBJECT.clone();
+      Type[] cachedResult = setsSeen.get(types);
+      if (cachedResult != null) {
+         return cachedResult;
       }
-      
+      // We seed the map with Object. That way we can avoid infinite recursion if we have recursive
+      // types, like Foo extends Comparable<Foo>, and the least upper bound wants to also be
+      // recursive (e.g. `lub` == Comparable<`lub`>). The JLS says compilers must model this
+      // situation with cyclic data structures. But this is core reflection, not a compiler. We
+      // don't want cyclic types because they'd likely cause infinite recursion with algorithms that
+      // expect (for good reason) reflection types to be a dag or a tree. So instead of a cyclic
+      // data structure, we terminate the cycle with the mother-of-all-upper-bounds: Object
+      setsSeen.put(types, JUST_OBJECT.clone());
+
       // Build erased candidate set
       Set<Class<?>> candidateSet;
       if (reduceTypesDirectly) {
          candidateSet = new LinkedHashSet<>(types.size() * 4 / 3);
          for (Type t : types) {
-            candidateSet.add(getRawType(t));
+            candidateSet.add(getErasure(t));
          }
       } else {
          Iterator<Type> iter = types.iterator();
@@ -1553,11 +1529,10 @@ public final class Types {
       if (candidateSet.isEmpty()) {
          // this can only happen if given types include a mix of reference and non-reference types
          assert StreamSupport.stream(types.spliterator(), false)
-               .anyMatch(t -> getRawType(t).isPrimitive());
+               .anyMatch(t -> getErasure(t).isPrimitive());
          assert StreamSupport.stream(types.spliterator(), false)
-               .anyMatch(t -> !getRawType(t).isPrimitive());
-         throw new IllegalArgumentException(
-               "cannot compute least upper bounds: mix of reference and primitive types given");
+               .anyMatch(t -> !getErasure(t).isPrimitive());
+         return EMPTY_TYPES;
       }
       
       // Now compute "minimal candidate set" by filtering out redundant supertypes
@@ -1567,7 +1542,7 @@ public final class Types {
             if (t1 == t2) {
                continue;
             }      
-            if (isSubtype(t1, t2)) {
+            if (isSubtype(t2, t1)) {
                csIter.remove();
                break;
             }
@@ -1588,12 +1563,12 @@ public final class Types {
             for (Type t : types) {
                Type resolved;
                if (reduceTypesDirectly) {
-                  if (getRawType(t) != rawCandidate) {
+                  if (getErasure(t) != rawCandidate) {
                      continue;
                   }
                   resolved = t;
                } else {
-                  resolved = resolveSuperType(t, rawCandidate);
+                  resolved = resolveSupertype(t, rawCandidate);
                   assert resolved != null;
                }
                if (resolved instanceof Class) {
@@ -1631,6 +1606,9 @@ public final class Types {
             break;
          }
       }
+      
+      // overwrite the seeded result with the actual
+      setsSeen.put(types, results);
       return results;
    }
    
@@ -1641,11 +1619,11 @@ public final class Types {
     * @param t1 a relevant parameterization
     * @param t2 another relevant parameterization
     * @param setsSeen sets of types already observed during calculation of least upper bounds, to
-    *       prevent infinite recursion
+    *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific parameterization that contains both given
     */
    private static Type leastContainingInvocation(ParameterizedType t1, ParameterizedType t2,
-         Set<Set<Type>> setsSeen) {
+         Map<Set<Type>, Type[]> setsSeen) {
       assert t1.getRawType() == t2.getRawType();
       Type pt1Owner = t1.getOwnerType();
       Type pt2Owner = t2.getOwnerType();
@@ -1680,10 +1658,11 @@ public final class Types {
     * @param t1 a value for the type argument being resolved
     * @param t2 another value for the type argument being resolved
     * @param setsSeen sets of types already observed during calculation of least upper bounds, to
-    *       prevent infinite recursion
+    *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific type argument that contains both the given values
     */
-   private static Type leastContainingTypeArgument(Type t1, Type t2, Set<Set<Type>> setsSeen) {
+   private static Type leastContainingTypeArgument(Type t1, Type t2,
+         Map<Set<Type>, Type[]> setsSeen) {
       if (t1 instanceof WildcardType) {
          return leastContainingTypeArgument((WildcardType) t1, t2, setsSeen);
       } else if (t2 instanceof WildcardType) {
@@ -1691,8 +1670,8 @@ public final class Types {
       } else {
          // JLS: lcta(U, V) = U if U = V, otherwise ? extends lub(U, V)
          Set<Type> asSet = new LinkedHashSet<Type>(4);
-         asSet.add(t1);
-         asSet.add(t2);
+         asSet.add(wrap(t1));
+         asSet.add(wrap(t2));
          if (asSet.size() == 1) {
             return t1;
          }
@@ -1708,18 +1687,18 @@ public final class Types {
     * @param t1 a wildcard type value for the type argument being resolved
     * @param t2 another value (may or may not be a wildcard) for the type argument being resolved
     * @param setsSeen sets of types already observed during calculation of least upper bounds, to
-    *       prevent infinite recursion
+    *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific type argument that contains both the given values
     */
    private static Type leastContainingTypeArgument(WildcardType t1, Type t2, 
-         Set<Set<Type>> setsSeen) {
+         Map<Set<Type>, Type[]> setsSeen) {
       Type[] superBounds = t1.getLowerBounds();
       Type[] extendsBounds = t1.getUpperBounds();
       assert extendsBounds.length > 0;
       
       // Lower bounds
       if (superBounds.length != 0) {
-         if (extendsBounds.length > 1 || extendsBounds[0] != Object.class) {
+         if (!isExtendsAny(extendsBounds)) {
             // a wildcard with both super and extends: treat as if it were "?"
             superBounds = EMPTY_TYPES;
             extendsBounds = JUST_OBJECT;
@@ -1729,7 +1708,7 @@ public final class Types {
                Type[] extendsBounds2 = t1.getUpperBounds();
                assert extendsBounds2.length > 0;
                if (superBounds2.length != 0) {
-                  if (extendsBounds2.length > 1 || extendsBounds2[0] != Object.class) {
+                  if (isExtendsAny(extendsBounds2)) {
                      // a wildcard with both super and extends: treat as if it were "?"
                      superBounds2 = EMPTY_TYPES;
                      extendsBounds2 = JUST_OBJECT;
@@ -1762,7 +1741,7 @@ public final class Types {
          Type[] extendsBounds2 = t1.getUpperBounds();
          assert extendsBounds2.length > 0;
          if (superBounds2.length != 0) {
-            if (extendsBounds2.length > 1 || extendsBounds2[0] != Object.class) {
+            if (isExtendsAny(extendsBounds2)) {
                // a wildcard with both super and extends: treat as if it were "?"
                superBounds2 = EMPTY_TYPES;
                extendsBounds2 = JUST_OBJECT;
@@ -1780,10 +1759,10 @@ public final class Types {
          Set<Type> typeSet =
                new LinkedHashSet<>((extendsBounds.length + extendsBounds2.length) * 4 /3);
          for (Type t : extendsBounds) {
-            typeSet.add(t);
+            typeSet.add(wrap(t));
          }
          for (Type t : extendsBounds2) {
-            typeSet.add(t);
+            typeSet.add(wrap(t));
          }
          Type[] lub = leastUpperBounds(typeSet, setsSeen);
          return new WildcardTypeImpl(lub, EMPTY_TYPES);
@@ -1792,21 +1771,21 @@ public final class Types {
          Set<Type> typeSet =
                new LinkedHashSet<>((extendsBounds.length + 1) * 4 /3);
          for (Type t : extendsBounds) {
-            typeSet.add(t);
+            typeSet.add(wrap(t));
          }
-         typeSet.add(t2);
+         typeSet.add(wrap(t2));
          Type[] lub = leastUpperBounds(typeSet, setsSeen);
          return new WildcardTypeImpl(lub, EMPTY_TYPES);
       }
    }
-   
+
    private static Type[] greatestLowerBounds(Type[] bounds, Type newBound) {
       // Section 5.1.10 of the JLS seems to define the glb function as a simple intersection of the
       // given arguments. But we also need to reduce the set to eliminate redundant types (where one
-      // is a sub-type of another).
+      // is a subtype of another).
       
       // NB: Intersections cannot contain conflicting types; e.g. two classes (not interfaces) where
-      // one is *not* a sub-type of another OR different parameterizations of the same generic type.
+      // one is *not* a subtype of another OR different parameterizations of the same generic type.
       // The natural resolution when faced with a conflict would be a union type, but there is no
       // such thing in Java (at least not in core reflection). So instead, we merge incompatible
       // types via least-upper-bounds. So an attempt to intersect String and Class results in
@@ -1822,7 +1801,7 @@ public final class Types {
       // more interface bounds.
       if (newIsClass && existingHasClass) {
          for (int i = 1; i < bounds.length; i++) {
-            interfaceBounds.add(bounds[i]);
+            interfaceBounds.add(wrap(bounds[i]));
          }
          // compute least upper bounds for possibly-conflicting class types
          Type lubs[] = getLeastUpperBounds(bounds[0], newBound);
@@ -1831,38 +1810,38 @@ public final class Types {
             if (lubs.length > 1) {
                interfacesNeedReduction = !interfaceBounds.isEmpty();
                for (int i = 1; i < lubs.length; i++) {
-                  interfaceBounds.add(lubs[i]);
+                  interfaceBounds.add(wrap(lubs[i]));
                }
             }
          } else {
             interfacesNeedReduction = !interfaceBounds.isEmpty();
             for (Type t : lubs) {
-               interfaceBounds.add(t);
+               interfaceBounds.add(wrap(t));
             }
          }
       } else {
          if (newIsClass) {
             classBound = newBound;
             for (Type t : bounds) {
-               interfaceBounds.add(t);
+               interfaceBounds.add(wrap(t));
             }
          } else if (existingHasClass) {
             classBound = bounds[0];
             if (bounds.length > 1) {
                interfacesNeedReduction = true;
                for (int i = 1; i < bounds.length; i++) {
-                  interfaceBounds.add(bounds[i]);
+                  interfaceBounds.add(wrap(bounds[i]));
                }
             }
-            interfaceBounds.add(newBound);
+            interfaceBounds.add(wrap(newBound));
          }
       }
       
       Type[] reducedInterfaces;
       if (interfacesNeedReduction) {
-         // instead of gathering super-types and reducing to least upper bounds, the last argument
+         // instead of gathering supertypes and reducing to least upper bounds, the last argument
          // being "true" means this will just reduce the given input types
-         reducedInterfaces = leastUpperBounds(interfaceBounds, new HashSet<>(), true);
+         reducedInterfaces = leastUpperBounds(interfaceBounds, new HashMap<>(), true);
       } else {
          reducedInterfaces = interfaceBounds.toArray(new Type[interfaceBounds.size()]);
       }
@@ -1895,7 +1874,7 @@ public final class Types {
       if (!(type instanceof Class || type instanceof ParameterizedType)) {
          return false;
       }
-      Class<?> clazz = getRawType(type);
+      Class<?> clazz = getErasure(type);
       if (!clazz.isInterface()) {
          return false;
       }
@@ -2026,7 +2005,7 @@ public final class Types {
          }
          context = componentType;
       }
-      Type superType = resolveSuperType(context, (Class<?>) declaration);
+      Type superType = resolveSupertype(context, (Class<?>) declaration);
       if (superType == null || superType instanceof Class) {
          return null; // cannot resolve
       }
@@ -2059,15 +2038,15 @@ public final class Types {
     * @return the resolved type
     */
    public static Type resolveType(Type context, Type typeToResolve) {
-      Map<TypeVariableWrapper, Type> resolvedVariableValues = new HashMap<>();
-      Set<TypeVariableWrapper> resolvedVariables = new HashSet<>();
+      Map<TypeVariable<?>, Type> resolvedVariableValues = new HashMap<>();
+      Set<TypeVariable<?>> resolvedVariables = new HashSet<>();
       resolveTypeVariables(context, typeToResolve, resolvedVariableValues, resolvedVariables);
       return replaceTypeVariablesInternal(typeToResolve, resolvedVariableValues);
    }
    
    private static void resolveTypeVariables(Type context, Type type,
-         Map<TypeVariableWrapper, Type> resolvedVariableValues,
-         Set<TypeVariableWrapper> resolvedVariables) {
+         Map<TypeVariable<?>, Type> resolvedVariableValues,
+         Set<TypeVariable<?>> resolvedVariables) {
       if (type instanceof Class) {
          // no-op
       } else if (type instanceof ParameterizedType) {
@@ -2087,7 +2066,7 @@ public final class Types {
          }
       } else if (type instanceof TypeVariable) {
          TypeVariable<?> tv = (TypeVariable<?>) type;
-         TypeVariableWrapper wrapper = wrap(tv);
+         TypeVariable<?> wrapper = wrap(tv);
          if (tv.getGenericDeclaration() instanceof Class) {
             // don't bother re-resolving occurrences of variables we've already seen
             if (resolvedVariables.add(wrapper)) {
@@ -2115,7 +2094,7 @@ public final class Types {
    public static Type replaceTypeVariable(Type type, TypeVariable<?> typeVariable,
          Type typeValue) {
       // wrap the variable to make sure its hashCode and equals are well-behaved
-      HashMap<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
+      HashMap<TypeVariable<?>, Type> resolvedVariables = new HashMap<>();
       resolvedVariables.put(wrap(typeVariable), typeValue);
       // extract additional context from the given type, in case it has resolved type arguments
       // necessary for validating bounds of given type variables
@@ -2137,7 +2116,7 @@ public final class Types {
     */
    public static Type replaceTypeVariables(Type type, Map<TypeVariable<?>, Type> typeVariables) {
       // wrap the variables to make sure their hashCode and equals are well-behaved
-      HashMap<TypeVariableWrapper, Type> resolvedVariables =
+      HashMap<TypeVariable<?>, Type> resolvedVariables =
             new HashMap<>(typeVariables.size() * 4 / 3);
       for (Entry<TypeVariable<?>, Type> entry : typeVariables.entrySet()) {
          TypeVariable<?> typeVariable = entry.getKey();
@@ -2155,12 +2134,12 @@ public final class Types {
    }
 
    private static Type replaceTypeVariablesInternal(Type type,
-         Map<TypeVariableWrapper, Type> typeVariables) {
+         Map<TypeVariable<?>, Type> typeVariables) {
       return replaceTypeVariablesInternal(type, typeVariables, false);
    }
 
    private static Type replaceTypeVariablesInternal(Type type,
-         Map<TypeVariableWrapper, Type> typeVariables, boolean wildcardForMissingTypeVars) {
+         Map<TypeVariable<?>, Type> typeVariables, boolean wildcardForMissingTypeVars) {
       // NB: if replacing variable references in this type result in no changes (e.g. no references
       // to replace), then return the given type object as is. Do *not* return a different-but-equal
       // type since that could cause a lot of excess work to re-construct a complex type for a
@@ -2244,33 +2223,336 @@ public final class Types {
       }
    }
 
+   /**
+    * Checks whether a parameterization is valid by determining whether the given type argument is
+    * compatible with the given type variable.
+    *
+    * @param variable a type variable
+    * @param argument a proposed argument for the type variable
+    * @param resolvedVariables current type context, as a map of type variables to their actual
+    *       arguments, for resolving types that may reference these variables
+    * @throws IllegalArgumentException if the given argument is not a valid value for the given
+    *       type variable
+    */
    private static void checkTypeValue(TypeVariable<?> variable, Type argument,
-         Map<TypeVariableWrapper, Type> resolvedVariables) {
-      checkTypeValue(variable, argument, resolvedVariables, -1);
-   }
-
-   private static void checkTypeValue(TypeVariable<?> variable, Type argument,
-         Map<TypeVariableWrapper, Type> resolvedVariables, int index) {
-      String id = index < 0 ? "" : (" #" + index);
+         Map<TypeVariable<?>, Type> resolvedVariables) {
       if (argument instanceof Class && ((Class<?>) argument).isPrimitive()) {
-         throw new IllegalArgumentException("Type argument" + id + " is primitive: "
-               + argument.getTypeName());
+         throw new IllegalArgumentException("Argument for variable " + variable.getName()
+               + " is primitive: " + argument.getTypeName());
       }
       for (Type bound : variable.getBounds()) {
-         // Do any substitutions on owner type variables that may be referenced (or recursive
-         // bounds, where a bound references its type variable). If any type variables cannot be
-         // resolved, substitute them with an appropriate wildcard
-         bound = replaceTypeVariablesInternal(bound, resolvedVariables, true);
-         if (!isAssignableStrict(argument, bound)) {
-            throw new IllegalArgumentException("Argument" + id + ", "
-                  + argument.getTypeName() + " does not extend bound "+ bound.getTypeName());
+         TypePath invalidPath =
+               findInvalidTypeValue(null, variable, bound, true, argument, resolvedVariables);
+         if (invalidPath != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Argument for variable ").append(variable.getName()).append(", ")
+                  .append(argument.getTypeName()).append(", is not compatible with bound, ")
+                  .append(bound.getTypeName());
+            if (invalidPath.previous != null) {
+               // there is a non-trivial path to the invalid type, so include the path
+               // in the message to help user find and understand incompatibility
+               sb.append("; ");
+               invalidPath.toStringBuilder(sb, true);
+            }
+            throw new IllegalArgumentException(sb.toString());
          }
       }
    }
    
    /**
-    * For the given generic type, computes the generic super-type corresponding to the given raw
-    * class token. If the given generic type is not actually assignable to the given super-type
+    * Represents part of the path to traverse a generic type to a particular enclosed type use.
+    *
+    * @see TypePath
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class TypePathElement {
+      enum Kind {
+         /**
+          * The path elements traverses an actual argument for a type variable, in a parameterized
+          * type. 
+          */
+         TYPE_VAR,
+         /**
+          * The path element traverses up the type hierarchy to a supertype.
+          */
+         SUPERTYPE,
+         /**
+          * The path element traverses into an owner type, for a non-static generic member type.
+          */
+         OWNER_TYPE
+      }
+      
+      final Kind kind;
+      final Type context;
+      
+      private TypePathElement(Kind kind, Type context) {
+         assert kind != null && context != null;
+         this.kind = kind;
+         this.context = context;
+      }
+      
+      static TypePathElement typeVariable(TypeVariable<?> typeVar) {
+         return new TypePathElement(Kind.TYPE_VAR, typeVar);
+      }
+
+      static TypePathElement supertype(Class<?> supertype) {
+         return new TypePathElement(Kind.SUPERTYPE, supertype);
+      }
+      
+      static TypePathElement owner(Class<?> owner) {
+         return new TypePathElement(Kind.OWNER_TYPE, owner);
+      }
+   }
+
+   /**
+    * Represents path to traverse a generic type to a particular enclosed type use. This is used to
+    * explain why a given parameterization of a generic type is invalid, by pinpointing invalid type
+    * arguments in possibly nested parameterized types.
+    * 
+    * <p>This is a simple persistent linked list of path elements. For each path element, a node
+    * also stores valuable context in the form of the actual effective bound for the type at this
+    * path and the given actual argument type at this path.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class TypePath {
+      final TypePathElement element;
+      final Type bound;
+      final Type argument;
+      final TypePath previous;
+      
+      private TypePath(TypePathElement element, Type bound, Type argument, TypePath next) {
+         this.element = element;
+         this.bound = bound;
+         this.argument = argument;
+         this.previous = next;
+      }
+      
+      static TypePath push(TypePath soFar, Type bound, Type argument,
+            TypePathElement element) {
+         assert bound != null && argument != null && element != null;
+         return new TypePath(element, bound, argument, soFar);
+      }
+      
+      void toStringBuilder(StringBuilder sb, boolean includeTypes) {
+         if (previous != null) {
+            previous.toStringBuilder(sb, false);
+         }
+         if (element.kind == TypePathElement.Kind.TYPE_VAR) {
+            // if first element in the path, show declaration for context
+            TypeVariable<?> typeVar = (TypeVariable<?>) element.context;
+            if (previous == null) {
+               sb.append(typeVar.getGenericDeclaration());
+            }               
+            sb.append('{').append(typeVar.getName()).append('}');
+         } else {
+            sb.append(" > ");
+            if (element.kind == TypePathElement.Kind.OWNER_TYPE) {
+               sb.append("(owner) ");
+            }
+            sb.append(element.context);
+         }
+         if (includeTypes) {
+            sb.append(": ");
+            Types.toStringBuilder(argument, sb);
+            sb.append(" --> ");
+            Types.toStringBuilder(bound, sb);
+         }
+      }
+   }
+   
+   /**
+    * Checks whether a given type argument is valid for a given type variable, given a particular
+    * constraint (e.g. type variable upper bound).
+    *
+    * @param soFar the path up to, but not including, this type variable
+    * @param typeVar the type variable being checked
+    * @param constraint the upper bound or invariant type value for the given variable
+    * @param isExistentialConstraint true if the constraint can be considered an upper bound; false
+    *        if the constraint is a concrete (and thus invariant) type value
+    * @param argument a proposed parameterization for the given type variable
+    * @param resolvedVariables current type context, as a map of type variables to their actual
+    *       arguments, for resolving types that may reference these variables
+    * @return the path to an invalid parameterization either at or within the given type variable
+    *       constraints and arguments; or {@code null} if the proposed parameterization is valid
+    */
+   private static TypePath findInvalidTypeValue(TypePath soFar, TypeVariable<?> typeVar,
+         Type constraint, boolean isExistentialConstraint, Type argument,
+         Map<TypeVariable<?>, Type> resolvedVariables) {
+      // Adapt bound to given resolved variables
+      constraint = replaceTypeVariablesInternal(constraint, resolvedVariables, true);
+      TypePath here = TypePath.push(soFar, constraint, argument,
+            TypePathElement.typeVariable(typeVar));
+      
+      if (!(argument instanceof WildcardType)) {
+         return isAssignableStrict(argument, constraint) ? null : here;
+      }
+      
+      // type argument is a wildcard
+      WildcardType wt = (WildcardType) argument;
+      // validate lower bounds if any
+      Type[] wtLowerBounds = wt.getLowerBounds();
+      for (Type wtBound : wtLowerBounds) {
+         if (!isAssignableStrict(wtBound, constraint)) {
+            return here;
+         }
+      }
+      
+      Type[] wtUpperBounds = wt.getUpperBounds();
+      if (isExtendsAny(wtUpperBounds)) {
+         // no bounds to test
+         return null;
+      }
+
+      Class<?> erasedConstraint = getErasure(constraint);
+      boolean constraintIsClass = !erasedConstraint.isInterface();
+      for (Type wtBound : wtUpperBounds) {
+         Class<?> erasedWtBound = getErasure(wtBound);
+         boolean wtBoundIsClass = !erasedWtBound.isInterface();
+
+         if (!isExistentialConstraint) {
+            // if the constraint is concrete (not existential, and thus invariant), we
+            // only need to check that the argument matches the wildcard
+            if (!Types.isAssignable(constraint, erasedWtBound)) {
+               return here;
+            }
+
+            Type effectiveWtBound = resolveSupertype(constraint, erasedWtBound);
+            if (effectiveWtBound instanceof ParameterizedType
+                  && wtBound instanceof ParameterizedType) {
+               // if the constraint and the wildcard bound are parameterized types, we need to
+               // check argument compatibility
+               TypePath invalid = findIncompatibleTypeParameter(here,
+                     (ParameterizedType) effectiveWtBound, (ParameterizedType) wtBound);
+               if (invalid != null) {
+                  return invalid;
+               }
+            } else if (!isAssignableStrict(constraint, wtBound)) {
+               // if not parameterized types, require strict assignability
+               return here;
+            }
+            
+            // this bound is good; proceed to next
+            continue;
+         }
+         
+         // Test that the bounds of the wildcard type and the type variable's bounds can be
+         // merged per the rules defined in JLS 5.1.10: Capture Conversion. If both contain class
+         // bounds (as opposed to interface bounds), one class be subtype of the other. For
+         // interface bounds that are potentially subtypes of one another (e.g. the raw interface
+         // type of one is a subtype of the raw interface type of the other), they must not
+         // induce conflicting parameterizations. In other words, a wildcard that extends
+         // List<String> cannot be used for a type variable that extends
+         // Collection<? extends Number> since the two parameterizations of Collection are
+         // incompatible.
+         if (constraintIsClass && wtBoundIsClass) {
+            if (!isAssignableStrict(wtBound, constraint)
+                  && !isAssignableStrict(constraint, wtBound)) {
+               return here;
+            }
+         } else if (Types.isAssignable(wtBound, erasedConstraint)) {
+            Type effectiveConstraint = resolveSupertype(wtBound, erasedConstraint);
+            if (effectiveConstraint instanceof ParameterizedType
+                  && constraint instanceof ParameterizedType) {
+               TypePath invalid = findIncompatibleTypeParameter(here,
+                     (ParameterizedType) constraint, (ParameterizedType) effectiveConstraint);
+               if (invalid != null) {
+                  return invalid;
+               }
+            }
+         } else if (Types.isAssignable(constraint, erasedWtBound)) {
+            Type effectiveWtBound = resolveSupertype(constraint, erasedWtBound);
+            if (effectiveWtBound instanceof ParameterizedType
+                  && wtBound instanceof ParameterizedType) {
+               TypePath invalid = findIncompatibleTypeParameter(here,
+                     (ParameterizedType) effectiveWtBound, (ParameterizedType) wtBound);
+               if (invalid != null) {
+                  return invalid;
+               }
+            }
+         }
+      }
+
+      return null;
+   }
+   
+   /**
+    * Searches for invalid parameterizations for the given types. The first given type represents
+    * a parameterization defined by an upper bound and the second given type represents a 
+    * proposed parameterization. Both types represent parameterizations of the same type (e.g. they
+    * both have the same raw type). If the proposal is not valid per the given bound, a non-null
+    * path is returned, which pinpoints the invalid type use.
+    *
+    * @param soFar the path up to, but not including, this parameterized type
+    * @param type1 a parameterized type that represents upper bounds for the type
+    * @param type2 a proposed parameterization of the same generic type as {@code type1}
+    * @return the path to an invalid parameterization within the given parameterized types; or
+    *       {@code null} if the proposed parameterization is valid
+    */
+   private static TypePath findIncompatibleTypeParameter(TypePath soFar, ParameterizedType type1,
+         ParameterizedType type2) {
+      assert getErasure(type1) == getErasure(type2);
+      assert type1.getActualTypeArguments().length == type2.getActualTypeArguments().length;
+      
+      TypePath here = TypePath.push(soFar, type1, type2,
+            TypePathElement.supertype(getRawType(type1)));
+      
+      Type owner1 = type1.getOwnerType();
+      Type owner2 = type2.getOwnerType();
+      if (owner1 instanceof ParameterizedType) {
+         if (!(owner2 instanceof ParameterizedType)) {
+            return TypePath.push(here, owner1, owner2,
+                  TypePathElement.owner(getRawType(owner1))); // WTF?
+         }
+         TypePath invalid = findIncompatibleTypeParameter(here,
+               (ParameterizedType) owner1, (ParameterizedType) owner2);
+         if (invalid != null) {
+            return invalid;
+         }
+      }
+      
+      TypeVariable<?>[] typeVars = getTypeParameters(type1);
+      Type[] typeArgs1 = type1.getActualTypeArguments();
+      Type[] typeArgs2 = type2.getActualTypeArguments();
+      assert typeVars.length == typeArgs1.length && typeArgs1.length == typeArgs2.length;
+      for (int i = 0; i < typeArgs1.length; i++) {
+         Type constraint = typeArgs1[i];
+         if (constraint instanceof WildcardType) {
+            for (Type bound :  ((WildcardType) constraint).getUpperBounds()) {
+               TypePath invalid = findInvalidTypeValue(here, typeVars[i], bound, true,
+                     typeArgs2[i], Collections.emptyMap());
+               if (invalid != null) {
+                  return invalid;
+               }
+            }
+         } else {
+            TypePath invalid = findInvalidTypeValue(here, typeVars[i], constraint, false,
+                  /*constraint instanceof ParameterizedType,*/ typeArgs2[i], Collections.emptyMap());
+            if (invalid != null) {
+               return invalid;
+            }
+         }
+      }
+      
+      // all checks pass
+      return null;
+   }
+
+   /**
+    * Returns true if the given wildcard bounds allow any type. This is the case when the given
+    * types define no bounds or solely {@code Object}.
+    *
+    * @param bounds array of type bounds
+    * @return true if the given wildcard bounds allow any type.
+    */
+   private static boolean isExtendsAny(Type[] bounds) {
+      return bounds.length == 0 || (bounds.length == 1 && bounds[0] == Object.class);
+   }
+   
+   /**
+    * For the given generic type, computes the generic supertype corresponding to the given raw
+    * class token. If the given generic type is not actually assignable to the given supertype
     * token then {@code null} is returned. 
     * 
     * <p>For example, if the given generic type is {@code List<String>} and the given raw class
@@ -2280,69 +2562,66 @@ public final class Types {
     * <p>If the given generic type is a raw class token but represents a type with type parameters,
     * then raw types are returned. For example, if the generic type is {@code HashMap.class} and
     * the given raw class token is {@code Map.class}, then this method simply returns the raw type
-    * {@code Map.class}. This is also done if any super-type traversed uses raw types. For example,
+    * {@code Map.class}. This is also done if any supertype traversed uses raw types. For example,
     * if the given type's super-class were defined as {@code class Xyz extends HashMap}, then the
     * type arguments to {@code HashMap} are lost due to raw type usage and a raw type is returned.
     * 
     * <p>If the given generic type is a raw class token that does <em>not</em> have any type
     * parameters, then the returned value can still be a generic type. For example, if the given
     * type is {@code Xyz.class} and that class is defined as {@code class Xyz extends
-    * ArrayList<String>}, then querying for a super-type of {@code List.class} will return a
+    * ArrayList<String>}, then querying for a supertype of {@code List.class} will return a
     * parameterized type: {@code List<String>}.
     * 
-    * <p>If the given generic type is a wildcard type or type variable, its super-types include all
-    * upper bounds (and their super-types), and the type's hierarchy is traversed as such.
+    * <p>If the given generic type is a wildcard type or type variable, its supertypes include all
+    * upper bounds (and their supertypes), and the type's hierarchy is traversed as such.
     * 
-    * <p>Technically, a generic array type's only super-types are {@code Object}, {@code Cloneable},
-    * and {@code Serializable}. However, since array types are co-variant, this method can resolve
-    * other super-types to which the given type is assignable. For example, if the given type is
+    * <p>Since array types are co-variant on their component type, this method can resolve other
+    * supertypes to which the given type is assignable. For example, if the given type is
     * {@code HashMap<String, Number>[]} and the given raw class token queried is {@code Map[].class}
     * then this method will resolve type parameters and return a generic type:
     * {@code Map<String, Number>[]}.
     *
     * @param type a generic type
-    * @param superClass a class token for the super-type to query
-    * @return a generic type that represents the given super-type token resolved in the context of
-    *       the given type or {@code null} if the given token is not a super-type of the given
+    * @param superClass a class token for the supertype to query
+    * @return a generic type that represents the given supertype token resolved in the context of
+    *       the given type or {@code null} if the given token is not a supertype of the given
     *       generic type
     */
-   public static Type resolveSuperType(Type type, Class<?> superClass) {
+   public static Type resolveSupertype(Type type, Class<?> superClass) {
       requireNonNull(type);
       requireNonNull(superClass);
-      Map<TypeVariableWrapper, Type> typeVariables = new HashMap<>();
-      Type superType = findGenericSuperType(type, superClass, typeVariables);
+      Map<TypeVariable<?>, Type> typeVariables = new HashMap<>();
+      Type superType = findGenericSupertype(type, superClass, typeVariables);
       return superType != null ? replaceTypeVariablesInternal(superType, typeVariables) : null;
    }
 
    /**
-    * Finds the generic super type for the given generic type and super-type token and accumulates
+    * Finds the generic super type for the given generic type and supertype token and accumulates
     * type variables and actual type arguments in the given map.
     *
     * @param type the generic type
-    * @param superClass the class token for the super-type being queried
+    * @param superClass the class token for the supertype being queried
     * @param typeVariables a map of type variables that accumulates type variables and actual type
-    *       arguments as types are traversed from the given type to the given super-type 
-    * @return the generic type corresponding to the given super-type token as returned by
+    *       arguments as types are traversed from the given type to the given supertype 
+    * @return the generic type corresponding to the given supertype token as returned by
     *       {@link Class#getGenericSuperclass()} or {@link Class#getGenericInterfaces()} 
     */
-   private static Type findGenericSuperType(Type type, Class<?> superClass,
-         Map<TypeVariableWrapper, Type> typeVariables) {
+   private static Type findGenericSupertype(Type type, Class<?> superClass,
+         Map<TypeVariable<?>, Type> typeVariables) {
       if (type instanceof Class) {
          Class<?> clazz = (Class<?>) type;
          // If this is a raw type reference to a generic type, just forget generic type information
          // and use raw types from here on out.
-         // NOTE: This is how the Java compiler works. However, it would be nice to support a case
-         // like so:
+         // NOTE: This is how the Java compiler works. It would be kind of nice to instead support
+         // a case like so though:
          //    interface X<T> extends List<String> { ... }
          //    X x; // raw type
          //    List<String> l = x; // generates an unchecked cast warning!
          // The Java compiler insists that the last line is an unchecked cast since raw types cause
-         // it to ignore generic type information. However, the missing type parameter to X, in this
-         // example, shouldn't really matter. We statically know, even without the type arg, that
-         // the assignment is safe.
-         // TODO: change this to behave in the more intuitive way instead of mimic'ing javac?
+         // it to ignore generic type information. (Even though the missing type argument to X isn't
+         // actually necessary in this example to statically know the parameterized supertype...)
          boolean useRawTypes = clazz.getTypeParameters().length > 0; 
-         return findGenericSuperType(clazz, superClass, useRawTypes, typeVariables);
+         return findGenericSupertype(clazz, superClass, useRawTypes, typeVariables);
           
       } else if (type instanceof GenericArrayType) {
          if (superClass == Object.class || superClass == Serializable.class
@@ -2352,18 +2631,18 @@ public final class Types {
          if (!superClass.isArray()) {
             return null;
          }
-         Type resolvedComponentType = findGenericSuperType(
+         Type resolvedComponentType = findGenericSupertype(
                ((GenericArrayType) type).getGenericComponentType(), superClass.getComponentType(),
                typeVariables);
-         return resolvedComponentType == null ? null : arrayTypeOf(resolvedComponentType);
+         return resolvedComponentType == null ? null : getArrayType(resolvedComponentType);
          
       } else if (type instanceof ParameterizedType) {
-         Class<?> rawType = getRawType(type);
          ParameterizedType pType = (ParameterizedType) type;
+         Class<?> rawType = getErasure(pType.getRawType());
          if (rawType == superClass) {
             return type;
          }
-         Type superType = findGenericSuperType(rawType, superClass, false, typeVariables);
+         Type superType = findGenericSupertype(rawType, superClass, false, typeVariables);
          mergeTypeVariables(pType, rawType, typeVariables);
          return superType;
          
@@ -2372,7 +2651,7 @@ public final class Types {
                ? ((WildcardType) type).getUpperBounds()
                : ((TypeVariable<?>) type).getBounds();
          for (Type bound : bounds) {
-            Type superType = findGenericSuperType(bound, superClass, typeVariables);
+            Type superType = findGenericSupertype(bound, superClass, typeVariables);
             if (superType != null) {
                return superType;
             }
@@ -2384,12 +2663,12 @@ public final class Types {
       }
    }
    
-   private static Type findGenericSuperType(Class<?> clazz, Class<?> superClass,
-         boolean useRawTypes, Map<TypeVariableWrapper, Type> typeVariables) {
+   private static Type findGenericSupertype(Class<?> clazz, Class<?> superClass,
+         boolean useRawTypes, Map<TypeVariable<?>, Type> typeVariables) {
       if (!superClass.isAssignableFrom(clazz)) {
          return null;
       }
-      if (superClass.getTypeParameters().length == 0) {
+      if (!isGeneric(superClass)) {
          return superClass;
       }
       if (useRawTypes) {
@@ -2402,7 +2681,7 @@ public final class Types {
    }
    
    private static Type findGenericSuperclass(Class<?> clazz, Class<?> superClass,
-         Map<TypeVariableWrapper, Type> typeVariables) {
+         Map<TypeVariable<?>, Type> typeVariables) {
       Class<?> actualSuper = clazz.getSuperclass();
       assert actualSuper != null;
       Type genericSuper = clazz.getGenericSuperclass();
@@ -2423,7 +2702,7 @@ public final class Types {
    }
 
    private static Type findGenericInterface(Class<?> clazz, Class<?> intrface,
-         Map<TypeVariableWrapper, Type> typeVariables, Set<Class<?>> alreadyChecked) {
+         Map<TypeVariable<?>, Type> typeVariables, Set<Class<?>> alreadyChecked) {
       if (alreadyChecked.contains(clazz)) {
          return null;
       }
@@ -2470,12 +2749,12 @@ public final class Types {
    }
    
    private static void mergeTypeVariables(ParameterizedType type, Class<?> rawType,
-         Map<TypeVariableWrapper, Type> typeVariables) {
+         Map<TypeVariable<?>, Type> typeVariables) {
       Type ownerType = type.getOwnerType();
       if (ownerType instanceof ParameterizedType) {
-         mergeTypeVariables((ParameterizedType) ownerType, getRawType(ownerType), typeVariables);
+         mergeTypeVariables((ParameterizedType) ownerType, getErasure(ownerType), typeVariables);
       }
-      Map<TypeVariableWrapper, Type> currentVars = new HashMap<>();
+      Map<TypeVariable<?>, Type> currentVars = new HashMap<>();
       TypeVariable<?> vars[] = rawType.getTypeParameters();
       Type values[] = type.getActualTypeArguments();
       assert vars.length == values.length;
@@ -2483,7 +2762,7 @@ public final class Types {
          currentVars.put(wrap(vars[i]), values[i]);
       }
       // update any existing type variable values in case they refer to these new variables
-      for (Entry<TypeVariableWrapper, Type> entry : typeVariables.entrySet()) {
+      for (Entry<TypeVariable<?>, Type> entry : typeVariables.entrySet()) {
          entry.setValue(replaceTypeVariablesInternal(entry.getValue(), currentVars));
       }
       typeVariables.putAll(currentVars);
@@ -2511,20 +2790,6 @@ public final class Types {
       return new GenericArrayTypeImpl(componentType);
    }
    
-   private static final Map<Class<?>, String> PRIMITIVE_CLASS_SYMBOLS;
-   static {
-      Map<Class<?>, String> symbols = new HashMap<>();
-      symbols.put(boolean.class, "Z");
-      symbols.put(byte.class, "B");
-      symbols.put(char.class, "C");
-      symbols.put(short.class, "S");
-      symbols.put(int.class, "I");
-      symbols.put(long.class, "J");
-      symbols.put(float.class, "F");
-      symbols.put(double.class, "D");
-      PRIMITIVE_CLASS_SYMBOLS = Collections.unmodifiableMap(symbols);
-   }
-
    /**
     * Gets the class token that represents an array of the given component type.
     *
@@ -2533,77 +2798,9 @@ public final class Types {
     * 
     */
    public static <T> Class<T[]> getArrayType(Class<T> componentType) {
-      requireNonNull(componentType);
-      if (componentType == void.class) {
-         throw new IllegalArgumentException("Cannot create an array with component type void");
-      }
-      boolean canLoad = canLoad(componentType);
-      if (canLoad || CLASS_FORNAME0 != null) {
-         // We should be able to use Class.forName (or a variant thereof) to load the class, so
-         // build the class name.
-         StringBuilder arrayClassName = new StringBuilder("[");
-         if (componentType.isPrimitive()) {
-            String symbol = PRIMITIVE_CLASS_SYMBOLS.get(componentType);
-            assert symbol != null;
-            arrayClassName.append(symbol);
-         } else if (componentType.isArray()) {
-            arrayClassName.append(componentType.getName());
-         } else {
-            arrayClassName.append("L").append(componentType.getName()).append(";");
-         }
-         String className = arrayClassName.toString();
-         if (canLoad) {
-            try {
-               // Try loading the class using Class.forName(...). This might fail if we have a
-               // misbehaving class loader.
-               @SuppressWarnings("unchecked") // we'll verify the type before returning it
-               Class<T[]> arrayType = (Class<T[]>) Class.forName(className);
-               if (arrayType.getComponentType() == componentType) {
-                  return arrayType;
-               }
-            } catch (Exception e) {
-               // intentional fall-through
-            }
-         }
-         if (CLASS_FORNAME0 != null) {
-            try {
-               // Either we can't load the class due to its class loader not being in our class
-               // loader hierarchy, or we encountered a problem trying to load. Be sneaky and try
-               // using a private native Class.forName0(...), which allows specifying the class
-               // loader.
-               @SuppressWarnings("unchecked") // we'll verify the type before returning it
-               Class<T[]> arrayType = (Class<T[]>)
-                     CLASS_FORNAME0.invoke(null, className, true, componentType.getClassLoader());
-               if (arrayType.getComponentType() == componentType) {
-                  // this test should really always be true
-                  return arrayType;
-               }
-            } catch (Exception e) {
-               // intentional fall-through
-            }
-         }
-      }
-      // Fallback approach requires reflective array creation
       @SuppressWarnings("unchecked") // if it's not right then Array.newInstance is broken!
       Class<T[]> arrayType = (Class<T[]>) Array.newInstance(componentType, 0).getClass();
       return arrayType;
-   }
-   
-   private static boolean canLoad(Class<?> clazz) {
-      // Can we load the given class using Class.forName? We can if its class loader is the same as
-      // or is an ancestor of our class loader.
-      ClassLoader target = clazz.getClassLoader();
-      if (target == null) {
-         // the class was loaded by boot class loader, so we're good
-         return true;
-      }
-      for (ClassLoader current = Types.class.getClassLoader(); current != null;
-            current = current.getParent()) {
-         if (current.equals(target)) {
-            return true;
-         }
-      }
-      return false;
    }
    
    /**
@@ -2617,7 +2814,7 @@ public final class Types {
     * @param componentType the component type
     * @return a type that represents an array of the given component type
     */
-   public static Type arrayTypeOf(Type componentType) {
+   public static Type getArrayType(Type componentType) {
       return componentType instanceof Class
                ? getArrayType((Class<?>) componentType)
                : newGenericArrayType(componentType);
@@ -2627,7 +2824,7 @@ public final class Types {
     * Returns the type parameters for the given type or an empty array if it has none. Only class
     * tokens and parameterized types have type parameters. Array types cannot have type parameters
     * (only the arrays' component types can). Wildcard types and type variables also do not have
-    * type parameters (only their bounds, e.g. super-types, can).
+    * type parameters (only their bounds, e.g. supertypes, can).
     *
     * @param type a generic type
     * @return the type parameters for the given type; an empty array if the type has no parameters
@@ -2641,7 +2838,7 @@ public final class Types {
          TypeVariable<Class<?>> ret[] = (TypeVariable<Class<?>>[]) variables;
          return ret;
       } else if (type instanceof ParameterizedType) {
-         return getTypeParameters(getRawType(((ParameterizedType) type).getRawType()));
+         return getTypeParameters(getErasure(((ParameterizedType) type).getRawType()));
       } else {
          @SuppressWarnings("unchecked") // array is empty, so conversion is safe
          TypeVariable<Class<?>> empty[] = (TypeVariable<Class<?>>[]) EMPTY_TYPE_VARIABLES;
@@ -2756,7 +2953,7 @@ public final class Types {
       }
       Type owner;
       if (ownerType != null) {
-         if (rawType.getDeclaringClass() != getRawType(ownerType)) {
+         if (rawType.getDeclaringClass() != getErasure(ownerType)) {
             throw new IllegalArgumentException("Owner type " + ownerType.getTypeName() + " does not"
                   + " match actual owner of given raw type " + rawType.getTypeName());
          } else if (Modifier.isStatic(rawType.getModifiers())) {
@@ -2787,7 +2984,7 @@ public final class Types {
                + " type variable(s), but " + copyOfArguments.size()
                + " argument(s) were specified");
       }
-      Map<TypeVariableWrapper, Type> resolvedVariables = new HashMap<>();
+      Map<TypeVariable<?>, Type> resolvedVariables = new HashMap<>();
       if (ownerType != null) {
          // resolve owners' type variables
          collectTypeParameters(ownerType, resolvedVariables);
@@ -2800,13 +2997,13 @@ public final class Types {
          // validate that given arguments are compatible with bounds
          TypeVariable<?> variable = typeVariables[i];
          Type argument = copyOfArguments.get(i);
-         checkTypeValue(variable, argument, resolvedVariables, i);
+         checkTypeValue(variable, argument, resolvedVariables);
       }
       return new ParameterizedTypeImpl(owner, rawType, copyOfArguments);
    }
    
    private static void collectTypeParameters(ParameterizedType type,
-         Map<TypeVariableWrapper, Type> typeParameters) {
+         Map<TypeVariable<?>, Type> typeParameters) {
       Type owner = type.getOwnerType();
       if (owner instanceof ParameterizedType) {
          collectTypeParameters((ParameterizedType) owner, typeParameters);
@@ -2819,8 +3016,7 @@ public final class Types {
       }
    }
    
-   private static void collectTypeParameters(Type type,
-         Map<TypeVariableWrapper, Type> typeParameters) {
+   private static void collectTypeParameters(Type type, Map<TypeVariable<?>, Type> typeParameters) {
       if (type instanceof ParameterizedType) {
          collectTypeParameters((ParameterizedType) type, typeParameters);
       } else if (type instanceof GenericArrayType) {
@@ -2894,6 +3090,9 @@ public final class Types {
    
    /**
     * Returns a {@link WildcardType} with an upper bound of {@code Object}, i.e.&nbsp;{@code ?}.
+    * 
+    * <p>The returned value is a constant. Multiple calls to this method all return references to
+    * that same constant object.
     *
     * @return the wildcard type with an open upper bound of {@code Object}
     */
@@ -2927,45 +3126,250 @@ public final class Types {
       return new WildcardTypeImpl(bound, isUpperBound);
    }
    
-   private static TypeVariableWrapper wrap(TypeVariable<?> typeVariable) {
-      return new TypeVariableWrapper(typeVariable);
+   /**
+    * Wraps the given type as a {@link ProperType}, unless it is already a {@link ProperType} or a
+    * {@link Class}.
+    *
+    * @param type a type
+    * @return a proper type that wraps the given type
+    */
+   private static Type wrap(Type type) {
+      if (type instanceof ProperType || type instanceof Class) {
+         return type; 
+      } else if (type instanceof ParameterizedType) {
+         return new ParameterizedTypeWrapper((ParameterizedType) type);
+      } else if (type instanceof GenericArrayType) {
+         return new GenericArrayTypeWrapper((GenericArrayType) type);
+      } else if (type instanceof WildcardType) {
+         return new WildcardTypeWrapper((WildcardType) type);
+      } else if (type instanceof TypeVariable) {
+         return new TypeVariableWrapper<>((TypeVariable<?>) type);
+      } else {
+         throw new UnknownTypeException(type);
+      }
+   }
+   
+   private static <G extends GenericDeclaration> TypeVariable<G> wrap(TypeVariable<G> type) {
+      if (type instanceof ProperType) {
+         return type;
+      } else {
+         return new TypeVariableWrapper<>(type);
+      }
    }
 
    /**
-    * A wrapper around {@link TypeVariable}s to ensure consistent equals and hash code, for use
-    * as keys in a hash map. Since {@link TypeVariable} does not define semantics for equals and
-    * hash code, we wrap them before putting into a map instead of relying on unknown behavior of
-    * underlying implementation.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * A {@link Type} that has well-defined behavior for {@link Object#equals equals},
+    * {@link Object#hashCode hashCode}, and {@link Type#getTypeName() getTypeName}.
+    * 
+    * <p>Since neither {@link Type} nor any of its subinterfaces specify semantics for these
+    * methods, we cannot rely on their implementations of those methods -- for example, when using
+    * them in a set or as map keys. (The only subtype of {@link Type} that can be relied on is the
+    * one <em>concrete</em> subtype: {@link Class}).
+    * 
+    * <p>These operations are defined to use the static methods of the same name on {@link Types}:
+    * <pre>
+    * {@literal @}Override
+    * public boolean equals(Object o) {
+    *   return o instanceof Type && Types.equals(this, (Type) o);
+    * }
+    * {@literal @}Override
+    * public int hashCode() {
+    *   return Types.hashCode(this);
+    * }
+    * {@literal @}Override
+    * public String toString() {
+    *   return Types.toString(this);
+    * }
+    * {@literal @}Override
+    * public String getTypeName() {
+    *   return toString();
+    * }
+    * </pre>
     */
-   private static class TypeVariableWrapper {
-      final TypeVariable<?> typeVariable;
+   private interface ProperType extends Type {
+   }
+
+   /**
+    * A {@link ProperType} that wraps another (improper) type, providing a new implementation for
+    * {@code equals}, {@code hashCode}, and {@code toString}.
+    *
+    * @param <T> the sub-interface of {@link Type} that is wrapped
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    * 
+    * @see Types#wrap(Type)
+    */
+   private static abstract class TypeWrapper<T extends Type> implements ProperType {
+      final T base;
       
-      TypeVariableWrapper(TypeVariable<?> typeVariable) {
-         this.typeVariable = typeVariable;
+      TypeWrapper(T base) {
+         this.base = base;
       }
-      
-      @Override public boolean equals(Object o) {
-         if (o instanceof TypeVariableWrapper) {
-            return Types.equals(typeVariable, ((TypeVariableWrapper) o).typeVariable);
-         }
-         return false;
+
+      @Override
+      public boolean equals(Object o) {
+         return o instanceof Type && Types.equals(base, (Type) o);
       }
-      
-      @Override public int hashCode() {
-         return Types.hashCode(typeVariable);
+
+      @Override
+      public int hashCode() {
+         return Types.hashCode(base);
       }
-      
-      @Override public String toString() {
-         return Types.toString(typeVariable);
+
+      @Override
+      public String toString() {
+         return Types.toString(base);
       }
    }
    
    /**
-    * Implements {@link ParameterizedType}.
+    * A wrapper around {@link ParameterizedType}s to ensure consistent equals and hash code, for use
+    * in sets and as keys in a hash map. 
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class ParameterizedTypeImpl implements ParameterizedType, Serializable {
+   private static class ParameterizedTypeWrapper extends TypeWrapper<ParameterizedType>
+   implements ParameterizedType {
+      ParameterizedTypeWrapper(ParameterizedType type) {
+         super(type);
+      }
+
+      @Override
+      public Type[] getActualTypeArguments() {
+         return base.getActualTypeArguments();
+      }
+
+      @Override
+      public Type getRawType() {
+         return base.getRawType();
+      }
+
+      @Override
+      public Type getOwnerType() {
+         return base.getOwnerType();
+      }
+   }
+   
+   /**
+    * A wrapper around {@link GenericArrayType}s to ensure consistent equals and hash code, for use
+    * in sets and as keys in a hash map. 
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class GenericArrayTypeWrapper extends TypeWrapper<GenericArrayType>
+   implements GenericArrayType {
+      GenericArrayTypeWrapper(GenericArrayType type) {
+         super(type);
+      }
+
+      @Override
+      public Type getGenericComponentType() {
+         return base.getGenericComponentType();
+      }
+   }
+   
+   /**
+    * A wrapper around {@link WildcardType}s to ensure consistent equals and hash code, for use in
+    * sets and as keys in a hash map. 
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class WildcardTypeWrapper extends TypeWrapper<WildcardType>
+   implements WildcardType {
+      WildcardTypeWrapper(WildcardType type) {
+         super(type);
+      }
+
+      @Override
+      public Type[] getUpperBounds() {
+         return base.getUpperBounds();
+      }
+
+      @Override
+      public Type[] getLowerBounds() {
+         return base.getLowerBounds();
+      }
+   }
+   
+   /**
+    * A wrapper around {@link TypeVariable}s to ensure consistent equals and hash code, for use in
+    * sets and as keys in a hash map. 
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static class TypeVariableWrapper<G extends GenericDeclaration>
+   extends TypeWrapper<TypeVariable<G>> implements TypeVariable<G> {
+      TypeVariableWrapper(TypeVariable<G> typeVariable) {
+         super(typeVariable);
+      }
+
+      @Override
+      public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+         return base.getAnnotation(annotationClass);
+      }
+
+      @Override
+      public Annotation[] getAnnotations() {
+         return base.getAnnotations();
+      }
+
+      @Override
+      public Annotation[] getDeclaredAnnotations() {
+         return base.getDeclaredAnnotations();
+      }
+
+      @Override
+      public Type[] getBounds() {
+         return base.getBounds();
+      }
+
+      @Override
+      public G getGenericDeclaration() {
+         return base.getGenericDeclaration();
+      }
+
+      @Override
+      public String getName() {
+         return base.getName();
+      }
+
+      @Override
+      public AnnotatedType[] getAnnotatedBounds() {
+         return base.getAnnotatedBounds();
+      }
+   }
+
+   /**
+    * An abstract base class for {@link ProperType} implementations. This implements {@code equals},
+    * {@code hashCode}, and {@code toString} and "inherits" {@code getTypeName} from its default
+    * implementation defined on {@link Type}.
+    *
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   private static abstract class AbstractProperType implements ProperType {
+      AbstractProperType() {
+      }
+      
+      @Override
+      public boolean equals(Object o) {
+         return o instanceof Type && Types.equals(this, (Type) o);
+      }
+
+      @Override
+      public int hashCode() {
+         return Types.hashCode(this);
+      }
+
+      @Override
+      public String toString() {
+         return Types.toString(this);
+      }
+   }
+
+   /**
+    * A proper implementation of {@link ParameterizedType}.
+    */
+   static class ParameterizedTypeImpl extends AbstractProperType
+   implements ParameterizedType, Serializable {
       private static final long serialVersionUID = -4933098144775956311L;
 
       private final Type ownerType;
@@ -2999,30 +3403,13 @@ public final class Types {
       public Type getOwnerType() {
          return ownerType;
       }
-
-      @Override
-      public boolean equals(Object o) {
-         if (o instanceof ParameterizedType) {
-            return Types.equals(this, (ParameterizedType) o);
-         }
-         return false;
-      }
-
-      @Override
-      public int hashCode() {
-         return Types.hashCode(this);
-      }
-
-      @Override
-      public String toString() {
-         return Types.toString(this);
-      }
    }
    
    /**
-    * Implements {@link GenericArrayType}.
+    * A proper implementation of {@link GenericArrayType}.
     */
-   private static class GenericArrayTypeImpl implements GenericArrayType, Serializable {
+   private static class GenericArrayTypeImpl extends AbstractProperType
+   implements GenericArrayType, Serializable {
       private static final long serialVersionUID = -8335550068623986776L;
       
       private final Type componentType;
@@ -3035,31 +3422,13 @@ public final class Types {
       public Type getGenericComponentType() {
          return componentType;
       }
-      
-      @Override
-      public boolean equals(Object o) {
-         if (o instanceof GenericArrayType) {
-            return Types.equals(this, (GenericArrayType) o);
-         }
-         return false;
-      }
-      
-      @Override
-      public int hashCode() {
-         return Types.hashCode(this);
-      }
-      
-      @Override
-      public String toString() {
-         return Types.toString(this);
-      }
    }
    
    /**
-    * Implements {@link WildcardType}.
+    * A proper implementation of {@link WildcardType}.
     */
-   // NB: not private so its visible for use from AnnotatedTypes
-   static class WildcardTypeImpl implements WildcardType, Serializable {
+   // NB: not private so it's visible for use from AnnotatedTypes
+   static class WildcardTypeImpl extends AbstractProperType implements WildcardType, Serializable {
       private static final long serialVersionUID = -5371665313248454547L;
       
       private final Type upperBounds[];
@@ -3068,20 +3437,109 @@ public final class Types {
       WildcardTypeImpl(Type bound, boolean isUpperBound) {
          upperBounds = new Type[] { isUpperBound ? bound : Object.class };
          lowerBounds = isUpperBound ? EMPTY_TYPES : new Type[] { bound };
+         assert boundsAreValid();
       }
 
       WildcardTypeImpl(Type[] upperBounds, Type[] lowerBounds) {
-         assert upperBounds.length > 0; // at a minimum, it contains Object
-         this.upperBounds = upperBounds;
+         this.upperBounds = upperBounds.length == 0 ? JUST_OBJECT : upperBounds;
          this.lowerBounds = lowerBounds;
+         assert boundsAreValid();
       }
-
+      
       WildcardTypeImpl(Collection<? extends Type> upperBounds,
             Collection<? extends Type> lowerBounds) {
          this.upperBounds = upperBounds.isEmpty() ? JUST_OBJECT
                : upperBounds.toArray(new Type[upperBounds.size()]);
          this.lowerBounds = lowerBounds.isEmpty() ? EMPTY_TYPES
                : lowerBounds.toArray(new Type[lowerBounds.size()]);
+         assert boundsAreValid();
+      }
+      
+      private boolean boundsAreValid() {
+         checkBounds(upperBounds); 
+         checkBounds(lowerBounds);
+         return true;
+      }
+      
+      private void checkBounds(Type[] bounds) {
+         // 1. Bounds cannot contain wildcards.
+         // 1. Bounds cannot contain primitives.
+         // 2. Bounds cannot contain more than one class. If a bound is a type argument, it is
+         //    considered a class if its bounds contain a class other than java.lang.Object.
+         // 3. Bounds cannot induce different parameterizations of the same supertype. For example,
+         //    ArrayList<String> and List<? extends Number> are invalid together because they result
+         //    in a type that must implement both List<String> and List<? extends Number>.
+         boolean hasClassBound = false;
+         for (Type bound : bounds) {
+            if (isUnknownType(bound)) {
+               // if we encounter an unknown kind of Type, we don't know how to validate... skip it
+               continue;
+            }
+            
+            if (isPrimitive(bound) || bound instanceof WildcardTypeImpl) {
+               throw new AssertionError("Wildcard bound cannot be primitive or wildcard: " + bound);
+            }
+            
+            if (isClass(bound)) {
+               if (hasClassBound) {
+                  throw new AssertionError("Wildcard bounds cannot indicate more than one class"
+                        + " (vs. interfaces): " + Arrays.toString(bounds));
+               }
+               hasClassBound = true;
+            }
+            
+            Class<?> boundClass = getErasure(bound);
+            for (Type other : bounds) {
+               if (other == bound || isUnknownType(other)) {
+                  continue;
+               }
+               
+               // make sure they don't imply different parameterizations of the same type
+               Class<?> otherClass = getErasure(other);
+               if (Types.isAssignable(other, boundClass)) {
+                  Type resolvedBound = resolveSupertype(bound, boundClass);
+                  Type resolvedOther = resolveSupertype(other, boundClass);
+                  if (!Types.equals(resolvedBound, resolvedOther)) {
+                     throw new AssertionError("Wildcard bounds " + bound + " and " + other
+                           + " imply incompatible parameterizations of " + boundClass);
+                  }
+               } else if (Types.isAssignable(bound, otherClass)) {
+                  Type resolvedBound = resolveSupertype(bound, otherClass);
+                  Type resolvedOther = resolveSupertype(other, otherClass);
+                  if (!Types.equals(resolvedBound, resolvedOther)) {
+                     throw new AssertionError("Wildcard bounds " + bound + " and " + other
+                           + " imply incompatible parameterizations of " + otherClass);
+                  }
+               }
+            }
+         }
+      }
+      
+      private boolean isClass(Type t) {
+         return t instanceof TypeVariable
+               ? isTypeVariableClass((TypeVariable<?>) t, new HashSet<>())
+               : !isInterface(t);
+      }
+      
+      private boolean isTypeVariableClass(TypeVariable<?> tv, Set<TypeVariable<?>> observed) {
+         if (!observed.add(tv)) {
+            // Java should not allow cycle in type hierarchy, but prevent such a case from causing
+            // stack overflow in case we encounter a misbehaving impl of TypeVariable
+            return false;
+         }
+         Type[] tvBounds = tv.getBounds();
+         for (Type t : tvBounds) {
+            if (isClass(t)) {
+               return true;
+            }
+         }
+         return false;
+      }
+      
+      private boolean isUnknownType(Type t) {
+         return !(t instanceof Class || t instanceof ParameterizedType
+               || t instanceof GenericArrayType || t instanceof WildcardType
+               || t instanceof TypeVariable);
       }
       
       @Override
@@ -3092,24 +3550,6 @@ public final class Types {
       @Override
       public Type[] getLowerBounds() {
          return lowerBounds.clone();
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         if (o instanceof WildcardType) {
-            return Types.equals(this, (WildcardType) o);
-         }
-         return false;
-      }
-      
-      @Override
-      public int hashCode() {
-         return Types.hashCode(this);
-      }
-      
-      @Override
-      public String toString() {
-         return Types.toString(this);
       }
    }
    
@@ -3249,9 +3689,9 @@ public final class Types {
       public GenericSignature erased() {
          Type[] erasedParamTypes = new Type[parameterTypes.length];
          for (int i = 0; i < parameterTypes.length; i++) {
-            erasedParamTypes[i] = getRawType(parameterTypes[i]);
+            erasedParamTypes[i] = getErasure(parameterTypes[i]);
          }
-         return new GenericSignature(name, getRawType(returnType), EMPTY_TYPE_VARIABLES,
+         return new GenericSignature(name, getErasure(returnType), EMPTY_TYPE_VARIABLES,
                erasedParamTypes);
       }
       

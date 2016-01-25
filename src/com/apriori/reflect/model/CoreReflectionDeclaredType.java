@@ -51,7 +51,7 @@ implements DeclaredType {
          this.args = Collections.unmodifiableList(list);
       }
 
-      Class<?> clazz = com.apriori.reflect.Types.getRawType(base.getType());
+      Class<?> clazz = com.apriori.reflect.Types.getErasure(base.getType());
       this.element = new CoreReflectionTypeElement(clazz);
    }
 

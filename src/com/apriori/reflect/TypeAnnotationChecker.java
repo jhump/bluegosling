@@ -42,32 +42,31 @@ public interface TypeAnnotationChecker {
     * 
     * <p>An argument that is empty indicates the absence of any type annotations.
     *
-    * @param target annotations that appear on the type of the assignment target (LHS)
-    * @param source annotations that appear on the type of the assignment source (RHS)
+    * @param from annotations that appear on the type of the assignment source (RHS)
+    * @param to annotations that appear on the type of the assignment target (LHS)
     * @return true if a type annotated with {@code target} annotations is assignable from a type
     *       annotated with {@code source} annotations
     * @throws IllegalArgumentException if either collection of annotations represents an illegal
     *       combination of type annotations (for example, contains both {@code NotNull} and
     *       {@code Nullable})
     */
-   boolean isAssignable(Collection<? extends Annotation> target,
-         Collection<? extends Annotation> source);
+   boolean isAssignable(Collection<? extends Annotation> from, Collection<? extends Annotation> to);
    
    /**
     * Determines if the first given annotations are "assignable from" the second given annotations.
     * This is a convenience method for use with core reflection, where most methods that query
     * annotations return arrays, not collections.
     *
-    * @param target annotations that appear on the type of the assignment target (LHS)
-    * @param source annotations that appear on the type of the assignment source (RHS)
+    * @param from annotations that appear on the type of the assignment source (RHS)
+    * @param to annotations that appear on the type of the assignment target (LHS)
     * @return true if a type annotated with {@code target} annotations is assignable from a type
     *       annotated with {@code source} annotations
     * @throws IllegalArgumentException if either collection of annotations represents an illegal
     *       combination of type annotations (for example, contains both {@code NotNull} and
     *       {@code Nullable})
     */
-   default boolean isAssignable(Annotation[] target, Annotation[] source) {
-      return isAssignable(Arrays.asList(target), Arrays.asList(source));
+   default boolean isAssignable(Annotation[] from, Annotation[] to) {
+      return isAssignable(Arrays.asList(from), Arrays.asList(to));
    }
   
    /**
@@ -152,11 +151,11 @@ public interface TypeAnnotationChecker {
          return this;
       }
       
-      public Builder assignable(Class<? extends Annotation> to,
-            Class<? extends Annotation> from) {
-         checkNotEquivalent(to, from);
-         checkNoCycle(to, from, false);
-         checkStructure(to, from);
+      public Builder assignable(Class<? extends Annotation> from,
+            Class<? extends Annotation> to) {
+         checkNotEquivalent(from, to);
+         checkNoCycle(from, to, false);
+         checkStructure(from, to);
          superTypes.compute(from, (k, v) -> {
             if (v == null) {
                v = new SuperTypeInfo();
@@ -177,8 +176,8 @@ public interface TypeAnnotationChecker {
          }
       }
 
-      private void checkNotAssignable(Class<? extends Annotation> to,
-            Class<? extends Annotation> from) {
+      private void checkNotAssignable(Class<? extends Annotation> from,
+            Class<? extends Annotation> to) {
          SuperTypeInfo s = superTypes.get(from);
          if (s != null && s.assignableTo.contains(to)) {
             throw new IllegalStateException(getName(to) + " is already defined as assignable from "
@@ -186,16 +185,16 @@ public interface TypeAnnotationChecker {
          }
       }
 
-      private void checkNoCycle(Class<? extends Annotation> to, Class<? extends Annotation> from,
+      private void checkNoCycle(Class<? extends Annotation> from, Class<? extends Annotation> to,
             boolean forEquivalence) {
-         if (hasCycle(to, from, forEquivalence, new HashSet<>())) {
+         if (hasCycle(from, to, forEquivalence, new HashSet<>())) {
             String combineMessage = forEquivalence ? " equivalent to " : " assignable from ";
             throw new IllegalArgumentException("Making " + getName(to) + combineMessage
                   + getName(from) + " would result in a cycle");
          }
       }
       
-      private boolean hasCycle(Class<? extends Annotation> to, Class<? extends Annotation> from,
+      private boolean hasCycle(Class<? extends Annotation> from, Class<? extends Annotation> to,
             boolean forEquivalence, Set<Class<? extends Annotation>> alreadySeen) {
          if (Objects.equals(to, from)) {
             return true;
@@ -206,7 +205,7 @@ public interface TypeAnnotationChecker {
          SuperTypeInfo s = superTypes.get(to);
          if (s != null) {
             for (Class<? extends Annotation> superType : s.assignableTo) {
-               if (hasCycle(superType, from, false, alreadySeen)) {
+               if (hasCycle(from, superType, false, alreadySeen)) {
                   return true;
                }
             }
@@ -216,7 +215,7 @@ public interface TypeAnnotationChecker {
                   // there's a cycle when it's actually a relationship we're going to overwrite)
                   continue;
                }
-               if (hasCycle(eq, from, true, alreadySeen)) {
+               if (hasCycle(from, eq, true, alreadySeen)) {
                   return true;
                }
             }
@@ -224,8 +223,8 @@ public interface TypeAnnotationChecker {
          return false;
       }
 
-      private static void checkStructure(Class<? extends Annotation> to,
-            Class<? extends Annotation> from) {
+      private static void checkStructure(Class<? extends Annotation> from,
+            Class<? extends Annotation> to) {
          Method methods[] = to == null ? EMPTY_METHODS : to.getDeclaredMethods();
          for (Method m : methods) {
             try {
@@ -260,7 +259,7 @@ public interface TypeAnnotationChecker {
             map.put(entry.getKey(), new SuperTypeInfo(entry.getValue()));
          }
          
-         return (to, from) -> {
+         return (from, to) -> {
             Collection<? extends Annotation> collTo = new FilteringCollection<>(to,
                   a -> map.containsKey(a.annotationType()));
             Iterator<? extends Annotation> iterTo = collTo.iterator();
@@ -282,18 +281,18 @@ public interface TypeAnnotationChecker {
             }
             Class<? extends Annotation> typeTo = aTo == null ? null : aTo.annotationType();
             Class<? extends Annotation> typeFrom = aFrom == null ? null : aFrom.annotationType();
-            return isAssignable(typeTo, typeFrom, map) && compatibleValues(aTo, aFrom);
+            return isAssignable(typeFrom, typeTo, map) && compatibleValues(aFrom, aTo);
          };
       }
 
-      private static boolean isAssignable(Class<? extends Annotation> to,
-            Class<? extends Annotation> from,
+      private static boolean isAssignable(Class<? extends Annotation> from,
+            Class<? extends Annotation> to,
             Map<Class<? extends Annotation>, SuperTypeInfo> superTypes) {
-         return Objects.equals(to, from) || isAssignable(to, from, superTypes, new HashSet<>());
+         return Objects.equals(to, from) || isAssignable(from, to, superTypes, new HashSet<>());
       }
       
-      private static boolean isAssignable(Class<? extends Annotation> to,
-            Class<? extends Annotation> from,
+      private static boolean isAssignable(Class<? extends Annotation> from,
+            Class<? extends Annotation> to,
             Map<Class<? extends Annotation>, SuperTypeInfo> superTypes,
             Set<Class<? extends Annotation>> alreadySeen) {
          if (!alreadySeen.add(from)) {
@@ -307,19 +306,19 @@ public interface TypeAnnotationChecker {
             return true;
          }
          for (Class<? extends Annotation> superType : s.assignableTo) {
-            if (isAssignable(to, superType, superTypes, alreadySeen)) {
+            if (isAssignable(superType, to, superTypes, alreadySeen)) {
                return true;
             }
          }
          for (Class<? extends Annotation> eq : s.equivalences) {
-            if (isAssignable(to, eq, superTypes, alreadySeen)) {
+            if (isAssignable(eq, to, superTypes, alreadySeen)) {
                return true;
             }
          }
          return false;
       }
 
-      private static boolean compatibleValues(Annotation to, Annotation from) {
+      private static boolean compatibleValues(Annotation from, Annotation to) {
          if (to == null || to.annotationType().getDeclaredMethods().length == 0) {
             return true;
          }

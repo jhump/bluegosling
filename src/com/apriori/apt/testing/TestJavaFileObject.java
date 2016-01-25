@@ -19,22 +19,24 @@ import javax.tools.SimpleJavaFileObject;
  * A simple in-memory file. This is used by {@link TestJavaFileManager} to provide an in-memory file
  * system for use in unit tests for annotation processors.
  * 
- * <p>When writing contents to a file, calling code <em>must</em> close and/or flush the output stream
- * for changes to actually be "written" to the in-memory contents. Opening an output stream for a file
- * effectively locks it, so only one output stream can be opened at any given time for a file. Open
- * input streams read consistent data. So if the file is changed while one thread is reading its
- * contents, the reading thread will not see the updates (unless it were to close and re-open an
- * input stream for the file).
+ * <p>When writing contents to a file, calling code <em>must</em> close and/or flush the output
+ * stream for changes to actually be "written" to the in-memory contents. Opening an output stream
+ * for a file effectively locks it, so only one output stream can be opened at any given time for a
+ * file. Open input streams read consistent data. So if the file is changed while one thread is
+ * reading its contents, the reading thread will not see the updates (unless it were to close and
+ * re-open a new input stream for the file).
  * 
- * <p>The in-memory contents of the file are stored as a byte array, not a character array. Using the
- * {@link FileObject} interface to open a reader or writer for the file implicitly uses the UTF-8
- * character set for encoding and decoding.
+ * <p>The in-memory contents of the file are stored as a byte array, not a character array. Using
+ * the {@link FileObject} interface to open a reader or writer for the file assume UTF-8 character
+ * set for encoding and decoding.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class TestJavaFileObject extends SimpleJavaFileObject {
-
-   static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
+   /**
+    * The default character set when defining file contents as text: UTF-8.
+    */
+   static final Charset DEFAULT_CHARSET = TestJavaFileManager.DEFAULT_CHARSET;
 
    private final TestJavaFileManager fileManager;
    private final String filePath;
@@ -53,14 +55,20 @@ public class TestJavaFileObject extends SimpleJavaFileObject {
    }
    
    TestJavaFileObject(TestJavaFileManager fileManager, String filePath, String contents) {
-      this(fileManager, filePath, contents.getBytes(UTF8_CHARSET));
+      this(fileManager, filePath, contents, DEFAULT_CHARSET);
+   }
+   
+   TestJavaFileObject(TestJavaFileManager fileManager, String filePath, String contents,
+         Charset charset) {
+      this(fileManager, filePath, contents.getBytes(charset));
    }
    
    TestJavaFileObject(TestJavaFileManager fileManager, String filePath, byte fileContents[]) {
       this(fileManager, filePath, fileContents, false);
    }
 
-   private TestJavaFileObject(TestJavaFileManager fileManager, String filePath, byte fileContents[], boolean readOnly) {
+   private TestJavaFileObject(TestJavaFileManager fileManager, String filePath, byte fileContents[],
+         boolean readOnly) {
       super(buildUri(filePath), determineKind(filePath));
       this.fileManager = fileManager;
       this.filePath = filePath;
@@ -122,7 +130,7 @@ public class TestJavaFileObject extends SimpleJavaFileObject {
 
    @Override
    public synchronized String getCharContent(boolean ignoreEncodingErrors) {
-      return new String(fileContents, UTF8_CHARSET);
+      return new String(fileContents, DEFAULT_CHARSET);
    }
    
    /**
@@ -142,9 +150,13 @@ public class TestJavaFileObject extends SimpleJavaFileObject {
 
    @Override
    public synchronized Reader openReader(boolean ignoreEncodingErrors) {
-      return new InputStreamReader(openInputStream(), UTF8_CHARSET);
+      return new InputStreamReader(openInputStream(), DEFAULT_CHARSET);
    }
-   
+
+   public synchronized Reader openReader(Charset charset) {
+      return new InputStreamReader(openInputStream(), charset);
+   }
+
    @Override
    public synchronized OutputStream openOutputStream() throws IOException {
       if (readOnly) {
@@ -161,9 +173,13 @@ public class TestJavaFileObject extends SimpleJavaFileObject {
    
    @Override
    public synchronized Writer openWriter() throws IOException {
-      return new OutputStreamWriter(openOutputStream(), UTF8_CHARSET);
+      return new OutputStreamWriter(openOutputStream(), DEFAULT_CHARSET);
    }
-   
+
+   public synchronized Writer openWriter(Charset charset) throws IOException {
+      return new OutputStreamWriter(openOutputStream(), charset);
+   }
+
    synchronized void closeOutputStream() {
       outputStream = null;
       fileManager.closedForWriting(this);

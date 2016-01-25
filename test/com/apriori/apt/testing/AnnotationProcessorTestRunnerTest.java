@@ -239,6 +239,11 @@ public class AnnotationProcessorTestRunnerTest {
       }
    }
    
+   @Test public void testProcessorUnderTest() {
+      Result result = runTest(TestProcessorUnderTest.class);
+      assertNoFailures(result, 1);
+   }
+   
    @RunWith(AnnotationProcessorTestRunner.class)
    @ProcessorUnderTest(TestProcessor.class)
    public static class TestProcessorUnderTest {
@@ -249,11 +254,11 @@ public class AnnotationProcessorTestRunnerTest {
       }
    }
    
-   @Test public void testProcessorUnderTest() {
-      Result result = runTest(TestProcessorUnderTest.class);
+   @Test public void testInitializeProcessorField() {
+      Result result = runTest(TestInitializeProcessorField.class);
       assertNoFailures(result, 1);
    }
-   
+
    @RunWith(AnnotationProcessorTestRunner.class)
    @InitializeProcessorField("tp")
    public static class TestInitializeProcessorField {
@@ -266,10 +271,5 @@ public class AnnotationProcessorTestRunnerTest {
          assertSame(tp, testEnv.processorUnderTest());
          assertEquals(1, ((TestProcessor) testEnv.processorUnderTest()).initCount);
       }
-   }
-
-   @Test public void testInitializeProcessorField() {
-      Result result = runTest(TestInitializeProcessorField.class);
-      assertNoFailures(result, 1);
    }
 }

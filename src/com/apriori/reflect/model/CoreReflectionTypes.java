@@ -278,13 +278,13 @@ enum CoreReflectionTypes implements Types {
          }
          AnnotatedType lub = AnnotatedTypes.getAnnotatedLeastUpperBounds(alternatives)[0];
          Type lubType = lub.getType();
-         Type erasedType = com.apriori.reflect.Types.getRawType(lubType);
+         Type erasedType = com.apriori.reflect.Types.getErasure(lubType);
          AnnotatedType erased = erasedType == lubType
                ? lub : AnnotatedTypes.newAnnotatedType(erasedType, lub.getAnnotations());
          return getTypeMirror(erased);
       } else {
          AnnotatedType at = asAnnotatedTypeAllowVoid(t, "given type");
-         Class<?> erased = com.apriori.reflect.Types.getRawType(at.getType());
+         Class<?> erased = com.apriori.reflect.Types.getErasure(at.getType());
          return getTypeMirror(AnnotatedTypes.newAnnotatedType(erased, at.getAnnotations()));
       }
    }
@@ -548,7 +548,7 @@ enum CoreReflectionTypes implements Types {
             || containingType instanceof AnnotatedWildcardType
             || containingType instanceof AnnotatedTypeVariable);
       Class<?> containingClass =
-            com.apriori.reflect.Types.getRawType(containingType.getType());
+            com.apriori.reflect.Types.getErasure(containingType.getType());
       
       switch (element.getKind()) {
          case CLASS: case INTERFACE: case ENUM: case ANNOTATION_TYPE:
